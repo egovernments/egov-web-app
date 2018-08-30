@@ -18,7 +18,6 @@ import ReviewForm from "./components/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
-// import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
@@ -28,11 +27,9 @@ import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery } from "egov-ui-kit/utils/PTCommon";
-import get from "lodash/get";
-import set from "lodash/set";
+import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
-import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, generalMDMSFetchSuccess, updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
@@ -160,21 +157,21 @@ class FormWizard extends Component {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft } = this.props;
     const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-
+    const tenantId = localStorage.getItem("tenant-id");
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
         [
-          { key: "userId", value: uuid },
+          // { key: "userId", value: uuid },
           {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
           },
           {
             key: "tenantId", //hardcoded tenantId to send pb in draft call.. need to remove later
-            value: "pb",
+            value: tenantId,
           },
         ],
         draftRequest
@@ -290,6 +287,19 @@ class FormWizard extends Component {
     }
   };
 
+  componentWillReceiveProps = (nextprops) => {
+    if (!isEqual(nextprops, this.props)) {
+      let inputType = document.getElementsByTagName("input");
+      for (let input in inputType) {
+        if (inputType[input].type === "number") {
+          inputType[input].addEventListener("mousewheel", function() {
+            this.blur();
+          });
+        }
+      }
+    }
+  };
+
   componentDidMount = async () => {
     let { location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
     let { search } = location;
@@ -303,7 +313,12 @@ class FormWizard extends Component {
       await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
 
-    this.addOwner(true);
+    const { ownerInfoArr } = this.state
+
+    if (ownerInfoArr.length < 2) {
+      this.addOwner(true)
+    }
+
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 

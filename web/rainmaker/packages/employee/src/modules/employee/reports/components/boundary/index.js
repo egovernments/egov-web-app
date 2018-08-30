@@ -19,6 +19,7 @@ class UiBoundary extends Component {
       dropDownDataVal: {},
       labelArr: [],
       viewLabels: [],
+      localityArray: []
     };
   }
 
@@ -133,6 +134,12 @@ class UiBoundary extends Component {
 
     self.setFirstDropDownData(cityBdry);
 
+    /**Code to set the localities for the entire tenant (first load)*/
+    this.state.localityArray = jp.query(cityBdry, `$..children[?(@.label=="Locality")].code`);
+    let e = { target: { value: this.state.localityArray } };
+    this.props.handleFieldChange(e, "localityArray", true, "");
+    /**End of locality array code*/
+
     // THIS IS FOR THE UPDATE PART
     // if (window.location.hash.split("/")[1] != "create" || item.setResponseData) {
     //   if (!_.isEmpty(self.props.formData)) {
@@ -190,12 +197,17 @@ class UiBoundary extends Component {
   };
   handler = (key, property) => {
     let { dropDownDataVal, dropDownData } = this.state;
-    this.setState({
-      dropDownDataVal: {
-        ...dropDownDataVal,
-        [property]: key,
-      },
-    });
+    
+    let newDropDownDataVal = { dropDownDataVal: {} };
+    for (let i=0; i<this.state.labelArr.length; i++) {
+      if (this.state.labelArr[i] == property) {
+        newDropDownDataVal.dropDownDataVal[property] = key;
+        break;
+      } else {
+        newDropDownDataVal.dropDownDataVal[this.state.labelArr[i]] = dropDownDataVal[this.state.labelArr[i]];
+      }
+    }
+    this.setState(newDropDownDataVal);
 
     //below runs for create & update only
     this.populateNextDropDown(key, property);
@@ -214,8 +226,18 @@ class UiBoundary extends Component {
     //     this.props.item.patternErrMsg
     //   );
     // }
-    let e = { target: { value: key } };
-    this.props.handleFieldChange(e, property, true, "");
+
+    /** Old search parameters */
+    // let e = { target: { value: key } };
+    // this.props.handleFieldChange(e, property, true, "");
+    /** END Old search params */
+
+    /** Add locality array to search parameters */
+    this.props.handleFieldChange({ target: { value: this.state.localityArray } }, "localityArray", true, "");
+    // this.props.handleFieldChange({ target: { value: dropDownData[property].find(o => o.key == key).value } }, property, true, "");
+    this.props.handleFieldChange({ target: { value: newDropDownDataVal.dropDownDataVal } }, "ZonalSelection", true, "");
+    /** END Add local... */
+
     console.log(key, property);
   };
 
@@ -250,6 +272,17 @@ class UiBoundary extends Component {
       }
       var jPath = "$.*.children" + str + `[?(@.code=='${key}')]`;
       objArr = jp.query(this.state.boundaryData, jPath + `.children[?(@.label=='${this.state.labelArr[index + 1]}')]`);
+      
+      /**Code to set the locality array locality wise reports data*/
+      if (this.state.labelArr.length - index == 2) {
+        this.state.localityArray = jp.query(objArr, `$..code`);
+      } else if (this.state.labelArr.length - index == 1) {
+        this.state.localityArray = [key];
+      } else {
+        this.state.localityArray = jp.query(objArr, `$..children[?(@.label=="Locality")].code`);
+      }
+      /**End of locality array code*/
+      
       if (objArr.length > 0) {
         objArr.map((v) => {
           if (v.label == this.state.labelArr[index + 1]) {

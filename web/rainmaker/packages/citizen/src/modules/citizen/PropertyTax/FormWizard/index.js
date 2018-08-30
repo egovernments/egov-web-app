@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
+import { deleteForm, updateForms, displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -16,21 +16,15 @@ import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
-// import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
-import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getQueryValue, getFinancialYearFromQuery } from "egov-ui-kit/utils/PTCommon";
-import get from "lodash/get";
-import set from "lodash/set";
+import { get, set, range, isEmpty, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
-import range from "lodash/range";
-// import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
@@ -287,6 +281,19 @@ class FormWizard extends Component {
     }
   };
 
+  componentWillReceiveProps = (nextprops) => {
+    if (!isEqual(nextprops, this.props)) {
+      let inputType = document.getElementsByTagName("input");
+      for (let input in inputType) {
+        if (inputType[input].type === "number") {
+          inputType[input].addEventListener("mousewheel", function() {
+            this.blur();
+          });
+        }
+      }
+    }
+  };
+
   componentDidMount = async () => {
     let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
     let { search } = this.props.location;
@@ -368,7 +375,13 @@ class FormWizard extends Component {
     }
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
-    this.addOwner(true);
+
+    const { ownerInfoArr } = this.state
+
+    if (ownerInfoArr.length < 2) {
+      this.addOwner(true)
+    }
+
     const financialYearFromQuery = getFinancialYearFromQuery();
     this.setState({
       financialYearFromQuery,
@@ -719,6 +732,7 @@ class FormWizard extends Component {
       }
     });
     const ownerArray = [ownerObj];
+    console.log(ownerArray);
     return ownerArray;
   };
 

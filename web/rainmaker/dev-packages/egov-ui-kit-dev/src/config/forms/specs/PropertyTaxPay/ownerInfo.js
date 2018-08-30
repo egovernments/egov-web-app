@@ -38,15 +38,6 @@ const formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
-    // ownerAadhar: {
-    //   id: "ownerAadhar",
-    //   jsonPath: "Properties[0].propertyDetails[0].owners[0].aadhaarNumber",
-    //   type: "textfield",
-    //   floatingLabelText: "Aadhar ID",
-    //   hintText: "Enter aadhar card no.",
-    //   errorMessage: "Enter valid aadhar number",
-    //   pattern: /^[0-9]{12}$/i,
-    // },
     ownerEmail: {
       id: "ownerEmail",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].emailId",
@@ -87,28 +78,6 @@ const formConfig = {
       dropDownData: [],
       fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "OwnerType",
-      //             },
-      //           ],
-      //         },
-      //       ],
-
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.PropertyTax.OwnerType"],
-      // },
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
@@ -129,14 +98,20 @@ const formConfig = {
             currAcc.push(dropDownData);
             return currAcc;
           }, []);
+
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         switch (value) {
           case "NONE":
             setDependentFields(dependentFields, dispatch, formKey, true);
             break;
+          case "WIDOW":
+            dispatch(setFieldProperty(formKey, "ownerGender", "value", "Female"));
+            break;
           default:
             setDependentFields(dependentFields, dispatch, formKey, false);
+            const genderValue = get(state, "form.ownerInfo.fields.ownerGender.value");
+            dispatch(setFieldProperty(formKey, "ownerGender", "value", genderValue));
             break;
         }
       },
@@ -199,7 +174,7 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dropDownData: [], //[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      dropDownData: [],
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         if (value === "Aadhar") {
@@ -257,6 +232,10 @@ const formConfig = {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
       const dropdownData = getOwnerCategoryByYear(Object.values(OwnerTypes), financialYearFromQuery);
       set(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      const ownerShipType = get(state, "form.ownershipType.fields.typeOfOwnership.value", "")
+      if (ownerShipType === "SINGLEOWNER") {
+        set(action, "form.fields.ownerGender.value", get(state, "form.ownerInfo.fields.ownerGender.value", "Male"))
+      }
       return action;
     } catch (e) {
       console.log(e);

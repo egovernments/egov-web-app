@@ -87,7 +87,6 @@ class DropDown extends Component {
         downloadReceipt(item, generalMDMSDataById, true, imageUrl);
         break;
       case "Complete Payment":
-        console.log(citizenUserId);
         localStorage.setItem("draftId", "");
         history && citizenUserId
           ? history.push(
