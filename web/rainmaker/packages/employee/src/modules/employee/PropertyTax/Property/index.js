@@ -174,9 +174,10 @@ class Property extends Component {
   };
 
   render() {
-    const { history, generalMDMSDataById } = this.props;
+    const { history, generalMDMSDataById, latestPropertyDetails } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
+    const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
     return (
       <Screen>
         <AssessmentList
@@ -187,6 +188,7 @@ class Property extends Component {
           history={history}
           hoverColor="#fff"
           generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
+          citizenUserId={uuid}
         />
 
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}

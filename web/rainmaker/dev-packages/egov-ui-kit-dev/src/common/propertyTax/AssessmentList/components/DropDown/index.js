@@ -56,17 +56,24 @@ class DropDown extends Component {
     return `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
   };
 
-  onSelectFieldChange = (event, key, payload, history, item, generalMDMSDataById, imageUrl) => {
+  onSelectFieldChange = (event, key, payload, imageUrl) => {
+    const { generalMDMSDataById, citizenUserId, history, item } = this.props;
     const { downloadReceipt } = this;
     switch (payload) {
       case "Re-Assess":
         localStorage.setItem("draftId", "");
-        history &&
-          history.push(
-            `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
-              item.propertyId
-            }&tenantId=${item.tenantId}`
-          );
+        history && citizenUserId
+          ? history.push(
+              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
+                item.assessmentNo
+              }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
+            )
+          : history.push(
+              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
+                item.propertyId
+              }&tenantId=${item.tenantId}`
+            );
+
         break;
       case "Download Receipt":
         //Need 1. Property, 2. Property Details, 3. receiptdetails
@@ -80,13 +87,20 @@ class DropDown extends Component {
         downloadReceipt(item, generalMDMSDataById, true, imageUrl);
         break;
       case "Complete Payment":
+        console.log(citizenUserId);
         localStorage.setItem("draftId", "");
-        history &&
-          history.push(
-            `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
-              item.propertyId
-            }&tenantId=${item.tenantId}`
-          );
+        history && citizenUserId
+          ? history.push(
+              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
+                item.assessmentNo
+              }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
+            )
+          : history.push(
+              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
+                item.propertyId
+              }&tenantId=${item.tenantId}`
+            );
+
         break;
     }
   };
@@ -108,7 +122,7 @@ class DropDown extends Component {
   };
 
   render() {
-    const { history, item, generalMDMSDataById } = this.props;
+    const { item } = this.props;
     const { imageUrl } = this.state;
     const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
     return (
@@ -121,7 +135,7 @@ class DropDown extends Component {
           iconStyle={styles.iconStyle}
           style={styles.customWidth}
           hintStyle={styles.hintStyle}
-          onChange={(event, key, payload) => this.onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById, imageUrl)}
+          onChange={(event, key, payload) => this.onSelectFieldChange(event, key, payload, imageUrl)}
         >
           {userType === "CITIZEN" && <MenuItem value="Download Receipt" primaryText="Download Receipt" />}
           {userType === "EMPLOYEE" && <MenuItem value="Download Citizen Receipt" primaryText="Download Citizen Receipt" />}

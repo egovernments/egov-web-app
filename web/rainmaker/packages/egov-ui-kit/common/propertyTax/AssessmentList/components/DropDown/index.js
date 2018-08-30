@@ -107,14 +107,20 @@ var DropDown = function (_Component) {
       img.src = url;
     }, _this.createImageUrl = function (tenantId) {
       return "https://s3.ap-south-1.amazonaws.com/pb-egov-assets/" + tenantId + "/logo.png";
-    }, _this.onSelectFieldChange = function (event, key, payload, history, item, generalMDMSDataById, imageUrl) {
+    }, _this.onSelectFieldChange = function (event, key, payload, imageUrl) {
+      var _this$props = _this.props,
+          generalMDMSDataById = _this$props.generalMDMSDataById,
+          citizenUserId = _this$props.citizenUserId,
+          history = _this$props.history,
+          item = _this$props.item;
       var _this2 = _this,
           downloadReceipt = _this2.downloadReceipt;
 
       switch (payload) {
         case "Re-Assess":
           localStorage.setItem("draftId", "");
-          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && citizenUserId ? history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&uuid=" + citizenUserId + "&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId) : history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+
           break;
         case "Download Receipt":
           //Need 1. Property, 2. Property Details, 3. receiptdetails
@@ -128,8 +134,10 @@ var DropDown = function (_Component) {
           downloadReceipt(item, generalMDMSDataById, true, imageUrl);
           break;
         case "Complete Payment":
+          console.log(citizenUserId);
           localStorage.setItem("draftId", "");
-          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && citizenUserId ? history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&uuid=" + citizenUserId + "&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId) : history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+
           break;
       }
     }, _this.downloadReceipt = function () {
@@ -178,10 +186,7 @@ var DropDown = function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      var _props = this.props,
-          history = _props.history,
-          item = _props.item,
-          generalMDMSDataById = _props.generalMDMSDataById;
+      var item = this.props.item;
       var imageUrl = this.state.imageUrl;
 
       var userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
@@ -199,7 +204,7 @@ var DropDown = function (_Component) {
             style: styles.customWidth,
             hintStyle: styles.hintStyle,
             onChange: function onChange(event, key, payload) {
-              return _this4.onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById, imageUrl);
+              return _this4.onSelectFieldChange(event, key, payload, imageUrl);
             }
           },
           userType === "CITIZEN" && _react2.default.createElement(_MenuItem2.default, { value: "Download Receipt", primaryText: "Download Receipt" }),
