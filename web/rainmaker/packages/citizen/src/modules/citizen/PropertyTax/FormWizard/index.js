@@ -25,7 +25,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, getFinancialYearFromQuery } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
 import set from "lodash/set";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
@@ -369,13 +369,10 @@ class FormWizard extends Component {
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
     this.addOwner(true);
-    let financialYearFromQuery = window.location.search.split("FY=")[1];
-    if (financialYearFromQuery) {
-      financialYearFromQuery = financialYearFromQuery.split("&")[0];
-      this.setState({
-        financialYearFromQuery,
-      });
-    }
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    this.setState({
+      financialYearFromQuery,
+    });
     const customTitle = isReassesment
       ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
@@ -715,7 +712,8 @@ class FormWizard extends Component {
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
       if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+          get(ownerInfo, `fields.${field}.value`, undefined) || null;
       } else {
         ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
       }
@@ -737,9 +735,11 @@ class FormWizard extends Component {
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
           if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `fields.${field}.value`, undefined) || null;
+            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `fields.${field}.value`, undefined) || null;
           } else {
-            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null;
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
           }
         });
         ownerData.push(ownerObj);
@@ -772,7 +772,7 @@ class FormWizard extends Component {
     toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
-    const { financialYearFromQuery } = this.state;
+    const financialYearFromQuery = getFinancialYearFromQuery();
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
