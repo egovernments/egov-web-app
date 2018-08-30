@@ -110,7 +110,8 @@ const formConfig = {
             break;
           default:
             setDependentFields(dependentFields, dispatch, formKey, false);
-            dispatch(setFieldProperty(formKey, "ownerGender", "value", "Male"));
+            const genderValue = get(state, "form.ownerInfo.fields.ownerGender.value");
+            dispatch(setFieldProperty(formKey, "ownerGender", "value", genderValue));
             break;
         }
       },
