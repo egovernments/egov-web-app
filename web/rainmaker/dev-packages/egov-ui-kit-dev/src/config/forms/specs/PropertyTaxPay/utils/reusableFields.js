@@ -279,7 +279,7 @@ export const beforeInitForm = {
       }
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    if (get(action, "form.fields.subUsageType.jsonPath")) {
+    if (get(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
       dispatch(
         prepareFormData(
           `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
@@ -352,7 +352,7 @@ export const beforeInitFormForPlot = {
         set(action, "form.fields.subUsageType.hideField", true);
       }
       set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-      if (get(action, "form.fields.subUsageType.jsonPath")) {
+      if (get(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
         dispatch(
           prepareFormData(
             `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,

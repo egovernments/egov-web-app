@@ -315,7 +315,7 @@ var beforeInitForm = exports.beforeInitForm = {
       }
     }
     (0, _set2.default)(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath")) {
+    if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
       dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMajor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")));
     }
     if ((0, _get2.default)(state, "common.prepareFormData." + (0, _get2.default)(action, "form.fields.occupancy.jsonPath")) === "RENTED") {
@@ -374,7 +374,7 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
       }
       (0, _set2.default)(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-      if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath")) {
+      if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
         dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMajor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")));
       }
     }
