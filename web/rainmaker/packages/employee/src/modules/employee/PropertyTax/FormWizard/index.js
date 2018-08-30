@@ -27,7 +27,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
 import set from "lodash/set";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
@@ -298,17 +298,14 @@ class FormWizard extends Component {
     let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
     let { search } = location;
     toggleSpinner();
-    let financialYearFromQuery = window.location.search.split("FY=")[1];
     const propertyId = getQueryValue(search, "propertyId");
     const isReassesment = !!getQueryValue(search, "isReassesment");
     const draftUuid = getQueryValue(search, "uuid");
 
-    if (financialYearFromQuery) {
-      financialYearFromQuery = financialYearFromQuery.split("&")[0];
-      this.setState({
-        financialYearFromQuery,
-      });
-    }
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    this.setState({
+      financialYearFromQuery,
+    });
     const customTitle = isReassesment
       ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;

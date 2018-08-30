@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _get = require("lodash/get");
 
@@ -119,4 +119,12 @@ var getOwnerCategoryByYear = exports.getOwnerCategoryByYear = function getOwnerC
     return OwnerCatArray;
   }, []);
   return OwnerCatArray;
+};
+
+var getFinancialYearFromQuery = exports.getFinancialYearFromQuery = function getFinancialYearFromQuery() {
+  var financialYearFromQuery = window.location.search.split("FY=")[1];
+  if (financialYearFromQuery) {
+    return financialYearFromQuery.split("&")[0];
+  }
+  return null;
 };

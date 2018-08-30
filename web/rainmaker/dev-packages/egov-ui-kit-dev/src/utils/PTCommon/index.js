@@ -120,3 +120,11 @@ export const getOwnerCategoryByYear = (data, financialYear) => {
   }, []);
   return OwnerCatArray;
 };
+
+export const getFinancialYearFromQuery = () => {
+  let financialYearFromQuery = window.location.search.split("FY=")[1];
+  if (financialYearFromQuery) {
+    return financialYearFromQuery.split("&")[0];
+  }
+  return null;
+};
