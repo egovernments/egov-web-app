@@ -4,7 +4,7 @@ const boundaryConfig = {
   hierarchyType: "REVENUE",
   style: {},
   isDisabled: false,
-  isRequired: true,
+  isRequired: false,
   requiredErrMsg: "",
   patternErrMsg: "",
 };

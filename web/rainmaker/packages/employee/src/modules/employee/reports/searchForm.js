@@ -456,14 +456,30 @@ class ShowForm extends Component {
                   toDate = new Date(searchForm.toDate);
                 }
 
+                let tabLabel = "";
                 if (fromDate && toDate) {
-                  let tabLabel = `Showing data for : ${fromDate.getDate() +
+                  tabLabel = `Showing data for : ${fromDate.getDate() +
                     "/" +
                     (fromDate.getMonth() + 1) +
                     "/" +
                     fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
-                  this.props.updateTabLabel(tabLabel);
                 }
+
+                /** Zone wise selection show in header */
+                if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
+                  if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
+                    tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
+                  }
+                  if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
+                    tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
+                  }
+                  if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
+                    tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
+                  }
+                }
+                /** END Zone wise ... */
+
+                this.props.updateTabLabel(tabLabel);
                 search(e);
               }}
             >
