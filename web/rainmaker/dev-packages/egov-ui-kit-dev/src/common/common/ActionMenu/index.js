@@ -1,56 +1,16 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Menu from "material-ui/Menu";
-import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
-import { Icon } from "components";
-import { split, orderBy, some ,get} from "lodash";
+import { get } from "lodash";
 import ActionMenuComp from "../ActionMenu/components";
 import "./index.css";
 import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
-//import actionList from "./actionList";
-
-const styles = {
-  menuStyle: {
-    marginLeft: 15,
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    flex: 1,
-  },
-
-  inputStyle: {
-    color: "white !important",
-    marginTop: "0px",
-    marginLeft: "-10px",
-  },
-  fibreIconStyle: {
-    height: "21px",
-    width: "21px",
-    margin: 0,
-    position: "relative",
-  },
-  arrowIconStyle: {
-    right: "-10px",
-  },
-  defaultMenuItemStyle: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 0,
-    padding: 0,
-  },
-};
-
-// const
 
 class ActionMenu extends Component {
   componentDidMount = async () => {
     let userInfo = JSON.parse(localStorage.getItem("user-info"));
-    let { fetchActionMenu, role } = this.props;
-    // let roleCode = this.getTransformedRole(role);
-    const roles=get(userInfo,"roles");
-    const roleCodes=roles?roles.map(role=>role.code):[];
+    let { fetchActionMenu } = this.props;
+    const roles = get(userInfo, "roles");
+    const roleCodes = roles ? roles.map((role) => role.code) : [];
     await fetchActionMenu(
       {
         roleCodes: roleCodes,
@@ -64,42 +24,9 @@ class ActionMenu extends Component {
     );
   };
 
-  // getTransformedRole = (role) => {
-  //   switch (role) {
-  //     case "citizen":
-  //       return "CITIZEN";
-  //       break;
-  //     // case "csr":
-  //     //   return "CSR";
-  //     //   break;
-  //     // case "ao":
-  //     //   return "GRO";
-  //     //   break;
-  //     // case "employee":
-  //     //   return "EMPLOYEE";
-  //     //   break;
-  //     // case "pgr-admin":
-  //     //   return "PGR-ADMIN";
-  //     //   break;
-  //     default:
-  //       return "EMPLOYEE";
-  //   }
-  // };
-
   render() {
-    let { actionListArr, role } = this.props;
-    // let { role } = this.props;
-    //let actionListArr = actionList[role];
-    // let transformedRole = this.getTransformedRole(role);
-    let transformedRole =""
-    // if (actionListArr && actionListArr.length > 0) {
-    //   actionListArr.map((item) => {
-    //     if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
-    //       item.navigationURL = "";
-    //     }
-    //   });
-    // }
-
+    let { actionListArr } = this.props;
+    let transformedRole = "";
     return actionListArr && actionListArr.length > 0 ? <ActionMenuComp role={transformedRole} actionListArr={actionListArr} /> : null;
   }
 }

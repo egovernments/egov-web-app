@@ -290,17 +290,22 @@ class FormWizard extends Component {
     }
   };
 
-  // getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
-
-  componentWillMount = () => {};
-
   componentDidMount = async () => {
-    let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
+    let { location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
     let { search } = location;
     toggleSpinner();
     const propertyId = getQueryValue(search, "propertyId");
     const isReassesment = !!getQueryValue(search, "isReassesment");
     const draftUuid = getQueryValue(search, "uuid");
+    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+
+    if (assessmentId) {
+      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+    }
+
+    this.addOwner(true);
+    const documentTypeMdms = await getDocumentTypes();
+    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
     const financialYearFromQuery = getFinancialYearFromQuery();
     this.setState({
@@ -309,30 +314,24 @@ class FormWizard extends Component {
     const customTitle = isReassesment
       ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
-    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isFreshAssesment = getQueryValue(search, "type");
-    if (assessmentId) {
-      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
-    }
-    this.addOwner(true);
-    const documentTypeMdms = await getDocumentTypes();
-    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
-    if (this.props.location.search.split("&").length > 3) {
-      try {
-        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-          history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
-        } else {
-          history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
-        }
-      } catch (e) {
-        alert(e);
-        // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
-      }
-    }
+
     renderCustomTitleForPt(customTitle);
     toggleSpinner();
+
+    // if (this.props.location.search.split("&").length > 3) {
+    //   try {
+    //     let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
+    //     let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
+    //     if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
+    //       history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
+    //     } else {
+    //       history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
+    //     }
+    //   } catch (e) {
+    //     alert(e);
+    //     // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
+    //   }
+    // }
   };
 
   getImportantDates = async (financialYearFromQuery) => {
@@ -900,8 +899,7 @@ class FormWizard extends Component {
     toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
-    const { draft } = this.state.draftRequest;
-    const { financialYearFromQuery } = this.state;
+    const financialYearFromQuery = getFinancialYearFromQuery();
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {

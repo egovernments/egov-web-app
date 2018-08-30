@@ -4,10 +4,10 @@ import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
 import { Icon } from "components";
+import get from "lodash/get";
 import { split, orderBy, some } from "lodash";
-//import actionListArr from "./actionList";
+import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import "./index.css";
-//import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
 
 const styles = {
   menuStyle: {
@@ -41,8 +41,6 @@ const styles = {
   },
 };
 
-// const
-
 class ActionMenuComp extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +50,6 @@ class ActionMenuComp extends Component {
       menuItems: [],
       selectedMenuIndex: 0,
     };
-    // this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
   }
 
@@ -61,10 +58,25 @@ class ActionMenuComp extends Component {
   }
 
   componentDidMount() {
-    let pathParam = {
+    let pathParam = {};
+    const menuPath = fetchFromLocalStorage("menuPath");
+    pathParam = {
       path: "",
       parentMenu: true,
     };
+    const url = get(window, "location.pathname")
+      .split("/")
+      .pop();
+    if (url !== "landing-page" && menuPath) {
+      const menupathArray = menuPath && menuPath.split(".");
+      if (menupathArray && menupathArray.length > 1) {
+        menupathArray.pop();
+        pathParam = {
+          path: menupathArray.join("."),
+          parentMenu: false,
+        };
+      }
+    }
     let { actionListArr } = this.props;
 
     if (actionListArr) {
@@ -86,7 +98,6 @@ class ActionMenuComp extends Component {
   };
   addMenuItems = (path, splitArray, menuItems, index) => {
     let { role, actionListArr } = this.props;
-    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let actionList = actionListArr;
 
     if (splitArray.length > 1) {
@@ -121,7 +132,6 @@ class ActionMenuComp extends Component {
   menuChange = (pathParam) => {
     let path = pathParam.path;
     let { role, actionListArr } = this.props;
-    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let actionList = actionListArr;
     let menuItems = [];
 
@@ -148,8 +158,6 @@ class ActionMenuComp extends Component {
         parentMenu: true,
       };
       this.menuChange(pathParam);
-
-      //setRoute("/citizen/property-tax");
       setRoute("/all-complaints");
     } else {
       let splitArray = split(path, ".");
@@ -177,7 +185,6 @@ class ActionMenuComp extends Component {
 
   render() {
     let { role, actionListArr } = this.props;
-    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
@@ -241,6 +248,7 @@ class ActionMenuComp extends Component {
                     style={{ whiteSpace: "initial" }}
                     key={index}
                     onClick={() => {
+                      localStorage.setItem("menuPath", item.path);
                       document.title = item.name;
                     }}
                     leftIcon={
