@@ -375,7 +375,13 @@ class FormWizard extends Component {
     }
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
-    this.addOwner(true);
+
+    const { ownerInfoArr } = this.state
+
+    if (ownerInfoArr.length < 2) {
+      this.addOwner(true)
+    }
+
     const financialYearFromQuery = getFinancialYearFromQuery();
     this.setState({
       financialYearFromQuery,

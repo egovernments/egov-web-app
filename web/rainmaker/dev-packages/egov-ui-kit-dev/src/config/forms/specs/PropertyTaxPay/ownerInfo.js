@@ -232,6 +232,10 @@ const formConfig = {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
       const dropdownData = getOwnerCategoryByYear(Object.values(OwnerTypes), financialYearFromQuery);
       set(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      const ownerShipType = get(state, "form.ownershipType.fields.typeOfOwnership.value", "")
+      if (ownerShipType === "SINGLEOWNER") {
+        set(action, "form.fields.ownerGender.value", get(state, "form.ownerInfo.fields.ownerGender.value", "Male"))
+      }
       return action;
     } catch (e) {
       console.log(e);
