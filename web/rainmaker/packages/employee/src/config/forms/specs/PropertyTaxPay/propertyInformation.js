@@ -1,5 +1,7 @@
 import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import set from "lodash/set";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 
 const formConfig = {
   name: "propertyInformation",
@@ -13,28 +15,14 @@ const formConfig = {
     mohalla: {
       id: "mohalla",
       jsonPath: "Properties[0].address.locality.code",
-      type: "autoSuggestDropdown",
+      type: "textfield",
       floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       fullWidth: true,
       boundary: true,
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      dataFetchConfig: {
-        url: "egov-location/location/v11/boundarys/_search",
-        action: "",
-        queryParams: [],
-        requestBody: {},
-        isDependent: true,
-      },
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      required: true,
-      updateDependentFields: ({ formKey, field, dispatch }) => {
-        const mohalla = field.dropDownData.find((option) => {
-          return option.value === field.value;
-        });
-        dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
-      },
+      disabled:true
     },
 
     ...pincode,
@@ -53,7 +41,17 @@ const formConfig = {
       maxLength: 64,
     },
   },
-
+  beforeInitForm: (action, store) => {
+    let state = store.getState();
+    set(action,"form.fields.city.required",false);
+    set(action,"form.fields.pincode.disabled",true);
+    return action;
+  },
+  afterInitForm: (action, store, dispatch) => {
+    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    dispatch(handleFieldChange("propertyInformation", "city", tenantId));
+    return action;
+  },
   action: "",
   redirectionRoute: "",
   saveUrl: "",

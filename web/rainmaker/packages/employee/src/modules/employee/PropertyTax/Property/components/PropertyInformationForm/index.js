@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Screen } from "modules/common";
 import { Icon } from "components";
-import { OwnerInfoHOC } from "../../../FormWizard/components/Forms";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "egov-ui-kit/common/GenericForm";
+import {OwnerInformation} from "../../../../PropertyTax/FormWizard/components/Forms"
+import { fetchProperties} from "egov-ui-kit/redux/properties/actions";
 import { ActionFooter } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
+import {getLatestPropertyDetails} from "egov-ui-kit/utils/PTCommon";
+import {connect} from "react-redux";
+
 import "./index.css";
 
 const buttons = {
@@ -13,10 +17,18 @@ const buttons = {
   button2: "SAVE",
 };
 
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
+
 const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay" })(GenericForm);
 
 class PropertyInformation extends Component {
+  componentDidMount()
+  {
+    const {fetchProperties}=this.props;
+    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
+  }
   render() {
+    console.log(this.props.currentProperty);
     return (
       <Screen>
         <div className="form-without-button-cont-generic">
@@ -43,4 +55,29 @@ class PropertyInformation extends Component {
     );
   }
 }
-export default PropertyInformation;
+
+const mapStateToProps=({properties},compProps)=>{
+  const {propertiesById}=properties;
+  let currentProperty=[];
+  if (propertiesById.hasOwnProperty(compProps.match.params.propertyId)) {
+      currentProperty[0]=propertiesById[compProps.match.params.propertyId];
+      console.log(currentProperty[0]);
+      console.log(getLatestPropertyDetails(currentProperty[0].propertyDetails));
+      currentProperty[0].propertyDetails=getLatestPropertyDetails(currentProperty[0].propertyDetails);
+  }
+  return {
+    currentProperty
+  }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PropertyInformation);

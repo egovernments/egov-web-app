@@ -1,7 +1,7 @@
 import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
-import commonConfig from "config/common.js";
+import commonConfig from "config/commons.js";
 
 axios.interceptors.response.use(
   (response) => {
@@ -47,7 +47,15 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {},ignoreTenantId=false) => {
+export const httpRequest = async (
+  endPoint,
+  action,
+  queryObject = [],
+  requestBody = {},
+  headers = [],
+  customRequestInfo = {},
+  ignoreTenantId = false
+) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 
@@ -90,9 +98,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
   const tenantId = fetchFromLocalStorage("tenant-id")
-    ? ulbLevel
-      ? fetchFromLocalStorage("tenant-id")
-      : fetchFromLocalStorage("tenant-id").split(".")[0]
+    ? ulbLevel ? fetchFromLocalStorage("tenant-id") : fetchFromLocalStorage("tenant-id").split(".")[0]
     : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
@@ -199,17 +205,13 @@ export const commonApiPost = (
       url +=
         "&tenantId=" +
         (localStorage.getItem("tenant-id")
-          ? isStateLevel
-            ? localStorage.getItem("tenant-id").split(".")[0]
-            : localStorage.getItem("tenant-id")
+          ? isStateLevel ? localStorage.getItem("tenant-id").split(".")[0] : localStorage.getItem("tenant-id")
           : "default");
     } else {
       url +=
         "?tenantId=" +
         (localStorage.getItem("tenant-id")
-          ? isStateLevel
-            ? localStorage.getItem("tenant-id").split(".")[0]
-            : localStorage.getItem("tenant-id")
+          ? isStateLevel ? localStorage.getItem("tenant-id").split(".")[0] : localStorage.getItem("tenant-id")
           : "default");
     }
   } else {

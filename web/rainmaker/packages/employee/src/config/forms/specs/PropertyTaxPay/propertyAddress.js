@@ -2,6 +2,7 @@ import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-ki
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import set from "lodash/set";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
@@ -154,6 +155,8 @@ const formConfig = {
         dispatch(prepareFormData("Properties[0].address.city", city));
       }
     }
+    set(action,"form.fields.city.required",true);
+    set(action,"form.fields.pincode.disabled",false);
     return action;
   },
   action: "",
