@@ -157,21 +157,21 @@ class FormWizard extends Component {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft } = this.props;
     const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-
+    const tenantId = localStorage.getItem("tenant-id");
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
         [
-          { key: "userId", value: uuid },
+          // { key: "userId", value: uuid },
           {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
           },
           {
             key: "tenantId", //hardcoded tenantId to send pb in draft call.. need to remove later
-            value: "pb",
+            value: tenantId,
           },
         ],
         draftRequest
@@ -290,7 +290,6 @@ class FormWizard extends Component {
   componentWillReceiveProps = (nextprops) => {
     if (!isEqual(nextprops, this.props)) {
       let inputType = document.getElementsByTagName("input");
-      console.log(inputType);
       for (let input in inputType) {
         if (inputType[input].type === "number") {
           inputType[input].addEventListener("mousewheel", function() {
