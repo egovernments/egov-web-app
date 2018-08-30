@@ -314,7 +314,12 @@ class FormWizard extends Component {
       await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
 
-    this.addOwner(true);
+    const { ownerInfoArr } = this.state
+
+    if (ownerInfoArr.length < 2) {
+      this.addOwner(true)
+    }
+
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 

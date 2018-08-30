@@ -260,6 +260,10 @@ var formConfig = {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
       var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(Object.values(OwnerTypes), financialYearFromQuery);
       (0, _set2.default)(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      var ownerShipType = (0, _get3.default)(state, "form.ownershipType.fields.typeOfOwnership.value", "");
+      if (ownerShipType === "SINGLEOWNER") {
+        (0, _set2.default)(action, "form.fields.ownerGender.value", (0, _get3.default)(state, "form.ownerInfo.fields.ownerGender.value", "Male"));
+      }
       return action;
     } catch (e) {
       console.log(e);
