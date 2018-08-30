@@ -284,7 +284,6 @@ class FormWizard extends Component {
   componentWillReceiveProps = (nextprops) => {
     if (!isEqual(nextprops, this.props)) {
       let inputType = document.getElementsByTagName("input");
-      console.log(inputType);
       for (let input in inputType) {
         if (inputType[input].type === "number") {
           inputType[input].addEventListener("mousewheel", function() {
@@ -727,6 +726,7 @@ class FormWizard extends Component {
       }
     });
     const ownerArray = [ownerObj];
+    console.log(ownerArray);
     return ownerArray;
   };
 
