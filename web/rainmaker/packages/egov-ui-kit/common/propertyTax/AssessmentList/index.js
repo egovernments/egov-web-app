@@ -34,7 +34,7 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
+var getItemStatus = function getItemStatus(item, history, generalMDMSDataById, citizenUserId) {
   var status = item.status;
   var styles = {
     paidIconStyle: {
@@ -56,7 +56,7 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
         _react2.default.createElement(
           "div",
           { style: { height: "30px", marginTop: "8px" } },
-          history && _react2.default.createElement(_DropDown2.default, { history: history, item: item, generalMDMSDataById: generalMDMSDataById })
+          history && _react2.default.createElement(_DropDown2.default, { history: history, item: item, generalMDMSDataById: generalMDMSDataById, citizenUserId: citizenUserId })
         )
       );
       break;
@@ -73,7 +73,7 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
         _react2.default.createElement(
           "div",
           { style: { height: "30px", marginTop: "8px" } },
-          history && _react2.default.createElement(_DropDown2.default, { generalMDMSDataById: generalMDMSDataById, history: history, item: item })
+          history && _react2.default.createElement(_DropDown2.default, { generalMDMSDataById: generalMDMSDataById, history: history, item: item, citizenUserId: citizenUserId })
         )
       );
       break;
@@ -123,7 +123,7 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
   }
 };
 
-var getRightIconItems = function getRightIconItems(item, history, generalMDMSDataById) {
+var getRightIconItems = function getRightIconItems(item, history, generalMDMSDataById, citizenUserId) {
   return item.date || item.status || item.receipt || item.action ? _react2.default.createElement(
     "div",
     {
@@ -134,19 +134,19 @@ var getRightIconItems = function getRightIconItems(item, history, generalMDMSDat
       "div",
       null,
       item.date && _react2.default.createElement(_translationNode2.default, { label: item.date, containerStyle: { marginRight: 5 }, labelStyle: { textAlign: "right" }, color: "#484848" }),
-      getItemStatus(item, history, generalMDMSDataById)
+      getItemStatus(item, history, generalMDMSDataById, citizenUserId)
     )
   ) : item.rightIcon;
 };
 
-var getListItems = function getListItems(items, history, generalMDMSDataById) {
+var getListItems = function getListItems(items, history, generalMDMSDataById, citizenUserId) {
   return items && items.map(function (item, index) {
     return item && {
       primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
       secondaryText: item.secondaryText && ((0, _typeof3.default)(item.secondaryText) === "object" ? item.secondaryText : _react2.default.createElement(_translationNode2.default, { label: item.secondaryText, fontSize: "14px", color: "#484848", containerStyle: { marginTop: "15px" } })),
       route: item.route,
       leftIcon: item.leftIcon,
-      rightIcon: getRightIconItems(item, history, generalMDMSDataById),
+      rightIcon: getRightIconItems(item, history, generalMDMSDataById, citizenUserId),
       initiallyOpen: item.initiallyOpen,
       nestedItems: item && item.nestedItems && item.nestedItems.map(function (nestedItem) {
         return {
@@ -160,7 +160,7 @@ var getListItems = function getListItems(items, history, generalMDMSDataById) {
           ,
           secondaryText: nestedItem.secondaryText,
           route: nestedItem.route,
-          rightIcon: getRightIconItems(nestedItem, history, generalMDMSDataById)
+          rightIcon: getRightIconItems(nestedItem, history, generalMDMSDataById, citizenUserId)
         };
       })
     };
@@ -179,7 +179,8 @@ var AssessmentList = function AssessmentList(_ref) {
       closeDialogue = _ref.closeDialogue,
       onNewPropertyButtonClick = _ref.onNewPropertyButtonClick,
       hoverColor = _ref.hoverColor,
-      generalMDMSDataById = _ref.generalMDMSDataById;
+      generalMDMSDataById = _ref.generalMDMSDataById,
+      citizenUserId = _ref.citizenUserId;
 
   return items.length == 0 ? _react2.default.createElement(_BlankAssessment2.default, {
     noAssessmentMessage: noAssessmentMessage,
@@ -189,7 +190,7 @@ var AssessmentList = function AssessmentList(_ref) {
     onButtonClick: onNewPropertyButtonClick,
     history: history
   }) : _react2.default.createElement(_PTList2.default, {
-    items: getListItems(items, history, generalMDMSDataById),
+    items: getListItems(items, history, generalMDMSDataById, citizenUserId),
     history: history,
     onItemClick: onItemClick,
     innerDivStyle: innerDivStyle,
