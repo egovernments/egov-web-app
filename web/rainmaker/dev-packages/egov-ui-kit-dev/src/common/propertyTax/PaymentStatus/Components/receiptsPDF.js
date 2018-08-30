@@ -318,9 +318,10 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           {
             ol: [
               { text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] },
-              { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] },
+              { text: "This document is not a proof of Property Ownership and regularization of unauthorized construction.", margin: [0, 0, 0, 5] },
               { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] },
               { text: "Assessment & Payment is subject to verification/Scrutiny by competitive authority.", margin: [0, 0, 0, 5] },
+              { text: "Please deposit property tax dues for earlier years also. Ignore, if already paid.", margin: [0, 0, 0, 5] },
             ],
             alignment: "left",
             style: "receipt-footer",
