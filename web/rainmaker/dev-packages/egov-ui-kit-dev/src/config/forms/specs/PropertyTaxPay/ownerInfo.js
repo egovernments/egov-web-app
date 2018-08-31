@@ -253,6 +253,24 @@ const formConfig = {
         dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false))
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", false))
       }
+      const currentCategory = get(state, `form.${action.form.name}.fields.ownerCategory.value`, "NONE");
+      let documentTypes = get(
+        state,
+        `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
+        []
+      ).filter((docu) => {
+          return docu.ownerTypeCode === currentCategory;
+        }).reduce((acc, curr) => {
+          let currAcc = [...acc];
+          let dropDownData = {
+            label: curr.name,
+            value: curr.code,
+          };
+          currAcc.push(dropDownData);
+          return currAcc;
+        }, []);
+
+      dispatch(setFieldProperty(action.form.name, "ownerCategoryIdType", "dropDownData", documentTypes));
       return action
     } catch (e) {
       console.log(e)

@@ -281,6 +281,20 @@ var formConfig = {
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", false));
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", false));
       }
+      var currentCategory = (0, _get3.default)(state, "form." + action.form.name + ".fields.ownerCategory.value", "NONE");
+      var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
+        return docu.ownerTypeCode === currentCategory;
+      }).reduce(function (acc, curr) {
+        var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
+        var dropDownData = {
+          label: curr.name,
+          value: curr.code
+        };
+        currAcc.push(dropDownData);
+        return currAcc;
+      }, []);
+
+      dispatch((0, _actions.setFieldProperty)(action.form.name, "ownerCategoryIdType", "dropDownData", documentTypes));
       return action;
     } catch (e) {
       console.log(e);
