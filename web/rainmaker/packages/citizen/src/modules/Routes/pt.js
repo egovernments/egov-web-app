@@ -180,7 +180,7 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "FAQs",
+      title: "PT_HOW_IT_WORKS",
     },
   },
   {
