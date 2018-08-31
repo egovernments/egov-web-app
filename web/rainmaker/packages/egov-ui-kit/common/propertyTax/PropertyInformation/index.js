@@ -324,7 +324,7 @@ var getOwnerInfo = function getOwnerInfo(ownerDetails) {
           key: "Mobile No:",
           value: owner.mobileNumber || "NA"
         }, {
-          key: "Father's Name:",
+          key: "Father's/Husband's Name:",
           value: owner.fatherOrHusbandName || "NA"
         }, {
           key: "User Category:",
@@ -334,7 +334,7 @@ var getOwnerInfo = function getOwnerInfo(ownerDetails) {
           value: owner.emailId || "NA"
         }, {
           key: "Correspondence Address:",
-          value: owner.correspondenceAddress || "NA"
+          value: owner.permanentAddress || "NA"
         }]
       };
     })

@@ -328,7 +328,7 @@ const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
                 value: owner.mobileNumber || "NA",
               },
               {
-                key: "Father's Name:",
+                key: "Father's/Husband's Name:",
                 value: owner.fatherOrHusbandName || "NA",
               },
               {
@@ -347,7 +347,7 @@ const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
               },
               {
                 key: "Correspondence Address:",
-                value: owner.correspondenceAddress || "NA",
+                value: owner.permanentAddress || "NA",
               },
             ],
           };

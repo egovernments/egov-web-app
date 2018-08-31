@@ -27,7 +27,7 @@ var _some = require("lodash/some");
 
 var _some2 = _interopRequireDefault(_some);
 
-var _common = require("config/common.js");
+var _common = require("egov-ui-kit/config/common.js");
 
 var _common2 = _interopRequireDefault(_common);
 

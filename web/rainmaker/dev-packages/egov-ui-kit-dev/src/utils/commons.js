@@ -334,16 +334,15 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
 };
 
 export const getCommaSeperatedAddress = (address, cities) => {
-  let name = address ? address.locality.name : "";
-  let cityValue = address ? address.city : "";
-  let pincode = address ? address.pincode : "";
-  let cityName = "";
-  cities &&
-    cities.forEach((city) => {
-      if (city.code === cityValue) {
-        cityName = city.name;
-      }
-    });
+  let name = address && address.locality && address.locality.name ? address.locality.name : "";
+  let cityName = address && address.city ? address.city : "";
+  let pincode = address && address.pincode ? address.pincode : "";
+  // cities &&
+  //   cities.forEach((city) => {
+  //     if (city.code === cityValue) {
+  //       cityName = city.name;
+  //     }
+  //   });
   const addressKeys = ["doorNo", "buildingName", "street"];
   let addressArray = addressKeys.reduce((result, curr) => {
     if (address && address[curr]) {
@@ -352,7 +351,7 @@ export const getCommaSeperatedAddress = (address, cities) => {
     return [...result];
   }, []);
   addressArray = pincode ? [...addressArray, name, cityName, pincode] : [...addressArray, name, cityName];
-  return addressArray.join(" , ");
+  return addressArray.join(", ");
 };
 
 export const getLatestCreationTime = (complaint) => {

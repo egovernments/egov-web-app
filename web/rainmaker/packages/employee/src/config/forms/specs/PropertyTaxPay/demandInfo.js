@@ -45,7 +45,7 @@ const formConfig = {
       disabled: true,
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
-      jsonPath: "Receipt[0].instrument.bank.id",
+      jsonPath: "Receipt[0].instrument.bank.name",
     },
     BankBranch: {
       id: "BankBranch",

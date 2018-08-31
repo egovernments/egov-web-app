@@ -1,7 +1,7 @@
 import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
-import commonConfig from "config/commons.js";
+import commonConfig from "egov-ui-kit/config/common.js";
 
 axios.interceptors.response.use(
   (response) => {
@@ -98,7 +98,9 @@ export const httpRequest = async (
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
   const tenantId = fetchFromLocalStorage("tenant-id")
-    ? ulbLevel ? fetchFromLocalStorage("tenant-id") : fetchFromLocalStorage("tenant-id").split(".")[0]
+    ? ulbLevel
+      ? fetchFromLocalStorage("tenant-id")
+      : fetchFromLocalStorage("tenant-id").split(".")[0]
     : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
@@ -205,13 +207,17 @@ export const commonApiPost = (
       url +=
         "&tenantId=" +
         (localStorage.getItem("tenant-id")
-          ? isStateLevel ? localStorage.getItem("tenant-id").split(".")[0] : localStorage.getItem("tenant-id")
+          ? isStateLevel
+            ? localStorage.getItem("tenant-id").split(".")[0]
+            : localStorage.getItem("tenant-id")
           : "default");
     } else {
       url +=
         "?tenantId=" +
         (localStorage.getItem("tenant-id")
-          ? isStateLevel ? localStorage.getItem("tenant-id").split(".")[0] : localStorage.getItem("tenant-id")
+          ? isStateLevel
+            ? localStorage.getItem("tenant-id").split(".")[0]
+            : localStorage.getItem("tenant-id")
           : "default");
     }
   } else {

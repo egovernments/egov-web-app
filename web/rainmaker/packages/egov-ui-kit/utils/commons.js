@@ -407,15 +407,15 @@ var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHour
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
-  var name = address ? address.locality.name : "";
-  var cityValue = address ? address.city : "";
-  var pincode = address ? address.pincode : "";
-  var cityName = "";
-  cities && cities.forEach(function (city) {
-    if (city.code === cityValue) {
-      cityName = city.name;
-    }
-  });
+  var name = address && address.locality && address.locality.name ? address.locality.name : "";
+  var cityName = address && address.city ? address.city : "";
+  var pincode = address && address.pincode ? address.pincode : "";
+  // cities &&
+  //   cities.forEach((city) => {
+  //     if (city.code === cityValue) {
+  //       cityName = city.name;
+  //     }
+  //   });
   var addressKeys = ["doorNo", "buildingName", "street"];
   var addressArray = addressKeys.reduce(function (result, curr) {
     if (address && address[curr]) {
@@ -424,7 +424,7 @@ var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCo
     return [].concat((0, _toConsumableArray3.default)(result));
   }, []);
   addressArray = pincode ? [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName, pincode]) : [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName]);
-  return addressArray.join(" , ");
+  return addressArray.join(", ");
 };
 
 var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCreationTime(complaint) {
