@@ -126,6 +126,7 @@ var formConfig = {
             break;
           case "WIDOW":
             dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", "Female"));
+            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
             break;
           default:
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
