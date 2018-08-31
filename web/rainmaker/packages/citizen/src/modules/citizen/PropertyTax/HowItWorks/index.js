@@ -110,6 +110,60 @@ class HowItWorks extends Component {
 
   renderList = (items) => {
     return (
+      <div>
+      <div className="row">
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/E0g26AzwRvs">
+            </iframe>
+            <h4>Registration & Homepage</h4>
+<p>This video will explain the registration process on mSeva Punjab portal and your Property tax login homepage.</p>
+
+        </div>
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/G2_EA0zTiM0">
+            </iframe>
+            <h4>Floor & Unit of a Property</h4>
+<p>This video explains the property and unit definition as required to capture details while assessing your property</p>
+
+                    </div>
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/UbmY5LmdiQc">
+            </iframe>
+            <h4>Assess & Pay Property Tax</h4>
+  <p>This video will take your through the steps and details required to be captured for Assessing your property tax. This explains only Residential type. Details need to be captured appropriately as applicable to your property type like commercial, institutional, mixed etc.</p>
+
+        </div>
+
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/eAd3K5WyEsM">
+            </iframe>
+            <h4>Property Tax Payment - Full Payment</h4>
+<p>This video explains the Payment process in case you want to pay your full property tax.</p>
+        </div>
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/oQu4qDNWP7I">
+            </iframe>
+            <h4>Property Tax Payment - Partial Payment</h4>
+<p>This video explains the Payment process in case you want to pay your partial property tax.</p>
+        </div>
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/3s6GtEWmf00">
+            </iframe>
+            <h4>Your Completed Assessments</h4>
+<p>This video explains the inbox of completed assessment on your property and actions that can be taken post completed assessment.</p>
+        </div>
+
+        <div className="col-sm-4">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/mKLsORPO1o8">
+            </iframe>
+            <h4>Your Incomplete Assessments</h4>
+<p>This video explains the inbox of incomplete assessment on your property and actions that can be taken on incomplete assessments.</p>
+
+        </div>
+      </div>
+
+      <hr/>
+
       <List style={{ padding: 0 }}>
         {items.map((item, index) => {
           return (
@@ -126,6 +180,7 @@ class HowItWorks extends Component {
           );
         })}
       </List>
+      </div>
     );
   };
 

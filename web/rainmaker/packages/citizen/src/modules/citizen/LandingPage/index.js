@@ -37,7 +37,7 @@ class LandingPage extends Component {
       moduleTitle: "Complaints",
       moduleDescription:
         "mSeva Complaints offers an easy to use interface which enables you to lodge civic works related complaints. It also lets you track the status of your complaint and facilitates direct interaction with your municipality till its resolution.",
-      button1: "mSeva Complaints",
+      button1: "Complaints",
       button2: "How it works?",
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
@@ -49,8 +49,8 @@ class LandingPage extends Component {
     PT: {
       moduleTitle: "Property Tax",
       moduleDescription: "Assess, pay and track your Property Taxes online with mSeva Property Tax.",
-      button1: "mSeva Property Tax",
-      button2: "FAQs",
+      button1: "Property Tax",
+      button2: "How it works?",
       borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       route: "property-tax",

@@ -92,6 +92,10 @@ class PTExample extends Component {
                   </div>
                 </div>
               </div>
+              <div className="col-12 detailPart">
+              <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                </iframe>
+              </div>
             </div>
           }
         />
