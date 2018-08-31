@@ -1018,79 +1018,103 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    let { form, common } = this.props;
-
+    const { financialYearFromQuery } = this.state;
+    let { form, common, location } = this.props;
+    const { search } = location;
+    const propertyId = getQueryValue(search, "propertyId");
+    const assessmentId = getQueryValue(search, "assessmentId");
+    const tenantId = getQueryValue(search, "tenantId");
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     let prepareFormData = { ...this.props.prepareFormData };
+
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
-    try {
-      if (selectedownerShipCategoryType === "SINGLEOWNER") {
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
-        set(
-          prepareFormData,
-          "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
-        );
-        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
-      }
+    if (financialYearFromQuery) {
+      set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+    }
 
-      if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
-        set(
-          prepareFormData,
-          "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
-        );
-        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
-      }
+    if (!!propertyId) {
+      set(prepareFormData, "Properties[0].propertyId", propertyId);
+      set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
+    }
+    if (selectedownerShipCategoryType === "SINGLEOWNER") {
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+      );
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+    }
 
+    if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+      );
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+    }
+
+    set(
+      prepareFormData,
+      "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
+      get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
+    );
+
+    if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+      const { instiObj, ownerArray } = this.getInstituteInfo();
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+      set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       set(
         prepareFormData,
         "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
-        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
+        get(form, "institutionAuthority.fields.mobile.value", get(form, "institutionAuthority.fields.telephone.value", null))
       );
+    }
 
-      if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
-        const { instiObj, ownerArray } = this.getInstituteInfo();
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
-        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
-        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
-        set(
-          prepareFormData,
-          "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
-          get(form, "institutionAuthority.fields.mobile.value", get(form, "institutionAuthority.fields.telephone.value", null))
-        );
-      }
-
+    try {
       set(
         prepareFormData,
         "Properties[0].propertyDetails[0].citizenInfo.name",
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
       );
 
-      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
-      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
-      callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
-      callPGService(
-        get(createPropertyResponse, "Properties[0].propertyId"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
-        get(createPropertyResponse, "Properties[0].tenantId")
-      );
+      if (isCompletePayment) {
+        callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
+      } else {
+        const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+        let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
+        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        callPGService(
+          get(createPropertyResponse, "Properties[0].propertyId"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
+          get(createPropertyResponse, "Properties[0].tenantId")
+        );
+      }
     } catch (e) {
       alert(e);
     }
   };
 
   normalizePropertyDetails = (properties) => {
+    let { search } = this.props.location;
     const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
     const property = propertyInfo[0] || {};
     const { propertyDetails } = property;
+    const isReassesment = !!getQueryValue(search, "isReassesment");
+    const propertyId = getQueryValue(search, "propertyId");
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
+    if (isReassesment && propertyId) {
+      property.propertyId = propertyId;
+    }
     var sumOfUnitArea = 0;
     units.forEach((unit) => {
       let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
