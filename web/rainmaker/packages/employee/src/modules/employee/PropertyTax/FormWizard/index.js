@@ -63,10 +63,36 @@ class FormWizard extends Component {
     valueSelected: "Full_Amount",
   };
 
-  updateDraftinLocalStorage = (draftInfo) => {
+  updateDraftinLocalStorage = (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
     this.setState({
       draftRequest: { draft: draftInfo },
+    }, async () => {
+        if (assessmentNumber) {
+          let { draftRequest, selected } = this.state;
+          const { form, prepareFormData } = this.props;
+          const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
+          draftRequest.draft = {
+            ...draftRequest.draft,
+            assessmentNumber: assessmentNo,
+            draftRecord: {
+              ...draftRequest.draft.draftRecord,
+              selectedTabIndex: assessmentNumber ? selected : selected + 1,
+              ...form,
+              assessmentNumber: assessmentNo,
+              prepareFormData,
+            },
+            prepareFormData,
+          };
+          try {
+            let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
+            const draftInfo = draftResponse.drafts[0];
+            this.updateDraftinLocalStorage(draftInfo);
+          } catch (e) {
+            alert(e);
+          }
+        }
+        return
     });
   };
 
@@ -82,7 +108,7 @@ class FormWizard extends Component {
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
-        this.updateDraftinLocalStorage(draftInfo);
+        this.updateDraftinLocalStorage(draftInfo, assessmentNumber);
       } catch (e) {
         alert(e);
       }
@@ -261,7 +287,7 @@ class FormWizard extends Component {
           draftRequest: {
             draft: {
               ...draftRequest.draft,
-              id: draftId,
+              id: null,
               assessmentNumber: currentDraft.assessmentNumber,
             },
           },
@@ -779,28 +805,47 @@ class FormWizard extends Component {
 
   getSingleOwnerInfo = () => {
     const { ownerInfo } = this.props.form;
-    const ownerObj = {};
+    const ownerObj = {
+      document: {},
+    };
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+          get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+          get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
+      } else {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      }
     });
     const ownerArray = [ownerObj];
     return ownerArray;
   };
 
   getMultipleOwnerInfo = () => {
-    const { form } = this.props;
-
+    let { form } = this.props;
     return Object.keys(form)
       .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
         const ownerData = [...acc];
         const currForm = form[curr];
-        const ownerObj = {};
+        const ownerObj = {
+          document: {},
+        };
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-            get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
+          }  else {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          }
         });
         ownerData.push(ownerObj);
         return ownerData;

@@ -56,10 +56,36 @@ class FormWizard extends Component {
     partialAmountError: "",
   };
 
-  updateDraftinLocalStorage = (draftInfo) => {
+  updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
     this.setState({
       draftRequest: { draft: draftInfo },
+    }, async () => {
+      if (assessmentNumber) {
+        let { draftRequest, selected } = this.state;
+        const { form, prepareFormData } = this.props;
+        const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
+        draftRequest.draft = {
+          ...draftRequest.draft,
+          assessmentNumber: assessmentNo,
+          draftRecord: {
+            ...draftRequest.draft.draftRecord,
+            selectedTabIndex: assessmentNumber ? selected : selected + 1,
+            ...form,
+            assessmentNumber: assessmentNo,
+            prepareFormData,
+          },
+          prepareFormData,
+        };
+        try {
+          let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
+          const draftInfo = draftResponse.drafts[0];
+          this.updateDraftinLocalStorage(draftInfo);
+        } catch (e) {
+          alert(e);
+        }
+      }
+      return
     });
   };
 
@@ -76,7 +102,7 @@ class FormWizard extends Component {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
 
-        this.updateDraftinLocalStorage(draftInfo);
+        this.updateDraftinLocalStorage(draftInfo, assessmentNumber);
       } catch (e) {
         alert(e);
       }
@@ -253,7 +279,7 @@ class FormWizard extends Component {
           draftRequest: {
             draft: {
               ...draftRequest.draft,
-              id: currentDraft.id,
+              id: null,
               assessmentNumber: currentDraft.assessmentNumber,
               draftRecord: currentDraft.draftRecord,
             },
@@ -727,12 +753,14 @@ class FormWizard extends Component {
       if (jsonPath.toLowerCase().indexOf("document") !== -1) {
         ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
           get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+          get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
       } else {
         ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
       }
     });
     const ownerArray = [ownerObj];
-    console.log(ownerArray);
     return ownerArray;
   };
 
@@ -750,8 +778,11 @@ class FormWizard extends Component {
           const jsonPath = currForm.fields[field].jsonPath;
           if (jsonPath.toLowerCase().indexOf("document") !== -1) {
             ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-              get(form, `fields.${field}.value`, undefined) || null;
-          } else {
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
+          }  else {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || null;
           }
