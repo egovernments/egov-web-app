@@ -886,13 +886,14 @@ class FormWizard extends Component {
     let { search } = location;
     const propertyId = getQueryValue(search, "propertyId");
     const assessmentId = getQueryValue(search, "assessmentId");
+    const tenantId = getQueryValue(search, "tenantId");
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
-
     if (!!propertyId) {
       set(prepareFormData, "Properties[0].propertyId", propertyId);
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
@@ -926,18 +927,22 @@ class FormWizard extends Component {
     }
 
     try {
-      //Remove null units and do sqyd to sqft conversion.
-      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
-      let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
-        Properties: properties,
-      });
-      callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
-      callPGService(
-        get(createPropertyResponse, "Properties[0].propertyId"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
-        get(createPropertyResponse, "Properties[0].tenantId")
-      );
+      if (isCompletePayment) {
+        callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
+      } else {
+        //Remove null units and do sqyd to sqft conversion.
+        const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+        let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
+          Properties: properties,
+        });
+        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        callPGService(
+          get(createPropertyResponse, "Properties[0].propertyId"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
+          get(createPropertyResponse, "Properties[0].tenantId")
+        );
+      }
     } catch (e) {
       toggleSpinner();
       alert(e);
