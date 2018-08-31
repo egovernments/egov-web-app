@@ -77,7 +77,7 @@ const getHeaderDetails = (property, cities) => {
   };
 };
 
-const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay) => {
+const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) => {
   return {
     ReceiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
     header: getHeaderDetails(property, cities),
@@ -95,7 +95,7 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
       transactionId: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       bankName: receiptDetails && get(receiptDetails, "instrument.bank.name", "NA"),
       payMode: receiptDetails && get(receiptDetails, "instrument.instrumentType.name", "Net Banking"),
-      pendingAmt: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+      pendingAmt: receiptDetails && (totalAmountToPay - totalAmountPaid).toString(),
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && get(receiptDetails, "instrument.transactionNumber"),
@@ -115,7 +115,7 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success) => {
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
   const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
   const ownerInfo = ownerDetails.map((item, index) => {
     return {
@@ -166,7 +166,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Amount Due:",
-        value: receiptDetails && (totalAmountToPay - (success ? get(receiptDetails, "Bill[0].billDetails[0].amountPaid") : 0)).toString(),
+        value: receiptDetails && (totalAmountToPay - (success ? totalAmountPaid : 0)).toString(),
       },
     ],
   };

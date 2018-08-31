@@ -185,10 +185,10 @@ class FormWizard extends Component {
         "pt-services-v2/drafts/_search",
         "_search",
         [
-          {
-            key: "userId",
-            value: uuid,
-          },
+          // {
+          //   key: "userId",
+          //   value: uuid,
+          // },
           {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
@@ -210,7 +210,7 @@ class FormWizard extends Component {
 
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
-      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0) > 3 ? 3 : get(currentDraft, "draftRecord.selectedTabIndex", 0);
       const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
         let requestBody = {

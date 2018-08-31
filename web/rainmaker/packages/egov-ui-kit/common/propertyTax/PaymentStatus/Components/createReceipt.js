@@ -67,7 +67,7 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   };
 };
 
-var createReceiptDetails = function createReceiptDetails(property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay) {
+var createReceiptDetails = function createReceiptDetails(property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) {
   return {
     ReceiptNo: (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
     header: getHeaderDetails(property, cities),
@@ -83,7 +83,7 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
       transactionId: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       bankName: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.name", "NA"),
       payMode: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.instrumentType.name", "Net Banking"),
-      pendingAmt: receiptDetails && (totalAmountToPay - (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+      pendingAmt: receiptDetails && (totalAmountToPay - totalAmountPaid).toString(),
       paymentDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.transactionNumber"),
@@ -100,7 +100,7 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
   };
 };
 
-var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails, cities, totalAmountToPay, success) {
+var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) {
   var _property$propertyDet = property.propertyDetails[0],
       ownerDetails = _property$propertyDet.owners,
       financialYear = _property$propertyDet.financialYear;
@@ -142,7 +142,7 @@ var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails,
       value: receiptDetails && success ? (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString() : "0"
     }, {
       key: "Amount Due:",
-      value: receiptDetails && (totalAmountToPay - (success ? (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid") : 0)).toString()
+      value: receiptDetails && (totalAmountToPay - (success ? totalAmountPaid : 0)).toString()
     }]
   };
 };
