@@ -174,10 +174,10 @@ var formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
       hintText: "PT_FORM3_DOCUMENT_ID_NO_PLACEHOLDER",
-      hideField: true,
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      hideField: true
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
@@ -185,13 +185,13 @@ var formConfig = {
       required: true,
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
-      hideField: true,
       fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dropDownData: [],
+      hideField: true,
       updateDependentFields: function updateDependentFields(_ref2) {
         var formKey = _ref2.formKey,
             sourceField = _ref2.field,
@@ -263,6 +263,23 @@ var formConfig = {
       var ownerShipType = (0, _get3.default)(state, "form.ownershipType.fields.typeOfOwnership.value", "");
       if (ownerShipType === "SINGLEOWNER") {
         (0, _set2.default)(action, "form.fields.ownerGender.value", (0, _get3.default)(state, "form.ownerInfo.fields.ownerGender.value", "Male"));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
+    }
+  },
+  afterInitForm: function afterInitForm(action, store, dispatch) {
+    try {
+      var formKey = (0, _get3.default)(action, "form.name", "");
+      var state = store.getState();
+      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerCategory.value", "NONE") === "NONE") {
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", true));
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", true));
+      } else {
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", false));
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", false));
       }
       return action;
     } catch (e) {

@@ -337,6 +337,8 @@ class FormWizard extends Component {
     const tenantId = getQueryValue(search, "tenantId");
     const propertyId = getQueryValue(search, "propertyId");
     const draftUuid = getQueryValue(search, "uuid");
+    const documentTypeMdms = await getDocumentTypes();
+    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
     if (assessmentId) {
       let requestBody = {
@@ -407,8 +409,6 @@ class FormWizard extends Component {
       ]);
       await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
-    const documentTypeMdms = await getDocumentTypes();
-    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
     const { ownerInfoArr } = this.state;
 

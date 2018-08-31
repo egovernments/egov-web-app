@@ -158,10 +158,10 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
       hintText: "PT_FORM3_DOCUMENT_ID_NO_PLACEHOLDER",
-      hideField: true,
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      hideField: true,
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
@@ -169,13 +169,13 @@ const formConfig = {
       required: true,
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
-      hideField: true,
       fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dropDownData: [],
+      hideField: true,
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         if (value === "Aadhar") {
@@ -240,6 +240,23 @@ const formConfig = {
     } catch (e) {
       console.log(e);
       return action;
+    }
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      const formKey = get(action, "form.name", "")
+      const state = store.getState()
+      if(get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
+        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true))
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", true))
+      } else {
+        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false))
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", false))
+      }
+      return action
+    } catch (e) {
+      console.log(e)
+      return action
     }
   },
   action: "",
