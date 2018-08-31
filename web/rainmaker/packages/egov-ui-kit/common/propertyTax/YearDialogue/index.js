@@ -109,15 +109,19 @@ var YearDialog = function (_Component) {
     }, _this.resetForm = function () {
       var _this$props2 = _this.props,
           form = _this$props2.form,
-          removeForm = _this$props2.removeForm;
+          removeForm = _this$props2.removeForm,
+          prepareFormData = _this$props2.prepareFormData;
 
       (0, _PTCommon.resetFormWizard)(form, removeForm);
+      prepareFormData("Properties", []);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(YearDialog, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           open = _props.open,
           closeDialogue = _props.closeDialogue,
@@ -141,15 +145,7 @@ var YearDialog = function (_Component) {
             "div",
             { className: "year-range-botton-cont" },
             getYearList && Object.values(getYearList).map(function (item, index) {
-              return _react2.default.createElement(YearDialogueHOC, {
-                key: index,
-                label: item,
-                history: history,
-                resetFormWizard: function resetFormWizard() {
-                  return (0, _PTCommon.resetFormWizard)(form, removeForm);
-                },
-                urlToAppend: urlToAppend
-              });
+              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history, resetFormWizard: _this2.resetForm, urlToAppend: urlToAppend });
             })
           )
         )],
@@ -183,6 +179,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     toggleSpinner: function toggleSpinner() {
       return dispatch((0, _actions.toggleSpinner)());
+    },
+    prepareFormData: function prepareFormData(path, value) {
+      return dispatch((0, _actions.prepareFormData)(path, value));
     }
   };
 };
