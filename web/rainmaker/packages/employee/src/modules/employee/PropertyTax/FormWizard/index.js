@@ -66,9 +66,11 @@ class FormWizard extends Component {
 
   updateDraftinLocalStorage = (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
-    this.setState({
-      draftRequest: { draft: draftInfo },
-    }, async () => {
+    this.setState(
+      {
+        draftRequest: { draft: draftInfo },
+      },
+      async () => {
         if (assessmentNumber) {
           let { draftRequest, selected } = this.state;
           const { form, prepareFormData } = this.props;
@@ -93,8 +95,9 @@ class FormWizard extends Component {
             alert(e);
           }
         }
-        return
-    });
+        return;
+      }
+    );
   };
 
   callDraft = async (formArray = [], assessmentNumber = "") => {
@@ -593,15 +596,17 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    // const { fetchDraftDetails } = this;
     const { formValidIndexArray, selected } = this.state;
-    // form validation checks needs to be written here
-    //fetchDraftDetails();
+    const { location } = this.props;
+    let { search } = location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      this.setState({
-        selected: index,
-        formValidIndexArray: range(0, index),
-      });
+      !isCompletePayment
+        ? this.setState({
+            selected: index,
+            formValidIndexArray: range(0, index),
+          })
+        : alert("Not authorized to edit this property details");
     } else {
       // alert("Please fill required tabs");
     }
@@ -816,8 +821,7 @@ class FormWizard extends Component {
         ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
           get(ownerInfo, `fields.${field}.value`, undefined) || null;
       } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
-        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-          get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
       } else {
         ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
       }
@@ -844,7 +848,7 @@ class FormWizard extends Component {
           } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
-          }  else {
+          } else {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || null;
           }

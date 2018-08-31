@@ -135,7 +135,7 @@ var DropDown = function (_Component) {
           break;
         case "Complete Payment":
           localStorage.setItem("draftId", "");
-          history && citizenUserId ? history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&uuid=" + citizenUserId + "&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId) : history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && citizenUserId ? history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&isCompletePayment=true&uuid=" + citizenUserId + "&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId) : history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&isCompletePayment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
 
           break;
       }

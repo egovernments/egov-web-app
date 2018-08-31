@@ -58,35 +58,38 @@ class FormWizard extends Component {
 
   updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
-    this.setState({
-      draftRequest: { draft: draftInfo },
-    }, async () => {
-      if (assessmentNumber) {
-        let { draftRequest, selected } = this.state;
-        const { form, prepareFormData } = this.props;
-        const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
-        draftRequest.draft = {
-          ...draftRequest.draft,
-          assessmentNumber: assessmentNo,
-          draftRecord: {
-            ...draftRequest.draft.draftRecord,
-            selectedTabIndex: assessmentNumber ? selected : selected + 1,
-            ...form,
+    this.setState(
+      {
+        draftRequest: { draft: draftInfo },
+      },
+      async () => {
+        if (assessmentNumber) {
+          let { draftRequest, selected } = this.state;
+          const { form, prepareFormData } = this.props;
+          const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
+          draftRequest.draft = {
+            ...draftRequest.draft,
             assessmentNumber: assessmentNo,
+            draftRecord: {
+              ...draftRequest.draft.draftRecord,
+              selectedTabIndex: assessmentNumber ? selected : selected + 1,
+              ...form,
+              assessmentNumber: assessmentNo,
+              prepareFormData,
+            },
             prepareFormData,
-          },
-          prepareFormData,
-        };
-        try {
-          let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
-          const draftInfo = draftResponse.drafts[0];
-          this.updateDraftinLocalStorage(draftInfo);
-        } catch (e) {
-          alert(e);
+          };
+          try {
+            let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
+            const draftInfo = draftResponse.drafts[0];
+            this.updateDraftinLocalStorage(draftInfo);
+          } catch (e) {
+            alert(e);
+          }
         }
+        return;
       }
-      return
-    });
+    );
   };
 
   callDraft = async (formArray = [], assessmentNumber = "") => {
@@ -130,7 +133,6 @@ class FormWizard extends Component {
         alert(e);
       }
     }
-    // }
   };
 
   configOwner = (ownersCount) =>
@@ -760,8 +762,7 @@ class FormWizard extends Component {
         ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
           get(ownerInfo, `fields.${field}.value`, undefined) || null;
       } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
-        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-          get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
       } else {
         ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
       }
@@ -788,7 +789,7 @@ class FormWizard extends Component {
           } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
-          }  else {
+          } else {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || null;
           }
@@ -948,45 +949,24 @@ class FormWizard extends Component {
     let { search } = location;
     let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
     // form validation checks needs to be written here
     // fetchDraftDetails();
-
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       isReassesment
-        ? draftUuidId === currentUuidId
-          ? this.setState({
+        ? isCompletePayment || draftUuidId !== currentUuidId
+          ? alert("Not authorized to edit this property details")
+          : this.setState({
               selected: index,
               formValidIndexArray: range(0, index),
             })
-          : alert("Not authorized to edit this property details")
         : this.setState({
             selected: index,
             formValidIndexArray: range(0, index),
           });
     } else {
     }
-
-    // if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-    //   if (Object.keys(obj).length > 0) {
-    //     if (draftUuidId === currentUuidId) {
-    //       this.setState({
-    //         selected: index,
-    //         formValidIndexArray: range(0, index),
-    //       });
-    //     } else {
-    //       alert("Not authorized to edit this property details");
-    //     }
-    //   } else {
-    //     this.setState({
-    //       selected: index,
-    //       formValidIndexArray: range(0, index),
-    //     });
-    //   }
-    // } else {
-    //   // alert("Please fill required tabs");
-    // }
   };
 
   validateUnitandPlotSize = (plotDetails, form) => {
