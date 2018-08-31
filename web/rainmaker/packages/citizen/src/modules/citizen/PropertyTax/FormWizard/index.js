@@ -704,7 +704,7 @@ class FormWizard extends Component {
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
-      { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
+      { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
     ];
 
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
@@ -743,6 +743,7 @@ class FormWizard extends Component {
           history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1]);
         }
       } catch (e) {
+        toggleSpinner();
         console.log(e);
       }
     } catch (e) {
