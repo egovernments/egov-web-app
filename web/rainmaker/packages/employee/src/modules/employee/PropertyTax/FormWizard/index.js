@@ -771,10 +771,12 @@ class FormWizard extends Component {
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     const { updateIndex } = this;
+    const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
+      { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
     ];
     this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
