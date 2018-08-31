@@ -36,6 +36,7 @@ import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/P
 import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
+import { lchmod } from "fs";
 
 class FormWizard extends Component {
   state = {
@@ -181,9 +182,10 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft } = this.props;
+    const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
+    const { search } = location;
     const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getQueryValue(search, "tenantId");
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -196,7 +198,7 @@ class FormWizard extends Component {
             value: draftId,
           },
           {
-            key: "tenantId", //hardcoded tenantId to send pb in draft call.. need to remove later
+            key: "tenantId",
             value: tenantId,
           },
         ],
@@ -339,10 +341,10 @@ class FormWizard extends Component {
       await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
 
-    const { ownerInfoArr } = this.state
+    const { ownerInfoArr } = this.state;
 
     if (ownerInfoArr.length < 2) {
-      this.addOwner(true)
+      this.addOwner(true);
     }
 
     const documentTypeMdms = await getDocumentTypes();

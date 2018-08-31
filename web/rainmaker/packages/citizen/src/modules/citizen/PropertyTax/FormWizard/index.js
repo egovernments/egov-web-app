@@ -45,7 +45,7 @@ class FormWizard extends Component {
     estimation: [],
     draftRequest: {
       draft: {
-        tenantId: localStorage.getItem("tenant-id"),
+        //tenantId: localStorage.getItem("tenant-id"),
         userId: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
         draftRecord: {},
       },
@@ -91,9 +91,10 @@ class FormWizard extends Component {
 
   callDraft = async (formArray = [], assessmentNumber = "") => {
     let { draftRequest, selected } = this.state;
-    // if (formArray) {
-    const { form, prepareFormData } = this.props;
+    const { form, prepareFormData, location } = this.props;
+    const { search } = location;
     if (!draftRequest.draft.id) {
+      draftRequest.draft.tenantId = getQueryValue(search, "tenantId") || prepareFormData.Properties[0].tenantId;
       draftRequest.draft.draftRecord = {
         selectedTabIndex: selected + 1,
         ...form,
@@ -111,6 +112,7 @@ class FormWizard extends Component {
       draftRequest.draft = {
         ...draftRequest.draft,
         assessmentNumber: assessmentNo,
+        tenantId: getQueryValue(search, "tenantId") || prepareFormData.Properties[0].tenantId,
         draftRecord: {
           ...draftRequest.draft.draftRecord,
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
@@ -172,9 +174,9 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
+    const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
     const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-
+    const { search } = location;
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -188,6 +190,10 @@ class FormWizard extends Component {
           {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
+          },
+          {
+            key: "tenantId",
+            value: getQueryValue(search, "tenantId"),
           },
         ],
         draftRequest
@@ -402,10 +408,10 @@ class FormWizard extends Component {
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
-    const { ownerInfoArr } = this.state
+    const { ownerInfoArr } = this.state;
 
     if (ownerInfoArr.length < 2) {
-      this.addOwner(true)
+      this.addOwner(true);
     }
 
     const financialYearFromQuery = getFinancialYearFromQuery();
