@@ -128,3 +128,28 @@ export const getFinancialYearFromQuery = () => {
   }
   return null;
 };
+
+export const getEstimateFromBill = (bill) => {
+  const { billDetails, tenantId } = bill && bill[0];
+  const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
+  let estimate = { totalAmount: 0 };
+  estimate.totalAmount = totalAmount;
+  estimate.tenantId = tenantId;
+  estimate.collectedAmount = collectedAmount;
+  const taxHeadEstimates = billAccountDetails.reduce((taxHeadEstimates, item) => {
+    taxHeadEstimates.push({
+      taxHeadCode: item.accountDescription.split("-")[0],
+      estimateAmount: item.crAmountToBePaid,
+      category: item.purpose,
+    });
+    return taxHeadEstimates;
+  }, []);
+  collectedAmount > 0 &&
+    taxHeadEstimates.push({
+      taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+      estimateAmount: collectedAmount,
+      category: "EXEMPTION",
+    });
+  estimate.taxHeadEstimates = taxHeadEstimates;
+  return [{ ...estimate }];
+};

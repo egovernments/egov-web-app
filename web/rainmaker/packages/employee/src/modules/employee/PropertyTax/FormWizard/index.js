@@ -189,6 +189,7 @@ class FormWizard extends Component {
     const { search } = location;
     const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const tenantId = getQueryValue(search, "tenantId");
+    this.getImportantDates();
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -380,8 +381,9 @@ class FormWizard extends Component {
     // }
   };
 
-  getImportantDates = async (financialYearFromQuery) => {
+  getImportantDates = async () => {
     const { currentTenantId } = this.props;
+    const financialYearFromQuery = getFinancialYearFromQuery();
     try {
       let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
         MdmsCriteria: {
@@ -666,7 +668,7 @@ class FormWizard extends Component {
             displayFormErrorsAction("basicInformation");
           }
         }
-        this.getImportantDates(financialYearFromQuery);
+        this.getImportantDates();
         break;
       case 2:
         const { ownershipType } = form;

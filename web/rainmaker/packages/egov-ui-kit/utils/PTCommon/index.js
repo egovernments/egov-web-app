@@ -3,7 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _get = require("lodash/get");
 
@@ -127,4 +131,35 @@ var getFinancialYearFromQuery = exports.getFinancialYearFromQuery = function get
     return financialYearFromQuery.split("&")[0];
   }
   return null;
+};
+
+var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFromBill(bill) {
+  var _ref = bill && bill[0],
+      billDetails = _ref.billDetails,
+      tenantId = _ref.tenantId;
+
+  var _ref2 = billDetails && billDetails[0],
+      collectedAmount = _ref2.collectedAmount,
+      totalAmount = _ref2.totalAmount,
+      billAccountDetails = _ref2.billAccountDetails;
+
+  var estimate = { totalAmount: 0 };
+  estimate.totalAmount = totalAmount;
+  estimate.tenantId = tenantId;
+  estimate.collectedAmount = collectedAmount;
+  var taxHeadEstimates = billAccountDetails.reduce(function (taxHeadEstimates, item) {
+    taxHeadEstimates.push({
+      taxHeadCode: item.accountDescription.split("-")[0],
+      estimateAmount: item.crAmountToBePaid,
+      category: item.purpose
+    });
+    return taxHeadEstimates;
+  }, []);
+  collectedAmount > 0 && taxHeadEstimates.push({
+    taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+    estimateAmount: collectedAmount,
+    category: "EXEMPTION"
+  });
+  estimate.taxHeadEstimates = taxHeadEstimates;
+  return [(0, _extends3.default)({}, estimate)];
 };
