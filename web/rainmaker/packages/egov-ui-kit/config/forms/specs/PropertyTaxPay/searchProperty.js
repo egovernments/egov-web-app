@@ -24,6 +24,7 @@ var formConfig = {
       id: "city",
       numcols: 6,
       fullWidth: true,
+      className: "search-property-form-pt",
       jsonPath: "",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
@@ -79,6 +80,8 @@ var formConfig = {
       var _state$common = state.common,
           cities = _state$common.cities,
           citiesByModule = _state$common.citiesByModule;
+
+      var tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
       var PT = citiesByModule.PT;
 
       if (PT) {
@@ -91,6 +94,15 @@ var formConfig = {
           return dd;
         }, []);
         dispatch((0, _actions.setFieldProperty)("searchProperty", "city", "dropDownData", dd));
+        if (process.env.REACT_APP_NAME !== "Citizen") {
+          var found = tenants.find(function (city) {
+            return city.code === tenantId;
+          });
+          if (found) {
+            dispatch((0, _actions.handleFieldChange)("searchProperty", "city", tenantId));
+            dispatch((0, _actions.setFieldProperty)("searchProperty", "city", "disabled", true));
+          }
+        }
       }
       return action;
     } catch (e) {

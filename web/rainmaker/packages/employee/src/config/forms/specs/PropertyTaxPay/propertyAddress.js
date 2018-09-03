@@ -48,7 +48,7 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
-        dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
+        // dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -152,8 +152,8 @@ const formConfig = {
         dispatch(prepareFormData("Properties[0].address.city", city));
       }
     }
-    set(action,"form.fields.city.required",true);
-    set(action,"form.fields.pincode.disabled",false);
+    set(action, "form.fields.city.required", true);
+    set(action, "form.fields.pincode.disabled", false);
     return action;
   },
   action: "",

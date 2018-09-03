@@ -1,4 +1,4 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 
 const formConfig = {
@@ -9,6 +9,7 @@ const formConfig = {
       id: "city",
       numcols: 6,
       fullWidth: true,
+      className: "search-property-form-pt",
       jsonPath: "",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
@@ -64,6 +65,7 @@ const formConfig = {
     try {
       let state = store.getState();
       const { cities, citiesByModule } = state.common;
+      let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
       const { PT } = citiesByModule;
       if (PT) {
         const tenants = PT.tenants;
@@ -75,6 +77,15 @@ const formConfig = {
           return dd;
         }, []);
         dispatch(setFieldProperty("searchProperty", "city", "dropDownData", dd));
+        if (process.env.REACT_APP_NAME !== "Citizen") {
+          let found = tenants.find((city) => {
+            return city.code === tenantId;
+          });
+          if (found) {
+            dispatch(handleFieldChange("searchProperty", "city", tenantId));
+            dispatch(setFieldProperty("searchProperty", "city", "disabled", true));
+          }
+        }
       }
       return action;
     } catch (e) {
