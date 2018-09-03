@@ -25,7 +25,7 @@ const formConfig = {
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       jsonPath: "Receipt[0].Bill[0].mobileNumber",
       required: true,
-      // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
     },
   },

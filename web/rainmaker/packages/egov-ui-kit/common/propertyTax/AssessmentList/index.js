@@ -61,13 +61,14 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById, c
       );
       break;
     case "Partially Paid":
+    case "Completed":
       return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(
           "div",
           { className: "assessment-displayInline", style: { marginTop: "8px" } },
-          _react2.default.createElement(_translationNode2.default, { label: item.status, labelStyle: { marginLeft: "8px" }, color: "#22b25f" }),
+          _react2.default.createElement(_translationNode2.default, { label: "Partially Paid", labelStyle: { marginLeft: "8px" }, color: "#22b25f" }),
           _react2.default.createElement(_components.Icon, { action: "navigation", name: "check", style: styles.paidIconStyle, color: "#22b25f" })
         ),
         _react2.default.createElement(
