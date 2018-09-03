@@ -94,6 +94,9 @@ class CompletedAssessments extends Component {
               {
                 name: "OwnerType",
               },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -108,6 +111,7 @@ class CompletedAssessments extends Component {
       "PropertyType",
       "PropertySubType",
       "OwnerType",
+      "UsageCategoryDetail",
     ]);
     getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
     resetFormWizard(form, removeForm);

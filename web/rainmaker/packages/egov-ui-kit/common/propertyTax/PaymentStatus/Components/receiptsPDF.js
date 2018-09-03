@@ -47,7 +47,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
 
   var transform = function transform(value, masterName) {
     if (value) {
-      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "";
+      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "NA";
     } else {
       return "NA";
     }
@@ -73,8 +73,8 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           units && units.map(function (unit) {
             dataRow = [];
             dataRow.push(transform(unit.floorNo, "Floor"));
-            dataRow.push(transform(unit.usageCategoryMajor, "UsageCategoryMajor"));
-            dataRow.push(transform(unit.usageCategorySubMinor, "UsageCategorySubMinor"));
+            dataRow.push(transform(unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor, unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"));
+            dataRow.push(transform(unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor, unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"));
             dataRow.push(transform(unit.occupancyType, "OccupancyType"));
             if (unit.occupancyType === "RENTED") {
               dataRow.push(unit.arv || "");
@@ -191,7 +191,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           style: "pt-reciept-citizen-table",
           table: {
             widths: receiptTableWidth,
-            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea + " sq yards" || "", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
+            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea ? propertyDetails[0].landArea + " sq yards" : "NA", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
               text: propertyDetails[0].propertySubType ? transform(propertyDetails[0].propertySubType, "PropertySubType") : transform(propertyDetails[0].propertyType, "PropertyType"),
               border: borderValue
             }]]
@@ -228,7 +228,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             body: [[{ text: "Total Amount Paid:", border: borderKey, style: "receipt-table-key" }, { text: receipts.AmountPaid || "", border: borderValue, style: "receipt-table-value" }, { text: "Pending Amount:", border: borderKey, style: "receipt-table-key" }, { text: receipts.pendingAmt || "", border: borderValue }], [{ text: "Payment Mode:", border: borderKey, style: "receipt-table-key" }, { text: receipts.payMode || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
-            { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
+            { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "NA", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
             { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]

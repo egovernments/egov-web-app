@@ -79,6 +79,12 @@ class PaymentSuccess extends Component {
               {
                 name: "PropertyType",
               },
+              {
+                name: "PropertySubType",
+              },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -91,6 +97,8 @@ class PaymentSuccess extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "PropertySubType",
+      "UsageCategoryDetail",
     ]);
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
     fetchReceipts([

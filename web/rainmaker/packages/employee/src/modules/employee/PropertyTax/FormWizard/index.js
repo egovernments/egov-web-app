@@ -927,7 +927,12 @@ class FormWizard extends Component {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
-    set(prepareFormData, "Receipt[0].Bill", []); //Fix for re-filling of form - prepareFormData retains the old bill
+    // if (
+    //   !get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate") ||
+    //   !get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber")
+    // ) {
+    //   set(prepareFormData, "Receipt[0].Bill", []); //Fix for re-filling of form - prepareFormData retains the old bill - But Why?
+    // }
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     prepareFormData.Receipt[0].Bill[0].billDetails[0] = { ...Bill[0].billDetails[0], ...prepareFormData.Receipt[0].Bill[0].billDetails[0] };
@@ -942,11 +947,11 @@ class FormWizard extends Component {
         "Receipt[0].instrument.transactionDateInput",
         this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput"))
       );
-    get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate") &&
+    get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].receiptDate") &&
       set(
         prepareFormData,
-        "Receipt[0].Bill[0].billDetails[0].manualReceiptDate",
-        this.changeDateToFormat(get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate"))
+        "Receipt[0].Bill[0].billDetails[0].receiptDate",
+        this.changeDateToFormat(get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].receiptDate"))
       );
     set(prepareFormData, "Receipt[0].instrument.amount", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
@@ -995,12 +1000,14 @@ class FormWizard extends Component {
         ts: 0,
       });
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
+        set(prepareFormData, "Receipt[0].Bill", []);
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
         console.log(getReceipt);
       }
     } catch (e) {
       console.log(e);
+      set(prepareFormData, "Receipt[0].Bill", []);
       this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
     }
   };

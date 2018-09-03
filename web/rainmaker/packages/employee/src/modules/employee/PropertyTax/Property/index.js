@@ -78,6 +78,9 @@ class Property extends Component {
               {
                 name: "OwnerType",
               },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -92,6 +95,7 @@ class Property extends Component {
       "PropertyType",
       "PropertySubType",
       "OwnerType",
+      "UsageCategoryDetail",
     ]);
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     renderCustomTitleForPt(customTitle);
@@ -242,8 +246,19 @@ const transform = (floor, key, generalMDMSDataById) => {
     return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${floor[dataKey]} sq yards`;
   } else {
     if (floor[dataKey]) {
-      return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
+      if (floor[dataKey] === "NONRESIDENTIAL") {
+        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
+      } else {
+        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
+      }
     } else {
+      if (dataKey === "usageCategoryDetail") {
+        return generalMDMSDataById["usageCategoryDetail"]
+          ? generalMDMSDataById["usageCategoryDetail"][floor[dataKey]].name
+          : generalMDMSDataById["usageCategorySubMinor"]
+            ? generalMDMSDataById["usageCategorySubMinor"][floor[dataKey]].name
+            : "NA";
+      }
       return "NA";
     }
   }
@@ -376,7 +391,7 @@ const mapStateToProps = (state, ownProps) => {
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
-    { masterName: "UsageCategorySubMinor", dataKey: "usageCategorySubMinor" },
+    { masterName: "UsageCategoryDetail", dataKey: "usageCategoryDetail" },
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];
