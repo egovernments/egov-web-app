@@ -141,7 +141,7 @@ var DropDown = function (_Component) {
       }
     }, _this.downloadReceipt = function () {
       var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(item, generalMDMSDataById, isEmployeeReceipt, imageUrl) {
-        var queryObj, payload, totalAmountToPay, receiptDetails;
+        var queryObj, payload, totalAmountToPay, totalAmountPaid, receiptDetails;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -154,24 +154,28 @@ var DropDown = function (_Component) {
               case 4:
                 payload = _context.sent;
                 totalAmountToPay = payload && payload.Receipt && (0, _get2.default)(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
-                receiptDetails = payload && payload.Receipt && (0, _createReceipt.createReceiptDetails)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities, totalAmountToPay);
+                totalAmountPaid = payload && payload.Receipt && payload.Receipt.reduce(function (acc, curr) {
+                  acc += (0, _get2.default)(curr, "Bill[0].billDetails[0].amountPaid");
+                  return acc;
+                }, 0);
+                receiptDetails = payload && payload.Receipt && (0, _createReceipt.createReceiptDetails)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities, totalAmountToPay, totalAmountPaid);
 
                 receiptDetails && (0, _receiptsPDF2.default)("pt-reciept-citizen", receiptDetails, generalMDMSDataById, imageUrl, isEmployeeReceipt);
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](1);
 
                 console.log(_context.t0);
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, _this3, [[1, 10]]);
+        }, _callee, _this3, [[1, 11]]);
       }));
 
       return function (_x, _x2, _x3, _x4) {

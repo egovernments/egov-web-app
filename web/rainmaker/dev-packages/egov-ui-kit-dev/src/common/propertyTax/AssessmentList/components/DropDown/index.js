@@ -110,10 +110,25 @@ class DropDown extends Component {
     try {
       const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
       const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
+      const totalAmountPaid =
+        payload &&
+        payload.Receipt &&
+        payload.Receipt.reduce((acc, curr) => {
+          acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+          return acc;
+        }, 0);
       const receiptDetails =
         payload &&
         payload.Receipt &&
-        createReceiptDetails(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities, totalAmountToPay);
+        createReceiptDetails(
+          item.property,
+          item.propertyDetails,
+          payload.Receipt[0],
+          item.localizationLabels,
+          item.cities,
+          totalAmountToPay,
+          totalAmountPaid
+        );
       receiptDetails && generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, imageUrl, isEmployeeReceipt);
     } catch (e) {
       console.log(e);
