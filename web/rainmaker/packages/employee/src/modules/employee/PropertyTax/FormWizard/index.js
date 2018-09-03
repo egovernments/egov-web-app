@@ -1071,6 +1071,8 @@ class FormWizard extends Component {
     const assessmentId = getQueryValue(search, "assessmentId");
     const tenantId = getQueryValue(search, "tenantId");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
+
+    const propertyMethodAction = !!propertyId ? "_update" : "_create";
     let prepareFormData = { ...this.props.prepareFormData };
 
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
@@ -1134,7 +1136,9 @@ class FormWizard extends Component {
         callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
       } else {
         const properties = this.normalizePropertyDetails(prepareFormData.Properties);
-        let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
+        let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
+          Properties: properties,
+        });
         callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
         callPGService(
           get(createPropertyResponse, "Properties[0].propertyId"),
