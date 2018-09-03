@@ -30,7 +30,11 @@ import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess,
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
-import ReactDOM from "react-dom";
+import {
+  getAllOwnerDetails,
+  getOwnerShipDetails,
+  convertRawDataToFormConfig,
+} from "modules/citizen/PropertyTax/FormWizard/utils/convertToFormConfig";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -174,6 +178,9 @@ class FormWizard extends Component {
     };
   };
 
+  getTargetPropertiesDetails = (propertyDetails) =>
+    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
@@ -184,31 +191,72 @@ class FormWizard extends Component {
     const assessmentId = getQueryValue(search, "assessmentId");
     const tenantId = getQueryValue(search, "tenantId");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
+
     try {
-      toggleSpinner();
-      let draftsResponse = await httpRequest(
-        "pt-services-v2/drafts/_search",
-        "_search",
-        [
-          // {
-          //   key: "userId",
-          //   value: uuid,
-          // },
-          {
-            key: isReassesment ? "assessmentNumber" : "id",
-            value: draftId,
-          },
+      //toggleSpinner();
+      //const ownerFromResponseIn = convertRawDataToFormConfig(responseee)
+
+      let currentDraft;
+      if (!isReassesment) {
+        let draftsResponse = await httpRequest(
+          "pt-services-v2/drafts/_search",
+          "_search",
+          [
+            // {
+            //   key: "userId",
+            //   value: uuid,
+            // },
+            {
+              key: isReassesment ? "assessmentNumber" : "id",
+              value: draftId,
+            },
+            {
+              key: "tenantId",
+              value: getQueryValue(search, "tenantId"),
+            },
+          ],
+          draftRequest
+        );
+        currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      } else {
+        let searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
           {
             key: "tenantId",
             value: tenantId,
           },
-        ],
-        draftRequest
-      );
-      const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+          {
+            key: "ids",
+            value: getQueryValue(search, "propertyId"), //"PT-107-001278",
+          },
+        ]);
+        searchPropertyResponse = {
+          ...searchPropertyResponse,
+          Properties: [
+            {
+              ...searchPropertyResponse.Properties[0],
+              propertyDetails: this.getTargetPropertiesDetails(searchPropertyResponse.Properties[0].propertyDetails),
+            },
+          ],
+        };
+        const ownerFromResponseIn = convertRawDataToFormConfig(searchPropertyResponse.Properties[0]); //convertRawDataToFormConfig(responseee)
+        currentDraft = {
+          draftRecord: {
+            ...ownerFromResponseIn,
+            selectedTabIndex: 3,
+            prepareFormData: searchPropertyResponse, //prepareFormData2,
+          },
+        };
+      }
+
+      //const currentDraft = searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      //searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+
       if (!currentDraft) {
         throw new Error("draft not found");
       }
+
+      const prepareFormData2 = currentDraft.draftRecord.prepareFormData;
+
       this.setState({
         draftByIDResponse: currentDraft,
       });
@@ -311,7 +359,7 @@ class FormWizard extends Component {
         },
         () => {
           //this.onTabClick(activeTab)
-          toggleSpinner();
+          //toggleSpinner();
           {
             if (activeTab === 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
@@ -327,7 +375,8 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      toggleSpinner();
+      console.log("e", e);
+      //toggleSpinner();
     }
   };
 
@@ -345,98 +394,109 @@ class FormWizard extends Component {
   };
 
   componentDidMount = async () => {
-    let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
-    let { search } = this.props.location;
-    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!getQueryValue(search, "isReassesment");
-    const isFreshAssesment = getQueryValue(search, "type");
-    const tenantId = getQueryValue(search, "tenantId");
-    const propertyId = getQueryValue(search, "propertyId");
-    const draftUuid = getQueryValue(search, "uuid");
-    const documentTypeMdms = await getDocumentTypes();
-    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
+    let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, toggleSpinner } = this.props;
+    toggleSpinner();
+    try {
+      let { search } = this.props.location;
+      const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+      const isReassesment = !!getQueryValue(search, "isReassesment");
+      const isFreshAssesment = getQueryValue(search, "type");
+      const tenantId = getQueryValue(search, "tenantId");
+      const propertyId = getQueryValue(search, "propertyId");
+      const draftUuid = getQueryValue(search, "uuid");
+      const documentTypeMdms = await getDocumentTypes();
+      if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
-    if (assessmentId) {
-      let requestBody = {
-        MdmsCriteria: {
-          tenantId: tenantId,
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "Floor",
-                },
-                {
-                  name: "OccupancyType",
-                },
-                {
-                  name: "OwnerShipCategory",
-                },
-                {
-                  name: "OwnerType",
-                },
-                {
-                  name: "PropertySubType",
-                },
-                {
-                  name: "PropertyType",
-                },
-                {
-                  name: "SubOwnerShipCategory",
-                },
-                {
-                  name: "UsageCategoryDetail",
-                },
-                {
-                  name: "UsageCategoryMajor",
-                },
-                {
-                  name: "UsageCategoryMinor",
-                },
-                {
-                  name: "UsageCategorySubMinor",
-                },
-                {
-                  name: "OwnerTypeDocument",
-                },
-              ],
-            },
-          ],
-        },
-      };
+      if (assessmentId) {
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: tenantId,
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "Floor",
+                  },
+                  {
+                    name: "OccupancyType",
+                  },
+                  {
+                    name: "OwnerShipCategory",
+                  },
+                  {
+                    name: "OwnerType",
+                  },
+                  {
+                    name: "PropertySubType",
+                  },
+                  {
+                    name: "PropertyType",
+                  },
+                  {
+                    name: "SubOwnerShipCategory",
+                  },
+                  {
+                    name: "UsageCategoryDetail",
+                  },
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                  {
+                    name: "OwnerTypeDocument",
+                  },
+                ],
+              },
+            ],
+          },
+        };
 
-      fetchGeneralMDMSData(requestBody, "PropertyTax", [
-        "Floor",
-        "OccupancyType",
-        "OwnerShipCategory",
-        "OwnerType",
-        "PropertySubType",
-        "PropertyType",
-        "SubOwnerShipCategory",
-        "UsageCategoryDetail",
-        "UsageCategoryMajor",
-        "UsageCategoryMinor",
-        "UsageCategorySubMinor",
-      ]);
-      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+        fetchGeneralMDMSData(requestBody, "PropertyTax", [
+          "Floor",
+          "OccupancyType",
+          "OwnerShipCategory",
+          "OwnerType",
+          "PropertySubType",
+          "PropertyType",
+          "SubOwnerShipCategory",
+          "UsageCategoryDetail",
+          "UsageCategoryMajor",
+          "UsageCategoryMinor",
+          "UsageCategorySubMinor",
+          "Rebate",
+          "Penalty",
+          "Interest",
+          "FireCess",
+        ]);
+        await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+      }
+
+      const { ownerInfoArr } = this.state;
+
+      if (ownerInfoArr.length < 2) {
+        this.addOwner(true);
+      }
+
+      const financialYearFromQuery = getFinancialYearFromQuery();
+      this.setState({
+        financialYearFromQuery,
+      });
+      const customTitle = isReassesment
+        ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
+        : `Property Assessment (${financialYearFromQuery}) : New Property`;
+
+      renderCustomTitleForPt(customTitle);
+      toggleSpinner();
+    } catch (e) {
+      console.log("e");
+      this.prop.toggleSpinner();
     }
-
-    const { ownerInfoArr } = this.state;
-
-    if (ownerInfoArr.length < 2) {
-      this.addOwner(true);
-    }
-
-    const financialYearFromQuery = getFinancialYearFromQuery();
-    this.setState({
-      financialYearFromQuery,
-    });
-    const customTitle = isReassesment
-      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
-      : `Property Assessment (${financialYearFromQuery}) : New Property`;
-
-    renderCustomTitleForPt(customTitle);
   };
 
   handleRemoveOwner = (index, formKey) => {
@@ -791,12 +851,12 @@ class FormWizard extends Component {
   getSingleOwnerInfo = () => {
     const { ownerInfo } = this.props.form;
     const ownerObj = {
-      document: {},
+      documents: [{}],
     };
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
       if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+        ownerObj.documents[0][jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
           get(ownerInfo, `fields.${field}.value`, undefined) || null;
       } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
         ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
@@ -816,12 +876,12 @@ class FormWizard extends Component {
         const ownerData = [...acc];
         const currForm = form[curr];
         const ownerObj = {
-          document: {},
+          documents: [{}],
         };
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
           if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+            ownerObj.documents[0][jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
               get(form, `${curr}.fields.${field}.value`, undefined) || null;
           } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
             ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
@@ -856,7 +916,8 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { toggleSpinner, form, common } = this.props;
+    let { toggleSpinner, form, common, location } = this.props;
+    let { search } = location;
     let prepareFormData = { ...this.props.prepareFormData };
     toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
@@ -996,7 +1057,7 @@ class FormWizard extends Component {
     // form validation checks needs to be written here
     // fetchDraftDetails();
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      isReassesment
+      false
         ? isCompletePayment || draftUuidId !== currentUuidId
           ? alert("Not authorized to edit this property details")
           : this.setState({
