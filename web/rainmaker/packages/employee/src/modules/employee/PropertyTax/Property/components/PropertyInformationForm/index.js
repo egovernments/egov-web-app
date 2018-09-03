@@ -3,12 +3,12 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "egov-ui-kit/common/GenericForm";
-import {OwnerInformation} from "../../../../PropertyTax/FormWizard/components/Forms"
-import { fetchProperties} from "egov-ui-kit/redux/properties/actions";
+import { OwnerInformation } from "../../../../PropertyTax/FormWizard/components/Forms";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { ActionFooter } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
-import {getLatestPropertyDetails} from "egov-ui-kit/utils/PTCommon";
-import {connect} from "react-redux";
+import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
+import { connect } from "react-redux";
 
 import "./index.css";
 
@@ -22,9 +22,8 @@ const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(O
 const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay" })(GenericForm);
 
 class PropertyInformation extends Component {
-  componentDidMount()
-  {
-    const {fetchProperties}=this.props;
+  componentDidMount() {
+    const { fetchProperties } = this.props;
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
   }
   render() {
@@ -56,24 +55,21 @@ class PropertyInformation extends Component {
   }
 }
 
-const mapStateToProps=({properties},compProps)=>{
-  const {propertiesById}=properties;
-  let currentProperty=[];
+const mapStateToProps = ({ properties }, compProps) => {
+  const { propertiesById } = properties;
+  let currentProperty = [];
   if (propertiesById.hasOwnProperty(compProps.match.params.propertyId)) {
-      currentProperty[0]=propertiesById[compProps.match.params.propertyId];
-      console.log(currentProperty[0]);
-      console.log(getLatestPropertyDetails(currentProperty[0].propertyDetails));
-      currentProperty[0].propertyDetails=getLatestPropertyDetails(currentProperty[0].propertyDetails);
+    currentProperty[0] = propertiesById[compProps.match.params.propertyId];
+    currentProperty[0].propertyDetails = getLatestPropertyDetails(currentProperty[0].propertyDetails);
   }
   return {
-    currentProperty
-  }
-}
-
+    currentProperty,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty))
+    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
   };
 };
 

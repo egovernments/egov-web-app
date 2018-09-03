@@ -33,7 +33,6 @@ class LandingPage extends Component {
             ...moduleData[item],
           });
         }
-        console.log(acc);
         return acc;
       }, [])
     );
