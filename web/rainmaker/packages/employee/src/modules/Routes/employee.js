@@ -85,7 +85,7 @@ const routes = [
     },
   },
   {
-    path: "egf/expensebill/newform",
+    path: "egf/*",
     component: ErpExpenseBill,
     needsAuthentication: true,
     options: {
