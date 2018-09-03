@@ -31,27 +31,6 @@ var formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       type: "singleValueList"
-      // dataFetchConfig: {
-      //   url: CITY.GET.URL,
-      //   action: CITY.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "tenant",
-      //           masterDetails: [
-      //             {
-      //               name: "tenants",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.tenant.tenants"],
-      // },
     },
     mobileNumber: (_mobileNumber = {
       id: "complainant-mobile-no",
@@ -81,40 +60,13 @@ var formConfig = {
       id: "property-tax-assessment-id",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "PT_ASSESSMENT_ID",
+      floatingLabelText: "PT_UNIQUE_ID",
       errorMessage: "",
-      hintText: "PT_ASSESSMENT_ID_PLACEHOLDER",
+      hintText: "PT_UNIQUE_ID_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64
     }
-
-    // houseNo: {
-    //   id: "house-no",
-    //   jsonPath: "",
-    //   type: "textfield",
-    //   floatingLabelText: "House No.",
-    //   errorMessage: "",
-    //   hintText: "Enter house no.",
-    //   numcols: 6,
-    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    // },
-    // mohalla: {
-    //   id: "mohalla",
-    //   numcols: 6,
-    //   type: "singleValueList",
-    //   jsonPath: "services[0].mohalla",
-    //   floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-    //   hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
-    //   errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
-    //   dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
-    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    // },
-    // tenantId: {
-    //   id: "add-complaint-tenantid",
-    //   jsonPath: "services[0].tenantId",
-    //   value: "pb.amritsar",
-    // },
   },
   submit: {
     type: "submit",

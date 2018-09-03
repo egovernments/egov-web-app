@@ -35,7 +35,9 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
+      pattern: /^[a-zA-Z\s]{1,64}$/i,
       required: true,
+      errorMessage: "Enter valid name (max length 64)",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerEmail: {
@@ -244,23 +246,25 @@ const formConfig = {
   },
   afterInitForm: (action, store, dispatch) => {
     try {
-      const formKey = get(action, "form.name", "")
-      const state = store.getState()
-      if(get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
-        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true))
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", true))
+      const formKey = get(action, "form.name", "");
+      const state = store.getState();
+      if (get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
+        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", true));
       } else {
-        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false))
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", false))
+        dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", false));
       }
       const currentCategory = get(state, `form.${action.form.name}.fields.ownerCategory.value`, "NONE");
       let documentTypes = get(
         state,
         `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
         []
-      ).filter((docu) => {
+      )
+        .filter((docu) => {
           return docu.ownerTypeCode === currentCategory;
-        }).reduce((acc, curr) => {
+        })
+        .reduce((acc, curr) => {
           let currAcc = [...acc];
           let dropDownData = {
             label: curr.name,
@@ -271,10 +275,10 @@ const formConfig = {
         }, []);
 
       dispatch(setFieldProperty(action.form.name, "ownerCategoryIdType", "dropDownData", documentTypes));
-      return action
+      return action;
     } catch (e) {
-      console.log(e)
-      return action
+      console.log(e);
+      return action;
     }
   },
   action: "",
