@@ -26,7 +26,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstimateFromBill } from "egov-ui-kit/utils/PTCommon";
 import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
@@ -186,9 +186,13 @@ class FormWizard extends Component {
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
+    // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const { search } = location;
-    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    const propertyId = getQueryValue(search, "propertyId");
+    const assessmentId = getQueryValue(search, "assessmentId");
     const tenantId = getQueryValue(search, "tenantId");
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     this.getImportantDates();
     try {
       toggleSpinner();
@@ -284,6 +288,10 @@ class FormWizard extends Component {
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.props.updatePTForms(currentDraft.draftRecord);
+      //Get estimate from bill in case of complete payment
+      const billResponse =
+        activeTab >= 3 && isCompletePayment && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
+      const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -297,20 +305,26 @@ class FormWizard extends Component {
               assessmentNumber: currentDraft.assessmentNumber,
             },
           },
+          estimation: estimateFromGetBill,
+          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
+          Bill: billResponse && billResponse.Bill,
         },
         () => {
           //this.onTabClick(activeTab)
           toggleSpinner();
-          activeTab >= 3 &&
-            this.estimate().then((estimateResponse) => {
-              if (estimateResponse) {
-                this.setState({
-                  estimation: estimateResponse && estimateResponse.Calculation,
-                  totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
-                });
-              }
-              if (activeTab === 4) this.pay();
-            });
+          {
+            if (activeTab >= 3 && !isCompletePayment) {
+              this.estimate().then((estimateResponse) => {
+                if (estimateResponse) {
+                  this.setState({
+                    estimation: estimateResponse && estimateResponse.Calculation,
+                    totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
+                  });
+                }
+              });
+            }
+            if (activeTab === 4) this.pay();
+          }
         }
       );
     } catch (e) {
@@ -771,20 +785,48 @@ class FormWizard extends Component {
     return isValid;
   };
 
-  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
-    const { updateIndex } = this;
+  callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+    const { location, toggleSpinner } = this.props;
     const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
+    const { search } = location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
+    toggleSpinner();
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
-      { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
+      { key: "tenantId", value: tenantId },
     ];
+    !isCompletePayment && queryObj.push({ key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid });
+
+    try {
+      const billResponse = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
+      toggleSpinner();
+      return billResponse;
+    } catch (e) {
+      toggleSpinner();
+      console.log(e);
+    }
+  };
+
+  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+    const { updateIndex } = this;
+    const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
+    const { search } = this.props.location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
+    // const queryObj = [
+    //   { key: "propertyId", value: propertyId },
+    //   { key: "assessmentNumber", value: assessmentNumber },
+    //   { key: "assessmentYear", value: assessmentYear },
+    //   { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
+    // ];
     this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
-      const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
-      const { Bill } = getBill;
-      this.setState({ Bill });
+      if (!isCompletePayment) {
+        const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId);
+        const { Bill } = getBill && getBill;
+        this.setState({ Bill });
+      }
       // try {
       //   const requestBody = {
       //     Transaction: {
@@ -1022,7 +1064,7 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    const { financialYearFromQuery } = this.state;
+    const financialYearFromQuery = getFinancialYearFromQuery();
     let { form, common, location } = this.props;
     const { search } = location;
     const propertyId = getQueryValue(search, "propertyId");
