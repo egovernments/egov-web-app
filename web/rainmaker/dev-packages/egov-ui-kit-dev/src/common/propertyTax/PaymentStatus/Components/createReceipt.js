@@ -158,7 +158,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Payable Amount:",
-        value: totalAmountToPay ? totalAmountToPay.toString() : 0,
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount", 0).toString(),
       },
       {
         key: "Amount Paid:",

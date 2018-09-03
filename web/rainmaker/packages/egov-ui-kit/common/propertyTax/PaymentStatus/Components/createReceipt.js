@@ -136,7 +136,7 @@ var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails,
       value: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, success ? "Bill[0].billDetails[0].receiptDate" : "billDetails[0].billDate"))
     }, {
       key: "Payable Amount:",
-      value: totalAmountToPay ? totalAmountToPay.toString() : 0
+      value: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].totalAmount", 0).toString()
     }, {
       key: "Amount Paid:",
       value: receiptDetails && success ? (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString() : "0"
