@@ -135,7 +135,7 @@ class HowItWorks extends Component {
         </div>
 
         <div className="col-sm-4">
-          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/eAd3K5WyEsM">
+          <iframe allowFullScreen="allowFullScreen" frameBorder="0"  src="https://www.youtube.com/embed/r6k7_J7jkYc">
             </iframe>
             <h4>Property Tax Payment - Full Payment</h4>
 <p>This video explains the Payment process in case you want to pay your full property tax.</p>
