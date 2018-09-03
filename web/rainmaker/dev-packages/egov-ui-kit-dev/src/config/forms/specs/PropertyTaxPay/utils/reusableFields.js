@@ -171,7 +171,6 @@ export const annualRent = {
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     hideField: true,
     numcols: 4,
-    errorMessage: "Enter a valid amount",
   },
 };
 
