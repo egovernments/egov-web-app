@@ -1,5 +1,5 @@
 import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
-import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { prepareFormData, fetchGeneralMDMSData, toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { setDependentFields } from "./enableDependentFields";
 import { removeFormKey } from "./removeFloors";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
@@ -51,8 +51,10 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
+      // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
         for (var i = field.value; i < previousFloorNo; i++) {
           if (state.form.hasOwnProperty(`customSelect_${i}`)) {

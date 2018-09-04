@@ -90,8 +90,10 @@ var floorCount = exports.floorCount = {
           dispatch = _ref2.dispatch,
           state = _ref2.state;
 
+      (0, _removeFloors.removeFormKey)(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
+      // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
         for (var i = field.value; i < previousFloorNo; i++) {
           if (state.form.hasOwnProperty("customSelect_" + i)) {
