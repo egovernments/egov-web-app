@@ -357,14 +357,18 @@ var mergeReceiptsInProperty = function mergeReceiptsInProperty(receiptsArray, pr
   }, {});
   for (var propertyId in groupByPropertyId) {
     for (var year in groupByPropertyId[propertyId]) {
-      if (groupByPropertyId[propertyId][year].findIndex(function (item) {
+      var assessmentByDate = (0, _orderBy2.default)(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
+
+      if (assessmentByDate.findIndex(function (item) {
         return item.receiptInfo.status === "Paid";
       }) > -1) {
-        for (var i = 0; i < groupByPropertyId[propertyId][year].length; i++) {
-          if (groupByPropertyId[propertyId][year][i].receiptInfo.status === "Partially Paid") {
-            groupByPropertyId[propertyId][year][i].receiptInfo.status = "Completed";
-          } else {
-            groupByPropertyId[propertyId][year][i].receiptInfo.status = "Paid";
+        for (var i = 0; i < assessmentByDate.length; i++) {
+          if (i !== assessmentByDate.length - 1) {
+            if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+              assessmentByDate[i].receiptInfo.status = "Completed";
+            } else {
+              assessmentByDate[i].receiptInfo.status = "Paid";
+            }
           }
         }
       }

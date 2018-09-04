@@ -222,12 +222,16 @@ const mergeReceiptsInProperty = (receiptsArray, propertyObj) => {
   }, {});
   for (let propertyId in groupByPropertyId) {
     for (let year in groupByPropertyId[propertyId]) {
-      if (groupByPropertyId[propertyId][year].findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
-        for (let i = 0; i < groupByPropertyId[propertyId][year].length; i++) {
-          if (groupByPropertyId[propertyId][year][i].receiptInfo.status === "Partially Paid") {
-            groupByPropertyId[propertyId][year][i].receiptInfo.status = "Completed";
-          } else {
-            groupByPropertyId[propertyId][year][i].receiptInfo.status = "Paid";
+      const assessmentByDate = orderby(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
+
+      if (assessmentByDate.findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
+        for (let i = 0; i < assessmentByDate.length; i++) {
+          if (i !== assessmentByDate.length - 1) {
+            if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+              assessmentByDate[i].receiptInfo.status = "Completed";
+            } else {
+              assessmentByDate[i].receiptInfo.status = "Paid";
+            }
           }
         }
       }

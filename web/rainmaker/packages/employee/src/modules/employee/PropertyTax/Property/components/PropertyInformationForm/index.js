@@ -27,7 +27,6 @@ class PropertyInformation extends Component {
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
   }
   render() {
-    console.log(this.props.currentProperty);
     return (
       <Screen>
         <div className="form-without-button-cont-generic">
