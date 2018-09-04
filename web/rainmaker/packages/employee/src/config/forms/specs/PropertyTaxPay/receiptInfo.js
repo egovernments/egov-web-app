@@ -15,7 +15,7 @@ const formConfig = {
       hintText: "dd/mm/yy",
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "",
-      jsonPath: "Receipt[0].Bill[0].billDetails[0].receiptDate",
+      jsonPath: "Receipt[0].Bill[0].billDetails[0].manualReceiptDate",
     },
   },
   action: "",

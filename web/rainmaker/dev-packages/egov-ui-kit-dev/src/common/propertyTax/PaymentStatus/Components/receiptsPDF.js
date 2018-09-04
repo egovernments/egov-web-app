@@ -36,7 +36,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
       // data for floor details
       let getFloorDetails = () => {
         let bodyData = [];
-        let { units } = propertyDetails[0];
+        let { units, propertySubType } = propertyDetails[0];
         let dataRow = [];
         if (units && units.length) {
           dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
@@ -48,7 +48,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           units &&
             units.map((unit) => {
               dataRow = [];
-              dataRow.push(transform(unit.floorNo, "Floor"));
+              dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
               dataRow.push(
                 transform(
                   unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor,

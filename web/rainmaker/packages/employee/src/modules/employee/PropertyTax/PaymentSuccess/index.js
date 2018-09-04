@@ -180,8 +180,17 @@ const mapStateToProps = (state, ownProps) => {
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
   const existingPropertyId = selProperty && selProperty.oldPropertyId;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
-  const totalAmountToPay = receipts && get(receipts[receipts.length - 1], "Bill[0].billDetails[0].totalAmount");
   const rawReceiptDetails = receipts && receipts[0];
+  const lastAmount = receipts && get(receipts[0], "Bill[0].billDetails[0].totalAmount");
+  const totalAmountBeforeLast =
+    receipts &&
+    receipts.reduce((acc, curr, index) => {
+      if (index !== 0) {
+        acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+      }
+      return acc;
+    }, 0);
+  const totalAmountToPay = lastAmount + totalAmountBeforeLast;
   const totalAmountPaid =
     receipts &&
     receipts.reduce((acc, curr) => {

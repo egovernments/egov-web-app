@@ -60,7 +60,9 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
       // data for floor details
       var getFloorDetails = function getFloorDetails() {
         var bodyData = [];
-        var units = propertyDetails[0].units;
+        var _propertyDetails$ = propertyDetails[0],
+            units = _propertyDetails$.units,
+            propertySubType = _propertyDetails$.propertySubType;
 
         var dataRow = [];
         if (units && units.length) {
@@ -72,7 +74,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           bodyData.push(dataRow);
           units && units.map(function (unit) {
             dataRow = [];
-            dataRow.push(transform(unit.floorNo, "Floor"));
+            dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
             dataRow.push(transform(unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor, unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"));
             dataRow.push(transform(unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor, unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"));
             dataRow.push(transform(unit.occupancyType, "OccupancyType"));

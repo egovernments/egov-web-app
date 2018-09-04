@@ -90,7 +90,7 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
       transactionDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "instrument.transactionDateInput")),
       bankNameBranch: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.name") + ", " + (0, _get2.default)(receiptDetails, "instrument.branchName"),
       G8receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptNumber"),
-      G8receiptDate: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptDate") && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptDate"))
+      G8receiptDate: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate") && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate"))
     },
     propertyDetails: [(0, _extends3.default)({}, propertyDetails)],
     address: property.address,

@@ -21,3 +21,6 @@
   .search-no-property-found .no-search-text {
     margin-bottom: 17px;
     margin-top: 36px; }
+
+.search-property-form-pt div > div div:nth-of-type(2) {
+  color: #484848 !important; }

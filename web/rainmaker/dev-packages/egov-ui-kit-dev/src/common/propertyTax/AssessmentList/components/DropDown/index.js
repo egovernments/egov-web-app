@@ -109,7 +109,18 @@ class DropDown extends Component {
 
     try {
       const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
-      const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
+      const lastAmount = payload && payload.Receipt && get(payload.Receipt[0], "Bill[0].billDetails[0].totalAmount");
+      const totalAmountBeforeLast =
+        payload &&
+        payload.Receipt &&
+        payload.Receipt.reduce((acc, curr, index) => {
+          if (index !== 0) {
+            acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+          }
+          return acc;
+        }, 0);
+      const totalAmountToPay = lastAmount + totalAmountBeforeLast;
+      // const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
       const totalAmountPaid =
         payload &&
         payload.Receipt &&
