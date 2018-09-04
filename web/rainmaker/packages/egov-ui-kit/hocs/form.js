@@ -129,6 +129,7 @@ var form = function form(_ref) {
             _react2.default.createElement(
               "form",
               {
+                id: formKey,
                 onSubmit: function onSubmit(e) {
                   e.preventDefault();
                   submitForm();
