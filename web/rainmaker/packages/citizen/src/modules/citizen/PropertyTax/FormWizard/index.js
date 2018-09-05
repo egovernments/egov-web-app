@@ -177,7 +177,7 @@ class FormWizard extends Component {
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
-    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const { search } = location;
     const financialYearFromQuery = getFinancialYearFromQuery();
     const propertyId = getQueryValue(search, "propertyId");
@@ -303,7 +303,7 @@ class FormWizard extends Component {
             },
           },
           estimation: estimateFromGetBill,
-          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0].totalAmount) || 0,
+          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
           billResponse,
         },
         () => {
