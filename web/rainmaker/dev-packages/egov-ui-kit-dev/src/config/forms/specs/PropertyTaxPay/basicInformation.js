@@ -1,5 +1,6 @@
 import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { removeFormKey } from "./utils/removeFloors";
 import { prepareDropDownData } from "./utils/reusableFields";
 import set from "lodash/set";
@@ -39,8 +40,11 @@ const formConfig = {
       required: true,
       fullWidth: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        removeFormKey(formKey, field, dispatch, state);
         dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].landArea`, null));
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].buildUpArea`, null));
+        dispatch(removeForm("plotDetails"));
+        removeFormKey(formKey, field, dispatch, state);
         let subTypeObject = get(state, `common.generalMDMSDataById.PropertySubType[${field.value}]`);
         if (!isEmpty(subTypeObject)) {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType", subTypeObject.propertyType));

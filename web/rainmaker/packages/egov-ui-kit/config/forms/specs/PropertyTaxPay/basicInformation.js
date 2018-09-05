@@ -8,6 +8,8 @@ var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
+var _actions2 = require("egov-ui-kit/redux/form/actions");
+
 var _removeFloors = require("./utils/removeFloors");
 
 var _reusableFields = require("./utils/reusableFields");
@@ -69,8 +71,11 @@ var formConfig = {
             dispatch = _ref2.dispatch,
             state = _ref2.state;
 
-        (0, _removeFloors.removeFormKey)(formKey, field, dispatch, state);
         dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units", []));
+        dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].landArea", null));
+        dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].buildUpArea", null));
+        dispatch((0, _actions2.removeForm)("plotDetails"));
+        (0, _removeFloors.removeFormKey)(formKey, field, dispatch, state);
         var subTypeObject = (0, _get2.default)(state, "common.generalMDMSDataById.PropertySubType[" + field.value + "]");
         if (!(0, _isEmpty2.default)(subTypeObject)) {
           dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].propertyType", subTypeObject.propertyType));

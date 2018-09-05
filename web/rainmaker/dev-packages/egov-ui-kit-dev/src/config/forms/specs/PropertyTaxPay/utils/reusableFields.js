@@ -51,7 +51,7 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      removeFormKey(formKey, field, dispatch, state);
+      // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
       // dispatch(toggleSpinner());

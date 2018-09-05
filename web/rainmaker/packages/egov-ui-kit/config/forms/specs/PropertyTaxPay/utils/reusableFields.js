@@ -90,7 +90,7 @@ var floorCount = exports.floorCount = {
           dispatch = _ref2.dispatch,
           state = _ref2.state;
 
-      (0, _removeFloors.removeFormKey)(formKey, field, dispatch, state);
+      // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
       // dispatch(toggleSpinner());
