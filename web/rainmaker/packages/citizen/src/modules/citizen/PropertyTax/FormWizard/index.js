@@ -284,9 +284,15 @@ class FormWizard extends Component {
       this.props.updatePTForms(currentDraft.draftRecord);
 
       //Get estimate from bill in case of complete payment
-      const billResponse =
-        activeTab === 3 && isCompletePayment && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
-      const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
+      if (isCompletePayment) {
+        const billResponse = activeTab === 3 && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
+        const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
+        this.setState({
+          estimation: estimateFromGetBill,
+          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
+          billResponse,
+        });
+      }
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -302,9 +308,6 @@ class FormWizard extends Component {
               draftRecord: currentDraft.draftRecord,
             },
           },
-          estimation: estimateFromGetBill,
-          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
-          billResponse,
         },
         () => {
           //this.onTabClick(activeTab)
