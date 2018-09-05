@@ -288,14 +288,16 @@ class FormWizard extends Component {
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.props.updatePTForms(currentDraft.draftRecord);
+
       //Get estimate from bill in case of complete payment
       if (isCompletePayment) {
-        const billResponse = activeTab === 3 && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
+        const billResponse =
+          activeTab >= 3 && isCompletePayment && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
         const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
         this.setState({
           estimation: estimateFromGetBill,
           totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
-          billResponse,
+          Bill: billResponse && billResponse.Bill,
         });
       }
       this.setState(
