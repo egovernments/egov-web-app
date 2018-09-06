@@ -5,9 +5,10 @@ class EGFFinance extends Component{
 
     render(){ 
     
-            let auth_token = localStorage.getItem('token');
-            let menuUrl = this.props.location.pathname;
-            let loc = window.location;
+            let auth_token = localStorage.getItem('token'),
+                menuUrl = this.props.location.pathname,
+                loc = window.location;
+                
             let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+menuUrl;
             // let erp_url='http://jalandhar.test.egov.com:8080'+menuUrl;
             console.log("ERP URL : "+erp_url);
@@ -17,7 +18,7 @@ class EGFFinance extends Component{
                     <iframe name="erp_iframe" height="800" width="1100"></iframe>
                      <form action={erp_url} id="erp_form" method="post" target="erp_iframe">
                       
-                        <input hidden="true" name="auth_token" value={auth_token}></input>
+                        <input readOnly hidden="true" name="auth_token" value={auth_token}  />
                     
                   </form>
 
