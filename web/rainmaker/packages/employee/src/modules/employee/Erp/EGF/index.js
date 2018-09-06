@@ -1,22 +1,16 @@
 import React, { Component } from "react";
-// import { faceOne } from 'egov-ui-kit/assets/images/faceOne.jpg';
 
-class ErpExpenseBill extends Component{
+class EGFFinance extends Component{
 
 
     render(){ 
     
-            // let auth_token = '7d030b3d-a094-4c49-a223-b59afdea0f75';
             let auth_token = localStorage.getItem('token');
             let menuUrl = this.props.location.pathname;
             let loc = window.location;
-            // let erp_url= 'http://longowal.coexit-dev.org/EGF/expensebill/newform';
             let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+menuUrl;
-            console.log("logged user token "+localStorage.getItem('token'));
-            console.log("tenat-info :"+ localStorage.getItem('tenant-id'));
+            // let erp_url='http://jalandhar.test.egov.com:8080'+menuUrl;
             console.log("ERP URL : "+erp_url);
-            let userInfo = JSON.parse(localStorage.getItem('user-info'));
-            let tenantId = localStorage.getItem('tenant-id');
 
             return (
                     <div>
@@ -31,13 +25,9 @@ class ErpExpenseBill extends Component{
                 );
     }
     componentDidMount(){
-        console.log('component mounted');
+        console.log('EGFFinance component mounted');
         // console.log('event registration completed');
-         console.log("***************************************************************")
-        console.log('document value ::'+document.forms['erp_form']);
         document.forms['erp_form'].submit();
-        console.log('event registration completed');
-        console.log("***************************************************************")
        /*
         window.addEventListener('message',function(event){
             console.log('event recieved from iframe client')
@@ -49,4 +39,4 @@ class ErpExpenseBill extends Component{
 
 }
 
-export default ErpExpenseBill;
+export default EGFFinance;

@@ -29,7 +29,7 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
-import ErpExpenseBill from "modules/employee/Erp/Expensebill";
+import EGFFinance from "modules/employee/Erp/EGF";
 
 //pt
 import ptRoutes from "./pt";
@@ -86,7 +86,7 @@ const routes = [
   },
   {
     path: "egf/*",
-    component: ErpExpenseBill,
+    component: EGFFinance,
     needsAuthentication: true,
     options: {
       hideFooter: true,
