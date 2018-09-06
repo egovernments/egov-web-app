@@ -116,13 +116,16 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
 };
 
 const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
-  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
-  const ownerInfo = ownerDetails.map((item, index) => {
-    return {
-      key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
-      value: item.name,
-    };
-  });
+  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
+  const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
+  const ownerInfo = isInstitution
+    ? [{ key: "Institution Name:", value: institution.name }, { key: "Authorized Person Name:", value: ownerDetails[0].name }]
+    : ownerDetails.map((item, index) => {
+        return {
+          key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
+          value: item.name,
+        };
+      });
   return {
     propertyInfo: property && [
       ...ownerInfo,

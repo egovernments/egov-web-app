@@ -81,6 +81,12 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
       let receiptTableWidth = ["*", "*", "*", "*"];
 
       let getOwnerDetails = (ownerArray, noOfColumns) => {
+        const { propertyDetails } = details;
+        const { institution } = propertyDetails[0] || {};
+        const isInstitution =
+          propertyDetails && propertyDetails.length
+            ? propertyDetails[0].ownershipCategory === "INSTITUTIONALPRIVATE" || propertyDetails[0].ownershipCategory === "INSTITUTIONALGOVERNMENT"
+            : false;
         const transformedArray = ownerArray.map((item, index) => {
           return [
             {
@@ -96,9 +102,46 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
         });
         const flatArray = transformedArray.reduce((acc, val) => acc.concat(val), []);
 
+        if (flatArray.length % noOfColumns !== 0) {
+          flatArray.push(
+            {
+              text: "",
+              border: borderKey,
+              style: "receipt-table-key",
+            },
+            {
+              text: "",
+              border: borderValue,
+            }
+          );
+        }
+
         let newArray = [];
         while (flatArray.length > 0) newArray.push(flatArray.splice(0, noOfColumns));
-        return newArray;
+        return isInstitution
+          ? [
+              [
+                {
+                  text: `Institution Name`,
+                  border: borderKey,
+                  style: "receipt-table-key",
+                },
+                {
+                  text: institution.name || "",
+                  border: borderValue,
+                },
+                {
+                  text: `Authorised Person`,
+                  border: borderKey,
+                  style: "receipt-table-key",
+                },
+                {
+                  text: ownerArray[0].name || "",
+                  border: borderValue,
+                },
+              ],
+            ]
+          : newArray;
       };
 
       data = {

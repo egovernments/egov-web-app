@@ -103,9 +103,12 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
 var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) {
   var _property$propertyDet = property.propertyDetails[0],
       ownerDetails = _property$propertyDet.owners,
-      financialYear = _property$propertyDet.financialYear;
+      financialYear = _property$propertyDet.financialYear,
+      institution = _property$propertyDet.institution,
+      ownershipCategory = _property$propertyDet.ownershipCategory;
 
-  var ownerInfo = ownerDetails.map(function (item, index) {
+  var isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
+  var ownerInfo = isInstitution ? [{ key: "Institution Name:", value: institution.name }, { key: "Authorized Person Name:", value: ownerDetails[0].name }] : ownerDetails.map(function (item, index) {
     return {
       key: "Owner" + (ownerDetails.length > 1 ? index + 1 : "") + " name:",
       value: item.name

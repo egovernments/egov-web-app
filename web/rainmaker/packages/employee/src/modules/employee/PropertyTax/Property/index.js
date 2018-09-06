@@ -81,6 +81,9 @@ class Property extends Component {
               {
                 name: "UsageCategoryDetail",
               },
+              {
+                name: "SubOwnerShipCategory",
+              },
             ],
           },
         ],
@@ -96,6 +99,7 @@ class Property extends Component {
       "PropertySubType",
       "OwnerType",
       "UsageCategoryDetail",
+      "SubOwnerShipCategory",
     ]);
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     renderCustomTitleForPt(customTitle);
@@ -306,55 +310,96 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
   ];
 };
 
-const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
-  return [
-    {
-      heading: "Ownership Information",
-      iconAction: "social",
-      iconName: "person",
-      nestedItems: true,
-      items: ownerDetails.map((owner) => {
-        return {
-          items: [
-            {
-              key: "Name",
-              value: owner.name || "NA",
-            },
-            {
-              key: "Gender:",
-              value: owner.gender || "NA",
-            },
-            {
-              key: "Mobile No:",
-              value: owner.mobileNumber || "NA",
-            },
-            {
-              key: "Father's/Husband's Name:",
-              value: owner.fatherOrHusbandName || "NA",
-            },
-            {
-              key: "User Category:",
-              value:
-                (owner &&
-                  owner.ownerType &&
-                  generalMDMSDataById &&
-                  generalMDMSDataById["OwnerType"] &&
-                  generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
-                "NA",
-            },
-            {
-              key: "Email ID:",
-              value: owner.emailId || "NA",
-            },
-            {
-              key: "Correspondence Address:",
-              value: owner.permanentAddress || "NA",
-            },
-          ],
-        };
-      }),
-    },
-  ];
+const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
+  const isInstitution =
+    latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
+  const { institution, owners: ownerDetails } = latestPropertyDetails || {};
+  return (
+    ownerDetails && [
+      {
+        heading: "Ownership Information",
+        iconAction: "social",
+        iconName: "person",
+        nestedItems: true,
+        items: ownerDetails.map((owner) => {
+          return {
+            items: [
+              isInstitution
+                ? {
+                    key: "Name of Institution",
+                    value: institution.name || "NA",
+                  }
+                : {
+                    key: "Name",
+                    value: owner.name || "NA",
+                  },
+              isInstitution
+                ? {
+                    key: "Type of Institution",
+                    value:
+                      (institution &&
+                        institution.type &&
+                        generalMDMSDataById &&
+                        generalMDMSDataById["SubOwnerShipCategory"] &&
+                        generalMDMSDataById["SubOwnerShipCategory"][institution.type].name) ||
+                      "NA",
+                  }
+                : {
+                    key: "Gender:",
+                    value: owner.gender || "NA",
+                  },
+              isInstitution
+                ? {
+                    key: "Name of Authorised Person",
+                    value: owner.name || "NA",
+                  }
+                : {
+                    key: "Mobile No:",
+                    value: owner.mobileNumber || "NA",
+                  },
+              isInstitution
+                ? {
+                    key: "Designation:",
+                    value: institution.designation || "NA",
+                  }
+                : {
+                    key: "Father's/Husband's Name:",
+                    value: owner.fatherOrHusbandName || "NA",
+                  },
+              isInstitution
+                ? {
+                    key: "Mobile Number:",
+                    value: owner.mobileNumber || "NA",
+                  }
+                : {
+                    key: "User Category:",
+                    value:
+                      (owner &&
+                        owner.ownerType &&
+                        generalMDMSDataById &&
+                        generalMDMSDataById["OwnerType"] &&
+                        generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
+                      "NA",
+                  },
+              isInstitution
+                ? {
+                    key: "Telephone Number:",
+                    value: owner.altContactNumber || "NA",
+                  }
+                : {
+                    key: "Email ID:",
+                    value: owner.emailId || "NA",
+                  },
+              {
+                key: "Correspondence Address:",
+                value: owner.permanentAddress || "NA",
+              },
+            ],
+          };
+        }),
+      },
+    ]
+  );
 };
 
 const getLatestPropertyDetails = (propertyDetailsArray) => {
@@ -400,7 +445,7 @@ const mapStateToProps = (state, ownProps) => {
       ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
       : []
     : [];
-  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners, generalMDMSDataById)) || [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails, generalMDMSDataById)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);

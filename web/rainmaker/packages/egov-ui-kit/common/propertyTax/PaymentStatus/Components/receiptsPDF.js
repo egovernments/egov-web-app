@@ -97,6 +97,12 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
       var receiptTableWidth = ["*", "*", "*", "*"];
 
       var getOwnerDetails = function getOwnerDetails(ownerArray, noOfColumns) {
+        var propertyDetails = details.propertyDetails;
+
+        var _ref = propertyDetails[0] || {},
+            institution = _ref.institution;
+
+        var isInstitution = propertyDetails && propertyDetails.length ? propertyDetails[0].ownershipCategory === "INSTITUTIONALPRIVATE" || propertyDetails[0].ownershipCategory === "INSTITUTIONALGOVERNMENT" : false;
         var transformedArray = ownerArray.map(function (item, index) {
           return [{
             text: "Owner " + (ownerArray.length > 1 ? index + 1 : "") + " Name",
@@ -111,10 +117,35 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           return acc.concat(val);
         }, []);
 
+        if (flatArray.length % noOfColumns !== 0) {
+          flatArray.push({
+            text: "",
+            border: borderKey,
+            style: "receipt-table-key"
+          }, {
+            text: "",
+            border: borderValue
+          });
+        }
+
         var newArray = [];
         while (flatArray.length > 0) {
           newArray.push(flatArray.splice(0, noOfColumns));
-        }return newArray;
+        }return isInstitution ? [[{
+          text: "Institution Name",
+          border: borderKey,
+          style: "receipt-table-key"
+        }, {
+          text: institution.name || "",
+          border: borderValue
+        }, {
+          text: "Authorised Person",
+          border: borderKey,
+          style: "receipt-table-key"
+        }, {
+          text: ownerArray[0].name || "",
+          border: borderValue
+        }]] : newArray;
       };
 
       data = {
