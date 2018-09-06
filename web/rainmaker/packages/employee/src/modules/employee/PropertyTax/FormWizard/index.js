@@ -38,6 +38,32 @@ import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
 import { lchmod } from "fs";
 
+export const normalizePropertyDetails = (properties, props) => {
+  let { search } = props.location;
+  const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
+  const property = propertyInfo[0] || {};
+  const { propertyDetails } = property;
+  const isReassesment = !!getQueryValue(search, "isReassesment");
+  const propertyId = getQueryValue(search, "propertyId");
+  const units = propertyDetails[0].units.filter((item, ind) => {
+    return item !== null;
+  });
+  if (isReassesment && propertyId) {
+    property.propertyId = propertyId;
+  }
+  var sumOfUnitArea = 0;
+  units.forEach((unit) => {
+    let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
+    unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
+    sumOfUnitArea += unit.unitArea;
+  });
+  if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
+    propertyDetails[0].buildUpArea = sumOfUnitArea;
+  }
+  propertyDetails[0].units = units;
+  return propertyInfo;
+};
+
 class FormWizard extends Component {
   state = {
     dialogueOpen: false,
@@ -1054,7 +1080,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       }
-      const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
+      const propertyDetails = normalizePropertyDetails(prepareFormData.Properties, this.props);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
@@ -1147,7 +1173,7 @@ class FormWizard extends Component {
       if (isCompletePayment) {
         callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
       } else {
-        const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+        const properties = normalizePropertyDetails(prepareFormData.Properties, this.props);
         let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
           Properties: properties,
         });
@@ -1162,32 +1188,6 @@ class FormWizard extends Component {
     } catch (e) {
       alert(e);
     }
-  };
-
-  normalizePropertyDetails = (properties) => {
-    let { search } = this.props.location;
-    const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
-    const property = propertyInfo[0] || {};
-    const { propertyDetails } = property;
-    const isReassesment = !!getQueryValue(search, "isReassesment");
-    const propertyId = getQueryValue(search, "propertyId");
-    const units = propertyDetails[0].units.filter((item, ind) => {
-      return item !== null;
-    });
-    if (isReassesment && propertyId) {
-      property.propertyId = propertyId;
-    }
-    var sumOfUnitArea = 0;
-    units.forEach((unit) => {
-      let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
-      unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
-      sumOfUnitArea += unit.unitArea;
-    });
-    if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
-      propertyDetails[0].buildUpArea = sumOfUnitArea;
-    }
-    propertyDetails[0].units = units;
-    return propertyInfo;
   };
 
   getHeaderLabel = (selected) => {
