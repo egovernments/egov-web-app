@@ -65,6 +65,7 @@ class LandingPage extends Component {
     const { history, name, citiesByModule } = this.props;
     const { getModuleItems, onPGRClick, onDialogueClose } = this;
     const moduleItems = getModuleItems(citiesByModule) || [];
+    const renderCityPicker = moduleItems && moduleItems.findIndex((item) => item.moduleTitle === "Complaints") > -1;
     return (
       <Dashboard
         moduleItems={moduleItems}
@@ -73,6 +74,7 @@ class LandingPage extends Component {
         onPGRClick={onPGRClick}
         onDialogueClose={onDialogueClose}
         dialogueOpen={this.state.dialogueOpen}
+        renderCityPicker={renderCityPicker}
       />
     );
   }

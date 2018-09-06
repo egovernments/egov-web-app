@@ -15,7 +15,7 @@ const formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[a-zA-Z\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\s]{1,64}$/i,
       errorMessage: "Enter valid name (max length 64)",
     },
     ownerMobile: {
