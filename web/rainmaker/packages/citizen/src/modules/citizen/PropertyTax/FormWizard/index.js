@@ -348,7 +348,7 @@ class FormWizard extends Component {
             },
           },
           estimation: estimateFromGetBill,
-          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
+          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0].totalAmount) || 0,
           billResponse,
         },
         () => {
