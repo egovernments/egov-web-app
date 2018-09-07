@@ -29,6 +29,7 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
+import EGFFinance from "modules/employee/Erp/EGF";
 
 //pt
 import ptRoutes from "./pt";
@@ -81,6 +82,21 @@ const routes = [
       hideFor: "ao",
       customFor: "csr",
       customTitle: "ES_ALL_COMPLAINTS_HEADER",
+    },
+  },
+  {
+    path: "egf/*",
+    component: EGFFinance,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+     // title: "ES_OPEN_COMPLAINTS_HEADER",
+      hideTitle: true,
+     // redirectionUrl,
+      isHomeScreen: true,
+      hideFor: "ao",
+      customFor: "csr",
+      //customTitle: "ES_ALL_COMPLAINTS_HEADER",
     },
   },
   {
