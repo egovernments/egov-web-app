@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -231,11 +231,6 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
         var jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
         var valueInJSON = (0, _get2.default)(data, jsonPath);
-        if (item === "builtArea") {
-          valueInJSON = valueInJSON * 9.0;
-          valueInJSON = Math.round(valueInJSON * 100) / 100;
-          //set prepare formdata as well
-        }
         configFloor["fields"][item].value = valueInJSON;
       });
       dictFloor[formKey] = configFloor;
@@ -256,4 +251,14 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
   // console.log(basicInfoConfig);
   console.log((0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect));
   return (0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect);
+};
+
+var convertUnitsToSqFt = exports.convertUnitsToSqFt = function convertUnitsToSqFt(unitArray) {
+  return unitArray.map(function (unit) {
+    var value = unit.unitArea;
+    value = value * 9.0;
+    value = Math.round(value * 100) / 100;
+    unit.unitArea = value;
+    return unit;
+  });
 };

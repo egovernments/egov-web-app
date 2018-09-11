@@ -22,7 +22,7 @@ import { setRoute, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/action
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
 import { get, set, range, isEmpty, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
@@ -180,6 +180,7 @@ class FormWizard extends Component {
 
   getTargetPropertiesDetails = (propertyDetails) => {
     propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    propertyDetails[propertyDetails.length - 1].units = convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
     return [propertyDetails[propertyDetails.length - 1]];
   };
 
@@ -221,7 +222,7 @@ class FormWizard extends Component {
         );
         currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
       } else {
-        let searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
+        const searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
           {
             key: "tenantId",
             value: tenantId,
@@ -231,7 +232,7 @@ class FormWizard extends Component {
             value: getQueryValue(search, "propertyId"), //"PT-107-001278",
           },
         ]);
-        searchPropertyResponse = {
+        let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [
             {
@@ -240,12 +241,12 @@ class FormWizard extends Component {
             },
           ],
         };
-        const ownerFromResponseIn = convertRawDataToFormConfig(searchPropertyResponse); //convertRawDataToFormConfig(responseee)
+        const preparedForm = convertRawDataToFormConfig(propertyResponse); //convertRawDataToFormConfig(responseee)
         currentDraft = {
           draftRecord: {
-            ...ownerFromResponseIn,
+            ...preparedForm,
             selectedTabIndex: 3,
-            prepareFormData: searchPropertyResponse, //prepareFormData2,
+            prepareFormData: propertyResponse, //prepareFormData2,
           },
         };
       }
@@ -257,7 +258,7 @@ class FormWizard extends Component {
         throw new Error("draft not found");
       }
 
-      const prepareFormData2 = currentDraft.draftRecord.prepareFormData;
+      // const prepareFormData2 = currentDraft.draftRecord.prepareFormData;
 
       this.setState({
         draftByIDResponse: currentDraft,

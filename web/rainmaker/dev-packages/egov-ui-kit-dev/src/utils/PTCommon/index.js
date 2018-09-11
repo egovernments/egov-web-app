@@ -214,11 +214,6 @@ export const transformPropertyDataToAssessInfo = (data) => {
         let jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
         let valueInJSON = get(data, jsonPath);
-        if (item === "builtArea") {
-          valueInJSON = valueInJSON * 9.0;
-          valueInJSON = Math.round(valueInJSON * 100) / 100;
-          //set prepare formdata as well
-        }
         configFloor["fields"][item].value = valueInJSON;
       });
       dictFloor[formKey] = configFloor;
@@ -239,4 +234,14 @@ export const transformPropertyDataToAssessInfo = (data) => {
   // console.log(basicInfoConfig);
   console.log({ basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect });
   return { basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect };
+};
+
+export const convertUnitsToSqFt = (unitArray) => {
+  return unitArray.map((unit) => {
+    let value = unit.unitArea;
+    value = value * 9.0;
+    value = Math.round(value * 100) / 100;
+    unit.unitArea = value;
+    return unit;
+  });
 };
