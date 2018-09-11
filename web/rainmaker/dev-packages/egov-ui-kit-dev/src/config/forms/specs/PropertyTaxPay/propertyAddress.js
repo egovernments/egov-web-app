@@ -172,7 +172,7 @@ const formConfig = {
     try {
       let state = store.getState();
       const { cities, citiesByModule } = state.common;
-      const { PT } = citiesByModule;
+      const PT = citiesByModule && citiesByModule.PT;
       if (PT) {
         const tenants = PT.tenants;
         const dd = tenants.reduce((dd, tenant) => {

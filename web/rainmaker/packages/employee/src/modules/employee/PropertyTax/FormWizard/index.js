@@ -4,7 +4,7 @@ import { Icon, Button } from "components";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
+import { deleteForm, updateForms, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -26,7 +26,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstimateFromBill } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
 import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
@@ -34,6 +34,7 @@ import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, generalMDMSFetchSuccess, updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
 import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
+import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
 import { lchmod } from "fs";
@@ -183,6 +184,15 @@ class FormWizard extends Component {
     };
   };
 
+  getTargetPropertiesDetails = (propertyDetails) => {
+    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    propertyDetails[propertyDetails.length - 1].units =
+      propertyDetails[propertyDetails.length - 1] &&
+      propertyDetails[propertyDetails.length - 1].units &&
+      convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
+    return [propertyDetails[propertyDetails.length - 1]];
+  };
+
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
@@ -196,29 +206,70 @@ class FormWizard extends Component {
     this.getImportantDates();
     try {
       toggleSpinner();
-      let draftsResponse = await httpRequest(
-        "pt-services-v2/drafts/_search",
-        "_search",
-        [
-          // { key: "userId", value: uuid },
-          {
-            key: isReassesment ? "assessmentNumber" : "id",
-            value: draftId,
-          },
+      let currentDraft;
+      if (!isReassesment) {
+        let draftsResponse = await httpRequest(
+          "pt-services-v2/drafts/_search",
+          "_search",
+          [
+            // {
+            //   key: "userId",
+            //   value: uuid,
+            // },
+            {
+              key: isReassesment ? "assessmentNumber" : "id",
+              value: draftId,
+            },
+            {
+              key: "tenantId",
+              value: getQueryValue(search, "tenantId"),
+            },
+          ],
+          draftRequest
+        );
+        currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      } else {
+        const searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
           {
             key: "tenantId",
             value: tenantId,
           },
-        ],
-        draftRequest
-      );
+          {
+            key: "ids",
+            value: getQueryValue(search, "propertyId"), //"PT-107-001278",
+          },
+        ]);
+        let propertyResponse = {
+          ...searchPropertyResponse,
+          Properties: [
+            {
+              ...searchPropertyResponse.Properties[0],
+              propertyDetails: this.getTargetPropertiesDetails(searchPropertyResponse.Properties[0].propertyDetails),
+            },
+          ],
+        };
+        const preparedForm = convertRawDataToFormConfig(propertyResponse); //convertRawDataToFormConfig(responseee)
+        currentDraft = {
+          draftRecord: {
+            ...preparedForm,
+            selectedTabIndex: 3,
+            prepareFormData: propertyResponse, //prepareFormData2,
+          },
+        };
+      }
 
-      const currentDraft = draftsResponse.drafts.find(
-        (res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId
-      );
+      //const currentDraft = searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      //searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+
       if (!currentDraft) {
         throw new Error("draft not found");
       }
+
+      // const prepareFormData2 = currentDraft.draftRecord.prepareFormData;
+
+      this.setState({
+        draftByIDResponse: currentDraft,
+      });
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0) > 3 ? 3 : get(currentDraft, "draftRecord.selectedTabIndex", 0);
@@ -285,6 +336,10 @@ class FormWizard extends Component {
         ]);
         const documentTypeMdms = await getDocumentTypes();
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
+      }
+
+      if (isReassesment && activeModule) {
+        this.props.handleFieldChange("propertyAddress", "city", activeModule);
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.props.updatePTForms(currentDraft.draftRecord);
@@ -1171,9 +1226,12 @@ class FormWizard extends Component {
     const { propertyDetails } = property;
     const isReassesment = !!getQueryValue(search, "isReassesment");
     const propertyId = getQueryValue(search, "propertyId");
-    const units = propertyDetails[0].units.filter((item, ind) => {
-      return item !== null;
-    });
+    const units =
+      propertyDetails[0] && propertyDetails[0].units
+        ? propertyDetails[0].units.filter((item, ind) => {
+            return item !== null;
+          })
+        : [];
     if (isReassesment && propertyId) {
       property.propertyId = propertyId;
     }
@@ -1319,6 +1377,7 @@ const mapDispatchToProps = (dispatch) => {
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
     fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data)),
     updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 

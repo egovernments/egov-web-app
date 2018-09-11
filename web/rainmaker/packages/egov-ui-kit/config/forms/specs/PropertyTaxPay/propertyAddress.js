@@ -165,8 +165,8 @@ var formConfig = {
       var _state$common = state.common,
           cities = _state$common.cities,
           citiesByModule = _state$common.citiesByModule;
-      var PT = citiesByModule.PT;
 
+      var PT = citiesByModule && citiesByModule.PT;
       if (PT) {
         var tenants = PT.tenants;
         var dd = tenants.reduce(function (dd, tenant) {
