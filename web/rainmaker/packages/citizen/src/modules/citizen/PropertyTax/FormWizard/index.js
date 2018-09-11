@@ -195,7 +195,7 @@ class FormWizard extends Component {
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
 
     try {
-      //toggleSpinner();
+      // toggleSpinner();
       //const ownerFromResponseIn = convertRawDataToFormConfig(responseee)
 
       let currentDraft;
@@ -265,7 +265,9 @@ class FormWizard extends Component {
 
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
+      console.log(currentDraft);
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0) > 3 ? 3 : get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      console.log(activeTab);
       const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
         let requestBody = {
@@ -361,7 +363,7 @@ class FormWizard extends Component {
         },
         () => {
           //this.onTabClick(activeTab)
-          //toggleSpinner();
+          // toggleSpinner();
           {
             if (activeTab === 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
@@ -378,7 +380,7 @@ class FormWizard extends Component {
       );
     } catch (e) {
       console.log("e", e);
-      //toggleSpinner();
+      // toggleSpinner();
     }
   };
 
@@ -926,6 +928,8 @@ class FormWizard extends Component {
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const financialYearFromQuery = getFinancialYearFromQuery();
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
+    console.log(form);
+    console.log(selectedownerShipCategoryType);
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
@@ -970,7 +974,7 @@ class FormWizard extends Component {
     } catch (e) {
       toggleSpinner();
       if (e.message) {
-        alert(e.message);
+        alert("SSSSSSSSSSSSS" + e.message);
       } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     }
   };
@@ -1137,9 +1141,13 @@ class FormWizard extends Component {
       property.propertyId = propertyId;
     }
     const { propertyDetails } = property;
-    const units = propertyDetails[0].units.filter((item, ind) => {
-      return item !== null;
-    });
+    console.log(propertyDetails[0]);
+    const units =
+      propertyDetails[0] && propertyDetails[0].units
+        ? propertyDetails[0].units.filter((item, ind) => {
+            return item !== null;
+          })
+        : [];
     var sumOfUnitArea = 0;
     units.forEach((unit) => {
       let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
