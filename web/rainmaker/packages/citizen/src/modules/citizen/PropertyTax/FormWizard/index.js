@@ -30,11 +30,7 @@ import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess,
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
-import {
-  getAllOwnerDetails,
-  getOwnerShipDetails,
-  convertRawDataToFormConfig,
-} from "modules/citizen/PropertyTax/FormWizard/utils/convertToFormConfig";
+import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
 import "./index.css";
 
 class FormWizard extends Component {
