@@ -132,8 +132,6 @@ var formConfig = {
             break;
           default:
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
-            var genderValue = (0, _get3.default)(state, "form.ownerInfo.fields.ownerGender.value");
-            dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", genderValue));
             break;
         }
       },
