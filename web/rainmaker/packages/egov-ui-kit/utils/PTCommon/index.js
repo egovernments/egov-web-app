@@ -183,9 +183,7 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
   var propUsageType = usageCategoryMinor == null ? usageCategoryMajor : usageCategoryMinor;
   console.log(propType, propUsageType);
   var formConfigPath = (0, _assessInfoFormManager.getPlotAndFloorFormConfigPath)(propUsageType, propType);
-  console.log(formConfigPath);
   var path = formConfigPath["path"];
-  console.log(path);
   var dictFloor = {};
   var dictCustomSelect = {};
 
@@ -217,7 +215,6 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
       }
     });
   }
-  console.log(configPlot);
 
   if (formConfigPath["hasFloor"]) {
     configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
@@ -233,6 +230,7 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
         var valueInJSON = (0, _get2.default)(data, jsonPath);
         configFloor["fields"][item].value = valueInJSON;
       });
+      configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
       if (!("customSelect_" + floorNo in dictCustomSelect)) {
         customSelectconfig = (0, _cloneDeep2.default)(customSelectconfig);

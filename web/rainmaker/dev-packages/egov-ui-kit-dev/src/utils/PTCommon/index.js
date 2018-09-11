@@ -166,9 +166,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
   const propUsageType = usageCategoryMinor == null ? usageCategoryMajor : usageCategoryMinor;
   console.log(propType, propUsageType);
   const formConfigPath = getPlotAndFloorFormConfigPath(propUsageType, propType);
-  console.log(formConfigPath);
   const path = formConfigPath["path"];
-  console.log(path);
   let dictFloor = {};
   let dictCustomSelect = {};
 
@@ -200,7 +198,6 @@ export const transformPropertyDataToAssessInfo = (data) => {
       }
     });
   }
-  console.log(configPlot);
 
   if (formConfigPath["hasFloor"]) {
     configFloor = require(`egov-ui-kit/config/forms/specs/${path}/floorDetails.js`).default;
@@ -216,6 +213,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
         let valueInJSON = get(data, jsonPath);
         configFloor["fields"][item].value = valueInJSON;
       });
+      configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
       if (!("customSelect_" + floorNo in dictCustomSelect)) {
         customSelectconfig = cloneDeep(customSelectconfig);

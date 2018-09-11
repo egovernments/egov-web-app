@@ -100,18 +100,14 @@ export const getInstituteAuthority = (propertyResponse) => {
 };
 
 export const getAssesmentDetails = (propertyResponse) => {
-  console.log(propertyResponse);
-  const assessmentInfo = transformPropertyDataToAssessInfo(propertyResponse);
-  console.log(assessmentInfo);
-  return assessmentInfo;
+  return transformPropertyDataToAssessInfo(propertyResponse);
 };
 
 export const convertRawDataToFormConfig = (propertyResponse) => {
   const { Properties } = propertyResponse;
   let properties = Properties;
-  console.log(properties);
 
-  let res = {};
+  // let res = {};
   let ownerForms = {};
   let institutionAuthority = {};
   let institutionDetails = {};
@@ -132,13 +128,13 @@ export const convertRawDataToFormConfig = (propertyResponse) => {
   }
 
   return {
-    ...res,
+    // ...res,
+    ...propertyAddress,
+    ...assessmentForms,
     ...ownerForms,
     ...ownerShipForm,
     ...institutionAuthority,
     ...institutionDetails,
-    ...propertyAddress,
-    ...assessmentForms,
-    selectedTabIndex: 3,
+    // selectedTabIndex: 3,
   };
 };
