@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import { deleteForm, updateForms, displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { deleteForm, updateForms, displayFormErrors, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -245,7 +245,7 @@ class FormWizard extends Component {
           draftRecord: {
             ...preparedForm,
             selectedTabIndex: 3,
-            prepareFormData: propertyResponse, //prepareFormData2,
+            prepareFormData: { Properties: propertyResponse["Properties"] }, //prepareFormData2,
           },
         };
       }
@@ -329,6 +329,9 @@ class FormWizard extends Component {
         ]);
         const documentTypeMdms = await getDocumentTypes();
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
+      }
+      if (isReassesment && activeModule) {
+        this.props.handleFieldChange("propertyAddress", "city", activeModule);
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.props.updatePTForms(currentDraft.draftRecord);
@@ -1220,6 +1223,7 @@ const mapDispatchToProps = (dispatch) => {
     updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
     fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 
