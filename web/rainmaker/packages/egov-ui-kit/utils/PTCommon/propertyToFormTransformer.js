@@ -29,10 +29,6 @@ var _institutionDetails = require("egov-ui-kit/config/forms/specs/PropertyTaxPay
 
 var _institutionDetails2 = _interopRequireDefault(_institutionDetails);
 
-var _propertyAddress = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress");
-
-var _propertyAddress2 = _interopRequireDefault(_propertyAddress);
-
 var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
@@ -54,6 +50,9 @@ var _set = require("lodash/set");
 var _set2 = _interopRequireDefault(_set);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import propertyAddress from "egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress";
+var propertyAddress = process.env.REACT_APP_NAME === "Citizen" ? require("egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress").default : require("config/forms/specs/PropertyTaxPay/propertyAddress").default;
 
 var addData = function addData(config, currentForm) {
   var res = (0, _extends4.default)({}, config);
@@ -108,10 +107,10 @@ var getAllOwnerDetails = exports.getAllOwnerDetails = function getAllOwnerDetail
 var getpropertyAddressDetails = exports.getpropertyAddressDetails = function getpropertyAddressDetails(propertyRes) {
   var Properties = propertyRes.Properties;
 
-  var oldPIDPath = (0, _get2.default)(_propertyAddress2.default, "fields.oldPID.jsonPath", "");
-  var mohallaPath = (0, _get2.default)(_propertyAddress2.default, "fields.mohalla.jsonPath", "");
+  var oldPIDPath = (0, _get2.default)(propertyAddress, "fields.oldPID.jsonPath", "");
+  var mohallaPath = (0, _get2.default)(propertyAddress, "fields.mohalla.jsonPath", "");
   var propertyAddressForm = {
-    propertyAddress: addData((0, _cloneDeep2.default)(_propertyAddress2.default), (0, _get2.default)(Properties[0], "address", {}))
+    propertyAddress: addData((0, _cloneDeep2.default)(propertyAddress), (0, _get2.default)(Properties[0], "address", {}))
   };
   (0, _set2.default)(propertyAddressForm, "propertyAddress.fields.oldPID.value", (0, _get2.default)(propertyRes, oldPIDPath, ""));
   (0, _set2.default)(propertyAddressForm, "propertyAddress.fields.mohalla.value", (0, _get2.default)(propertyRes, mohallaPath, ""));

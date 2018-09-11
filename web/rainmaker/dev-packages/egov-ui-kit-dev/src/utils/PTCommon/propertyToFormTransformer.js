@@ -2,13 +2,18 @@ import ownerInfo from "egov-ui-kit/config/forms/specs/PropertyTaxPay/ownerInfo";
 import ownershipType from "egov-ui-kit/config/forms/specs/PropertyTaxPay/ownershipType";
 import institutionAuthority from "egov-ui-kit/config/forms/specs/PropertyTaxPay/OwnerInformation/Institution/institutionAuthority";
 import institutionDetails from "egov-ui-kit/config/forms/specs/PropertyTaxPay/OwnerInformation/Institution/institutionDetails";
-import propertyAddress from "egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress";
+// import propertyAddress from "egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress";
 import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import capitalize from "lodash/capitalize";
 import { transformPropertyDataToAssessInfo } from "egov-ui-kit/utils/PTCommon";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
 import set from "lodash/set";
+
+const propertyAddress =
+  process.env.REACT_APP_NAME === "Citizen"
+    ? require("egov-ui-kit/config/forms/specs/PropertyTaxPay/propertyAddress").default
+    : require("config/forms/specs/PropertyTaxPay/propertyAddress").default;
 
 const addData = (config, currentForm) => {
   let res = { ...config };
