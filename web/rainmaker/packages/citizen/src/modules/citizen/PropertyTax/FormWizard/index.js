@@ -178,8 +178,10 @@ class FormWizard extends Component {
     };
   };
 
-  getTargetPropertiesDetails = (propertyDetails) =>
+  getTargetPropertiesDetails = (propertyDetails) => {
     propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    return [propertyDetails[propertyDetails.length - 1]];
+  };
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;

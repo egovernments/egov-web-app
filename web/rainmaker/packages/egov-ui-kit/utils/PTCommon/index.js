@@ -233,6 +233,8 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
         var valueInJSON = (0, _get2.default)(data, jsonPath);
         if (item === "builtArea") {
           valueInJSON = valueInJSON * 9.0;
+          valueInJSON = Math.round(valueInJSON * 100) / 100;
+          //set prepare formdata as well
         }
         configFloor["fields"][item].value = valueInJSON;
       });

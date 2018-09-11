@@ -216,6 +216,8 @@ export const transformPropertyDataToAssessInfo = (data) => {
         let valueInJSON = get(data, jsonPath);
         if (item === "builtArea") {
           valueInJSON = valueInJSON * 9.0;
+          valueInJSON = Math.round(valueInJSON * 100) / 100;
+          //set prepare formdata as well
         }
         configFloor["fields"][item].value = valueInJSON;
       });
