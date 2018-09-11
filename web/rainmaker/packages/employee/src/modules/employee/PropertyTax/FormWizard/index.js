@@ -339,15 +339,7 @@ class FormWizard extends Component {
       }
 
       if (isReassesment && activeModule) {
-        // const mohalla = get(currentDraft, "draftRecord.propertyAddress.fields.mohalla.value", "");
         this.props.handleFieldChange("propertyAddress", "city", activeModule);
-        // this.props.setFieldProperty(
-        //   "propertyAddress",
-        //   "mohalla",
-        //   "value",
-        //   get(this.props.common, "prepareFormData.Properties[0].address.locality.code")
-        // );
-        // this.props.handleFieldChange("propertyAddress", "mohalla", mohalla);
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.props.updatePTForms(currentDraft.draftRecord);
