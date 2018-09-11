@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -13,9 +13,19 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
+var _set = require("lodash/set");
+
+var _set2 = _interopRequireDefault(_set);
+
+var _cloneDeep = require("lodash/cloneDeep");
+
+var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
+
 var _queryString = require("query-string");
 
 var _queryString2 = _interopRequireDefault(_queryString);
+
+var _assessInfoFormManager = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -162,4 +172,86 @@ var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFrom
   });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [(0, _extends3.default)({}, estimate)];
+};
+
+var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInfo = function transformPropertyDataToAssessInfo(data) {
+  var propertyType = data["Properties"][0]["propertyDetails"][0]["propertyType"];
+  var propertySubType = data["Properties"][0]["propertyDetails"][0]["propertySubType"];
+  var usageCategoryMajor = data["Properties"][0]["propertyDetails"][0]["usageCategoryMajor"];
+  var usageCategoryMinor = data["Properties"][0]["propertyDetails"][0]["usageCategoryMinor"];
+  var propType = propertySubType === null ? propertyType : propertySubType;
+  var propUsageType = usageCategoryMinor == null ? usageCategoryMajor : usageCategoryMinor;
+  console.log(propType, propUsageType);
+  var formConfigPath = (0, _assessInfoFormManager.getPlotAndFloorFormConfigPath)(propUsageType, propType);
+  console.log(formConfigPath);
+  var path = formConfigPath["path"];
+  console.log(path);
+  var dictFloor = {};
+  var dictCustomSelect = {};
+
+  var customSelectconfig = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/customSelect.js").default;
+  var basicInfoConfig = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/basicInformation.js").default;
+  var configPlot = null,
+      configFloor = null;
+
+  basicInfoConfig = (0, _cloneDeep2.default)(basicInfoConfig);
+  (0, _set2.default)(basicInfoConfig, "fields.typeOfUsage.value", propUsageType);
+  (0, _set2.default)(basicInfoConfig, "fields.typeOfBuilding.value", propType);
+
+  // console.log(customSelectconfig, basicInfoConfig);
+  if (formConfigPath["hasPlot"]) {
+    configPlot = require("egov-ui-kit/config/forms/specs/" + path + "/plotDetails.js").default;
+    configPlot = (0, _cloneDeep2.default)(configPlot);
+    Object.keys(configPlot["fields"]).map(function (item) {
+      var jsonPath = configPlot["fields"][item]["jsonPath"];
+      // let value = get(data, jsonPath);
+      if (item === "plotSize" && (propType === "VACANT" || propType === "INDEPENDENTPROPERTY")) {
+        var jP = jsonPath.split(".");
+        jP.pop();
+        jsonPath = jP.join(".") + ".landArea";
+        var value = (0, _get2.default)(data, jsonPath);
+        configPlot["fields"][item]["value"] = value;
+      } else {
+        var _value = (0, _get2.default)(data, jsonPath);
+        configPlot["fields"][item]["value"] = _value;
+      }
+    });
+  }
+  console.log(configPlot);
+
+  if (formConfigPath["hasFloor"]) {
+    configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
+    var units = data["Properties"][0]["propertyDetails"][0]["units"];
+
+    for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
+      var floorNo = units[unitIndex]["floorNo"];
+      var formKey = "floorDetails_" + floorNo + "_unit_" + unitIndex;
+      configFloor = (0, _cloneDeep2.default)(configFloor);
+      Object.keys(configFloor["fields"]).map(function (item) {
+        var jsonPath = configFloor["fields"][item]["jsonPath"];
+        jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        var valueInJSON = (0, _get2.default)(data, jsonPath);
+        if (item === "builtArea") {
+          valueInJSON = valueInJSON * 9.0;
+        }
+        configFloor["fields"][item].value = valueInJSON;
+      });
+      dictFloor[formKey] = configFloor;
+      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+        customSelectconfig = (0, _cloneDeep2.default)(customSelectconfig);
+        customSelectconfig["fields"]["floorName"]["value"] = floorNo;
+        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+      }
+    }
+  }
+
+  // Object.keys(basicInfoConfig["fields"]).map((item) => {
+  //   var jsonPath = basicInfoConfig["fields"][item]["jsonPath"];
+  //   var valueInJSON = get(data, jsonPath);
+  //   basicInfoConfig["fields"][item].value = valueInJSON;
+  //   console.log(jsonPath, valueInJSON, basicInfoConfig["fields"][item].value);
+  // });
+  // console.log(basicInfoConfig);
+  console.log((0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect));
+  return (0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect);
 };

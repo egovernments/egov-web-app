@@ -238,7 +238,7 @@ class FormWizard extends Component {
             },
           ],
         };
-        const ownerFromResponseIn = convertRawDataToFormConfig(searchPropertyResponse.Properties[0]); //convertRawDataToFormConfig(responseee)
+        const ownerFromResponseIn = convertRawDataToFormConfig(searchPropertyResponse); //convertRawDataToFormConfig(responseee)
         currentDraft = {
           draftRecord: {
             ...ownerFromResponseIn,

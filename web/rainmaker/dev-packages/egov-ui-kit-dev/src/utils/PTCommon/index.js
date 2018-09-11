@@ -1,5 +1,8 @@
 import get from "lodash/get";
+import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 import queryString from "query-string";
+import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
 
 export const resetFormWizard = (form, removeForm) => {
   const formKeys = form && Object.keys(form);
@@ -152,4 +155,86 @@ export const getEstimateFromBill = (bill) => {
     });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [{ ...estimate }];
+};
+
+export const transformPropertyDataToAssessInfo = (data) => {
+  const propertyType = data["Properties"][0]["propertyDetails"][0]["propertyType"];
+  const propertySubType = data["Properties"][0]["propertyDetails"][0]["propertySubType"];
+  const usageCategoryMajor = data["Properties"][0]["propertyDetails"][0]["usageCategoryMajor"];
+  const usageCategoryMinor = data["Properties"][0]["propertyDetails"][0]["usageCategoryMinor"];
+  const propType = propertySubType === null ? propertyType : propertySubType;
+  const propUsageType = usageCategoryMinor == null ? usageCategoryMajor : usageCategoryMinor;
+  console.log(propType, propUsageType);
+  const formConfigPath = getPlotAndFloorFormConfigPath(propUsageType, propType);
+  console.log(formConfigPath);
+  const path = formConfigPath["path"];
+  console.log(path);
+  let dictFloor = {};
+  let dictCustomSelect = {};
+
+  let customSelectconfig = require(`egov-ui-kit/config/forms/specs/PropertyTaxPay/customSelect.js`).default;
+  let basicInfoConfig = require(`egov-ui-kit/config/forms/specs/PropertyTaxPay/basicInformation.js`).default;
+  let configPlot = null,
+    configFloor = null;
+
+  basicInfoConfig = cloneDeep(basicInfoConfig);
+  set(basicInfoConfig, "fields.typeOfUsage.value", propUsageType);
+  set(basicInfoConfig, "fields.typeOfBuilding.value", propType);
+
+  // console.log(customSelectconfig, basicInfoConfig);
+  if (formConfigPath["hasPlot"]) {
+    configPlot = require(`egov-ui-kit/config/forms/specs/${path}/plotDetails.js`).default;
+    configPlot = cloneDeep(configPlot);
+    Object.keys(configPlot["fields"]).map((item) => {
+      let jsonPath = configPlot["fields"][item]["jsonPath"];
+      // let value = get(data, jsonPath);
+      if (item === "plotSize" && (propType === "VACANT" || propType === "INDEPENDENTPROPERTY")) {
+        let jP = jsonPath.split(".");
+        jP.pop();
+        jsonPath = jP.join(".") + ".landArea";
+        let value = get(data, jsonPath);
+        configPlot["fields"][item]["value"] = value;
+      } else {
+        let value = get(data, jsonPath);
+        configPlot["fields"][item]["value"] = value;
+      }
+    });
+  }
+  console.log(configPlot);
+
+  if (formConfigPath["hasFloor"]) {
+    configFloor = require(`egov-ui-kit/config/forms/specs/${path}/floorDetails.js`).default;
+    let units = data["Properties"][0]["propertyDetails"][0]["units"];
+
+    for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
+      var floorNo = units[unitIndex]["floorNo"];
+      let formKey = `floorDetails_${floorNo}_unit_${unitIndex}`;
+      configFloor = cloneDeep(configFloor);
+      Object.keys(configFloor["fields"]).map((item) => {
+        let jsonPath = configFloor["fields"][item]["jsonPath"];
+        jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        let valueInJSON = get(data, jsonPath);
+        if (item === "builtArea") {
+          valueInJSON = valueInJSON * 9.0;
+        }
+        configFloor["fields"][item].value = valueInJSON;
+      });
+      dictFloor[formKey] = configFloor;
+      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+        customSelectconfig = cloneDeep(customSelectconfig);
+        customSelectconfig["fields"]["floorName"]["value"] = floorNo;
+        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+      }
+    }
+  }
+
+  // Object.keys(basicInfoConfig["fields"]).map((item) => {
+  //   var jsonPath = basicInfoConfig["fields"][item]["jsonPath"];
+  //   var valueInJSON = get(data, jsonPath);
+  //   basicInfoConfig["fields"][item].value = valueInJSON;
+  //   console.log(jsonPath, valueInJSON, basicInfoConfig["fields"][item].value);
+  // });
+  // console.log(basicInfoConfig);
+  console.log({ basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect });
+  return { basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect };
 };
