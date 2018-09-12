@@ -40,7 +40,7 @@ import UploadDrawer from "egov-ui-kit/common/User/components/UploadDrawer";
 //Pt common components
 import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
 import SearchProperty from "egov-ui-kit/common/propertyTax/SearchProperty";
-import PropertyInformation from "egov-ui-kit/common/propertyTax/PropertyInformation";
+import Property from "egov-ui-kit/common/propertyTax/Property";
 import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
 import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
 
@@ -79,7 +79,7 @@ export {
   PrivacyPolicy,
   AssessPay,
   SearchProperty,
-  PropertyInformation,
+  Property,
   AssessmentList,
   Dashboard,
   YearDialogue,

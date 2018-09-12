@@ -40,7 +40,7 @@ const twitterStyle = {
   background: "#55acee",
 };
 
-const defaultLoader = "Loading ..."
+const defaultLoader = "Loading ...";
 
 // const location = { lat: 12.9199988, lng: 77.67078 };
 
@@ -128,7 +128,8 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
-        primaryText: <a
+        primaryText: (
+          <a
             className="phoneNumberStyle"
             target="_blank"
             href={domainUrl && domainUrl.includes("http") ? domainUrl : `http://${domainUrl}`}
@@ -136,7 +137,7 @@ class ContactUs extends Component {
           >
             {domainUrl || defaultLoader}
           </a>
-        ,
+        ),
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -164,22 +165,34 @@ class ContactUs extends Component {
                   <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.returnListItems()} />
                 </div>
                 <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                  {twitterUrl &&
+                  {twitterUrl && (
                     <a href={twitterUrl} target="_blank">
-                    {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
-                  </a>}
-                  {facebookUrl && <a href={facebookUrl} target="_blank">
-                    {
-                      <Icon
-                        id="contactus-facebook"
-                        className="contactus-facebook"
-                        style={facebookStyle}
-                        action="custom"
-                        name="facebook"
-                        color="ffffff"
-                      />
-                    }
-                  </a>}
+                      {
+                        <Icon
+                          id="contactus-twitter"
+                          className="contactus-twitter"
+                          style={twitterStyle}
+                          action="custom"
+                          name="twitter"
+                          color="ffffff"
+                        />
+                      }
+                    </a>
+                  )}
+                  {facebookUrl && (
+                    <a href={facebookUrl} target="_blank">
+                      {
+                        <Icon
+                          id="contactus-facebook"
+                          className="contactus-facebook"
+                          style={facebookStyle}
+                          action="custom"
+                          name="facebook"
+                          color="ffffff"
+                        />
+                      }
+                    </a>
+                  )}
                 </div>
               </div>
             }

@@ -515,7 +515,6 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (fromReviewPage) => {
-    // let {floorDetails} =this.state;
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
     if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
       let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;

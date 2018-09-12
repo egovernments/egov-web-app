@@ -57,22 +57,24 @@ class DropDown extends Component {
   };
 
   onSelectFieldChange = (event, key, payload, imageUrl) => {
-    const { generalMDMSDataById, citizenUserId, history, item } = this.props;
+    const { generalMDMSDataById, history, item } = this.props;
     const { downloadReceipt } = this;
     switch (payload) {
       case "Re-Assess":
         localStorage.setItem("draftId", "");
-        history && citizenUserId
-          ? history.push(
-              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-                item.assessmentNo
-              }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-            )
-          : history.push(
-              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
-                item.propertyId
-              }&tenantId=${item.tenantId}`
-            );
+        history &&
+          //&& citizenUserId
+          // ? history.push(
+          //     `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
+          //       item.assessmentNo
+          //     }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
+          //   )
+          // :
+          history.push(
+            `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
+              item.propertyId
+            }&tenantId=${item.tenantId}`
+          );
 
         break;
       case "Download Receipt":
@@ -88,17 +90,19 @@ class DropDown extends Component {
         break;
       case "Complete Payment":
         localStorage.setItem("draftId", "");
-        history && citizenUserId
-          ? history.push(
-              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-                item.assessmentNo
-              }&isReassesment=true&isCompletePayment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-            )
-          : history.push(
-              `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-                item.assessmentNo
-              }&isReassesment=true&isCompletePayment=true&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-            );
+        history &&
+          // citizenUserId
+          //   ? history.push(
+          //       `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
+          //         item.assessmentNo
+          //       }&isReassesment=true&isCompletePayment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
+          //     )
+          //   :
+          history.push(
+            `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
+              item.assessmentNo
+            }&isReassesment=true&isCompletePayment=true&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
+          );
 
         break;
     }

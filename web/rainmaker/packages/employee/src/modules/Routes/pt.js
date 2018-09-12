@@ -2,14 +2,11 @@ import asyncComponent from "./asyncComponent";
 
 const PTHome = asyncComponent(() => import("modules/employee/PropertyTax/PTHome").then((module) => module.default));
 const SearchProperty = asyncComponent(() => import("modules/employee/PropertyTax/SearchProperty").then((module) => module.default));
-const Property = asyncComponent(() => import("modules/employee/PropertyTax/Property").then((module) => module.default));
+const Property = asyncComponent(() => import("egov-ui-kit/common/propertyTax/Property").then((module) => module.default));
 const FormWizard = asyncComponent(() => import("modules/employee/PropertyTax/FormWizard").then((module) => module.default));
 const PaymentSuccess = asyncComponent(() => import("modules/employee/PropertyTax/PaymentSuccess").then((module) => module.default));
 const PaymentFailure = asyncComponent(() => import("modules/employee/PropertyTax/PaymentFailure").then((module) => module.default));
-const PropertyInformationForm = asyncComponent(() =>
-  import("modules/employee/PropertyTax/Property/components/PropertyInformationForm").then((module) => module.default)
-);
-
+const PropertyInformationForm = asyncComponent(() => import("modules/employee/PropertyTax/PropertyEditForm").then((module) => module.default));
 const routes = [
   // property tax routes
   {

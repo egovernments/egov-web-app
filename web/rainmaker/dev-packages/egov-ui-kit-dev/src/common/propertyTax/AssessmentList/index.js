@@ -6,7 +6,7 @@ import BlankAssessment from "./components/BlankAssessment";
 import DropDown from "./components/DropDown";
 import "./index.css";
 
-const getItemStatus = (item, history, generalMDMSDataById, citizenUserId) => {
+const getItemStatus = (item, history, generalMDMSDataById) => {
   let status = item.status;
   let styles = {
     paidIconStyle: {
@@ -24,7 +24,7 @@ const getItemStatus = (item, history, generalMDMSDataById, citizenUserId) => {
           </div>
 
           <div style={{ height: "30px", marginTop: "8px" }}>
-            {history && <DropDown history={history} item={item} generalMDMSDataById={generalMDMSDataById} citizenUserId={citizenUserId} />}
+            {history && <DropDown history={history} item={item} generalMDMSDataById={generalMDMSDataById} />}
           </div>
         </div>
       );
@@ -38,7 +38,7 @@ const getItemStatus = (item, history, generalMDMSDataById, citizenUserId) => {
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
           <div style={{ height: "30px", marginTop: "8px" }}>
-            {history && <DropDown generalMDMSDataById={generalMDMSDataById} history={history} item={item} citizenUserId={citizenUserId} />}
+            {history && <DropDown generalMDMSDataById={generalMDMSDataById} history={history} item={item} />}
           </div>
         </div>
       );
@@ -89,7 +89,7 @@ const getItemStatus = (item, history, generalMDMSDataById, citizenUserId) => {
   }
 };
 
-const getRightIconItems = (item, history, generalMDMSDataById, citizenUserId) => {
+const getRightIconItems = (item, history, generalMDMSDataById) => {
   return item.date || item.status || item.receipt || item.action ? (
     <div
       className="assessment-right-icon"
@@ -97,7 +97,7 @@ const getRightIconItems = (item, history, generalMDMSDataById, citizenUserId) =>
     >
       <div>
         {item.date && <Label label={item.date} containerStyle={{ marginRight: 5 }} labelStyle={{ textAlign: "right" }} color="#484848" />}
-        {getItemStatus(item, history, generalMDMSDataById, citizenUserId)}
+        {getItemStatus(item, history, generalMDMSDataById)}
       </div>
     </div>
   ) : (
@@ -105,7 +105,7 @@ const getRightIconItems = (item, history, generalMDMSDataById, citizenUserId) =>
   );
 };
 
-const getListItems = (items, history, generalMDMSDataById, citizenUserId) => {
+const getListItems = (items, history, generalMDMSDataById) => {
   return (
     items &&
     items.map((item, index) => {
@@ -121,7 +121,7 @@ const getListItems = (items, history, generalMDMSDataById, citizenUserId) => {
             )),
           route: item.route,
           leftIcon: item.leftIcon,
-          rightIcon: getRightIconItems(item, history, generalMDMSDataById, citizenUserId),
+          rightIcon: getRightIconItems(item, history, generalMDMSDataById),
           initiallyOpen: item.initiallyOpen,
           nestedItems:
             item &&
@@ -139,7 +139,7 @@ const getListItems = (items, history, generalMDMSDataById, citizenUserId) => {
                 ),
                 secondaryText: nestedItem.secondaryText,
                 route: nestedItem.route,
-                rightIcon: getRightIconItems(nestedItem, history, generalMDMSDataById, citizenUserId),
+                rightIcon: getRightIconItems(nestedItem, history, generalMDMSDataById),
               };
             }),
         }
@@ -161,7 +161,6 @@ const AssessmentList = ({
   onNewPropertyButtonClick,
   hoverColor,
   generalMDMSDataById,
-  citizenUserId,
 }) => {
   return items.length == 0 ? (
     <BlankAssessment
@@ -174,7 +173,7 @@ const AssessmentList = ({
     />
   ) : (
     <PTList
-      items={getListItems(items, history, generalMDMSDataById, citizenUserId)}
+      items={getListItems(items, history, generalMDMSDataById)}
       history={history}
       onItemClick={onItemClick}
       innerDivStyle={innerDivStyle}

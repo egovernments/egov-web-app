@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
-import { AssessmentList, YearDialogue } from "modules/common";
-import { Screen } from "modules/common";
-import { Icon, BreadCrumbs, Button } from "components";
+import AssessmentList from "../AssessmentList";
+import YearDialogue from "../YearDialogue";
+import Screen from "egov-ui-kit/common/common/Screen";
+import { Icon, BreadCrumbs } from "egov-ui-kit/components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
-import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
-import { getCompletedTransformedItems } from "../common/TransformedAssessments";
+import { fetchProperties, getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 import orderby from "lodash/orderBy";
 
@@ -34,6 +34,8 @@ const listItemStyle = {
   padding: "0px 20px",
   borderWidth: "10px 10px 0px",
 };
+
+const appName = process.env.REACT_APP_NAME;
 
 class Property extends Component {
   constructor(props) {
@@ -107,7 +109,7 @@ class Property extends Component {
       { key: "tenantId", value: this.props.match.params.tenantId },
     ]);
     const { pathname } = location;
-    if (!(localStorage.getItem("path") === pathname)) {
+    if (appName === "Citizen" && !(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
     renderCustomTitleForPt(customTitle);
@@ -122,7 +124,8 @@ class Property extends Component {
   onAssessPayClick = () => {
     const { latestPropertyDetails, propertyId, tenantId } = this.props;
     const assessmentNo = latestPropertyDetails && latestPropertyDetails.assessmentNumber;
-    localStorage.setItem("draftId", "");
+    //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
+    localStorage.removeItem("draftId");
     this.setState({
       dialogueOpen: true,
       urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
@@ -130,7 +133,7 @@ class Property extends Component {
   };
 
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails } = props;
+    const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails, tenantId } = props;
     return [
       {
         primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -146,6 +149,7 @@ class Property extends Component {
                 items={propertyItems}
                 propertyTaxAssessmentID={propertyId}
                 history={history}
+                tenantId={tenantId}
                 onButtonClick={this.onAssessPayClick}
               />
             ),
@@ -188,7 +192,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history, generalMDMSDataById } = this.props;
+    const { urls, location, history, generalMDMSDataById, latestPropertyDetails } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
@@ -196,10 +200,11 @@ class Property extends Component {
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
+    //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
 
     return (
       <Screen>
-        <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
+        {appName === "Citizen" && <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />}
         {
           <AssessmentList
             onItemClick={this.onListItemClick}
@@ -207,7 +212,9 @@ class Property extends Component {
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
             history={history}
+            hoverColor="#fff"
             generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
+            // citizenUserId={uuid}
           />
         }
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
@@ -326,6 +333,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
 const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
   const isInstitution =
     latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
+  console.log(isInstitution);
   const { institution, owners: ownerDetails } = latestPropertyDetails || {};
   return (
     ownerDetails && [
@@ -425,8 +433,6 @@ const mapStateToProps = (state, ownProps) => {
   const propertyId = decodeURIComponent(ownProps.match.params.propertyId);
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  const propertyCity =
-    cities && selPropertyDetails && selPropertyDetails.address && cities.filter((item) => item.key === selPropertyDetails.address.city);
   const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
