@@ -196,7 +196,6 @@ class FormWizard extends Component {
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
-    // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const { search } = location;
     const financialYearFromQuery = getFinancialYearFromQuery();
     const propertyId = getQueryValue(search, "propertyId");
@@ -205,7 +204,7 @@ class FormWizard extends Component {
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     this.getImportantDates();
     try {
-      toggleSpinner();
+      //toggleSpinner();
       let currentDraft;
       if (!isReassesment) {
         let draftsResponse = await httpRequest(
@@ -363,15 +362,13 @@ class FormWizard extends Component {
           selected: activeTab,
           draftRequest: {
             draft: {
-              ...draftRequest.draft,
               id: null,
-              assessmentNumber: currentDraft.assessmentNumber,
+              ...currentDraft,
             },
           },
         },
         () => {
-          //this.onTabClick(activeTab)
-          toggleSpinner();
+          //toggleSpinner();
           {
             if (activeTab >= 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
@@ -388,7 +385,7 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      toggleSpinner();
+      //toggleSpinner();
       console.log(e);
     }
   };
@@ -438,21 +435,6 @@ class FormWizard extends Component {
 
     renderCustomTitleForPt(customTitle);
     toggleSpinner();
-
-    // if (this.props.location.search.split("&").length > 3) {
-    //   try {
-    //     let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-    //     let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-    //     if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-    //       history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
-    //     } else {
-    //       history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
-    //     }
-    //   } catch (e) {
-    //     alert(e);
-    //     // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
-    //   }
-    // }
   };
 
   getImportantDates = async () => {
@@ -625,8 +607,6 @@ class FormWizard extends Component {
         );
       case 2:
         const ownerType = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
-        //const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
-        // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
             <OwnershipTypeHOC disabled={fromReviewPage} />
@@ -683,8 +663,6 @@ class FormWizard extends Component {
             formValidIndexArray: range(0, index),
           })
         : alert("Not authorized to edit this property details");
-    } else {
-      // alert("Please fill required tabs");
     }
   };
 
@@ -874,12 +852,6 @@ class FormWizard extends Component {
     const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
     const { search } = this.props.location;
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-    // const queryObj = [
-    //   { key: "propertyId", value: propertyId },
-    //   { key: "assessmentNumber", value: assessmentNumber },
-    //   { key: "assessmentYear", value: assessmentYear },
-    //   { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
-    // ];
     this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
       if (!isCompletePayment) {
@@ -887,25 +859,6 @@ class FormWizard extends Component {
         const { Bill } = getBill && getBill;
         this.setState({ Bill });
       }
-      // try {
-      //   const requestBody = {
-      //     Transaction: {
-      //       tenantId: localStorage.getItem("tenant-id"),
-      //       txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
-      //       module: "PT",
-      //       billId: get(getBill, "Bill[0].id"),
-      //       moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
-      //       productInfo: "Property Tax Payment",
-      //       gateway: "AXIS",
-      //       callbackUrl: window.location.href,
-      //     },
-      //   };
-      //   const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
-      //   const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-      //   window.location = redirectionUrl;
-      // } catch (e) {
-      //   console.log(e);
-      // }
       updateIndex(4);
     } catch (e) {
       console.log(e);
@@ -987,12 +940,6 @@ class FormWizard extends Component {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
-    // if (
-    //   !get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate") ||
-    //   !get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber")
-    // ) {
-    //   set(prepareFormData, "Receipt[0].Bill", []); //Fix for re-filling of form - prepareFormData retains the old bill - But Why?
-    // }
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     prepareFormData.Receipt[0].Bill[0].billDetails[0] = { ...Bill[0].billDetails[0], ...prepareFormData.Receipt[0].Bill[0].billDetails[0] };
@@ -1063,7 +1010,6 @@ class FormWizard extends Component {
         set(prepareFormData, "Receipt[0].Bill", []);
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
-        console.log(getReceipt);
       }
     } catch (e) {
       console.log(e);

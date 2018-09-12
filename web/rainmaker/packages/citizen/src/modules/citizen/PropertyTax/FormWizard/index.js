@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Icon, Button } from "components";
+import { Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms, displayFormErrors, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import {
@@ -26,7 +26,7 @@ import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertU
 import { get, set, range, isEmpty, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
+import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
@@ -45,7 +45,6 @@ class FormWizard extends Component {
     estimation: [],
     draftRequest: {
       draft: {
-        //tenantId: localStorage.getItem("tenant-id"),
         userId: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
         draftRecord: {},
       },
@@ -126,8 +125,18 @@ class FormWizard extends Component {
         prepareFormData,
       };
       try {
+        if (selected === 3) {
+          draftRequest = {
+            ...draftRequest,
+            draft: {
+              ...draftRequest.draft,
+              isActive: false,
+            },
+          };
+        }
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
+
         this.updateDraftinLocalStorage(draftInfo);
       } catch (e) {
         alert(e);
@@ -185,7 +194,7 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
+    const { updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
     // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const { search } = location;
     const financialYearFromQuery = getFinancialYearFromQuery();
@@ -250,14 +259,9 @@ class FormWizard extends Component {
         };
       }
 
-      //const currentDraft = searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
-      //searchPropertyResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
-
       if (!currentDraft) {
         throw new Error("draft not found");
       }
-
-      // const prepareFormData2 = currentDraft.draftRecord.prepareFormData;
 
       this.setState({
         draftByIDResponse: currentDraft,
@@ -355,16 +359,14 @@ class FormWizard extends Component {
           selected: activeTab,
           draftRequest: {
             draft: {
-              ...draftRequest.draft,
               id: null,
-              assessmentNumber: currentDraft.assessmentNumber,
-              draftRecord: currentDraft.draftRecord,
+              ...currentDraft,
+              // assessmentNumber: currentDraft.assessmentNumber,
+              // draftRecord: currentDraft.draftRecord,
             },
           },
         },
         () => {
-          //this.onTabClick(activeTab)
-          // toggleSpinner();
           {
             if (activeTab === 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
@@ -381,7 +383,6 @@ class FormWizard extends Component {
       );
     } catch (e) {
       console.log("e", e);
-      // toggleSpinner();
     }
   };
 
@@ -612,8 +613,6 @@ class FormWizard extends Component {
         );
       case 2:
         const ownerType = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
-        //const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
-        // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
             <OwnershipTypeHOC disabled={fromReviewPage} />
@@ -800,13 +799,6 @@ class FormWizard extends Component {
     let { history, toggleSpinner, location } = this.props;
     const { search } = location;
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-    // const queryObj = [
-    //   { key: "propertyId", value: propertyId },
-    //   { key: "assessmentNumber", value: assessmentNumber },
-    //   { key: "assessmentYear", value: assessmentYear },
-    //   { key: "tenantId", value: tenantId },
-    //   { key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
-    // ];
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
       const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
