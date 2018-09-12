@@ -3,7 +3,7 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "egov-ui-kit/common/GenericForm";
-import { OwnerInformation } from "../../../../PropertyTax/FormWizard/components/Forms";
+import { OwnerInformation } from "../FormWizard/components/Forms";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { ActionFooter } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";

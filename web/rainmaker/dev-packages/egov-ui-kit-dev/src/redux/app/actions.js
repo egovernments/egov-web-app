@@ -33,7 +33,7 @@ export const fetchLocalizationLabel = (locale) => {
       //let payload = { messages: JSON.parse(window.localStorage.getItem(`localization_${locale}`)) || [] };
       //if (!payload.messages.length) {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
-        { key: "module", value: "rainmaker-pgr" },
+        { key: "module", value: "rainmaker-pgr,rainmaker-pt" },
         { key: "locale", value: locale },
         { key: "tenantId", value: commonConfig.tenantId },
       ]);

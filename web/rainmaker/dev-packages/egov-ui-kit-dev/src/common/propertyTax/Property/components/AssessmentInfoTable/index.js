@@ -1,17 +1,6 @@
 import React from "react";
 import "./index.css";
-import { Receipt } from "components";
-
-const tableHeaderItems = [
-  {
-    key: "Plot Size:",
-    value: "800 sq ft",
-  },
-  {
-    key: "Type of Building:",
-    value: "Independent Building",
-  },
-];
+import { Receipt } from "egov-ui-kit/components";
 
 const AssessmentInfoTable = ({ items, tableHeaderItems }) => {
   return (
