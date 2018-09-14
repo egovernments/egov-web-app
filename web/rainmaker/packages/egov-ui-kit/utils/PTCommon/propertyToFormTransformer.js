@@ -139,7 +139,10 @@ var getInstituteAuthority = exports.getInstituteAuthority = function getInstitut
       };
     }
   });
-  (0, _set2.default)(instituteAuthorityForm, "institutionAuthority.fields.designation.value", (0, _get2.default)(propertyResponse, designationPath, ""));
+  (0, _set2.default)(instituteAuthorityForm, "institutionAuthority.fields.designation.value", (0, _get2.default)(propertyResponse.Properties[0], designationPath, ""));
+  if ((0, _get2.default)(instituteAuthorityForm, "institutionAuthority.fields.mobile.value", "") === (0, _get2.default)(instituteAuthorityForm, "institutionAuthority.fields.telephone.value", "")) {
+    (0, _set2.default)(instituteAuthorityForm, "institutionAuthority.fields.mobile.value", "");
+  }
 
   return instituteAuthorityForm;
 };
@@ -160,15 +163,16 @@ var convertRawDataToFormConfig = exports.convertRawDataToFormConfig = function c
   var ownerShipForm = getOwnerShipDetails(properties[0]);
   var propertyAddress = getpropertyAddressDetails(propertyResponse);
   var assessmentForms = getAssesmentDetails(propertyResponse);
-  var typeOfOwnershipPath = (0, _get2.default)(ownershipType, "fields.ownershipCategory.jsonPath", "");
   var ownershipType = (0, _get2.default)(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", "");
+  var typeOfOwnershipPath = (0, _get2.default)(ownerShipForm, "ownershipType.fields.ownershipCategory.jsonPath", "");
+  var ownershipCategoryFromApi = (0, _get2.default)(properties[0], "propertyDetails[0].ownershipCategory", "");
 
   if (ownershipType === "MULTIPLEOWNERS" || ownershipType === "SINGLEOWNER") {
     ownerForms = getAllOwnerDetails(properties[0], ownershipType === "SINGLEOWNER");
-  } else if (ownershipType.toLowerCase().indexOf("insti") !== -1) {
+  } else if (ownershipType.toLowerCase().indexOf("insti") !== -1 || ownershipCategoryFromApi.toLowerCase().indexOf("insti") !== -1) {
     institutionAuthority = getInstituteAuthority(propertyResponse);
     institutionDetails = getInstituteDetails(properties[0]);
-    (0, _set2.default)(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", (0, _get2.default)(propertyResponse, typeOfOwnershipPath, ""));
+    (0, _set2.default)(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", (0, _get2.default)(propertyResponse, "Properties[0].propertyDetails[0].ownershipCategory", ""));
   } else {
     //TODO
   }
