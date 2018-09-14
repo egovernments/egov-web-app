@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 // import { translate, validate_fileupload } from '../../common/common';
 // import RaisedButton from 'material-ui/RaisedButton';
 import { SelectField, MenuItem } from "material-ui";
-import { Grid, Row, Col, DropdownButton } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import _ from "lodash";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import jp from "jsonpath";
 import { withRouter } from "react-router";
+import Label from "egov-ui-kit/utils/translationNode";
 
 class UiBoundary extends Component {
   constructor(props) {
@@ -307,9 +308,10 @@ class UiBoundary extends Component {
     let labelProperty = {
       floatingLabelFixed: true,
       floatingLabelText: (
-        <span>
-          {level} <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
-        </span>
+        <div className="rainmaker-displayInline">
+          <Label className="show-field-label" label={level} fontSize="25px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+          <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
+        </div>
       ),
       hintText: "-- Please Select --",
     };
@@ -317,12 +319,6 @@ class UiBoundary extends Component {
       <SelectField
         className="custom-form-control-for-select"
         id={this.props.item.jsonPath.split(".").join("-") + "-" + level}
-        floatingLabelStyle={{
-          color: "#696969",
-          fontSize: "20px",
-          whiteSpace: "nowrap",
-        }}
-        labelStyle={{ color: "#5F5C57" }}
         dropDownMenuProps={{
           targetOrigin: { horizontal: "left", vertical: "bottom" },
         }}
