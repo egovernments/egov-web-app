@@ -164,7 +164,6 @@ export const transformPropertyDataToAssessInfo = (data) => {
   const usageCategoryMinor = data["Properties"][0]["propertyDetails"][0]["usageCategoryMinor"];
   const propType = propertySubType === null ? propertyType : propertySubType;
   const propUsageType = usageCategoryMinor == null ? usageCategoryMajor : usageCategoryMinor;
-  console.log(propType, propUsageType);
   const formConfigPath = getPlotAndFloorFormConfigPath(propUsageType, propType);
   const path = formConfigPath["path"];
   let dictFloor = {};
@@ -178,19 +177,17 @@ export const transformPropertyDataToAssessInfo = (data) => {
   basicInfoConfig = cloneDeep(basicInfoConfig);
   set(basicInfoConfig, "fields.typeOfUsage.value", propUsageType);
   set(basicInfoConfig, "fields.typeOfBuilding.value", propType);
+  if (propType === "SHAREDPROPERTY") {
+    configPlot = { fields: { floorCount: { value: 1 } } };
+  }
 
-  // console.log(customSelectconfig, basicInfoConfig);
   if (formConfigPath["hasPlot"]) {
     configPlot = require(`egov-ui-kit/config/forms/specs/${path}/plotDetails.js`).default;
     configPlot = cloneDeep(configPlot);
     Object.keys(configPlot["fields"]).map((item) => {
       let jsonPath = configPlot["fields"][item]["jsonPath"];
-      // let value = get(data, jsonPath);
       if (item === "plotSize" && (propType === "VACANT" || propType === "INDEPENDENTPROPERTY")) {
-        let jP = jsonPath.split(".");
-        jP.pop();
-        jsonPath = jP.join(".") + ".landArea";
-        let value = get(data, jsonPath);
+        let value = get(data, modifyEndOfJsonPath(jsonPath, "landArea"));
         configPlot["fields"][item]["value"] = value;
       } else {
         let value = get(data, jsonPath);
@@ -211,10 +208,19 @@ export const transformPropertyDataToAssessInfo = (data) => {
         let jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
         let valueInJSON = get(data, jsonPath);
+        if (valueInJSON === null) {
+          let categoryValue = jsonPath.split(".").pop();
+          if (categoryValue === "usageCategoryMinor") {
+            valueInJSON = get(data, modifyEndOfJsonPath(jsonPath, "usageCategoryMajor"));
+          } else if (categoryValue === "usageCategoryDetail") {
+            valueInJSON = get(data, modifyEndOfJsonPath(jsonPath, "usageCategorySubMinor"));
+          }
+        }
         configFloor["fields"][item].value = valueInJSON;
       });
       configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
+
       if (!("customSelect_" + floorNo in dictCustomSelect)) {
         customSelectconfig = cloneDeep(customSelectconfig);
         customSelectconfig["fields"]["floorName"]["value"] = floorNo;
@@ -230,7 +236,6 @@ export const transformPropertyDataToAssessInfo = (data) => {
   //   console.log(jsonPath, valueInJSON, basicInfoConfig["fields"][item].value);
   // });
   // console.log(basicInfoConfig);
-  console.log({ basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect });
   return { basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect };
 };
 
@@ -242,4 +247,10 @@ export const convertUnitsToSqFt = (unitArray) => {
     unit.unitArea = value;
     return unit;
   });
+};
+
+const modifyEndOfJsonPath = (jsonpath, toReplaceWith) => {
+  let jP = jsonpath.split(".");
+  jP.pop();
+  return jP.join(".") + "." + toReplaceWith;
 };
