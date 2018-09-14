@@ -146,9 +146,10 @@ export default class ShowField extends Component {
               dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
               floatingLabelFixed={true}
               floatingLabelText={
-                <span>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                <div className="rainmaker-displayInline">
+                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               value={typeof obj.value == "undefined" ? "" : obj.value}
               onChange={(event, key, value) => {
