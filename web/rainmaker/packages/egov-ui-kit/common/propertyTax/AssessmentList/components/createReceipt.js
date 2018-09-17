@@ -86,7 +86,7 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
     return item.code === property.tenantId;
   });
   return {
-    header: propertyTenant[0].name + " MUNICIPAL CORPORATION",
+    header: propertyTenant[0].name + " MUNICIPAL COUNCIL",
     subheader: "Property Tax Payment Receipt (Citizen Copy)",
     logo: propertyTenant[0].imageId || _pblogo2.default,
     contact: propertyTenant[0].contactNumber,

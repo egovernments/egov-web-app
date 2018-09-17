@@ -59,7 +59,7 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   });
 
   return {
-    header: propertyTenant[0].name + " MUNICIPAL CORPORATION",
+    header: propertyTenant[0].name + " MUNICIPAL COUNCIL",
     subheader: "Property Tax Payment Receipt",
     logo: _pblogo2.default,
     contact: propertyTenant[0].contactNumber,
