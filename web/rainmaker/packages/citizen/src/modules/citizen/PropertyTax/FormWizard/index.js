@@ -93,13 +93,51 @@ class FormWizard extends Component {
 
   callDraft = async (formArray = [], assessmentNumber = "") => {
     let { draftRequest, selected } = this.state;
-    const { form, prepareFormData, location } = this.props;
+    const { form, location, common } = this.props;
     const { search } = location;
+
+    let prepareFormData = { ...this.props.prepareFormData };
+    //toggleSpinner();
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
+    try {
+      if (financialYearFromQuery) {
+        set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if (selectedownerShipCategoryType === "SINGLEOWNER") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+      } else if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+      } else if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+        const { instiObj, ownerArray } = this.getInstituteInfo();
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
+      }
+    } catch (e) {
+      alert(e)
+    }
+
     if (!draftRequest.draft.id) {
       draftRequest.draft.tenantId = getQueryValue(search, "tenantId") || prepareFormData.Properties[0].tenantId;
       draftRequest.draft.draftRecord = {
         selectedTabIndex: selected + 1,
-        ...form,
+        prepareFormData,
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
@@ -118,7 +156,6 @@ class FormWizard extends Component {
         draftRecord: {
           ...draftRequest.draft.draftRecord,
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
-          ...form,
           assessmentNumber: assessmentNo,
           prepareFormData,
         },
@@ -229,6 +266,15 @@ class FormWizard extends Component {
           draftRequest
         );
         currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+        const prepareFormDataFromApi = get(currentDraft, "draftRecord.prepareFormData", {})
+        const preparedForm = convertRawDataToFormConfig(prepareFormDataFromApi); //convertRawDataToFormConfig(responseee)
+        currentDraft = {
+          draftRecord: {
+            ...currentDraft.draftRecord,
+            ...preparedForm,
+            prepareFormData: prepareFormDataFromApi,
+          },
+        };
       } else {
         const searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
           {
