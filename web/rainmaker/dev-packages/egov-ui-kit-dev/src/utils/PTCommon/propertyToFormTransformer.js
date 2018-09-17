@@ -135,6 +135,7 @@ export const convertRawDataToFormConfig = (propertyResponse) => {
     set(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", get(propertyResponse, "Properties[0].propertyDetails[0].ownershipCategory", ""));
   } else {
     //TODO
+    set(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", "SINGLEOWNER");
   }
 
   return {

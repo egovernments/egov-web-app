@@ -175,6 +175,7 @@ var convertRawDataToFormConfig = exports.convertRawDataToFormConfig = function c
     (0, _set2.default)(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", (0, _get2.default)(propertyResponse, "Properties[0].propertyDetails[0].ownershipCategory", ""));
   } else {
     //TODO
+    (0, _set2.default)(ownerShipForm, "ownershipType.fields.typeOfOwnership.value", "SINGLEOWNER");
   }
 
   return (0, _extends4.default)({}, propertyAddress, assessmentForms, ownerForms, ownerShipForm, institutionAuthority, institutionDetails);
