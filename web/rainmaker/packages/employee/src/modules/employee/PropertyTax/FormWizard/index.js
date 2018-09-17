@@ -677,7 +677,6 @@ class FormWizard extends Component {
           this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
           break;
         }
-
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
           callDraft();
