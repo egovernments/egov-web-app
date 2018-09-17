@@ -85,7 +85,7 @@ const routes = [
     },
   },
   {
-    path: "egf/*",
+    path: "services/*",
     component: EGFFinance,
     needsAuthentication: true,
     options: {
