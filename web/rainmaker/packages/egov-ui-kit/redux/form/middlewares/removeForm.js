@@ -35,7 +35,7 @@ var removeFormMiddleware = function removeFormMiddleware(store) {
                 form = state.form;
 
                 if (!(type === _actionTypes.REMOVE_FORM)) {
-                  _context.next = 14;
+                  _context.next = 15;
                   break;
                 }
 
@@ -50,27 +50,32 @@ var removeFormMiddleware = function removeFormMiddleware(store) {
 
                   dispatch((0, _actions2.prepareFormData)("Properties[0].propertyDetails[0].units[" + unitIndex + "]", null));
                 }
-                _context.next = 14;
+
+                if (window.appOverrides) {
+                  window.appOverrides.resetForm(formKey);
+                }
+
+                _context.next = 15;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](5);
                 message = _context.t0.message;
 
                 dispatch((0, _actions.toggleSnackbarAndSetText)(true, message, true));
                 return _context.abrupt("return");
 
-              case 14:
+              case 15:
 
                 next(action);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, undefined, [[5, 9]]);
+        }, _callee, undefined, [[5, 10]]);
       }));
 
       return function (_x) {
