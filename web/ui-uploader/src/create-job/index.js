@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createJob, setInputFile } from "./actions";
 import View from "./view";
+import { Redirect } from "react-router-dom";
 
 class CreateJob extends Component {
   static propTypes = {
@@ -52,8 +53,16 @@ class CreateJob extends Component {
     this.props.createJob(moduleName, moduleDefinition, file);
   };
 
+  showJobs = e => {
+    // console.log("AAsssssssssA");
+    let { history } = this.props;
+    // history.push("/view-jobs");
+    window.basename = process.env.NODE_ENV === "production" ? "/app/v2/uploader" : "";
+    window.location.href = window.location.origin +window.basename+ "/view-jobs";
+  };
+
   render() {
-    const { handleSubmit, handleOnChange } = this;
+    const { handleSubmit, handleOnChange, showJobs } = this;
     const { isLoading, history } = this.props;
     const { message, messageBarOpen, errorMessage } = this.state;
 
@@ -61,6 +70,7 @@ class CreateJob extends Component {
       <View
         handleOnChange={handleOnChange}
         handleSubmit={handleSubmit}
+        showJobs={showJobs}
         isLoading={isLoading}
         history={history}
         message={message}
@@ -85,4 +95,7 @@ const mapStateToProps = (state, ownProps) => ({
   jobId: state.jobCreate.jobId
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateJob);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateJob);
