@@ -32,67 +32,19 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = require("react-router-dom");
-
-var _Menu = require("material-ui/Menu");
-
-var _Menu2 = _interopRequireDefault(_Menu);
-
-var _MenuItem = require("material-ui/MenuItem");
-
-var _MenuItem2 = _interopRequireDefault(_MenuItem);
-
 var _reactRedux = require("react-redux");
-
-var _components = require("components");
 
 var _lodash = require("lodash");
 
-var _components2 = require("../ActionMenu/components");
+var _components = require("../ActionMenu/components");
 
-var _components3 = _interopRequireDefault(_components2);
+var _components2 = _interopRequireDefault(_components);
 
 require("./index.css");
 
 var _actions = require("egov-ui-kit/redux/app/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import actionList from "./actionList";
-
-var styles = {
-  menuStyle: {
-    marginLeft: 15,
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    flex: 1
-  },
-
-  inputStyle: {
-    color: "white !important",
-    marginTop: "0px",
-    marginLeft: "-10px"
-  },
-  fibreIconStyle: {
-    height: "21px",
-    width: "21px",
-    margin: 0,
-    position: "relative"
-  },
-  arrowIconStyle: {
-    right: "-10px"
-  },
-  defaultMenuItemStyle: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 0,
-    padding: 0
-  }
-};
-
-// const
 
 var ActionMenu = function (_Component) {
   (0, _inherits3.default)(ActionMenu, _Component);
@@ -110,16 +62,13 @@ var ActionMenu = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ActionMenu.__proto__ || Object.getPrototypeOf(ActionMenu)).call.apply(_ref, [this].concat(args))), _this), _this.componentDidMount = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-      var userInfo, _this$props, fetchActionMenu, role, roles, roleCodes;
-
+      var userInfo, fetchActionMenu, roles, roleCodes;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               userInfo = JSON.parse(localStorage.getItem("user-info"));
-              _this$props = _this.props, fetchActionMenu = _this$props.fetchActionMenu, role = _this$props.role;
-              // let roleCode = this.getTransformedRole(role);
-
+              fetchActionMenu = _this.props.fetchActionMenu;
               roles = (0, _lodash.get)(userInfo, "roles");
               roleCodes = roles ? roles.map(function (role) {
                 return role.code;
@@ -145,48 +94,11 @@ var ActionMenu = function (_Component) {
 
   (0, _createClass3.default)(ActionMenu, [{
     key: "render",
-
-
-    // getTransformedRole = (role) => {
-    //   switch (role) {
-    //     case "citizen":
-    //       return "CITIZEN";
-    //       break;
-    //     // case "csr":
-    //     //   return "CSR";
-    //     //   break;
-    //     // case "ao":
-    //     //   return "GRO";
-    //     //   break;
-    //     // case "employee":
-    //     //   return "EMPLOYEE";
-    //     //   break;
-    //     // case "pgr-admin":
-    //     //   return "PGR-ADMIN";
-    //     //   break;
-    //     default:
-    //       return "EMPLOYEE";
-    //   }
-    // };
-
     value: function render() {
-      var _props = this.props,
-          actionListArr = _props.actionListArr,
-          role = _props.role;
-      // let { role } = this.props;
-      //let actionListArr = actionList[role];
-      // let transformedRole = this.getTransformedRole(role);
+      var actionListArr = this.props.actionListArr;
 
       var transformedRole = "";
-      // if (actionListArr && actionListArr.length > 0) {
-      //   actionListArr.map((item) => {
-      //     if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
-      //       item.navigationURL = "";
-      //     }
-      //   });
-      // }
-
-      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components3.default, { role: transformedRole, actionListArr: actionListArr }) : null;
+      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole, actionListArr: actionListArr }) : null;
     }
   }]);
   return ActionMenu;

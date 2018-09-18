@@ -8,7 +8,7 @@ var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _enableDependentFields = require("./utils/enableDependentFields");
 
@@ -35,7 +35,7 @@ var formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[a-zA-Z\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\s]{1,64}$/i,
       errorMessage: "Enter valid name (max length 64)"
     },
     ownerMobile: {
@@ -55,18 +55,11 @@ var formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
+      pattern: /^[a-zA-Z\s]{1,64}$/i,
       required: true,
+      errorMessage: "Enter valid name (max length 64)",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
-    // ownerAadhar: {
-    //   id: "ownerAadhar",
-    //   jsonPath: "Properties[0].propertyDetails[0].owners[0].aadhaarNumber",
-    //   type: "textfield",
-    //   floatingLabelText: "Aadhar ID",
-    //   hintText: "Enter aadhar card no.",
-    //   errorMessage: "Enter valid aadhar number",
-    //   pattern: /^[0-9]{12}$/i,
-    // },
     ownerEmail: {
       id: "ownerEmail",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].emailId",
@@ -75,7 +68,7 @@ var formConfig = {
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
       errorMessage: "Enter valid email id",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/
+      pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/
     },
     ownerAddress: {
       id: "ownerAddress",
@@ -84,7 +77,7 @@ var formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 0-9A-Za-z]{1,500}$/,
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,500}$/,
       errorMessage: "Enter valid address"
     },
     ownerRelationship: {
@@ -107,24 +100,6 @@ var formConfig = {
       dropDownData: [],
       fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dataFetchConfig: {
-        url: _endPoints.MDMS.GET.URL,
-        action: _endPoints.MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [{
-              moduleName: "PropertyTax",
-              masterDetails: [{
-                name: "OwnerType",
-                filter: "[?(@.fromFY=='2015-16')]" //year value for this filter should be dynamic.
-              }]
-            }]
-          }
-        },
-        dataPath: ["MdmsRes.PropertyTax.OwnerType"]
-      },
       updateDependentFields: function updateDependentFields(_ref) {
         var formKey = _ref.formKey,
             sourceField = _ref.field,
@@ -144,11 +119,16 @@ var formConfig = {
           currAcc.push(dropDownData);
           return currAcc;
         }, []);
+
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "value", (0, _get3.default)(documentTypes, "[0].value", "")));
         switch (value) {
           case "NONE":
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, true);
+            break;
+          case "WIDOW":
+            dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", "Female"));
+            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
             break;
           default:
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
@@ -194,10 +174,10 @@ var formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
       hintText: "PT_FORM3_DOCUMENT_ID_NO_PLACEHOLDER",
-      hideField: true,
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      hideField: true
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
@@ -205,13 +185,13 @@ var formConfig = {
       required: true,
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
-      hideField: true,
       fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dropDownData: [], //[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      dropDownData: [],
+      hideField: true,
       updateDependentFields: function updateDependentFields(_ref2) {
         var formKey = _ref2.formKey,
             sourceField = _ref2.field,
@@ -260,16 +240,65 @@ var formConfig = {
             _get$street = _get.street,
             street = _get$street === undefined ? "" : _get$street;
 
-        var mohallaDetails = mohalla && mohalla.dropDownData.find(function (mohallaData) {
+        var mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(function (mohallaData) {
           return mohallaData.value === (0, _get3.default)(mohalla, "value", "");
         });
         if (iscorrAddrSameProp) {
-          var correspondingAddress = ["" + (0, _get3.default)(houseNumber, "value", ""), "" + (0, _get3.default)(colony, "value", ""), "" + (0, _get3.default)(street, "value", ""), "" + (0, _get3.default)(mohallaDetails, "label", ""), "" + (0, _get3.default)(city, "value", "").split(".").pop(), "" + (0, _get3.default)(pincode, "value", "")].join(", ").replace(/^(,\s)+|(,\s)+$/g, '').replace(/(,\s){2,}/g, ", ");
+          var correspondingAddress = ["" + (0, _get3.default)(houseNumber, "value", ""), "" + (0, _get3.default)(colony, "value", ""), "" + (0, _get3.default)(street, "value", ""), "" + (0, _get3.default)(mohallaDetails, "label", ""), "" + (0, _get3.default)(city, "value", "").split(".").pop(), "" + (0, _get3.default)(pincode, "value", "")].join(", ").replace(/^(,\s)+|(,\s)+$/g, "").replace(/(,\s){2,}/g, ", ");
           dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", correspondingAddress));
         } else {
           dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", ""));
         }
       }
+    }
+  },
+  beforeInitForm: function beforeInitForm(action, store, dispatch) {
+    try {
+      var state = store.getState();
+      var OwnerTypes = (0, _get3.default)(state, "common.generalMDMSDataById.OwnerType");
+      var financialYearFromQuery = window.location.search.split("FY=")[1];
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(Object.values(OwnerTypes), financialYearFromQuery);
+      (0, _set2.default)(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      var ownerShipType = (0, _get3.default)(state, "form.ownershipType.fields.typeOfOwnership.value", "");
+      if (ownerShipType === "SINGLEOWNER") {
+        (0, _set2.default)(action, "form.fields.ownerGender.value", (0, _get3.default)(state, "form.ownerInfo.fields.ownerGender.value", "Male"));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
+    }
+  },
+  afterInitForm: function afterInitForm(action, store, dispatch) {
+    try {
+      var formKey = (0, _get3.default)(action, "form.name", "");
+      var state = store.getState();
+      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerCategory.value", "NONE") === "NONE") {
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", true));
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", true));
+      } else {
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", false));
+        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", false));
+      }
+      var currentCategory = (0, _get3.default)(state, "form." + action.form.name + ".fields.ownerCategory.value", "NONE");
+      var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
+        return docu.ownerTypeCode === currentCategory;
+      }).reduce(function (acc, curr) {
+        var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
+        var dropDownData = {
+          label: curr.name,
+          value: curr.code
+        };
+        currAcc.push(dropDownData);
+        return currAcc;
+      }, []);
+
+      dispatch((0, _actions.setFieldProperty)(action.form.name, "ownerCategoryIdType", "dropDownData", documentTypes));
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
     }
   },
   action: "",

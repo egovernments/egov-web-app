@@ -9,7 +9,7 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
@@ -90,8 +90,10 @@ var floorCount = exports.floorCount = {
           dispatch = _ref2.dispatch,
           state = _ref2.state;
 
+      // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
+      // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
         for (var i = field.value; i < previousFloorNo; i++) {
           if (state.form.hasOwnProperty("customSelect_" + i)) {
@@ -275,7 +277,6 @@ var beforeInitForm = exports.beforeInitForm = {
     var usageCategoryMinor = (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     var usageCategoryMajor = (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
     (0, _set2.default)(action, "form.fields.subUsageType.hideField", false);
-    //For adding multiple units to prepareFormData
 
     var unitFormUpdate = function unitFormUpdate(usageCategoryMinor) {
       var skipMajorUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -285,7 +286,9 @@ var beforeInitForm = exports.beforeInitForm = {
       });
       if (filteredSubUsageMinor.length > 0) {
         var filteredUsageCategoryDetails = getPresentMasterObj(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
-        (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"));
+        var mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+        var subUsageData = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+        (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", subUsageData);
         if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")));
         }
@@ -306,14 +309,15 @@ var beforeInitForm = exports.beforeInitForm = {
           return item.value !== "MIXED";
         });
         (0, _set2.default)(action, "form.fields.usageType.disabled", false);
-        (0, _set2.default)(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+        var usageTypeData = (0, _PTCommon.sortDropdown)(filterArrayWithoutMixed, "label", true);
+        (0, _set2.default)(action, "form.fields.usageType.dropDownData", usageTypeData);
         unitFormUpdate("common.prepareFormData." + action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", false);
       } else {
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
       }
     }
     (0, _set2.default)(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath")) {
+    if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
       dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMajor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")));
     }
     if ((0, _get2.default)(state, "common.prepareFormData." + (0, _get2.default)(action, "form.fields.occupancy.jsonPath")) === "RENTED") {
@@ -343,7 +347,9 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
         });
         if (filteredSubUsageMinor.length > 0) {
           var filteredUsageCategoryDetails = getPresentMasterObj(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
-          (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"));
+          var mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+          var subUsageData = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+          (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", subUsageData);
           // set(
           //   action,
           //   "form.fields.subUsageType.value",
@@ -364,12 +370,13 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
             return item.value !== "MIXED";
           });
           (0, _set2.default)(action, "form.fields.usageType.disabled", false);
-          (0, _set2.default)(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+          var usageTypeData = (0, _PTCommon.sortDropdown)(filterArrayWithoutMixed, "label", true);
+          (0, _set2.default)(action, "form.fields.usageType.dropDownData", usageTypeData);
         }
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
       }
       (0, _set2.default)(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-      if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath")) {
+      if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
         dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMajor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")));
       }
     }
@@ -403,24 +410,27 @@ var city = exports.city = {
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     numcols: 6,
     dataFetchConfig: {
-      url: _endPoints.CITY.GET.URL,
-      action: _endPoints.CITY.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [{
-            moduleName: "tenant",
-            masterDetails: [{
-              name: "tenants"
-            }]
-          }]
-        }
-      },
-      dataPath: ["MdmsRes.tenant.tenants"],
+      // url: CITY.GET.URL,
+      // action: CITY.GET.ACTION,
+      // queryParams: [],
+      // requestBody: {
+      //   MdmsCriteria: {
+      //     tenantId: "pb",
+      //     moduleDetails: [
+      //       {
+      //         moduleName: "tenant",
+      //         masterDetails: [
+      //           {
+      //             name: "tenants",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      // },
+      // dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [{
-        fieldKey: "mohalla",
-        hierarchyType: "REVENUE"
+        fieldKey: "mohalla"
       }]
     },
     updateDependentFields: function updateDependentFields(_ref6) {
@@ -462,7 +472,7 @@ var city = exports.city = {
         }
       };
 
-      dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor", "Rebate", "Penalty", "Interest", "FireCess"]));
+      dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor"]));
     }
   }
 };
@@ -544,10 +554,12 @@ var mohalla = exports.mohalla = {
           field = _ref7.field,
           dispatch = _ref7.dispatch;
 
-      var mohalla = field.dropDownData.find(function (option) {
-        return option.value === field.value;
-      });
-      dispatch((0, _actions.prepareFormData)("Properties[0].address.locality.area", mohalla.area));
+      if (field.value && field.value.length > 0) {
+        var _mohalla = field.dropDownData.find(function (option) {
+          return option.value === field.value;
+        });
+        dispatch((0, _actions.prepareFormData)("Properties[0].address.locality.area", _mohalla.area));
+      }
     }
   }
 };

@@ -1,5 +1,5 @@
-import { CITY } from "egov-ui-kit/utils/endPoints";
-import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
+import { prepareFormData, fetchGeneralMDMSData, toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { setDependentFields } from "./enableDependentFields";
 import { removeFormKey } from "./removeFloors";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
@@ -51,8 +51,10 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
       localStorage.setItem("previousFloorNo", field.value);
+      // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
         for (var i = field.value; i < previousFloorNo; i++) {
           if (state.form.hasOwnProperty(`customSelect_${i}`)) {
@@ -231,7 +233,6 @@ export const beforeInitForm = {
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
     set(action, "form.fields.subUsageType.hideField", false);
-    //For adding multiple units to prepareFormData
 
     const unitFormUpdate = (usageCategoryMinor, skipMajorUpdate = true) => {
       var filteredSubUsageMinor = filter(
@@ -246,11 +247,9 @@ export const beforeInitForm = {
           filteredSubUsageMinor,
           "usageCategorySubMinor"
         );
-        set(
-          action,
-          "form.fields.subUsageType.dropDownData",
-          mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
-        );
+        const mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+        const subUsageData = sortDropdown(mergedMaster, "label", true);
+        set(action, "form.fields.subUsageType.dropDownData", subUsageData);
         if (get(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch(
             prepareFormData(
@@ -274,14 +273,15 @@ export const beforeInitForm = {
         var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
-        set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+        const usageTypeData = sortDropdown(filterArrayWithoutMixed, "label", true);
+        set(action, "form.fields.usageType.dropDownData", usageTypeData);
         unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`, false);
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    if (get(action, "form.fields.subUsageType.jsonPath")) {
+    if (get(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
       dispatch(
         prepareFormData(
           `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
@@ -322,11 +322,9 @@ export const beforeInitFormForPlot = {
             filteredSubUsageMinor,
             "usageCategorySubMinor"
           );
-          set(
-            action,
-            "form.fields.subUsageType.dropDownData",
-            mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
-          );
+          const mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+          const subUsageData = sortDropdown(mergedMaster, "label", true);
+          set(action, "form.fields.subUsageType.dropDownData", subUsageData);
           // set(
           //   action,
           //   "form.fields.subUsageType.value",
@@ -350,12 +348,13 @@ export const beforeInitFormForPlot = {
           var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
           var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
           set(action, "form.fields.usageType.disabled", false);
-          set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+          const usageTypeData = sortDropdown(filterArrayWithoutMixed, "label", true);
+          set(action, "form.fields.usageType.dropDownData", usageTypeData);
         }
         set(action, "form.fields.subUsageType.hideField", true);
       }
       set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-      if (get(action, "form.fields.subUsageType.jsonPath")) {
+      if (get(action, "form.fields.subUsageType.jsonPath") && usageCategoryMajor !== "MIXED") {
         dispatch(
           prepareFormData(
             `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
@@ -394,29 +393,28 @@ export const city = {
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     numcols: 6,
     dataFetchConfig: {
-      url: CITY.GET.URL,
-      action: CITY.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [
-            {
-              moduleName: "tenant",
-              masterDetails: [
-                {
-                  name: "tenants",
-                },
-              ],
-            },
-          ],
-        },
-      },
-      dataPath: ["MdmsRes.tenant.tenants"],
+      // url: CITY.GET.URL,
+      // action: CITY.GET.ACTION,
+      // queryParams: [],
+      // requestBody: {
+      //   MdmsCriteria: {
+      //     tenantId: "pb",
+      //     moduleDetails: [
+      //       {
+      //         moduleName: "tenant",
+      //         masterDetails: [
+      //           {
+      //             name: "tenants",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      // },
+      // dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [
         {
           fieldKey: "mohalla",
-          hierarchyType: "REVENUE",
         },
       ],
     },
@@ -481,10 +479,6 @@ export const city = {
           "UsageCategoryMajor",
           "UsageCategoryMinor",
           "UsageCategorySubMinor",
-          "Rebate",
-          "Penalty",
-          "Interest",
-          "FireCess",
         ])
       );
     },
@@ -564,10 +558,12 @@ export const mohalla = {
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     required: true,
     updateDependentFields: ({ formKey, field, dispatch }) => {
-      const mohalla = field.dropDownData.find((option) => {
-        return option.value === field.value;
-      });
-      dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
+      if (field.value && field.value.length > 0) {
+        const mohalla = field.dropDownData.find((option) => {
+          return option.value === field.value;
+        });
+        dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
+      }
     },
   },
 };

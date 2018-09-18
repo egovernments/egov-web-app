@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Icon, Button } from "components";
+import { Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
+import { deleteForm, updateForms, displayFormErrors, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -16,27 +16,21 @@ import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
-// import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
-import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue } from "egov-ui-kit/utils/PTCommon";
-import get from "lodash/get";
-import set from "lodash/set";
+import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
+import { get, set, range, isEmpty, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
-import range from "lodash/range";
-// import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
+import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
-import ReactDOM from "react-dom";
+import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -51,7 +45,6 @@ class FormWizard extends Component {
     estimation: [],
     draftRequest: {
       draft: {
-        tenantId: localStorage.getItem("tenant-id"),
         userId: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
         draftRecord: {},
       },
@@ -62,53 +55,130 @@ class FormWizard extends Component {
     partialAmountError: "",
   };
 
-  updateDraftinLocalStorage = (draftInfo) => {
+  updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
-    this.setState({
-      draftRequest: { draft: draftInfo },
-    });
+    this.setState(
+      {
+        draftRequest: { draft: draftInfo },
+      },
+      async () => {
+        if (assessmentNumber) {
+          let { draftRequest, selected } = this.state;
+          const { form, prepareFormData } = this.props;
+          const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
+          draftRequest.draft = {
+            ...draftRequest.draft,
+            assessmentNumber: assessmentNo,
+            draftRecord: {
+              ...draftRequest.draft.draftRecord,
+              selectedTabIndex: assessmentNumber ? selected : selected + 1,
+              ...form,
+              assessmentNumber: assessmentNo,
+              prepareFormData,
+            },
+            prepareFormData,
+          };
+          try {
+            let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
+            const draftInfo = draftResponse.drafts[0];
+            this.updateDraftinLocalStorage(draftInfo);
+          } catch (e) {
+            alert(e);
+          }
+        }
+        return;
+      }
+    );
   };
 
   callDraft = async (formArray = [], assessmentNumber = "") => {
     let { draftRequest, selected } = this.state;
-    // if (formArray) {
-    const { form, prepareFormData } = this.props;
+    const { form, location, common } = this.props;
+    const { search } = location;
+
+    let prepareFormData = { ...this.props.prepareFormData };
+    //toggleSpinner();
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
+    try {
+      if (financialYearFromQuery) {
+        set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if (selectedownerShipCategoryType === "SINGLEOWNER") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+      } else if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
+      } else if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+        const { instiObj, ownerArray } = this.getInstituteInfo();
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
+      }
+    } catch (e) {
+      alert(e)
+    }
+
     if (!draftRequest.draft.id) {
+      draftRequest.draft.tenantId = getQueryValue(search, "tenantId") || prepareFormData.Properties[0].tenantId;
       draftRequest.draft.draftRecord = {
         selectedTabIndex: selected + 1,
-        ...form,
+        prepareFormData,
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
 
-        this.updateDraftinLocalStorage(draftInfo);
+        this.updateDraftinLocalStorage(draftInfo, assessmentNumber);
       } catch (e) {
         alert(e);
       }
     } else {
-      const assessmentNo = draftRequest.draft.assessmentNumber || assessmentNumber;
+      const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
       draftRequest.draft = {
         ...draftRequest.draft,
         assessmentNumber: assessmentNo,
+        tenantId: getQueryValue(search, "tenantId") || prepareFormData.Properties[0].tenantId,
         draftRecord: {
           ...draftRequest.draft.draftRecord,
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
-          ...form,
           assessmentNumber: assessmentNo,
           prepareFormData,
         },
         prepareFormData,
       };
       try {
+        if (selected === 3) {
+          draftRequest = {
+            ...draftRequest,
+            draft: {
+              ...draftRequest.draft,
+              isActive: false,
+            },
+          };
+        }
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
+
         this.updateDraftinLocalStorage(draftInfo);
       } catch (e) {
         alert(e);
       }
     }
-    // }
   };
 
   configOwner = (ownersCount) =>
@@ -150,39 +220,102 @@ class FormWizard extends Component {
     };
   };
 
+  getTargetPropertiesDetails = (propertyDetails) => {
+    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    propertyDetails[propertyDetails.length - 1].units =
+      propertyDetails[propertyDetails.length - 1] &&
+      propertyDetails[propertyDetails.length - 1].units &&
+      convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
+    return [propertyDetails[propertyDetails.length - 1]];
+  };
+
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
-    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    const { updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
+    // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    const { search } = location;
+    const financialYearFromQuery = getFinancialYearFromQuery();
+    const propertyId = getQueryValue(search, "propertyId");
+    const assessmentId = getQueryValue(search, "assessmentId");
+    const tenantId = getQueryValue(search, "tenantId");
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
 
     try {
-      toggleSpinner();
-      let draftsResponse = await httpRequest(
-        "pt-services-v2/drafts/_search",
-        "_search",
-        [
+      // toggleSpinner();
+      //const ownerFromResponseIn = convertRawDataToFormConfig(responseee)
+
+      let currentDraft;
+      if (!isReassesment) {
+        let draftsResponse = await httpRequest(
+          "pt-services-v2/drafts/_search",
+          "_search",
+          [
+            // {
+            //   key: "userId",
+            //   value: uuid,
+            // },
+            {
+              key: isReassesment ? "assessmentNumber" : "id",
+              value: draftId,
+            },
+            {
+              key: "tenantId",
+              value: getQueryValue(search, "tenantId"),
+            },
+          ],
+          draftRequest
+        );
+        currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+        const prepareFormDataFromApi = get(currentDraft, "draftRecord.prepareFormData", {})
+        const preparedForm = convertRawDataToFormConfig(prepareFormDataFromApi); //convertRawDataToFormConfig(responseee)
+        currentDraft = {
+          draftRecord: {
+            ...currentDraft.draftRecord,
+            ...preparedForm,
+            prepareFormData: prepareFormDataFromApi,
+          },
+        };
+      } else {
+        const searchPropertyResponse = await httpRequest("pt-services-v2/property/_search", "_search", [
           {
-            key: "userId",
-            value: uuid,
+            key: "tenantId",
+            value: tenantId,
           },
           {
-            key: isReassesment ? "assessmentNumber" : "id",
-            value: draftId,
+            key: "ids",
+            value: getQueryValue(search, "propertyId"), //"PT-107-001278",
           },
-        ],
-        draftRequest
-      );
-      const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+        ]);
+        let propertyResponse = {
+          ...searchPropertyResponse,
+          Properties: [
+            {
+              ...searchPropertyResponse.Properties[0],
+              propertyDetails: this.getTargetPropertiesDetails(searchPropertyResponse.Properties[0].propertyDetails),
+            },
+          ],
+        };
+        const preparedForm = convertRawDataToFormConfig(propertyResponse); //convertRawDataToFormConfig(responseee)
+        currentDraft = {
+          draftRecord: {
+            ...preparedForm,
+            selectedTabIndex: 3,
+            prepareFormData: { Properties: propertyResponse["Properties"] }, //prepareFormData2,
+          },
+        };
+      }
+
       if (!currentDraft) {
         throw new Error("draft not found");
       }
+
       this.setState({
         draftByIDResponse: currentDraft,
       });
 
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
-      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0) > 3 ? 3 : get(currentDraft, "draftRecord.selectedTabIndex", 0);
       const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
         let requestBody = {
@@ -247,7 +380,22 @@ class FormWizard extends Component {
         const documentTypeMdms = await getDocumentTypes();
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
+      if (isReassesment && activeModule) {
+        this.props.handleFieldChange("propertyAddress", "city", activeModule);
+      }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
+      this.props.updatePTForms(currentDraft.draftRecord);
+
+      //Get estimate from bill in case of complete payment
+      if (isCompletePayment) {
+        const billResponse = activeTab === 3 && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
+        const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
+        this.setState({
+          estimation: estimateFromGetBill,
+          totalAmountToBePaid: (estimateFromGetBill && estimateFromGetBill[0] && estimateFromGetBill[0].totalAmount) || 0,
+          billResponse,
+        });
+      }
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -257,20 +405,16 @@ class FormWizard extends Component {
           selected: activeTab,
           draftRequest: {
             draft: {
-              ...draftRequest.draft,
-              id: currentDraft.id,
-              assessmentNumber: currentDraft.assessmentNumber,
-              draftRecord: currentDraft.draftRecord,
+              id: null,
+              ...currentDraft,
+              // assessmentNumber: currentDraft.assessmentNumber,
+              // draftRecord: currentDraft.draftRecord,
             },
           },
-          // floorDetails,
         },
         () => {
-          this.props.updatePTForms(currentDraft.draftRecord);
-          //this.onTabClick(activeTab)
-          toggleSpinner();
           {
-            activeTab === 3 &&
+            if (activeTab === 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
                 if (estimateResponse) {
                   this.setState({
@@ -279,109 +423,132 @@ class FormWizard extends Component {
                   });
                 }
               });
+            }
           }
         }
       );
     } catch (e) {
-      toggleSpinner();
+      console.log("e", e);
+    }
+  };
+
+  componentWillReceiveProps = (nextprops) => {
+    if (!isEqual(nextprops, this.props)) {
+      let inputType = document.getElementsByTagName("input");
+      for (let input in inputType) {
+        if (inputType[input].type === "number") {
+          inputType[input].addEventListener("mousewheel", function() {
+            this.blur();
+          });
+        }
+      }
     }
   };
 
   componentDidMount = async () => {
-    let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
-    let { search } = this.props.location;
-    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!getQueryValue(search, "isReassesment");
-    const isFreshAssesment = getQueryValue(search, "type");
-    const tenantId = getQueryValue(search, "tenantId");
-    const propertyId = getQueryValue(search, "propertyId");
-    const draftUuid = getQueryValue(search, "uuid");
+    let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, toggleSpinner } = this.props;
+    toggleSpinner();
+    try {
+      let { search } = this.props.location;
+      const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+      const isReassesment = !!getQueryValue(search, "isReassesment");
+      const isFreshAssesment = getQueryValue(search, "type");
+      const tenantId = getQueryValue(search, "tenantId");
+      const propertyId = getQueryValue(search, "propertyId");
+      const draftUuid = getQueryValue(search, "uuid");
+      const documentTypeMdms = await getDocumentTypes();
+      if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
 
-    if (assessmentId) {
-      let requestBody = {
-        MdmsCriteria: {
-          tenantId: tenantId,
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "Floor",
-                },
-                {
-                  name: "OccupancyType",
-                },
-                {
-                  name: "OwnerShipCategory",
-                },
-                {
-                  name: "OwnerType",
-                },
-                {
-                  name: "PropertySubType",
-                },
-                {
-                  name: "PropertyType",
-                },
-                {
-                  name: "SubOwnerShipCategory",
-                },
-                {
-                  name: "UsageCategoryDetail",
-                },
-                {
-                  name: "UsageCategoryMajor",
-                },
-                {
-                  name: "UsageCategoryMinor",
-                },
-                {
-                  name: "UsageCategorySubMinor",
-                },
-                {
-                  name: "OwnerTypeDocument",
-                },
-              ],
-            },
-          ],
-        },
-      };
+      if (assessmentId) {
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: tenantId,
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "Floor",
+                  },
+                  {
+                    name: "OccupancyType",
+                  },
+                  {
+                    name: "OwnerShipCategory",
+                  },
+                  {
+                    name: "OwnerType",
+                  },
+                  {
+                    name: "PropertySubType",
+                  },
+                  {
+                    name: "PropertyType",
+                  },
+                  {
+                    name: "SubOwnerShipCategory",
+                  },
+                  {
+                    name: "UsageCategoryDetail",
+                  },
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                  {
+                    name: "OwnerTypeDocument",
+                  },
+                ],
+              },
+            ],
+          },
+        };
 
-      fetchGeneralMDMSData(requestBody, "PropertyTax", [
-        "Floor",
-        "OccupancyType",
-        "OwnerShipCategory",
-        "OwnerType",
-        "PropertySubType",
-        "PropertyType",
-        "SubOwnerShipCategory",
-        "UsageCategoryDetail",
-        "UsageCategoryMajor",
-        "UsageCategoryMinor",
-        "UsageCategorySubMinor",
-        "Rebate",
-        "Penalty",
-        "Interest",
-        "FireCess",
-      ]);
+        fetchGeneralMDMSData(requestBody, "PropertyTax", [
+          "Floor",
+          "OccupancyType",
+          "OwnerShipCategory",
+          "OwnerType",
+          "PropertySubType",
+          "PropertyType",
+          "SubOwnerShipCategory",
+          "UsageCategoryDetail",
+          "UsageCategoryMajor",
+          "UsageCategoryMinor",
+          "UsageCategorySubMinor",
+          "Rebate",
+          "Penalty",
+          "Interest",
+          "FireCess",
+        ]);
+        await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+      }
 
-      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
-    }
-    const documentTypeMdms = await getDocumentTypes();
-    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
-    this.addOwner(true);
-    let financialYearFromQuery = window.location.search.split("FY=")[1];
-    if (financialYearFromQuery) {
-      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      const { ownerInfoArr } = this.state;
+
+      if (ownerInfoArr.length < 2) {
+        this.addOwner(true);
+      }
+
+      const financialYearFromQuery = getFinancialYearFromQuery();
       this.setState({
         financialYearFromQuery,
       });
-    }
-    const customTitle = isReassesment
-      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
-      : `Property Assessment (${financialYearFromQuery}) : New Property`;
+      const customTitle = isReassesment
+        ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
+        : `Property Assessment (${financialYearFromQuery}) : New Property`;
 
-    renderCustomTitleForPt(customTitle);
+      renderCustomTitleForPt(customTitle);
+      toggleSpinner();
+    } catch (e) {
+      console.log("e");
+      this.prop.toggleSpinner();
+    }
   };
 
   handleRemoveOwner = (index, formKey) => {
@@ -395,7 +562,6 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (fromReviewPage) => {
-    // let {floorDetails} =this.state;
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
     if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
       let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;
@@ -476,8 +642,7 @@ class FormWizard extends Component {
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
     const { estimation, totalAmountToBePaid, financialYearFromQuery } = this.state;
-    const { form, currentTenantId } = this.props;
-
+    const { form, currentTenantId, search } = this.props;
     switch (selected) {
       case 0:
         return (
@@ -494,8 +659,6 @@ class FormWizard extends Component {
         );
       case 2:
         const ownerType = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
-        //const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
-        // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
             <OwnershipTypeHOC disabled={fromReviewPage} />
@@ -653,17 +816,35 @@ class FormWizard extends Component {
     }
   };
 
-  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+  callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+    const { location, toggleSpinner } = this.props;
     const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
-    let { history, toggleSpinner } = this.props;
+    const { search } = location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
+    toggleSpinner();
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
-      { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
     ];
+    !isCompletePayment && queryObj.push({ key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid });
 
+    try {
+      const billResponse = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
+      toggleSpinner();
+      return billResponse;
+    } catch (e) {
+      toggleSpinner();
+      console.log(e);
+    }
+  };
+
+  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+    const { isFullPayment, totalAmountToBePaid, billResponse } = this.state;
+    let { history, toggleSpinner, location } = this.props;
+    const { search } = location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
       const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
@@ -674,7 +855,7 @@ class FormWizard extends Component {
       }
     }
     try {
-      const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
+      const getBill = !isCompletePayment ? await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId) : billResponse;
       try {
         const requestBody = {
           Transaction: {
@@ -700,6 +881,7 @@ class FormWizard extends Component {
           history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1]);
         }
       } catch (e) {
+        toggleSpinner();
         console.log(e);
       }
     } catch (e) {
@@ -710,10 +892,19 @@ class FormWizard extends Component {
 
   getSingleOwnerInfo = () => {
     const { ownerInfo } = this.props.form;
-    const ownerObj = {};
+    const ownerObj = {
+      documents: [{}],
+    };
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+        ownerObj.documents[0][jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+          get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
+      } else {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      }
     });
     const ownerArray = [ownerObj];
     return ownerArray;
@@ -726,11 +917,21 @@ class FormWizard extends Component {
       .reduce((acc, curr, currIndex, arr) => {
         const ownerData = [...acc];
         const currForm = form[curr];
-        const ownerObj = {};
+        const ownerObj = {
+          documents: [{}],
+        };
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-            get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+            ownerObj.documents[0][jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
+          } else {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+              get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          }
         });
         ownerData.push(ownerObj);
         return ownerData;
@@ -757,11 +958,13 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { location, form, common } = this.props;
+    let { toggleSpinner, form, common, location } = this.props;
+    let { search } = location;
     let prepareFormData = { ...this.props.prepareFormData };
+    toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
-    const { financialYearFromQuery } = this.state;
+    const financialYearFromQuery = getFinancialYearFromQuery();
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
@@ -802,8 +1005,10 @@ class FormWizard extends Component {
           },
         ],
       });
+      toggleSpinner();
       return estimateResponse;
     } catch (e) {
+      toggleSpinner();
       if (e.message) {
         alert(e.message);
       } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
@@ -820,13 +1025,14 @@ class FormWizard extends Component {
     let { search } = location;
     const propertyId = getQueryValue(search, "propertyId");
     const assessmentId = getQueryValue(search, "assessmentId");
+    const tenantId = getQueryValue(search, "tenantId");
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
-
     if (!!propertyId) {
       set(prepareFormData, "Properties[0].propertyId", propertyId);
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
@@ -860,18 +1066,22 @@ class FormWizard extends Component {
     }
 
     try {
-      //Remove null units and do sqyd to sqft conversion.
-      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
-      let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
-        Properties: properties,
-      });
-      callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
-      callPGService(
-        get(createPropertyResponse, "Properties[0].propertyId"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
-        get(createPropertyResponse, "Properties[0].tenantId")
-      );
+      if (isCompletePayment) {
+        callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
+      } else {
+        //Remove null units and do sqyd to sqft conversion.
+        const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+        let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
+          Properties: properties,
+        });
+        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        callPGService(
+          get(createPropertyResponse, "Properties[0].propertyId"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
+          get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
+          get(createPropertyResponse, "Properties[0].tenantId")
+        );
+      }
     } catch (e) {
       toggleSpinner();
       alert(e);
@@ -884,45 +1094,24 @@ class FormWizard extends Component {
     let { search } = location;
     let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
     // form validation checks needs to be written here
     // fetchDraftDetails();
-
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      isReassesment
-        ? draftUuidId === currentUuidId
-          ? this.setState({
+      false
+        ? isCompletePayment || draftUuidId !== currentUuidId
+          ? alert("Not authorized to edit this property details")
+          : this.setState({
               selected: index,
               formValidIndexArray: range(0, index),
             })
-          : alert("Not authorized to edit this property details")
         : this.setState({
             selected: index,
             formValidIndexArray: range(0, index),
           });
     } else {
     }
-
-    // if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-    //   if (Object.keys(obj).length > 0) {
-    //     if (draftUuidId === currentUuidId) {
-    //       this.setState({
-    //         selected: index,
-    //         formValidIndexArray: range(0, index),
-    //       });
-    //     } else {
-    //       alert("Not authorized to edit this property details");
-    //     }
-    //   } else {
-    //     this.setState({
-    //       selected: index,
-    //       formValidIndexArray: range(0, index),
-    //     });
-    //   }
-    // } else {
-    //   // alert("Please fill required tabs");
-    // }
   };
 
   validateUnitandPlotSize = (plotDetails, form) => {
@@ -988,13 +1177,21 @@ class FormWizard extends Component {
       property.propertyId = propertyId;
     }
     const { propertyDetails } = property;
-    const units = propertyDetails[0].units.filter((item, ind) => {
-      return item !== null;
-    });
+    const units =
+      propertyDetails[0] && propertyDetails[0].units
+        ? propertyDetails[0].units.filter((item, ind) => {
+            return item !== null;
+          })
+        : [];
+    var sumOfUnitArea = 0;
     units.forEach((unit) => {
       let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
       unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
+      sumOfUnitArea += unit.unitArea;
     });
+    if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
+      propertyDetails[0].buildUpArea = sumOfUnitArea;
+    }
     propertyDetails[0].units = units;
 
     return propertyInfo;
@@ -1005,9 +1202,13 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
-    const { isFullPayment, partialAmountError } = this.state;
+    const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
     if (!isFullPayment && partialAmountError) return;
-    this.setState({ dialogueOpen: true });
+    if (totalAmountToBePaid % 1 === 0) {
+      this.setState({ dialogueOpen: true });
+    } else {
+      alert("Amount cannot be a fraction!");
+    }
   };
 
   render() {
@@ -1059,6 +1260,7 @@ const mapDispatchToProps = (dispatch) => {
     updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
     fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 

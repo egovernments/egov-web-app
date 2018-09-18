@@ -1,12 +1,13 @@
 // property tax
 import asyncComponent from "./asyncComponent";
+
 const PTHome = asyncComponent(() => import("modules/citizen/PropertyTax/PTHome").then((module) => module.default));
 const AssessPay = asyncComponent(() => import("modules/citizen/PropertyTax/AssessPay").then((module) => module.default));
 const SearchProperty = asyncComponent(() => import("modules/citizen/PropertyTax/SearchProperty").then((module) => module.default));
 const CompletedAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/CompletedAssessments").then((module) => module.default));
 const IncompleteAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/IncompleteAssessments").then((module) => module.default));
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
-const Property = asyncComponent(() => import("modules/citizen/PropertyTax/Property").then((module) => module.default));
+const Property = asyncComponent(() => import("egov-ui-kit/common/propertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
 // const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
 //   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
@@ -91,16 +92,6 @@ const routes = [
     },
   },
   {
-    path: "property-tax/my-properties/view-assessments/:propertyId",
-    component: ViewAllAssessments,
-    needsAuthentication: true,
-    options: {
-      title: "View All Assessments",
-      hideFooter: true,
-      hideBackButton: true,
-    },
-  },
-  {
     path: "property-tax/assess-pay/search-property",
     component: SearchProperty,
     needsAuthentication: true,
@@ -180,7 +171,7 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "FAQs",
+      title: "PT_HOW_IT_WORKS",
     },
   },
   {

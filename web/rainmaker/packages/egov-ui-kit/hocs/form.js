@@ -42,8 +42,6 @@ var _reactRedux = require("react-redux");
 
 var _actions = require("egov-ui-kit/redux/form/actions");
 
-var _actions2 = require("egov-ui-kit/redux/common/actions");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var form = function form(_ref) {
@@ -110,9 +108,6 @@ var form = function form(_ref) {
       (0, _createClass3.default)(FormWrapper, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-          var toggleSpinner = this.props.toggleSpinner;
-
-          toggleSpinner();
           if (this.formConfig && copyName) {
             var formConf = (0, _extends4.default)({}, this.formConfig);
             formConf = this.createCopy(formConf);
@@ -120,7 +115,6 @@ var form = function form(_ref) {
           } else {
             this.formConfig && this.props.initForm(this.formConfig, rowData);
           }
-          toggleSpinner();
         }
       }, {
         key: "render",
@@ -135,6 +129,7 @@ var form = function form(_ref) {
             _react2.default.createElement(
               "form",
               {
+                id: formKey,
                 onSubmit: function onSubmit(e) {
                   e.preventDefault();
                   submitForm();
@@ -172,9 +167,6 @@ var form = function form(_ref) {
         },
         deleteForm: function deleteForm() {
           return dispatch((0, _actions.deleteForm)(formKey));
-        },
-        toggleSpinner: function toggleSpinner() {
-          return dispatch((0, _actions2.toggleSpinner)());
         }
       };
     };

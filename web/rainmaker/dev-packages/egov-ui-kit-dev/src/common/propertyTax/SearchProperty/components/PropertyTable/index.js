@@ -7,7 +7,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 const columnData = [
   { id: "index", numeric: true, disablePadding: false, label: "S.No" },
   { id: "name", numeric: false, disablePadding: true, label: "Owner Name" },
-  { id: "propertyId", numeric: false, disablePadding: false, label: "Property Tax Assessment ID" },
+  { id: "propertyId", numeric: false, disablePadding: false, label: "Property Tax Unique ID" },
   { id: "oldPropertyId", numeric: false, disablePadding: false, label: "Existing Property ID" },
   { id: "address", numeric: false, disablePadding: false, label: "Address" },
   { id: "action", numeric: false, disablePadding: false, label: "Action" },

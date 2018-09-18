@@ -313,6 +313,7 @@ const mapStateToProps = (state, ownProps) => {
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
+      landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,

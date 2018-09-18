@@ -30,10 +30,11 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
       );
       break;
     case "Partially Paid":
+    case "Completed":
       return (
         <div>
           <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Label label="Partially Paid" labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
           <div style={{ height: "30px", marginTop: "8px" }}>

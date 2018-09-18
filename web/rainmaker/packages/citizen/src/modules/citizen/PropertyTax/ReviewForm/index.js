@@ -9,6 +9,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import EditIcon from "./components/EditIcon";
+import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
 
 import "./index.css";
 const defaultIconStyle = {
@@ -79,10 +80,10 @@ class ReviewForm extends Component {
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
         const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
         const { financialYr } = this.props;
-        const intrest = this.findCorrectDateObj(financialYr, Interest);
-        const fireCess = this.findCorrectDateObj(financialYr, FireCess);
-        const rebate = this.findCorrectDateObj(financialYr, Rebate);
-        const penalty = this.findCorrectDateObj(financialYr, Penalty);
+        const intrest = findCorrectDateObj(financialYr, Interest);
+        const fireCess = findCorrectDateObj(financialYr, FireCess);
+        const rebate = findCorrectDateObj(financialYr, Rebate);
+        const penalty = findCorrectDateObj(financialYr, Penalty);
         this.setState({
           importantDates: {
             intrest,
@@ -97,60 +98,37 @@ class ReviewForm extends Component {
     }
   };
 
-  findCorrectDateObj = (financialYear, category) => {
-    category.sort((a, b) => {
-      let yearOne = a.fromFY && a.fromFY.slice(0, 4);
-      let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
-      if (yearOne < yearTwo) {
-        return 1;
-      } else return -1;
-    });
-    const assessYear = financialYear && financialYear.slice(0, 4);
-    let chosenDateObj = {};
-    let categoryYear = category.reduce((categoryYear, item) => {
-      const year = item.fromFY && item.fromFY.slice(0, 4);
-      categoryYear.push(year);
-      return categoryYear;
-    }, []);
-    const index = categoryYear.indexOf(assessYear);
-    if (index > -1) {
-      chosenDateObj = category[index];
-    } else {
-      for (let i = 0; i < categoryYear.length; i++) {
-        if (assessYear > categoryYear[i]) {
-          chosenDateObj = category[i];
-          break;
-        }
-      }
-    }
-    return chosenDateObj;
-  };
-
   getErrorMessage = (value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    let errorText = `amount should be numeric`
+    let errorText = `amount should be numeric`;
     if (isFinite(value) && value >= totalAmount) {
-      errorText = `can't be greater than ${parseInt(totalAmount)-1}`
+      errorText = `can't be greater than ${parseInt(totalAmount) - 1}`;
     } else if (isFinite(value) && value <= 100) {
-      errorText = "can't be less than 100"
+      errorText = "can't be less than 100";
     }
-    return errorText
-  }
+    return errorText;
+  };
 
   handleFieldChange = (event, value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
     if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value < 100) {
-      this.setState({
-        errorText: this.getErrorMessage(value),
-      }, () => {
-        this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
-      });
+      this.setState(
+        {
+          errorText: this.getErrorMessage(value),
+        },
+        () => {
+          this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+        }
+      );
     } else {
-      this.setState({
-        errorText: "",
-      }, () => {
-        this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
-      });
+      this.setState(
+        {
+          errorText: "",
+        },
+        () => {
+          this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+        }
+      );
     }
   };
 
@@ -161,11 +139,11 @@ class ReviewForm extends Component {
     let { totalAmount } = estimationDetails[0] || {};
     if (e.target.value === "Full_Amount") {
       this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount", errorText: "" }, () => {
-        this.updateTotalAmount(this.props.totalAmountToBePaid)
+        this.updateTotalAmount(this.props.totalAmountToBePaid);
       });
     } else {
       this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" }, () => {
-        this.updateTotalAmount(100)
+        this.updateTotalAmount(100);
       });
     }
   };

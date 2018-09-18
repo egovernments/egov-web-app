@@ -334,16 +334,15 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
 };
 
 export const getCommaSeperatedAddress = (address, cities) => {
-  let name = address ? address.locality.name : "";
-  let cityValue = address ? address.city : "";
-  let pincode = address ? address.pincode : "";
-  let cityName = "";
-  cities &&
-    cities.forEach((city) => {
-      if (city.code === cityValue) {
-        cityName = city.name;
-      }
-    });
+  let name = address && address.locality && address.locality.name ? address.locality.name : "";
+  let cityName = address && address.city ? address.city : "";
+  let pincode = address && address.pincode ? address.pincode : "";
+  // cities &&
+  //   cities.forEach((city) => {
+  //     if (city.code === cityValue) {
+  //       cityName = city.name;
+  //     }
+  //   });
   const addressKeys = ["doorNo", "buildingName", "street"];
   let addressArray = addressKeys.reduce((result, curr) => {
     if (address && address[curr]) {
@@ -352,7 +351,7 @@ export const getCommaSeperatedAddress = (address, cities) => {
     return [...result];
   }, []);
   addressArray = pincode ? [...addressArray, name, cityName, pincode] : [...addressArray, name, cityName];
-  return addressArray.join(" , ");
+  return addressArray.join(", ");
 };
 
 export const getLatestCreationTime = (complaint) => {
@@ -498,24 +497,26 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
 export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
   const { url, action, requestBody, queryParams } = dataFetchConfig;
   try {
-    const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
-    const dropdownData = boundary
-      ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
-        payloadSpec.TenantBoundary[0].boundary
-      : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
-          dropdownData = [...dropdownData, ...get(payloadSpec, path)];
-          return dropdownData;
+    if (url) {
+      const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
+      const dropdownData = boundary
+        ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+          payloadSpec.TenantBoundary[0].boundary
+        : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
+            dropdownData = [...dropdownData, ...get(payloadSpec, path)];
+            return dropdownData;
+          }, []);
+      const ddData =
+        dropdownData &&
+        dropdownData.reduce((ddData, item) => {
+          let option = { label: item.name, value: item.code };
+          //Only for boundary
+          item.area && (option.area = item.area);
+          ddData.push(option);
+          return ddData;
         }, []);
-    const ddData =
-      dropdownData &&
-      dropdownData.reduce((ddData, item) => {
-        let option = { label: item.name, value: item.code };
-        //Only for boundary
-        item.area && (option.area = item.area);
-        ddData.push(option);
-        return ddData;
-      }, []);
-    dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
+      dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
+    }
   } catch (error) {
     const { message } = error;
     dispatch(toggleSnackbarAndSetText(true, message, true));
@@ -527,6 +528,7 @@ export const trimObj = (obj) => {
   if (!Array.isArray(obj) && typeof obj != "object") return obj;
   for (var key in obj) {
     obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+    if (key === "") delete obj[key];
   }
   return obj;
 };

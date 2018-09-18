@@ -1,5 +1,6 @@
-import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { removeFormKey } from "./utils/removeFloors";
 import { prepareDropDownData } from "./utils/reusableFields";
 import set from "lodash/set";
@@ -39,8 +40,11 @@ const formConfig = {
       required: true,
       fullWidth: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        removeFormKey(formKey, field, dispatch, state);
         dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].landArea`, null));
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].buildUpArea`, null));
+        dispatch(removeForm("plotDetails"));
+        removeFormKey(formKey, field, dispatch, state);
         let subTypeObject = get(state, `common.generalMDMSDataById.PropertySubType[${field.value}]`);
         if (!isEmpty(subTypeObject)) {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType", subTypeObject.propertyType));
@@ -59,10 +63,12 @@ const formConfig = {
   beforeInitForm: (action, store) => {
     try {
       let state = store.getState();
-      localStorage.setItem("previousFloorNo",-1);
+      localStorage.setItem("previousFloorNo", -1);
       var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
       var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
-      set(action, "form.fields.typeOfUsage.dropDownData", mergeMaster(masterOne, masterTwo, "usageCategoryMajor"));
+      const mergedMaster = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+      const typeOfUsageSorted = sortDropdown(mergedMaster, "label", true);
+      set(action, "form.fields.typeOfUsage.dropDownData", typeOfUsageSorted);
       masterOne = get(state, "common.generalMDMSDataById.PropertyType");
       masterTwo = get(state, "common.generalMDMSDataById.PropertySubType");
       set(action, "form.fields.typeOfBuilding.dropDownData", mergeMaster(masterOne, masterTwo, "propertyType"));

@@ -176,7 +176,11 @@ var StatusContent = function StatusContent(_ref2) {
         }),
         role !== "citizen" && action !== "reopen" && filedUserMobileNumber && _react2.default.createElement(
           "a",
-          { className: "pgr-call-icon", href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
+          {
+            className: "citizen-mobileNumber-style",
+            href: "tel:+91" + filedUserMobileNumber,
+            style: { textDecoration: "none", position: "relative" }
+          },
           _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
           _react2.default.createElement(
             "span",
@@ -346,19 +350,6 @@ var StatusContent = function StatusContent(_ref2) {
         )
       );
 
-    // case "re-assign":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_REASSIGNED_TO" />
-    //       <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
-    //       <Label
-    //         labelClassName="rainmaker-small-font"
-    //         containerStyle={{ width: "192px" }}
-    //         label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
-    //       />
-    //     </div>
-    //   );
     case "rejected":
       rejectStatusCount++;
       return _react2.default.createElement(

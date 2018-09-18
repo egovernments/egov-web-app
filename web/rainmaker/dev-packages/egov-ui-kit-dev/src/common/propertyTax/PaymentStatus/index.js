@@ -25,7 +25,7 @@ const PaymentStatus = ({
 }) => {
   return (
     <div>
-      <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
+      <div key={1} style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
         <Card
           className="pt-success-receipt "
           textChildren={
@@ -43,10 +43,10 @@ const PaymentStatus = ({
             className="rainmaker-displayInline"
             style={{ padding: "12px 12px 12px 12px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
           >
-            <div>
+            <div key={"1_1"}>
               <Icon action="action" name="info" color="#30588c" />
             </div>
-            <div style={{ marginLeft: 16 }}>
+            <div key={"1_2"} style={{ marginLeft: 16 }}>
               <Label fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE" />
             </div>
           </div>
@@ -55,7 +55,7 @@ const PaymentStatus = ({
           <Card
             className="pt-success-receipt"
             textChildren={
-              <div>
+              <div key={"1_3"}>
                 {receiptUIDetails &&
                   receiptUIDetails.propertyInfo &&
                   receiptUIDetails.propertyInfo.map((item) => {
@@ -96,7 +96,7 @@ const PaymentStatus = ({
             </div>
           )}
       </div>
-      <ActionFooter label2={buttons.button2} primaryAction={primaryAction} />
+      <ActionFooter key={2} label2={buttons.button2} primaryAction={primaryAction} />
     </div>
   );
 };

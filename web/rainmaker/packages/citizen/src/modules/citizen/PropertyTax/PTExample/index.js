@@ -22,11 +22,11 @@ class PTExample extends Component {
             <div className="example-main-cont clearfix">
               <div className="col-sm-12 descriptionStyle">
                 Property Tax is calculated based on rates stipulated by the Department of Local Government, Punjab. You can view the calculation rates{" "}
-                <a href={require("./PT_Council_Notification.pdf")} target="_blank">
+                <a href={require("./PT_Corporation_Notification.pdf")} target="_blank">
                   here
                 </a>{" "}
                 (Corporation) and{" "}
-                <a href="#" target="_blank">
+                <a href={require("./PT_Council_Notification.pdf")} target="_blank">
                   here
                 </a>{" "}
                 (Council).
@@ -59,8 +59,10 @@ class PTExample extends Component {
                   <div className="col-sm-12 block">
                     <div className="col-sm-4 detailLeft">Calculation of Property Tax:</div>
                     <div className="col-sm-8">
-                      150 (b) x Rs. 2/sq yard = Rs. 300<br />
-                      50 (c) x Re. 1/sq yard = Rs. 50<br />
+                      150 (b) x Rs. 2/sq yard = Rs. 300
+                      <br />
+                      50 (c) x Re. 1/sq yard = Rs. 50
+                      <br />
                       100 (d) x Re. 1/sq yard = Rs. 100
                     </div>
                   </div>

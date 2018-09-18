@@ -52,7 +52,7 @@ var PaymentStatus = function PaymentStatus(_ref) {
     null,
     _react2.default.createElement(
       "div",
-      { style: { marginBottom: "50px" }, className: "col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4" },
+      { key: 1, style: { marginBottom: "50px" }, className: "col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4" },
       _react2.default.createElement(_components.Card, {
         className: "pt-success-receipt ",
         textChildren: _react2.default.createElement(
@@ -83,12 +83,12 @@ var PaymentStatus = function PaymentStatus(_ref) {
         },
         _react2.default.createElement(
           "div",
-          null,
+          { key: "1_1" },
           _react2.default.createElement(_components.Icon, { action: "action", name: "info", color: "#30588c" })
         ),
         _react2.default.createElement(
           "div",
-          { style: { marginLeft: 16 } },
+          { key: "1_2", style: { marginLeft: 16 } },
           _react2.default.createElement(_translationNode2.default, { fontSize: "14px", color: "#484848", label: "PT_FORM1_INFORMATION_MESSAGE" })
         )
       ),
@@ -96,7 +96,7 @@ var PaymentStatus = function PaymentStatus(_ref) {
         className: "pt-success-receipt",
         textChildren: _react2.default.createElement(
           "div",
-          null,
+          { key: "1_3" },
           receiptUIDetails && receiptUIDetails.propertyInfo && receiptUIDetails.propertyInfo.map(function (item) {
             return _react2.default.createElement(
               "div",
@@ -130,7 +130,7 @@ var PaymentStatus = function PaymentStatus(_ref) {
         })
       )
     ),
-    _react2.default.createElement(_ActionFooter2.default, { label2: buttons.button2, primaryAction: primaryAction })
+    _react2.default.createElement(_ActionFooter2.default, { key: 2, label2: buttons.button2, primaryAction: primaryAction })
   );
 };
 

@@ -69,6 +69,9 @@ class PaymentSuccess extends Component {
               {
                 name: "PropertySubType",
               },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -82,6 +85,7 @@ class PaymentSuccess extends Component {
       "OccupancyType",
       "PropertyType",
       "PropertySubType",
+      "UsageCategoryDetail",
     ]);
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
     fetchReceipts([
@@ -91,7 +95,6 @@ class PaymentSuccess extends Component {
     this.convertImgToDataURLviaCanvas(
       this.createImageUrl(match.params.tenantId),
       function(data) {
-        console.log(this);
         this.setState({ imageUrl: data });
       }.bind(this)
     );
@@ -102,7 +105,6 @@ class PaymentSuccess extends Component {
   };
 
   convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {
-    console.log(url);
     var img = new Image();
     img.crossOrigin = "Anonymous";
     img.onload = function() {
@@ -126,7 +128,6 @@ class PaymentSuccess extends Component {
   render() {
     const { generalMDMSDataById, match } = this.props;
     const { imageUrl } = this.state;
-    console.log(imageUrl);
     return (
       <Screen>
         <PaymentStatus
@@ -165,14 +166,30 @@ const mapStateToProps = (state, ownProps) => {
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
   const existingPropertyId = selProperty && selProperty.oldPropertyId;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
-  const totalAmountToPay = receipts && get(receipts[receipts.length - 1], "Bill[0].billDetails[0].totalAmount");
   const rawReceiptDetails = receipts && receipts[0];
-  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true);
+  const lastAmount = receipts && get(receipts[0], "Bill[0].billDetails[0].totalAmount");
+  const totalAmountBeforeLast =
+    receipts &&
+    receipts.reduce((acc, curr, index) => {
+      if (index !== 0) {
+        acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+      }
+      return acc;
+    }, 0);
+  const totalAmountToPay = lastAmount + totalAmountBeforeLast;
+  const totalAmountPaid =
+    receipts &&
+    receipts.reduce((acc, curr) => {
+      acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+      return acc;
+    }, 0);
+  const receiptUIDetails =
+    selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true, totalAmountPaid);
   const receiptDetails =
     selProperty &&
     rawReceiptDetails &&
     cities &&
-    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay);
+    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid);
   return { receiptUIDetails, receiptDetails, cities, existingPropertyId, generalMDMSDataById };
 };
 

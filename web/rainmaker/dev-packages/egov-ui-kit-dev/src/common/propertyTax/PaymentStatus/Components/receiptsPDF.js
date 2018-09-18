@@ -23,7 +23,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
 
   const transform = (value, masterName) => {
     if (value) {
-      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "";
+      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "NA";
     } else {
       return "NA";
     }
@@ -36,7 +36,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
       // data for floor details
       let getFloorDetails = () => {
         let bodyData = [];
-        let { units } = propertyDetails[0];
+        let { units, propertySubType } = propertyDetails[0];
         let dataRow = [];
         if (units && units.length) {
           dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
@@ -48,9 +48,19 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           units &&
             units.map((unit) => {
               dataRow = [];
-              dataRow.push(transform(unit.floorNo, "Floor"));
-              dataRow.push(transform(unit.usageCategoryMajor, "UsageCategoryMajor"));
-              dataRow.push(transform(unit.usageCategorySubMinor, "UsageCategorySubMinor"));
+              dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
+              dataRow.push(
+                transform(
+                  unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor,
+                  unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"
+                )
+              );
+              dataRow.push(
+                transform(
+                  unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor,
+                  unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"
+                )
+              );
               dataRow.push(transform(unit.occupancyType, "OccupancyType"));
               if (unit.occupancyType === "RENTED") {
                 dataRow.push(unit.arv || "");
@@ -71,6 +81,12 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
       let receiptTableWidth = ["*", "*", "*", "*"];
 
       let getOwnerDetails = (ownerArray, noOfColumns) => {
+        const { propertyDetails } = details;
+        const { institution } = propertyDetails[0] || {};
+        const isInstitution =
+          propertyDetails && propertyDetails.length
+            ? propertyDetails[0].ownershipCategory === "INSTITUTIONALPRIVATE" || propertyDetails[0].ownershipCategory === "INSTITUTIONALGOVERNMENT"
+            : false;
         const transformedArray = ownerArray.map((item, index) => {
           return [
             {
@@ -86,9 +102,46 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
         });
         const flatArray = transformedArray.reduce((acc, val) => acc.concat(val), []);
 
+        if (flatArray.length % noOfColumns !== 0) {
+          flatArray.push(
+            {
+              text: "",
+              border: borderKey,
+              style: "receipt-table-key",
+            },
+            {
+              text: "",
+              border: borderValue,
+            }
+          );
+        }
+
         let newArray = [];
         while (flatArray.length > 0) newArray.push(flatArray.splice(0, noOfColumns));
-        return newArray;
+        return isInstitution
+          ? [
+              [
+                {
+                  text: `Institution Name`,
+                  border: borderKey,
+                  style: "receipt-table-key",
+                },
+                {
+                  text: institution.name || "",
+                  border: borderValue,
+                },
+                {
+                  text: `Authorised Person`,
+                  border: borderKey,
+                  style: "receipt-table-key",
+                },
+                {
+                  text: ownerArray[0].name || "",
+                  border: borderValue,
+                },
+              ],
+            ]
+          : newArray;
       };
 
       data = {
@@ -190,7 +243,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                 [
                   { text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.existingPropertyId || "NA", border: borderValue },
-                  { text: "Property Tax Assessment ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Property Tax Unique ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.propertyId || "", border: borderValue }, //need to confirm this data
                   { text: "Assessment No:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].assessmentNumber || "", border: borderValue },
@@ -229,7 +282,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
               body: [
                 [
                   { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
-                  { text: `${propertyDetails[0].landArea} sq yards` || "", border: borderValue },
+                  { text: propertyDetails[0].landArea ? `${propertyDetails[0].landArea} sq yards` : "NA", border: borderValue },
                   { text: "Property Type:", border: borderKey, style: "receipt-table-key" },
                   {
                     text: propertyDetails[0].propertySubType
@@ -293,7 +346,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                   // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
                   // { text: receipts.transactionId || "", border: borderValue },
                   { text: "Bank Name:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.bankName || "", border: borderValue },
+                  { text: receipts.bankName || "NA", border: borderValue },
                 ],
                 [
                   { text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" },
@@ -306,7 +359,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                 [
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.G8receiptNo || "NA", border: borderValue },
-                  { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" },
+                  { text: "G8 Receipt Issue Date:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.G8receiptDate || "NA", border: borderValue },
                 ],
               ],
@@ -318,8 +371,10 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           {
             ol: [
               { text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] },
-              { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] },
+              { text: "This document is not a proof of Property Ownership and regularization of unauthorized construction.", margin: [0, 0, 0, 5] },
               { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] },
+              { text: "Assessment & Payment is subject to verification/Scrutiny by competitive authority.", margin: [0, 0, 0, 5] },
+              { text: "Please deposit property tax dues for earlier years also. Ignore, if already paid.", margin: [0, 0, 0, 5] },
             ],
             alignment: "left",
             style: "receipt-footer",

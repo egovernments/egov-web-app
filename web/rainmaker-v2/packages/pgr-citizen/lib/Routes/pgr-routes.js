@@ -4,6 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _Register = require("../Screens/User/Register");
+
+var _Register2 = _interopRequireDefault(_Register);
+
+var _Login = require("../Screens/User/Login");
+
+var _Login2 = _interopRequireDefault(_Login);
+
+var _OTP = require("../Screens/User/OTP");
+
+var _OTP2 = _interopRequireDefault(_OTP);
+
 var _MyComplaints = require("../Screens/MyComplaints");
 
 var _MyComplaints2 = _interopRequireDefault(_MyComplaints);
@@ -32,6 +44,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // pgr citizen specific screens
 var routes = [{
+  path: "user/register",
+  component: _Register2.default,
+  needsAuthentication: false,
+  redirectionUrl: "/"
+}, {
+  path: "user/login",
+  component: _Login2.default,
+  needsAuthentication: false,
+  redirectionUrl: "/"
+}, {
+  path: "user/otp",
+  component: _OTP2.default,
+  needsAuthentication: false,
+  redirectionUrl: "/"
+}, {
   path: "my-complaints",
   component: _MyComplaints2.default,
   needsAuthentication: true,
@@ -77,6 +104,5 @@ var routes = [{
     hideFooter: true,
     title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION"
   }
-}];
-
+}]; // user routes
 exports.default = routes;

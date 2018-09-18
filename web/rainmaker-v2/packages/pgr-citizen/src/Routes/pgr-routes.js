@@ -1,3 +1,8 @@
+// user routes
+import Register from "../Screens/User/Register";
+import Login from "../Screens/User/Login";
+import OTP from "../Screens/User/OTP";
+
 // pgr citizen specific screens
 import MyComplaints from "../Screens/MyComplaints";
 import ComplaintDetails from "../Screens/ComplaintDetails";
@@ -7,6 +12,24 @@ import AddComplaint from "../Screens/AddComplaint";
 import FeedbackAcknowledge from "../Screens/FeedbackAcknowledgement";
 
 const routes = [
+  {
+    path: "user/register",
+    component: Register,
+    needsAuthentication: false,
+    redirectionUrl: "/"
+  },
+  {
+    path: "user/login",
+    component: Login,
+    needsAuthentication: false,
+    redirectionUrl: "/"
+  },
+  {
+    path: "user/otp",
+    component: OTP,
+    needsAuthentication: false,
+    redirectionUrl: "/"
+  },
   {
     path: "my-complaints",
     component: MyComplaints,

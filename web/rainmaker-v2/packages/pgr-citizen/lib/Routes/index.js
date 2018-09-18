@@ -8,11 +8,11 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _withAuthorization = require("egov-ui-kit/src/hocs/withAuthorization");
+var _withAuthorization = require("egov-ui-kit/hocs/withAuthorization");
 
 var _withAuthorization2 = _interopRequireDefault(_withAuthorization);
 
-var _withoutAuthorization = require("egov-ui-kit/src/hocs/withoutAuthorization");
+var _withoutAuthorization = require("egov-ui-kit/hocs/withoutAuthorization");
 
 var _withoutAuthorization2 = _interopRequireDefault(_withoutAuthorization);
 
@@ -35,5 +35,5 @@ var mapRoutes = function mapRoutes(routes) {
   });
 };
 
-var routes = { citizen: mapRoutes(_pgrRoutes2.default) };
+var routes = { pgr: mapRoutes(_pgrRoutes2.default) };
 exports.default = routes;

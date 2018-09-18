@@ -7,6 +7,8 @@ import Checkbox from "material-ui/Checkbox";
 import { translate } from "./commons/common";
 import AutoComplete from "material-ui/AutoComplete";
 import Label from "egov-ui-kit/utils/translationNode";
+import UiBoundary from "./components/boundary";
+import boundaryConfig from "./commons/config";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -144,9 +146,10 @@ export default class ShowField extends Component {
               dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
               floatingLabelFixed={true}
               floatingLabelText={
-                <span>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                <div className="rainmaker-displayInline">
+                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               value={typeof obj.value == "undefined" ? "" : obj.value}
               onChange={(event, key, value) => {
@@ -268,6 +271,13 @@ export default class ShowField extends Component {
               checked={obj.value ? obj.value : false}
               onCheck={(e) => this.props.handler({ target: { value: e.target.checked } }, obj.name, obj.isMandatory ? true : false, "")}
             />
+          </Col>
+        );
+
+      case "boundarylist":
+        return (
+          <Col xs={12} sm={12} md={12} lg={12}>
+            <UiBoundary item={boundaryConfig} handleFieldChange={this.props.handler} />
           </Col>
         );
 

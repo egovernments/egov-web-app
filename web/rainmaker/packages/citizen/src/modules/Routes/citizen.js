@@ -12,6 +12,8 @@ import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import { ImageModalDisplay } from "modules/common";
 
+import Playground from "modules/citizen/Playground";
+
 // pgr specific screens
 import MyComplaints from "modules/citizen/pgr/MyComplaints";
 import ComplaintDetails from "modules/citizen/pgr/ComplaintDetails";
@@ -173,6 +175,12 @@ const routes = [
       title: "CS_COMMON_COMPLAINT_REOPENED",
       hideTitle: true,
     },
+  },
+  {
+    path: "playground",
+    component: Playground,
+    needsAuthentication: true,
+    options: { hideFooter: true },
   },
   ...ptRoutes,
 ];

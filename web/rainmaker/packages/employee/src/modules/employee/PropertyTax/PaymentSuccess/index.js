@@ -53,6 +53,7 @@ class PaymentSuccess extends Component {
 
   componentDidMount = () => {
     const { fetchProperties, fetchReceipts, match, fetchGeneralMDMSData } = this.props;
+    const { tenantId } = match.params;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -78,6 +79,12 @@ class PaymentSuccess extends Component {
               {
                 name: "PropertyType",
               },
+              {
+                name: "PropertySubType",
+              },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -90,6 +97,8 @@ class PaymentSuccess extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "PropertySubType",
+      "UsageCategoryDetail",
     ]);
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
     fetchReceipts([
@@ -99,7 +108,6 @@ class PaymentSuccess extends Component {
     this.convertImgToDataURLviaCanvas(
       this.createImageUrl(match.params.tenantId),
       function(data) {
-        console.log(this);
         this.setState({ imageUrl: data });
       }.bind(this)
     );
@@ -172,14 +180,30 @@ const mapStateToProps = (state, ownProps) => {
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
   const existingPropertyId = selProperty && selProperty.oldPropertyId;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
-  const totalAmountToPay = receipts && get(receipts[receipts.length - 1], "Bill[0].billDetails[0].totalAmount");
   const rawReceiptDetails = receipts && receipts[0];
-  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true);
+  const lastAmount = receipts && get(receipts[0], "Bill[0].billDetails[0].totalAmount");
+  const totalAmountBeforeLast =
+    receipts &&
+    receipts.reduce((acc, curr, index) => {
+      if (index !== 0) {
+        acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+      }
+      return acc;
+    }, 0);
+  const totalAmountToPay = lastAmount + totalAmountBeforeLast;
+  const totalAmountPaid =
+    receipts &&
+    receipts.reduce((acc, curr) => {
+      acc += get(curr, "Bill[0].billDetails[0].amountPaid");
+      return acc;
+    }, 0);
+  const receiptUIDetails =
+    selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true, totalAmountPaid);
   const receiptDetails =
     selProperty &&
     rawReceiptDetails &&
     cities &&
-    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay);
+    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid);
   return { receiptUIDetails, receiptDetails, cities, existingPropertyId, generalMDMSDataById };
 };
 
@@ -187,7 +211,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName, key) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName, key)),
   };
 };
 export default connect(

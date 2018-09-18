@@ -46,7 +46,7 @@ var ReceiptItems = function ReceiptItems(_ref) {
       _react2.default.createElement(_Icon2.default, { action: "action", name: "assignment", color: "#767676" }),
       _react2.default.createElement(_translationNode2.default, {
         bold: true,
-        label: "Property Tax Assessment ID.: " + propertyTaxAssessmentID,
+        label: "Property Tax Unique ID.: " + propertyTaxAssessmentID,
         containerStyle: { marginLeft: "13px" },
         labelStyle: { letterSpacing: 0 },
         color: "#767676"

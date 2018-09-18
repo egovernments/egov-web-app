@@ -376,7 +376,7 @@
 }
 
 input[type="radio"] {
-  margin: 4px 8px 0 !important;
+  // margin: 4px 8px 0 !important;
   -webkit-appearance: none;
   width: 17px;
   height: 17px;
@@ -402,9 +402,10 @@ input[type="radio"]:checked:before {
   background: #fe7a51;
 }
 
-.propertyAddress {
+.propertyAddress,
+.ifsc-field {
   .textfield-text div {
-    width: 55px;
+    width: 60px;
     color: #fe7a51 !important;
     margin-right: 12px !important;
   }

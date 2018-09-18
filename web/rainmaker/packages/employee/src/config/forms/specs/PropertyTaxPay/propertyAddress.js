@@ -1,7 +1,8 @@
 import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
-import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { handleFieldChange, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import set from "lodash/set";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
@@ -47,6 +48,7 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
+        // dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -106,10 +108,6 @@ const formConfig = {
             "UsageCategoryMajor",
             "UsageCategoryMinor",
             "UsageCategorySubMinor",
-            "Rebate",
-            "Penalty",
-            "Interest",
-            "FireCess",
           ])
         );
       },
@@ -141,8 +139,21 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
     let city = JSON.parse(localStorage.getItem("user-info")).permanentAddress;
-    dispatch(handleFieldChange("propertyAddress", "city", tenantId));
-    dispatch(prepareFormData("Properties[0].address.city", city));
+    let state = store.getState();
+    const { citiesByModule } = state.common;
+    const { PT } = citiesByModule || {};
+    if (PT) {
+      const tenants = PT.tenants;
+      let found = tenants.find((city) => {
+        return city.code === tenantId;
+      });
+      if (found) {
+        dispatch(handleFieldChange("propertyAddress", "city", tenantId));
+        dispatch(prepareFormData("Properties[0].address.city", city));
+      }
+    }
+    set(action, "form.fields.city.required", true);
+    set(action, "form.fields.pincode.disabled", false);
     return action;
   },
   action: "",

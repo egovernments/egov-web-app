@@ -1,7 +1,7 @@
 import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
-import commonConfig from "config/common.js";
+import commonConfig from "egov-ui-kit/config/common.js";
 
 axios.interceptors.response.use(
   (response) => {
@@ -47,7 +47,15 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {},ignoreTenantId=false) => {
+export const httpRequest = async (
+  endPoint,
+  action,
+  queryObject = [],
+  requestBody = {},
+  headers = [],
+  customRequestInfo = {},
+  ignoreTenantId = false
+) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 

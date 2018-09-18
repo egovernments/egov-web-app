@@ -95,7 +95,8 @@ var DropDownUi = function DropDownUi(_ref) {
       autoWidth = _ref.autoWidth,
       toolTipMessage = _ref.toolTipMessage,
       updateDependentFields = _ref.updateDependentFields,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "menuInnerDivStyle", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "menuStyle", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "autoWidth", "toolTipMessage", "updateDependentFields"]);
+      beforeFieldChange = _ref.beforeFieldChange,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "menuInnerDivStyle", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "menuStyle", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "autoWidth", "toolTipMessage", "updateDependentFields", "beforeFieldChange"]);
 
   var renderSelectMenuItems = function renderSelectMenuItems() {
     return dropDownData.map(function (option, index) {

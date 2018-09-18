@@ -47,7 +47,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
 
   var transform = function transform(value, masterName) {
     if (value) {
-      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "";
+      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "NA";
     } else {
       return "NA";
     }
@@ -60,7 +60,9 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
       // data for floor details
       var getFloorDetails = function getFloorDetails() {
         var bodyData = [];
-        var units = propertyDetails[0].units;
+        var _propertyDetails$ = propertyDetails[0],
+            units = _propertyDetails$.units,
+            propertySubType = _propertyDetails$.propertySubType;
 
         var dataRow = [];
         if (units && units.length) {
@@ -72,9 +74,9 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           bodyData.push(dataRow);
           units && units.map(function (unit) {
             dataRow = [];
-            dataRow.push(transform(unit.floorNo, "Floor"));
-            dataRow.push(transform(unit.usageCategoryMajor, "UsageCategoryMajor"));
-            dataRow.push(transform(unit.usageCategorySubMinor, "UsageCategorySubMinor"));
+            dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
+            dataRow.push(transform(unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor, unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"));
+            dataRow.push(transform(unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor, unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"));
             dataRow.push(transform(unit.occupancyType, "OccupancyType"));
             if (unit.occupancyType === "RENTED") {
               dataRow.push(unit.arv || "");
@@ -95,6 +97,12 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
       var receiptTableWidth = ["*", "*", "*", "*"];
 
       var getOwnerDetails = function getOwnerDetails(ownerArray, noOfColumns) {
+        var propertyDetails = details.propertyDetails;
+
+        var _ref = propertyDetails[0] || {},
+            institution = _ref.institution;
+
+        var isInstitution = propertyDetails && propertyDetails.length ? propertyDetails[0].ownershipCategory === "INSTITUTIONALPRIVATE" || propertyDetails[0].ownershipCategory === "INSTITUTIONALGOVERNMENT" : false;
         var transformedArray = ownerArray.map(function (item, index) {
           return [{
             text: "Owner " + (ownerArray.length > 1 ? index + 1 : "") + " Name",
@@ -109,10 +117,35 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           return acc.concat(val);
         }, []);
 
+        if (flatArray.length % noOfColumns !== 0) {
+          flatArray.push({
+            text: "",
+            border: borderKey,
+            style: "receipt-table-key"
+          }, {
+            text: "",
+            border: borderValue
+          });
+        }
+
         var newArray = [];
         while (flatArray.length > 0) {
           newArray.push(flatArray.splice(0, noOfColumns));
-        }return newArray;
+        }return isInstitution ? [[{
+          text: "Institution Name",
+          border: borderKey,
+          style: "receipt-table-key"
+        }, {
+          text: institution.name || "",
+          border: borderValue
+        }, {
+          text: "Authorised Person",
+          border: borderKey,
+          style: "receipt-table-key"
+        }, {
+          text: ownerArray[0].name || "",
+          border: borderValue
+        }]] : newArray;
       };
 
       data = {
@@ -176,7 +209,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
         }, {
           style: "pt-reciept-citizen-table",
           table: {
-            body: [[{ text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" }, { text: details.existingPropertyId || "NA", border: borderValue }, { text: "Property Tax Assessment ID:", border: borderKey, style: "receipt-table-key" }, { text: details.propertyId || "", border: borderValue }, //need to confirm this data
+            body: [[{ text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" }, { text: details.existingPropertyId || "NA", border: borderValue }, { text: "Property Tax Unique ID:", border: borderKey, style: "receipt-table-key" }, { text: details.propertyId || "", border: borderValue }, //need to confirm this data
             { text: "Assessment No:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].assessmentNumber || "", border: borderValue }]]
           },
           layout: tableborder
@@ -191,7 +224,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           style: "pt-reciept-citizen-table",
           table: {
             widths: receiptTableWidth,
-            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea + " sq yards" || "", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
+            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea ? propertyDetails[0].landArea + " sq yards" : "NA", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
               text: propertyDetails[0].propertySubType ? transform(propertyDetails[0].propertySubType, "PropertySubType") : transform(propertyDetails[0].propertyType, "PropertyType"),
               border: borderValue
             }]]
@@ -228,14 +261,14 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             body: [[{ text: "Total Amount Paid:", border: borderKey, style: "receipt-table-key" }, { text: receipts.AmountPaid || "", border: borderValue, style: "receipt-table-value" }, { text: "Pending Amount:", border: borderKey, style: "receipt-table-key" }, { text: receipts.pendingAmt || "", border: borderValue }], [{ text: "Payment Mode:", border: borderKey, style: "receipt-table-key" }, { text: receipts.payMode || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
-            { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
+            { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "NA", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
-            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]
+            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]
           },
           layout: tableborder
         }, { text: "Commissioner/EO", alignment: "right", color: "#484848", fontSize: 12, bold: true, margin: [0, 30, 0, 30] }, { text: "Note:", alignment: "left", style: "receipt-footer" }, {
-          ol: [{ text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] }, { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] }, { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] }],
+          ol: [{ text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] }, { text: "This document is not a proof of Property Ownership and regularization of unauthorized construction.", margin: [0, 0, 0, 5] }, { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] }, { text: "Assessment & Payment is subject to verification/Scrutiny by competitive authority.", margin: [0, 0, 0, 5] }, { text: "Please deposit property tax dues for earlier years also. Ignore, if already paid.", margin: [0, 0, 0, 5] }],
           alignment: "left",
           style: "receipt-footer"
         }],

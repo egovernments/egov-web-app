@@ -22,6 +22,8 @@ var _reusableFields = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/uti
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
+var _actions2 = require("egov-ui-kit/redux/form/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var formConfig = {
@@ -29,7 +31,7 @@ var formConfig = {
   fields: (0, _extends3.default)({
     city: {
       id: "city",
-      jsonPath: "Properties[1].address.city",
+      jsonPath: "PropertiesTemp[0].address.city",
       required: true,
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
@@ -38,21 +40,6 @@ var formConfig = {
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       numcols: 6,
       dataFetchConfig: {
-        url: _endPoints.CITY.GET.URL,
-        action: _endPoints.CITY.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [{
-              moduleName: "tenant",
-              masterDetails: [{
-                name: "tenants"
-              }]
-            }]
-          }
-        },
-        dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [{
           fieldKey: "mohalla"
         }]
@@ -67,6 +54,8 @@ var formConfig = {
         dispatch((0, _actions.prepareFormData)("Properties[0].address.city", (0, _filter2.default)((0, _get2.default)(state, "common.cities"), function (city) {
           return city.code === field.value;
         })[0].name));
+        dispatch((0, _actions2.setFieldProperty)("propertyAddress", "mohalla", "value", ""));
+
         var requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -99,7 +88,7 @@ var formConfig = {
           }
         };
 
-        dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor", "Rebate", "Penalty", "Interest", "FireCess"]));
+        dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor"]));
       }
     },
     dummy: {
@@ -170,7 +159,31 @@ var formConfig = {
       maxLength: 64
     }
   }),
+  afterInitForm: function afterInitForm(action, store, dispatch) {
+    try {
+      var state = store.getState();
+      var _state$common = state.common,
+          cities = _state$common.cities,
+          citiesByModule = _state$common.citiesByModule;
 
+      var PT = citiesByModule && citiesByModule.PT;
+      if (PT) {
+        var tenants = PT.tenants;
+        var dd = tenants.reduce(function (dd, tenant) {
+          var selected = cities.find(function (city) {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch((0, _actions2.setFieldProperty)("propertyAddress", "city", "dropDownData", dd));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
+    }
+  },
   action: "",
   redirectionRoute: "",
   saveUrl: "",

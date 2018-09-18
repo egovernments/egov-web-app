@@ -120,5 +120,5 @@ const DatePickerUi = ({
 export default DatePickerUi;
 
 DatePickerUi.propTypes = {
-  props: PropTypes.object,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

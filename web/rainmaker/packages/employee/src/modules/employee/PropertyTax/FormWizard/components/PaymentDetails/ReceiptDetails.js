@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Label from "egov-ui-kit/utils/translationNode";
-import { ReceiptInformation, DemandDraftInformation } from "./forms";
+import { ReceiptInformation } from "./forms";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Card, Icon } from "components";
 

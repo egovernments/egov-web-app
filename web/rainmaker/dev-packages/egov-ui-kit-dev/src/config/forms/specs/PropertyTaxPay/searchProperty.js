@@ -1,3 +1,4 @@
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 
 const formConfig = {
@@ -8,6 +9,7 @@ const formConfig = {
       id: "city",
       numcols: 6,
       fullWidth: true,
+      className: "search-property-form-pt",
       jsonPath: "",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
@@ -15,27 +17,6 @@ const formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       type: "singleValueList",
-      dataFetchConfig: {
-        url: CITY.GET.URL,
-        action: CITY.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "tenant",
-                masterDetails: [
-                  {
-                    name: "tenants",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.tenant.tenants"],
-      },
     },
     mobileNumber: {
       id: "complainant-mobile-no",
@@ -67,45 +48,49 @@ const formConfig = {
       id: "property-tax-assessment-id",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "PT_ASSESSMENT_ID",
+      floatingLabelText: "PT_UNIQUE_ID",
       errorMessage: "",
-      hintText: "PT_ASSESSMENT_ID_PLACEHOLDER",
+      hintText: "PT_UNIQUE_ID_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64,
     },
-
-    // houseNo: {
-    //   id: "house-no",
-    //   jsonPath: "",
-    //   type: "textfield",
-    //   floatingLabelText: "House No.",
-    //   errorMessage: "",
-    //   hintText: "Enter house no.",
-    //   numcols: 6,
-    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    // },
-    // mohalla: {
-    //   id: "mohalla",
-    //   numcols: 6,
-    //   type: "singleValueList",
-    //   jsonPath: "services[0].mohalla",
-    //   floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-    //   hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
-    //   errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
-    //   dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
-    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    // },
-    // tenantId: {
-    //   id: "add-complaint-tenantid",
-    //   jsonPath: "services[0].tenantId",
-    //   value: "pb.amritsar",
-    // },
   },
   submit: {
     type: "submit",
     label: "SEARCH",
     id: "search-property",
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      let state = store.getState();
+      const { cities, citiesByModule } = state.common;
+      let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+      const { PT } = citiesByModule;
+      if (PT) {
+        const tenants = PT.tenants;
+        const dd = tenants.reduce((dd, tenant) => {
+          let selected = cities.find((city) => {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch(setFieldProperty("searchProperty", "city", "dropDownData", dd));
+        if (process.env.REACT_APP_NAME !== "Citizen") {
+          let found = tenants.find((city) => {
+            return city.code === tenantId;
+          });
+          if (found) {
+            dispatch(handleFieldChange("searchProperty", "city", tenantId));
+            dispatch(setFieldProperty("searchProperty", "city", "disabled", true));
+          }
+        }
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
   },
   action: "_search",
   saveUrl: "/pt-services-v2/property",

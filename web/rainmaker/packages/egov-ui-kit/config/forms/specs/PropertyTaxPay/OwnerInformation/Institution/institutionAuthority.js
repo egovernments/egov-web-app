@@ -100,7 +100,7 @@ var formConfig = {
             _get$street = _get.street,
             street = _get$street === undefined ? "" : _get$street;
 
-        var mohallaDetails = mohalla && mohalla.dropDownData.find(function (mohallaData) {
+        var mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(function (mohallaData) {
           return mohallaData.value === (0, _get3.default)(mohalla, "value", "");
         });
         if (iscorrAddrSameProp) {

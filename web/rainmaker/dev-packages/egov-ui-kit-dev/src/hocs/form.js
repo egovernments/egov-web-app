@@ -68,6 +68,7 @@ const form = ({ formKey, path, copyName, rowData, isCoreConfiguration, edit = fa
       return (
         <div>
           <form
+            id={formKey}
             onSubmit={(e) => {
               e.preventDefault();
               submitForm();

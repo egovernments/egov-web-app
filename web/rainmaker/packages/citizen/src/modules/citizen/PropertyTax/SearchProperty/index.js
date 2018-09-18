@@ -85,7 +85,7 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? () => {
-                localStorage.setItem("draftId", "");
+                  localStorage.setItem("draftId", "");
                   this.setState({
                     dialogueOpen: true,
                     urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
@@ -99,6 +99,7 @@ class SearchProperty extends Component {
           label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
           value={propertyId}
           primary={true}
+          className="pt-search-table-action"
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
         />
       );

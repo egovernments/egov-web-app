@@ -46,13 +46,17 @@ var _reactRedux = require("react-redux");
 
 var _components = require("components");
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
 var _lodash = require("lodash");
+
+var _commons = require("egov-ui-kit/utils/commons");
 
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
 
 var styles = {
   menuStyle: {
@@ -86,10 +90,6 @@ var styles = {
   }
 };
 
-// const
-
-//import actionListArr from "./actionList";
-
 var ActionMenuComp = function (_Component) {
   (0, _inherits3.default)(ActionMenuComp, _Component);
 
@@ -108,7 +108,6 @@ var ActionMenuComp = function (_Component) {
       var _this$props = _this.props,
           role = _this$props.role,
           actionListArr = _this$props.actionListArr;
-      // const transformedRole = role === "citizen" ? "citizen" : "employee";
 
       var actionList = actionListArr;
 
@@ -147,7 +146,6 @@ var ActionMenuComp = function (_Component) {
       var _this$props2 = _this.props,
           role = _this$props2.role,
           actionListArr = _this$props2.actionListArr;
-      // const transformedRole = role === "citizen" ? "citizen" : "employee";
 
       var actionList = actionListArr;
       var menuItems = [];
@@ -176,8 +174,6 @@ var ActionMenuComp = function (_Component) {
           parentMenu: true
         };
         _this.menuChange(pathParam);
-
-        //setRoute("/citizen/property-tax");
         setRoute("/all-complaints");
       } else {
         var splitArray = (0, _lodash.split)(path, ".");
@@ -210,7 +206,6 @@ var ActionMenuComp = function (_Component) {
       menuItems: [],
       selectedMenuIndex: 0
     };
-    // this.handleClickOutside = this.handleClickOutside.bind(this);
     _this.setWrapperRef = _this.setWrapperRef.bind(_this);
     return _this;
   }
@@ -223,10 +218,23 @@ var ActionMenuComp = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var pathParam = {
+      var pathParam = {};
+      var menuPath = (0, _commons.fetchFromLocalStorage)("menuPath");
+      pathParam = {
         path: "",
         parentMenu: true
       };
+      var url = (0, _get2.default)(window, "location.pathname").split("/").pop();
+      if (url !== "landing-page" && menuPath) {
+        var menupathArray = menuPath && menuPath.split(".");
+        if (menupathArray && menupathArray.length > 1) {
+          menupathArray.pop();
+          pathParam = {
+            path: menupathArray.join("."),
+            parentMenu: false
+          };
+        }
+      }
       var actionListArr = this.props.actionListArr;
 
 
@@ -248,8 +256,6 @@ var ActionMenuComp = function (_Component) {
       var _props = this.props,
           role = _props.role,
           actionListArr = _props.actionListArr;
-      // const transformedRole = role === "citizen" ? "citizen" : "employee";
-
       var _state = this.state,
           searchText = _state.searchText,
           path = _state.path,
@@ -318,6 +324,7 @@ var ActionMenuComp = function (_Component) {
                     style: { whiteSpace: "initial" },
                     key: index,
                     onClick: function onClick() {
+                      localStorage.setItem("menuPath", item.path);
                       document.title = item.name;
                     },
                     leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {

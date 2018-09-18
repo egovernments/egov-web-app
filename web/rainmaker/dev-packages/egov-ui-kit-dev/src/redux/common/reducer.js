@@ -1,7 +1,7 @@
 import * as commonTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
-import { commonActions } from "egov-ui-kit/utils/commons"
+import { commonActions } from "egov-ui-kit/utils/commons";
 
 const intialState = {
   dropDownData: {},
@@ -95,6 +95,7 @@ const commonReducer = (state = intialState, action) => {
     case commonTypes.MDMS_FETCH_SUCCESS:
       let departmentsById = transformById(action.payload.MdmsRes["common-masters"].Department, "code");
       let designationsById = transformById(action.payload.MdmsRes["common-masters"].Designation, "code");
+      const citiesByModule = transformById(action.payload.MdmsRes["tenant"].citymodule, "code");
       const cities = action.payload.MdmsRes["tenant"]["tenants"].map((item) => {
         return {
           key: item.code,
@@ -114,6 +115,7 @@ const commonReducer = (state = intialState, action) => {
           ...designationsById,
         },
         cities: [...cities],
+        citiesByModule: citiesByModule,
       };
     case commonTypes.MDMS_FETCH_ERROR:
       return {
@@ -125,17 +127,15 @@ const commonReducer = (state = intialState, action) => {
     case commonTypes.PREPARE_FORM_DATA:
       return {
         ...state,
-        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value?action.value:null),
+        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value ? action.value : null),
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
-      const { masterArray } = action;
+      const { masterArray, key } = action;
       const generalMDMSDataById = masterArray.reduce((result, masterName) => {
-        result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], "code");
+        result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], key ? key : "code");
         return result;
       }, {});
-
-      // const generalMDMSDataById = transformById(action.payload.MdmsRes[action.moduleName][action.masterName], "code");
       return {
         ...state,
         loading: false,
@@ -154,12 +154,12 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         spinner: !state.spinner,
-      }
+      };
     case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
       return {
         ...state,
         prepareFormData: action.prepareFormData,
-      }
+      };
     default:
       return state;
   }

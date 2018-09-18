@@ -11,6 +11,8 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headers = [
     "PT_TAX",
     "PT_FIRE_CESS",
+    "PT_CANCER_CESS",
+    "PT_TIME_PENALTY",
     "PT_TIME_REBATE",
     "PT_TIME_INTEREST",
     "PT_UNIT_USAGE_EXEMPTION",
@@ -46,12 +48,13 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
       taxHeadContent &&
         taxHeadContent[0] &&
         result[1].push({
-          text:
-            taxHeadContent[0] && taxHeadContent[0].crAmountToBePaid
-              ? negativeHeaders.indexOf(taxHeadContent[0].accountDescription.split("-")[0]) > -1
-                ? `-${taxHeadContent[0].crAmountToBePaid}`
-                : taxHeadContent[0].crAmountToBePaid
-              : "0",
+          text: taxHeadContent[0]
+            ? taxHeadContent[0].debitAmount
+              ? `-${taxHeadContent[0].debitAmount}`
+              : taxHeadContent[0].crAmountToBePaid
+                ? taxHeadContent[0].crAmountToBePaid
+                : "0"
+            : "NA",
         });
       return result;
     },
@@ -74,7 +77,7 @@ const getHeaderDetails = (property, cities) => {
   };
 };
 
-const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay) => {
+const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) => {
   return {
     ReceiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
     header: getHeaderDetails(property, cities),
@@ -90,16 +93,19 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
     receipts: {
       AmountPaid: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       transactionId: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-      bankName: "AXIS",
-      payMode: "Net Banking",
-      pendingAmt: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+      bankName: receiptDetails && get(receiptDetails, "instrument.bank.name", "NA"),
+      payMode: receiptDetails && get(receiptDetails, "instrument.instrumentType.name", "Net Banking"),
+      pendingAmt: receiptDetails && (totalAmountToPay - totalAmountPaid).toString(),
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && get(receiptDetails, "instrument.transactionNumber"),
       transactionDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "instrument.transactionDateInput")),
-      bankNameBranch: receiptDetails && `${get(receiptDetails, "instrument.bank.id")}, ${get(receiptDetails, "instrument.branchName")}`,
-      G8receiptNo: receiptDetails && get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
-      G8receiptDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate")),
+      bankNameBranch: receiptDetails && `${get(receiptDetails, "instrument.bank.name")}, ${get(receiptDetails, "instrument.branchName")}`,
+      G8receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate:
+        receiptDetails &&
+        get(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate") &&
+        getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate")),
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,
@@ -109,14 +115,17 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success) => {
-  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
-  const ownerInfo = ownerDetails.map((item, index) => {
-    return {
-      key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
-      value: item.name,
-    };
-  });
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
+  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
+  const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
+  const ownerInfo = isInstitution
+    ? [{ key: "Institution Name:", value: institution.name }, { key: "Authorized Person Name:", value: ownerDetails[0].name }]
+    : ownerDetails.map((item, index) => {
+        return {
+          key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
+          value: item.name,
+        };
+      });
   return {
     propertyInfo: property && [
       ...ownerInfo,
@@ -125,7 +134,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
         value: property.oldPropertyId,
       },
       {
-        key: "Property Tax Assessment ID:",
+        key: "Property Tax Unique ID:",
         value: property.propertyId,
       },
       {
@@ -152,7 +161,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Payable Amount:",
-        value: totalAmountToPay ? totalAmountToPay.toString() : 0,
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount", 0).toString(),
       },
       {
         key: "Amount Paid:",
@@ -160,7 +169,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Amount Due:",
-        value: receiptDetails && (totalAmountToPay - (success ? get(receiptDetails, "Bill[0].billDetails[0].amountPaid") : 0)).toString(),
+        value: receiptDetails && (totalAmountToPay - (success ? totalAmountPaid : 0)).toString(),
       },
     ],
   };

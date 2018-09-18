@@ -91,8 +91,10 @@ class PaymentFailure extends Component {
 
   redirectToReview = () => {
     const { match, history } = this.props;
-    const { assessmentNumber, assessmentYear, propertyId } = match.params;
-    history.push(`/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true&propertyId=${propertyId}`);
+    const { assessmentNumber, assessmentYear, propertyId, tenantId } = match.params;
+    history.push(
+      `/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
+    );
   };
 
   render() {

@@ -7,6 +7,7 @@ import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
@@ -56,6 +57,12 @@ class YearDialog extends Component {
     toggleSpinner();
   };
 
+  resetForm = () => {
+    const { form, removeForm, prepareFormData } = this.props;
+    resetFormWizard(form, removeForm);
+    prepareFormData("Properties", []);
+  };
+
   render() {
     let { open, closeDialogue, getYearList, history, form, removeForm, urlToAppend } = this.props;
     return getYearList ? (
@@ -68,13 +75,7 @@ class YearDialog extends Component {
             </div>
             <div className="year-range-botton-cont">
               {Object.values(getYearList).map((item, index) => (
-                <YearDialogueHOC
-                  key={index}
-                  label={item}
-                  history={history}
-                  resetFormWizard={() => resetFormWizard(form, removeForm)}
-                  urlToAppend={urlToAppend}
-                />
+                <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetForm} urlToAppend={urlToAppend} />
               ))}
             </div>
           </div>,
@@ -101,6 +102,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     removeForm: (formkey) => dispatch(removeForm(formkey)),
     toggleSpinner: () => dispatch(toggleSpinner()),
+    prepareFormData: (path, value) => dispatch(prepareFormData(path, value)),
   };
 };
 

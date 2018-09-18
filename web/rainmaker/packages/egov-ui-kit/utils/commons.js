@@ -407,15 +407,15 @@ var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHour
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
-  var name = address ? address.locality.name : "";
-  var cityValue = address ? address.city : "";
-  var pincode = address ? address.pincode : "";
-  var cityName = "";
-  cities && cities.forEach(function (city) {
-    if (city.code === cityValue) {
-      cityName = city.name;
-    }
-  });
+  var name = address && address.locality && address.locality.name ? address.locality.name : "";
+  var cityName = address && address.city ? address.city : "";
+  var pincode = address && address.pincode ? address.pincode : "";
+  // cities &&
+  //   cities.forEach((city) => {
+  //     if (city.code === cityValue) {
+  //       cityName = city.name;
+  //     }
+  //   });
   var addressKeys = ["doorNo", "buildingName", "street"];
   var addressArray = addressKeys.reduce(function (result, curr) {
     if (address && address[curr]) {
@@ -424,7 +424,7 @@ var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCo
     return [].concat((0, _toConsumableArray3.default)(result));
   }, []);
   addressArray = pincode ? [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName, pincode]) : [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName]);
-  return addressArray.join(" , ");
+  return addressArray.join(", ");
 };
 
 var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCreationTime(complaint) {
@@ -584,10 +584,16 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
           case 0:
             url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody, queryParams = dataFetchConfig.queryParams;
             _context3.prev = 1;
-            _context3.next = 4;
+
+            if (!url) {
+              _context3.next = 9;
+              break;
+            }
+
+            _context3.next = 5;
             return (0, _api.httpRequest)(url, action, queryParams || [], requestBody);
 
-          case 4:
+          case 5:
             payloadSpec = _context3.sent;
             dropdownData = boundary ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
             payloadSpec.TenantBoundary[0].boundary : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
@@ -603,23 +609,25 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
             }, []);
 
             dispatch((0, _actions.setFieldProperty)(formKey, fieldKey, "dropDownData", ddData));
-            _context3.next = 15;
+
+          case 9:
+            _context3.next = 16;
             break;
 
-          case 10:
-            _context3.prev = 10;
+          case 11:
+            _context3.prev = 11;
             _context3.t0 = _context3["catch"](1);
             message = _context3.t0.message;
 
             dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
             return _context3.abrupt("return");
 
-          case 15:
+          case 16:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[1, 10]]);
+    }, _callee3, undefined, [[1, 11]]);
   }));
 
   return function fetchDropdownData(_x4, _x5, _x6, _x7, _x8) {
@@ -631,6 +639,7 @@ var trimObj = exports.trimObj = function trimObj(obj) {
   if (!Array.isArray(obj) && (typeof obj === "undefined" ? "undefined" : (0, _typeof3.default)(obj)) != "object") return obj;
   for (var key in obj) {
     obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+    if (key === "") delete obj[key];
   }
   return obj;
 };

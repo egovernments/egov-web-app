@@ -51,14 +51,15 @@ var Dashboard = function Dashboard(_ref) {
       history = _ref.history,
       onPGRClick = _ref.onPGRClick,
       onDialogueClose = _ref.onDialogueClose,
-      dialogueOpen = _ref.dialogueOpen;
+      dialogueOpen = _ref.dialogueOpen,
+      renderCityPicker = _ref.renderCityPicker;
 
   return _react2.default.createElement(
     "div",
     { "class": "col-sm-12 " },
     _react2.default.createElement(_translationNode2.default, { className: "landingPageUser", label: " Welcome " + userName + ", " }),
     _react2.default.createElement(_component2.default, { onPGRClick: onPGRClick, items: moduleItems, onButton2Click: onButton2Click, onButton1Click: onButton1Click, history: history }),
-    _react2.default.createElement(_CityPicker2.default, { history: history, moduleItems: moduleItems, onDialogueClose: onDialogueClose, dialogueOpen: dialogueOpen })
+    renderCityPicker && _react2.default.createElement(_CityPicker2.default, { history: history, moduleItems: moduleItems, onDialogueClose: onDialogueClose, dialogueOpen: dialogueOpen })
   );
 };
 exports.default = Dashboard;

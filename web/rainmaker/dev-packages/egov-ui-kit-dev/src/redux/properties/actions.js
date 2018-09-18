@@ -3,6 +3,7 @@ import { PROPERTY, DRAFT, PGService, RECEIPT } from "egov-ui-kit/utils/endPoints
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { transformById } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
+import groupby from "lodash/groupBy";
 
 const propertyFetchPending = () => {
   return {
@@ -213,6 +214,29 @@ const mergeReceiptsInProperty = (receiptsArray, propertyObj) => {
   const mergedReceiptsProperties = Object.values(transformedPropertyObj).filter((property) => {
     return property.receiptInfo;
   });
+  const groupByPropertyId = mergedReceiptsProperties.reduce((res, item) => {
+    if (!res[item.propertyId]) res[item.propertyId] = {};
+    if (!res[item.propertyId][item.financialYear]) res[item.propertyId][item.financialYear] = [];
+    res[item.propertyId][item.financialYear].push(item);
+    return res;
+  }, {});
+  for (let propertyId in groupByPropertyId) {
+    for (let year in groupByPropertyId[propertyId]) {
+      const assessmentByDate = orderby(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
+
+      if (assessmentByDate.findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
+        for (let i = 0; i < assessmentByDate.length; i++) {
+          if (i !== assessmentByDate.length - 1) {
+            // if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+            assessmentByDate[i].receiptInfo.status = "Completed";
+            // } else {
+            //   assessmentByDate[i].receiptInfo.status = "Paid";
+            // }
+          }
+        }
+      }
+    }
+  }
   return mergedReceiptsProperties;
 };
 
@@ -325,7 +349,6 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
           });
           return acc;
         }, {});
-
       dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
     } catch (error) {
       dispatch(SingleAssessmentStatusFetchError(error.message));

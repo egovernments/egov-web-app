@@ -149,5 +149,5 @@ exports.default = DatePickerUi;
 
 
 DatePickerUi.propTypes = {
-  props: _propTypes2.default.object
+  value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object])
 };

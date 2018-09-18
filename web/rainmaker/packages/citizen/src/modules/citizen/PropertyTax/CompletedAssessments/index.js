@@ -12,7 +12,6 @@ import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
-import { getFetchGeneralMDMSData } from "egov-ui-kit/utils/PTCommon";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -95,6 +94,9 @@ class CompletedAssessments extends Component {
               {
                 name: "OwnerType",
               },
+              {
+                name: "UsageCategoryDetail",
+              },
             ],
           },
         ],
@@ -109,6 +111,7 @@ class CompletedAssessments extends Component {
       "PropertyType",
       "PropertySubType",
       "OwnerType",
+      "UsageCategoryDetail",
     ]);
     getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
     resetFormWizard(form, removeForm);

@@ -31,6 +31,10 @@ var _orderBy = require("lodash/orderBy");
 
 var _orderBy2 = _interopRequireDefault(_orderBy);
 
+var _groupBy = require("lodash/groupBy");
+
+var _groupBy2 = _interopRequireDefault(_groupBy);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -345,6 +349,31 @@ var mergeReceiptsInProperty = function mergeReceiptsInProperty(receiptsArray, pr
   var mergedReceiptsProperties = Object.values(transformedPropertyObj).filter(function (property) {
     return property.receiptInfo;
   });
+  var groupByPropertyId = mergedReceiptsProperties.reduce(function (res, item) {
+    if (!res[item.propertyId]) res[item.propertyId] = {};
+    if (!res[item.propertyId][item.financialYear]) res[item.propertyId][item.financialYear] = [];
+    res[item.propertyId][item.financialYear].push(item);
+    return res;
+  }, {});
+  for (var propertyId in groupByPropertyId) {
+    for (var year in groupByPropertyId[propertyId]) {
+      var assessmentByDate = (0, _orderBy2.default)(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
+
+      if (assessmentByDate.findIndex(function (item) {
+        return item.receiptInfo.status === "Paid";
+      }) > -1) {
+        for (var i = 0; i < assessmentByDate.length; i++) {
+          if (i !== assessmentByDate.length - 1) {
+            // if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+            assessmentByDate[i].receiptInfo.status = "Completed";
+            // } else {
+            //   assessmentByDate[i].receiptInfo.status = "Paid";
+            // }
+          }
+        }
+      }
+    }
+  }
   return mergedReceiptsProperties;
 };
 
@@ -465,7 +494,6 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
                 });
                 return acc;
               }, {});
-
 
               dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
               _context4.next = 15;

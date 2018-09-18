@@ -266,24 +266,34 @@ var logout = exports.logout = function logout() {
 
           case 5:
             response = _context4.sent;
-            _context4.next = 10;
+            _context4.next = 11;
             break;
 
           case 8:
+            Object.keys(localStorage).forEach(function (key) {
+              if (!key.startsWith("localization")) {
+                localStorage.removeItem(key);
+              }
+            });
             process.env.REACT_APP_NAME === "Citizen" ? window.location.replace(window.basename + "/user/register") : window.location.replace(window.basename + "/user/login");
             return _context4.abrupt("return");
 
-          case 10:
-            _context4.next = 15;
+          case 11:
+            _context4.next = 17;
             break;
 
-          case 12:
-            _context4.prev = 12;
+          case 13:
+            _context4.prev = 13;
             _context4.t0 = _context4["catch"](0);
 
             console.log(_context4.t0);
+            Object.keys(localStorage).forEach(function (key) {
+              if (!key.startsWith("localization")) {
+                localStorage.removeItem(key);
+              }
+            });
 
-          case 15:
+          case 17:
             // whatever happens the client should clear the user details
             // let userInfo=localStorage.getItem("user-info");
             // let userRole=get(userInfo,"roles[0].code");
@@ -296,11 +306,11 @@ var logout = exports.logout = function logout() {
             // window.location.replace(`${window.basename}/user/login`)
             window.location.replace(window.basename + "/user/login");
 
-          case 17:
+          case 19:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, undefined, [[0, 12]]);
+    }, _callee4, undefined, [[0, 13]]);
   }));
 };

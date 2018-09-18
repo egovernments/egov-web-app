@@ -216,7 +216,7 @@ class ShowForm extends Component {
       if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
         this.search(null, true, nextProps.metaData.reportDetails.reportName);
       } else if (needDefaultSearch) {
-        this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName);
+        this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName, nextProps.match.params.moduleName);
       }
     }
   }
@@ -248,7 +248,7 @@ class ShowForm extends Component {
       metaData.reportDetails.searchParams.filter((field) => field.displayOnly).map((field) => field.name)
     );
   };
-  defautSearch = (e = null, isDrilldown = false, rptName) => {
+  defautSearch = (e = null, isDrilldown = false, rptName, moduleName) => {
     if (e) {
       e.preventDefault();
     }
@@ -280,7 +280,7 @@ class ShowForm extends Component {
       let searchParams = [];
 
       clearReportHistory();
-      let resulturl = getResultUrl(this.state.moduleName);
+      let resulturl = getResultUrl(moduleName);
       let response =
         resulturl &&
         commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: rptName || this.state.reportName, searchParams }).then(
@@ -456,14 +456,30 @@ class ShowForm extends Component {
                   toDate = new Date(searchForm.toDate);
                 }
 
+                let tabLabel = "";
                 if (fromDate && toDate) {
-                  let tabLabel = `Showing data for : ${fromDate.getDate() +
+                  tabLabel = `Showing data for : ${fromDate.getDate() +
                     "/" +
                     (fromDate.getMonth() + 1) +
                     "/" +
                     fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
-                  this.props.updateTabLabel(tabLabel);
                 }
+
+                /** Zone wise selection show in header */
+                if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
+                  if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
+                    tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
+                  }
+                  if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
+                    tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
+                  }
+                  if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
+                    tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
+                  }
+                }
+                /** END Zone wise ... */
+
+                this.props.updateTabLabel(tabLabel);
                 search(e);
               }}
             >
