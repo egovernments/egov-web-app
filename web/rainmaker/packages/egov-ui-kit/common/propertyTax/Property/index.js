@@ -372,7 +372,6 @@ var getAssessmentInfo = function getAssessmentInfo(propertyDetails, keys, genera
 
 var getOwnerInfo = function getOwnerInfo(latestPropertyDetails, generalMDMSDataById) {
   var isInstitution = latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
-  console.log(isInstitution);
 
   var _ref2 = latestPropertyDetails || {},
       institution = _ref2.institution,

@@ -50,7 +50,6 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common, form } = state;
   const { employeeById, departmentById, designationsById } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
-  console.log(selectedComplaint);
   if (selectedComplaint) {
     let details = {
       status: selectedComplaint.status,

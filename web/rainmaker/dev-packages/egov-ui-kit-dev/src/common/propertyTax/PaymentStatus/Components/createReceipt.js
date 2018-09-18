@@ -116,6 +116,8 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
 };
 
 const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
+  const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
+  const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
   const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
@@ -161,7 +163,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Payable Amount:",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount", 0).toString(),
+        value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString(),
       },
       {
         key: "Amount Paid:",
@@ -169,7 +171,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
       },
       {
         key: "Amount Due:",
-        value: receiptDetails && (totalAmountToPay - (success ? totalAmountPaid : 0)).toString(),
+        value: amountDue,
       },
     ],
   };

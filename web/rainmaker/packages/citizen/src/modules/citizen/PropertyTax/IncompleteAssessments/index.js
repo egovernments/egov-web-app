@@ -48,7 +48,7 @@ class IncompleteAssessments extends Component {
 
   onListItemClick = (item) => {
     const { route } = item;
-    localStorage.setItem("draftId","");
+    localStorage.setItem("draftId", "");
     this.props.history.push(route);
   };
 
@@ -71,40 +71,6 @@ class IncompleteAssessments extends Component {
     );
   }
 }
-
-// const getfailedPropertiesById = (propertiesById, failedTransactions) => {
-//   return (
-//     failedTransactions &&
-//     Object.keys(failedTransactions).reduce((result, moduleId) => {
-//       if (propertiesById[moduleId] && !result[moduleId]) result[moduleId] = [];
-//       result[moduleId] = propertiesById[moduleId];
-//       return result;
-//     }, {})
-//   );
-// };
-
-// const filterData = (propertiesById, propertyName, ids) => {
-//   return {
-//     [propertyName]: {
-//       ...propertiesById[propertyName],
-//       propertyDetails:
-//         propertiesById &&
-//         propertiesById[propertyName]["propertyDetails"] &&
-//         propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
-//     },
-//   };
-// };
-
-// const mergeFinalData = (propertiesById, failedTransObj) => {
-//   return (
-//     propertiesById &&
-//     Object.keys(propertiesById).reduce((result, current) => {
-//       result[current] = filterData(propertiesById, current, failedTransObj[current])[current];
-//       return result;
-//     }, {})
-//   );
-// };
-
 const getTransformedItems = (propertiesById, cities) => {
   return (
     propertiesById &&

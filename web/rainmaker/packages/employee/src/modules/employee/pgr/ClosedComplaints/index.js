@@ -80,7 +80,15 @@ const mapStateToProps = (state) => {
   const loading = fetchSuccess ? false : true;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
-  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
+  const closedComplaints = orderby(
+    transformedComplaints.filter((complaint) => {
+      if (complaint) {
+        return complaint.complaintStatus === "CLOSED";
+      }
+    }),
+    "latestActionTime",
+    "desc"
+  );
   const numClosedComplaints = closedComplaints.length;
   return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
