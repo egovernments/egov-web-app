@@ -5,7 +5,8 @@ import { Screen } from "modules/common";
 import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
+import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
+import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import isEqual from "lodash/isEqual";
@@ -21,26 +22,31 @@ class AllComplaints extends Component {
     value: 0,
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     let { role, userInfo, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
     let rawRole = userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
-    const numberOfComplaints = role === "employee" ? numEmpComplaint : role === "csr" ? numCSRComplaint : 0;
+    //const numberOfComplaints = role === "employee" ? numEmpComplaint : role === "csr" ? numCSRComplaint : 0;
     if (rawRole === "PGR-ADMIN") {
       this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
     } else {
       let { fetchComplaints } = this.props;
       fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }], true, true);
-      renderCustomTitle(numberOfComplaints);
-    }
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
-    if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
-      const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
-      renderCustomTitle(numberOfComplaints);
+      const complaintCountRequest = [
+        { key: "tenantId", value: fetchFromLocalStorage("tenant-id") },
+        { key: "status", value: role === "csr" ? "assigned,open,reassignrequested" : "assigned,reassignrequested" },
+      ];
+      let payloadCount = await httpRequest("rainmaker-pgr/v1/requests/_count", "_search", complaintCountRequest);
+      payloadCount ? (payloadCount.count ? renderCustomTitle(payloadCount.count) : renderCustomTitle("0")) : renderCustomTitle("0");
     }
   };
+
+  // componentWillReceiveProps = (nextProps) => {
+  //   const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
+  //   if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
+  //     const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
+  //     renderCustomTitle(numberOfComplaints);
+  //   }
+  // };
 
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/complaint-details/${complaintNo}`);

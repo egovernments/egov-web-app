@@ -3,29 +3,25 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
-import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
+import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
+import { httpRequest } from "egov-ui-kit/utils/api";
 import "./index.css";
 
 class ClosedComplaints extends Component {
-  componentDidMount() {
-    let { fetchComplaints, numClosedComplaints, renderCustomTitle } = this.props;
+  componentDidMount = async () => {
+    let { fetchComplaints, renderCustomTitle } = this.props;
     fetchComplaints([{ key: "status", value: "rejected,resolved,closed" }]);
-    const numberOfComplaints = numClosedComplaints ? numClosedComplaints : 0;
-    renderCustomTitle(numberOfComplaints);
-  }
+    const complaintCountRequest = [
+      { key: "tenantId", value: fetchFromLocalStorage("tenant-id") },
+      { key: "status", value: "closed,resolved,rejected" },
+    ]; // getting tenantId from localStorage
+    let payloadCount = await httpRequest("rainmaker-pgr/v1/requests/_count", "_search", complaintCountRequest);
+    payloadCount ? (payloadCount.count ? renderCustomTitle(payloadCount.count) : renderCustomTitle("0")) : renderCustomTitle("0");
+  };
 
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/complaint-details/${complaintNo}`);
-  };
-
-  componentWillReceiveProps = (nextProps) => {
-    const { numClosedComplaints, closedComplaints, renderCustomTitle } = this.props;
-    if (!isEqual(closedComplaints, nextProps.closedComplaints)) {
-      const numberOfComplaints = nextProps.numClosedComplaints ? nextProps.numClosedComplaints : 0;
-      renderCustomTitle(numberOfComplaints);
-    }
   };
 
   render() {
@@ -80,15 +76,7 @@ const mapStateToProps = (state) => {
   const loading = fetchSuccess ? false : true;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
-  const closedComplaints = orderby(
-    transformedComplaints.filter((complaint) => {
-      if (complaint) {
-        return complaint.complaintStatus === "CLOSED";
-      }
-    }),
-    "latestActionTime",
-    "desc"
-  );
+  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
   const numClosedComplaints = closedComplaints.length;
   return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
