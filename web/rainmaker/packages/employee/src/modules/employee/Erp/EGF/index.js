@@ -7,9 +7,20 @@ class EGFFinance extends Component{
     
             let auth_token = localStorage.getItem('token'),
                 menuUrl = this.props.location.pathname,
-                loc = window.location;
-                
-            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+menuUrl;
+                loc = window.location,
+                subdomainurl,
+                hostname = loc.hostname;
+
+            if(hostname.search('dev')!=-1){
+                subdomainurl = hostname.substring(hostname.search('dev'),hostname.length);
+            }else if(hostname.search('qa')!=-1){
+                subdomainurl = hostname.substring(hostname.search('qa'),hostname.length);
+            }else if(hostname.search('uat')!=-1){
+                subdomainurl = hostname.substring(hostname.search('uat'),hostname.length);
+            }else
+                subdomainurl = hostname;
+
+            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"-"+subdomainurl+menuUrl;
             // let erp_url='http://jalandhar.test.egov.com:8080'+menuUrl;
             console.log("ERP URL : "+erp_url);
 
