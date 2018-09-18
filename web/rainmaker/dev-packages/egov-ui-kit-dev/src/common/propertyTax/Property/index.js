@@ -333,7 +333,6 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
 const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
   const isInstitution =
     latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
-  console.log(isInstitution);
   const { institution, owners: ownerDetails } = latestPropertyDetails || {};
   return (
     ownerDetails && [
