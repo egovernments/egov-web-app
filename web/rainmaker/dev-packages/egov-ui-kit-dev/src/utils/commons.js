@@ -44,6 +44,7 @@ export const transformById = (payload, id) => {
       result[item[id]] = {
         ...item,
       };
+
       return result;
     }, {})
   );
@@ -416,48 +417,42 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       complaintDetail.actions[complaintDetail.actions.length - 1].by &&
       complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] &&
       complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
-    if (complaintDetail.actions) {
-      return {
-        header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
-        date: complaintDetail.auditDetails.createdTime,
-        latestCreationTime: getLatestCreationTime(complaintDetail),
-        complaintNo: complaintDetail.serviceRequestId,
-        images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-        complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
-        rawStatus: complaintDetail.status && complaintDetail.status,
-        address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
-        reassign: complaintDetail.status === "reassignrequested" ? true : false,
-        reassignRequestedBy:
-          complaintDetail.status === "reassignrequested"
-            ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA")
-            : "NA",
-        latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
-        submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Citizen Service Desk)` : filedUserName) : "NA",
-        citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
-        assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
-        employeePhoneNumber:
-          employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
-            ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
-            : defaultPhoneNumber,
-        status:
-          role === "citizen"
-            ? displayStatus(
-                complaintDetail.status,
-                complaintDetail.assignee,
-                complaintDetail.actions.filter((complaint) => complaint.status)[0].action
-              )
-            : getTransformedStatus(complaintDetail.status) === "CLOSED"
-              ? complaintDetail.rating
-                ? displayStatus(`${complaintDetail.rating}/5`)
-                : displayStatus(complaintDetail.actions[0].status)
-              : displayStatus(
-                  returnSLAStatus(
-                    getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
-                    getLatestCreationTime(complaintDetail)
-                  )
-                ),
-      };
-    }
+    return {
+      header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
+      date: complaintDetail.auditDetails.createdTime,
+      latestCreationTime: getLatestCreationTime(complaintDetail),
+      complaintNo: complaintDetail.serviceRequestId,
+      images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
+      complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
+      rawStatus: complaintDetail.status && complaintDetail.status,
+      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+      reassign: complaintDetail.status === "reassignrequested" ? true : false,
+      reassignRequestedBy:
+        complaintDetail.status === "reassignrequested"
+          ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA")
+          : "NA",
+      latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
+      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Citizen Service Desk)` : filedUserName) : "NA",
+      citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
+      assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
+      employeePhoneNumber:
+        employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
+          ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
+          : defaultPhoneNumber,
+      status:
+        role === "citizen"
+          ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter((complaint) => complaint.status)[0].action)
+          : getTransformedStatus(complaintDetail.status) === "CLOSED"
+            ? complaintDetail.rating
+              ? displayStatus(`${complaintDetail.rating}/5`)
+              : displayStatus(complaintDetail.actions[0].status)
+            : displayStatus(
+                returnSLAStatus(
+                  getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
+                  getLatestCreationTime(complaintDetail)
+                )
+              ),
+    };
   });
   return transformedComplaints;
 };
