@@ -2,7 +2,8 @@
   "name": "react-uploader-service",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://egov-micro-dev.egovernments.org/",
+  "homepage": "https://egov-micro-dev.egovernments.org/app/v2/uploader/",
+  "proxy": "https://egov-micro-dev.egovernments.org/",
   "dependencies": {
     "axios": "^0.17.1",
     "material-ui": "^0.20.0",
@@ -21,6 +22,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "homepage": "."
+  }
 }
