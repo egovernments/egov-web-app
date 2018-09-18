@@ -14,6 +14,13 @@ const initFormMiddleware = (store) => (next) => async (action) => {
     try {
       formData = await transform("businessModelToViewModelTransformer", formKey, form, state, recordData);
       action.form = formData;
+
+      next(action);
+
+      if (window.appOverrides) {
+        window.appOverrides.initForm(formKey, form);
+      }
+      return;
     } catch (error) {
       const { message } = error;
       dispatch(toggleSnackbarAndSetText(true, message, true));

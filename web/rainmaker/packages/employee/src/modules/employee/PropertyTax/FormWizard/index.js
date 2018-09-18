@@ -673,6 +673,10 @@ class FormWizard extends Component {
     switch (selected) {
       //validating property address is validated
       case 0:
+        if (window.appOverrides && !window.appOverrides.validateForm("propertyAddress", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
           callDraft();
@@ -683,6 +687,11 @@ class FormWizard extends Component {
         break;
       //validating basic information,plotdetails and if plot details having floors
       case 1:
+        if (window.appOverrides && !window.appOverrides.validateForm("assessmentInformation", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
+
         const { basicInformation, plotDetails } = form;
         if (basicInformation) {
           const isBasicInformationFormValid = validateForm(basicInformation);
@@ -723,6 +732,11 @@ class FormWizard extends Component {
         this.getImportantDates();
         break;
       case 2:
+        if (window.appOverrides && !window.appOverrides.validateForm("ownerInfo", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
+
         const { ownershipType } = form;
         const estimateCall = () => {
           estimate().then((estimateResponse) => {
@@ -1191,6 +1205,11 @@ class FormWizard extends Component {
       propertyDetails[0].buildUpArea = sumOfUnitArea;
     }
     propertyDetails[0].units = units;
+
+    if (window.appOverrides) {
+      window.appOverrides.submitForm(propertyInfo);
+    }
+
     return propertyInfo;
   };
 

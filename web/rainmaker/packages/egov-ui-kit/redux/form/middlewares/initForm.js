@@ -36,7 +36,7 @@ var initFormMiddleware = function initFormMiddleware(store) {
                 state = store.getState();
 
                 if (!(type === _actionTypes.INIT_FORM)) {
-                  _context.next = 19;
+                  _context.next = 22;
                   break;
                 }
 
@@ -51,27 +51,32 @@ var initFormMiddleware = function initFormMiddleware(store) {
                 formData = _context.sent;
 
                 action.form = formData;
-                _context.next = 19;
-                break;
 
-              case 14:
-                _context.prev = 14;
+                next(action);
+
+                if (window.appOverrides) {
+                  window.appOverrides.initForm(formKey, form);
+                }
+                return _context.abrupt("return");
+
+              case 17:
+                _context.prev = 17;
                 _context.t0 = _context["catch"](7);
                 message = _context.t0.message;
 
                 dispatch((0, _actions.toggleSnackbarAndSetText)(true, message, true));
                 return _context.abrupt("return");
 
-              case 19:
+              case 22:
 
                 next(action);
 
-              case 20:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, undefined, [[7, 14]]);
+        }, _callee, undefined, [[7, 17]]);
       }));
 
       return function (_x) {
