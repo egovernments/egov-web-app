@@ -53,6 +53,7 @@ class FormWizard extends Component {
     draftByIDResponse: {},
     isFullPayment: true,
     partialAmountError: "",
+    propertyUUId: "",
   };
 
   updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
@@ -303,6 +304,10 @@ class FormWizard extends Component {
             prepareFormData: { Properties: propertyResponse["Properties"] }, //prepareFormData2,
           },
         };
+        console.log("propertyResponse...", searchPropertyResponse);
+        this.setState({
+          propertyUUID: get(searchPropertyResponse, "Properties[0].propertyDetails[0].citizenInfo.uuid"),
+        });
       }
 
       if (!currentDraft) {
@@ -1104,16 +1109,15 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    const { formValidIndexArray, selected, draftByIDResponse } = this.state;
+    const { formValidIndexArray, selected, propertyUUID } = this.state;
     const { location } = this.props;
     let { search } = location;
-    let draftUuidId = draftByIDResponse.userId;
-    let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    let currentUUID = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       isReassesment
-        ? isCompletePayment || draftUuidId !== currentUuidId
+        ? isCompletePayment || propertyUUID !== currentUUID
           ? alert("Not authorized to edit this property details")
           : this.setState({
               selected: index,
