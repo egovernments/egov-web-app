@@ -1111,10 +1111,8 @@ class FormWizard extends Component {
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
-    // form validation checks needs to be written here
-    // fetchDraftDetails();
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      false
+      isReassesment
         ? isCompletePayment || draftUuidId !== currentUuidId
           ? alert("Not authorized to edit this property details")
           : this.setState({
