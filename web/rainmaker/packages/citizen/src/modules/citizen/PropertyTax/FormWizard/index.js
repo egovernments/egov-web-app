@@ -304,7 +304,6 @@ class FormWizard extends Component {
             prepareFormData: { Properties: propertyResponse["Properties"] }, //prepareFormData2,
           },
         };
-        console.log("propertyResponse...", searchPropertyResponse);
         this.setState({
           propertyUUID: get(searchPropertyResponse, "Properties[0].propertyDetails[0].citizenInfo.uuid"),
         });
