@@ -1,0 +1,22 @@
+import rootReducer from "./reducer";
+import { createStore, applyMiddleware,combineReducers } from "redux";
+import thunk from "redux-thunk";
+import screenConfigurationMiddleware from "mihy-ui-framework/ui-redux/screen-configuration/middlewares";
+import authMiddleware from "ui-redux/auth/middlewares";
+
+let middlewares = [];
+
+middlewares = middlewares.concat(authMiddleware);
+middlewares = middlewares.concat(screenConfigurationMiddleware);
+middlewares = middlewares.concat(thunk);
+
+if (process.env.NODE_ENV === "development") {
+  const { logger } = require("redux-logger");
+  middlewares = middlewares.concat(logger);
+}
+
+const store = createStore(combineReducers({
+  ...rootReducer
+}), applyMiddleware(...middlewares))
+
+export default store
