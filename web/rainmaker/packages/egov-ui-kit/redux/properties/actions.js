@@ -364,11 +364,11 @@ var mergeReceiptsInProperty = function mergeReceiptsInProperty(receiptsArray, pr
       }) > -1) {
         for (var i = 0; i < assessmentByDate.length; i++) {
           if (i !== assessmentByDate.length - 1) {
-            // if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
-            assessmentByDate[i].receiptInfo.status = "Completed";
-            // } else {
-            //   assessmentByDate[i].receiptInfo.status = "Paid";
-            // }
+            if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+              assessmentByDate[i].receiptInfo.status = "Completed";
+            } else {
+              assessmentByDate[i].receiptInfo.status = "Paid";
+            }
           }
         }
       }
