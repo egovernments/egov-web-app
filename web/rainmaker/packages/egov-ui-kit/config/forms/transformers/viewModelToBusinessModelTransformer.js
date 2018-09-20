@@ -125,6 +125,10 @@ var transformer = function transformer(formKey) {
           tenantId: {
             jsonPath: "User.tenantId",
             value: fields.city.value
+          },
+          permanentCity: {
+            jsonPath: "User.permanentCity",
+            value: fields.city.value
           }
         });
       } else if (previousRoute.endsWith("login")) {
