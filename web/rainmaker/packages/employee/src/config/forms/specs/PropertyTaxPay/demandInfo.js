@@ -8,7 +8,7 @@ const formConfig = {
       floatingLabelText: "DD No.",
       hintText: "Enter dd no.",
       jsonPath: "Receipt[0].instrument.transactionNumber",
-      pattern: /^([1-9]\d{5,15})(\.\d+)?$/,
+      pattern: /^([0-9]\d{5,15})(\.\d+)?$/,
       errorMessage: "DD should be minimum 6 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,

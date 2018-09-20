@@ -359,19 +359,17 @@ var mergeReceiptsInProperty = function mergeReceiptsInProperty(receiptsArray, pr
     for (var year in groupByPropertyId[propertyId]) {
       var assessmentByDate = (0, _orderBy2.default)(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
 
-      if (assessmentByDate.findIndex(function (item) {
-        return item.receiptInfo.status === "Paid";
-      }) > -1) {
-        for (var i = 0; i < assessmentByDate.length; i++) {
-          if (i !== assessmentByDate.length - 1) {
-            if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
-              assessmentByDate[i].receiptInfo.status = "Completed";
-            } else {
-              assessmentByDate[i].receiptInfo.status = "Paid";
-            }
+      // if (assessmentByDate.findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
+      for (var i = 0; i < assessmentByDate.length; i++) {
+        if (i !== assessmentByDate.length - 1) {
+          if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+            assessmentByDate[i].receiptInfo.status = "Completed";
+          } else {
+            assessmentByDate[i].receiptInfo.status = "Paid-Disable";
           }
         }
       }
+      // }
     }
   }
   return mergedReceiptsProperties;
