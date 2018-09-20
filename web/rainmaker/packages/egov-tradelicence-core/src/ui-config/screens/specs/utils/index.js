@@ -138,3 +138,16 @@ export const getFooterButtons = () => {
     return getLabel("APPROVE APPLICATION");
   }
 };
+export const getFeesEstimateCard = (header, fees, extra) => {
+  return {
+    uiFramework: "custom-molecules",
+    componentPath: "FeesEstimateCard",
+    props: {
+      estimate: {
+        header,
+        fees,
+        extra
+      }
+    }
+  };
+};

@@ -276,3 +276,157 @@ export const footerApprove = getCommonApplyFooter({
     }
   }
 });
+
+export const footerReview = getCommonApplyFooter({
+  downloadButton: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "#F2F2F2",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginLeft: "24px"
+      }
+    },
+    children: {
+      downloadIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "cloud_download"
+        }
+      },
+      nextButtonLabel: getLabel("Download"),
+      dropdown: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          style: {
+            float: "right"
+          },
+          iconName: "arrow_drop_down"
+        }
+      }
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPrevious
+    },
+    visible: true
+  },
+  printButton: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "#F2F2F2",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      downloadIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "print"
+        }
+      },
+      nextButtonLabel: getLabel("Print"),
+      dropdown: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "arrow_drop_down"
+        }
+      }
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPrevious
+    },
+    visible: true
+  },
+  rejectButton: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      nextButtonLabel: getLabel("Reject")
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPrevious
+    },
+    visible: true
+  },
+  approveButton: {
+    componentPath: "Button",
+    props: {
+      variant: "contained",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      nextButtonLabel: getLabel("APPROVE")
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+    },
+    visible: true
+  },
+  proceedPayButton: {
+    componentPath: "Button",
+    props: {
+      variant: "contained",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      nextButtonLabel: getLabel("PROCEED TO PAYMENT")
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+    },
+    visible: true
+  },
+  cancelButton: {
+    componentPath: "Button",
+    props: {
+      variant: "contained",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      nextButtonLabel: getLabel("CANCEL")
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+    },
+    visible: true
+  }
+});
