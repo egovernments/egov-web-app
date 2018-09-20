@@ -8,6 +8,12 @@ const TestMolecules = Loadable({
   loading: () => <Loading />
 });
 
+const Table = Loadable({
+  loader: () => import("./Table"),
+  loading: () => <Loading />
+});
+
 export {
-  TestMolecules
+  TestMolecules,
+  Table,
 }
