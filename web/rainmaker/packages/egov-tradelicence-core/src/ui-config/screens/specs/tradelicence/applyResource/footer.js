@@ -156,7 +156,15 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("Previous Step")
+      previousButtonIcon:{
+        uiFramework:"custom-atoms",
+        componentPath:"Icon",
+        props:{
+          iconName:"keyboard_arrow_left"
+        }
+      },
+      previousButtonLabel: getLabel("Previous Step")
+
     },
     onClickDefination: {
       action: "condition",
@@ -176,7 +184,14 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("Next Step")
+      nextButtonLabel: getLabel("Next Step"),
+      nextButtonIcon:{
+        uiFramework:"custom-atoms",
+        componentPath:"Icon",
+        props:{
+          iconName:"keyboard_arrow_right"
+        }
+      }
     },
     onClickDefination: {
       action: "condition",
@@ -195,7 +210,14 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("Submit")
+      submitButtonLabel: getLabel("Submit"),
+      submitButtonIcon:{
+        uiFramework:"custom-atoms",
+        componentPath:"Icon",
+        props:{
+          iconName:"keyboard_arrow_right"
+        }
+      }
     },
     onClickDefination: {
       action: "page_change",

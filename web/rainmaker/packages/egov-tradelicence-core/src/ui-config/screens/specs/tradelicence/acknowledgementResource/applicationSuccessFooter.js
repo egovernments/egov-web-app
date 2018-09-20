@@ -55,6 +55,10 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       collectPaymentButtonLabel: getLabel("COLLECT PAYMENT")
+    },
+    onClickDefination:{
+      action: "page_change",
+      path: "/landing/mihy-ui-framework/tradelicence/pay"
     }
   }
 });
