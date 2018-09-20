@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import MUIDataTable from "mui-datatables";
 import get from "lodash/get"
 import set from "lodash/set"
+import PropTypes from "prop-types";
 import "./index.css"
 
 
@@ -58,5 +59,10 @@ class Table extends React.Component {
     );
   }
 }
+
+Table.propTypes = {
+  columns: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired
+};
 
 export default Table
