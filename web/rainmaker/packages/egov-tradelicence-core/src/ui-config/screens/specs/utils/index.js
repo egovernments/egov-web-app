@@ -1,6 +1,6 @@
 import {
   getLabel,
-  getRadiobuttonGroup
+  getRadioButtonGroup
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
 
@@ -67,7 +67,7 @@ export const getRadioGroupWithLabel = (label, buttons) => {
           sm: 8
         },
         children: {
-          div: getRadiobuttonGroup(buttons)
+          div: getRadioButtonGroup(buttons)
         }
       }
     }
