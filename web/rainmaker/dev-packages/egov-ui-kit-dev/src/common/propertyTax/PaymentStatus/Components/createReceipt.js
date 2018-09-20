@@ -69,7 +69,7 @@ const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
 
   return {
-    header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
+    header: `${propertyTenant[0].name} MUNICIPAL COUNCIL`,
     subheader: "Property Tax Payment Receipt",
     logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,

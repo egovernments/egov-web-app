@@ -237,7 +237,7 @@ var DropDown = function (_Component) {
           userType === "CITIZEN" && _react2.default.createElement(_MenuItem2.default, { value: "Download Receipt", primaryText: "Download Receipt" }),
           userType === "EMPLOYEE" && _react2.default.createElement(_MenuItem2.default, { value: "Download Citizen Receipt", primaryText: "Download Citizen Receipt" }),
           userType === "EMPLOYEE" && _react2.default.createElement(_MenuItem2.default, { value: "Download Employee Receipt", primaryText: "Download Employee Receipt" }),
-          item.status !== "Completed" && _react2.default.createElement(_MenuItem2.default, { value: "Re-Assess", primaryText: "Re-Assess" }),
+          (item.status === "Paid" || item.status === "Partially Paid") && _react2.default.createElement(_MenuItem2.default, { value: "Re-Assess", primaryText: "Re-Assess" }),
           item.status === "Partially Paid" && _react2.default.createElement(_MenuItem2.default, { value: "Complete Payment", primaryText: "Complete Payment" })
         )
       );

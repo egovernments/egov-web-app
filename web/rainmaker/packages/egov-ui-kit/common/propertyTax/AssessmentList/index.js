@@ -44,13 +44,14 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
   };
   switch (status) {
     case "Paid":
+    case "Paid-Disable":
       return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(
           "div",
           { className: "assessment-displayInline", style: item.date ? { marginTop: "8px" } : { marginTop: "0px" } },
-          _react2.default.createElement(_translationNode2.default, { label: item.status, labelStyle: { marginLeft: "8px" }, color: "#22b25f" }),
+          _react2.default.createElement(_translationNode2.default, { label: "Paid", labelStyle: { marginLeft: "8px" }, color: "#22b25f" }),
           _react2.default.createElement(_components.Icon, { action: "navigation", name: "check", style: styles.paidIconStyle, color: "#22b25f" })
         ),
         _react2.default.createElement(

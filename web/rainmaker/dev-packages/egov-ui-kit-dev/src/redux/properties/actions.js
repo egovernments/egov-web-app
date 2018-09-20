@@ -224,17 +224,17 @@ const mergeReceiptsInProperty = (receiptsArray, propertyObj) => {
     for (let year in groupByPropertyId[propertyId]) {
       const assessmentByDate = orderby(groupByPropertyId[propertyId][year], "assessmentDate", "asc");
 
-      if (assessmentByDate.findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
-        for (let i = 0; i < assessmentByDate.length; i++) {
-          if (i !== assessmentByDate.length - 1) {
-            if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
-              assessmentByDate[i].receiptInfo.status = "Completed";
-            } else {
-              assessmentByDate[i].receiptInfo.status = "Paid";
-            }
+      // if (assessmentByDate.findIndex((item) => item.receiptInfo.status === "Paid") > -1) {
+      for (let i = 0; i < assessmentByDate.length; i++) {
+        if (i !== assessmentByDate.length - 1) {
+          if (assessmentByDate[i].receiptInfo.status === "Partially Paid") {
+            assessmentByDate[i].receiptInfo.status = "Completed";
+          } else {
+            assessmentByDate[i].receiptInfo.status = "Paid-Disable";
           }
         }
       }
+      // }
     }
   }
   return mergedReceiptsProperties;
