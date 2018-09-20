@@ -39,6 +39,9 @@ const capturePaymentDetails = getCommonGrayCard({
         }
       }
     }
+  },
+  cash:{
+    
   }
 });
 
