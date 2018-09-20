@@ -14,20 +14,13 @@ class Table extends React.Component {
   };
 
   formatData = (data, columns) => {
-    return data.reduce((acc, curr) => {
+    return [...data].reduce((acc, curr) => {
       let dataRow = [];
-      columns.forEach(column => {
+      Object.keys(columns).forEach(column => {
+        let currentColumn = columns[column];
         let columnValue = get(curr, `${column}`, "");
-        if (column === "Status") {
-          let style = {
-            color: "",
-            fontSize: "14px",
-            fontWeight: 400
-          };
-          if (columnValue === "Approved") {
-            set(style, "color", "green");
-          }
-          columnValue = <span style={style}>{columnValue}</span>;
+        if (get(columns, `${column}.format`, "")) {
+          columnValue = columns[column].format(columnValue);
         }
         dataRow.push(columnValue);
       });
@@ -42,11 +35,9 @@ class Table extends React.Component {
     const updatedData = this.formatData(data, columns);
     this.setState({
       data: updatedData,
-      columns: columns
+      columns: Object.keys(columns)
     });
   }
-
-  componentWillMount() {}
 
   render() {
     const { data, columns } = this.state;
