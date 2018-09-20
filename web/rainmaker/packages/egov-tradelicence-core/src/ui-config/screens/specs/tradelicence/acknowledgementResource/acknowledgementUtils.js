@@ -14,7 +14,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
       header: "Application Submitted Successfully",
       body:
         "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
-      tail: "Application No.",
+      tailText: "Application No.",
       number: number
     });
   } else if (purpose === "pay" && status === "success") {
@@ -24,7 +24,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
       header: "Payment has been collected successfully!",
       body:
         "A copy of receipt has been sent to trade owner at registered Mobile No.",
-      tail: "Payment Receipt No.",
+      tailText: "Payment Receipt No.",
       number: number
     });
   } else if (purpose === "approve" && status === "success") {
@@ -34,7 +34,25 @@ const getAcknowledgementCard = (purpose, status, number) => {
       header: "Trade License Approved Successfully",
       body:
         "Copy of trade License has been sent to trade owner at registered Mobile No.",
-      tail: "Payment Receipt No.",
+      tailText: "Payment Receipt No.",
+      number: number
+    });
+  } else if (purpose === "application" && status === "rejected") {
+    return acknowledgementCard({
+      icon: "close",
+      backgroundColor: "#E54D42",
+      header: "Trade License Application Rejected",
+      body:
+        "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No."
+    });
+  } else if (purpose === "application" && status === "cancelled") {
+    return acknowledgementCard({
+      icon: "close",
+      backgroundColor: "#E54D42",
+      header: "Trade License Cancelled",
+      body:
+        "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
+      tailText: "Trade License No.",
       number: number
     });
   }
@@ -45,9 +63,27 @@ const acknowledgementCard = ({
   backgroundColor = "#39CB74",
   header,
   body,
-  tail,
+  tailText,
   number
 } = {}) => {
+  const tail = tailText
+    ? {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          text: getCommonParagraph(tailText),
+          paragraph: getCommonHeader(number)
+        },
+        props: {
+          style: {
+            marginTop: "20px",
+            "text-align": "right",
+            flex: 1
+          }
+        }
+      }
+    : {};
+
   return getCommonCard({
     applicationSuccessContainer: getCommonContainer({
       avatar: {
@@ -89,21 +125,7 @@ const acknowledgementCard = ({
           }
         }
       },
-      applicationNumber: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        children: {
-          text: getCommonParagraph(tail),
-          paragraph: getCommonHeader(number)
-        },
-        props: {
-          style: {
-            marginTop: "20px",
-            "text-align": "right",
-            flex: 1
-          }
-        }
-      }
+      tail: tail
     })
   });
 };

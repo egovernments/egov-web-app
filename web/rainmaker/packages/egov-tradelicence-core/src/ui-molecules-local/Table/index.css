@@ -1,0 +1,16 @@
+div[class^=MuiTableRow-head] {
+  background: #ffff00;
+}
+
+div[class^=MUIDataTableHeadCell-data] {
+  color: rgba(0, 0, 0, 0.8700000048);
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: left;
+}
+
+div[class^=MUIDataTableToolbar-actions] {
+  display: none;
+}

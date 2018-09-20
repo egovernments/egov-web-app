@@ -2,43 +2,42 @@ const themeObject = {
   palette: {
     primary: {
       main: "#FE7A51",
-      dark: '#FE7A51',
-      contrastText: '#fff',
+      dark: "#FE7A51",
+      contrastText: "#fff"
     },
     secondary: {
       main: "#fff",
-      contrastText: '#000',
+      contrastText: "#000"
     },
-    background:{
+    background: {
       default: "#F4F7FB"
     }
   },
-  overrides:{
-    MuiDivider:{
-      root:{
-        marginBottom:"24px",
-        marginTop:"24px"
+  overrides: {
+    MuiDivider: {
+      root: {
+        marginBottom: "24px",
+        marginTop: "24px"
       }
     },
-    MuiStepper:{
-      root:{
-        paddingBottom:"0px"
+    MuiStepper: {
+      root: {
+        paddingBottom: "0px"
       }
     },
-    MuiGrid:
-    {
-      item: { // Name of the rule
-        padding: '12px 24px 12px 0', // Some CSS
+    MuiGrid: {
+      item: {
+        // Name of the rule
+        padding: "12px 24px 12px 0" // Some CSS
       }
     },
-    MuiCard:
-    {
-      root:{
-        marginTop:"24px"
+    MuiCard: {
+      root: {
+        marginTop: "24px"
       }
     },
-    MuiTypography:{
-      title:{
+    MuiTypography: {
+      title: {
         color: "rgba(0, 0, 0, 0.87)",
         fontFamily: "Roboto",
         fontSize: "20px",
@@ -46,15 +45,15 @@ const themeObject = {
         letterSpacing: "0.83px",
         lineHeight: "24px"
       },
-      body1:{
+      body1: {
         color: "rgba(0, 0, 0, 0.60)",
         fontFamily: "Roboto",
         fontSize: "14px",
         fontWeight: 400,
         lineHeight: "20px",
-        marginBottom:"12px"
+        marginBottom: "12px"
       },
-      body2:{
+      body2: {
         color: "rgba(0, 0, 0, 0.87)",
         fontFamily: "Roboto",
         fontSize: "16px",
@@ -62,7 +61,7 @@ const themeObject = {
         letterSpacing: "0.67px",
         lineHeight: "19px"
       },
-      subheading:{
+      subheading: {
         color: "rgba(0, 0, 0, 0.87)",
         fontFamily: "Roboto",
         fontSize: "18px",
