@@ -1,4 +1,5 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import generateReceipt from "../../utils/receiptPdf";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -25,6 +26,12 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       downloadLicenseButtonLabel: getLabel("DOWNLOAD TRADE LICENSE")
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        generateReceipt(state, dispatch, "tlCertificate");
+      }
     }
   },
   printLicenseButton: {
