@@ -3,13 +3,21 @@ import {
   dispatchMultipleFieldChangeAction
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+
+import { getFooterButtons } from "../../utils";
+const queryValue = getQueryArg(window.location.href, "purpose");
 
 export const callBackForNext = (state, dispatch) => {
   changeStep(state, dispatch);
 };
 
-
-export const changeStep = (state, dispatch, mode = "next", defaultActiveStep = -1) => {
+export const changeStep = (
+  state,
+  dispatch,
+  mode = "next",
+  defaultActiveStep = -1
+) => {
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -240,13 +248,14 @@ export const footerApprove = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("CANCEL")
+      nextButtonLabel: getLabel("BACK")
     },
     onClickDefination: {
       action: "condition",
       callBack: callBackForPrevious
     }
   },
+
   nextButton: {
     componentPath: "Button",
     props: {
@@ -259,7 +268,7 @@ export const footerApprove = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("APPROVE")
+      nextButtonLabel: getFooterButtons()
     },
     onClickDefination: {
       action: "condition",

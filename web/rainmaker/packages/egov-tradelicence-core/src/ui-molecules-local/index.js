@@ -7,13 +7,14 @@ const TestMolecules = Loadable({
   loader: () => import("./TestMolecules"),
   loading: () => <Loading />
 });
+const RadioButtonsGroup = Loadable({
+  loader: () => import("./RadioGroup"),
+  loading: () => <Loading />
+});
 
 const Table = Loadable({
   loader: () => import("./Table"),
   loading: () => <Loading />
 });
 
-export {
-  TestMolecules,
-  Table,
-}
+export { TestMolecules, Table, RadioButtonsGroup };
