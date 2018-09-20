@@ -1,8 +1,13 @@
 import {
   getLabel,
-  getRadioButtonGroup
+  getTextField,
+  getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
+
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+
+const queryValue = getQueryArg(window.location.href, "purpose");
 
 export const getTooltip = (children, toolTipProps) => {
   return {
@@ -36,15 +41,22 @@ export const getUploadFile = {
     ]
   }
 };
+
+export const getRadioButtonGroup = buttons => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "RadioButtonsGroup",
+    props: {
+      buttons
+    }
+  };
+};
 export const getRadioGroupWithLabel = (label, buttons) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Container",
     props: {
-      alignItems: "center",
-      classess: {
-        item: "radio-button-group"
-      }
+      alignItems: "center"
     },
 
     children: {
@@ -72,4 +84,57 @@ export const getRadioGroupWithLabel = (label, buttons) => {
       }
     }
   };
+};
+
+export const getApplicationNoContainer = number => {
+  return {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number
+    }
+  };
+};
+
+export const getCommonHeader = (header, props, isApplicationNo) => {
+  return {
+    componentPath: "Typography",
+    props: {
+      variant: "headline",
+      ...props
+    },
+    children: {
+      [header]: getLabel(header)
+    }
+  };
+};
+
+export const getApprovalTextField = () => {
+  if (queryValue === "reject") {
+    return getTextField("Comments", "Enter rejection Comments", false, "");
+  } else if (queryValue === "cancel") {
+    return getTextField("Comments", "Enter Cancellation Comments", false, "");
+  } else {
+    return getTextField("Comments", "Enter Approval Comments", false, "");
+  }
+};
+
+export const getSubHeaderLabel = () => {
+  if (queryValue === "reject") {
+    return getCommonSubHeader("Rejection CheckList");
+  } else if (queryValue === "cancel") {
+    return {};
+  } else {
+    return getCommonSubHeader("Approve Checklist");
+  }
+};
+
+export const getFooterButtons = () => {
+  if (queryValue === "reject") {
+    return getLabel("REJECT APPLICATION");
+  } else if (queryValue === "cancel") {
+    return getLabel("CANCEL TRADE LICENSE");
+  } else {
+    return getLabel("APPROVE APPLICATION");
+  }
 };

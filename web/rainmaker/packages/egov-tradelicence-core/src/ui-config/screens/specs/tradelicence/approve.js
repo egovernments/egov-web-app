@@ -1,56 +1,72 @@
 import {
-  getCommonHeader,
+  // getCommonHeader,
   getCommonCard,
   getCommonSubHeader,
   getCommonParagraph,
   getBreak,
-  getTextField,
-  getRadioButtonGroup,
   getCheckBoxwithLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import { getRadioGroupWithLabel, getUploadFile } from "../utils";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+
+import {
+  getRadioGroupWithLabel,
+  getApplicationNoContainer,
+  getApprovalTextField,
+  getSubHeaderLabel,
+  getCommonHeader
+} from "../utils";
 
 import { footerApprove } from "./applyResource/footer";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
-
-const header = getCommonHeader("Trade License Application (2018-2019)");
+const queryValue = getQueryArg(window.location.href, "purpose");
+const applicationNo = getApplicationNoContainer(5467);
+const header = getCommonHeader(
+  "Trade License Application (2018-2019)",
+  {},
+  true
+);
 
 const tradeDetails = getCommonCard({
-  headerOne: getCommonSubHeader(
-    "Please Review the Application and Proceed with Approval"
-  ),
+  headerOne:
+    queryValue === "cancel"
+      ? getCommonSubHeader("Please provide Cancellation remarks")
+      : getCommonSubHeader(
+          "Please provide the following details on the basis of your field verification"
+        ),
   breakOne: getBreak(),
   paragraphOne: getCommonParagraph(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   breakTwo: getBreak(),
-  headerTwo: getCommonSubHeader("Approve Checklist"),
-  // safetyNorms: getRadioGroupWithLabel(
-  //   "Are Safety Norms Satisfactory?",
-  //   radioButtonLabels
-  // ),
+  headerTwo: getSubHeaderLabel(),
+  safetyNorms:
+    queryValue === "cancel"
+      ? {}
+      : getRadioGroupWithLabel(
+          "Are Safety Norms Satisfactory?",
+          radioButtonLabels
+        ),
 
-  safetyNorms: getRadioButtonGroup(radioButtonLabels),
+  hygieneMeasure:
+    queryValue === "cancel"
+      ? {}
+      : getRadioGroupWithLabel(
+          "Are Hygiene Levels Satisfactory?",
+          radioButtonLabels
+        ),
 
-  // hygieneMeasure: getRadioGroupWithLabel(
-  //   "Are Hygiene Levels Satisfactory?",
-  //   radioButtonLabels
-  // ),
+  localityMeasure:
+    queryValue === "cancel"
+      ? {}
+      : getRadioGroupWithLabel(
+          "Is Locality harmed/disturbed by this trade?",
+          radioButtonLabels
+        ),
 
-  // localityMeasure: getRadioGroupWithLabel(
-  //   "Is Locality harmed/disturbed by this trade?",
-  //   radioButtonLabels
-  // ),
+  tradeDetailsContainer: getApprovalTextField(),
 
-  tradeDetailsContainer: getTextField(
-    "Comments",
-    "Enter Approval Comments",
-    false,
-    ""
-  ),
-  //uploadFile: getUploadFile(),
   checkBoxContainer: getCheckBoxwithLabel(
     "All information in the application are true upto best of my knowledge"
   )
@@ -68,6 +84,7 @@ const screenConfig = {
       },
       children: {
         header,
+
         approveForm: {
           uiFramework: "custom-atoms",
           componentPath: "Div",

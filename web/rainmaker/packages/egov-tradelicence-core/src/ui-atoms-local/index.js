@@ -8,6 +8,9 @@ const TestAtoms = Loadable({
   loading: () => <Loading />
 });
 
-export {
-  TestAtoms
-}
+const ApplicationNoContainer = Loadable({
+  loader: () => import("./ApplicationNo"),
+  loading: () => <Loading />
+});
+
+export { TestAtoms, ApplicationNoContainer };
