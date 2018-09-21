@@ -18,7 +18,16 @@ import { getReviewOwner } from "./applyResource//review-owner";
 import { getReviewDocuments } from "./applyResource//review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 
-const header = getCommonHeader("Trade License Application (2018-2019)");
+const header = getCommonContainer({
+  header: getCommonHeader("Trade License Application (2018-2019)"),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: 5434
+    }
+  }
+});
 
 const estimate = getCommonGrayCard({
   estimateSection: getFeesEstimateCard(
