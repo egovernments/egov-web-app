@@ -1,8 +1,20 @@
-import { getCommonHeader } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonHeader,
+  getCommonContainer
+} from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { footer } from "./acknowledgementResource/paymentSuccessFooter";
 import getAcknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 
-const header = getCommonHeader("Payment for New Trade License (2018-2019)");
+const header = getCommonContainer({
+  header: getCommonHeader("Payment for New Trade License (2018-2019)"),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: 5434
+    }
+  }
+});
 
 const screenConfig = {
   uiFramework: "material-ui",
