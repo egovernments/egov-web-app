@@ -10,7 +10,3 @@ div[class^=MUIDataTableHeadCell-data] {
   line-height: 17px;
   text-align: left;
 }
-
-div[class^=MUIDataTableToolbar-actions] {
-  display: none;
-}

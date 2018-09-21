@@ -33,28 +33,7 @@ class Table extends React.Component {
 
   componentDidMount() {
     const { data, columns } = this.props;
-    const updatedData = this.formatData(data, {
-      "Application No": {},
-      "License No": {},
-      "Trade Name": {},
-      "Owner Name": {},
-      "Application Date": {},
-      Status: {
-        format: value => {
-          let color = "";
-          if (value.toLowerCase().indexOf("approved") !== -1) {
-            color = "green";
-          } else if (value.toLowerCase().indexOf("pending") !== -1) {
-            color = "red";
-          }
-          return (
-            <span style={{ color: color, fontSize: "14px", fontWeight: 400 }}>
-              {value}
-            </span>
-          );
-        }
-      }
-    });
+    const updatedData = this.formatData(data, columns);
     this.setState({
       data: updatedData,
       columns: Object.keys(columns)
@@ -63,16 +42,10 @@ class Table extends React.Component {
 
   render() {
     const { data, columns } = this.state;
-
-    const options = {
-      filterType: "dropdown",
-      responsive: "scroll",
-      selectableRows: false
-    };
-
+    const { options, title } = this.props
     return (
       <MUIDataTable
-        title={this.props.title}
+        title={title}
         data={data}
         columns={columns}
         options={options}
@@ -83,7 +56,9 @@ class Table extends React.Component {
 
 Table.propTypes = {
   columns: PropTypes.object.isRequired,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  options: PropTypes.object.isRequired,
 };
 
 export default Table

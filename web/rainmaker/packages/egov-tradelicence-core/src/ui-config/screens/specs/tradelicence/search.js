@@ -152,8 +152,12 @@ import {
                   }
                 }
               },
-              title:"Search Results for Trade License Applications (27)"
-
+              title:"Search Results for Trade License Applications (27)",
+              options: {
+                filterType: "dropdown",
+                responsive: "scroll",
+                selectableRows: false
+              }
             }
           }
         }
