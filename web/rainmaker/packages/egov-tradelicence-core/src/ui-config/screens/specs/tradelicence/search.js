@@ -4,9 +4,9 @@ import {
   } from "mihy-ui-framework/ui-config/screens/specs/utils";
   import React from "react";
   import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
-  
+
   const header = getCommonHeader("Trade License");
-  
+
   const tradeLicenseSearchBox = {
     uiFramework: "material-ui",
     name: "search",
@@ -22,7 +22,7 @@ import {
           headerDiv: {
             uiFramework: "custom-atoms",
             componentPath: "Container",
-  
+
             children: {
               header: {
                 gridDefination: {
@@ -48,9 +48,9 @@ import {
                     height: "48px"
                   }
                 },
-  
+
                 children: {
-  
+
                   plusIconInsideButton: {
                     uiFramework: "custom-atoms",
                     componentPath: "Icon",
@@ -62,7 +62,7 @@ import {
                       }
                     }
                   },
-  
+
                   buttonLabel: getLabel("NEW APPLICATION"),
                 }
               }
@@ -153,14 +153,13 @@ import {
                 }
               },
               title:"Search Results for Trade License Applications (27)"
-          
+
             }
           }
         }
       }
     }
-  
+
   };
-  
+
   export default tradeLicenseSearchBox;
-  
