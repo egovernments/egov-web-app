@@ -164,15 +164,14 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      previousButtonIcon:{
-        uiFramework:"custom-atoms",
-        componentPath:"Icon",
-        props:{
-          iconName:"keyboard_arrow_left"
+      previousButtonIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "keyboard_arrow_left"
         }
       },
       previousButtonLabel: getLabel("Previous Step")
-
     },
     onClickDefination: {
       action: "condition",
@@ -193,11 +192,11 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       nextButtonLabel: getLabel("Next Step"),
-      nextButtonIcon:{
-        uiFramework:"custom-atoms",
-        componentPath:"Icon",
-        props:{
-          iconName:"keyboard_arrow_right"
+      nextButtonIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "keyboard_arrow_right"
         }
       }
     },
@@ -219,11 +218,11 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       submitButtonLabel: getLabel("Submit"),
-      submitButtonIcon:{
-        uiFramework:"custom-atoms",
-        componentPath:"Icon",
-        props:{
-          iconName:"keyboard_arrow_right"
+      submitButtonIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "keyboard_arrow_right"
         }
       }
     },
@@ -405,7 +404,7 @@ export const footerReview = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+      path: "./pay"
     },
     visible: true
   },

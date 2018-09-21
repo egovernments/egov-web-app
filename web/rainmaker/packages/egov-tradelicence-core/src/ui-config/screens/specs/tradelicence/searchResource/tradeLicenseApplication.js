@@ -11,7 +11,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 export const tradeLicenseApplication = getCommonCard({
-  subHeader: getCommonSubHeader("Search Trade License Application"),
+  subHeader: getCommonTitle("Search Trade License Application"),
   subParagraph: getCommonParagraph(
     "Please provide at least one parameter to search for an application"
   ),
@@ -122,8 +122,7 @@ export const tradeLicenseApplication = getCommonCard({
           height: "48px"
         }
       },
-      children: 
-      {
+      children: {
         buttonLabel: getLabel("Search")
       }
     }
