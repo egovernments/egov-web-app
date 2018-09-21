@@ -33,7 +33,28 @@ class Table extends React.Component {
 
   componentDidMount() {
     const { data, columns } = this.props;
-    const updatedData = this.formatData(data, columns);
+    const updatedData = this.formatData(data, {
+      "Application No": {},
+      "License No": {},
+      "Trade Name": {},
+      "Owner Name": {},
+      "Application Date": {},
+      Status: {
+        format: value => {
+          let color = "";
+          if (value.toLowerCase().indexOf("approved") !== -1) {
+            color = "green";
+          } else if (value.toLowerCase().indexOf("pending") !== -1) {
+            color = "red";
+          }
+          return (
+            <span style={{ color: color, fontSize: "14px", fontWeight: 400 }}>
+              {value}
+            </span>
+          );
+        }
+      }
+    });
     this.setState({
       data: updatedData,
       columns: Object.keys(columns)

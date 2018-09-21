@@ -1,5 +1,5 @@
-div[class^=MuiTableRow-head] {
-  background: #ffff00;
+div[class^=MUIDataTable-responsiveScroll] thead {
+  background: #F2F2F2;
 }
 
 div[class^=MUIDataTableHeadCell-data] {
