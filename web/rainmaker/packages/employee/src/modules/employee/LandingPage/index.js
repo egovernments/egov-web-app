@@ -6,9 +6,10 @@ class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
 
   onPGRClick = () => {
-    this.setState({
-      dialogueOpen: true,
-    });
+    // this.setState({
+    //   dialogueOpen: true,
+    // });
+    this.props.history.push("all-complaints");
   };
   onDialogueClose = () => {
     this.setState({
@@ -69,7 +70,7 @@ class LandingPage extends Component {
         onPGRClick={onPGRClick}
         onDialogueClose={onDialogueClose}
         dialogueOpen={this.state.dialogueOpen}
-        renderCityPicker={renderCityPicker}
+        renderCityPicker={false}
       />
     );
   }

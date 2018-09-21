@@ -262,25 +262,27 @@ const getAddressInfo = (addressObj, extraItems) => {
   );
 };
 
-const transform = (floor, key, generalMDMSDataById) => {
+const transform = (floor, key, generalMDMSDataById, propertySubType) => {
   const { masterName, dataKey } = key;
   if (!masterName) {
     return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${floor[dataKey]} sq yards`;
   } else {
     if (floor[dataKey]) {
+      if (dataKey === "usageCategoryDetail") {
+        return generalMDMSDataById["UsageCategoryDetail"]
+          ? generalMDMSDataById["UsageCategoryDetail"][floor[dataKey]].name
+          : generalMDMSDataById["UsageCategorySubMinor"]
+            ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name
+            : "NA";
+      }
       if (floor[dataKey] === "NONRESIDENTIAL") {
         return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
+      } else if (propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
+        return "NA";
       } else {
         return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
       }
     } else {
-      if (dataKey === "usageCategoryDetail") {
-        return generalMDMSDataById["usageCategoryDetail"]
-          ? generalMDMSDataById["usageCategoryDetail"][floor[dataKey]].name
-          : generalMDMSDataById["usageCategorySubMinor"]
-            ? generalMDMSDataById["usageCategorySubMinor"][floor[dataKey]].name
-            : "NA";
-      }
       return "NA";
     }
   }
@@ -298,7 +300,12 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         tableHeaderItems: [
           {
             key: "Plot Size:",
-            value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
+            value:
+              propertyDetails.propertySubType === "SHAREDPROPERTY"
+                ? "NA"
+                : propertyDetails.uom
+                  ? `${propertyDetails.landArea} ${propertyDetails.uom}`
+                  : `${propertyDetails.landArea} sq yards`,
           },
           {
             key: "Type of Building:",
@@ -319,7 +326,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
             ? units.map((floor) => {
                 return {
                   value: keys.map((key) => {
-                    return transform(floor, key, generalMDMSDataById);
+                    return transform(floor, key, generalMDMSDataById, propertyDetails.propertySubType);
                   }),
                 };
               })

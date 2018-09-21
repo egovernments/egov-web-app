@@ -221,8 +221,19 @@ class FormWizard extends Component {
     };
   };
 
+  convertBuiltUpAreaToSqFt = (builtUpArea) => {
+    const builtUpAreaTransform = builtUpArea * 9;
+    return Math.round(builtUpAreaTransform * 100) / 100;
+  };
+
   getTargetPropertiesDetails = (propertyDetails) => {
     propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    if (propertyDetails[propertyDetails.length - 1].propertySubType === "SHAREDPROPERTY") {
+      propertyDetails[propertyDetails.length - 1].buildUpArea =
+        propertyDetails[propertyDetails.length - 1] &&
+        propertyDetails[propertyDetails.length - 1].buildUpArea &&
+        this.convertBuiltUpAreaToSqFt(propertyDetails[propertyDetails.length - 1].buildUpArea);
+    }
     propertyDetails[propertyDetails.length - 1].units =
       propertyDetails[propertyDetails.length - 1] &&
       propertyDetails[propertyDetails.length - 1].units &&
