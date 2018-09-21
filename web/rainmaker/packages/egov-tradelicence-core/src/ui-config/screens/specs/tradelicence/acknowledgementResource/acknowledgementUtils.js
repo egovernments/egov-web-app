@@ -33,8 +33,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
       backgroundColor: "#39CB74",
       header: "Trade License Approved Successfully",
       body:
-        "Copy of trade License has been sent to trade owner at registered Mobile No.",
-      tailText: "Payment Receipt No.",
+        "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
+      tailText: "Trade License No.",
       number: number
     });
   } else if (purpose === "application" && status === "rejected") {
