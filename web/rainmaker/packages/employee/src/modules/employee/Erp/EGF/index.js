@@ -39,7 +39,7 @@ class EGFFinance extends Component{
     componentDidMount(){
         console.log('EGFFinance component mounted');
         // console.log('event registration completed');
-        document.forms['erp_form'].submit();
+       // document.forms['erp_form'].submit();
        /*
         window.addEventListener('message',function(event){
             console.log('event recieved from iframe client')
@@ -47,6 +47,11 @@ class EGFFinance extends Component{
             console.log(this);
         },false);
        */
+    }
+    componentWillUpdate(){
+        console.log('componentWillUpdate method called');
+        document.forms['erp_form'].submit();
+     
     }
 
 }
