@@ -2,7 +2,6 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonParagraph,
-  getBreak,
   getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -24,6 +23,16 @@ const style = {
     textAlign: "right",
     justifyContent: "center",
     flex: 1
+  },
+  bodySub: {
+    marginTop: "8px",
+    marginBottom: "0px"
+  },
+  container: {
+    display: "flex",
+    minHeight: "106px",
+    justifyContent: "center",
+    alignItems: "center"
   }
 };
 
@@ -37,55 +46,62 @@ const acknowledgementCard = ({
 } = {}) => {
   const tail = tailText
     ? {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        children: {
-          text: getCommonHeader(tailText, { style: style.tailText }),
-          paragraph: getCommonHeader(number, { style: style.tailNumber })
-        },
-        props: {
-          style: style.tailBox
-        }
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      children: {
+        text: getCommonHeader(tailText, { style: style.tailText }),
+        paragraph: getCommonHeader(number, { style: style.tailNumber })
+      },
+      props: {
+        style: style.tailBox
       }
+    }
     : {};
 
   return getCommonCard({
-    applicationSuccessContainer: getCommonContainer({
-      avatar: {
-        componentPath: "Avatar",
-        props: {
-          style: {
-            width: "72px",
-            height: "72px",
-            backgroundColor: backgroundColor
-          }
-        },
-        children: {
-          Icon: {
-            uiFramework: "custom-atoms",
-            componentPath: "Icon",
-            props: {
-              iconName: icon,
-              style: {
-                fontSize: "50px"
+    applicationSuccessContainer: getCommonContainer(
+      {
+        avatar: {
+          componentPath: "Avatar",
+          props: {
+            style: {
+              width: "72px",
+              height: "72px",
+              backgroundColor: backgroundColor
+            }
+          },
+          children: {
+            Icon: {
+              uiFramework: "custom-atoms",
+              componentPath: "Icon",
+              props: {
+                iconName: icon,
+                style: {
+                  fontSize: "50px"
+                }
               }
             }
           }
-        }
-      },
-      body: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        children: {
-          header: getCommonHeader(header),
-          paragraph: getCommonParagraph(body)
         },
-        props: {
-          style: style.bodyBox
-        }
+        body: {
+          uiFramework: "custom-atoms",
+          componentPath: "Div",
+          children: {
+            header: getCommonHeader(header),
+            paragraph: getCommonParagraph(body, {
+              style: style.bodySub
+            })
+          },
+          props: {
+            style: style.bodyBox
+          }
+        },
+        tail: tail
       },
-      tail: tail
-    })
+      {
+        style: style.container
+      }
+    )
   });
 };
 
