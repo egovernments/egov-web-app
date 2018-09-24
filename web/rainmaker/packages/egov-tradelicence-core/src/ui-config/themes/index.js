@@ -32,7 +32,8 @@ const themeObject = {
     },
     MuiFormControl: {
       root: {
-        paddingBottom: "24px"
+        paddingBottom: "16px",
+        marginTop:"8px"
       },
       fullWidth: {
         width: "80% !important"
