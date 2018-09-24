@@ -1,6 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-export const getCommonApplyFooter = children => {
+const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Div",
@@ -11,7 +11,7 @@ export const getCommonApplyFooter = children => {
   };
 };
 
-export const footer = getCommonApplyFooter({
+export const applicationSuccessFooter = getCommonApplyFooter({
   downloadFormButton: {
     componentPath: "Button",
     props: {

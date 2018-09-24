@@ -6,55 +6,24 @@ import {
   getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-const getAcknowledgementCard = (purpose, status, number) => {
-  if (purpose === "apply" && status === "success") {
-    return acknowledgementCard({
-      icon: "done",
-      backgroundColor: "#39CB74",
-      header: "Application Submitted Successfully",
-      body:
-        "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
-      tailText: "Application No.",
-      number: number
-    });
-  } else if (purpose === "pay" && status === "success") {
-    return acknowledgementCard({
-      icon: "done",
-      backgroundColor: "#39CB74",
-      header: "Payment has been collected successfully!",
-      body:
-        "A copy of receipt has been sent to trade owner at registered Mobile No.",
-      tailText: "Payment Receipt No.",
-      number: number
-    });
-  } else if (purpose === "approve" && status === "success") {
-    return acknowledgementCard({
-      icon: "done",
-      backgroundColor: "#39CB74",
-      header: "Trade License Approved Successfully",
-      body:
-        "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-      tailText: "Trade License No.",
-      number: number
-    });
-  } else if (purpose === "application" && status === "rejected") {
-    return acknowledgementCard({
-      icon: "close",
-      backgroundColor: "#E54D42",
-      header: "Trade License Application Rejected",
-      body:
-        "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No."
-    });
-  } else if (purpose === "application" && status === "cancelled") {
-    return acknowledgementCard({
-      icon: "close",
-      backgroundColor: "#E54D42",
-      header: "Trade License Cancelled",
-      body:
-        "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
-      tailText: "Trade License No.",
-      number: number
-    });
+const style = {
+  bodyBox: {
+    marginLeft: 16,
+    flex: 1
+  },
+  tailText: {
+    color: "rgba(0, 0, 0, 0.6000000238418579)",
+    fontSize: 16,
+    fontWeight: 400
+  },
+  tailNumber: {
+    fontSize: 34,
+    fontWeight: 500
+  },
+  tailBox: {
+    textAlign: "right",
+    justifyContent: "center",
+    flex: 1
   }
 };
 
@@ -71,15 +40,11 @@ const acknowledgementCard = ({
         uiFramework: "custom-atoms",
         componentPath: "Div",
         children: {
-          text: getCommonParagraph(tailText),
-          paragraph: getCommonHeader(number)
+          text: getCommonHeader(tailText, { style: style.tailText }),
+          paragraph: getCommonHeader(number, { style: style.tailNumber })
         },
         props: {
-          style: {
-            marginTop: "20px",
-            "text-align": "right",
-            flex: 1
-          }
+          style: style.tailBox
         }
       }
     : {};
@@ -90,9 +55,8 @@ const acknowledgementCard = ({
         componentPath: "Avatar",
         props: {
           style: {
-            width: "80px",
-            height: "80px",
-            margin: "10px",
+            width: "72px",
+            height: "72px",
             backgroundColor: backgroundColor
           }
         },
@@ -109,20 +73,15 @@ const acknowledgementCard = ({
           }
         }
       },
-      successText: {
+      body: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
         children: {
           header: getCommonHeader(header),
-          break: getBreak(),
           paragraph: getCommonParagraph(body)
         },
         props: {
-          style: {
-            marginTop: "15px",
-            marginLeft: "10px",
-            flex: 1
-          }
+          style: style.bodyBox
         }
       },
       tail: tail
@@ -130,4 +89,4 @@ const acknowledgementCard = ({
   });
 };
 
-export default getAcknowledgementCard;
+export default acknowledgementCard;
