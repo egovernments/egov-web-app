@@ -2,7 +2,7 @@ const themeObject = {
   palette: {
     primary: {
       main: "#FE7A51",
-      dark: "#FE7A51",
+      dark: "#DB6844",
       contrastText: "#fff"
     },
     secondary: {
@@ -25,15 +25,17 @@ const themeObject = {
         paddingBottom: "0px"
       }
     },
-    MuiGrid: {
-      item: {
-        // Name of the rule
-        padding: "12px 24px 12px 0" // Some CSS
-      }
-    },
     MuiCard: {
       root: {
         marginTop: "24px"
+      }
+    },
+    MuiFormControl: {
+      root: {
+        paddingBottom: "24px"
+      },
+      fullWidth: {
+        width: "80% !important"
       }
     },
     MuiTypography: {

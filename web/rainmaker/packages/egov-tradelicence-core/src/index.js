@@ -11,6 +11,10 @@ import registerServiceWorker from "./registerServiceWorker";
 
 const theme = createMuiTheme(themeObject);
 
+// move it to a env file
+window.basename = process.env.NODE_ENV === "production" ? "/employee-tradelicence" : "";
+// hardcoded the base; to be changed soon!!!!!
+
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>

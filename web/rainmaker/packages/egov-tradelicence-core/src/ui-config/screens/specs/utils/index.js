@@ -1,7 +1,7 @@
 import {
   getLabel,
   getTextField,
-  getCommonSubHeader
+  getCommonSubHeader,
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
 

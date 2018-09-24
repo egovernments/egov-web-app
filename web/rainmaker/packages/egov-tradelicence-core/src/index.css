@@ -89,3 +89,7 @@ body {
 span[class^="MuiFormLabel-asterisk"] {
     color:#E54D42;
 }
+
+/* div[class^="MuiGrid-item"]   {
+    padding-right: 80px
+} */
