@@ -862,6 +862,8 @@ const generateReceipt = (state, dispatch, type) => {
     case "receipt":
       data = receiptData;
       break;
+    default:
+      break;
   }
   data && pdfMake.createPdf(data).download("test_receipt.pdf");
 };
