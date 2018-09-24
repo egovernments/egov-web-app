@@ -17,7 +17,7 @@ const themeObject = {
     MuiDivider: {
       root: {
         marginBottom: "24px",
-        marginTop: "24px"
+        marginTop: "8px"
       }
     },
     MuiStepper: {
