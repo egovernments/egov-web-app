@@ -13,4 +13,9 @@ const ApplicationNoContainer = Loadable({
   loading: () => <Loading />
 });
 
-export { TestAtoms, ApplicationNoContainer };
+const Checkbox = Loadable({
+  loader: () => import("./Checkbox"),
+  loading: () => <Loading />
+});
+
+export { TestAtoms, ApplicationNoContainer, Checkbox };

@@ -1,32 +1,35 @@
 import {
-  // getCommonHeader,
   getCommonCard,
   getCommonSubHeader,
   getCommonParagraph,
   getBreak,
-  getCheckBoxwithLabel
+  getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import {
   getRadioGroupWithLabel,
-  getApplicationNoContainer,
   getApprovalTextField,
   getSubHeaderLabel,
-  getCommonHeader
+  getCommonHeader,
+  getCheckbox
 } from "../utils";
 
 import { footerApprove } from "./applyResource/footer";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValue = getQueryArg(window.location.href, "purpose");
-const applicationNo = getApplicationNoContainer(5467);
-const header = getCommonHeader(
-  "Trade License Application (2018-2019)",
-  {},
-  true
-);
+const header = getCommonContainer({
+  header: getCommonHeader("Trade License Application (2018-2019)"),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: 5434
+    }
+  }
+});
 
 const tradeDetails = getCommonCard({
   headerOne:
@@ -35,12 +38,23 @@ const tradeDetails = getCommonCard({
       : getCommonSubHeader(
           "Please provide the following details on the basis of your field verification"
         ),
-  breakOne: getBreak(),
   paragraphOne: getCommonParagraph(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   breakTwo: getBreak(),
-  headerTwo: getSubHeaderLabel(),
+  headerTwo: {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    children: {
+      div1: getSubHeaderLabel()
+    },
+    props: {
+      style: {
+        marginBottom: "10px"
+      }
+    }
+  },
+
   safetyNorms:
     queryValue === "cancel"
       ? {}
@@ -65,9 +79,20 @@ const tradeDetails = getCommonCard({
           radioButtonLabels
         ),
 
-  tradeDetailsContainer: getApprovalTextField(),
+  tradeDetailsContainer: {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    children: {
+      div1: getApprovalTextField()
+    },
+    props: {
+      style: {
+        marginTop: "20px"
+      }
+    }
+  },
 
-  checkBoxContainer: getCheckBoxwithLabel(
+  checkBoxContainer: getCheckbox(
     "All information in the application are true upto best of my knowledge"
   )
 });
