@@ -97,7 +97,11 @@ class FormWizard extends Component {
     const { form, location, common } = this.props;
     const { search } = location;
 
-    let prepareFormData = { ...this.props.prepareFormData };
+    let prepareFormData = {
+      Properties: {
+        ...this.props.prepareFormData.Properties,
+      },
+    };
     //toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -1104,7 +1108,7 @@ class FormWizard extends Component {
         let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
           Properties: properties,
         });
-        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        //callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
         callPGService(
           get(createPropertyResponse, "Properties[0].propertyId"),
           get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
