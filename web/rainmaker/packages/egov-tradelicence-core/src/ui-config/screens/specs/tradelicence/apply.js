@@ -2,6 +2,7 @@ import {
   getStepperObject,
   getCommonHeader,
   getCommonCard,
+  getCommonContainer,
   getCommonTitle,
   getCommonParagraph,
   getLabel
@@ -16,8 +17,18 @@ import { documentList } from "./applyResource/documentList";
 
 
 const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
-const header = getCommonHeader("Application for New Trade License (2018-2019)");
 const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
+
+const header = getCommonContainer({
+  header: getCommonHeader("Payment for New Trade License (2018-2019)"),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: 5434
+    }
+  }
+});
 
 const tradeDocumentDetails = getCommonCard({
   header: getCommonTitle(
