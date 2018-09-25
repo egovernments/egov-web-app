@@ -1,1 +1,16 @@
-../rainmaker/packages/egov-ui-transform-service/build.wkflo
+def build(path, ci_image) {
+    stage("Build") {
+        docker.image("egovio/ci-react:v8.4.0-lerna").inside {
+            sh "cd ${path}/rainmaker && cd packages/egov-ui-transform-service && rm -rf node_modules && npm install && cp -r * ../../../egov-ui-transform-service ";
+        }
+    }
+}
+
+return this;
+COPY package.json /www/package.json
+RUN cd /www; npm install
+
+# Copy app source
+COPY . /www
+
+

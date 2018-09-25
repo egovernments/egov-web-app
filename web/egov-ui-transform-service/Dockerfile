@@ -1,1 +1,17 @@
-../rainmaker/packages/egov-ui-transform-service/Dockerfile
+FROM node:8.12-alpine
+# File Author / Maintainer
+LABEL authors="Sivaprakash Ramasamy <sivaprakash.ramasamy@tarento.com>"
+
+COPY . /opt
+
+# Set work directory to /www
+WORKDIR /opt
+
+# set your port
+ENV PORT 8080
+
+# expose the port to outside world
+EXPOSE  8080
+
+# start command as per package.json
+CMD ["npm", "start"]
