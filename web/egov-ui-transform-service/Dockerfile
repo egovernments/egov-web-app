@@ -2,10 +2,7 @@ FROM node:8.12-alpine
 # File Author / Maintainer
 LABEL authors="Sivaprakash Ramasamy <sivaprakash.ramasamy@tarento.com>"
 
-COPY src /srv/
-COPY node_modules /srv/
-COPY package.json /srv/
-CMD ls -ltr /srv
+COPY . /srv/
 # Set work directory to /www
 WORKDIR /srv
 
