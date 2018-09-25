@@ -18,7 +18,7 @@ window.basename = process.env.NODE_ENV === "production" ? "/employee-tradelicenc
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <Router>
+      <Router basename={window.basename}>
         <App />
       </Router>
     </Provider>
