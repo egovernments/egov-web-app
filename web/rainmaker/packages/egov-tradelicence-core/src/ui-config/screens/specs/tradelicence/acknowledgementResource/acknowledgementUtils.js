@@ -8,7 +8,7 @@ import {
 const style = {
   bodyBox: {
     marginLeft: 16,
-    flex: 1
+    flex: 2
   },
   tailText: {
     color: "rgba(0, 0, 0, 0.6000000238418579)",
