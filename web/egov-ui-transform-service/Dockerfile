@@ -6,6 +6,7 @@ COPY . /srv/
 # Set work directory to /www
 WORKDIR /srv
 
+RUN npm build
 # set your port
 ENV PORT 8080
 # expose the port to outside world
