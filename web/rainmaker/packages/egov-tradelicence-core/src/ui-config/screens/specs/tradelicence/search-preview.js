@@ -18,6 +18,11 @@ import { getReviewOwner } from "./applyResource//review-owner";
 import { getReviewDocuments } from "./applyResource//review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+
+const role = getQueryArg(window.location.href, "role");
+const purpose = getQueryArg(window.location.href, "purpose");
+
 const header = getCommonContainer({
   header: getCommonHeader("Trade License Application (2018-2019)"),
   applicationNumber: {

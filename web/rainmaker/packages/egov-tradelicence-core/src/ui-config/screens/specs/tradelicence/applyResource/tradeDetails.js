@@ -7,12 +7,11 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import {
-  getTooltip
-} from "../../utils";
+import { getIconStyle } from "../../utils";
 
 const multipleTradeUnitCard =
   // {
@@ -97,7 +96,21 @@ const accessoriesCard = {
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
-      header:getCommonSubHeader("Accessories"),
+      header: {
+        uiFramework: "custom-atoms",
+        componentPath: "Container",
+        children: {
+          head: getCommonSubHeader("Accessories"),
+          ico: {
+            uiFramework: "custom-molecules-local",
+            componentPath: "Tooltip",
+            props: {
+              val: "Accessories Information",
+              style: getIconStyle("headerIcon")
+            }
+          }
+        }
+      },
       accessoriesCardContainer: getCommonContainer({
         accessoriesName: getSelectTextField(
           "Accessories",
@@ -142,7 +155,7 @@ const accessoriesCard = {
     addItemLabel: "ADD ACCESSORIES",
     headerName: "Accessory",
     headerJsonPath:
-      "children.cardContent.children.header.children.Accessories.props.label"
+      "children.cardContent.children.header.children.head.children.Accessories.props.label"
   },
   type: "array"
 };

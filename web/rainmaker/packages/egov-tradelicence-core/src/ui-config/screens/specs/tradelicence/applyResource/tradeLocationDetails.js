@@ -8,25 +8,50 @@ import {
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+import { getIconStyle } from "../../utils";
+
 export const tradeLocationDetails = getCommonCard({
   header: getCommonTitle("Please Provide Trade Location Details"),
   paragraph: getCommonParagraph(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   tradeDetailsConatiner: getCommonContainer({
-    tradeLocPropertyID: getTextField(
-      "Property ID",
-      "Enter Property ID",
-      false,
-      getPattern("PropertyID"),
-      "",
-      {
-        iconName:"search",
-        position:"end",
-        color:"#FE7A51",
-        label:"SEARCH"
+    tradeLocPropertyID: {
+      uiFramework: "custom-atoms",
+      componentPath: "Container",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      children: {
+        txt: getTextField(
+          "Property ID",
+          "Enter Property ID",
+          false,
+          getPattern("PropertyID"),
+          "",
+          {
+            iconName: "search",
+            position: "end",
+            color: "#FE7A51",
+            label: "SEARCH"
+          },
+          {
+            xs: 11,
+            sm: 11
+          }
+        ),
+        ico: {
+          uiFramework: "custom-molecules-local",
+          componentPath: "Tooltip",
+          props: {
+            val: "Property Id Information",
+            style: getIconStyle("textfieldIcon")
+          },
+          gridDefination: { xs: 1 }
+        }
       }
-    ),
+    },
     tradeLocCity: getSelectTextField("City", "Select City", false, ""),
     tradeLocDoorHouseNo: getTextField(
       "Door/House No.",
@@ -60,8 +85,8 @@ export const tradeLocationDetails = getCommonCard({
       "",
       "",
       {
-        iconName:"gps_fixed",
-        position:"end"
+        iconName: "gps_fixed",
+        position: "end"
       }
     ),
     tradeLocElectricity: getTextField(

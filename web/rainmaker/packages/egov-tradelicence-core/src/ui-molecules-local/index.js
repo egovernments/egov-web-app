@@ -17,4 +17,9 @@ const Table = Loadable({
   loading: () => <Loading />
 });
 
-export { TestMolecules, Table, RadioButtonsGroup };
+const Tooltip = Loadable({
+  loader: () => import("./Tooltip"),
+  loading: () => <Loading />
+});
+
+export { TestMolecules, Table, RadioButtonsGroup, Tooltip };

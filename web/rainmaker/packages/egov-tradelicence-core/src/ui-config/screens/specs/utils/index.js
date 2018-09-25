@@ -1,7 +1,7 @@
 import {
   getLabel,
   getTextField,
-  getCommonSubHeader,
+  getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
 
@@ -150,4 +150,20 @@ export const getFeesEstimateCard = (header, fees, extra) => {
       }
     }
   };
+};
+
+const style = {
+  textfieldIcon: {
+    position: "relative",
+    top: "25px",
+    left: "-249%"
+  },
+  headerIcon: {
+    position: "relative",
+    bottom: "2px"
+  }
+};
+
+export const getIconStyle = key => {
+  return style[key];
 };
