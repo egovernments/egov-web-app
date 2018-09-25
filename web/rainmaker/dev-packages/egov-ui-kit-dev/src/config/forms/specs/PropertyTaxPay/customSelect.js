@@ -1,5 +1,6 @@
 import { prepareDropDownData } from "./utils/reusableFields";
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -34,6 +35,12 @@ const formConfig = {
           action.value = "";
         }
         return action;
+      },
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        var arr = formKey.split("_");
+        var floorIndex = parseInt(arr[1]);
+        const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
       },
     },
   },
