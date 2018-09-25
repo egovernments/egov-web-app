@@ -7,10 +7,5 @@ def build(path, ci_image) {
 }
 
 return this;
-COPY package.json /www/package.json
-RUN cd /www; npm install
-
-# Copy app source
-COPY . /www
 
 
