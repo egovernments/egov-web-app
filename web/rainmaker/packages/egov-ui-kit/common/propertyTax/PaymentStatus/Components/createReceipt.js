@@ -57,14 +57,27 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   var propertyTenant = cities.filter(function (item) {
     return item.code === property.tenantId;
   });
-
+  var ulbGrade = (0, _get2.default)(propertyTenant[0], "city.ulbGrade");
+  var name = (0, _get2.default)(propertyTenant[0], "name");
   return {
-    header: propertyTenant[0].name + " MUNICIPAL COUNCIL",
+    header: getReceiptHeaderLabel(name, ulbGrade),
     subheader: "Property Tax Payment Receipt",
     logo: _pblogo2.default,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl
   };
+};
+
+var getReceiptHeaderLabel = function getReceiptHeaderLabel(name, ulbGrade) {
+  if (ulbGrade && ulbGrade === "NP") {
+    return name + " Nagar Panchayat";
+  } else if (ulbGrade === "Municipal Corporation") {
+    return name + " Municipal Corporation";
+  } else if (ulbGrade.includes("MC Class")) {
+    return name + " Municipal Council";
+  } else {
+    return name + " Municipal Corporation";
+  }
 };
 
 var createReceiptDetails = function createReceiptDetails(property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) {

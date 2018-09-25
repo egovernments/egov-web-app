@@ -67,14 +67,27 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
 
 const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
-
+  const ulbGrade = get(propertyTenant[0], "city.ulbGrade");
+  const name = get(propertyTenant[0], "name");
   return {
-    header: `${propertyTenant[0].name} MUNICIPAL COUNCIL`,
+    header: getReceiptHeaderLabel(name, ulbGrade),
     subheader: "Property Tax Payment Receipt",
     logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl,
   };
+};
+
+const getReceiptHeaderLabel = (name, ulbGrade) => {
+  if (ulbGrade && ulbGrade === "NP") {
+    return `${name} Nagar Panchayat`;
+  } else if (ulbGrade === "Municipal Corporation") {
+    return `${name} Municipal Corporation`;
+  } else if (ulbGrade.includes("MC Class")) {
+    return `${name} Municipal Council`;
+  } else {
+    return `${name} Municipal Corporation`;
+  }
 };
 
 const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) => {
