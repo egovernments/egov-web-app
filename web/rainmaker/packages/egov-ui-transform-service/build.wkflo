@@ -1,0 +1,9 @@
+def build(path, ci_image) {
+    stage("Build") {
+        docker.image("egovio/ci-react:v8.4.0").inside {
+            sh "echo "The build step starts from dockerfile."";
+        }
+    }
+}
+
+return this;
