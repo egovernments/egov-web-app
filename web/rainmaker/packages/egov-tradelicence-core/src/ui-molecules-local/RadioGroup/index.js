@@ -11,7 +11,10 @@ const styles = theme => ({
   root: {
     display: "flex"
   },
-  formControl: {},
+  formControl: {
+    marginTop: 0,
+    paddingBottom: 0
+  },
   group: {
     margin: `${theme.spacing.unit}px 0`,
     display: "inline-block",
@@ -48,6 +51,7 @@ class RadioButtonsGroup extends React.Component {
               buttons.map(button => {
                 return (
                   <FormControlLabel
+                    classes={{ label: "radio-button-label" }}
                     value={button}
                     control={
                       <Radio

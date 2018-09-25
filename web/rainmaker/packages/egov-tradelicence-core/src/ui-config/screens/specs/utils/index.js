@@ -30,6 +30,17 @@ export const getTooltip = (children, toolTipProps) => {
   };
 };
 
+export const getCheckbox = (content, props = {}) => {
+  return {
+    uiFramework: "custom-atoms-local",
+    componentPath: "Checkbox",
+    props: {
+      content,
+      ...props
+    }
+  };
+};
+
 export const getUploadFile = {
   uiFramework: "custom-molecules",
   componentPath: "DocumentList",
@@ -68,7 +79,11 @@ export const getRadioGroupWithLabel = (label, buttons) => {
           sm: 4
         },
         children: {
-          div: getLabel(label)
+          div: getLabel(label, {
+            style: {
+              fontSize: "14px"
+            }
+          })
         }
       },
       div2: {
@@ -96,7 +111,7 @@ export const getApplicationNoContainer = number => {
   };
 };
 
-export const getCommonHeader = (header, props, isApplicationNo) => {
+export const getCommonHeader = (header, props) => {
   return {
     componentPath: "Typography",
     props: {
