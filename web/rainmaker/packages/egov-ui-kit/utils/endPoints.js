@@ -151,3 +151,10 @@ var RECEIPT = exports.RECEIPT = {
     ACTION: "_get"
   }
 };
+
+var BOUNDARY = exports.BOUNDARY = {
+  GET: {
+    URL: "/egov-location/location/v11/boundarys/_search",
+    ACTION: "_get"
+  }
+};

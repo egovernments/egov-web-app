@@ -13,7 +13,8 @@ import {
   getSubHeaderLabel,
   getCommonHeader,
   getCheckbox,
-  getContainerWithElement
+  getContainerWithElement,
+  getUploadFilesMultiple
 } from "../utils";
 
 import { footerApprove } from "./applyResource/footer";
@@ -96,6 +97,12 @@ const tradeDetails = getCommonCard({
     }
   ),
 
+  uploadFileHeader: getCommonSubHeader("Upload Document"),
+  uploadFileInfo: getCommonParagraph(
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.",
+    { styles: { body1: { fontSize: 25 } } }
+  ),
+  uploadFiles: getUploadFilesMultiple(),
   checkBoxContainer: getCheckbox(
     "All information in the application are true upto best of my knowledge"
   )

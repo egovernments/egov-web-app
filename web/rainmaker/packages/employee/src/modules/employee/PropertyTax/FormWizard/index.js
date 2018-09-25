@@ -1022,12 +1022,14 @@ class FormWizard extends Component {
       });
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
         set(prepareFormData, "Receipt[0].Bill", []);
+        set(prepareFormData,"Receipt[0].instrument", {} ) // Clear prepareFormData
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
       }
     } catch (e) {
       console.log(e);
       set(prepareFormData, "Receipt[0].Bill", []);
+      set(prepareFormData,"Receipt[0].instrument", {} )
       this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
     }
   };

@@ -18,4 +18,9 @@ const Checkbox = Loadable({
   loading: () => <Loading />
 });
 
-export { TestAtoms, ApplicationNoContainer, Checkbox };
+const UploadFile = Loadable({
+  loader: () => import("./UploadFile"),
+  loading: () => <Loading />
+});
+
+export { TestAtoms, ApplicationNoContainer, UploadFile, Checkbox };

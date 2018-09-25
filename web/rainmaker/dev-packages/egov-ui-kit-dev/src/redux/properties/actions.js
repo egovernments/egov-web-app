@@ -1,9 +1,9 @@
 import * as actionTypes from "./actionTypes";
-import { PROPERTY, DRAFT, PGService, RECEIPT } from "egov-ui-kit/utils/endPoints";
+import { PROPERTY, DRAFT, PGService, RECEIPT, BOUNDARY } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { transformById } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
-import groupby from "lodash/groupBy";
+import get from "lodash/get";
 
 const propertyFetchPending = () => {
   return {
@@ -133,12 +133,68 @@ const SingleAssessmentStatusFetchComplete = (payload) => {
   };
 };
 
-export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) => {
+const mohallaFetchComplete = (payload) => {
+  return {
+    type: actionTypes.MOHALLA_FETCH_COMPLETE,
+    payload,
+  };
+};
+
+const fetchMohalla = (queryObj) => {
   return async (dispatch) => {
+    try {
+      let mergedMohallas = [];
+      for (let i = 0; i < queryObj.length; i++) {
+        const payload = await httpRequest(BOUNDARY.GET.URL, BOUNDARY.GET.ACTION, queryObj[i]);
+        if (payload && payload.TenantBoundary) {
+          mergedMohallas.push(...payload.TenantBoundary[0].boundary);
+        }
+      }
+      dispatch(mohallaFetchComplete(mergedMohallas));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+const setMohallaInRedux = (dispatch, state, draftResponse) => {
+  const tenantId = get(draftResponse, "drafts[0].tenantId");
+  const { drafts } = draftResponse || {};
+  const mohallaCodes =
+    drafts &&
+    drafts.reduce((result, current) => {
+      if (current.draftRecord && current.draftRecord.prepareFormData) {
+        if (!result[current.tenantId]) result[current.tenantId] = [];
+        if (
+          get(current, "draftRecord.prepareFormData.Properties[0].address.locality.code") &&
+          result[current.tenantId].indexOf(get(current, "draftRecord.prepareFormData.Properties[0].address.locality.code")) === -1
+        ) {
+          result[current.tenantId].push(get(current, "draftRecord.prepareFormData.Properties[0].address.locality.code"));
+        }
+      }
+      return result;
+    }, {});
+  const queryObj = Object.keys(mohallaCodes).map((item) => {
+    return [
+      {
+        key: "tenantId",
+        value: item,
+      },
+      { key: "hierarchyTypeCode", value: "REVENUE" },
+      { key: "boundaryType", value: "Locality" },
+      { key: "codes", value: mohallaCodes[item].join(",") },
+    ];
+  });
+  dispatch(fetchMohalla(queryObj));
+};
+
+export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) => {
+  return async (dispatch, getState) => {
     if (queryObjectDraft) {
       dispatch(draftFetchPending());
       try {
         const draftpayload = await httpRequest(DRAFT.GET.URL, DRAFT.GET.ACTION, queryObjectDraft);
+        setMohallaInRedux(dispatch, getState(), draftpayload);
         dispatch(draftFetchComplete(draftpayload));
       } catch (error) {
         dispatch(draftFetchError(error.message));

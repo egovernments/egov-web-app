@@ -32,4 +32,17 @@ const CustomTabContainer = Loadable({
   loading: () => <Loading />
 });
 
-export { TestMolecules, Table, RadioButtonsGroup, Tooltip,CustomTab ,CustomTabContainer};
+const UploadMultipleFiles = Loadable({
+  loader: () => import("./UploadMultipleFiles"),
+  loading: () => <Loading />
+});
+
+export {
+  TestMolecules,
+  Table,
+  RadioButtonsGroup,
+  Tooltip,
+  CustomTab,
+  CustomTabContainer,
+  UploadMultipleFiles
+};

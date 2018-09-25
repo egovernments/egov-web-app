@@ -53,6 +53,14 @@ export const getUploadFile = {
   }
 };
 
+export const getUploadFilesMultiple = () => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "UploadMultipleFiles",
+    props: {}
+  };
+};
+
 export const getRadioButtonGroup = buttons => {
   return {
     uiFramework: "custom-molecules-local",

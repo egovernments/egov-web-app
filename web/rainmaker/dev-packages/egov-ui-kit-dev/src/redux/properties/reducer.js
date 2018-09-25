@@ -102,6 +102,15 @@ const propertyReducer = (state = initialState, action) => {
         errorMessage: "",
         draftsById,
       };
+    case actionTypes.MOHALLA_FETCH_COMPLETE:
+      const mohallaById = transformById(action.payload, "code");
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        mohallaById,
+      };
     case actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE:
       const failedPayments = transformById(action.payload["Transaction"], "txnId");
       return {

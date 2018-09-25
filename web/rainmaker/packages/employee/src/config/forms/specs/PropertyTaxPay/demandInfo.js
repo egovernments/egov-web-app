@@ -12,6 +12,7 @@ const formConfig = {
       errorMessage: "DD should be minimum 6 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
+      value: "",
     },
     demandDate: {
       id: "demandDate",
@@ -22,6 +23,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorMessage: "",
       jsonPath: "Receipt[0].instrument.transactionDateInput",
+      value: "",
     },
     ifscCode: {
       id: "ifscCode",
@@ -36,6 +38,7 @@ const formConfig = {
       errorMessage: "Please enter a valid IFSC",
       jsonPath: "Receipt[0].instrument.ifscCode",
       pattern: /^[a-zA-Z0-9]{1,11}$/i,
+      value: "",
     },
     BankName: {
       id: "BankName",
@@ -46,6 +49,7 @@ const formConfig = {
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
       jsonPath: "Receipt[0].instrument.bank.name",
+      value: "",
     },
     BankBranch: {
       id: "BankBranch",
@@ -55,6 +59,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Bank Branch",
       jsonPath: "Receipt[0].instrument.branchName",
+      value: "",
     },
   },
   action: "",

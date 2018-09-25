@@ -11,6 +11,7 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.instrumentNumber",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorMessage: "Enter 4 digits",
+      value: "",
     },
     receiptNo: {
       id: "receiptNo",
@@ -20,6 +21,7 @@ const formConfig = {
       hintText: "Enter transaction no.",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       jsonPath: "Receipt[0].instrument.transactionNumber",
+      value: "",
     },
     confirmReceiptNo: {
       id: "receiptNo",
@@ -29,6 +31,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       hintText: "Enter transaction no.",
       jsonPath: "Receipt[0].instrument.transactionNumberConfirm",
+      value: "",
     },
   },
   action: "",
