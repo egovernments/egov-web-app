@@ -1,8 +1,8 @@
 import {
-  // getCommonHeader,
   getCommonCard,
-  getCommonSubHeader,
+  getCommonContainer,
   getCommonParagraph,
+  getCommonSubHeader,
   getBreak,
   getCheckBoxwithLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
@@ -11,7 +11,6 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import {
   getRadioGroupWithLabel,
-  getApplicationNoContainer,
   getApprovalTextField,
   getSubHeaderLabel,
   getCommonHeader
@@ -21,12 +20,16 @@ import { footerApprove } from "./applyResource/footer";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValue = getQueryArg(window.location.href, "purpose");
-const applicationNo = getApplicationNoContainer(5467);
-const header = getCommonHeader(
-  "Trade License Application (2018-2019)",
-  {},
-  true
-);
+const header = getCommonContainer({
+  header: getCommonHeader("Trade License Application (2018-2019)"),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: 5434
+    }
+  }
+});
 
 const tradeDetails = getCommonCard({
   headerOne:
