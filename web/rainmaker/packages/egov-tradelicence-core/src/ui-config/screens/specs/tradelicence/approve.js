@@ -2,9 +2,7 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonParagraph,
-  getCommonSubHeader,
-  getBreak,
-  getCommonContainer
+  getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -14,7 +12,8 @@ import {
   getApprovalTextField,
   getSubHeaderLabel,
   getCommonHeader,
-  getCheckbox
+  getCheckbox,
+  getContainerWithElement
 } from "../utils";
 
 import { footerApprove } from "./applyResource/footer";
@@ -39,23 +38,29 @@ const tradeDetails = getCommonCard({
       : getCommonSubHeader(
           "Please provide the following details on the basis of your field verification"
         ),
-  paragraphOne: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  ),
-  breakTwo: getBreak(),
-  headerTwo: {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    children: {
-      div1: getSubHeaderLabel()
+
+  paragraphOne: getContainerWithElement(
+    {
+      paragraph: getCommonParagraph(
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+      )
     },
-    props: {
+    {
       style: {
-        marginBottom: "10px"
+        marginTop: "8px"
       }
     }
-  },
-
+  ),
+  headerTwo: getContainerWithElement(
+    {
+      subHeader: getSubHeaderLabel()
+    },
+    {
+      style: {
+        marginTop: "33px"
+      }
+    }
+  ),
   safetyNorms:
     queryValue === "cancel"
       ? {}
@@ -80,18 +85,16 @@ const tradeDetails = getCommonCard({
           radioButtonLabels
         ),
 
-  tradeDetailsContainer: {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    children: {
-      div1: getApprovalTextField()
+  commentSection: getContainerWithElement(
+    {
+      childrenomment: getApprovalTextField()
     },
-    props: {
+    {
       style: {
         marginTop: "20px"
       }
     }
-  },
+  ),
 
   checkBoxContainer: getCheckbox(
     "All information in the application are true upto best of my knowledge"

@@ -111,6 +111,17 @@ export const getApplicationNoContainer = number => {
   };
 };
 
+export const getContainerWithElement = (children, props = {}) => {
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    children,
+    props: {
+      ...props
+    }
+  };
+};
+
 export const getCommonHeader = (header, props) => {
   return {
     componentPath: "Typography",
