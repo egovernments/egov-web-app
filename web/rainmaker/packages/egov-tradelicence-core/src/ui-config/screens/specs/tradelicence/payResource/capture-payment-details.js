@@ -2,46 +2,42 @@ import {
   getCommonGrayCard,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import {cash,demandDraft,cheque,card} from "./payment-methods";
 
 const capturePaymentDetails = getCommonGrayCard({
   header: getCommonSubHeader("Capture Payment"),
   tabSection: {
-    componentPath: "Tabs",
+    uiFramework: "custom-molecules-local",
+    componentPath: "CustomTabContainer",
     props: {
-      value:0,
-      indicatorColor: "primary",
-      textColor: "primary",
-      fullWidth: true
+      // horizontal: {
+      //   tabsGrid: { xs: 4, sm: 2, md: 2 },
+      //   contentGrid: { xs: 8, sm: 10, md: 10 }
+      // },
+      tabs: [
+        {
+          tabButton: "CASH",
+          tabIcon: "Dashboard",
+          tabContent:{cash}
+        },
+        {
+          tabButton: "CHECK",
+          tabIcon: "Schedule",
+          tabContent: {cheque}
+        },
+        {
+          tabButton: "DD",
+          tabIcon: "Schedule",
+          tabContent: {demandDraft}
+        },
+        {
+          tabButton: "Credit/Debit Card",
+          tabIcon: "Schedule",
+          tabContent: {card}
+        }
+      ]
     },
-    children: {
-      tabCash: {
-        componentPath: "Tab",
-        props: {
-          label: "CASH"
-        }
-      },
-      tabCheque: {
-        componentPath: "Tab",
-        props: {
-          label: "Cheque"
-        }
-      },
-      tabDD: {
-        componentPath: "Tab",
-        props: {
-          label: "DD"
-        }
-      },
-      tabCreditOrDebit: {
-        componentPath: "Tab",
-        props: {
-          label: "Credit/Debit Card"
-        }
-      }
-    }
-  },
-  cash:{
-    
+    type:"array"
   }
 });
 

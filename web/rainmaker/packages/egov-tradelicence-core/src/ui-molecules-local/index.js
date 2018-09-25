@@ -22,4 +22,14 @@ const Tooltip = Loadable({
   loading: () => <Loading />
 });
 
-export { TestMolecules, Table, RadioButtonsGroup, Tooltip };
+const CustomTab = Loadable({
+  loader: () => import("./CustomTab"),
+  loading: () => <Loading />
+});
+
+const CustomTabContainer = Loadable({
+  loader: () => import("./CustomTabContainer"),
+  loading: () => <Loading />
+});
+
+export { TestMolecules, Table, RadioButtonsGroup, Tooltip,CustomTab ,CustomTabContainer};
