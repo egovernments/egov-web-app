@@ -228,7 +228,7 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=apply&status=success&number=12345"
     },
     visible: false
   }
@@ -384,7 +384,7 @@ export const footerReview = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345"
     },
     visible: true
   },
@@ -424,7 +424,7 @@ export const footerReview = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/application-success"
+      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345"
     },
     visible: true
   }

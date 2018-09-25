@@ -40,7 +40,7 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/payment-success"
+      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=pay&status=success&number=12345"
     }
   }
 });
