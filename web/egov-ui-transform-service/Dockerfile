@@ -4,7 +4,7 @@ LABEL authors="Sivaprakash Ramasamy <sivaprakash.ramasamy@tarento.com>"
 
 COPY src /srv/
 COPY node_modules /srv/
-#COPY dist /srv/
+COPY package.json /srv/
 CMD ls -ltr /srv
 # Set work directory to /www
 WORKDIR /srv
