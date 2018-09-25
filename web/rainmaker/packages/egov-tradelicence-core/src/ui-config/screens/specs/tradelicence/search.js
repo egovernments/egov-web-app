@@ -71,6 +71,10 @@ const tradeLicenseSearchAndResult = {
                 },
 
                 buttonLabel: getLabel("NEW APPLICATION")
+              },
+              onClickDefination: {
+                action: "page_change",
+                path: "/landing/mihy-ui-framework/tradelicence/apply"
               }
             }
           }
