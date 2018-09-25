@@ -10,6 +10,8 @@ import { footer } from "./payResource/footer";
 import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
+import { adhocPopup } from "./applyResource/adhocPopup";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 const header = getCommonContainer({
   header: getCommonHeader("Payment for New Trade License (2018-2019)"),
@@ -64,6 +66,20 @@ const screenConfig = {
           }
         },
         footer
+      }
+    },
+    adhocDialog: {
+      componentPath: "Dialog",
+      props: {
+        open: getQueryArg(window.location.href, "show-dialog") === "true" ? true : false
+      },
+      children: {
+        dialogContent: {
+          componentPath: "DialogContent",
+          children: {
+            popup: adhocPopup
+          }
+        }
       }
     }
   }
