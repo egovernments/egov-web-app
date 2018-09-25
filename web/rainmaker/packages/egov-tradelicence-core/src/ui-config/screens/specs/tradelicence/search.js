@@ -79,7 +79,6 @@ const tradeLicenseSearchAndResult = {
             }
           }
         },
-
         divForPendingApprovals: {
           uiFramework: "custom-atoms",
           componentPath: "Div",
