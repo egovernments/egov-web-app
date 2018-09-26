@@ -98,9 +98,9 @@ class FormWizard extends Component {
     const { search } = location;
 
     let prepareFormData = {
-      Properties: {
+      Properties: [
         ...this.props.prepareFormData.Properties,
-      },
+      ],
     };
     //toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
