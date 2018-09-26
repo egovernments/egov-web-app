@@ -424,7 +424,7 @@ class FormWizard extends Component {
           selected: activeTab,
           draftRequest: {
             draft: {
-              id: null,
+              id: !isReassesment ? draftId : null,
               ...currentDraft,
               // assessmentNumber: currentDraft.assessmentNumber,
               // draftRecord: currentDraft.draftRecord,
