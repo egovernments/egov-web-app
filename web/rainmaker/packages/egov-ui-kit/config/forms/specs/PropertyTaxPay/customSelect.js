@@ -62,7 +62,6 @@ var formConfig = {
             dispatch = _ref2.dispatch,
             state = _ref2.state;
 
-        console.log(formKey);
         var arr = formKey.split("_");
         var floorIndex = parseInt(arr[1]);
         var floorNo = (0, _get2.default)(state, "form." + formKey + ".fields.floorName.value");

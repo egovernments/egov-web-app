@@ -240,7 +240,7 @@ class ActionMenuComp extends Component {
               />
             );
           } else {
-            if (item.navigationURL) {
+            if (item.navigationURL && item.navigationURL !== "newTab") {
               return (
                 <Link key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
                   <MenuItem
@@ -272,6 +272,39 @@ class ActionMenuComp extends Component {
                     }
                   />
                 </Link>
+              );
+            } else {
+              return (
+                <a href={item.url} target="_blank">
+                  <MenuItem
+                    innerDivStyle={styles.defaultMenuItemStyle}
+                    style={{ whiteSpace: "initial" }}
+                    key={index}
+                    onClick={() => {
+                      localStorage.setItem("menuPath", item.path);
+                      document.title = item.name;
+                    }}
+                    leftIcon={
+                      iconLeft &&
+                      iconLeft.length === 2 && (
+                        <Icon
+                          name={iconLeft[1]}
+                          action={iconLeft[0]}
+                          fill={"#b3b3b3"}
+                          color="#b3b3b3"
+                          style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                          className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                        />
+                      )
+                    }
+                    primaryText={
+                      <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                        <span className="onHoverText hidden-xs">{item.name || ""}</span>
+                        <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
+                      </div>
+                    }
+                  />
+                </a>
               );
             }
           }
@@ -372,7 +405,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
 });
-export default connect(
-  null,
-  mapDispatchToProps
-)(ActionMenuComp);
+export default connect(null, mapDispatchToProps)(ActionMenuComp);

@@ -315,10 +315,46 @@ var ActionMenuComp = function (_Component) {
                 }
               });
             } else {
-              if (item.navigationURL) {
+              if (item.navigationURL && item.navigationURL !== "newTab") {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
                   { key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
+                  _react2.default.createElement(_MenuItem2.default, {
+                    innerDivStyle: styles.defaultMenuItemStyle,
+                    style: { whiteSpace: "initial" },
+                    key: index,
+                    onClick: function onClick() {
+                      localStorage.setItem("menuPath", item.path);
+                      document.title = item.name;
+                    },
+                    leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
+                      name: iconLeft[1],
+                      action: iconLeft[0],
+                      fill: "#b3b3b3",
+                      color: "#b3b3b3",
+                      style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                      className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
+                    }),
+                    primaryText: _react2.default.createElement(
+                      "div",
+                      { className: "menuStyle whiteColor", style: styles.menuStyle },
+                      _react2.default.createElement(
+                        "span",
+                        { className: "onHoverText hidden-xs" },
+                        item.name || ""
+                      ),
+                      _react2.default.createElement(
+                        "span",
+                        { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" } },
+                        item.name || ""
+                      )
+                    )
+                  })
+                );
+              } else {
+                return _react2.default.createElement(
+                  "a",
+                  { href: item.url, target: "_blank" },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },
