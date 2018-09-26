@@ -61,7 +61,7 @@ class LandingPage extends Component {
       borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "custom",
       iconName: "rupee",
-      route: "employee/services/EGF/inbox",
+      route: "services/EGF/inbox",
       iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "#767676" },
     },
   };
