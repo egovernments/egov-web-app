@@ -15,4 +15,4 @@ WORKDIR /opt
 #EXPOSE  8080
 
 # start command as per package.json
-CMD ["npm", "start"]
+CMD ["PORT=8080", "npm", "start"]
