@@ -2,7 +2,6 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 const UploadFile = props => {
-  console.log(props);
   const { classes, handleFileUpload, buttonProps, inputProps } = props;
   return (
     <div>

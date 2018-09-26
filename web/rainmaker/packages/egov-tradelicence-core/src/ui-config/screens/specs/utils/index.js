@@ -71,7 +71,9 @@ export const getUploadFilesMultiple = () => {
   return {
     uiFramework: "custom-molecules-local",
     componentPath: "UploadMultipleFiles",
-    props: {}
+    props: {
+      maxFiles: 4
+    }
   };
 };
 

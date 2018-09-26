@@ -23,4 +23,15 @@ const UploadFile = Loadable({
   loading: () => <Loading />
 });
 
-export { TestAtoms, ApplicationNoContainer, UploadFile, Checkbox };
+const UploadedDocument = Loadable({
+  loader: () => import("./UploadedDocument"),
+  loading: () => <Loading />
+});
+
+export {
+  TestAtoms,
+  ApplicationNoContainer,
+  UploadFile,
+  Checkbox,
+  UploadedDocument
+};

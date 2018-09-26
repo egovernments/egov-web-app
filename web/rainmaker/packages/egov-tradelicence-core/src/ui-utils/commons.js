@@ -1,22 +1,25 @@
 import isEmpty from "lodash/isEmpty";
 
-export const addComponentJsonpath=(components,jsonPath="components")=>
-{
+export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
     if (components.hasOwnProperty(componentKey)) {
       if (components[componentKey].children) {
-        components[componentKey].componentJsonpath=`${jsonPath}.${componentKey}`;
-        const childJsonpath=`${components[componentKey].componentJsonpath}.children`;
-        addComponentJsonpath(components[componentKey].children,childJsonpath);
-      }
-      else {
-        components[componentKey].componentJsonpath=`${jsonPath}.${componentKey}`;
+        components[
+          componentKey
+        ].componentJsonpath = `${jsonPath}.${componentKey}`;
+        const childJsonpath = `${
+          components[componentKey].componentJsonpath
+        }.children`;
+        addComponentJsonpath(components[componentKey].children, childJsonpath);
+      } else {
+        components[
+          componentKey
+        ].componentJsonpath = `${jsonPath}.${componentKey}`;
       }
     }
   }
   return components;
-}
-
+};
 
 export const getQueryArg = (url, name) => {
   if (!url) url = window.location.href;
@@ -32,7 +35,7 @@ export const addQueryArg = (url, queries = []) => {
   const urlParts = url.split("?");
   const path = urlParts[0];
   let queryParts = urlParts.length > 1 ? urlParts[1].split("&") : [];
-  queries.forEach((query) => {
+  queries.forEach(query => {
     const key = query.key;
     const value = query.value;
     const newQuery = `${key}=${value}`;
@@ -42,7 +45,7 @@ export const addQueryArg = (url, queries = []) => {
   return newUrl;
 };
 
-export const isFieldEmpty = (field) => {
+export const isFieldEmpty = field => {
   if (field === undefined || field === null) {
     return true;
   }
@@ -53,30 +56,42 @@ export const isFieldEmpty = (field) => {
   return false;
 };
 
-export const slugify = (term) => {
+export const slugify = term => {
   return term.toLowerCase().replace(/\s+/, "-");
 };
 
-export const persistInLocalStorage = (obj) => {
-  Object.keys(obj).forEach((objKey) => {
+export const persistInLocalStorage = obj => {
+  Object.keys(obj).forEach(objKey => {
     const objValue = obj[objKey];
     window.localStorage.setItem(objKey, objValue);
   }, this);
 };
 
-export const fetchFromLocalStorage = (key) => {
+export const fetchFromLocalStorage = key => {
   return window.localStorage.getItem(key) || null;
 };
 
-export const trimObj = (obj) => {
+export const trimObj = obj => {
   if (!Array.isArray(obj) && typeof obj !== "object") return obj;
   for (var key in obj) {
-    obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+    obj[key.trim()] =
+      typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
     if (key === "") delete obj[key];
   }
   return obj;
 };
 
-export const getDateInEpoch=()=>{
+export const getDateInEpoch = () => {
   return new Date().getTime();
-}
+};
+
+export const getImageUrlByFile = file => {
+  return new Promise(resolve => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = e => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
+  });
+};

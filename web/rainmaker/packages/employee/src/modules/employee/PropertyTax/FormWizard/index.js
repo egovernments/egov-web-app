@@ -802,7 +802,6 @@ class FormWizard extends Component {
 
         break;
       case 3:
-        pay();
         this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
         break;
       case 4:
@@ -839,7 +838,7 @@ class FormWizard extends Component {
 
   callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     const { location, toggleSpinner } = this.props;
-    const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
+    const { isFullPayment, totalAmountToBePaid, estimation, valueSelected } = this.state;
     const { search } = location;
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     toggleSpinner();
@@ -849,7 +848,8 @@ class FormWizard extends Component {
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
     ];
-    !isCompletePayment && queryObj.push({ key: "amountExpected", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid });
+    !isCompletePayment &&
+      queryObj.push({ key: "amountExpected", value: valueSelected === "Full_Amount" ? estimation[0].totalAmount : totalAmountToBePaid });
 
     try {
       const billResponse = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
@@ -871,9 +871,9 @@ class FormWizard extends Component {
       if (!isCompletePayment) {
         const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId);
         const { Bill } = getBill && getBill;
-        this.setState({ Bill });
+        this.createReceipt(Bill);
       }
-      updateIndex(4);
+      // updateIndex(4);
     } catch (e) {
       console.log(e);
     }
@@ -950,9 +950,9 @@ class FormWizard extends Component {
     return { instiObj, ownerArray };
   };
 
-  createReceipt = async () => {
+  createReceipt = async (Bill = []) => {
     const { prepareFormData } = this.props;
-    const { Bill, propertyDetails } = this.state;
+    const { propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
@@ -1022,14 +1022,14 @@ class FormWizard extends Component {
       });
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
         set(prepareFormData, "Receipt[0].Bill", []);
-        set(prepareFormData,"Receipt[0].instrument", {} ) // Clear prepareFormData
+        set(prepareFormData, "Receipt[0].instrument", {}); // Clear prepareFormData
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
       }
     } catch (e) {
       console.log(e);
       set(prepareFormData, "Receipt[0].Bill", []);
-      set(prepareFormData,"Receipt[0].instrument", {} )
+      set(prepareFormData, "Receipt[0].instrument", {});
       this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
     }
   };
@@ -1248,10 +1248,11 @@ class FormWizard extends Component {
     this.setState({ dialogueOpen: false });
   };
 
-  onPayButtonClick = () => {
+  onPayButtonClick = async () => {
     const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
     if (!isFullPayment && partialAmountError) return;
     if (totalAmountToBePaid % 1 === 0) {
+      //Fractions Check
       this.setState({ dialogueOpen: true });
       const { form, prepareFormData } = this.props;
       const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
@@ -1280,7 +1281,7 @@ class FormWizard extends Component {
         }, false);
 
         if (areFormsValid) {
-          this.createReceipt();
+          this.pay();
         } else {
           validateArray.forEach((item) => {
             if (!item.formValid) {
@@ -1289,7 +1290,7 @@ class FormWizard extends Component {
           });
         }
       } else {
-        this.createReceipt();
+        this.pay();
       }
     } else {
       alert("Amount cannot be a fraction!");
@@ -1312,7 +1313,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"
-          nextLabel={selected === 4 ? "PT_COMMONS_NEXT" : "PT_COMMONS_NEXT"}
+          nextLabel={selected === 4 ? "PT_HOME_PAY1" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}

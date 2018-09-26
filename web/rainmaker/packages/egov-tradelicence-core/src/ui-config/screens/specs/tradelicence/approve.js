@@ -100,7 +100,7 @@ const tradeDetails = getCommonCard({
   uploadFileHeader: getCommonSubHeader("Upload Document"),
   uploadFileInfo: getCommonParagraph(
     "Only .jpg and .pdf files. 5MB max file size.",
-    { styles: { body1: { fontSize: 25 } } }
+    { style: { fontSize: 25 } }
   ),
   uploadFiles: getUploadFilesMultiple(),
   checkBoxContainer: getCheckbox(
