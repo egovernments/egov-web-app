@@ -1,13 +1,11 @@
 import {
   getCommonGrayCard,
   getCommonSubHeader,
-  getLabel,
   getLabelWithValue,
   getCommonContainer,
   getCommonCaption
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import { changeStep } from "./footer";
 
 export const getApprovalDetails = () => {
   return getCommonGrayCard({

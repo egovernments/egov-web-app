@@ -12,8 +12,8 @@ const hasButton = getQueryArg(window.location.href, "hasButton");
 const hasApproval = getQueryArg(window.location.href, "hasApproval");
 let enableInbox,
   enableButton = true;
-enableInbox = hasApproval && hasApproval == "false" ? false : true;
-enableButton = hasButton && hasButton == "false" ? false : true;
+enableInbox = hasApproval && hasApproval === "false" ? false : true;
+enableButton = hasButton && hasButton === "false" ? false : true;
 
 const header = getCommonHeader("Trade License");
 const tradeLicenseSearchAndResult = {

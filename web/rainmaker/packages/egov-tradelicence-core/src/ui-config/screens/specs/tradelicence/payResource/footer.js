@@ -1,8 +1,6 @@
 import {
-  getLabel,
-  dispatchMultipleFieldChangeAction
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import get from "lodash/get";
 
 
 export const getCommonApplyFooter = children => {

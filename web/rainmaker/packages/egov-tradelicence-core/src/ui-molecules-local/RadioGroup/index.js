@@ -16,7 +16,6 @@ const styles = theme => ({
     paddingBottom: 0
   },
   group: {
-    margin: `${theme.spacing.unit}px 0`,
     display: "inline-block",
     margin: 0
   },

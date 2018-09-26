@@ -1,6 +1,5 @@
 import {
   getTextField,
-  getSelectTextField,
   getCommonContainer,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";

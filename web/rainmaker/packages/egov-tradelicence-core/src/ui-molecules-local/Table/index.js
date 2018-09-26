@@ -1,8 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import MUIDataTable from "mui-datatables";
 import get from "lodash/get"
-import set from "lodash/set"
 import PropTypes from "prop-types";
 import "./index.css"
 
@@ -18,7 +16,6 @@ class Table extends React.Component {
     return [...data].reduce((acc, curr) => {
       let dataRow = [];
       Object.keys(columns).forEach(column => {
-        let currentColumn = columns[column];
         let columnValue = get(curr, `${column}`, "");
         if (get(columns, `${column}.format`, "")) {
           columnValue = columns[column].format(columnValue);

@@ -7,8 +7,7 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
-  getPattern,
-  getLabel
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getIconStyle } from "../../utils";

@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
 function SimpleTooltips(props) {

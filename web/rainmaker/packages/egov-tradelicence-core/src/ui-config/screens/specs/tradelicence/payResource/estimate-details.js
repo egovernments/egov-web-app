@@ -1,18 +1,7 @@
 import {
-  getCommonCard,
   getCommonGrayCard,
-  getCommonTitle,
-  getCommonSubHeader,
-  getCommonParagraph,
-  getTextField,
-  getSelectTextField,
-  getCommonContainer,
-  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import {
-  getTooltip
-} from "../../utils";
 
 
 const estimate = getCommonGrayCard({estimateSection:{
