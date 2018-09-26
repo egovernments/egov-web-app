@@ -4,7 +4,6 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
-  getCommonSubHeader,
   getCommonParagraph,
   getPattern,
   getLabel

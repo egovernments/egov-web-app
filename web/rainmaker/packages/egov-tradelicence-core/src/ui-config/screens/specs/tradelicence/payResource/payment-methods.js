@@ -2,7 +2,6 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
-  getCommonSubHeader,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -16,9 +15,9 @@ export const payeeDetails = getCommonContainer({
     getPattern("Date"),
     "",
     {
-        position:"start",
-        label:"+91 |",
-     }
+      position: "start",
+      label: "+91 |",
+    }
   )
 });
 

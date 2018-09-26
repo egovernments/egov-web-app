@@ -2,12 +2,7 @@ import {
   getCommonCard,
   getCommonGrayCard,
   getCommonTitle,
-  getCommonSubHeader,
-  getCommonParagraph,
-  getCommonContainer,
-  getLabelWithValue,
-  getDivider,
-  getLabel
+  getCommonParagraph
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getFeesEstimateCard } from "../../utils";
@@ -15,8 +10,6 @@ import { getFeesEstimateCard } from "../../utils";
 import { getReviewTrade } from "./review-trade";
 import { getReviewOwner } from "./review-owner";
 import { getReviewDocuments } from "./review-documents";
-
-import { changeStep } from "./footer";
 
 const estimate = getCommonGrayCard({
   estimateSection: getFeesEstimateCard(

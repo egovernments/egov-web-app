@@ -3,10 +3,8 @@ import {
   dispatchMultipleFieldChangeAction
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import { getFooterButtons } from "../../utils";
-const queryValue = getQueryArg(window.location.href, "purpose");
 
 export const callBackForNext = (state, dispatch) => {
   changeStep(state, dispatch);
@@ -228,7 +226,8 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=apply&status=success&number=12345"
+      path:
+        "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=apply&status=success&number=12345"
     },
     visible: false
   }
@@ -384,7 +383,8 @@ export const footerReview = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345"
+      path:
+        "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345"
     },
     visible: true
   },
@@ -424,7 +424,8 @@ export const footerReview = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345"
+      path:
+        "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345"
     },
     visible: true
   }
