@@ -1,6 +1,6 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
+// import classNames from "classnames";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -30,14 +30,7 @@ class NavPills extends React.Component {
     this.setState({ active: index });
   };
   render() {
-    const {
-      classes,
-      tabs,
-      direction,
-      color,
-      horizontal,
-      alignCenter
-    } = this.props;
+    const { classes, tabs, direction, horizontal, alignCenter } = this.props;
     const tabButtons = (
       <Tabs
         classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
@@ -48,7 +41,6 @@ class NavPills extends React.Component {
         scrollButtons="off"
       >
         {tabs.map((prop, key) => {
-          var icon = {};
           return (
             <Tab
               label={prop.tabButton}
@@ -76,15 +68,16 @@ class NavPills extends React.Component {
         </SwipeableViews>
       </div>
     );
-    return horizontal !== undefined ? (<div className={classes.root}>
-      <GridContainer container>
-        <GridItem item {...horizontal.tabsGrid}>
-          {tabButtons}
-        </GridItem>
-        <GridItem item {...horizontal.contentGrid}>
-          {tabContent}
-        </GridItem>
-      </GridContainer>
+    return horizontal !== undefined ? (
+      <div className={classes.root}>
+        <GridContainer container>
+          <GridItem item {...horizontal.tabsGrid}>
+            {tabButtons}
+          </GridItem>
+          <GridItem item {...horizontal.contentGrid}>
+            {tabContent}
+          </GridItem>
+        </GridContainer>
       </div>
     ) : (
       <div className={classes.root}>

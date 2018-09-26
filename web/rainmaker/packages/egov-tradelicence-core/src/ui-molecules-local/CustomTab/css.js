@@ -8,7 +8,7 @@ const navPillsStyle = theme => ({
     borderBottom: "1px solid #e8e8e8"
   },
   tabsIndicator: {
-    backgroundColor: "#1890ff"
+    backgroundColor: theme.palette.primary.main
   },
   tabRoot: {
     textTransform: "initial",
@@ -28,15 +28,15 @@ const navPillsStyle = theme => ({
       '"Segoe UI Symbol"'
     ].join(","),
     "&:hover": {
-      color: "#40a9ff",
+      color: theme.palette.primary.main,
       opacity: 1
     },
     "&$tabSelected": {
-      color: "#1890ff",
+      color: theme.palette.primary.main,
       fontWeight: theme.typography.fontWeightMedium
     },
     "&:focus": {
-      color: "#40a9ff"
+      color: theme.palette.primary.main
     }
   },
   tabSelected: {},
