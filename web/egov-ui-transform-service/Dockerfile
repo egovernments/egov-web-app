@@ -6,7 +6,7 @@ COPY . /
 # Set work directory to /www
 WORKDIR /
 
-RUN npm build
+RUN npm install
 # set your port
 ENV PORT 8080
 # expose the port to outside world
