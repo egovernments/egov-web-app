@@ -10,9 +10,9 @@ RUN cd /opt && npm install
 WORKDIR /opt
 
 # set your port
-#ENV PORT 8080
+ENV PORT 8080
 # expose the port to outside world
 #EXPOSE  8080
 
 # start command as per package.json
-CMD ["PORT=8080", "npm", "start"]
+CMD ["npm", "start"]
