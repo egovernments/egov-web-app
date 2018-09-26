@@ -3,7 +3,8 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph
+  getCommonParagraph,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "./payResource/footer";
@@ -11,7 +12,7 @@ import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const header = getCommonContainer({
   header: getCommonHeader("Payment for New Trade License (2018-2019)"),
@@ -23,6 +24,10 @@ const header = getCommonContainer({
     }
   }
 });
+
+export const showPopup = (state, dispatch) => {
+  dispatch(handleField("pay", "components.adhocDialog", "props.open", true));
+};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -60,6 +65,20 @@ const screenConfig = {
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
               ),
               estimateDetails,
+              addPenaltyRebateButton: {
+                componentPath: "Button",
+                props: {
+                  color: "primary",
+                  style: {}
+                },
+                children: {
+                  previousButtonLabel: getLabel("ADD REBATE/PENALTY")
+                },
+                onClickDefination: {
+                  action: "condition",
+                  callBack: showPopup
+                }
+              },
               capturePaymentDetails,
               g8Details
             })
@@ -71,7 +90,7 @@ const screenConfig = {
     adhocDialog: {
       componentPath: "Dialog",
       props: {
-        open: getQueryArg(window.location.href, "show-dialog") === "true" ? true : false
+        open: false
       },
       children: {
         dialogContent: {
