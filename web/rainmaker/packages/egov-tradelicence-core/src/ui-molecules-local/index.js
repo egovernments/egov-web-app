@@ -31,10 +31,6 @@ const CustomTabContainer = Loadable({
   loader: () => import("./CustomTabContainer"),
   loading: () => <Loading />
 });
-const LabelContainer = Loadable({
-  loader: () => import("./LabelContainer"),
-  loading: () => <Loading />
-});
 
 const UploadMultipleFiles = Loadable({
   loader: () => import("./UploadMultipleFiles"),
@@ -48,6 +44,5 @@ export {
   Tooltip,
   CustomTab,
   CustomTabContainer,
-  UploadMultipleFiles,
-  LabelContainer
+  UploadMultipleFiles
 };
