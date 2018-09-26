@@ -200,10 +200,8 @@ const mapStateToProps = (state) => {
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData);
   const numFailedPayments = finalFailedTransactions ? Object.keys(finalFailedTransactions).length : 0;
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
-    if (
-      (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
-      get(draft, "draftRecord.financialYear.fields.button.value")
-    ) {
+    const { prepareFormData, assessmentNumber } = draft.draftRecord || {};
+    if (!assessmentNumber && get(prepareFormData, "Properties[0].propertyDetails[0].financialYear")) {
       result.push(draft);
     }
     return result;

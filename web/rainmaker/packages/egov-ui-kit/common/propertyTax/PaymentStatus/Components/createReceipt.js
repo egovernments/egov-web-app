@@ -69,12 +69,16 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
 };
 
 var getReceiptHeaderLabel = function getReceiptHeaderLabel(name, ulbGrade) {
-  if (ulbGrade && ulbGrade === "NP") {
-    return name + " Nagar Panchayat";
-  } else if (ulbGrade === "Municipal Corporation") {
-    return name + " Municipal Corporation";
-  } else if (ulbGrade.includes("MC Class")) {
-    return name + " Municipal Council";
+  if (ulbGrade) {
+    if (ulbGrade === "NP") {
+      return name + " Nagar Panchayat";
+    } else if (ulbGrade === "Municipal Corporation") {
+      return name + " Municipal Corporation";
+    } else if (ulbGrade.includes("MC Class")) {
+      return name + " Municipal Council";
+    } else {
+      return name + " Municipal Corporation";
+    }
   } else {
     return name + " Municipal Corporation";
   }
