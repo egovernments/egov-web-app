@@ -7,11 +7,7 @@ import {
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-
-export const hidePopup = (state, dispatch) => {
-  dispatch(handleField("pay", "components.adhocDialog", "props.open", false));
-};
+import { showHideAdhocPopup } from "../../utils";
 
 export const adhocPopup = getCommonContainer({
   header: getCommonHeader("Add Adhoc Penalty/Rebate"),
@@ -94,7 +90,7 @@ export const adhocPopup = getCommonContainer({
         },
         onClickDefination: {
           action: "condition",
-          callBack: hidePopup
+          callBack: showHideAdhocPopup
         }
       },
       addButton: {

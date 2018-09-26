@@ -6,6 +6,8 @@ import {
 import "./index.css";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
 
@@ -200,4 +202,13 @@ const style = {
 
 export const getIconStyle = key => {
   return style[key];
+};
+
+export const showHideAdhocPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["pay"],
+    "components.adhocDialog.props.open",
+    false
+  );
+  dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
 };

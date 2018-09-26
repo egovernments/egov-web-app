@@ -12,7 +12,7 @@ import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { showHideAdhocPopup } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader("Payment for New Trade License (2018-2019)"),
@@ -24,10 +24,6 @@ const header = getCommonContainer({
     }
   }
 });
-
-export const showPopup = (state, dispatch) => {
-  dispatch(handleField("pay", "components.adhocDialog", "props.open", true));
-};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -76,7 +72,7 @@ const screenConfig = {
                 },
                 onClickDefination: {
                   action: "condition",
-                  callBack: showPopup
+                  callBack: showHideAdhocPopup
                 }
               },
               capturePaymentDetails,
