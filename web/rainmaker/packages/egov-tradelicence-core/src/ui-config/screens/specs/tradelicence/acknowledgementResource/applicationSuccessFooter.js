@@ -11,6 +11,22 @@ const getCommonApplyFooter = children => {
   };
 };
 
+export const generatePdfAndDownload = () => {
+  // html2canvas(document.getElementById("custom-atoms-tradeReviewDetails")).then(
+  //   canvas => {
+  //     var data = canvas.toDataURL();
+  //     var docDefinition = {
+  //       content: [
+  //         {
+  //           image: data
+  //         }
+  //       ]
+  //     };
+  //     pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+  //   }
+  // );
+};
+
 export const applicationSuccessFooter = getCommonApplyFooter({
   downloadFormButton: {
     componentPath: "Button",
@@ -25,6 +41,10 @@ export const applicationSuccessFooter = getCommonApplyFooter({
     },
     children: {
       downloadFormButtonLabel: getLabel("DOWNLOAD CONFIRMATION FORM")
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: generatePdfAndDownload
     }
   },
   printFormButton: {
@@ -56,7 +76,7 @@ export const applicationSuccessFooter = getCommonApplyFooter({
     children: {
       collectPaymentButtonLabel: getLabel("COLLECT PAYMENT")
     },
-    onClickDefination:{
+    onClickDefination: {
       action: "page_change",
       path: "/landing/mihy-ui-framework/tradelicence/pay"
     }

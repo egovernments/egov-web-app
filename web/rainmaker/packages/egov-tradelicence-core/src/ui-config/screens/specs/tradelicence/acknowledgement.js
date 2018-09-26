@@ -1,10 +1,14 @@
-import { getCommonHeader, getCommonContainer } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonHeader,
+  getCommonContainer
+} from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { applicationSuccessFooter } from "./acknowledgementResource/applicationSuccessFooter";
 import { paymentSuccessFooter } from "./acknowledgementResource/paymentSuccessFooter";
 import { approvalSuccessFooter } from "./acknowledgementResource/approvalSuccessFooter";
 import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
 
 const purpose = getQueryArg(window.location.href, "purpose");
 const status = getQueryArg(window.location.href, "status");
@@ -26,7 +30,19 @@ const getAcknowledgementCard = (purpose, status, number) => {
               "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
             tailText: "Application No.",
             number: number
-          })
+          }),
+          tradeReviewDetails: {
+            uiFramework: "custom-atoms",
+            componentPath: "Div",
+            children: {
+              tradeReviewDetails
+            },
+            props: {
+              style: {
+                display: "none"
+              }
+            }
+          }
         }
       },
       applicationSuccessFooter
