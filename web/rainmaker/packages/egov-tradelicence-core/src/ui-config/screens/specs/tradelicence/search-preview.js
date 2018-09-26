@@ -13,8 +13,28 @@ import { getReviewTrade } from "./applyResource//review-trade";
 import { getReviewOwner } from "./applyResource//review-owner";
 import { getReviewDocuments } from "./applyResource//review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
+import { getCancelDetails } from "./applyResource/cancel-details";
 
-const header = getCommonContainer({
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+
+const role = getQueryArg(window.location.href, "role");
+const status = getQueryArg(window.location.href, "status");
+const tradeLicenseNo = getQueryArg(window.location.href, "licenseNo");
+
+let heaaderText = "";
+let titleText = "";
+let paraText =
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
+
+// if (purpose === "approved") {
+//   if (role === "approver") {
+//   }
+//   if (role === "employee") {
+//   }
+// }
+
+const footer = footerReview(role, status);
+const headerrow = getCommonContainer({
   header: getCommonHeader("Trade License Application (2018-2019)"),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -52,19 +72,21 @@ const reviewOwnerDetails = getReviewOwner(false);
 const reviewDocumentDetails = getReviewDocuments(false);
 
 const approvalDetails = getApprovalDetails();
+const cancelDetails = getCancelDetails();
+let title = getCommonTitle(
+  "Please review the Application and Proceed with Approval"
+);
+let paragraph = getCommonParagraph(paraText);
 
 export const tradeReviewDetails = getCommonCard({
-  header: getCommonTitle(
-    "Please review the Application and Proceed with Approval"
-  ),
-  paragraph: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  ),
+  title,
+  paragraph,
   estimate,
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails,
-  approvalDetails
+  approvalDetails,
+  cancelDetails
 });
 
 const screenConfig = {
@@ -87,7 +109,7 @@ const screenConfig = {
                 xs: "12",
                 sm: "9"
               },
-              ...header
+              ...headerrow
             },
             helpSection: {
               uiFramework: "custom-atoms",
@@ -107,7 +129,7 @@ const screenConfig = {
           }
         },
         tradeReviewDetails,
-        footerReview
+        footer
       }
     }
   }

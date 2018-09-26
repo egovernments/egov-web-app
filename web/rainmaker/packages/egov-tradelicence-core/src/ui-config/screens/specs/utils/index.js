@@ -240,3 +240,60 @@ export const showHideAdhocPopup = (state, dispatch) => {
   );
   dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
 };
+
+export const getTextField1 = (
+  label,
+  placeholder,
+  required,
+  pattern,
+  jsonPath = "",
+  iconObj = {},
+  gridDefination = {
+    xs: 12,
+    sm: 6
+  }
+) => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "TextfieldContainer",
+    props: {
+      label,
+      InputLabelProps: {
+        shrink: true
+      },
+      placeholder,
+      fullWidth: true,
+      required,
+      iconObj
+    },
+    gridDefination,
+    required,
+    pattern,
+    jsonPath
+  };
+};
+
+export const getButtonVisibility = (role, status, button) => {
+  console.log(role, status, button);
+  if (status === "pending_payment" && button === "PROCEED TO PAYMENT")
+    return true;
+  if (
+    status === "pending_approval" &&
+    role === "approver" &&
+    button === "APPROVE"
+  )
+    return true;
+  if (
+    status === "pending_approval" &&
+    role === "approver" &&
+    button === "REJECT"
+  )
+    return true;
+  if (
+    status === "approved" &&
+    role === "approver" &&
+    button === "CANCEL TRADE LICENSE"
+  )
+    return true;
+  return false;
+};
