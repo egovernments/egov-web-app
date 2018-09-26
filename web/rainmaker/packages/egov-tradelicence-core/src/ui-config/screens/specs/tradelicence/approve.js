@@ -2,7 +2,8 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonParagraph,
-  getCommonSubHeader
+  getCommonSubHeader,
+  getCommonHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -11,7 +12,6 @@ import {
   getRadioGroupWithLabel,
   getApprovalTextField,
   getSubHeaderLabel,
-  getCommonHeader,
   getCheckbox,
   getContainerWithElement,
   getUploadFilesMultiple
@@ -99,7 +99,7 @@ const tradeDetails = getCommonCard({
 
   uploadFileHeader: getCommonSubHeader("Upload Document"),
   uploadFileInfo: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.",
+    "Only .jpg and .pdf files. 5MB max file size.",
     { styles: { body1: { fontSize: 25 } } }
   ),
   uploadFiles: getUploadFilesMultiple(),

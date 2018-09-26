@@ -6,9 +6,6 @@ class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
 
   onPGRClick = () => {
-    // this.setState({
-    //   dialogueOpen: true,
-    // });
     this.props.history.push("all-complaints");
   };
   onDialogueClose = () => {
@@ -20,7 +17,7 @@ class LandingPage extends Component {
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
     const tenantId = localStorage.getItem("tenant-id");
-    return (
+    let transformedData =
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
         const index = citiesByModule[item].tenants.findIndex((tenant) => {
@@ -35,9 +32,11 @@ class LandingPage extends Component {
           });
         }
         return acc;
-      }, [])
-    );
+      }, []);
+    transformedData && transformedData.push(moduleData["Finance"]);
+    return transformedData;
   };
+
   moduleData = {
     PGR: {
       moduleTitle: "Complaints",
@@ -55,6 +54,15 @@ class LandingPage extends Component {
       iconName: "dashboard-complaint",
       route: "property-tax",
       iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
+    },
+    Finance: {
+      moduleTitle: "Finance",
+      button1: "Inbox",
+      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      iconAction: "custom",
+      iconName: "rupee",
+      route: "employee/services/EGF/inbox",
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "#767676" },
     },
   };
   render() {

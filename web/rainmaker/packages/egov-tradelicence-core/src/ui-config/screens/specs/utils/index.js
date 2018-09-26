@@ -1,5 +1,5 @@
 import {
-  getLabel,
+  //getLabel,
   getTextField,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
@@ -10,6 +10,18 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import get from "lodash/get";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
+
+export const getLabel = (label, labelKey, props = {}) => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "LabelContainer",
+    props: {
+      label,
+      labelKey,
+      ...props
+    }
+  };
+};
 
 export const getTooltip = (children, toolTipProps) => {
   return {
@@ -132,17 +144,31 @@ export const getContainerWithElement = (children, props = {}) => {
   };
 };
 
-export const getCommonHeader = (header, props) => {
-  return {
-    componentPath: "Typography",
-    props: {
-      variant: "headline",
-      ...props
-    },
-    children: {
-      [header]: getLabel(header)
-    }
-  };
+export const transformById = (payload, id) => {
+  return (
+    payload &&
+    payload.reduce((result, item) => {
+      result[item[id]] = {
+        ...item
+      };
+
+      return result;
+    }, {})
+  );
+};
+
+export const getTranslatedLabel = (labelKey, localizationLabels) => {
+  let translatedLabel = null;
+  if (localizationLabels && localizationLabels.hasOwnProperty(labelKey)) {
+    translatedLabel = localizationLabels[labelKey];
+    if (
+      translatedLabel &&
+      typeof translatedLabel === "object" &&
+      translatedLabel.hasOwnProperty("message")
+    )
+      translatedLabel = translatedLabel.message;
+  }
+  return translatedLabel || labelKey;
 };
 
 export const getApprovalTextField = () => {

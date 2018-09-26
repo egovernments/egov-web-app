@@ -29,9 +29,10 @@ var onButton1Click = function onButton1Click(item, history, onPGRClick) {
 
   if (item.moduleTitle === "Property Tax") {
     history && history.push(route);
-  }
-  if (item.moduleTitle === "Complaints") {
+  } else if (item.moduleTitle === "Complaints") {
     onPGRClick();
+  } else if (item.moduleTitle === "Finance") {
+    history && history.push(route);
   }
 };
 var onButton2Click = function onButton2Click(item, history) {

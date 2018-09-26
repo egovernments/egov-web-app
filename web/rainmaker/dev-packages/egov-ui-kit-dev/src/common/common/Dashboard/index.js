@@ -8,9 +8,10 @@ const onButton1Click = (item, history, onPGRClick) => {
   const { route } = item;
   if (item.moduleTitle === "Property Tax") {
     history && history.push(route);
-  }
-  if (item.moduleTitle === "Complaints") {
+  } else if (item.moduleTitle === "Complaints") {
     onPGRClick();
+  } else if (item.moduleTitle === "Finance") {
+    history && history.push(route);
   }
 };
 const onButton2Click = (item, history) => {
