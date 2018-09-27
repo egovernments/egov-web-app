@@ -1,5 +1,5 @@
 import {
-  //getLabel,
+  getLabel,
   getTextField,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
@@ -10,18 +10,6 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import get from "lodash/get";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
-
-export const getLabel = (label, labelKey, props = {}) => {
-  return {
-    uiFramework: "custom-molecules-local",
-    componentPath: "LabelContainer",
-    props: {
-      label,
-      labelKey,
-      ...props
-    }
-  };
-};
 
 export const getTooltip = (children, toolTipProps) => {
   return {
@@ -79,14 +67,14 @@ export const getUploadFilesMultiple = () => {
 
 export const getRadioButtonGroup = buttons => {
   return {
-    uiFramework: "custom-molecules-local",
-    componentPath: "RadioButtonsGroup",
+    uiFramework: "custom-molecules",
+    componentPath: "RadioGroup",
     props: {
       buttons
     }
   };
 };
-export const getRadioGroupWithLabel = (label, buttons) => {
+export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Container",
@@ -103,7 +91,7 @@ export const getRadioGroupWithLabel = (label, buttons) => {
           sm: 4
         },
         children: {
-          div: getLabel(label, {
+          div: getLabel(label, labelKey, {
             style: {
               fontSize: "14px"
             }
@@ -175,11 +163,11 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
 
 export const getApprovalTextField = () => {
   if (queryValue === "reject") {
-    return getTextField("Comments", "Enter rejection Comments", false, "");
+    return getTextField1("Comments", "Enter rejection Comments", false, "");
   } else if (queryValue === "cancel") {
-    return getTextField("Comments", "Enter Cancellation Comments", false, "");
+    return getTextField1("Comments", "Enter Cancellation Comments", false, "");
   } else {
-    return getTextField("Comments", "Enter Approval Comments", false, "");
+    return getTextField1("Comments", "Enter Approval Comments", false, "");
   }
 };
 
@@ -195,11 +183,17 @@ export const getSubHeaderLabel = () => {
 
 export const getFooterButtons = () => {
   if (queryValue === "reject") {
-    return getLabel("REJECT APPLICATION");
+    return getLabel(
+      "REJECT APPLICATION",
+      "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+    );
   } else if (queryValue === "cancel") {
-    return getLabel("CANCEL TRADE LICENSE");
+    return getLabel("CANCEL TRADE LICENSE", "TL_COMMON_BUTTON_CANCEL_LICENSE");
   } else {
-    return getLabel("APPROVE APPLICATION");
+    return getLabel(
+      "APPROVE APPLICATION",
+      "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+    );
   }
 };
 export const getFeesEstimateCard = (header, fees, extra) => {
@@ -264,7 +258,8 @@ export const getTextField1 = (
       placeholder,
       fullWidth: true,
       required,
-      iconObj
+      iconObj,
+      jsonPath
     },
     gridDefination,
     required,

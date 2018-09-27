@@ -47,9 +47,10 @@ class RadioButtonsGroup extends React.Component {
             onChange={this.handleChange}
           >
             {buttons &&
-              buttons.map(button => {
+              buttons.map((button, index) => {
                 return (
                   <FormControlLabel
+                    key={index}
                     classes={{ label: "radio-button-label" }}
                     value={button}
                     control={

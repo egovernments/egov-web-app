@@ -37,6 +37,11 @@ const UploadMultipleFiles = Loadable({
   loading: () => <Loading />
 });
 
+const TextfieldContainer = Loadable({
+  loader: () => import("./TextfieldContainer"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -44,5 +49,6 @@ export {
   Tooltip,
   CustomTab,
   CustomTabContainer,
-  UploadMultipleFiles
+  UploadMultipleFiles,
+  TextfieldContainer
 };
