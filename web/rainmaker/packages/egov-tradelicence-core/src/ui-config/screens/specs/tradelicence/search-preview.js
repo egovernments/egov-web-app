@@ -21,17 +21,50 @@ const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
 const tradeLicenseNo = getQueryArg(window.location.href, "licenseNo");
 
-let heaaderText = "";
+let headerSideText = "";
 let titleText = "";
 let paraText =
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
+let titleVisibility = false;
+let paraVisibiliy = false;
+let approvalDetailsVisibility = false;
+let cancelDetailsVisibility = false;
 
-// if (purpose === "approved") {
-//   if (role === "approver") {
-//   }
-//   if (role === "employee") {
-//   }
-// }
+switch (status) {
+  case "approved": {
+    approvalDetailsVisibility = true;
+    headerSideText = "Trade License No: 3444";
+    if (role === "approver") {
+      titleText = "Please Review the Trade License";
+      titleVisibility = true;
+    }
+    break;
+  }
+  case "pending_payment": {
+    titleText = "Please Review the Application and Proceed with Payment";
+    titleVisibility = true;
+    headerSideText = "Status: Pending Payment";
+    break;
+  }
+  case "pending_approval": {
+    headerSideText = "Status: Pending Approval";
+    if (role === "approver") {
+      titleText = "Please Review the Application and Proceed with Approval";
+      titleVisibility = true;
+      paraText =
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
+      paraVisibiliy = true;
+    }
+    break;
+  }
+  case "cancelled": {
+    cancelDetailsVisibility = true;
+    headerSideText = "Trade License No: 3444";
+    break;
+  }
+  default:
+    break;
+}
 
 const footer = footerReview(role, status);
 const headerrow = getCommonContainer({
@@ -71,12 +104,15 @@ const reviewOwnerDetails = getReviewOwner(false);
 
 const reviewDocumentDetails = getReviewDocuments(false);
 
-const approvalDetails = getApprovalDetails();
-const cancelDetails = getCancelDetails();
-let title = getCommonTitle(
-  "Please review the Application and Proceed with Approval"
-);
+let approvalDetails = getApprovalDetails();
+let cancelDetails = getCancelDetails();
+let title = getCommonTitle(titleText);
 let paragraph = getCommonParagraph(paraText);
+
+title = { ...title, visible: titleVisibility };
+paragraph = { ...paragraph, visible: paraVisibiliy };
+cancelDetails = { ...cancelDetails, visible: cancelDetailsVisibility };
+approvalDetails = { ...approvalDetails, visible: approvalDetailsVisibility };
 
 export const tradeReviewDetails = getCommonCard({
   title,
@@ -123,7 +159,7 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: getCommonTitle("Status: Pending Approval ")
+                buttonLabel: getCommonTitle(headerSideText)
               }
             }
           }
