@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownprops) => {
   const { preparedFinalObject } = screenConfiguration;
   console.log("first,,,", ownprops);
   const fieldValue = value ? value : get(preparedFinalObject, jsonPath);
-  return { fieldValue };
+  return { value:fieldValue };
 };
 
 export default connect(mapStateToProps)(TextFieldContainer);

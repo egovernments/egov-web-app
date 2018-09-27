@@ -7,7 +7,8 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getTextField1 } from "../../utils";
 import { getIconStyle } from "../../utils";
@@ -165,12 +166,35 @@ export const tradeDetails = getCommonCard({
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   tradeDetailsConatiner: getCommonContainer({
-    tradeLicenseType: getSelectTextField(
-      "License Type",
-      "Select License Type",
-      true,
-      ""
-    ),
+    tradeLicenseType: {
+      ...getSelectTextField(
+        "License Type",
+        "Select License Type",
+        true,
+        "",
+        "Licences[0].licenseType"
+      ),
+      children:{
+        itemOne:{
+          componentPath:"MenuItem",
+          props:{
+            value:"TEMPORARY"
+          },
+          children:{
+            label:getLabel("TEMPORARY")
+          }
+        },
+        itemTwo:{
+          componentPath:"MenuItem",
+          props:{
+            value:"PERMANENT"
+          },
+          children:{
+            label:getLabel("PERMANENT")
+          }
+        }
+      }
+    },
     tradeName: getTextField1(
       "Name of Trade",
       "Example Diljit Da Dhaba",
@@ -182,7 +206,8 @@ export const tradeDetails = getCommonCard({
       "Structure Type",
       "Select Structure Type",
       true,
-      ""
+      "",
+
     ),
     tradeStructureSubType: getSelectTextField(
       "Structure Sub Type",

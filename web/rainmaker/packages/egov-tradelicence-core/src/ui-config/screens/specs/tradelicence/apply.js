@@ -62,11 +62,50 @@ const getSearchResults = async (action, state, dispatch) => {
   }
 };
 
+const getMdmsData = async (action, state, dispatch) => {
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: "pb",
+      moduleDetails: [
+        {
+          moduleName: "TradeLicense",
+          masterDetails: [{ name: "TradeType" }, { name: "AccessoriesCategory" }]
+        },
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            { name: "StructureType" },
+            { name: "OwnerType" },
+            { name: "OwnerShipCategory" },
+            { name: "DocumentType" }
+          ]
+        }
+      ]
+    }
+  }
+  try {
+    const payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    console.log("payload...", payload);
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
-    getSearchResults(action, state, dispatch);
+    if (queryValue) {
+      getSearchResults(action, state, dispatch);
+    }
+    getMdmsData();
     return action;
   },
   components: {
