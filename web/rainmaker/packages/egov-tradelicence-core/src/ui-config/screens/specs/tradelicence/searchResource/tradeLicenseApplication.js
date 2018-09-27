@@ -9,6 +9,8 @@ import {
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+import { searchApiCall } from "./functions";
+
 export const tradeLicenseApplication = getCommonCard({
   subHeader: getCommonTitle("Search Trade License Application"),
   subParagraph: getCommonParagraph(
@@ -20,7 +22,7 @@ export const tradeLicenseApplication = getCommonCard({
       "Enter Application No.",
       false,
       "",
-      "",
+      "searchScreen.applicationNumber",
       {},
       {
         xs: 12,
@@ -32,7 +34,7 @@ export const tradeLicenseApplication = getCommonCard({
       "Enter Trade License No.",
       false,
       "",
-      "",
+      "searchScreen.licenseNumber",
       {},
       {
         xs: 12,
@@ -44,7 +46,7 @@ export const tradeLicenseApplication = getCommonCard({
       "Enter your mobile No.",
       false,
       getPattern("MobileNo"),
-      "",
+      "searchScreen.mobileNumber",
       {
         position: "start",
         label: "+91 |"
@@ -61,7 +63,7 @@ export const tradeLicenseApplication = getCommonCard({
       "Select Application Status",
       false,
       "",
-      "",
+      "searchScreen.status",
       {},
       {
         xs: 12,
@@ -123,6 +125,10 @@ export const tradeLicenseApplication = getCommonCard({
       },
       children: {
         buttonLabel: getLabel("Search")
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: searchApiCall
       }
     }
   })

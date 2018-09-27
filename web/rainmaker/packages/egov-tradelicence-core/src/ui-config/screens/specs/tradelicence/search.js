@@ -82,7 +82,7 @@ const tradeLicenseSearchAndResult = {
         divForPendingApprovals: {
           uiFramework: "custom-atoms",
           componentPath: "Div",
-          visible: enableInbox,
+          visible: false,
           children: {
             breakPending: getBreak(),
             pendingApprovals: {
@@ -166,65 +166,9 @@ const tradeLicenseSearchAndResult = {
         searchResults: {
           uiFramework: "custom-molecules-local",
           componentPath: "Table",
+          visible: false,
           props: {
-            data: [
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Approved"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Approved"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Pending Approval"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Pending Application"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Approved"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Approved"
-              },
-              {
-                "Application No": 1234,
-                "License No": 345,
-                "Trade Name": "Name of the trade",
-                "Owner Name": "Satinder Singh",
-                "Application Date": "12/08/2018",
-                Status: "Approved"
-              }
-            ],
+            data: [],
             columns: {
               "Application No": {},
               "License No": {},
@@ -238,6 +182,12 @@ const tradeLicenseSearchAndResult = {
                     color = "green";
                   } else if (value.toLowerCase().indexOf("pending") !== -1) {
                     color = "red";
+                  }
+                  else if (value.toLowerCase().indexOf("initiated") !== -1) {
+                    color = "orange";
+                  }
+                  else if (value.toLowerCase().indexOf("applied") !== -1) {
+                    color = "grey";
                   }
                   return (
                     <span
@@ -253,7 +203,7 @@ const tradeLicenseSearchAndResult = {
                 }
               }
             },
-            title: "Search Results for Trade License Applications (27)",
+            title: "Search Results for Trade License Applications",
             options: {
               filterType: "dropdown",
               responsive: "scroll",
