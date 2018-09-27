@@ -196,6 +196,29 @@ export const getFooterButtons = () => {
     );
   }
 };
+
+export const onClickNextButton = () => {
+  switch (queryValue) {
+    case "reject":
+      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&number=12345";
+    case "cancel":
+      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345";
+
+    default:
+      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345";
+  }
+};
+
+export const onClickPreviousButton = () => {
+  switch (queryValue) {
+    case "reject":
+      return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
+    case "cancel":
+      return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=approved";
+    default:
+      return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
+  }
+};
 export const getFeesEstimateCard = (header, fees, extra) => {
   return {
     uiFramework: "custom-molecules",
@@ -269,7 +292,6 @@ export const getTextField1 = (
 };
 
 export const getButtonVisibility = (role, status, button) => {
-  console.log(role, status, button);
   if (status === "pending_payment" && button === "PROCEED TO PAYMENT")
     return true;
   if (

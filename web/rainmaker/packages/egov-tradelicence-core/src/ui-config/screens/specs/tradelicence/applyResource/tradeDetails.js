@@ -9,7 +9,7 @@ import {
   getCommonContainer,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
+import { getTextField1 } from "../../utils";
 import { getIconStyle } from "../../utils";
 
 const multipleTradeUnitCard =
@@ -171,11 +171,12 @@ export const tradeDetails = getCommonCard({
       true,
       ""
     ),
-    tradeName: getTextField(
+    tradeName: getTextField1(
       "Name of Trade",
       "Example Diljit Da Dhaba",
       true,
-      getPattern("TradeName")
+      getPattern("TradeName"),
+      "Licenses[0].tradeName"
     ),
     tradeStructureType: getSelectTextField(
       "Structure Type",

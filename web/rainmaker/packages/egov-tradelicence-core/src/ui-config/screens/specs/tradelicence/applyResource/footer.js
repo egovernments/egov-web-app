@@ -4,7 +4,12 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 
-import { getFooterButtons, getButtonVisibility } from "../../utils";
+import {
+  getFooterButtons,
+  getButtonVisibility,
+  onClickNextButton,
+  onClickPreviousButton
+} from "../../utils";
 
 export const callBackForNext = (state, dispatch) => {
   changeStep(state, dispatch);
@@ -249,8 +254,8 @@ export const footerApprove = getCommonApplyFooter({
       nextButtonLabel: getLabel("BACK")
     },
     onClickDefination: {
-      action: "condition",
-      callBack: callBackForPrevious
+      action: "page_change",
+      path: onClickPreviousButton()
     }
   },
 
@@ -269,8 +274,8 @@ export const footerApprove = getCommonApplyFooter({
       nextButtonLabel: getFooterButtons()
     },
     onClickDefination: {
-      action: "condition",
-      callBack: callBackForNext
+      action: "page_change",
+      path: onClickNextButton()
     }
   }
 });
@@ -379,8 +384,9 @@ export const footerReview = (role, status) =>
                 nextButtonLabel: getLabel("Reject")
               },
               onClickDefination: {
-                action: "condition",
-                callBack: callBackForPrevious
+                action: "page_change",
+                path:
+                  "/landing/mihy-ui-framework/tradelicence/approve?purpose=reject"
               },
               visible: getButtonVisibility(role, status, "REJECT")
             },
@@ -400,8 +406,7 @@ export const footerReview = (role, status) =>
               },
               onClickDefination: {
                 action: "page_change",
-                path:
-                  "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345"
+                path: "/landing/mihy-ui-framework/tradelicence/approve"
               },
               visible: getButtonVisibility(role, status, "APPROVE")
             },
@@ -442,7 +447,7 @@ export const footerReview = (role, status) =>
               onClickDefination: {
                 action: "page_change",
                 path:
-                  "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345"
+                  "/landing/mihy-ui-framework/tradelicence/approve?purpose=cancel"
               },
               visible: getButtonVisibility(role, status, "CANCEL TRADE LICENSE")
             }
