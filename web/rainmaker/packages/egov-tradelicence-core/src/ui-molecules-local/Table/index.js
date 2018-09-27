@@ -29,15 +29,16 @@ class Table extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    this.updateTable()
+    const { data, columns } = nextProps;
+    this.updateTable(data, columns)
   }
 
   componentDidMount() {
-    this.updateTable()
+    const { data, columns } = this.props;
+    this.updateTable(data, columns)
   }
 
-  updateTable = () => {
-    const { data, columns } = this.props;
+  updateTable = (data, columns) => {
     const updatedData = this.formatData(data, columns);
     this.setState({
       data: updatedData,
