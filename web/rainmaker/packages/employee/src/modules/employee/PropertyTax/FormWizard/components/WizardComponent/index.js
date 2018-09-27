@@ -20,6 +20,7 @@ const WizardComponent = ({
   nextLabel,
   history,
 }) => {
+  console.log(selected);
   return (
     <div className="wizard-cont">
       <BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />

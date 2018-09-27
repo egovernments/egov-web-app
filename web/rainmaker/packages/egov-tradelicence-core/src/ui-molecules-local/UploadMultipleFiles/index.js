@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { UploadFile, UploadedDocument } from "ui-atoms-local";
 import { withStyles } from "@material-ui/core/styles";
 import { getImageUrlByFile } from "ui-utils/commons";
+import { connect } from "react-redux";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { uploadFile } from "ui-utils/api";
 
+const S3_BUCKET = {
+  endPoint: "filestore/v1/files"
+};
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -17,21 +23,25 @@ class UploadMultipleFiles extends Component {
     documents: []
   };
 
-  handleDocument = file => {
+  handleDocument = (file, fileStoreId) => {
     let { documents } = this.state;
-    const { maxFiles } = this.props;
+    const { maxFiles, prepareFinalObject } = this.props;
+
     if (documents.length + 1 > maxFiles) {
       alert(`Can only upload ${maxFiles} files`);
     } else {
-      documents.push({ fileName: file.name });
+      documents.push({ fileName: file.name, fileStoreId });
       documents.slice(0, maxFiles);
+      prepareFinalObject("tradeLicene[0].approveFiles", documents);
       this.setState({ documents });
     }
   };
 
   removeDocument = index => {
     let { documents } = this.state;
+    const { prepareFinalObject } = this.props;
     documents.splice(index, 1);
+    prepareFinalObject("tradeLicene[0].approveFiles", documents);
     this.setState({ documents });
   };
 
@@ -46,9 +56,22 @@ class UploadMultipleFiles extends Component {
           const file = files[key];
           if (file.type.match(/^image\//)) {
             const imageUri = await getImageUrlByFile(file);
-            this.handleDocument(file);
+            const fileStoreId = await uploadFile(
+              S3_BUCKET.endPoint,
+              "rainmaker-pgr",
+              file,
+              "pb"
+            );
+            console.log(fileStoreId);
+            this.handleDocument(file, fileStoreId);
           } else {
-            this.handleDocument(file);
+            const fileStoreId = await uploadFile(
+              S3_BUCKET.endPoint,
+              "RAINMAKER-PGR",
+              file,
+              "pb"
+            );
+            this.handleDocument(file, fileStoreId);
           }
         });
     }
@@ -64,9 +87,9 @@ class UploadMultipleFiles extends Component {
                 style={
                   index === documents.length - 1 ? {} : { marginBottom: 5 }
                 }
+                key={index}
               >
                 <UploadedDocument
-                  key={index}
                   document={document}
                   removeDocument={() => this.removeDocument(index)}
                 />
@@ -88,4 +111,16 @@ class UploadMultipleFiles extends Component {
   }
 }
 
-export default withStyles(styles)(UploadMultipleFiles);
+const mapDispatchToProps = dispatch => {
+  return {
+    prepareFinalObject: (jsonPath, value) =>
+      dispatch(prepareFinalObject(jsonPath, value))
+  };
+};
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(UploadMultipleFiles)
+);

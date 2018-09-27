@@ -89,7 +89,7 @@ export const loginRequest = async (username = null, password = null) => {
   try {
     // api call for login
     alert("Logged in");
-    return ;
+    return;
   } catch (e) {
     apiError = e.message;
     // alert(e.message);
@@ -98,15 +98,60 @@ export const loginRequest = async (username = null, password = null) => {
   throw new Error(apiError);
 };
 
-export const logoutRequest=async ()=>{
+export const logoutRequest = async () => {
   let apiError = "Api Error";
   try {
     alert("Logged out");
-    return ;
+    return;
   } catch (e) {
     apiError = e.message;
     // alert(e.message);
   }
 
   throw new Error(apiError);
-}
+};
+
+export const prepareForm = params => {
+  let formData = new FormData();
+  for (var k in params) {
+    formData.append(k, params[k]);
+  }
+  return formData;
+};
+
+export const uploadFile = async (endPoint, module, file, ulbLevel) => {
+  // Bad idea to fetch from local storage, change as feasible
+  const tenantId = fetchFromLocalStorage("tenant-id")
+    ? ulbLevel
+      ? fetchFromLocalStorage("tenant-id").split(".")[0]
+      : fetchFromLocalStorage("tenant-id").split(".")[0]
+    : "";
+  const uploadInstance = axios.create({
+    baseURL: window.location.origin,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+
+  const requestParams = {
+    tenantId,
+    module,
+    file
+  };
+  const requestBody = prepareForm(requestParams);
+
+  try {
+    const response = await uploadInstance.post(endPoint, requestBody);
+    const responseStatus = parseInt(response.status, 10);
+    let fileStoreIds = [];
+
+    if (responseStatus === 201) {
+      const responseData = response.data;
+      const files = responseData.files || [];
+      fileStoreIds = files.map(f => f.fileStoreId);
+      return fileStoreIds[0];
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};

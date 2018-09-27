@@ -184,8 +184,19 @@ class FormWizard extends Component {
     };
   };
 
+  convertBuiltUpAreaToSqFt = (builtUpArea) => {
+    const builtUpAreaTransform = builtUpArea * 9;
+    return Math.round(builtUpAreaTransform * 100) / 100;
+  };
+
   getTargetPropertiesDetails = (propertyDetails) => {
     propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    if (propertyDetails[propertyDetails.length - 1].propertySubType === "SHAREDPROPERTY") {
+      propertyDetails[propertyDetails.length - 1].buildUpArea =
+        propertyDetails[propertyDetails.length - 1] &&
+        propertyDetails[propertyDetails.length - 1].buildUpArea &&
+        this.convertBuiltUpAreaToSqFt(propertyDetails[propertyDetails.length - 1].buildUpArea);
+    }
     propertyDetails[propertyDetails.length - 1].units =
       propertyDetails[propertyDetails.length - 1] &&
       propertyDetails[propertyDetails.length - 1].units &&
@@ -679,7 +690,7 @@ class FormWizard extends Component {
         }
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
-          callDraft();
+          //callDraft();
           this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
         } else {
           displayFormErrorsAction("propertyAddress");
@@ -713,11 +724,11 @@ class FormWizard extends Component {
                       }
                     }
                     if (floorValidation) {
-                      callDraft();
+                      //callDraft();
                       this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                     }
                   } else {
-                    callDraft();
+                    //callDraft();
                     this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                   }
                 }
@@ -757,7 +768,7 @@ class FormWizard extends Component {
               const { ownerInfo } = form;
               const isOwnerInfoFormValid = validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
-                callDraft();
+                //callDraft();
                 this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               } else {
                 displayFormErrorsAction("ownerInfo");
@@ -774,7 +785,7 @@ class FormWizard extends Component {
                 }
               }
               if (ownerValidation) {
-                callDraft();
+                //callDraft();
                 this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               }
             } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
@@ -791,7 +802,7 @@ class FormWizard extends Component {
                 institutionFormValid = false;
               }
               if (institutionFormValid) {
-                callDraft();
+                //callDraft();
                 this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               }
             }
@@ -868,11 +879,11 @@ class FormWizard extends Component {
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
-      if (!isCompletePayment) {
-        const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId);
-        const { Bill } = getBill && getBill;
-        this.createReceipt(Bill);
-      }
+      // if (!isCompletePayment) {
+      const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId);
+      const { Bill } = getBill && getBill;
+      this.createReceipt(Bill);
+      // }
       // updateIndex(4);
     } catch (e) {
       console.log(e);
@@ -1168,7 +1179,7 @@ class FormWizard extends Component {
         let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
           Properties: properties,
         });
-        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        //callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
         callPGService(
           get(createPropertyResponse, "Properties[0].propertyId"),
           get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
