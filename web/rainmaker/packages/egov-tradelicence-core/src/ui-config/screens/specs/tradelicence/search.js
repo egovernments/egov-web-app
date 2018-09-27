@@ -182,11 +182,9 @@ const tradeLicenseSearchAndResult = {
                     color = "green";
                   } else if (value.toLowerCase().indexOf("pending") !== -1) {
                     color = "red";
-                  }
-                  else if (value.toLowerCase().indexOf("initiated") !== -1) {
+                  } else if (value.toLowerCase().indexOf("initiated") !== -1) {
                     color = "orange";
-                  }
-                  else if (value.toLowerCase().indexOf("applied") !== -1) {
+                  } else if (value.toLowerCase().indexOf("applied") !== -1) {
                     color = "grey";
                   }
                   return (
