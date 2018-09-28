@@ -184,14 +184,16 @@ export const tradeDetails = getCommonCard({
       "",
       "Licences[0].licenseType",
       "",
-      [{
-        code:"Temprovory",
-        code:"Temprovory"
-      },
-      {
-        code:"Permanant",
-        code:"Permanant"
-      }],
+      [
+        {
+          code: "Temprovory",
+          code: "Temprovory"
+        },
+        {
+          code: "Permanant",
+          code: "Permanant"
+        }
+      ],
       "code",
       "code"
     ),
@@ -201,6 +203,28 @@ export const tradeDetails = getCommonCard({
       true,
       getPattern("TradeName"),
       "Licenses[0].tradeName"
+    ),
+    tradeFromDate: getTextField(
+      "From Date",
+      "Trade License From Date",
+      true,
+      getPattern("Date"),
+      "",
+      {
+        position: "end",
+        iconName: "date_range"
+      }
+    ),
+    tradeToDate: getTextField(
+      "To Date",
+      "Trade License From Date",
+      true,
+      getPattern("Date"),
+      "",
+      {
+        position: "end",
+        iconName: "date_range"
+      }
     ),
     tradeStructureType: getSelectTextField(
       "Structure Type",
