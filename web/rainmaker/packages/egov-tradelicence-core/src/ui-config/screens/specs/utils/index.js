@@ -60,7 +60,12 @@ export const getUploadFilesMultiple = () => {
     uiFramework: "custom-molecules-local",
     componentPath: "UploadMultipleFiles",
     props: {
-      maxFiles: 4
+      maxFiles: 4,
+      jsonPath: "Trade[0].files",
+      inputProps: {
+        accept: "image/*, .pdf, .png, .jpeg"
+      },
+      buttonLabel: "UPLOAD FILES"
     }
   };
 };

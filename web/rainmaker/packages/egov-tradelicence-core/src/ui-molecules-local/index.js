@@ -27,12 +27,20 @@ const CustomTab = Loadable({
   loading: () => <Loading />
 });
 
-
 const UploadMultipleFiles = Loadable({
   loader: () => import("./UploadMultipleFiles"),
   loading: () => <Loading />
 });
 
+const UploadSingleFile = Loadable({
+  loader: () => import("./UploadSingleFile"),
+  loading: () => <Loading />
+});
+
+const DocumentList = Loadable({
+  loader: () => import("./DocumentList"),
+  loading: () => <Loading />
+});
 
 export {
   TestMolecules,
@@ -40,5 +48,7 @@ export {
   RadioButtonsGroup,
   Tooltip,
   CustomTab,
-  UploadMultipleFiles
+  UploadMultipleFiles,
+  UploadSingleFile,
+  DocumentList
 };

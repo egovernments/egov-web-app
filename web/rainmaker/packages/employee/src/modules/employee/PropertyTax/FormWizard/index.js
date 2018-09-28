@@ -357,7 +357,7 @@ class FormWizard extends Component {
       //Get estimate from bill in case of complete payment
       if (isCompletePayment) {
         const billResponse =
-          activeTab >= 3 && isCompletePayment && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId));
+          activeTab >= 3 && isCompletePayment && (await this.callGetBill(propertyId, assessmentId, financialYearFromQuery, tenantId, false));
         const estimateFromGetBill = billResponse ? getEstimateFromBill(billResponse.Bill) : [];
         this.setState({
           estimation: estimateFromGetBill,
@@ -847,7 +847,7 @@ class FormWizard extends Component {
     return isValid;
   };
 
-  callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+  callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId, amountExpected) => {
     const { location, toggleSpinner } = this.props;
     const { isFullPayment, totalAmountToBePaid, estimation, valueSelected } = this.state;
     const { search } = location;
@@ -859,7 +859,7 @@ class FormWizard extends Component {
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
     ];
-    !isCompletePayment &&
+    amountExpected &&
       queryObj.push({ key: "amountExpected", value: valueSelected === "Full_Amount" ? estimation[0].totalAmount : totalAmountToBePaid });
 
     try {
@@ -880,7 +880,7 @@ class FormWizard extends Component {
     this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
       // if (!isCompletePayment) {
-      const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId);
+      const getBill = await this.callGetBill(propertyId, assessmentNumber, assessmentYear, tenantId, true);
       const { Bill } = getBill && getBill;
       this.createReceipt(Bill);
       // }
