@@ -14,36 +14,40 @@ export const searchApiCall = async (state, dispatch) => {
       queryObject.push({ key: key, value: searchScreenObject[key] });
     }
   }
-  const response = await httpRequest(
-    "post",
-    "/tl-services/v1/_search",
-    "",
-    queryObject
-  );
+  try {
+    const response = await httpRequest(
+      "post",
+      "/tl-services/v1/_search",
+      "",
+      queryObject
+    );
 
-  let data = response.Licenses.map(item => ({
-    "Application No": item.applicationNumber,
-    "License No": item.licenseNumber,
-    "Trade Name": item.tradeName,
-    "Owner Name": item.tradeLicenseDetail.owners[0].name,
-    "Application Date": item.applicationDate,
-    Status: item.status
-  }));
+    let data = response.Licenses.map(item => ({
+      "Application No": item.applicationNumber,
+      "License No": item.licenseNumber,
+      "Trade Name": item.tradeName,
+      "Owner Name": item.tradeLicenseDetail.owners[0].name,
+      "Application Date": item.applicationDate,
+      Status: item.status
+    }));
 
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.searchResults",
-      "props.data",
-      data
-    )
-  );
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.searchResults",
-      "visible",
-      true
-    )
-  );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.searchResults",
+        "props.data",
+        data
+      )
+    );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.searchResults",
+        "visible",
+        true
+      )
+    );
+  } catch (error) {
+    console.log(error);
+  }
 };
