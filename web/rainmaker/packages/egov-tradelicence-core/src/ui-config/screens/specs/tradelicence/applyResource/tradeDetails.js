@@ -5,6 +5,7 @@ import {
   getCommonSubHeader,
   getCommonParagraph,
   getTextField,
+  getDateField,
   getSelectTextField,
   getCommonContainer,
   getPattern,
@@ -27,7 +28,7 @@ const multipleTradeUnitCard =
         true,
         "",
         "",
-        "applyScreenMdmsData.TradeLicense.TradeType",
+        "",
         [],
         "code",
         "code",
@@ -166,7 +167,8 @@ const accessoriesCard = {
     addItemLabel: "ADD ACCESSORIES",
     headerName: "Accessory",
     headerJsonPath:
-      "children.cardContent.children.header.children.head.children.Accessories.props.label"
+      "children.cardContent.children.header.children.head.children.Accessories.props.label",
+      objectJsonPath:"Licences[0].accessories"
   },
   type: "array"
 };
@@ -190,7 +192,7 @@ export const tradeDetails = getCommonCard({
           code: "TEMPORARY"
         },
         {
-          code: "Permanant",
+          code: "PERMANANT",
           code: "Permanant"
         }
       ],
@@ -204,16 +206,12 @@ export const tradeDetails = getCommonCard({
       getPattern("TradeName"),
       "Licenses[0].tradeName"
     ),
-    tradeFromDate: getTextField(
+    tradeFromDate: getDateField(
       "From Date",
       "Trade License From Date",
       true,
       getPattern("Date"),
-      "Licenses[0].validFrom",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      "Licenses[0].validFrom"
     ),
     tradeToDate: getTextField(
       "To Date",
