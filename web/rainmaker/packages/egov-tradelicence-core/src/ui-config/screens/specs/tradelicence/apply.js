@@ -8,6 +8,7 @@ import {
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+import { commonTransform } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { footer } from "./applyResource/footer";
@@ -87,7 +88,8 @@ const getMdmsData = async (action, state, dispatch) => {
     }
   };
   try {
-    const payload = await httpRequest(
+    let payload = null;
+    payload = await httpRequest(
       "post",
       "/egov-mdms-service/v1/_search",
       "_search",
@@ -95,6 +97,12 @@ const getMdmsData = async (action, state, dispatch) => {
       mdmsBody
     );
     console.log("payload...", payload);
+    payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
+    payload = commonTransform(
+      payload,
+      "MdmsRes.common-masters.OwnerShipCategory"
+    );
+    payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
