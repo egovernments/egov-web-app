@@ -27,7 +27,7 @@ const multipleTradeUnitCard =
         "Select Trade Category",
         true,
         "",
-        "",
+        "Licences[0].tradeType",
         "",
         [],
         "code",
@@ -211,18 +211,16 @@ export const tradeDetails = getCommonCard({
       "Trade License From Date",
       true,
       getPattern("Date"),
-      "Licenses[0].validFrom"
+      "Licenses[0].validFrom",
+      {}
     ),
-    tradeToDate: getTextField(
+    tradeToDate: getDateField(
       "To Date",
       "Trade License From Date",
       true,
       getPattern("Date"),
       "Licenses[0].validTo",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     ),
     tradeStructureType: getSelectTextField(
       "Structure Type",
@@ -238,16 +236,13 @@ export const tradeDetails = getCommonCard({
       "",
       "Licences[0].tradeLicenseDetail.structureType"
     ),
-    tradeCommencementDate: getTextField(
+    tradeCommencementDate: getDateField(
       "Trade Commencement Date",
       "Enter Trade Commencement Date",
       true,
       getPattern("Date"),
       "Licences[0].commencementDate",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     ),
     tradeGSTNo: getTextField(
       "Trade GST No.",

@@ -2,6 +2,7 @@ import {
   getCommonGrayCard,
   getCommonSubHeader,
   getTextField,
+  getDateField,
   getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -14,16 +15,13 @@ const g8Details = getCommonGrayCard({
       false,
       ""
     ),
-    receiptIssueDate: getTextField(
+    receiptIssueDate: getDateField(
       "G8 Receipt Issue Date",
       "Enter G8 Receipt Issue Date",
       false,
       "",
       "",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     )
   })
 });

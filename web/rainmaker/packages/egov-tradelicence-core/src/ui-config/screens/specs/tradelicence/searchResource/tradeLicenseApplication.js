@@ -6,6 +6,7 @@ import {
   getCommonContainer,
   getCommonParagraph,
   getPattern,
+  getDateField,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -99,32 +100,26 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       }
     ),
-    fromDate: getTextField(
+    fromDate: getDateField(
       "From Date",
       "From Date",
       false,
       getPattern("Date"),
       "",
-      {
-        position: "end",
-        iconName: "date_range"
-      },
+      {},
 
       {
         xs: 12,
         sm: 4
       }
     ),
-    toDate: getTextField(
+    toDate: getDateField(
       "To Date",
       "To date",
       false,
       getPattern("Date"),
       "",
-      {
-        position: "end",
-        iconName: "date_range"
-      },
+      {},
       {
         xs: 12,
         sm: 4

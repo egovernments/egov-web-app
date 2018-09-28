@@ -2,11 +2,18 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 const UploadFile = props => {
-  const { classes, handleFileUpload, buttonProps, inputProps } = props;
+  const {
+    classes,
+    handleFileUpload,
+    buttonProps,
+    inputProps,
+    accept,
+    buttonLabel
+  } = props;
   return (
     <div>
       <input
-        accept="image/*"
+        accept={accept}
         className={classes.input}
         id="contained-button-file"
         multiple
@@ -16,7 +23,7 @@ const UploadFile = props => {
       />
       <label htmlFor="contained-button-file">
         <Button component="span" className={classes.button} {...buttonProps}>
-          UPLOAD FILE
+          {buttonLabel}
         </Button>
       </label>
     </div>

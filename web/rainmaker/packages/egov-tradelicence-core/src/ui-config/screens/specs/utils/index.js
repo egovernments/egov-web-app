@@ -8,6 +8,7 @@ import "./index.css";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
+import set from "lodash/set";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
 
@@ -60,7 +61,12 @@ export const getUploadFilesMultiple = () => {
     uiFramework: "custom-molecules-local",
     componentPath: "UploadMultipleFiles",
     props: {
-      maxFiles: 4
+      maxFiles: 4,
+      jsonPath: "Trade[0].files",
+      inputProps: {
+        accept: "image/*, .pdf, .png, .jpeg"
+      },
+      buttonLabel: "UPLOAD FILES"
     }
   };
 };
@@ -280,4 +286,39 @@ export const getButtonVisibility = (role, status, button) => {
   )
     return true;
   return false;
+};
+
+export const commonTransform = (object, path) => {
+  let data = get(object, path);
+  let transformedData = {};
+  data.map(a => {
+    const splitList = a.code.split(".");
+    let ipath = "";
+    let k = 0;
+    for (let i = 0; i < splitList.length; i += 1) {
+      if (i != splitList.length - 1) {
+        if (
+          !(
+            splitList[i] in
+            (ipath === "" ? transformedData : get(transformedData, ipath))
+          )
+        ) {
+          set(
+            transformedData,
+            ipath === "" ? splitList[i] : ipath + "." + splitList[i],
+            i < splitList.length - 2 ? {} : []
+          );
+        }
+      } else {
+        get(transformedData, ipath).push(a);
+        // insert(transformedData + "." + ipath, a);
+      }
+      ipath = splitList.slice(0, i + 1).join(".");
+    }
+  });
+  console.log("aaa...", path);
+  console.log("bbb...", transformedData);
+  set(object, path, transformedData);
+  console.log(object);
+  return object;
 };

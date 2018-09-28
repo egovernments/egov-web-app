@@ -95,3 +95,31 @@ export const getImageUrlByFile = file => {
     };
   });
 };
+
+export const getFileSize = file => {
+  const size = parseFloat(file.size / 1024).toFixed(2);
+  return size;
+};
+
+export const isFileValid = (file, acceptedFiles) => {
+  const mimeType = file["type"];
+  return (
+    (mimeType &&
+      acceptedFiles &&
+      acceptedFiles.indexOf(mimeType.split("/")[1]) > -1) ||
+    false
+  );
+};
+
+export const acceptedFiles = acceptedExt => {
+  const splitExtByName = acceptedExt.split(",");
+  const acceptedFileTypes = splitExtByName.reduce((result, curr) => {
+    if (curr.includes("image")) {
+      result.push("image");
+    } else {
+      result.push(curr.split(".")[1]);
+    }
+    return result;
+  }, []);
+  return acceptedFileTypes;
+};

@@ -17,7 +17,8 @@ class LandingPage extends Component {
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
     const tenantId = localStorage.getItem("tenant-id");
-    let transformedData =
+    // let transformedData =
+    return (
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
         const index = citiesByModule[item].tenants.findIndex((tenant) => {
@@ -32,9 +33,10 @@ class LandingPage extends Component {
           });
         }
         return acc;
-      }, []);
-    transformedData && transformedData.push(moduleData["Finance"]);
-    return transformedData;
+      }, [])
+    );
+    // transformedData && transformedData.push(moduleData["Finance"]);
+    // return transformedData;
   };
 
   moduleData = {

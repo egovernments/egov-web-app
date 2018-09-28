@@ -9,6 +9,7 @@ import { uploadFile } from "ui-utils/api";
 const S3_BUCKET = {
   endPoint: "filestore/v1/files"
 };
+
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -25,23 +26,23 @@ class UploadMultipleFiles extends Component {
 
   handleDocument = (file, fileStoreId) => {
     let { documents } = this.state;
-    const { maxFiles, prepareFinalObject } = this.props;
+    const { maxFiles, prepareFinalObject, jsonPath } = this.props;
 
     if (documents.length + 1 > maxFiles) {
       alert(`Can only upload ${maxFiles} files`);
     } else {
       documents.push({ fileName: file.name, fileStoreId });
       documents.slice(0, maxFiles);
-      prepareFinalObject("tradeLicene[0].approveFiles", documents);
+      prepareFinalObject(jsonPath, documents);
       this.setState({ documents });
     }
   };
 
   removeDocument = index => {
     let { documents } = this.state;
-    const { prepareFinalObject } = this.props;
+    const { prepareFinalObject, jsonPath } = this.props;
     documents.splice(index, 1);
-    prepareFinalObject("tradeLicene[0].approveFiles", documents);
+    prepareFinalObject(jsonPath, documents);
     this.setState({ documents });
   };
 
@@ -105,6 +106,7 @@ class UploadMultipleFiles extends Component {
           handleFileUpload={this.handleFileUpload}
           inputProps={{ multiple: true, ...this.props.inputProps }}
           classes={this.props.classes}
+          buttonLabel={this.props.buttonLabel}
         />
       </div>
     );

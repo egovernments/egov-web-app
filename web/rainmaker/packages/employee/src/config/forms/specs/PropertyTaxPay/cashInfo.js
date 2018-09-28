@@ -9,6 +9,7 @@ const formConfig = {
       floatingLabelText: "Paid By",
       jsonPath: "Receipt[0].Bill[0].payer",
       dropDownData: [{ label: "Owner", value: "Owner" }, { label: "Other", value: "Other" }],
+      value: "",
     },
     payerName: {
       id: "payerName",
@@ -17,6 +18,7 @@ const formConfig = {
       hintText: "Enter payer Name",
       jsonPath: "Receipt[0].Bill[0].paidBy",
       required: true,
+      value: "",
     },
     payerMobile: {
       id: "ownerMobile",
@@ -27,6 +29,7 @@ const formConfig = {
       required: true,
       pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
+      value: "",
     },
   },
   action: "",

@@ -1,29 +1,48 @@
-import React from "react";
-import { UploadFile } from "ui-atoms-local";
+import React, { Component } from "react";
+import { UploadFile, UploadedDocument } from "ui-atoms-local";
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-    padding: "8px 38px"
-  },
-  input: {
-    display: "none"
-  }
-});
-class UploadSingleFile extends Component {
-  handleFileUpload = event => {
-    console.log(event);
-  };
-  render() {
-    return (
-      <UploadFile
-        buttonProps={{ variant: "outlined", color: "primary" }}
-        handleFileUpload={this.handleFileUpload}
-        inputProps={{ multiple: false }}
-        classes={this.props.classes}
-      />
-    );
-  }
-}
+const UploadSingleFile = ({
+  uploaded,
+  classes,
+  handleFileUpload,
+  documents,
+  removeDocument,
+  onButtonClick,
+  inputProps,
+  buttonLabel
+}) => {
+  return (
+    <div>
+      {!uploaded && (
+        <UploadFile
+          buttonProps={{
+            variant: "outlined",
+            color: "primary",
+            onClick: onButtonClick
+          }}
+          handleFileUpload={handleFileUpload}
+          inputProps={{ multiple: false, ...inputProps }}
+          classes={classes}
+          buttonLabel={buttonLabel}
+        />
+      )}
+      {uploaded && (
+        <div>
+          {documents &&
+            documents.map((document, documentIndex) => {
+              return (
+                <div key={documentIndex}>
+                  <UploadedDocument
+                    document={document}
+                    removeDocument={removeDocument}
+                  />
+                </div>
+              );
+            })}
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default withStyles(styles)(UploadSingleFile);
+export default UploadSingleFile;
