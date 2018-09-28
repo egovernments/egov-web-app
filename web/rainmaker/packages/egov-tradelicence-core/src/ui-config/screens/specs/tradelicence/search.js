@@ -13,7 +13,7 @@ import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 const hasButton = getQueryArg(window.location.href, "hasButton");
 const hasApproval = getQueryArg(window.location.href, "hasApproval");
 let enableInbox,
-  enableButton = true;
+enableButton = true;
 enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
@@ -165,6 +165,20 @@ const tradeLicenseSearchAndResult = {
         },
         tradeLicenseApplication,
         breakAfterSearch: getBreak(),
+        progressStatus: {
+          uiFramework: "custom-atoms",
+          componentPath: "Div",
+          props: {
+            style: {display: "flex", justifyContent: "center"}
+          },
+          visible:false,
+          children: {
+            progress:{
+              uiFramework: "material-ui",
+              componentPath: "CircularProgress",
+            }
+          }
+        },
         searchResults: {
           uiFramework: "custom-molecules-local",
           componentPath: "Table",

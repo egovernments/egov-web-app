@@ -3,6 +3,9 @@ import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const searchApiCall = async (state, dispatch) => {
+
+  showHideTable(false,dispatch);
+  showHideProgress(true,dispatch);
   let queryObject = [{ key: "tenantId", value: "pb.amritsar" }];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -39,15 +42,27 @@ export const searchApiCall = async (state, dispatch) => {
         data
       )
     );
-    dispatch(
-      handleField(
-        "search",
-        "components.div.children.searchResults",
-        "visible",
-        true
-      )
-    );
+    showHideProgress(false,dispatch);
+    showHideTable(true,dispatch);
   } catch (error) {
     console.log(error);
   }
 };
+const showHideProgress=(booleanHideOrShow,dispatch)=>{
+  dispatch( handleField(
+    "search",
+    "components.div.children.progressStatus",
+    "visible",
+    booleanHideOrShow
+  ));
+}
+
+
+const showHideTable=(booleanHideOrShow,dispatch)=>{
+  dispatch( handleField(
+    "search",
+    "components.div.children.searchResults",
+    "visible",
+    booleanHideOrShow
+  ));
+}
