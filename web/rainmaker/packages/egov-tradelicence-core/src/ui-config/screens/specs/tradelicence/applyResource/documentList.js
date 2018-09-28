@@ -15,6 +15,8 @@ export const documentList = {
       {
         name: "Business ID Proof "
       }
-    ]
+    ],
+    buttonLabel: "UPLOAD FILE",
+    description: "Only .jpg and .pdf files. 500kb max file size."
   }
 };
