@@ -58,101 +58,47 @@ export const tradeLicenseApplication = getCommonCard({
     )
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
-    applicationNo: getTextField(
+    applicationNo: getSelectTextField(
       "Application status",
       "Select Application Status",
       false,
       "",
+      "searchScreen.status",
       "",
+      [
+        {
+          code: "INITIATED",
+          code: "INITIATED"
+        },
+        {
+          code: "APPLIED",
+          code: "APPLIED"
+        },
+        {
+          code: "APPROVED",
+          code: "APPROVED"
+        },
+        {
+          code: "PENDING APPROVAL",
+          code: "PENDING APPROVAL"
+        },
+        {
+          code: "PENDING PAYMENT",
+          code: "PENDING PAYMENT"
+        },
+        {
+          code: "PENDING APPLICATION",
+          code: "PENDING APPLICATION"
+        }
+      ],
+      "code",
+      "code",
       {},
       {
         xs: 12,
         sm: 4
       }
     ),
-    // applicationStatus: getSelectTextField(
-    //   "Application status",
-    //   "Select Application Status",
-    //   false,
-    //   "",
-    //   "searchScreen.status",
-    //   {},
-    //   {
-    //     xs: 12,
-    //     sm: 4
-    //   }
-    // ),
-    // tradeLicenseType: {
-    //   ...getSelectTextField(
-    //     "Application status",
-    //     "Select Application Status",
-    //     false,
-    //     "",
-    //     "searchScreen.status",
-    //     {},
-    //     {
-    //       xs: 12,
-    //       sm: 4
-    //     }
-    //   ),
-    //   children: {
-    //     itemOne: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "INITIATED"
-    //       },
-    //       children: {
-    //         label: getLabel("INITIATED")
-    //       }
-    //     },
-    //     itemTwo: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "APPLIED"
-    //       },
-    //       children: {
-    //         label: getLabel("APPLIED")
-    //       }
-    //     },
-    //     itemThree: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "APPROVED"
-    //       },
-    //       children: {
-    //         label: getLabel("APPROVED")
-    //       }
-    //     },
-    //     itemFour: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "PENDING APPROVAL"
-    //       },
-    //       children: {
-    //         label: getLabel("PENDING APPROVAL")
-    //       }
-    //     },
-    //     itemFIVE: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "PENDING PAYMENT"
-    //       },
-    //       children: {
-    //         label: getLabel("PENDING PAYMENT")
-    //       }
-    //     }
-    //     ,
-    //     itemSIX: {
-    //       componentPath: "MenuItem",
-    //       props: {
-    //         value: "PENDING APPLICATION"
-    //       },
-    //       children: {
-    //         label: getLabel("PENDING APPLICATION")
-    //       }
-    //     }
-    //   }
-    // },
     fromDate: getTextField(
       "From Date",
       "From Date",
