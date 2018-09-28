@@ -7,6 +7,8 @@ import React from "react";
 import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import store from "ui-redux/store";
+import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -205,7 +207,35 @@ const tradeLicenseSearchAndResult = {
             options: {
               filterType: "dropdown",
               responsive: "scroll",
-              selectableRows: false
+              selectableRows: false,
+              hover: true,
+              onRowClick: (rowData, rowMetadata) => {
+                switch (rowData[5].props.children) {
+                  case "APPLIED":
+                    store.dispatch(
+                      setRoute(
+                        "/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=employee"
+                      )
+                    );
+                    break;
+                  case "APPROVED":
+                    store.dispatch(
+                      setRoute(
+                        "/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=employee"
+                      )
+                    );
+                    break;
+                  case "INITIATED":
+                    store.dispatch(
+                      setRoute(
+                        "/landing/mihy-ui-framework/tradelicence/apply"
+                      )
+                    );
+                    break;
+                  default:
+                    break;
+                }
+              }
             }
           }
         }
