@@ -11,7 +11,7 @@ const capturePaymentDetails = getCommonGrayCard({
     }
   }),
   tabSection: {
-    uiFramework: "custom-molecules-local",
+    uiFramework: "custom-containers-local",
     componentPath: "CustomTabContainer",
     props: {
       // horizontal: {

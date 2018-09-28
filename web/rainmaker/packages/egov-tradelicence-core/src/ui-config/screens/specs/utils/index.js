@@ -163,11 +163,11 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
 
 export const getApprovalTextField = () => {
   if (queryValue === "reject") {
-    return getTextField1("Comments", "Enter rejection Comments", false, "");
+    return getTextField("Comments", "Enter rejection Comments", false, "");
   } else if (queryValue === "cancel") {
-    return getTextField1("Comments", "Enter Cancellation Comments", false, "");
+    return getTextField("Comments", "Enter Cancellation Comments", false, "");
   } else {
-    return getTextField1("Comments", "Enter Approval Comments", false, "");
+    return getTextField("Comments", "Enter Approval Comments", false, "");
   }
 };
 
@@ -256,39 +256,6 @@ export const showHideAdhocPopup = (state, dispatch) => {
     false
   );
   dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
-};
-
-export const getTextField1 = (
-  label,
-  placeholder,
-  required,
-  pattern,
-  jsonPath = "",
-  iconObj = {},
-  gridDefination = {
-    xs: 12,
-    sm: 6
-  }
-) => {
-  return {
-    uiFramework: "custom-molecules-local",
-    componentPath: "TextfieldContainer",
-    props: {
-      label,
-      InputLabelProps: {
-        shrink: true
-      },
-      placeholder,
-      fullWidth: true,
-      required,
-      iconObj,
-      jsonPath
-    },
-    gridDefination,
-    required,
-    pattern,
-    jsonPath
-  };
 };
 
 export const getButtonVisibility = (role, status, button) => {

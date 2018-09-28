@@ -10,7 +10,6 @@ import {
   getPattern,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getTextField1 } from "../../utils";
 import { getIconStyle } from "../../utils";
 
 const multipleTradeUnitCard =
@@ -27,7 +26,11 @@ const multipleTradeUnitCard =
         "Select Trade Category",
         true,
         "",
-        "",
+        "Licences[0].tradeType",
+        "applyScreenMdmsData.TradeLicense.TradeType",
+        [],
+        "code",
+        "code",
         {},
         {
           xs: 12,
@@ -40,6 +43,10 @@ const multipleTradeUnitCard =
         true,
         "",
         "",
+        "",
+        [],
+        "",
+        "",
         {},
         {
           xs: 12,
@@ -50,6 +57,10 @@ const multipleTradeUnitCard =
         "Trade Sub-Type",
         "Select Trade Sub-Type",
         true,
+        "",
+        "",
+        "",
+        [],
         "",
         "",
         {},
@@ -166,36 +177,25 @@ export const tradeDetails = getCommonCard({
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   tradeDetailsConatiner: getCommonContainer({
-    tradeLicenseType: {
-      ...getSelectTextField(
-        "License Type",
-        "Select License Type",
-        true,
-        "",
-        "Licences[0].licenseType"
-      ),
-      children:{
-        itemOne:{
-          componentPath:"MenuItem",
-          props:{
-            value:"TEMPORARY"
-          },
-          children:{
-            label:getLabel("TEMPORARY")
-          }
-        },
-        itemTwo:{
-          componentPath:"MenuItem",
-          props:{
-            value:"PERMANENT"
-          },
-          children:{
-            label:getLabel("PERMANENT")
-          }
-        }
-      }
-    },
-    tradeName: getTextField1(
+    tradeLicenseType: getSelectTextField(
+      "License Type",
+      "Select License Type",
+      true,
+      "",
+      "Licences[0].licenseType",
+      "",
+      [{
+        code:"Temprovory",
+        code:"Temprovory"
+      },
+      {
+        code:"Permanant",
+        code:"Permanant"
+      }],
+      "code",
+      "code"
+    ),
+    tradeName: getTextField(
       "Name of Trade",
       "Example Diljit Da Dhaba",
       true,
@@ -206,8 +206,7 @@ export const tradeDetails = getCommonCard({
       "Structure Type",
       "Select Structure Type",
       true,
-      "",
-
+      ""
     ),
     tradeStructureSubType: getSelectTextField(
       "Structure Sub Type",

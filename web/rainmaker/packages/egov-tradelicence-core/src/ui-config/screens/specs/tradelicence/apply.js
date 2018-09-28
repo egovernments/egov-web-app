@@ -105,7 +105,7 @@ const screenConfig = {
     if (queryValue) {
       getSearchResults(action, state, dispatch);
     }
-    getMdmsData();
+    getMdmsData(action, state, dispatch);
     return action;
   },
   components: {

@@ -1,6 +1,6 @@
 import React from "react";
 import RenderScreen from "mihy-ui-framework/ui-molecules/RenderScreen";
-import CustomTab from "../CustomTab";
+import CustomTab from "../../ui-molecules-local/CustomTab";
 import { connect } from "react-redux";
 // import get from "lodash/get";
 // import set from "lodash/set";
