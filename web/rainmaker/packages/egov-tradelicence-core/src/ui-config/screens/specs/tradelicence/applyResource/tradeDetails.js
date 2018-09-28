@@ -8,6 +8,7 @@ import {
   getSelectTextField,
   getCommonContainer,
   getPattern,
+  getDateField,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getIconStyle } from "../../utils";
@@ -204,27 +205,21 @@ export const tradeDetails = getCommonCard({
       getPattern("TradeName"),
       "Licenses[0].tradeName"
     ),
-    tradeFromDate: getTextField(
+    tradeFromDate: getDateField(
       "From Date",
       "Trade License From Date",
       true,
       getPattern("Date"),
       "Licenses[0].validFrom",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     ),
-    tradeToDate: getTextField(
+    tradeToDate: getDateField(
       "To Date",
       "Trade License From Date",
       true,
       getPattern("Date"),
       "Licenses[0].validTo",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     ),
     tradeStructureType: getSelectTextField(
       "Structure Type",
@@ -240,16 +235,13 @@ export const tradeDetails = getCommonCard({
       "",
       "Licences[0].tradeLicenseDetail.structureType"
     ),
-    tradeCommencementDate: getTextField(
+    tradeCommencementDate: getDateField(
       "Trade Commencement Date",
       "Enter Trade Commencement Date",
       true,
       getPattern("Date"),
       "Licences[0].commencementDate",
-      {
-        position: "end",
-        iconName: "date_range"
-      }
+      {}
     ),
     tradeGSTNo: getTextField(
       "Trade GST No.",

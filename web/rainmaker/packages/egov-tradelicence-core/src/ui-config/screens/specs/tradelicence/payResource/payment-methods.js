@@ -2,6 +2,7 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
+  getDateField,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -16,17 +17,14 @@ export const payeeDetails = getCommonContainer({
     "",
     {
       position: "start",
-      label: "+91 |",
+      label: "+91 |"
     }
   )
 });
 
 export const chequeDetails = getCommonContainer({
   chequeNo: getTextField("Cheque No", "Enter Cheque  no.", true, ""),
-  chequeDate: getTextField("Cheque Date", "dd/mm/yy", true, "", "", {
-    position: "end",
-    iconName: "date_range"
-  }),
+  chequeDate: getDateField("Cheque Date", "dd/mm/yy", true, "", "", {}),
   chequeIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
 });
 
@@ -37,10 +35,7 @@ export const cheque = getCommonContainer({
 
 export const demandDraftDetails = getCommonContainer({
   ddNo: getTextField("DD No", "Enter DD  no.", true, ""),
-  ddDate: getTextField("DD Date", "dd/mm/yy", true, "", "", {
-    position: "end",
-    iconName: "date_range"
-  }),
+  ddDate: getDateField("DD Date", "dd/mm/yy", true, "", "", {}),
   ddIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
 });
 

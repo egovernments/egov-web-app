@@ -7,6 +7,7 @@ import {
   getTextField,
   getSelectTextField,
   getCommonContainer,
+  getDateField,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -51,16 +52,13 @@ const OwnerInfoCard = {
           "",
           "Licenses[0].tradeLicenseDetail.owners[0].gender"
         ),
-        ownerDOB: getTextField(
+        ownerDOB: getDateField(
           "Date of Birth",
           "Enter Date of Birth",
           true,
           getPattern("Date"),
           "Licenses[0].tradeLicenseDetail.owners[0].dob",
-          {
-            position: "end",
-            iconName: "date_range"
-          }
+          {}
         ),
         ownerEmail: getTextField(
           "Email",
