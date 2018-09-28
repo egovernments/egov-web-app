@@ -9,10 +9,7 @@ import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
-
-const purpose = getQueryArg(window.location.href, "purpose");
-const status = getQueryArg(window.location.href, "status");
-const number = getQueryArg(window.location.href, "number");
+import set from "lodash/set";
 
 const getAcknowledgementCard = (purpose, status, number) => {
   if (purpose === "apply" && status === "success") {
@@ -173,9 +170,16 @@ const screenConfig = {
       componentPath: "Div",
       props: {
         className: "common-div-css"
-      },
-      children: getAcknowledgementCard(purpose, status, number)
+      }
     }
+  },
+  beforeInitScreen: (action, state, dispatch) => {
+    const purpose = getQueryArg(window.location.href, "purpose");
+    const status = getQueryArg(window.location.href, "status");
+    const number = getQueryArg(window.location.href, "number");
+    const data = getAcknowledgementCard(purpose, status, number);
+    set(action, "screenConfig.components.div.children", data);
+    return action;
   }
 };
 
