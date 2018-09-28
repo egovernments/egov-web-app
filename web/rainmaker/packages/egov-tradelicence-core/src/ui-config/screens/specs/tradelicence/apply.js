@@ -38,7 +38,7 @@ const tradeDocumentDetails = getCommonCard({
     "Please Upload the Required Documents for Verification"
   ),
   paragraph: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+    "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload"
   ),
   documentList
 });
@@ -69,7 +69,10 @@ const getMdmsData = async (action, state, dispatch) => {
       moduleDetails: [
         {
           moduleName: "TradeLicense",
-          masterDetails: [{ name: "TradeType" }, { name: "AccessoriesCategory" }]
+          masterDetails: [
+            { name: "TradeType" },
+            { name: "AccessoriesCategory" }
+          ]
         },
         {
           moduleName: "common-masters",
@@ -82,7 +85,7 @@ const getMdmsData = async (action, state, dispatch) => {
         }
       ]
     }
-  }
+  };
   try {
     const payload = await httpRequest(
       "post",

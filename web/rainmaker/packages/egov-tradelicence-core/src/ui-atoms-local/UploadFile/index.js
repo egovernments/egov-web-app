@@ -16,7 +16,7 @@ const UploadFile = props => {
       />
       <label htmlFor="contained-button-file">
         <Button component="span" className={classes.button} {...buttonProps}>
-          ADD FILE
+          UPLOAD FILE
         </Button>
       </label>
     </div>

@@ -26,7 +26,7 @@ const multipleTradeUnitCard =
         "Select Trade Category",
         true,
         "",
-        "Licences[0].tradeType",
+        "",
         "applyScreenMdmsData.TradeLicense.TradeType",
         [],
         "code",
@@ -58,7 +58,7 @@ const multipleTradeUnitCard =
         "Select Trade Sub-Type",
         true,
         "",
-        "",
+        "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
         "",
         [],
         "",
@@ -74,7 +74,7 @@ const multipleTradeUnitCard =
         "",
         true,
         "",
-        "",
+        "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
         {},
         {
           xs: 12,
@@ -86,7 +86,7 @@ const multipleTradeUnitCard =
         "Enter UOM Value",
         true,
         getPattern("UOMValue"),
-        "",
+        "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
         {},
         {
           xs: 12,
@@ -128,7 +128,7 @@ const accessoriesCard = {
           "Select Accessories",
           false,
           "",
-          "",
+          "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory",
           {},
           {
             xs: 12,
@@ -140,7 +140,7 @@ const accessoriesCard = {
           "UOM",
           true,
           "",
-          "tradeDetails[0].unit",
+          "Licences[0].tradeLicenseDetail.accessories[0].uom",
           {},
           {
             xs: 12,
@@ -152,7 +152,7 @@ const accessoriesCard = {
           "Enter UOM Value",
           false,
           getPattern("UOMValue"),
-          "",
+          "Licences[0].tradeLicenseDetail.accessories[0].uomValue",
           {},
           {
             xs: 12,
@@ -186,8 +186,8 @@ export const tradeDetails = getCommonCard({
       "",
       [
         {
-          code: "Temprovory",
-          code: "Temprovory"
+          code: "TEMPORARY",
+          code: "TEMPORARY"
         },
         {
           code: "Permanant",
@@ -209,7 +209,7 @@ export const tradeDetails = getCommonCard({
       "Trade License From Date",
       true,
       getPattern("Date"),
-      "",
+      "Licenses[0].validFrom",
       {
         position: "end",
         iconName: "date_range"
@@ -220,7 +220,7 @@ export const tradeDetails = getCommonCard({
       "Trade License From Date",
       true,
       getPattern("Date"),
-      "",
+      "Licenses[0].validTo",
       {
         position: "end",
         iconName: "date_range"
@@ -230,20 +230,22 @@ export const tradeDetails = getCommonCard({
       "Structure Type",
       "Select Structure Type",
       true,
+      "",
       ""
     ),
     tradeStructureSubType: getSelectTextField(
       "Structure Sub Type",
       "Select Structure Sub Type",
       true,
-      ""
+      "",
+      "Licences[0].tradeLicenseDetail.structureType"
     ),
     tradeCommencementDate: getTextField(
       "Trade Commencement Date",
       "Enter Trade Commencement Date",
       true,
       getPattern("Date"),
-      "",
+      "Licences[0].commencementDate",
       {
         position: "end",
         iconName: "date_range"
@@ -259,13 +261,15 @@ export const tradeDetails = getCommonCard({
       "Operatonal Area (Sq Ft)",
       "Enter Operatonal Area in Sq Ft",
       false,
-      getPattern("OperationalArea")
+      getPattern("OperationalArea"),
+      "Licences[0].tradeLicenseDetail.operationalArea"
     ),
     tradeNoOfEmployee: getTextField(
       "No. Of Employee",
       "Enter No. Of Employee",
       false,
-      getPattern("NoOfEmp")
+      getPattern("NoOfEmp"),
+      "Licences[0].tradeLicenseDetail.noOfEmployees"
     )
   }),
   multipleTradeUnitCard,

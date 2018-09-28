@@ -22,7 +22,7 @@ const OwnerInfoCard = {
           "Enter Mobile No.",
           true,
           getPattern("MobileNo"),
-          "",
+          "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
           {
             iconName: "search",
             position: "end",
@@ -30,20 +30,33 @@ const OwnerInfoCard = {
             label: "SEARCH"
           }
         ),
-        ownerName: getTextField("Name", "Enter Name", true, getPattern("Name")),
+        ownerName: getTextField(
+          "Name",
+          "Enter Name",
+          true,
+          getPattern("Name"),
+          "Licenses[0].tradeLicenseDetail.owners[0].name"
+        ),
         ownerFatherName: getTextField(
           "Father/Husband's Name",
           "Enter Father/Husband's Name",
           true,
-          getPattern("Name")
+          getPattern("Name"),
+          "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
         ),
-        OwnerGender: getSelectTextField("Gender", "Select Gender", true, ""),
+        OwnerGender: getSelectTextField(
+          "Gender",
+          "Select Gender",
+          true,
+          "",
+          "Licenses[0].tradeLicenseDetail.owners[0].gender"
+        ),
         ownerDOB: getTextField(
           "Date of Birth",
           "Enter Date of Birth",
           true,
           getPattern("Date"),
-          "",
+          "Licenses[0].tradeLicenseDetail.owners[0].dob",
           {
             position: "end",
             iconName: "date_range"
@@ -53,25 +66,29 @@ const OwnerInfoCard = {
           "Email",
           "Enter Email",
           false,
-          getPattern("Email")
+          getPattern("Email"),
+          "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
         ),
         ownerPAN: getTextField(
           "PAN No.",
           "Enter Owner's PAN No.",
           false,
-          getPattern("PAN")
+          getPattern("PAN"),
+          "Licenses[0].tradeLicenseDetail.owners[0].pan"
         ),
         ownerAddress: getTextField(
           "Corrospondence Address",
           "Enter Corrospondence Address",
           true,
-          getPattern("Address")
+          getPattern("Address"),
+          "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
         ),
         OwnerSpecialCategory: getSelectTextField(
           "Special Owner Category",
           "Select Special Owner Category",
           true,
-          ""
+          "",
+          "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory"
         )
       })
     }),
@@ -93,7 +110,8 @@ export const tradeOwnerDetails = getCommonCard({
     "Type of ownership",
     "Select Type of Ownership",
     false,
-    ""
+    "",
+    "Licenses[0].tradeLicenseDetail.owners[0].ownerType"
   ),
   OwnerInfoCard
 });
