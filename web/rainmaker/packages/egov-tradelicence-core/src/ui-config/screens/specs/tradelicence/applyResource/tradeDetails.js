@@ -11,53 +11,100 @@ import {
   getPattern,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getIconStyle } from "../../utils";
+import { getIconStyle, objectToDropdown } from "../../utils";
+import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const multipleTradeUnitCard = getCommonGrayCard({
   header: getCommonSubHeader("Trade Unit  "),
   tradeUnitCardContainer: getCommonContainer({
-    tradeCategory: getSelectTextField(
-      "Trade Category",
-      "Select Trade Category",
-      true,
-      "",
-      "Licences[0].tradeType",
-      "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
-      [],
-      "code",
-      "code",
-      {},
-      {
-        xs: 12,
-        sm: 4
+    tradeCategory: {
+      ...getSelectTextField(
+        "Trade Category",
+        "Select Trade Category",
+        true,
+        "",
+        "LicencesTemp[0].tradeType",
+        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+        [],
+        "code",
+        "code",
+        {},
+        {
+          xs: 12,
+          sm: 4
+        }
+      ),
+      beforeFieldChange: (action, state, dispatch) => {
+        try {
+          dispatch(
+            pFO(
+              "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+              objectToDropdown(
+                get(
+                  state.screenConfiguration.preparedFinalObject,
+                  `applyScreenMdmsData.TradeLicense.TradeType.${action.value}`,
+                  []
+                )
+              )
+            )
+          );
+        } catch (e) {
+          console.log(e);
+        }
       }
-    ),
-    tradeType: getSelectTextField(
-      "Trade  Type",
-      "Select Trade Type",
-      true,
-      "",
-      "",
-      "",
-      [],
-      "",
-      "",
-      {},
-      {
-        xs: 12,
-        sm: 4
+    },
+    tradeType: {
+      ...getSelectTextField(
+        "Trade  Type",
+        "Select Trade Type",
+        true,
+        "",
+        "LicencesTemp[0].tradeSubType",
+        "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+        [],
+        "code",
+        "code",
+        {},
+        {
+          xs: 12,
+          sm: 4
+        }
+      ),
+      beforeFieldChange: (action, state, dispatch) => {
+        try {
+          let tradeCategory = get(
+            state.screenConfiguration.preparedFinalObject,
+            "LicencesTemp[0].tradeType",
+            ""
+          );
+          dispatch(
+            pFO(
+              "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                `applyScreenMdmsData.TradeLicense.TradeType.${tradeCategory}.${
+                  action.value
+                }`,
+                []
+              )
+            )
+          );
+        } catch (e) {
+          console.log(e);
+        }
       }
-    ),
+    },
     tradeSubType: getSelectTextField(
       "Trade Sub-Type",
       "Select Trade Sub-Type",
       true,
       "",
-      "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-      "",
+      "LicencesTemp[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
       [],
-      "",
-      "",
+      "code",
+      "code",
       {},
       {
         xs: 12,
@@ -244,23 +291,46 @@ export const tradeDetails = getCommonCard({
       "Licenses[0].validTo",
       {}
     ),
-    tradeStructureType: getSelectTextField(
-      "Structure Type",
-      "Select Structure Type",
-      true,
-      "",
-      "",
-      "applyScreenMdmsData.common-masters.StructureTypeTransformed",
-      [],
-      "code",
-      "code"
-    ),
+    tradeStructureType: {
+      ...getSelectTextField(
+        "Structure Type",
+        "Select Structure Type",
+        true,
+        "",
+        "LicencesTemp[0].tradeLicenseDetail.structureType",
+        "applyScreenMdmsData.common-masters.StructureTypeTransformed",
+        [],
+        "code",
+        "code"
+      ),
+      beforeFieldChange: (action, state, dispatch) => {
+        try {
+          dispatch(
+            pFO(
+              "applyScreenMdmsData.common-masters.StructureSubTypeTransformed",
+              get(
+                state.screenConfiguration.preparedFinalObject
+                  .applyScreenMdmsData["common-masters"],
+                `StructureType.${action.value}`,
+                []
+              )
+            )
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
     tradeStructureSubType: getSelectTextField(
       "Structure Sub Type",
       "Select Structure Sub Type",
       true,
       "",
-      "Licences[0].tradeLicenseDetail.structureType"
+      "Licences[0].tradeLicenseDetail.structureType",
+      "applyScreenMdmsData.common-masters.StructureSubTypeTransformed",
+      [],
+      "code",
+      "code"
     ),
     tradeCommencementDate: getDateField(
       {
