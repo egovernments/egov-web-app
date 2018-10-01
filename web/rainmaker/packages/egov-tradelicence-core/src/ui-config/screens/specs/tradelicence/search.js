@@ -156,7 +156,7 @@ const tradeLicenseSearchAndResult = {
                 title: "Pending for your Approval (4)",
                 options: {
                   filterType: "dropdown",
-                  responsive: "scroll",
+                  responsive: "stacked",
                   selectableRows: false
                 }
               }
@@ -220,7 +220,7 @@ const tradeLicenseSearchAndResult = {
             title: "Search Results for Trade License Applications",
             options: {
               filterType: "dropdown",
-              responsive: "scroll",
+              responsive: "stacked",
               selectableRows: false,
               hover: true,
               onRowClick: (rowData, rowMetadata) => {
