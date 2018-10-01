@@ -169,11 +169,44 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
 
 export const getApprovalTextField = () => {
   if (queryValue === "reject") {
-    return getTextField("Comments", "Enter rejection Comments", false, "");
+    return getTextField(
+      {
+        labelName: "Comments",
+        labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
+      },
+      {
+        labelName: "Enter Rejection Comments",
+        labelKey: "TL_REJECTION_CHECKLIST_COMMENTS_PLACEHOLDER"
+      },
+      false,
+      ""
+    );
   } else if (queryValue === "cancel") {
-    return getTextField("Comments", "Enter Cancellation Comments", false, "");
+    return getTextField(
+      {
+        labelName: "Comments",
+        labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
+      },
+      {
+        labelName: "Enter Cancellation Comments",
+        labelKey: "TL_CANCEL_CHECKLIST_COMMENTS_PLACEHOLDER"
+      },
+      false,
+      ""
+    );
   } else {
-    return getTextField("Comments", "Enter Approval Comments", false, "");
+    return getTextField(
+      {
+        labelName: "Comments",
+        labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
+      },
+      {
+        labelName: "Enter Approval Comments",
+        labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_PLACEHOLDER_APPR"
+      },
+      false,
+      ""
+    );
   }
 };
 
@@ -323,12 +356,12 @@ export const commonTransform = (object, path) => {
   return object;
 };
 
-export const objectToDropdown =(object) =>{
+export const objectToDropdown = object => {
   let dropDown = [];
   for (var variable in object) {
     if (object.hasOwnProperty(variable)) {
-      dropDown.push({code:variable})
+      dropDown.push({ code: variable });
     }
   }
   return dropDown;
-}
+};

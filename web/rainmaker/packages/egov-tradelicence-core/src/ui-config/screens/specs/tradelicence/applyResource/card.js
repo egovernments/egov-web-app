@@ -13,10 +13,27 @@ export const cardDetails = getCommonContainer({
     true,
     ""
   ),
-  TrxNo: getTextField("Transaction No.", "Enter transaction no.", true, ""),
+  TrxNo: getTextField(
+    {
+      labelName: "Transaction No.",
+      labelKey: "TL_PAYMENT_TRANS_NO_LABEL"
+    },
+    {
+      labelName: "Enter transaction no.",
+      labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   repeatTrxNo: getTextField(
-    "Re-Enter Transaction No.",
-    "Enter transaction no.",
+    {
+      labelName: "Re-Enter Transaction No.",
+      labelKey: "TL_PAYMENT_RENTR_TRANS_LABEL"
+    },
+    {
+      labelName: "Enter transaction no.",
+      labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
+    },
     true,
     ""
   )

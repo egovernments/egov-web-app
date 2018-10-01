@@ -7,9 +7,31 @@ import {
 import { payeeDetails } from "./payeeDetails";
 
 export const demandDraftDetails = getCommonContainer({
-  ddNo: getTextField("DD No", "Enter DD  no.", true, ""),
+  ddNo: getTextField(
+    {
+      labelName: "DD No",
+      labelKey: "TL_PAYMENT_DD_NO_LABEL"
+    },
+    {
+      labelName: "Enter DD  no.",
+      labelKey: "TL_PAYMENT_DD_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   ddDate: getDateField("DD Date", "dd/mm/yy", true, ""),
-  ddIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
+  ddIFSC: getTextField(
+    {
+      labelName: "IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_LABEL"
+    },
+    {
+      labelName: "Enter bank IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
+    },
+    true,
+    ""
+  )
 });
 
 export const demandDraft = getCommonContainer({

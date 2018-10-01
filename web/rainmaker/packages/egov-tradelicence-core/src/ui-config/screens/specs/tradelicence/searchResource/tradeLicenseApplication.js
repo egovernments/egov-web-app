@@ -19,8 +19,14 @@ export const tradeLicenseApplication = getCommonCard({
   ),
   appTradeAndMobNumContainer: getCommonContainer({
     applicationNo: getTextField(
-      "Application No.",
-      "Enter Application No.",
+      {
+        labelName: "Application No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+      },
+      {
+        labelName: "Enter Application No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_PLACEHOLDER"
+      },
       false,
       "",
       "searchScreen.applicationNumber",
@@ -31,8 +37,14 @@ export const tradeLicenseApplication = getCommonCard({
       }
     ),
     tradeLicenseNo: getTextField(
-      "Trade License No.",
-      "Enter Trade License No.",
+      {
+        labelName: "Trade License No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
+      },
+      {
+        labelName: "Enter Trade License No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_PLACEHOLDER"
+      },
       false,
       "",
       "searchScreen.licenseNumber",
@@ -43,8 +55,14 @@ export const tradeLicenseApplication = getCommonCard({
       }
     ),
     ownerMobNo: getTextField(
-      "Owner Mobile No.",
-      "Enter your mobile No.",
+      {
+        labelName: "Owner Mobile No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_OWN_MOB_LABEL"
+      },
+      {
+        labelName: "Enter your mobile No.",
+        labelKey: "TL_HOME_SEARCH_RESULTS_OWN_MOB_PLACEHOLDER"
+      },
       false,
       getPattern("MobileNo"),
       "searchScreen.mobileNumber",

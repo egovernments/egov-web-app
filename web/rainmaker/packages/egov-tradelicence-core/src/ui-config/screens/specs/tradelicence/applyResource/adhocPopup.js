@@ -16,8 +16,14 @@ export const adhocPopup = getCommonContainer({
       subheader: getCommonSubHeader("Adhoc Penalty"),
       penaltyAmountAndReasonContainer: getCommonContainer({
         penaltyAmount: getTextField(
-          "Adhoc Penalty Amount",
-          "Enter Adhoc Charge Amount",
+          {
+            labelName: "Adhoc Penalty Amount",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_PEN_AMT_LABEL"
+          },
+          {
+            labelName: "Enter Adhoc Charge Amount",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_PEN_AMT_PLACEHOLDER"
+          },
           false,
           ""
         ),
@@ -29,8 +35,14 @@ export const adhocPopup = getCommonContainer({
         )
       }),
       commentsField: getTextField(
-        "Enter Comments",
-        "Enter Comments",
+        {
+          labelName: "Enter Comments",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
+        },
+        {
+          labelName: "Enter Comments",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
+        },
         false,
         "",
         "",
@@ -51,8 +63,14 @@ export const adhocPopup = getCommonContainer({
     subHeader: getCommonSubHeader("Adhoc Rebate"),
     rebateAmountAndReasonContainer: getCommonContainer({
       rebateAmount: getTextField(
-        "Adhoc Rebate Amount",
-        "Enter Adhoc Rebate Amount",
+        {
+          labelName: "Adhoc Rebate Amount",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_LABEL"
+        },
+        {
+          labelName: "Enter Adhoc Rebate Amount",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_PLACEHOLDER"
+        },
         false,
         ""
       ),

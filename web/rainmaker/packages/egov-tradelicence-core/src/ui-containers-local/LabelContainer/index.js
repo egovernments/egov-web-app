@@ -6,10 +6,8 @@ import {
 } from "../../ui-config/screens/specs/utils/index";
 
 const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-  console.log("label....", label, labelKey);
   if (labelKey) {
     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-    console.log(labelKey, translatedLabel);
     if (!translatedLabel || labelKey === translatedLabel) {
       return label;
     } else {

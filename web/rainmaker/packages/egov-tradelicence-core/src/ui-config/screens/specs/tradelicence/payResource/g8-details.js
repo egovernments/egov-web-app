@@ -10,8 +10,11 @@ const g8Details = getCommonGrayCard({
   header: getCommonSubHeader("G8 Receipt Details (Optional)"),
   receiptDetailsCardContainer: getCommonContainer({
     receiptNo: getTextField(
-      "G8 Receipt No.",
-      "Enter G8 Receipt No.",
+      { labelName: "G8 Receipt No.", labelKey: "TL_PAYMENT_RCPT_NO_LABEL" },
+      {
+        labelName: "Enter G8 Receipt No.",
+        labelKey: "TL_PAYMENT_RCPT_NO_PLACEHOLDER"
+      },
       false,
       ""
     ),

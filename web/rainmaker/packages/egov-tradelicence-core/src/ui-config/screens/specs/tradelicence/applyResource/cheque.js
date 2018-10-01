@@ -7,9 +7,31 @@ import {
 import { payeeDetails } from "./payeeDetails";
 
 export const chequeDetails = getCommonContainer({
-  chequeNo: getTextField("Cheque No", "Enter Cheque  no.", true, ""),
+  chequeNo: getTextField(
+    {
+      labelName: "Cheque No",
+      labelKey: "TL_PAYMENT_CHQ_NO_LABEL"
+    },
+    {
+      labelName: "Enter Cheque  no.",
+      labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   chequeDate: getDateField("Cheque Date", "dd/mm/yy", true, ""),
-  chequeIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
+  chequeIFSC: getTextField(
+    {
+      labelName: "IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_LABEL"
+    },
+    {
+      labelName: "Enter bank IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
+    },
+    true,
+    ""
+  )
 });
 
 export const cheque = getCommonContainer({

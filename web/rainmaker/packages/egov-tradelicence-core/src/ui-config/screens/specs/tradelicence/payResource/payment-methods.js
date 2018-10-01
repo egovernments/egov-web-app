@@ -8,10 +8,27 @@ import {
 
 export const payeeDetails = getCommonContainer({
   paidBy: getSelectTextField("Paid By", "Paid By", false, ""),
-  payerName: getTextField("Payer Name", "Enter Payer Name", false, ""),
+  payerName: getTextField(
+    {
+      labelName: "Payer Name",
+      labelKey: "TL_PAYMENT_PAYER_NAME_LABEL"
+    },
+    {
+      labelName: "Enter Payer Name",
+      labelKey: "TL_PAYMENT_PAYER_NAME_PLACEHOLDER"
+    },
+    false,
+    ""
+  ),
   payerMobileNo: getTextField(
-    "Payer Mobile No.",
-    "Enter Payer Mobile No.",
+    {
+      labelName: "Payer Mobile No.",
+      labelKey: "TL_PAYMENT_PAYER_MOB_LABEL"
+    },
+    {
+      labelName: "Enter Payer Mobile No.",
+      labelKey: "TL_PAYMENT_PAYER_MOB_PLACEHOLDER"
+    },
     false,
     getPattern("Date"),
     "",
@@ -23,9 +40,31 @@ export const payeeDetails = getCommonContainer({
 });
 
 export const chequeDetails = getCommonContainer({
-  chequeNo: getTextField("Cheque No", "Enter Cheque  no.", true, ""),
+  chequeNo: getTextField(
+    {
+      labelName: "Cheque No",
+      labelKey: "TL_PAYMENT_CHQ_NO_LABEL"
+    },
+    {
+      labelName: "Enter Cheque  no.",
+      labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   chequeDate: getDateField("Cheque Date", "dd/mm/yy", true, "", "", {}),
-  chequeIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
+  chequeIFSC: getTextField(
+    {
+      labelName: "IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_LABEL"
+    },
+    {
+      labelName: "Enter bank IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
+    },
+    true,
+    ""
+  )
 });
 
 export const cheque = getCommonContainer({
@@ -34,9 +73,31 @@ export const cheque = getCommonContainer({
 });
 
 export const demandDraftDetails = getCommonContainer({
-  ddNo: getTextField("DD No", "Enter DD  no.", true, ""),
+  ddNo: getTextField(
+    {
+      labelName: "DD No",
+      labelKey: "TL_PAYMENT_DD_NO_LABEL"
+    },
+    {
+      labelName: "Enter DD  no.",
+      labelKey: "TL_PAYMENT_DD_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   ddDate: getDateField("DD Date", "dd/mm/yy", true, "", "", {}),
-  ddIFSC: getTextField("IFSC", "Enter bank IFSC", true, "")
+  ddIFSC: getTextField(
+    {
+      labelName: "IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_LABEL"
+    },
+    {
+      labelName: "Enter bank IFSC",
+      labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
+    },
+    true,
+    ""
+  )
 });
 
 export const demandDraft = getCommonContainer({
@@ -46,15 +107,38 @@ export const demandDraft = getCommonContainer({
 
 export const cardDetails = getCommonContainer({
   last4Digits: getTextField(
-    "Last 4 digits",
-    "Enter Last 4 digits of the card",
+    {
+      labelName: "Last 4 digits",
+      labelKey: "TL_CARD_LAST_DIGITS_LABEL"
+    },
+    {
+      labelName: "Enter Last 4 digits of the card",
+      labelKey: "TL_CARD_LAST_DIGITS_LABEL_PLACEHOLDER"
+    },
     true,
     ""
   ),
-  TrxNo: getTextField("Transaction No.", "Enter transaction no.", true, ""),
+  TrxNo: getTextField(
+    {
+      labelName: "Transaction No.",
+      labelKey: "TL_PAYMENT_TRANS_NO_LABEL"
+    },
+    {
+      labelName: "Enter transaction no.",
+      labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
+    },
+    true,
+    ""
+  ),
   repeatTrxNo: getTextField(
-    "Re-Enter Transaction No.",
-    "Enter transaction no.",
+    {
+      labelName: "Re-Enter Transaction No.",
+      labelKey: "TL_PAYMENT_RENTR_TRANS_LABEL"
+    },
+    {
+      labelName: "Enter transaction no.",
+      labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
+    },
     true,
     ""
   )
