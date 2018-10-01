@@ -19,8 +19,14 @@ const OwnerInfoCard = {
       header: getCommonSubHeader("Owner Information"),
       tradeUnitCardContainer: getCommonContainer({
         ownerMobileNo: getTextField(
-          "Mobile No.",
-          "Enter Mobile No.",
+          {
+            labelName: "Mobile No.",
+            labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+          },
+          {
+            labelName: "Enter Mobile No.",
+            labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
+          },
           true,
           getPattern("MobileNo"),
           "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
@@ -32,15 +38,24 @@ const OwnerInfoCard = {
           }
         ),
         ownerName: getTextField(
-          "Name",
-          "Enter Name",
+          { labelName: "Name", labelKey: "TL_NEW_OWNER_DETAILS_NAME_LABEL" },
+          {
+            labelName: "Enter Name",
+            labelKey: "TL_NEW_OWNER_DETAILS_NAME_PLACEHOLDER"
+          },
           true,
           getPattern("Name"),
           "Licenses[0].tradeLicenseDetail.owners[0].name"
         ),
         ownerFatherName: getTextField(
-          "Father/Husband's Name",
-          "Enter Father/Husband's Name",
+          {
+            labelName: "Father/Husband's Name",
+            labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+          },
+          {
+            labelName: "Enter Father/Husband's Name",
+            labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_PLACEHOLDER"
+          },
           true,
           getPattern("Name"),
           "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
@@ -74,22 +89,34 @@ const OwnerInfoCard = {
           {}
         ),
         ownerEmail: getTextField(
-          "Email",
-          "Enter Email",
+          { labelName: "Email", labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL" },
+          {
+            labelName: "Enter Email",
+            labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_PLACEHOLDER"
+          },
           false,
           getPattern("Email"),
           "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
         ),
         ownerPAN: getTextField(
-          "PAN No.",
-          "Enter Owner's PAN No.",
+          { labelName: "PAN No.", labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL" },
+          {
+            labelName: "Enter Owner's PAN No.",
+            labelKey: "TL_NEW_OWNER_DETAILS_PAN_PLACEHOLDER"
+          },
           false,
           getPattern("PAN"),
           "Licenses[0].tradeLicenseDetail.owners[0].pan"
         ),
         ownerAddress: getTextField(
-          "Corrospondence Address",
-          "Enter Corrospondence Address",
+          {
+            labelName: "Corrospondence Address",
+            labelKey: "TL_NEW_OWNER_DETAILS_ADDR_LABEL"
+          },
+          {
+            labelName: "Enter Corrospondence Address",
+            labelKey: "TL_NEW_OWNER_DETAILS_ADDR_PLACEHOLDER"
+          },
           true,
           getPattern("Address"),
           "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
@@ -104,7 +131,6 @@ const OwnerInfoCard = {
           [],
           "code",
           "code"
-
         )
       })
     }),
