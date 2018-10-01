@@ -25,8 +25,14 @@ export const tradeLocationDetails = getCommonCard({
       },
       children: {
         txt: getTextField(
-          "Property ID",
-          "Enter Property ID",
+          {
+            labelName: "Property ID",
+            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
+          },
+          {
+            labelName: "Enter Property ID",
+            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
+          },
           false,
           getPattern("PropertyID"),
           "",
@@ -52,35 +58,80 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
-    tradeLocCity: getSelectTextField("City", "Select City", false, "","","applyScreenMdmsData.tenant.tenants",[],"code","name"),
+    tradeLocCity: getSelectTextField(
+      "City",
+      "Select City",
+      false,
+      "",
+      "",
+      "applyScreenMdmsData.tenant.tenants",
+      [],
+      "code",
+      "name"
+    ),
     tradeLocDoorHouseNo: getTextField(
-      "Door/House No.",
-      "Enter Door/House No.",
+      {
+        labelName: "Door/House No.",
+        labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_LABEL"
+      },
+      {
+        labelName: "Enter Door/House No.",
+        labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_PLACEHOLDER"
+      },
       false,
       getPattern("DoorHouseNo")
     ),
     tradeLocBuilidingName: getTextField(
-      "Building/Colony Name",
-      "Enter Building/Colony Name",
+      {
+        labelName: "Building/Colony Name",
+        labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_LABEL"
+      },
+      {
+        labelName: "Enter Building/Colony Name",
+        labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_PLACEHOLDER"
+      },
       false,
       getPattern("BuildingStreet")
     ),
     tradeLocStreetName: getTextField(
-      "Street Name",
-      "Enter Street Name",
+      {
+        labelName: "Street Name",
+        labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_LABEL"
+      },
+      {
+        labelName: "Enter Street Name",
+        labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_PLACEHOLDER"
+      },
       false,
       getPattern("BuildingStreet")
     ),
-    tradeLocMohalla: getTextField("Mohalla", "Enter Mohalla", true, ""),
+    tradeLocMohalla: getTextField(
+      { labelName: "Mohalla", labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL" },
+      {
+        labelName: "Enter Mohalla",
+        labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
+      },
+      true,
+      ""
+    ),
     tradeLocPincode: getTextField(
-      "Pincode",
-      "Enter Pincode",
+      { labelName: "Pincode", labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL" },
+      {
+        labelName: "Enter Pincode",
+        labelKey: "TL_NEW_TRADE_DETAILS_PIN_PLACEHOLDER"
+      },
       false,
       getPattern("Pincode")
     ),
     tradeLocGISCoord: getTextField(
-      "GIS Coordinates",
-      "Select your trade location on map",
+      {
+        labelName: "GIS Coordinates",
+        labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_LABEL"
+      },
+      {
+        labelName: "Select your trade location on map",
+        labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
+      },
       false,
       "",
       "",
@@ -90,8 +141,14 @@ export const tradeLocationDetails = getCommonCard({
       }
     ),
     tradeLocElectricity: getTextField(
-      "Electricity Connection No.",
-      "Enter Electricity Connection No. of Trade Loaction",
+      {
+        labelName: "Electricity Connection No.",
+        labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
+      },
+      {
+        labelName: "Enter Electricity Connection No. of Trade Loaction",
+        labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_PLACEHOLDER"
+      },
       false,
       getPattern("ElectricityConnNo")
     )

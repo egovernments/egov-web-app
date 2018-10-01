@@ -13,95 +13,95 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getIconStyle } from "../../utils";
 
-const multipleTradeUnitCard =
-  // {
-  //   uiFramework: "custom-molecules",
-  //   componentPath: "MultiItem",
-  //   props: {
-  //     scheama:
-  getCommonGrayCard({
-    header: getCommonSubHeader("Trade Unit  "),
-    tradeUnitCardContainer: getCommonContainer({
-      tradeCategory: getSelectTextField(
-        "Trade Category",
-        "Select Trade Category",
-        true,
-        "",
-        "Licences[0].tradeType",
-        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
-        [],
-        "code",
-        "code",
-        {},
-        {
-          xs: 12,
-          sm: 4
-        }
-      ),
-      tradeType: getSelectTextField(
-        "Trade  Type",
-        "Select Trade Type",
-        true,
-        "",
-        "",
-        "",
-        [],
-        "",
-        "",
-        {},
-        {
-          xs: 12,
-          sm: 4
-        }
-      ),
-      tradeSubType: getSelectTextField(
-        "Trade Sub-Type",
-        "Select Trade Sub-Type",
-        true,
-        "",
-        "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-        "",
-        [],
-        "",
-        "",
-        {},
-        {
-          xs: 12,
-          sm: 4
-        }
-      ),
-      tradeUOM: getTextField(
-        "UOM (Unit of Measurement)",
-        "",
-        true,
-        "",
-        "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
-        {},
-        {
-          xs: 12,
-          sm: 4
-        }
-      ),
-      tradeUOMValue: getTextField(
-        "UOM Value",
-        "Enter UOM Value",
-        true,
-        getPattern("UOMValue"),
-        "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
-        {},
-        {
-          xs: 12,
-          sm: 4
-        }
-      )
-    })
-  });
-//     ,
-//     items: [],
-//     addItemLabel: "ADD TRADE UNIT"
-//   },
-//   type:"array"
-// };
+const multipleTradeUnitCard = getCommonGrayCard({
+  header: getCommonSubHeader("Trade Unit  "),
+  tradeUnitCardContainer: getCommonContainer({
+    tradeCategory: getSelectTextField(
+      "Trade Category",
+      "Select Trade Category",
+      true,
+      "",
+      "Licences[0].tradeType",
+      "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+      [],
+      "code",
+      "code",
+      {},
+      {
+        xs: 12,
+        sm: 4
+      }
+    ),
+    tradeType: getSelectTextField(
+      "Trade  Type",
+      "Select Trade Type",
+      true,
+      "",
+      "",
+      "",
+      [],
+      "",
+      "",
+      {},
+      {
+        xs: 12,
+        sm: 4
+      }
+    ),
+    tradeSubType: getSelectTextField(
+      "Trade Sub-Type",
+      "Select Trade Sub-Type",
+      true,
+      "",
+      "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      "",
+      [],
+      "",
+      "",
+      {},
+      {
+        xs: 12,
+        sm: 4
+      }
+    ),
+    tradeUOM: getTextField(
+      {
+        labelName: "UOM (Unit of Measurement)",
+        labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
+      },
+      {
+        labelName: "UOM",
+        labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
+      },
+      true,
+      "",
+      "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
+      {},
+      {
+        xs: 12,
+        sm: 4
+      }
+    ),
+    tradeUOMValue: getTextField(
+      {
+        labelName: "UOM Value",
+        labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+      },
+      {
+        labelName: "Enter UOM Value",
+        labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
+      },
+      true,
+      getPattern("UOMValue"),
+      "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
+      {},
+      {
+        xs: 12,
+        sm: 4
+      }
+    )
+  })
+});
 
 const accessoriesCard = {
   uiFramework: "custom-molecules",
@@ -141,8 +141,14 @@ const accessoriesCard = {
           }
         ),
         accessoriesUOM: getTextField(
-          "UOM (Unit of Measurement)",
-          "UOM",
+          {
+            labelName: "UOM (Unit of Measurement)",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
+          },
+          {
+            labelName: "UOM",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
+          },
           true,
           "",
           "Licences[0].tradeLicenseDetail.accessories[0].uom",
@@ -153,8 +159,14 @@ const accessoriesCard = {
           }
         ),
         accessoriesUOMValue: getTextField(
-          "UOM Value",
-          "Enter UOM Value",
+          {
+            labelName: "UOM Value",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+          },
+          {
+            labelName: "Enter UOM Value",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
+          },
           false,
           getPattern("UOMValue"),
           "Licences[0].tradeLicenseDetail.accessories[0].uomValue",
@@ -172,7 +184,7 @@ const accessoriesCard = {
     headerName: "Accessory",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-      objectJsonPath:"Licences[0].accessories"
+    objectJsonPath: "Licences[0].accessories"
   },
   type: "array"
 };
@@ -204,8 +216,14 @@ export const tradeDetails = getCommonCard({
       "code"
     ),
     tradeName: getTextField(
-      "Name of Trade",
-      "Example Diljit Da Dhaba",
+      {
+        labelName: "Name of Trade",
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_NAME_LABEL"
+      },
+      {
+        labelName: "Example Diljit Da Dhaba",
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_NAME_PLACEHOLDER"
+      },
       true,
       getPattern("TradeName"),
       "Licenses[0].tradeName"
@@ -245,29 +263,53 @@ export const tradeDetails = getCommonCard({
       "Licences[0].tradeLicenseDetail.structureType"
     ),
     tradeCommencementDate: getDateField(
-      "Trade Commencement Date",
-      "Enter Trade Commencement Date",
+      {
+        labelName: "Trade Commencement Date",
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"
+      },
+      {
+        labelName: "Enter Trade Commencement Date",
+        labekKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_PLACEHOLDER"
+      },
       true,
       getPattern("Date"),
       "Licences[0].commencementDate",
       {}
     ),
     tradeGSTNo: getTextField(
-      "Trade GST No.",
-      "Enter Trade GST No.",
+      {
+        labelName: "Trade GST No.",
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_LABEL"
+      },
+      {
+        labelName: "Enter Trade GST No.",
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_PLACEHOLDER"
+      },
       false,
       getPattern("GSTNo")
     ),
     tradeOperationalArea: getTextField(
-      "Operatonal Area (Sq Ft)",
-      "Enter Operatonal Area in Sq Ft",
+      {
+        labelName: "Operatonal Area (Sq Ft)",
+        labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_LABEL"
+      },
+      {
+        labelName: "Enter Operatonal Area in Sq Ft",
+        labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_PLACEHOLDER"
+      },
       false,
       getPattern("OperationalArea"),
       "Licences[0].tradeLicenseDetail.operationalArea"
     ),
     tradeNoOfEmployee: getTextField(
-      "No. Of Employee",
-      "Enter No. Of Employee",
+      {
+        labelName: "No. Of Employee",
+        labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
+      },
+      {
+        labelName: "Enter No. Of Employee",
+        labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_PLACEHOLDER"
+      },
       false,
       getPattern("NoOfEmp"),
       "Licences[0].tradeLicenseDetail.noOfEmployees"
