@@ -11,7 +11,7 @@ import {
 import get from "lodash/get";
 import set from "lodash/set";
 
-import { commonTransform,objectToDropdown } from "../utils";
+import { commonTransform, objectToDropdown } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { footer } from "./applyResource/footer";
@@ -34,7 +34,7 @@ const header = getCommonContainer({
     props: {
       number: 5434
     },
-    visible:false
+    visible: false
   }
 });
 
@@ -87,6 +87,14 @@ const getMdmsData = async (action, state, dispatch) => {
             { name: "OwnerShipCategory" },
             { name: "DocumentType" }
           ]
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants"
+            }
+          ]
         }
       ]
     }
@@ -107,9 +115,23 @@ const getMdmsData = async (action, state, dispatch) => {
       "MdmsRes.common-masters.OwnerShipCategory"
     );
     payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
-    set(payload,"MdmsRes.TradeLicense.TradeTypeTransformed",objectToDropdown(get(payload,"MdmsRes.TradeLicense.TradeType",[])));
-    set(payload,"MdmsRes.common-masters.StructureTypeTransformed",objectToDropdown(get(payload,"MdmsRes.common-masters.StructureType",[])));
-    set(payload,"MdmsRes.common-masters.OwnerShipCategoryTransformed",objectToDropdown(get(payload,"MdmsRes.common-masters.OwnerShipCategory",[])));
+    set(
+      payload,
+      "MdmsRes.TradeLicense.TradeTypeTransformed",
+      objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
+    );
+    set(
+      payload,
+      "MdmsRes.common-masters.StructureTypeTransformed",
+      objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
+    );
+    set(
+      payload,
+      "MdmsRes.common-masters.OwnerShipCategoryTransformed",
+      objectToDropdown(
+        get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
+      )
+    );
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);

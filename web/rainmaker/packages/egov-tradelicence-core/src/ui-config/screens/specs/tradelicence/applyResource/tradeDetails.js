@@ -28,7 +28,7 @@ const multipleTradeUnitCard =
         true,
         "",
         "Licences[0].tradeType",
-        "",
+        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
         [],
         "code",
         "code",
@@ -130,6 +130,10 @@ const accessoriesCard = {
           false,
           "",
           "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory",
+          "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
+          [],
+          "code",
+          "code",
           {},
           {
             xs: 12,
@@ -227,7 +231,11 @@ export const tradeDetails = getCommonCard({
       "Select Structure Type",
       true,
       "",
-      ""
+      "",
+      "applyScreenMdmsData.common-masters.StructureTypeTransformed",
+      [],
+      "code",
+      "code"
     ),
     tradeStructureSubType: getSelectTextField(
       "Structure Sub Type",

@@ -52,7 +52,7 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
-    tradeLocCity: getSelectTextField("City", "Select City", false, ""),
+    tradeLocCity: getSelectTextField("City", "Select City", false, "","","applyScreenMdmsData.tenant.tenants",[],"code","name"),
     tradeLocDoorHouseNo: getTextField(
       "Door/House No.",
       "Enter Door/House No.",

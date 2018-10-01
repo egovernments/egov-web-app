@@ -50,7 +50,20 @@ const OwnerInfoCard = {
           "Select Gender",
           true,
           "",
-          "Licenses[0].tradeLicenseDetail.owners[0].gender"
+          "Licenses[0].tradeLicenseDetail.owners[0].gender",
+          "",
+          [
+            {
+              code: "MALE",
+              label: "Male"
+            },
+            {
+              code: "FEMALE",
+              label: "Female"
+            }
+          ],
+          "code",
+          "label"
         ),
         ownerDOB: getDateField(
           "Date of Birth",
@@ -86,7 +99,12 @@ const OwnerInfoCard = {
           "Select Special Owner Category",
           true,
           "",
-          "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory"
+          "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory",
+          "applyScreenMdmsData.common-masters.OwnerType",
+          [],
+          "code",
+          "code"
+
         )
       })
     }),
@@ -109,7 +127,11 @@ export const tradeOwnerDetails = getCommonCard({
     "Select Type of Ownership",
     false,
     "",
-    "Licenses[0].tradeLicenseDetail.owners[0].ownerType"
+    "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+    "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed",
+    [],
+    "code",
+    "code"
   ),
   OwnerInfoCard
 });
