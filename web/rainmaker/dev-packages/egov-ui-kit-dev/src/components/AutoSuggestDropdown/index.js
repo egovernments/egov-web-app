@@ -60,6 +60,9 @@ class AutoSuggestDropdown extends React.Component {
       errorMessage,
       boundary,
       dropDownData,
+      toolTip,
+      updateDependentFields,
+      toolTipMessage,
       ...restProps
     } = this.props;
 
