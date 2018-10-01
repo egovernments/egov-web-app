@@ -18,15 +18,17 @@ class LandingPage extends Component {
 
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
+    const modulesToShow = Object.keys(moduleData);
     return (
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
-        acc.push({
-          cities: citiesByModule[item].tenants.map((item) => {
-            return item.code;
-          }),
-          ...moduleData[item],
-        });
+        modulesToShow.indexOf(item) > -1 &&
+          acc.push({
+            cities: citiesByModule[item].tenants.map((item) => {
+              return item.code;
+            }),
+            ...moduleData[item],
+          });
         return acc;
       }, [])
     );

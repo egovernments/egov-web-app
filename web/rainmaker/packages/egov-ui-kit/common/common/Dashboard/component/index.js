@@ -44,7 +44,7 @@ var ModuleCard = function ModuleCard(_ref) {
 
       return _react2.default.createElement(
         "div",
-        { className: "col-sm-6 " + item.className },
+        { key: key, className: "col-sm-6 " + item.className },
         _react2.default.createElement(_components.Card, {
           id: "home-complaint-card",
           className: "clearfix landingPageCard",
@@ -87,7 +87,7 @@ var ModuleCard = function ModuleCard(_ref) {
                       onButton1Click(item, history, onPGRClick);
                     },
                     label: _react2.default.createElement(_translationNode2.default, { label: item.button1, color: "#fff" }),
-                    primary: "true",
+                    primary: true,
                     style: { align: "left" }
                   }, (0, _defineProperty3.default)(_React$createElement, "style", moduleCardButtons), (0, _defineProperty3.default)(_React$createElement, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement, "labelStyle", {
                     padding: "0 12px 0 12px ",
@@ -119,7 +119,7 @@ var ModuleCard = function ModuleCard(_ref) {
                       onButton1Click(item, history, onPGRClick);
                     },
                     label: _react2.default.createElement(_translationNode2.default, { label: item.button1, color: "#fff" }),
-                    primary: "true",
+                    primary: true,
                     style: { align: "left" }
                   }, (0, _defineProperty3.default)(_React$createElement2, "style", moduleCardButtons), (0, _defineProperty3.default)(_React$createElement2, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement2, "labelStyle", {
                     padding: "0 12px 0 12px ",

@@ -17,7 +17,8 @@ class LandingPage extends Component {
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
     const tenantId = localStorage.getItem("tenant-id");
-    // let transformedData =
+    const modulesToShow = Object.keys(moduleData);
+
     return (
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
@@ -25,12 +26,13 @@ class LandingPage extends Component {
           return tenant.code === tenantId;
         });
         if (index > -1) {
-          acc.push({
-            cities: citiesByModule[item].tenants.map((item, key) => {
-              return item.code;
-            }),
-            ...moduleData[item],
-          });
+          modulesToShow.indexOf(item) > -1 &&
+            acc.push({
+              cities: citiesByModule[item].tenants.map((item, key) => {
+                return item.code;
+              }),
+              ...moduleData[item],
+            });
         }
         return acc;
       }, [])
