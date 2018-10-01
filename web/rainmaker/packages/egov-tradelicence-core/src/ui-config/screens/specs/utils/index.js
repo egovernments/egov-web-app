@@ -316,9 +316,19 @@ export const commonTransform = (object, path) => {
       ipath = splitList.slice(0, i + 1).join(".");
     }
   });
-  console.log("aaa...", path);
-  console.log("bbb...", transformedData);
+  // console.log("aaa...", path);
+  // console.log("bbb...", transformedData);
   set(object, path, transformedData);
-  console.log(object);
+  // console.log(object);
   return object;
 };
+
+export const objectToDropdown =(object) =>{
+  let dropDown = [];
+  for (var variable in object) {
+    if (object.hasOwnProperty(variable)) {
+      dropDown.push({code:variable})
+    }
+  }
+  return dropDown;
+}

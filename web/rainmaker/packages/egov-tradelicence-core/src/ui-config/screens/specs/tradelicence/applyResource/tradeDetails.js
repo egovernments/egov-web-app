@@ -184,7 +184,7 @@ export const tradeDetails = getCommonCard({
       "Select License Type",
       true,
       "",
-      "Licences[0].licenseType",
+      "Licenses[0].licenseType",
       "",
       [
         {
@@ -192,8 +192,8 @@ export const tradeDetails = getCommonCard({
           code: "TEMPORARY"
         },
         {
-          code: "PERMANANT",
-          code: "Permanant"
+          code: "PERMANENT",
+          code: "PERMANENT"
         }
       ],
       "code",
