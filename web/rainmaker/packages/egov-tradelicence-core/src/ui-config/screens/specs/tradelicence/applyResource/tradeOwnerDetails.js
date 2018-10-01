@@ -11,6 +11,9 @@ import {
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
+
 const OwnerInfoCard = {
   uiFramework: "custom-molecules",
   componentPath: "MultiItem",
@@ -148,16 +151,48 @@ export const tradeOwnerDetails = getCommonCard({
   paragraph: getCommonParagraph(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
-  tradeLicenseType: getSelectTextField(
-    "Type of ownership",
-    "Select Type of Ownership",
-    false,
-    "",
-    "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-    "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed",
-    [],
-    "code",
-    "code"
-  ),
+  ownershipSection:getCommonContainer({
+    ownership: {...getSelectTextField(
+      "Type of ownership",
+      "Select Type of Ownership",
+      false,
+      "",
+      "LicensesTemp[0].ownerType",
+      "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed",
+      [],
+      "code",
+      "code"
+    ),
+    beforeFieldChange: (action, state, dispatch) => {
+      try {
+        dispatch(
+          pFO(
+            "applyScreenMdmsData.common-masters.OwnerShipSubCategoryTransformed",
+
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                `applyScreenMdmsData.common-masters.OwnerShipCategory.${action.value}`,
+                []
+              )
+            
+          )
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  },
+    ownershipSubCategory: getSelectTextField(
+      "Type of sub ownership",
+      "Select Type of Sub Ownership",
+      false,
+      "",
+      "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+      "applyScreenMdmsData.common-masters.OwnerShipSubCategoryTransformed",
+      [],
+      "code",
+      "code"
+    )
+  }),
   OwnerInfoCard
 });
