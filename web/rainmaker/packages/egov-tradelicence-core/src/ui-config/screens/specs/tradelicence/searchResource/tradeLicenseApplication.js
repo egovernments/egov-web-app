@@ -2,7 +2,7 @@ import {
   getCommonCard,
   getCommonTitle,
   getTextField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer,
   getCommonParagraph,
   getPattern,
@@ -77,7 +77,7 @@ export const tradeLicenseApplication = getCommonCard({
     )
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
-    applicationNo: getSelectTextField(
+    applicationNo: getSelectField(
       "Application status",
       "Select Application Status",
       false,
@@ -149,8 +149,8 @@ export const tradeLicenseApplication = getCommonCard({
     searchButton: {
       componentPath: "Button",
       gridDefination: {
-        xs: "12",
-        sm: "12",
+        xs: 12,
+        sm: 12,
         align: "center"
       },
       props: {

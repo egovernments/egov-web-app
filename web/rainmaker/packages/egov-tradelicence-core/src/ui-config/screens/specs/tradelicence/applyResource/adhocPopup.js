@@ -1,7 +1,7 @@
 import {
   getCommonHeader,
   getTextField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer,
   getCommonSubHeader,
   getLabel
@@ -15,43 +15,35 @@ export const adhocPopup = getCommonContainer({
     {
       subheader: getCommonSubHeader("Adhoc Penalty"),
       penaltyAmountAndReasonContainer: getCommonContainer({
-        penaltyAmount: getTextField(
-          {
+        penaltyAmount: getTextField({
+          label: {
             labelName: "Adhoc Penalty Amount",
             labelKey: "TL_ADD_HOC_CHARGES_POPUP_PEN_AMT_LABEL"
           },
-          {
+          placeholder: {
             labelName: "Enter Adhoc Charge Amount",
             labelKey: "TL_ADD_HOC_CHARGES_POPUP_PEN_AMT_PLACEHOLDER"
-          },
-          false,
-          ""
-        ),
-        penaltyReason: getSelectTextField(
-          "Reason for Adhoc Penalty",
-          "Others",
-          false,
-          ""
-        )
+          }
+        }),
+        penaltyReason: getSelectField({
+          label: { labelName: "Reason for Adhoc Penalty" },
+          placeholder: { labelName: "Others" }
+        })
       }),
-      commentsField: getTextField(
-        {
+      commentsField: getTextField({
+        label: {
           labelName: "Enter Comments",
           labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
         },
-        {
+        placeholder: {
           labelName: "Enter Comments",
           labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
         },
-        false,
-        "",
-        "",
-        {},
-        {
+        gridDefination: {
           xs: 12,
           sm: 12
         }
-      )
+      })
     },
     {
       style: {
@@ -62,24 +54,20 @@ export const adhocPopup = getCommonContainer({
   adhocRebateCard: getCommonContainer({
     subHeader: getCommonSubHeader("Adhoc Rebate"),
     rebateAmountAndReasonContainer: getCommonContainer({
-      rebateAmount: getTextField(
-        {
+      rebateAmount: getTextField({
+        label: {
           labelName: "Adhoc Rebate Amount",
           labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_LABEL"
         },
-        {
+        placeholder: {
           labelName: "Enter Adhoc Rebate Amount",
           labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_PLACEHOLDER"
-        },
-        false,
-        ""
-      ),
-      rebateReason: getSelectTextField(
-        "Reason for Adhoc Rebate",
-        "Select Reason for Adhoc Rebate",
-        false,
-        ""
-      )
+        }
+      }),
+      rebateReason: getSelectField({
+        label: { labelName: "Reason for Adhoc Rebate" },
+        placeholder: { labelName: "Select Reason for Adhoc Rebate" }
+      })
     })
   }),
   div: {

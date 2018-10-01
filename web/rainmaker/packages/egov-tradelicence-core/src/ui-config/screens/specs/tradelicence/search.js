@@ -36,16 +36,16 @@ const tradeLicenseSearchAndResult = {
           children: {
             header: {
               gridDefination: {
-                xs: "12",
-                sm: "6"
+                xs: 12,
+                sm: 6
               },
               ...header
             },
             newApplicationButton: {
               componentPath: "Button",
               gridDefination: {
-                xs: "12",
-                sm: "6",
+                xs: 12,
+                sm: 6,
                 align: "right"
               },
               visible: enableButton,

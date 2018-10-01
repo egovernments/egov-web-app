@@ -14,8 +14,8 @@ export const getReviewDocuments = (isEditable = true) => {
       children: {
         header: {
           gridDefination: {
-            xs: "12",
-            sm: "10"
+            xs: 12,
+            sm: 10
           },
           ...getCommonSubHeader("Documents")
         },
@@ -25,8 +25,8 @@ export const getReviewDocuments = (isEditable = true) => {
             color: "primary"
           },
           gridDefination: {
-            xs: "12",
-            sm: "2",
+            xs: 12,
+            sm: 2,
             align: "right"
           },
           visible: isEditable,

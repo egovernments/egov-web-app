@@ -15,8 +15,8 @@ export const getApprovalDetails = () => {
       children: {
         header: {
           gridDefination: {
-            xs: "12",
-            sm: "10"
+            xs: 12,
+            sm: 10
           },
           ...getCommonSubHeader("Approval/Rejection Details")
         },

@@ -1,11 +1,11 @@
 import {
   getTextField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 export const payeeDetails = getCommonContainer({
-  paidBy: getSelectTextField("Paid By", "Paid By", false, ""),
+  paidBy: getSelectField("Paid By", "Paid By", false, ""),
   payerName: getTextField(
     {
       labelName: "Payer Name",

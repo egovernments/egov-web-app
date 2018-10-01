@@ -6,7 +6,7 @@ import {
   getCommonParagraph,
   getTextField,
   getDateField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer,
   getPattern,
   getLabel
@@ -19,22 +19,17 @@ const multipleTradeUnitCard = getCommonGrayCard({
   header: getCommonSubHeader("Trade Unit  "),
   tradeUnitCardContainer: getCommonContainer({
     tradeCategory: {
-      ...getSelectTextField(
-        "Trade Category",
-        "Select Trade Category",
-        true,
-        "",
-        "LicencesTemp[0].tradeType",
-        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
-        [],
-        "code",
-        "code",
-        {},
-        {
+      ...getSelectField({
+        label: { labelName: "Trade Category" },
+        placeholder: { labelName: "Select Trade Category" },
+        required: true,
+        jsonPath: "LicencesTemp[0].tradeType",
+        sourceJsonPath: "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+        gridDefination: {
           xs: 12,
           sm: 4
         }
-      ),
+      }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
           dispatch(
@@ -55,22 +50,18 @@ const multipleTradeUnitCard = getCommonGrayCard({
       }
     },
     tradeType: {
-      ...getSelectTextField(
-        "Trade  Type",
-        "Select Trade Type",
-        true,
-        "",
-        "LicencesTemp[0].tradeSubType",
-        "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
-        [],
-        "code",
-        "code",
-        {},
-        {
+      ...getSelectField({
+        label: { labelName: "Trade  Type" },
+        placeholder: { labelName: "Select Trade Type" },
+        required: true,
+        jsonPath: "LicencesTemp[0].tradeSubType",
+        sourceJsonPath:
+          "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+        gridDefination: {
           xs: 12,
           sm: 4
         }
-      ),
+      }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
           let tradeCategory = get(
@@ -95,58 +86,51 @@ const multipleTradeUnitCard = getCommonGrayCard({
         }
       }
     },
-    tradeSubType: getSelectTextField(
-      "Trade Sub-Type",
-      "Select Trade Sub-Type",
-      true,
-      "",
-      "LicencesTemp[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-      "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
-      [],
-      "code",
-      "code",
-      {},
-      {
+    tradeSubType: getSelectField({
+      label: { labelName: "Trade Sub-Type" },
+      placeholder: { labelName: "Select Trade Sub-Type" },
+      required: true,
+      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      sourceJsonPath:
+        "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+      gridDefination: {
         xs: 12,
         sm: 4
       }
-    ),
-    tradeUOM: getTextField(
-      {
+    }),
+    tradeUOM: getTextField({
+      label: {
         labelName: "UOM (Unit of Measurement)",
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
       },
-      {
+      placeholder: {
         labelName: "UOM",
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
       },
-      true,
-      "",
-      "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
-      {},
-      {
+      required: true,
+      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
+      gridDefination: {
         xs: 12,
         sm: 4
       }
-    ),
-    tradeUOMValue: getTextField(
-      {
+    }),
+    tradeUOMValue: getTextField({
+      label: {
         labelName: "UOM Value",
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter UOM Value",
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
       },
-      true,
-      getPattern("UOMValue"),
-      "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
-      {},
-      {
+      required: true,
+      pattern: getPattern("UOMValue"),
+      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
+      gridDefination: {
         xs: 12,
         sm: 4
       }
-    )
+    })
   })
 });
 
@@ -171,58 +155,50 @@ const accessoriesCard = {
         }
       },
       accessoriesCardContainer: getCommonContainer({
-        accessoriesName: getSelectTextField(
-          "Accessories",
-          "Select Accessories",
-          false,
-          "",
-          "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory",
-          "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
-          [],
-          "code",
-          "code",
-          {},
-          {
+        accessoriesName: getSelectField({
+          label: { labelName: "Accessories" },
+          placeholder: { labelName: "Select Accessories" },
+          jsonPath:
+            "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory",
+          sourceJsonPath:
+            "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
+          gridDefination: {
             xs: 12,
             sm: 4
           }
-        ),
-        accessoriesUOM: getTextField(
-          {
+        }),
+        accessoriesUOM: getTextField({
+          label: {
             labelName: "UOM (Unit of Measurement)",
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
           },
-          {
+          placeholder: {
             labelName: "UOM",
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
           },
-          true,
-          "",
-          "Licences[0].tradeLicenseDetail.accessories[0].uom",
-          {},
-          {
+          required: true,
+          jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uom",
+          gridDefination: {
             xs: 12,
             sm: 4
           }
-        ),
-        accessoriesUOMValue: getTextField(
-          {
+        }),
+        accessoriesUOMValue: getTextField({
+          label: {
             labelName: "UOM Value",
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
           },
-          {
+          placeholder: {
             labelName: "Enter UOM Value",
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
           },
-          false,
-          getPattern("UOMValue"),
-          "Licences[0].tradeLicenseDetail.accessories[0].uomValue",
-          {},
-          {
+          pattern: getPattern("UOMValue"),
+          jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uomValue",
+          gridDefination: {
             xs: 12,
             sm: 4
           }
-        )
+        })
       })
     }),
 
@@ -242,67 +218,56 @@ export const tradeDetails = getCommonCard({
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
   tradeDetailsConatiner: getCommonContainer({
-    tradeLicenseType: getSelectTextField(
-      "License Type",
-      "Select License Type",
-      true,
-      "",
-      "Licenses[0].licenseType",
-      "",
-      [
+    tradeLicenseType: getSelectField({
+      label: { labelName: "License Type" },
+      placeholder: { labelName: "Select License Type" },
+      required: true,
+      jsonPath: "Licenses[0].licenseType",
+      data: [
         {
-          code: "TEMPORARY",
           code: "TEMPORARY"
         },
         {
-          code: "PERMANENT",
           code: "PERMANENT"
         }
-      ],
-      "code",
-      "code"
-    ),
-    tradeName: getTextField(
-      {
+      ]
+    }),
+    tradeName: getTextField({
+      label: {
         labelName: "Name of Trade",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_NAME_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Example Diljit Da Dhaba",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_NAME_PLACEHOLDER"
       },
-      true,
-      getPattern("TradeName"),
-      "Licenses[0].tradeName"
-    ),
-    tradeFromDate: getDateField(
-      "From Date",
-      "Trade License From Date",
-      true,
-      getPattern("Date"),
-      "Licenses[0].validFrom",
-      {}
-    ),
-    tradeToDate: getDateField(
-      "To Date",
-      "Trade License From Date",
-      true,
-      getPattern("Date"),
-      "Licenses[0].validTo",
-      {}
-    ),
+      required: true,
+      pattern: getPattern("TradeName"),
+      jsonPath: "Licenses[0].tradeName"
+    }),
+    tradeFromDate: getDateField({
+      label: { labelName: "From Date" },
+      placeholder: { labelName: "Trade License From Date" },
+      required: true,
+      pattern: getPattern("Date"),
+      jsonPath: "Licenses[0].validFrom"
+    }),
+    tradeToDate: getDateField({
+      label: { labelName: "To Date" },
+      placeholder: { labelName: "Trade License From Date" },
+      required: true,
+      pattern: getPattern("Date"),
+      jsonPath: "Licenses[0].validTo"
+    }),
     tradeStructureType: {
-      ...getSelectTextField(
-        "Structure Type",
-        "Select Structure Type",
-        true,
-        "",
-        "LicencesTemp[0].tradeLicenseDetail.structureType",
-        "applyScreenMdmsData.common-masters.StructureTypeTransformed",
-        [],
-        "code",
-        "code"
-      ),
+      ...getSelectField({
+        label: { labelName: "Structure Type" },
+        placeholder: { labelName: "Select Structure Type" },
+        required: true,
+        jsonPath: "LicencesTemp[0].tradeLicenseDetail.structureType",
+        sourceJsonPath:
+          "applyScreenMdmsData.common-masters.StructureTypeTransformed"
+      }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
           dispatch(
@@ -321,69 +286,62 @@ export const tradeDetails = getCommonCard({
         }
       }
     },
-    tradeStructureSubType: getSelectTextField(
-      "Structure Sub Type",
-      "Select Structure Sub Type",
-      true,
-      "",
-      "Licences[0].tradeLicenseDetail.structureType",
-      "applyScreenMdmsData.common-masters.StructureSubTypeTransformed",
-      [],
-      "code",
-      "code"
-    ),
-    tradeCommencementDate: getDateField(
-      {
+    tradeStructureSubType: getSelectField({
+      label: { labelName: "Structure Sub Type" },
+      placeholder: { labelName: "Select Structure Sub Type" },
+      required: true,
+      jsonPath: "Licences[0].tradeLicenseDetail.structureType",
+      sourceJsonPath:
+        "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
+    }),
+    tradeCommencementDate: getDateField({
+      label: {
         labelName: "Trade Commencement Date",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Trade Commencement Date",
         labekKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_PLACEHOLDER"
       },
-      true,
-      getPattern("Date"),
-      "Licences[0].commencementDate",
-      {}
-    ),
-    tradeGSTNo: getTextField(
-      {
+      required: true,
+      pattern: getPattern("Date"),
+      jsonPath: "Licences[0].commencementDate"
+    }),
+    tradeGSTNo: getTextField({
+      label: {
         labelName: "Trade GST No.",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Trade GST No.",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_PLACEHOLDER"
       },
-      false,
-      getPattern("GSTNo")
-    ),
-    tradeOperationalArea: getTextField(
-      {
+      pattern: getPattern("GSTNo")
+    }),
+    tradeOperationalArea: getTextField({
+      label: {
         labelName: "Operatonal Area (Sq Ft)",
         labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Operatonal Area in Sq Ft",
         labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_PLACEHOLDER"
       },
-      false,
-      getPattern("OperationalArea"),
-      "Licences[0].tradeLicenseDetail.operationalArea"
-    ),
-    tradeNoOfEmployee: getTextField(
-      {
+      pattern: getPattern("OperationalArea"),
+      jsonPath: "Licences[0].tradeLicenseDetail.operationalArea"
+    }),
+    tradeNoOfEmployee: getTextField({
+      label: {
         labelName: "No. Of Employee",
         labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter No. Of Employee",
         labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_PLACEHOLDER"
       },
-      false,
-      getPattern("NoOfEmp"),
-      "Licences[0].tradeLicenseDetail.noOfEmployees"
-    )
+      pattern: getPattern("NoOfEmp"),
+      jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees"
+    })
   }),
   multipleTradeUnitCard,
   accessoriesCard

@@ -5,7 +5,7 @@ import {
   getCommonSubHeader,
   getCommonParagraph,
   getTextField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer,
   getDateField,
   getPattern
@@ -21,120 +21,118 @@ const OwnerInfoCard = {
     scheama: getCommonGrayCard({
       header: getCommonSubHeader("Owner Information"),
       tradeUnitCardContainer: getCommonContainer({
-        ownerMobileNo: getTextField(
-          {
+        ownerMobileNo: getTextField({
+          label: {
             labelName: "Mobile No.",
             labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
           },
-          {
+          placeholder: {
             labelName: "Enter Mobile No.",
             labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
           },
-          true,
-          getPattern("MobileNo"),
-          "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-          {
+          required: true,
+          pattern: getPattern("MobileNo"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+          iconObj: {
             iconName: "search",
             position: "end",
             color: "#FE7A51",
             label: "SEARCH"
           }
-        ),
-        ownerName: getTextField(
-          { labelName: "Name", labelKey: "TL_NEW_OWNER_DETAILS_NAME_LABEL" },
-          {
+        }),
+        ownerName: getTextField({
+          label: {
+            labelName: "Name",
+            labelKey: "TL_NEW_OWNER_DETAILS_NAME_LABEL"
+          },
+          placeholder: {
             labelName: "Enter Name",
             labelKey: "TL_NEW_OWNER_DETAILS_NAME_PLACEHOLDER"
           },
-          true,
-          getPattern("Name"),
-          "Licenses[0].tradeLicenseDetail.owners[0].name"
-        ),
-        ownerFatherName: getTextField(
-          {
+          required: true,
+          pattern: getPattern("Name"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
+        }),
+        ownerFatherName: getTextField({
+          label: {
             labelName: "Father/Husband's Name",
             labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
           },
-          {
+          placeholder: {
             labelName: "Enter Father/Husband's Name",
             labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_PLACEHOLDER"
           },
-          true,
-          getPattern("Name"),
-          "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
-        ),
-        OwnerGender: getSelectTextField(
-          "Gender",
-          "Select Gender",
-          true,
-          "",
-          "Licenses[0].tradeLicenseDetail.owners[0].gender",
-          "",
-          [
+          required: true,
+          pattern: getPattern("Name"),
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
+        }),
+        OwnerGender: getSelectField({
+          label: { labelName: "Gender" },
+          placeholder: { labelName: "Select Gender" },
+          required: true,
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
+          data: [
             {
-              code: "MALE",
-              label: "Male"
+              code: "MALE"
             },
             {
-              code: "FEMALE",
-              label: "Female"
+              code: "FEMALE"
             }
-          ],
-          "code",
-          "label"
-        ),
-        ownerDOB: getDateField(
-          "Date of Birth",
-          "Enter Date of Birth",
-          true,
-          getPattern("Date"),
-          "Licenses[0].tradeLicenseDetail.owners[0].dob",
-          {}
-        ),
-        ownerEmail: getTextField(
-          { labelName: "Email", labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL" },
-          {
+          ]
+        }),
+        ownerDOB: getDateField({
+          label: { labelName: "Date of Birth" },
+          placeholder: { labelName: "Enter Date of Birth" },
+          required: true,
+          pattern: getPattern("Date"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
+        }),
+        ownerEmail: getTextField({
+          label: {
+            labelName: "Email",
+            labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
+          },
+          placeholder: {
             labelName: "Enter Email",
             labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_PLACEHOLDER"
           },
-          false,
-          getPattern("Email"),
-          "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
-        ),
-        ownerPAN: getTextField(
-          { labelName: "PAN No.", labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL" },
-          {
+          pattern: getPattern("Email"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
+        }),
+        ownerPAN: getTextField({
+          label: {
+            labelName: "PAN No.",
+            labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL"
+          },
+          placeholder: {
             labelName: "Enter Owner's PAN No.",
             labelKey: "TL_NEW_OWNER_DETAILS_PAN_PLACEHOLDER"
           },
-          false,
-          getPattern("PAN"),
-          "Licenses[0].tradeLicenseDetail.owners[0].pan"
-        ),
-        ownerAddress: getTextField(
-          {
+          pattern: getPattern("PAN"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan"
+        }),
+        ownerAddress: getTextField({
+          label: {
             labelName: "Corrospondence Address",
             labelKey: "TL_NEW_OWNER_DETAILS_ADDR_LABEL"
           },
-          {
+          placeholder: {
             labelName: "Enter Corrospondence Address",
             labelKey: "TL_NEW_OWNER_DETAILS_ADDR_PLACEHOLDER"
           },
-          true,
-          getPattern("Address"),
-          "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-        ),
-        OwnerSpecialCategory: getSelectTextField(
-          "Special Owner Category",
-          "Select Special Owner Category",
-          true,
-          "",
-          "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory",
-          "applyScreenMdmsData.common-masters.OwnerType",
-          [],
-          "code",
-          "code"
-        )
+          required: true,
+          pattern: getPattern("Address"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
+        }),
+        OwnerSpecialCategory: getSelectField({
+          label: { labelName: "Special Owner Category" },
+          placeholder: { labelName: "Select Special Owner Category" },
+          required: true,
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory",
+          sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType"
+        })
       })
     }),
     items: [],
@@ -151,48 +149,12 @@ export const tradeOwnerDetails = getCommonCard({
   paragraph: getCommonParagraph(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   ),
-  ownershipSection:getCommonContainer({
-    ownership: {...getSelectTextField(
-      "Type of ownership",
-      "Select Type of Ownership",
-      false,
-      "",
-      "LicensesTemp[0].ownerType",
-      "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed",
-      [],
-      "code",
-      "code"
-    ),
-    beforeFieldChange: (action, state, dispatch) => {
-      try {
-        dispatch(
-          pFO(
-            "applyScreenMdmsData.common-masters.OwnerShipSubCategoryTransformed",
-
-              get(
-                state.screenConfiguration.preparedFinalObject,
-                `applyScreenMdmsData.common-masters.OwnerShipCategory.${action.value}`,
-                []
-              )
-            
-          )
-        );
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  },
-    ownershipSubCategory: getSelectTextField(
-      "Type of sub ownership",
-      "Select Type of Sub Ownership",
-      false,
-      "",
-      "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-      "applyScreenMdmsData.common-masters.OwnerShipSubCategoryTransformed",
-      [],
-      "code",
-      "code"
-    )
+  ownership: getSelectField({
+    label: { labelName: "Type of ownership" },
+    placeholder: { labelName: "Select Type of Ownership" },
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+    sourceJsonPath:
+      "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"
   }),
   OwnerInfoCard
 });

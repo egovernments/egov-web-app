@@ -85,7 +85,8 @@ const getMdmsData = async (action, state, dispatch) => {
             { name: "StructureType" },
             { name: "OwnerType" },
             { name: "OwnerShipCategory" },
-            { name: "DocumentType" }
+            { name: "DocumentType" },
+            {name:"UOM"}
           ]
         },
         {
@@ -162,8 +163,8 @@ const screenConfig = {
           children: {
             header: {
               gridDefination: {
-                xs: "12",
-                sm: "10"
+                xs: 12,
+                sm: 10
               },
               ...header
             },
@@ -173,8 +174,8 @@ const screenConfig = {
                 color: "primary"
               },
               gridDefination: {
-                xs: "12",
-                sm: "2",
+                xs: 12,
+                sm: 2,
                 align: "right"
               },
               children: {

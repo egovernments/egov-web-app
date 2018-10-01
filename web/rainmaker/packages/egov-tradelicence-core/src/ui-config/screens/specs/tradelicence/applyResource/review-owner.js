@@ -16,8 +16,8 @@ export const getReviewOwner = (isEditable = true) => {
       children: {
         header: {
           gridDefination: {
-            xs: "12",
-            sm: "10"
+            xs: 12,
+            sm: 10
           },
           ...getCommonSubHeader("Owner Details")
         },
@@ -28,8 +28,8 @@ export const getReviewOwner = (isEditable = true) => {
           },
           visible: isEditable,
           gridDefination: {
-            xs: "12",
-            sm: "2",
+            xs: 12,
+            sm: 2,
             align: "right"
           },
           children: {

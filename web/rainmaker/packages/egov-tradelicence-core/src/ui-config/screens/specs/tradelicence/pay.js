@@ -42,8 +42,8 @@ const screenConfig = {
           children: {
             header: {
               gridDefination: {
-                xs: "12",
-                sm: "10"
+                xs: 12,
+                sm: 10
               },
               ...header
             }

@@ -17,8 +17,8 @@ export const getReviewTrade = (isEditable = true) => {
       children: {
         header: {
           gridDefination: {
-            xs: "12",
-            sm: "10"
+            xs: 12,
+            sm: 10
           },
           ...getCommonSubHeader("Trade Details")
         },
@@ -29,8 +29,8 @@ export const getReviewTrade = (isEditable = true) => {
           },
           visible: isEditable,
           gridDefination: {
-            xs: "12",
-            sm: "2",
+            xs: 12,
+            sm: 2,
             align: "right"
           },
           children: {

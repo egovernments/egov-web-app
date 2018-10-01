@@ -142,8 +142,8 @@ const screenConfig = {
           children: {
             header1: {
               gridDefination: {
-                xs: "12",
-                sm: "9"
+                xs: 12,
+                sm: 9
               },
               ...headerrow
             },
@@ -154,8 +154,8 @@ const screenConfig = {
                 color: "primary"
               },
               gridDefination: {
-                xs: "12",
-                sm: "3",
+                xs: 12,
+                sm: 3,
                 align: "right"
               },
               children: {

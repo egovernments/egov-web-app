@@ -1,42 +1,39 @@
 import {
   getTextField,
-  getSelectTextField,
+  getSelectField,
   getCommonContainer,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { payeeDetails } from "./payeeDetails";
 
 export const cardDetails = getCommonContainer({
-  last4Digits: getSelectTextField(
-    "Last 4 digits",
-    "Enter Last 4 digits of the card",
-    true,
-    ""
-  ),
-  TrxNo: getTextField(
-    {
+  last4Digits: getSelectField({
+    label: { labelName: "Last 4 digits" },
+    placeholder: { labelName: "Enter Last 4 digits of the card" },
+    required: true
+  }),
+  TrxNo: getTextField({
+    label: {
       labelName: "Transaction No.",
       labelKey: "TL_PAYMENT_TRANS_NO_LABEL"
     },
-    {
+    placeholder: {
       labelName: "Enter transaction no.",
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
-    true,
-    ""
-  ),
-  repeatTrxNo: getTextField(
-    {
+    required: true
+  }),
+  repeatTrxNo: getTextField({
+    label: {
       labelName: "Re-Enter Transaction No.",
       labelKey: "TL_PAYMENT_RENTR_TRANS_LABEL"
     },
-    {
+    placeholder: {
       labelName: "Enter transaction no.",
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
-    true,
-    ""
-  )
+    required: true
+  })
 });
 
 export const card = getCommonContainer({
