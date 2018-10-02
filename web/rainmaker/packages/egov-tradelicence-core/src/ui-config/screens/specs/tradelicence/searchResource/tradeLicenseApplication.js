@@ -86,27 +86,21 @@ export const tradeLicenseApplication = getCommonCard({
       "",
       [
         {
-          code: "INITIATED",
           code: "INITIATED"
         },
         {
-          code: "APPLIED",
           code: "APPLIED"
         },
         {
-          code: "APPROVED",
           code: "APPROVED"
         },
         {
-          code: "PENDING APPROVAL",
           code: "PENDING APPROVAL"
         },
         {
-          code: "PENDING PAYMENT",
           code: "PENDING PAYMENT"
         },
         {
-          code: "PENDING APPLICATION",
           code: "PENDING APPLICATION"
         }
       ],

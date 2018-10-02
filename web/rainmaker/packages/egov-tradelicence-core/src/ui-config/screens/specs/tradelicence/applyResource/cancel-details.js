@@ -2,11 +2,8 @@ import {
   getCommonGrayCard,
   getCommonSubHeader,
   getCommonContainer,
-  getLabelWithValue,
-  getLabel
+  getLabelWithValue
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
-import { changeStep } from "./footer";
 
 export const getCancelDetails = (isEditable = true) => {
   return getCommonGrayCard({

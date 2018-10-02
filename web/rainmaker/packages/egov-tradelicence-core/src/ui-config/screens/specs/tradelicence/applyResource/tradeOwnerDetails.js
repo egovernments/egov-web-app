@@ -11,9 +11,6 @@ import {
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import get from "lodash/get";
-
 const OwnerInfoCard = {
   uiFramework: "custom-molecules",
   componentPath: "MultiItem",

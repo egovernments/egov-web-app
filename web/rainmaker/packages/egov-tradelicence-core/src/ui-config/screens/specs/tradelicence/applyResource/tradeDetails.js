@@ -8,8 +8,7 @@ import {
   getDateField,
   getSelectField,
   getCommonContainer,
-  getPattern,
-  getLabel
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getIconStyle, objectToDropdown } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";

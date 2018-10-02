@@ -19,7 +19,6 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
-const tradeLicenseNo = getQueryArg(window.location.href, "licenseNo");
 
 let headerSideText = "";
 let titleText = "";

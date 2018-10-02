@@ -4,12 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import {
-  getImageUrlByFile,
-  acceptedFiles,
-  getFileSize,
-  isFileValid
-} from "ui-utils/commons";
+import { acceptedFiles, getFileSize, isFileValid } from "ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { uploadFile } from "ui-utils/api";
@@ -114,7 +109,7 @@ class DocumentList extends Component {
           return;
         }
         if (file.type.match(/^image\//)) {
-          const imageUri = await getImageUrlByFile(file);
+          //const imageUri = await getImageUrlByFile(file);
           const fileStoreId = await uploadFile(
             S3_BUCKET.endPoint,
             "rainmaker-pgr",
@@ -147,7 +142,7 @@ class DocumentList extends Component {
     }
   };
   render() {
-    const { classes, documents, buttonLabel, description } = this.props;
+    const { classes, documents, description } = this.props;
     const { uploadedIndex } = this.state;
     return (
       <div>

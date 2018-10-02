@@ -169,44 +169,47 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
 
 export const getApprovalTextField = () => {
   if (queryValue === "reject") {
-    return getTextField(
-      {
+    return getTextField({
+      label: {
         labelName: "Comments",
         labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Rejection Comments",
         labelKey: "TL_REJECTION_CHECKLIST_COMMENTS_PLACEHOLDER"
       },
-      false,
-      ""
-    );
+      required: false,
+      pattern: "",
+      jsonPath: ""
+    });
   } else if (queryValue === "cancel") {
-    return getTextField(
-      {
+    return getTextField({
+      label: {
         labelName: "Comments",
         labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Cancellation Comments",
         labelKey: "TL_CANCEL_CHECKLIST_COMMENTS_PLACEHOLDER"
       },
-      false,
-      ""
-    );
+      required: false,
+      pattern: "",
+      jsonPath: ""
+    });
   } else {
-    return getTextField(
-      {
+    return getTextField({
+      label: {
         labelName: "Comments",
         labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Approval Comments",
         labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_PLACEHOLDER_APPR"
       },
-      false,
-      ""
-    );
+      required: false,
+      pattern: "",
+      jsonPath: ""
+    });
   }
 };
 
@@ -327,7 +330,6 @@ export const commonTransform = (object, path) => {
   data.map(a => {
     const splitList = a.code.split(".");
     let ipath = "";
-    let k = 0;
     for (let i = 0; i < splitList.length; i += 1) {
       if (i != splitList.length - 1) {
         if (
@@ -344,15 +346,11 @@ export const commonTransform = (object, path) => {
         }
       } else {
         get(transformedData, ipath).push(a);
-        // insert(transformedData + "." + ipath, a);
       }
       ipath = splitList.slice(0, i + 1).join(".");
     }
   });
-  // console.log("aaa...", path);
-  // console.log("bbb...", transformedData);
   set(object, path, transformedData);
-  // console.log(object);
   return object;
 };
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { UploadFile, UploadedDocument } from "ui-atoms-local";
 import { withStyles } from "@material-ui/core/styles";
-import { getImageUrlByFile } from "ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { uploadFile } from "ui-utils/api";
@@ -56,7 +55,7 @@ class UploadMultipleFiles extends Component {
         .forEach(async (key, index) => {
           const file = files[key];
           if (file.type.match(/^image\//)) {
-            const imageUri = await getImageUrlByFile(file);
+            // const imageUri = await getImageUrlByFile(file);
             const fileStoreId = await uploadFile(
               S3_BUCKET.endPoint,
               "rainmaker-pgr",

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { UploadFile, UploadedDocument } from "ui-atoms-local";
 
 const UploadSingleFile = ({
