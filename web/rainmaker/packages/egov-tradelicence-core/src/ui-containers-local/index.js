@@ -9,6 +9,9 @@ const CustomTabContainer = Loadable({
   loading: () => <Loading />
 });
 
-export {
-  CustomTabContainer
-}
+const LabelContainer = Loadable({
+  loader: () => import("./LabelContainer"),
+  loading: () => <Loading />
+});
+
+export { CustomTabContainer, LabelContainer };

@@ -363,3 +363,70 @@ export const objectToDropdown = object => {
   }
   return dropDown;
 };
+
+//Testing
+
+export const getLabelNew = schema => {
+  const { label, labelKey, jsonPath, props = {} } = schema;
+  return {
+    uiFramework: "custom-containers-local",
+    componentPath: "LabelContainer",
+    props: {
+      label,
+      labelKey,
+      jsonPath,
+      ...props
+    }
+  };
+};
+
+export const getCommonHeader = schema => {
+  const { textLabel = {}, jsonPath, props } = schema;
+  const { label, labelKey } = textLabel;
+  return {
+    componentPath: "Typography",
+    props: {
+      variant: "headline",
+      ...props
+    },
+    children: {
+      [textLabel]: getLabelNew({ label, labelKey }),
+      [jsonPath]: getLabelNew({ jsonPath })
+    }
+  };
+};
+
+export const getCommonCaption = textScheama => {
+  let { textLabel = {}, props = {} } = textScheama;
+  return getCommonHeader({
+    textLabel,
+    props: { variant: "caption", ...props }
+  });
+};
+
+export const getCommonValue = textScheama => {
+  let { jsonPath, props = {} } = textScheama;
+  return getCommonHeader({ jsonPath, props: { variant: "body2", ...props } });
+};
+
+export const getLabelWithValueNew = textScheama => {
+  const { textLabel = {}, jsonPath, props = {} } = textScheama;
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    gridDefination: {
+      xs: 6,
+      sm: 3
+    },
+    props: {
+      style: {
+        marginBottom: "16px"
+      },
+      ...props
+    },
+    children: {
+      label: getCommonCaption({ textLabel }),
+      value: getCommonValue({ jsonPath })
+    }
+  };
+};
