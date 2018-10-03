@@ -407,3 +407,17 @@ export const convertDateToEpoch = dateString => {
   const parts = dateString.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   return Date.UTC(parts[3], parts[2] - 1, parts[1]);
 };
+
+export const getReceiptData = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "collection-services/receipts/_search",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
