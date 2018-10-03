@@ -13,83 +13,79 @@ import {
 import { searchApiCall } from "./functions";
 
 export const tradeLicenseApplication = getCommonCard({
-  subHeader: getCommonTitle({
-    labelName: "Search Trade License Application",
-    labelKey: "TL_HOME_SEARCH_RESULTS_HEADING"
-  }),
-  subParagraph: getCommonParagraph({
-    labelName:
-      "Please provide at least one parameter to search for an application",
-    labelKey: "TL_HOME_SEARCH_RESULTS_DESC"
-  }),
+  subHeader: getCommonTitle("Search Trade License Application"),
+  subParagraph: getCommonParagraph(
+    "Please provide at least one parameter to search for an application"
+  ),
   appTradeAndMobNumContainer: getCommonContainer({
-    applicationNo: getTextField(
-      {
+    applicationNo: getTextField({
+      label: {
         labelName: "Application No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Application No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_PLACEHOLDER"
       },
-      false,
-      "",
-      "searchScreen.applicationNumber",
-      {},
-      {
+      gridDefination: {
         xs: 12,
         sm: 4
-      }
-    ),
-    tradeLicenseNo: getTextField(
-      {
+      },
+      required: false,
+      pattern: "",
+      jsonPath: "searchScreen.applicationNumber"
+    }),
+
+    tradeLicenseNo: getTextField({
+      label: {
         labelName: "Trade License No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter Trade License No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_PLACEHOLDER"
       },
-      false,
-      "",
-      "searchScreen.licenseNumber",
-      {},
-      {
+      gridDefination: {
         xs: 12,
         sm: 4
-      }
-    ),
-    ownerMobNo: getTextField(
-      {
+      },
+      required: false,
+      pattern: "",
+      jsonPath: "searchScreen.licenseNumber"
+    }),
+    ownerMobNo: getTextField({
+      label: {
         labelName: "Owner Mobile No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_OWN_MOB_LABEL"
       },
-      {
+      placeholder: {
         labelName: "Enter your mobile No.",
         labelKey: "TL_HOME_SEARCH_RESULTS_OWN_MOB_PLACEHOLDER"
       },
-      false,
-      getPattern("MobileNo"),
-      "searchScreen.mobileNumber",
-      {
-        position: "start",
-        label: "+91 |"
-      },
-      {
+      gridDefination: {
         xs: 12,
         sm: 4
-      }
-    )
+      },
+      iconObj: {
+        label: "+91 |",
+        position: "start"
+      },
+      required: false,
+      pattern: getPattern("MobileNo"),
+      jsonPath: "searchScreen.mobileNumber"
+    })
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
-    applicationNo: getSelectField(
-      "Application status",
-      "Select Application Status",
-      false,
-      "",
-      "searchScreen.status",
-      "",
-      [
+    applicationNo: getSelectField({
+      label: { labelName: "Application status" },
+      placeholder: { labelName: "Select Application Status" },
+      required: false,
+      jsonPath: "searchScreen.status",
+      gridDefination: {
+        xs: 12,
+        sm: 4
+      },
+      data: [
         {
           code: "INITIATED"
         },
@@ -97,51 +93,43 @@ export const tradeLicenseApplication = getCommonCard({
           code: "APPLIED"
         },
         {
+          code: "PAID"
+        },
+        {
           code: "APPROVED"
         },
         {
-          code: "PENDING APPROVAL"
+          code: "REJECTED"
         },
         {
-          code: "PENDING PAYMENT"
-        },
-        {
-          code: "PENDING APPLICATION"
+          code: "CANCELED"
         }
-      ],
-      "code",
-      "code",
-      {},
-      {
-        xs: 12,
-        sm: 4
-      }
-    ),
-    fromDate: getDateField(
-      "From Date",
-      "From Date",
-      false,
-      getPattern("Date"),
-      "",
-      {},
+      ]
+    }),
 
-      {
+    fromDate: getDateField({
+      label: { labelName: "From Date" },
+      placeholder: { labelName: "From Date" },
+      jsonPath: "searchScreen.fromDate",
+      gridDefination: {
         xs: 12,
         sm: 4
-      }
-    ),
-    toDate: getDateField(
-      "To Date",
-      "To date",
-      false,
-      getPattern("Date"),
-      "",
-      {},
-      {
+      },
+      pattern: getPattern("Date"),
+      required: false
+    }),
+
+    toDate: getDateField({
+      label: { labelName: "To Date" },
+      placeholder: { labelName: "To Date" },
+      jsonPath: "",
+      gridDefination: {
         xs: 12,
         sm: 4
-      }
-    )
+      },
+      pattern: getPattern("Date"),
+      required: false
+    })
   }),
 
   buttonContainer: getCommonContainer({
@@ -164,10 +152,7 @@ export const tradeLicenseApplication = getCommonCard({
         }
       },
       children: {
-        buttonLabel: getLabel({
-          labelName: "Search",
-          labelKey: "TL_HOME_SEARCH_RESULTS_BUTTON_SEARCH"
-        })
+        buttonLabel: getLabel("Search")
       },
       onClickDefination: {
         action: "condition",
