@@ -116,7 +116,14 @@ const tradeDetails = getCommonCard({
     {
       labelName: "Only .jpg and .pdf files. 5MB max file size."
     },
-    { style: { fontSize: 12, marginBottom: 0 } }
+    {
+      style: {
+        fontSize: 12,
+        marginBottom: 0,
+        marginTop: 5,
+        color: "rgba(0, 0, 0, 0.6000000238418579)"
+      }
+    }
   ),
   uploadFiles: getUploadFilesMultiple(),
   checkBoxContainer: getCheckbox(

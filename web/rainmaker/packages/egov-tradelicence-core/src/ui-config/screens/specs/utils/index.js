@@ -102,10 +102,9 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
           div: getLabel({
             labelName: label,
             labelKey,
-            props: {
-              style: {
-                fontSize: "14px"
-              }
+
+            style: {
+              fontSize: "14px"
             }
           })
         }
