@@ -20,7 +20,8 @@ import { tradeDetails } from "./applyResource/tradeDetails";
 import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
-import { httpRequest } from "../../../../ui-utils/api";
+import { getSearchResults } from "../utils";
+import { getMdmsResults } from "./applyResource/apiResource";
 
 const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
 const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
@@ -48,17 +49,12 @@ const tradeDocumentDetails = getCommonCard({
   documentList
 });
 
-const getSearchResults = async (action, state, dispatch) => {
+const searchResults = async (action, state, dispatch) => {
   let queryObject = [
     { key: "tenantId", value: "pb.amritsar" },
     { key: "applicationNumber", value: queryValue }
   ];
-  const payload = await httpRequest(
-    "post",
-    "/tl-services/v1/_search",
-    "",
-    queryObject
-  );
+  const payload = await getSearchResults(queryObject);
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
 };
 
@@ -95,43 +91,32 @@ const getMdmsData = async (action, state, dispatch) => {
       ]
     }
   };
-  try {
-    let payload = null;
-    payload = await httpRequest(
-      "post",
-      "/egov-mdms-service/v1/_search",
-      "_search",
-      [],
-      mdmsBody
-    );
-    console.log("payload...", payload);
-    payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
-    payload = commonTransform(
-      payload,
-      "MdmsRes.common-masters.OwnerShipCategory"
-    );
-    payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
-    set(
-      payload,
-      "MdmsRes.TradeLicense.TradeTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
-    );
-    set(
-      payload,
-      "MdmsRes.common-masters.StructureTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
-    );
-    set(
-      payload,
-      "MdmsRes.common-masters.OwnerShipCategoryTransformed",
-      objectToDropdown(
-        get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
-      )
-    );
-    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
-  } catch (e) {
-    console.log(e);
-  }
+
+  let payload = await getMdmsResults(mdmsBody);
+  payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
+  payload = commonTransform(
+    payload,
+    "MdmsRes.common-masters.OwnerShipCategory"
+  );
+  payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
+  set(
+    payload,
+    "MdmsRes.TradeLicense.TradeTypeTransformed",
+    objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
+  );
+  set(
+    payload,
+    "MdmsRes.common-masters.StructureTypeTransformed",
+    objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
+  );
+  set(
+    payload,
+    "MdmsRes.common-masters.OwnerShipCategoryTransformed",
+    objectToDropdown(
+      get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
+    )
+  );
+  dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
 };
 
 const screenConfig = {
@@ -139,7 +124,7 @@ const screenConfig = {
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
     if (queryValue) {
-      getSearchResults(action, state, dispatch);
+      searchResults(action, state, dispatch);
     }
     getMdmsData(action, state, dispatch);
     return action;
