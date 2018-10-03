@@ -188,7 +188,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             text: [{
               text: "Contact Us: ",
               bold: true
-            }, header.contact],
+            }, header.contact || "NA"],
             alignment: "right"
           }]
         }, {
@@ -203,7 +203,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             text: [{
               text: "Website: ",
               bold: true
-            }, header.website],
+            }, header.website || "NA"],
             alignment: "right"
           }]
         }, {
