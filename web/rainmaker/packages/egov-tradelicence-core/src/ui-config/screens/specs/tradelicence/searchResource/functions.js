@@ -1,6 +1,7 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../utils";
+import { convertEpochToDate } from "../../utils/index";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
@@ -18,13 +19,12 @@ export const searchApiCall = async (state, dispatch) => {
   }
 
   const response = await getSearchResults(queryObject);
-
   let data = response.Licenses.map(item => ({
     "Application No": item.applicationNumber,
     "License No": item.licenseNumber,
     "Trade Name": item.tradeName,
     "Owner Name": item.tradeLicenseDetail.owners[0].name,
-    "Application Date": changeDateFormat(item.applicationDate),
+    "Application Date": convertEpochToDate(item.applicationDate),
     Status: item.status
   }));
 
@@ -59,14 +59,4 @@ const showHideTable = (booleanHideOrShow, dispatch) => {
       booleanHideOrShow
     )
   );
-};
-
-const changeDateFormat = epoch => {
-  var dateObj = new Date(epoch);
-  var month = dateObj.getMonth() + 1;
-  var day = dateObj.getDate();
-  var year = dateObj.getFullYear();
-  month = (month > 9 ? "" : "0") + month;
-  day = (day > 9 ? "" : "0") + day;
-  return day + "/" + month + "/" + year;
 };
