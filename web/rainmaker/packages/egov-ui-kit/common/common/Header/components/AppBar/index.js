@@ -49,6 +49,8 @@ var styles = {
 // handle listners
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
+      defaultTitle = _ref.defaultTitle,
+      ulbLogo = _ref.ulbLogo,
       title = _ref.title,
       titleAddon = _ref.titleAddon,
       isHomeScreen = _ref.isHomeScreen,
@@ -57,7 +59,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
       onToolBarIconClick = _ref.onToolBarIconClick,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -73,7 +75,12 @@ var EgovAppBar = function EgovAppBar(_ref) {
           _react2.default.createElement(
             "div",
             { className: "citizen-header-logo" },
-            _react2.default.createElement("img", { src: _pblogo2.default })
+            _react2.default.createElement("img", {
+              src: role && role.toLowerCase() === "citizen" ? _pblogo2.default : ulbLogo ? ulbLogo : _pblogo2.default,
+              onError: function onError(event) {
+                return event.target.setAttribute("src", _pblogo2.default);
+              }
+            })
           ),
           _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "0px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
           titleAddon && _react2.default.createElement(_translationNode2.default, {
@@ -84,7 +91,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
           _react2.default.createElement(_translationNode2.default, {
             containerStyle: { marginLeft: "10px" },
             className: "screenHeaderLabelStyle appbar-municipal-label",
-            label: "PUNJAB MUNICIPAL CORPORATION"
+            label: role && role.toLowerCase() === "citizen" ? "PUNJAB MUNICIPAL CORPORATION" : defaultTitle ? defaultTitle : "PUNJAB MUNICIPAL CORPORATION"
           })
         ),
         titleStyle: styles.titleStyle

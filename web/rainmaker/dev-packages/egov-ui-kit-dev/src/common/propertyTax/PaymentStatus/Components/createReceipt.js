@@ -81,16 +81,16 @@ const getHeaderDetails = (property, cities) => {
 const getReceiptHeaderLabel = (name, ulbGrade) => {
   if (ulbGrade) {
     if (ulbGrade === "NP") {
-      return `${name} Nagar Panchayat`;
+      return `${name.toUpperCase()} NAGAR PANCHAYAT`;
     } else if (ulbGrade === "Municipal Corporation") {
-      return `${name} Municipal Corporation`;
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
     } else if (ulbGrade.includes("MC Class")) {
-      return `${name} Municipal Council`;
+      return `${name.toUpperCase()} MUNICIPAL COUNCIL`;
     } else {
-      return `${name} Municipal Corporation`;
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
     }
   } else {
-    return `${name} Municipal Corporation`;
+    return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
   }
 };
 

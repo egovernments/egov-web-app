@@ -13,7 +13,19 @@ const styles = {
 };
 
 // handle listners
-const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLocalizationLabel, userInfo = {}, onToolBarIconClick, ...rest }) => {
+const EgovAppBar = ({
+  className,
+  defaultTitle,
+  ulbLogo,
+  title,
+  titleAddon,
+  isHomeScreen,
+  role,
+  fetchLocalizationLabel,
+  userInfo = {},
+  onToolBarIconClick,
+  ...rest
+}) => {
   return (
     <div>
       <AppBar
@@ -22,7 +34,10 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
         title={
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
-              <img src={pbLogo} />
+              <img
+                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
+                onError={(event) => event.target.setAttribute("src", pbLogo)}
+              />
             </div>
             <Label containerStyle={{ marginLeft: "0px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
             {titleAddon && (
@@ -35,7 +50,13 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
             <Label
               containerStyle={{ marginLeft: "10px" }}
               className="screenHeaderLabelStyle appbar-municipal-label"
-              label={"PUNJAB MUNICIPAL CORPORATION"}
+              label={
+                role && role.toLowerCase() === "citizen"
+                  ? "PUNJAB MUNICIPAL CORPORATION"
+                  : defaultTitle
+                    ? defaultTitle
+                    : "PUNJAB MUNICIPAL CORPORATION"
+              }
             />
           </div>
         }

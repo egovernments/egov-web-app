@@ -56,6 +56,10 @@ var _actions = require("egov-ui-kit/redux/auth/actions");
 
 var _actions2 = require("egov-ui-kit/redux/app/actions");
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -79,7 +83,16 @@ var Header = function (_Component) {
       toggleMenu: false,
       logoutPopupOpen: false,
       right: false,
-      left: false
+      left: false,
+      ulbLogo: ""
+    }, _this.componentDidMount = function () {
+      var role = _this.props.role;
+
+      if (role && role.toLowerCase() !== "citizen") {
+        var tenantId = localStorage.getItem("tenant-id");
+        var ulbLogo = "https://s3.ap-south-1.amazonaws.com/pb-egov-assets/" + tenantId + "/logo.png";
+        _this.setState({ ulbLogo: ulbLogo });
+      }
     }, _this._handleToggleMenu = function () {
       var toggleMenu = _this.state.toggleMenu;
 
@@ -173,7 +186,8 @@ var Header = function (_Component) {
           titleAddon = _props.titleAddon,
           fetchLocalizationLabel = _props.fetchLocalizationLabel,
           userInfo = _props.userInfo,
-          isHomeScreen = _props.isHomeScreen;
+          isHomeScreen = _props.isHomeScreen,
+          defaultTitle = _props.defaultTitle;
 
       return _react2.default.createElement(
         "div",
@@ -181,8 +195,10 @@ var Header = function (_Component) {
         _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({
           className: className,
           title: title,
+          defaultTitle: defaultTitle,
           titleAddon: titleAddon,
-          role: role
+          role: role,
+          ulbLogo: this.state.ulbLogo
         }, appBarProps, {
           fetchLocalizationLabel: fetchLocalizationLabel,
           userInfo: userInfo
@@ -205,9 +221,32 @@ var Header = function (_Component) {
   return Header;
 }(_react.Component);
 
+var getReceiptHeaderLabel = function getReceiptHeaderLabel(name, ulbGrade) {
+  if (ulbGrade) {
+    if (ulbGrade === "NP") {
+      return name.toUpperCase() + " NAGAR PANCHAYAT";
+    } else if (ulbGrade === "Municipal Corporation") {
+      return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    } else if (ulbGrade.includes("MC Class")) {
+      return name.toUpperCase() + " MUNICIPAL COUNCIL";
+    } else {
+      return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    }
+  } else {
+    return name.toUpperCase() + " MUNICIPAL CORPORATION";
+  }
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   var cities = state.common.cities || [];
-  return { cities: cities };
+  var tenantId = localStorage.getItem("tenant-id");
+  var userTenant = cities.filter(function (item) {
+    return item.code === tenantId;
+  });
+  var ulbGrade = userTenant && (0, _get2.default)(userTenant[0], "city.ulbGrade");
+  var name = userTenant && (0, _get2.default)(userTenant[0], "name");
+  var defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
+  return { cities: cities, defaultTitle: defaultTitle };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
