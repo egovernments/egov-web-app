@@ -22,7 +22,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
         label: { labelName: "Trade Category" },
         placeholder: { labelName: "Select Trade Category" },
         required: true,
-        jsonPath: "LicencesTemp[0].tradeType",
+        jsonPath: "LicensesTemp[0].tradeType",
         sourceJsonPath: "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
         gridDefination: {
           xs: 12,
@@ -53,7 +53,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
         label: { labelName: "Trade  Type" },
         placeholder: { labelName: "Select Trade Type" },
         required: true,
-        jsonPath: "LicencesTemp[0].tradeSubType",
+        jsonPath: "LicensesTemp[0].tradeSubType",
         sourceJsonPath:
           "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
         gridDefination: {
@@ -65,7 +65,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
         try {
           let tradeCategory = get(
             state.screenConfiguration.preparedFinalObject,
-            "LicencesTemp[0].tradeType",
+            "LicensesTemp[0].tradeType",
             ""
           );
           dispatch(
@@ -89,7 +89,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
       label: { labelName: "Trade Sub-Type" },
       placeholder: { labelName: "Select Trade Sub-Type" },
       required: true,
-      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
       sourceJsonPath:
         "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
       gridDefination: {
@@ -107,7 +107,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
       },
       required: true,
-      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uom",
+      jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom",
       gridDefination: {
         xs: 12,
         sm: 4
@@ -124,7 +124,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
       },
       required: true,
       pattern: getPattern("UOMValue"),
-      jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue",
+      jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue",
       gridDefination: {
         xs: 12,
         sm: 4
@@ -158,7 +158,7 @@ const accessoriesCard = {
           label: { labelName: "Accessories" },
           placeholder: { labelName: "Select Accessories" },
           jsonPath:
-            "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory",
+            "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory",
           sourceJsonPath:
             "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
           gridDefination: {
@@ -176,7 +176,7 @@ const accessoriesCard = {
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
           },
           required: true,
-          jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uom",
+          jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uom",
           gridDefination: {
             xs: 12,
             sm: 4
@@ -192,7 +192,7 @@ const accessoriesCard = {
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
           },
           pattern: getPattern("UOMValue"),
-          jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uomValue",
+          jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
           gridDefination: {
             xs: 12,
             sm: 4
@@ -206,7 +206,7 @@ const accessoriesCard = {
     headerName: "Accessory",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-    objectJsonPath: "Licences[0].accessories"
+    objectJsonPath: "Licenses[0].accessories"
   },
   type: "array"
 };
@@ -263,7 +263,7 @@ export const tradeDetails = getCommonCard({
         label: { labelName: "Structure Type" },
         placeholder: { labelName: "Select Structure Type" },
         required: true,
-        jsonPath: "LicencesTemp[0].tradeLicenseDetail.structureType",
+        jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType",
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.StructureTypeTransformed"
       }),
@@ -289,7 +289,7 @@ export const tradeDetails = getCommonCard({
       label: { labelName: "Structure Sub Type" },
       placeholder: { labelName: "Select Structure Sub Type" },
       required: true,
-      jsonPath: "Licences[0].tradeLicenseDetail.structureType",
+      jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
       sourceJsonPath:
         "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
     }),
@@ -304,7 +304,7 @@ export const tradeDetails = getCommonCard({
       },
       required: true,
       pattern: getPattern("Date"),
-      jsonPath: "Licences[0].commencementDate"
+      jsonPath: "Licenses[0].commencementDate"
     }),
     tradeGSTNo: getTextField({
       label: {
@@ -327,7 +327,7 @@ export const tradeDetails = getCommonCard({
         labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_PLACEHOLDER"
       },
       pattern: getPattern("OperationalArea"),
-      jsonPath: "Licences[0].tradeLicenseDetail.operationalArea"
+      jsonPath: "Licenses[0].tradeLicenseDetail.operationalArea"
     }),
     tradeNoOfEmployee: getTextField({
       label: {
@@ -339,7 +339,7 @@ export const tradeDetails = getCommonCard({
         labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_PLACEHOLDER"
       },
       pattern: getPattern("NoOfEmp"),
-      jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees"
+      jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees"
     })
   }),
   multipleTradeUnitCard,
