@@ -26,7 +26,7 @@ export const paymentSuccessFooter = getCommonApplyFooter({
     },
     children: {
       downloadReceiptButtonLabel: getLabel({
-        label: "DOWNLOAD RECEIPT",
+        labelName: "DOWNLOAD RECEIPT",
         labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
       })
     },
@@ -50,7 +50,7 @@ export const paymentSuccessFooter = getCommonApplyFooter({
     },
     children: {
       printReceiptButtonLabel: getLabel({
-        label: "PRINT RECEIPT",
+        labelName: "PRINT RECEIPT",
         labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
       })
     }

@@ -15,7 +15,10 @@ import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-con
 import get from "lodash/get";
 
 const multipleTradeUnitCard = getCommonGrayCard({
-  header: getCommonSubHeader("Trade Unit  "),
+  header: getCommonSubHeader({
+    labelName: "Trade Unit  ",
+    labelKey: "TL_NEW_TRADE_DETAILS_TRADE_UNIT_HEADER"
+  }),
   tradeUnitCardContainer: getCommonContainer({
     tradeCategory: {
       ...getSelectField({
@@ -134,7 +137,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
 });
 
 const accessoriesCard = {
-  uiFramework: "custom-molecules",
+  uiFramework: "custom-containers",
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
@@ -142,7 +145,10 @@ const accessoriesCard = {
         uiFramework: "custom-atoms",
         componentPath: "Container",
         children: {
-          head: getCommonSubHeader("Accessories"),
+          head: getCommonSubHeader({
+            labelName: "Accessories",
+            labelKey: "TL_NEW_TRADE_DETAILS_HEADER_ACC"
+          }),
           ico: {
             uiFramework: "custom-molecules-local",
             componentPath: "Tooltip",
@@ -212,10 +218,14 @@ const accessoriesCard = {
 };
 
 export const tradeDetails = getCommonCard({
-  header: getCommonTitle("Please Provide Trade Details"),
-  paragraph: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  ),
+  header: getCommonTitle({
+    labelName: "Please Provide Trade Details",
+    labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
+  }),
+  paragraph: getCommonParagraph({
+    labelName:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  }),
   tradeDetailsConatiner: getCommonContainer({
     tradeLicenseType: getSelectField({
       label: { labelName: "License Type" },

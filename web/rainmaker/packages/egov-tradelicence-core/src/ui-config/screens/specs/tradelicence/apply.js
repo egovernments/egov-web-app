@@ -29,10 +29,8 @@ const queryValue = getQueryArg(window.location.href, "number");
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    textLabel: {
-      label: "Apply for New Trade License (2018-2019)",
-      labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
-    }
+    labelName: "Apply for New Trade License (2018-2019)",
+    labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -45,12 +43,15 @@ const header = getCommonContainer({
 });
 
 const tradeDocumentDetails = getCommonCard({
-  header: getCommonTitle(
-    "Please Upload the Required Documents for Verification"
-  ),
-  paragraph: getCommonParagraph(
-    "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload"
-  ),
+  header: getCommonTitle({
+    labelName: "Please Upload the Required Documents for Verification",
+    labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
+  }),
+  paragraph: getCommonParagraph({
+    labelName:
+      "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",
+    labelKey: "TL_NEW-UPLOAD-DOCS_SUBHEADER"
+  }),
   documentList
 });
 
@@ -153,20 +154,6 @@ const screenConfig = {
               },
               ...header
             }
-            // helpSection: {
-            //   componentPath: "Button",
-            //   props: {
-            //     color: "primary"
-            //   },
-            //   gridDefination: {
-            //     xs: 12,
-            //     sm: 2,
-            //     align: "right"
-            //   },
-            //   children: {
-            //     buttonLabel: getLabel("help ?")
-            //   }
-            // }
           }
         },
         stepper,

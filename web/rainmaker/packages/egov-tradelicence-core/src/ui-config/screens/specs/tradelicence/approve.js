@@ -23,10 +23,8 @@ const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValue = getQueryArg(window.location.href, "purpose");
 const header = getCommonContainer({
   header: getCommonHeader({
-    textLabel: {
-      label: "Trade License Application (2018-2019)",
-      labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
-    }
+    labelName: "Trade License Application (2018-2019)",
+    labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -40,15 +38,21 @@ const header = getCommonContainer({
 const tradeDetails = getCommonCard({
   headerOne:
     queryValue === "cancel"
-      ? getCommonSubHeader("Please provide Cancellation remarks")
-      : getCommonSubHeader(
-          "Please provide the following details on the basis of your field verification"
-        ),
+      ? getCommonSubHeader({
+          labelName: "Please provide Cancellation remarks",
+          labelKey: "TL_CANCEL_CHECKLIST_HEAD"
+        })
+      : getCommonSubHeader({
+          labelName:
+            "Please provide the following details on the basis of your field verification",
+          labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
+        }),
   paragraphOne: getContainerWithElement(
     {
-      paragraph: getCommonParagraph(
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-      )
+      paragraph: getCommonParagraph({
+        labelName:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+      })
     },
     {
       style: {
@@ -104,9 +108,14 @@ const tradeDetails = getCommonCard({
     }
   ),
 
-  uploadFileHeader: getCommonSubHeader("Upload Document"),
+  uploadFileHeader: getCommonSubHeader({
+    labelName: "Upload Document",
+    labelKey: "TL_APPROVAL_UPLOAD_HEAD"
+  }),
   uploadFileInfo: getCommonParagraph(
-    "Only .jpg and .pdf files. 5MB max file size.",
+    {
+      labelName: "Only .jpg and .pdf files. 5MB max file size."
+    },
     { style: { fontSize: 12, marginBottom: 0 } }
   ),
   uploadFiles: getUploadFilesMultiple(),

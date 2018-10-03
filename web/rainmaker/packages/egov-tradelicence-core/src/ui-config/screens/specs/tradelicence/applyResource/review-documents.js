@@ -17,7 +17,10 @@ export const getReviewDocuments = (isEditable = true) => {
             xs: 12,
             sm: 10
           },
-          ...getCommonSubHeader("Documents")
+          ...getCommonSubHeader({
+            labelName: "Documents",
+            labelKey: "TL_COMMON_DOCS"
+          })
         },
         editSection: {
           componentPath: "Button",
@@ -39,7 +42,7 @@ export const getReviewDocuments = (isEditable = true) => {
               }
             },
             buttonLabel: getLabel({
-              label: "Edit",
+              labelName: "Edit",
               labelKey: "TL_SUMMARY_EDIT"
             })
           },

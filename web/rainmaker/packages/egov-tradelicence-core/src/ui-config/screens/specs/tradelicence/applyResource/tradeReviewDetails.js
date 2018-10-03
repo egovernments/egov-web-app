@@ -36,10 +36,14 @@ const reviewOwnerDetails = getReviewOwner();
 const reviewDocumentDetails = getReviewDocuments();
 
 export const tradeReviewDetails = getCommonCard({
-  header: getCommonTitle("Please review your Application and Submit"),
-  paragraph: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  ),
+  header: getCommonTitle({
+    labelName: "Please review your Application and Submit",
+    labelKey: "TL_SUMMARY_HEADER"
+  }),
+  paragraph: getCommonParagraph({
+    labelName:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  }),
   estimate,
   reviewTradeDetails,
   reviewOwnerDetails,

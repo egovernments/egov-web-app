@@ -7,22 +7,25 @@ import {
 
 export const getCancelDetails = (isEditable = true) => {
   return getCommonGrayCard({
-    header: getCommonSubHeader("Cancellation Details"),
+    header: getCommonSubHeader({
+      labelName: "Cancellation Details",
+      labelKey: "TL_EMP_APPLICATION_CANC_DET"
+    }),
     info: getCommonContainer({
-      cancelledBy: getLabelWithValue({
-        textLabel: {
-          label: "Cancelled By",
+      cancelledBy: getLabelWithValue(
+        {
+          labelName: "Cancelled By",
           labelKey: "TL_EMP_APPLICATION_CANC_BY"
         },
-        jsonPath: "Sukhwinder Singh"
-      }),
-      Comments: getLabelWithValue({
-        textLabel: {
-          label: "Cancellation Comments",
+        { jsonPath: "Sukhwinder Singh" }
+      ),
+      Comments: getLabelWithValue(
+        {
+          labelName: "Cancellation Comments",
           labelKey: "TL_EMP_APPLICATION_CANC_COM"
         },
-        jsonPath: "lorel Ispum"
-      })
+        { jsonPath: "lorel Ispum" }
+      )
     })
   });
 };

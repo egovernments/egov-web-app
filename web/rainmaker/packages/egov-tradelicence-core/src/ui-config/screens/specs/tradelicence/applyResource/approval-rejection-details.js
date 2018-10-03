@@ -17,23 +17,26 @@ export const getApprovalDetails = () => {
             xs: 12,
             sm: 10
           },
-          ...getCommonSubHeader("Approval/Rejection Details")
+          ...getCommonSubHeader({
+            labelName: "Approval/Rejection Details",
+            labelKey: "TL_EMP_APPLICATION_APPR_DETAILS"
+          })
         },
         viewOne: getCommonContainer({
-          reviewLicenceType: getLabelWithValue({
-            textLabel: {
-              label: "Approved By",
+          reviewLicenceType: getLabelWithValue(
+            {
+              labelName: "Approved By",
               labelKey: "TL_EMP_APPLICATION_APPR_BY"
             },
-            jsonPath: "Sukhwindar Singh"
-          }),
-          reviewTradeName: getLabelWithValue({
-            textLabel: {
-              label: "Approval Comments",
+            { value: "Sukhwindar Singh" }
+          ),
+          reviewTradeName: getLabelWithValue(
+            {
+              labelName: "Approval Comments",
               labelKey: "TL_EMP_APPLICATION_APPR_COM"
             },
-            jsonPath: "asdfgfdsafsds"
-          })
+            { jsonPath: "asdfgfdsafsds" }
+          )
         }),
         viewTow: getCommonContainer({
           lbl: {
@@ -46,10 +49,8 @@ export const getApprovalDetails = () => {
               }
             },
             ...getCommonCaption({
-              textLabel: {
-                label: "Uploaded Documents",
-                labelKey: "TL_EMP_APPLICATION_UP_DOC"
-              }
+              labelName: "Uploaded Documents",
+              labelKey: "TL_EMP_APPLICATION_UP_DOC"
             })
           },
           documents: {

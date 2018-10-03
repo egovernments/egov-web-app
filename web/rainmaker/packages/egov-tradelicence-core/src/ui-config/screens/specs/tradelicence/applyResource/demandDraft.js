@@ -38,6 +38,9 @@ export const demandDraftDetails = getCommonContainer({
 
 export const demandDraft = getCommonContainer({
   payeeDetails,
-  header: getCommonSubHeader("Demand Draft Details: "),
+  header: getCommonSubHeader({
+    labelName: "Demand Draft Details: ",
+    labelKey: "TL_EMP_APPLICATION_DD_DETAILS"
+  }),
   demandDraftDetails
 });

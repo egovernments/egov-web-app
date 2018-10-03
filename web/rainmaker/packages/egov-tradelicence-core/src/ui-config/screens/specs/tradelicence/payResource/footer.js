@@ -25,7 +25,7 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       submitButtonLabel: getLabel({
-        label: "Submit",
+        labelName: "Submit",
         labelKey: "TL_COMMON_BUTTON_SUBMIT"
       }),
       submitButtonIcon: {

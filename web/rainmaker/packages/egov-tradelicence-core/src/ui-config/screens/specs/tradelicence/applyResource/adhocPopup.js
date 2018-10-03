@@ -11,14 +11,15 @@ import { showHideAdhocPopup } from "../../utils";
 
 export const adhocPopup = getCommonContainer({
   header: getCommonHeader({
-    textLabel: {
-      label: "Add Adhoc Penalty/Rebate",
-      labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
-    }
+    labelName: "Add Adhoc Penalty/Rebate",
+    labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
   }),
   adhocPenaltyCard: getCommonContainer(
     {
-      subheader: getCommonSubHeader("Adhoc Penalty"),
+      subheader: getCommonSubHeader({
+        labelName: "Adhoc Penalty",
+        labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_FIRST"
+      }),
       penaltyAmountAndReasonContainer: getCommonContainer({
         penaltyAmount: getTextField({
           label: {
@@ -57,7 +58,10 @@ export const adhocPopup = getCommonContainer({
     }
   ),
   adhocRebateCard: getCommonContainer({
-    subHeader: getCommonSubHeader("Adhoc Rebate"),
+    subHeader: getCommonSubHeader({
+      labelName: "Adhoc Rebate",
+      labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_SEC"
+    }),
     rebateAmountAndReasonContainer: getCommonContainer({
       rebateAmount: getTextField({
         label: {
@@ -98,7 +102,7 @@ export const adhocPopup = getCommonContainer({
         },
         children: {
           previousButtonLabel: getLabel({
-            label: "CANCEL",
+            labelName: "CANCEL",
             labelKey: "TL_ADD_HOC_CHARGES_POPUP_BUTTON_CANCEL"
           })
         },
@@ -119,7 +123,7 @@ export const adhocPopup = getCommonContainer({
         },
         children: {
           previousButtonLabel: getLabel({
-            label: "ADD",
+            labelName: "ADD",
             labelKey: "TL_ADD_HOC_CHARGES_POPUP_BUTTON_ADD"
           })
         }

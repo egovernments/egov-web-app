@@ -7,7 +7,10 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 const g8Details = getCommonGrayCard({
-  header: getCommonSubHeader("G8 Receipt Details (Optional)"),
+  header: getCommonSubHeader({
+    labelName: "G8 Receipt Details (Optional)",
+    labelKey: "TL_PAYMENT_RCPT_DETAILS"
+  }),
   receiptDetailsCardContainer: getCommonContainer({
     receiptNo: getTextField({
       label: {

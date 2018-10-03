@@ -38,6 +38,9 @@ export const cardDetails = getCommonContainer({
 
 export const card = getCommonContainer({
   payeeDetails,
-  header: getCommonSubHeader("Card Details: "),
+  header: getCommonSubHeader({
+    labelName: "Card Details:",
+    labelKey: "TL_EMP_APPLICATION_CARD_DETAILS"
+  }),
   cardDetails
 });

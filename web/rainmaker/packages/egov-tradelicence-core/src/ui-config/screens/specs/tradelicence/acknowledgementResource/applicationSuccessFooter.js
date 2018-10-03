@@ -41,7 +41,7 @@ export const applicationSuccessFooter = getCommonApplyFooter({
     },
     children: {
       downloadFormButtonLabel: getLabel({
-        label: "DOWNLOAD CONFIRMATION FORM",
+        labelName: "DOWNLOAD CONFIRMATION FORM",
         labelKey: "TL_APPLICATION_BUTTON_DOWN_CONF"
       })
     },
@@ -63,7 +63,7 @@ export const applicationSuccessFooter = getCommonApplyFooter({
     },
     children: {
       printFormButtonLabel: getLabel({
-        label: "PRINT CONFIRMATION FORM",
+        labelName: "PRINT CONFIRMATION FORM",
         labelKey: "TL_APPLICATION_BUTTON_PRINT_CONF"
       })
     }
@@ -81,7 +81,7 @@ export const applicationSuccessFooter = getCommonApplyFooter({
     },
     children: {
       collectPaymentButtonLabel: getLabel({
-        label: "COLLECT PAYMENT",
+        labelName: "COLLECT PAYMENT",
         labelKey: "TL_COLLECT_PAYMENT"
       })
     },

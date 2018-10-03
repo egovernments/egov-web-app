@@ -8,32 +8,39 @@ import { payeeDetails } from "./payeeDetails";
 
 export const chequeDetails = getCommonContainer({
   chequeNo: getTextField({
-    label:{
+    label: {
       labelName: "Cheque No",
       labelKey: "TL_PAYMENT_CHQ_NO_LABEL"
     },
-    placeholder:{
+    placeholder: {
       labelName: "Enter Cheque  no.",
       labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
     },
-    required:true
+    required: true
   }),
-  chequeDate: getDateField({label:{labelName:"Cheque Date"},placeholder:{labelName:"dd/mm/yy"},required: true}),
+  chequeDate: getDateField({
+    label: { labelName: "Cheque Date" },
+    placeholder: { labelName: "dd/mm/yy" },
+    required: true
+  }),
   chequeIFSC: getTextField({
-    label:{
+    label: {
       labelName: "IFSC",
       labelKey: "TL_PAYMENT_IFSC_CODE_LABEL"
     },
-    placeholder:{
+    placeholder: {
       labelName: "Enter bank IFSC",
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
-    required:true
+    required: true
   })
 });
 
 export const cheque = getCommonContainer({
   payeeDetails,
-  header: getCommonSubHeader("Cheque Details: "),
+  header: getCommonSubHeader({
+    labelName: "Cheque Details:",
+    labelKey: "TL_EMP_APPLICATION_CHECK_DETAILS"
+  }),
   chequeDetails
 });

@@ -68,10 +68,8 @@ switch (status) {
 const footer = footerReview(role, status);
 const headerrow = getCommonContainer({
   header: getCommonHeader({
-    textLabel: {
-      label: "Trade License Application (2018-2019)",
-      labelKey: "TL_TRADE_APPLICATION"
-    }
+    labelName: "Trade License Application (2018-2019)",
+    labelKey: "TL_TRADE_APPLICATION"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -110,8 +108,8 @@ const reviewDocumentDetails = getReviewDocuments(false);
 
 let approvalDetails = getApprovalDetails();
 let cancelDetails = getCancelDetails();
-let title = getCommonTitle(titleText);
-let paragraph = getCommonParagraph(paraText);
+let title = getCommonTitle({ labelName: titleText });
+let paragraph = getCommonParagraph({ labelName: paraText });
 
 title = { ...title, visible: titleVisibility };
 paragraph = { ...paragraph, visible: paraVisibiliy };
@@ -163,7 +161,7 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: getCommonTitle(headerSideText)
+                buttonLabel: getCommonTitle({ labelName: headerSideText })
               }
             }
           }

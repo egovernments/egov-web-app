@@ -175,7 +175,7 @@ export const footer = getCommonApplyFooter({
         }
       },
       previousButtonLabel: getLabel({
-        label: "Previous Step",
+        labelName: "Previous Step",
         labelKey: "TL_COMMON_BUTTON_PREV_STEP"
       })
     },
@@ -198,7 +198,7 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       nextButtonLabel: getLabel({
-        label: "Next Step",
+        labelName: "Next Step",
         labelKey: "TL_COMMON_BUTTON_NXT_STEP"
       }),
       nextButtonIcon: {
@@ -227,7 +227,7 @@ export const footer = getCommonApplyFooter({
     },
     children: {
       submitButtonLabel: getLabel({
-        label: "Submit",
+        labelName: "Submit",
         labelKey: "TL_COMMON_BUTTON_SUBMIT"
       }),
       submitButtonIcon: {
@@ -261,7 +261,7 @@ export const footerApprove = getCommonApplyFooter({
     },
     children: {
       nextButtonLabel: getLabel({
-        label: "BACK",
+        labelName: "BACK",
         labelKey: "TL_COMMON_BUTTON_BACK"
       })
     },
@@ -321,7 +321,7 @@ export const footerReview = (role, status) =>
                   }
                 },
                 nextButtonLabel: getLabel({
-                  label: "Download",
+                  labelName: "Download",
                   labelKey: "TL_COMMON_DOWNLOAD"
                 }),
                 dropdown: {
@@ -360,7 +360,7 @@ export const footerReview = (role, status) =>
                   }
                 },
                 nextButtonLabel: getLabel({
-                  label: "Print",
+                  labelName: "Print",
                   labelKey: "TL_COMMON_PRINT"
                 }),
                 dropdown: {
@@ -400,7 +400,7 @@ export const footerReview = (role, status) =>
               },
               children: {
                 nextButtonLabel: getLabel({
-                  label: "Reject",
+                  labelName: "Reject",
                   labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
                 })
               },
@@ -424,7 +424,7 @@ export const footerReview = (role, status) =>
               },
               children: {
                 nextButtonLabel: getLabel({
-                  label: "APPROVE",
+                  labelName: "APPROVE",
                   labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
                 })
               },
@@ -447,7 +447,7 @@ export const footerReview = (role, status) =>
               },
               children: {
                 nextButtonLabel: getLabel({
-                  label: "PROCEED TO PAYMENT",
+                  labelName: "PROCEED TO PAYMENT",
                   labelKey: "TL_COMMON_BUTTON_PROC_PMT"
                 })
               },
@@ -470,7 +470,7 @@ export const footerReview = (role, status) =>
               },
               children: {
                 nextButtonLabel: getLabel({
-                  label: "CANCEL TRADE LICENSE",
+                  labelName: "CANCEL TRADE LICENSE",
                   labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
                 })
               },

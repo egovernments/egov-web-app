@@ -26,7 +26,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     children: {
       downloadLicenseButtonLabel: getLabel({
-        label: "DOWNLOAD TRADE LICENSE",
+        labelName: "DOWNLOAD TRADE LICENSE",
         labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_DOWN_LIC"
       })
     },
@@ -50,7 +50,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     children: {
       printLicenseButtonLabel: getLabel({
-        label: "PRINT TRADE LICENSE",
+        labelName: "PRINT TRADE LICENSE",
         labelKey: "TL_APPROVAL_CHECKLIST_PRINT_LIC"
       })
     }

@@ -15,10 +15,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
-        textLabel: {
-          label: "Application for New Trade License (2018-2019)",
-          labelKey: "TL_COMMON_APPL_NEW_LIC"
-        }
+        labelName: "Application for New Trade License (2018-2019)",
+        labelKey: "TL_COMMON_APPL_NEW_LIC"
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -53,10 +51,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          textLabel: {
-            label: "Payment for New Trade License (2018-2019)",
-            labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
-          }
+          labelName: "Payment for New Trade License (2018-2019)",
+          labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -87,10 +83,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          textLabel: {
-            label: "Trade License Application (2018-2019)",
-            labelKey: "TL_TRADE_APPLICATION"
-          }
+          labelName: "Trade License Application (2018-2019)",
+          labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -121,10 +115,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          textLabel: {
-            label: "Trade License Application (2018-2019)",
-            labelKey: "TL_TRADE_APPLICATION"
-          }
+          labelName: "Trade License Application (2018-2019)",
+          labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -153,10 +145,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          textLabel: {
-            label: "Trade License Application (2018-2019)",
-            labelKey: "TL_TRADE_APPLICATION"
-          }
+          labelName: "Trade License Application (2018-2019)",
+          labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",

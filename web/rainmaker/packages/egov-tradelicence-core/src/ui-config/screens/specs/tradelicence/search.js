@@ -18,10 +18,8 @@ enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const header = getCommonHeader({
-  textLabel: {
-    label: "Trade License",
-    labelKey: "TL_COMMON_TL"
-  }
+  labelName: "Trade License",
+  labelKey: "TL_COMMON_TL"
 });
 const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
@@ -78,7 +76,7 @@ const tradeLicenseSearchAndResult = {
                 },
 
                 buttonLabel: getLabel({
-                  label: "NEW APPLICATION",
+                  labelName: "NEW APPLICATION",
                   labelKey: "TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"
                 })
               },

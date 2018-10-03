@@ -12,11 +12,14 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 const OwnerInfoCard = {
-  uiFramework: "custom-molecules",
+  uiFramework: "custom-containers",
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
-      header: getCommonSubHeader("Owner Information"),
+      header: getCommonSubHeader({
+        labelName: "Owner Information",
+        labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
+      }),
       tradeUnitCardContainer: getCommonContainer({
         ownerMobileNo: getTextField({
           label: {
@@ -154,10 +157,14 @@ const OwnerInfoCard = {
 };
 
 export const tradeOwnerDetails = getCommonCard({
-  header: getCommonTitle("Please Provide Trade Owner Details"),
-  paragraph: getCommonParagraph(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  ),
+  header: getCommonTitle({
+    labelName: "Please Provide Trade Owner Details",
+    labelKey: "TL_NEW_OWNER_DETAILS_HEADER"
+  }),
+  paragraph: getCommonParagraph({
+    labelName:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  }),
   ownership: getSelectField({
     label: { labelName: "Type of ownership" },
     placeholder: { labelName: "Select Type of Ownership" },

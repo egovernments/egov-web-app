@@ -19,7 +19,10 @@ export const getReviewOwner = (isEditable = true) => {
             xs: 12,
             sm: 10
           },
-          ...getCommonSubHeader("Owner Details")
+          ...getCommonSubHeader({
+            labelName: "Owner Details",
+            labelKey: "TL_COMMON_OWN_DETAILS"
+          })
         },
         editSection: {
           componentPath: "Button",
@@ -41,7 +44,7 @@ export const getReviewOwner = (isEditable = true) => {
               }
             },
             buttonLabel: getLabel({
-              label: "Edit",
+              labelName: "Edit",
               labelKey: "TL_SUMMARY_EDIT"
             })
           },
@@ -55,70 +58,77 @@ export const getReviewOwner = (isEditable = true) => {
       }
     },
     viewFive: getCommonContainer({
-      reviewOwnerName: getLabelWithValue({
-        textLabel: {
-          label: "Name",
+      reviewOwnerName: getLabelWithValue(
+        {
+          labelName: "Name",
           labelKey: "TL_NEW_OWNER_DETAILS_NAME_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
-      }),
-      reviewOwnerFatherName: getLabelWithValue({
-        textLabel: {
-          label: "Father/Husband's Name",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
+      ),
+      reviewOwnerFatherName: getLabelWithValue(
+        {
+          labelName: "Father/Husband's Name",
           labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
-      }),
-      reviewOwnerGender: getLabelWithValue({
-        textLabel: {
-          label: "Gender",
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
+        }
+      ),
+      reviewOwnerGender: getLabelWithValue(
+        {
+          labelName: "Gender",
           labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
         },
 
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender"
-      }),
-      reviewOwnerAge: getLabelWithValue({
-        textLabel: {
-          label: "Age",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender" }
+      ),
+      reviewOwnerAge: getLabelWithValue(
+        {
+          labelName: "Age",
           labelKey: "TL_EMP_APPLICATION_AGE"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
-      }),
-      reviewOwnerPhoneNo: getLabelWithValue({
-        textLabel: {
-          label: "Mobile No.",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob" }
+      ),
+      reviewOwnerPhoneNo: getLabelWithValue(
+        {
+          labelName: "Mobile No.",
           labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
-      }),
-      reviewOwnerEmail: getLabelWithValue({
-        textLabel: {
-          label: "Email",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber" }
+      ),
+      reviewOwnerEmail: getLabelWithValue(
+        {
+          labelName: "Email",
           labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
-      }),
-      reviewOwnerPAN: getLabelWithValue({
-        textLabel: {
-          label: "PAN No.",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId" }
+      ),
+      reviewOwnerPAN: getLabelWithValue(
+        {
+          labelName: "PAN No.",
           labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan"
-      }),
-      reviewOwnerAddr: getLabelWithValue({
-        textLabel: {
-          label: "Corrospondence Address",
+        { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan" }
+      ),
+      reviewOwnerAddr: getLabelWithValue(
+        {
+          labelName: "Corrospondence Address",
           labelKey: "TL_NEW_OWNER_DETAILS_ADDR_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-      }),
-      reviewOwnerSpecialCat: getLabelWithValue({
-        textLabel: {
-          label: "Special Owner Category",
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
+        }
+      ),
+      reviewOwnerSpecialCat: getLabelWithValue(
+        {
+          labelName: "Special Owner Category",
           labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory"
-      })
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory"
+        }
+      )
     })
   });
 };

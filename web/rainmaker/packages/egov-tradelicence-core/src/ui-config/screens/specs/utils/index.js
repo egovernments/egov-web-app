@@ -100,8 +100,8 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
         },
         children: {
           div: getLabel({
-            label: label,
-            labelKey: labelKey,
+            labelName: label,
+            labelKey,
             props: {
               style: {
                 fontSize: "14px"
@@ -221,28 +221,34 @@ export const getApprovalTextField = () => {
 
 export const getSubHeaderLabel = () => {
   if (queryValue === "reject") {
-    return getCommonSubHeader("Rejection CheckList");
+    return getCommonSubHeader({
+      labelName: "Rejection CheckList",
+      labelKey: "TL_REJECTION_CHECKLIST_REJ_CHECKLIST"
+    });
   } else if (queryValue === "cancel") {
     return {};
   } else {
-    return getCommonSubHeader("Approve Checklist");
+    return getCommonSubHeader({
+      labelName: "Approve Checklist",
+      labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_CHECKLIST"
+    });
   }
 };
 
 export const getFooterButtons = () => {
   if (queryValue === "reject") {
-    return getLabel(
-      "REJECT APPLICATION",
-      "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
-    );
+    return getLabel({
+      labelName: "REJECT APPLICATION",
+      labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+    });
   } else if (queryValue === "cancel") {
     return getLabel({
-      label: "CANCEL TRADE LICENSE",
+      labelName: "CANCEL TRADE LICENSE",
       labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
     });
   } else {
     return getLabel({
-      label: "APPROVE APPLICATION",
+      labelName: "APPROVE APPLICATION",
       labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
     });
   }
@@ -371,73 +377,6 @@ export const objectToDropdown = object => {
     }
   }
   return dropDown;
-};
-
-//Testing
-
-export const getLabelNew = schema => {
-  const { label, labelKey, jsonPath, props = {} } = schema;
-  return {
-    uiFramework: "custom-containers-local",
-    componentPath: "LabelContainer",
-    props: {
-      label,
-      labelKey,
-      jsonPath,
-      ...props
-    }
-  };
-};
-
-export const getCommonHeader = schema => {
-  const { textLabel = {}, jsonPath, props } = schema;
-  const { label, labelKey } = textLabel;
-  return {
-    componentPath: "Typography",
-    props: {
-      variant: "headline",
-      ...props
-    },
-    children: {
-      [textLabel]: getLabelNew({ label, labelKey }),
-      [jsonPath]: getLabelNew({ jsonPath })
-    }
-  };
-};
-
-export const getCommonCaption = textScheama => {
-  let { textLabel = {}, props = {} } = textScheama;
-  return getCommonHeader({
-    textLabel,
-    props: { variant: "caption", ...props }
-  });
-};
-
-export const getCommonValue = textScheama => {
-  let { jsonPath, props = {} } = textScheama;
-  return getCommonHeader({ jsonPath, props: { variant: "body2", ...props } });
-};
-
-export const getLabelWithValueNew = textScheama => {
-  const { textLabel = {}, jsonPath, props = {} } = textScheama;
-  return {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    gridDefination: {
-      xs: 6,
-      sm: 3
-    },
-    props: {
-      style: {
-        marginBottom: "16px"
-      },
-      ...props
-    },
-    children: {
-      label: getCommonCaption({ textLabel }),
-      value: getCommonValue({ jsonPath })
-    }
-  };
 };
 
 // Search API call

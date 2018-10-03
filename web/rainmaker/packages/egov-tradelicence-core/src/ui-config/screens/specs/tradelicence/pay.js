@@ -16,10 +16,8 @@ import { showHideAdhocPopup } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    textLabel: {
-      label: "Payment for New Trade License (2018-2019)",
-      labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
-    }
+    labelName: "Payment for New Trade License (2018-2019)",
+    labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -59,12 +57,15 @@ const screenConfig = {
           componentPath: "Div",
           children: {
             paymentDetails: getCommonCard({
-              header: getCommonTitle(
-                "Review your estimated fees and enter the payment collection details"
-              ),
-              paragraph: getCommonParagraph(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-              ),
+              header: getCommonTitle({
+                labelName:
+                  "Review your estimated fees and enter the payment collection details",
+                labelKey: "TL_PAYMENT_HEAD"
+              }),
+              paragraph: getCommonParagraph({
+                labelName:
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+              }),
               estimateDetails,
               addPenaltyRebateButton: {
                 componentPath: "Button",
@@ -74,7 +75,7 @@ const screenConfig = {
                 },
                 children: {
                   previousButtonLabel: getLabel({
-                    label: "ADD REBATE/PENALTY",
+                    labelName: "ADD REBATE/PENALTY",
                     labelKey: "TL_PAYMENT_ADD_RBT_PEN"
                   })
                 },
