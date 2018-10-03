@@ -234,14 +234,36 @@ const tradeLicenseSearchAndResult = {
                   case "APPLIED":
                     store.dispatch(
                       setRoute(
-                        "/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=employee"
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=employee&applicationNumber=${
+                          rowData[0]
+                        }`
                       )
                     );
                     break;
                   case "APPROVED":
                     store.dispatch(
                       setRoute(
-                        "/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=employee"
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=employee&applicationNumber=${
+                          rowData[0]
+                        }`
+                      )
+                    );
+                    break;
+
+                  case "PAID":
+                    store.dispatch(
+                      setRoute(
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=employee&applicationNumber=${
+                          rowData[0]
+                        }`
+                      )
+                    );
+                  case "CANCELLED":
+                    store.dispatch(
+                      setRoute(
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=employee&applicationNumber=${
+                          rowData[0]
+                        }`
                       )
                     );
                     break;
