@@ -16,9 +16,25 @@ import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { getCancelDetails } from "./applyResource/cancel-details";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getSearchResults } from "../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
+
+const applicationNumber = getQueryArg(
+  window.location.href,
+  "applicationNumber"
+);
+
+const searchResults = async (action, state, dispatch) => {
+  let queryObject = [
+    { key: "tenantId", value: "pb.amritsar" },
+    { key: "applicationNumber", value: applicationNumber }
+  ];
+  const payload = await getSearchResults(queryObject);
+  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+};
 
 let headerSideText = "";
 let titleText = "";
@@ -130,6 +146,13 @@ export const tradeReviewDetails = getCommonCard({
 const screenConfig = {
   uiFramework: "material-ui",
   name: "searchPreview",
+  beforeInitScreen: (action, state, dispatch) => {
+    if (applicationNumber) {
+      searchResults(action, state, dispatch);
+    }
+    return action;
+  },
+
   components: {
     div: {
       uiFramework: "custom-atoms",
