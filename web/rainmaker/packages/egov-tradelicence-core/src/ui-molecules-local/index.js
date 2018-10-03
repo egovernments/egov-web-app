@@ -42,6 +42,11 @@ const DocumentList = Loadable({
   loading: () => <Loading />
 });
 
+const AutoSelector = Loadable({
+  loader: () => import("./AutoSelector"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -50,5 +55,6 @@ export {
   CustomTab,
   UploadMultipleFiles,
   UploadSingleFile,
-  DocumentList
+  DocumentList,
+  AutoSelector
 };
