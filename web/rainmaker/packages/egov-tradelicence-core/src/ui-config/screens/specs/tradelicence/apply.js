@@ -28,7 +28,12 @@ const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
 const queryValue = getQueryArg(window.location.href, "number");
 
 const header = getCommonContainer({
-  header: getCommonHeader("Apply for New Trade License (2018-2019)"),
+  header: getCommonHeader({
+    textLabel: {
+      label: "Apply for New Trade License (2018-2019)",
+      labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+    }
+  }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",
@@ -147,7 +152,7 @@ const screenConfig = {
                 sm: 10
               },
               ...header
-            },
+            }
             // helpSection: {
             //   componentPath: "Button",
             //   props: {

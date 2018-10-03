@@ -40,7 +40,10 @@ export const getReviewOwner = (isEditable = true) => {
                 iconName: "edit"
               }
             },
-            buttonLabel: getLabel("Edit")
+            buttonLabel: getLabel({
+              label: "Edit",
+              labelKey: "TL_SUMMARY_EDIT"
+            })
           },
           onClickDefination: {
             action: "condition",
@@ -52,21 +55,70 @@ export const getReviewOwner = (isEditable = true) => {
       }
     },
     viewFive: getCommonContainer({
-      reviewOwnerName: getLabelWithValue("Name", "Satinder Singh"),
-      reviewOwnerFatherName: getLabelWithValue(
-        "Father/Husband's Name",
-        "Jaswindar Singh"
-      ),
-      reviewOwnerGender: getLabelWithValue("Gender", "Male"),
-      reviewOwnerAge: getLabelWithValue("Age", "45"),
-      reviewOwnerPhoneNo: getLabelWithValue("Phone No.", "9999999999"),
-      reviewOwnerEmail: getLabelWithValue("Email", "satinder@gmail.com"),
-      reviewOwnerPAN: getLabelWithValue("PAN No.", "BUFAS1234H"),
-      reviewOwnerAddr: getLabelWithValue(
-        "Corrospondance Address",
-        "707/B, railway Colony, Vikarnagar, Amritsar"
-      ),
-      reviewOwnerSpecialCat: getLabelWithValue("Special Category", "None")
+      reviewOwnerName: getLabelWithValue({
+        textLabel: {
+          label: "Name",
+          labelKey: "TL_NEW_OWNER_DETAILS_NAME_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
+      }),
+      reviewOwnerFatherName: getLabelWithValue({
+        textLabel: {
+          label: "Father/Husband's Name",
+          labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
+      }),
+      reviewOwnerGender: getLabelWithValue({
+        textLabel: {
+          label: "Gender",
+          labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
+        },
+
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender"
+      }),
+      reviewOwnerAge: getLabelWithValue({
+        textLabel: {
+          label: "Age",
+          labelKey: "TL_EMP_APPLICATION_AGE"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
+      }),
+      reviewOwnerPhoneNo: getLabelWithValue({
+        textLabel: {
+          label: "Mobile No.",
+          labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
+      }),
+      reviewOwnerEmail: getLabelWithValue({
+        textLabel: {
+          label: "Email",
+          labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
+      }),
+      reviewOwnerPAN: getLabelWithValue({
+        textLabel: {
+          label: "PAN No.",
+          labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan"
+      }),
+      reviewOwnerAddr: getLabelWithValue({
+        textLabel: {
+          label: "Corrospondence Address",
+          labelKey: "TL_NEW_OWNER_DETAILS_ADDR_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
+      }),
+      reviewOwnerSpecialCat: getLabelWithValue({
+        textLabel: {
+          label: "Special Owner Category",
+          labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory"
+      })
     })
   });
 };

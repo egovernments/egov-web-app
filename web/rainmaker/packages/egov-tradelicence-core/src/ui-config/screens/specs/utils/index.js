@@ -98,9 +98,13 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
           sm: 4
         },
         children: {
-          div: getLabel(label, labelKey, {
-            style: {
-              fontSize: "14px"
+          div: getLabel({
+            label: label,
+            labelKey: labelKey,
+            props: {
+              style: {
+                fontSize: "14px"
+              }
             }
           })
         }
@@ -231,12 +235,15 @@ export const getFooterButtons = () => {
       "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
     );
   } else if (queryValue === "cancel") {
-    return getLabel("CANCEL TRADE LICENSE", "TL_COMMON_BUTTON_CANCEL_LICENSE");
+    return getLabel({
+      label: "CANCEL TRADE LICENSE",
+      labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
+    });
   } else {
-    return getLabel(
-      "APPROVE APPLICATION",
-      "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
-    );
+    return getLabel({
+      label: "APPROVE APPLICATION",
+      labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+    });
   }
 };
 

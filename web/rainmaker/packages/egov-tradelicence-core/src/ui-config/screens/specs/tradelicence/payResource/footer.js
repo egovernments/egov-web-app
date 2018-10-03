@@ -1,7 +1,4 @@
-import {
-  getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
-
+import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -27,18 +24,22 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      submitButtonLabel: getLabel("Submit"),
-      submitButtonIcon:{
-        uiFramework:"custom-atoms",
-        componentPath:"Icon",
-        props:{
-          iconName:"keyboard_arrow_right"
+      submitButtonLabel: getLabel({
+        label: "Submit",
+        labelKey: "TL_COMMON_BUTTON_SUBMIT"
+      }),
+      submitButtonIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "keyboard_arrow_right"
         }
       }
     },
     onClickDefination: {
       action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=pay&status=success&number=12345"
+      path:
+        "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=pay&status=success&number=12345"
     }
   }
 });

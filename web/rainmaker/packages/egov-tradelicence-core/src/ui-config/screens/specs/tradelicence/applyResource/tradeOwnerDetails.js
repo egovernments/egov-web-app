@@ -65,8 +65,14 @@ const OwnerInfoCard = {
             "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
         }),
         OwnerGender: getSelectField({
-          label: { labelName: "Gender" },
-          placeholder: { labelName: "Select Gender" },
+          label: {
+            labelName: "Gender",
+            labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Gender",
+            labelKey: "TL_NEW_OWNER_DETAILS_GENDER_PLACEHOLDER"
+          },
           required: true,
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
           data: [
@@ -123,8 +129,14 @@ const OwnerInfoCard = {
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
         }),
         OwnerSpecialCategory: getSelectField({
-          label: { labelName: "Special Owner Category" },
-          placeholder: { labelName: "Select Special Owner Category" },
+          label: {
+            labelName: "Special Owner Category",
+            labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Special Owner Category",
+            labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
+          },
           required: true,
           jsonPath:
             "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory",

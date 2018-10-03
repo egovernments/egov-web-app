@@ -20,15 +20,15 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   }
 };
 
+const localizationLabels = JSON.parse(
+  window.localStorage.getItem("localization_en_IN")
+);
+
 class LabelContainer extends React.Component {
   render() {
     let { label, labelKey, fieldValue, ...rest } = this.props;
-    const localizationLabels = JSON.parse(
-      window.localStorage.getItem("localization_en_IN")
-    );
     let transfomedKeys = transformById(localizationLabels, "code");
     let translatedLabel = getLocaleLabelsforTL(label, labelKey, transfomedKeys);
-
     return (
       <Label label={fieldValue ? fieldValue : translatedLabel} {...rest} />
     );
@@ -36,8 +36,6 @@ class LabelContainer extends React.Component {
 }
 
 const mapStateToProps = (state, ownprops) => {
-  console.log("Sample 1,,,,,", state);
-  console.log("Sample 2,,,,,", ownprops);
   let fieldValue = "";
   const { jsonPath } = ownprops;
   const { screenConfiguration } = state;
@@ -46,7 +44,7 @@ const mapStateToProps = (state, ownprops) => {
     fieldValue = get(preparedFinalObject, jsonPath);
   }
 
-  return { value: fieldValue };
+  return { fieldValue };
 };
 
 export default connect(mapStateToProps)(LabelContainer);

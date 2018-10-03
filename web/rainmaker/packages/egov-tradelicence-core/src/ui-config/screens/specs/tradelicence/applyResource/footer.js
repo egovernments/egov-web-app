@@ -174,7 +174,10 @@ export const footer = getCommonApplyFooter({
           iconName: "keyboard_arrow_left"
         }
       },
-      previousButtonLabel: getLabel("Previous Step")
+      previousButtonLabel: getLabel({
+        label: "Previous Step",
+        labelKey: "TL_COMMON_BUTTON_PREV_STEP"
+      })
     },
     onClickDefination: {
       action: "condition",
@@ -194,7 +197,10 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("Next Step"),
+      nextButtonLabel: getLabel({
+        label: "Next Step",
+        labelKey: "TL_COMMON_BUTTON_NXT_STEP"
+      }),
       nextButtonIcon: {
         uiFramework: "custom-atoms",
         componentPath: "Icon",
@@ -220,7 +226,10 @@ export const footer = getCommonApplyFooter({
       }
     },
     children: {
-      submitButtonLabel: getLabel("Submit"),
+      submitButtonLabel: getLabel({
+        label: "Submit",
+        labelKey: "TL_COMMON_BUTTON_SUBMIT"
+      }),
       submitButtonIcon: {
         uiFramework: "custom-atoms",
         componentPath: "Icon",
@@ -251,7 +260,10 @@ export const footerApprove = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getLabel("BACK")
+      nextButtonLabel: getLabel({
+        label: "BACK",
+        labelKey: "TL_COMMON_BUTTON_BACK"
+      })
     },
     onClickDefination: {
       action: "page_change",
@@ -308,7 +320,10 @@ export const footerReview = (role, status) =>
                     iconName: "cloud_download"
                   }
                 },
-                nextButtonLabel: getLabel("Download"),
+                nextButtonLabel: getLabel({
+                  label: "Download",
+                  labelKey: "TL_COMMON_DOWNLOAD"
+                }),
                 dropdown: {
                   uiFramework: "custom-atoms",
                   componentPath: "Icon",
@@ -344,7 +359,10 @@ export const footerReview = (role, status) =>
                     iconName: "print"
                   }
                 },
-                nextButtonLabel: getLabel("Print"),
+                nextButtonLabel: getLabel({
+                  label: "Print",
+                  labelKey: "TL_COMMON_PRINT"
+                }),
                 dropdown: {
                   uiFramework: "custom-atoms",
                   componentPath: "Icon",
@@ -381,7 +399,10 @@ export const footerReview = (role, status) =>
                 }
               },
               children: {
-                nextButtonLabel: getLabel("Reject")
+                nextButtonLabel: getLabel({
+                  label: "Reject",
+                  labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
+                })
               },
               onClickDefination: {
                 action: "page_change",
@@ -402,7 +423,10 @@ export const footerReview = (role, status) =>
                 }
               },
               children: {
-                nextButtonLabel: getLabel("APPROVE")
+                nextButtonLabel: getLabel({
+                  label: "APPROVE",
+                  labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
+                })
               },
               onClickDefination: {
                 action: "page_change",
@@ -422,7 +446,10 @@ export const footerReview = (role, status) =>
                 }
               },
               children: {
-                nextButtonLabel: getLabel("PROCEED TO PAYMENT")
+                nextButtonLabel: getLabel({
+                  label: "PROCEED TO PAYMENT",
+                  labelKey: "TL_COMMON_BUTTON_PROC_PMT"
+                })
               },
               onClickDefination: {
                 action: "page_change",
@@ -442,7 +469,10 @@ export const footerReview = (role, status) =>
                 }
               },
               children: {
-                nextButtonLabel: getLabel("CANCEL TRADE LICENSE")
+                nextButtonLabel: getLabel({
+                  label: "CANCEL TRADE LICENSE",
+                  labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
+                })
               },
               onClickDefination: {
                 action: "page_change",

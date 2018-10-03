@@ -13,11 +13,16 @@ import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 const hasButton = getQueryArg(window.location.href, "hasButton");
 const hasApproval = getQueryArg(window.location.href, "hasApproval");
 let enableInbox,
-enableButton = true;
+  enableButton = true;
 enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
-const header = getCommonHeader("Trade License");
+const header = getCommonHeader({
+  textLabel: {
+    label: "Trade License",
+    labelKey: "TL_COMMON_TL"
+  }
+});
 const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
@@ -72,7 +77,10 @@ const tradeLicenseSearchAndResult = {
                   }
                 },
 
-                buttonLabel: getLabel("NEW APPLICATION")
+                buttonLabel: getLabel({
+                  label: "NEW APPLICATION",
+                  labelKey: "TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"
+                })
               },
               onClickDefination: {
                 action: "page_change",
@@ -169,13 +177,13 @@ const tradeLicenseSearchAndResult = {
           uiFramework: "custom-atoms",
           componentPath: "Div",
           props: {
-            style: {display: "flex", justifyContent: "center"}
+            style: { display: "flex", justifyContent: "center" }
           },
-          visible:false,
+          visible: false,
           children: {
-            progress:{
+            progress: {
               uiFramework: "material-ui",
-              componentPath: "CircularProgress",
+              componentPath: "CircularProgress"
             }
           }
         },
@@ -241,9 +249,7 @@ const tradeLicenseSearchAndResult = {
                     break;
                   case "INITIATED":
                     store.dispatch(
-                      setRoute(
-                        "/landing/mihy-ui-framework/tradelicence/apply"
-                      )
+                      setRoute("/landing/mihy-ui-framework/tradelicence/apply")
                     );
                     break;
                   default:

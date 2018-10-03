@@ -25,7 +25,10 @@ export const paymentSuccessFooter = getCommonApplyFooter({
       }
     },
     children: {
-      downloadReceiptButtonLabel: getLabel("DOWNLOAD RECEIPT")
+      downloadReceiptButtonLabel: getLabel({
+        label: "DOWNLOAD RECEIPT",
+        labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+      })
     },
     onClickDefination: {
       action: "condition",
@@ -46,7 +49,10 @@ export const paymentSuccessFooter = getCommonApplyFooter({
       }
     },
     children: {
-      printReceiptButtonLabel: getLabel("PRINT RECEIPT")
+      printReceiptButtonLabel: getLabel({
+        label: "PRINT RECEIPT",
+        labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
+      })
     }
   }
 });

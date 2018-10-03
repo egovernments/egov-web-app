@@ -67,7 +67,12 @@ switch (status) {
 
 const footer = footerReview(role, status);
 const headerrow = getCommonContainer({
-  header: getCommonHeader("Trade License Application (2018-2019)"),
+  header: getCommonHeader({
+    textLabel: {
+      label: "Trade License Application (2018-2019)",
+      labelKey: "TL_TRADE_APPLICATION"
+    }
+  }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",

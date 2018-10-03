@@ -10,7 +10,12 @@ import {
 import { showHideAdhocPopup } from "../../utils";
 
 export const adhocPopup = getCommonContainer({
-  header: getCommonHeader("Add Adhoc Penalty/Rebate"),
+  header: getCommonHeader({
+    textLabel: {
+      label: "Add Adhoc Penalty/Rebate",
+      labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+    }
+  }),
   adhocPenaltyCard: getCommonContainer(
     {
       subheader: getCommonSubHeader("Adhoc Penalty"),
@@ -92,7 +97,10 @@ export const adhocPopup = getCommonContainer({
           }
         },
         children: {
-          previousButtonLabel: getLabel("CANCEL")
+          previousButtonLabel: getLabel({
+            label: "CANCEL",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_BUTTON_CANCEL"
+          })
         },
         onClickDefination: {
           action: "condition",
@@ -110,7 +118,10 @@ export const adhocPopup = getCommonContainer({
           }
         },
         children: {
-          previousButtonLabel: getLabel("ADD")
+          previousButtonLabel: getLabel({
+            label: "ADD",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_BUTTON_ADD"
+          })
         }
       }
     }

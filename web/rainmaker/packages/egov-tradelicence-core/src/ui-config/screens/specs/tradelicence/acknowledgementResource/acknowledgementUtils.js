@@ -46,16 +46,22 @@ const acknowledgementCard = ({
 } = {}) => {
   const tail = tailText
     ? {
-      uiFramework: "custom-atoms",
-      componentPath: "Div",
-      children: {
-        text: getCommonHeader(tailText, { style: style.tailText }),
-        paragraph: getCommonHeader(number, { style: style.tailNumber })
-      },
-      props: {
-        style: style.tailBox
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          text: getCommonHeader({
+            textLabel: { label: tailText, labelKey: "" },
+            props: { style: style.tailText }
+          }),
+          paragraph: getCommonHeader({
+            textLabel: { label: number, labelKey: "" },
+            props: { style: style.tailNumber }
+          })
+        },
+        props: {
+          style: style.tailBox
+        }
       }
-    }
     : {};
 
   return getCommonCard({
@@ -87,7 +93,9 @@ const acknowledgementCard = ({
           uiFramework: "custom-atoms",
           componentPath: "Div",
           children: {
-            header: getCommonHeader(header),
+            header: getCommonHeader({
+              textLabel: { label: header, labelKey: "" }
+            }),
             paragraph: getCommonParagraph(body, {
               style: style.bodySub
             })

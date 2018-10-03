@@ -24,13 +24,10 @@ export const gotoHomeFooter = getCommonApplyFooter({
       }
     },
     children: {
-      downloadReceiptButtonLabel: getLabel("GO TO HOME")
+      downloadReceiptButtonLabel: getLabel({
+        label: "GO TO HOME",
+        labelKey: "TL_COMMON_BUTTON_HOME"
+      })
     }
-    // onClickDefination: {
-    //   action: "condition",
-    //   callBack: (state, dispatch) => {
-    //     generateReceipt(state, dispatch, "receipt");
-    //   }
-    // }
   }
 });

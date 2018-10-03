@@ -14,7 +14,12 @@ import set from "lodash/set";
 const getAcknowledgementCard = (purpose, status, number) => {
   if (purpose === "apply" && status === "success") {
     return {
-      header: getCommonHeader("Application for New Trade License (2018-2019)"),
+      header: getCommonHeader({
+        textLabel: {
+          label: "Application for New Trade License (2018-2019)",
+          labelKey: "TL_COMMON_APPL_NEW_LIC"
+        }
+      }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -47,7 +52,12 @@ const getAcknowledgementCard = (purpose, status, number) => {
   } else if (purpose === "pay" && status === "success") {
     return {
       header: getCommonContainer({
-        header: getCommonHeader("Payment for New Trade License (2018-2019)"),
+        header: getCommonHeader({
+          textLabel: {
+            label: "Payment for New Trade License (2018-2019)",
+            labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+          }
+        }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
@@ -76,7 +86,12 @@ const getAcknowledgementCard = (purpose, status, number) => {
   } else if (purpose === "approve" && status === "success") {
     return {
       header: getCommonContainer({
-        header: getCommonHeader("Trade License Application (2018-2019)"),
+        header: getCommonHeader({
+          textLabel: {
+            label: "Trade License Application (2018-2019)",
+            labelKey: "TL_TRADE_APPLICATION"
+          }
+        }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
@@ -105,7 +120,12 @@ const getAcknowledgementCard = (purpose, status, number) => {
   } else if (purpose === "application" && status === "rejected") {
     return {
       header: getCommonContainer({
-        header: getCommonHeader("Trade License Application (2018-2019)"),
+        header: getCommonHeader({
+          textLabel: {
+            label: "Trade License Application (2018-2019)",
+            labelKey: "TL_TRADE_APPLICATION"
+          }
+        }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
@@ -132,7 +152,12 @@ const getAcknowledgementCard = (purpose, status, number) => {
   } else if (purpose === "application" && status === "cancelled") {
     return {
       header: getCommonContainer({
-        header: getCommonHeader("Trade License Application (2018-2019)"),
+        header: getCommonHeader({
+          textLabel: {
+            label: "Trade License Application (2018-2019)",
+            labelKey: "TL_TRADE_APPLICATION"
+          }
+        }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",

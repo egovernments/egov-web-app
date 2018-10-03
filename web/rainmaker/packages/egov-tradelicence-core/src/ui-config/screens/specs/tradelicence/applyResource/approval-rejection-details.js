@@ -6,7 +6,6 @@ import {
   getCommonCaption
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-
 export const getApprovalDetails = () => {
   return getCommonGrayCard({
     headerDiv: {
@@ -21,14 +20,20 @@ export const getApprovalDetails = () => {
           ...getCommonSubHeader("Approval/Rejection Details")
         },
         viewOne: getCommonContainer({
-          reviewLicenceType: getLabelWithValue(
-            "Approved By",
-            "Sukhwindar Singh"
-          ),
-          reviewTradeName: getLabelWithValue(
-            "Approval Comments",
-            "asdfgfdsafsds"
-          )
+          reviewLicenceType: getLabelWithValue({
+            textLabel: {
+              label: "Approved By",
+              labelKey: "TL_EMP_APPLICATION_APPR_BY"
+            },
+            jsonPath: "Sukhwindar Singh"
+          }),
+          reviewTradeName: getLabelWithValue({
+            textLabel: {
+              label: "Approval Comments",
+              labelKey: "TL_EMP_APPLICATION_APPR_COM"
+            },
+            jsonPath: "asdfgfdsafsds"
+          })
         }),
         viewTow: getCommonContainer({
           lbl: {
@@ -40,7 +45,12 @@ export const getApprovalDetails = () => {
                 padding: "12px 24px 12px 0"
               }
             },
-            ...getCommonCaption("Uploaded Documents")
+            ...getCommonCaption({
+              textLabel: {
+                label: "Uploaded Documents",
+                labelKey: "TL_EMP_APPLICATION_UP_DOC"
+              }
+            })
           },
           documents: {
             uiFramework: "custom-molecules",

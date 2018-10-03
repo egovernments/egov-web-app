@@ -8,7 +8,6 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { changeStep } from "./footer";
-import { getLabelWithValueNew } from "../../utils";
 
 export const getReviewTrade = (isEditable = true) => {
   return getCommonGrayCard({
@@ -42,7 +41,10 @@ export const getReviewTrade = (isEditable = true) => {
                 iconName: "edit"
               }
             },
-            buttonLabel: getLabel("Edit")
+            buttonLabel: getLabel({
+              label: "Edit",
+              labelKey: "TL_SUMMARY_EDIT"
+            })
           },
           onClickDefination: {
             action: "condition",
@@ -54,59 +56,172 @@ export const getReviewTrade = (isEditable = true) => {
       }
     },
     viewOne: getCommonContainer({
-      reviewLicenceType: getLabelWithValue("Licence Type", "Temporary"),
-      reviewTradeName: getLabelWithValueNew({
+      reviewLicenceType: getLabelWithValue({
+        textLabel: {
+          label: "Licence Type",
+          labelKey: "TL_COMMON_TABLE_COL_LICENSE_TYPE"
+        },
+        jsonPath: "Licenses[0].licenseType"
+      }),
+      reviewTradeName: getLabelWithValue({
         textLabel: {
           label: "Trade Name",
           labelKey: "TL_COMMON_TABLE_COL_TRD_NAME"
         },
-        jsonPath: "Licenses[0].tenantId"
+        jsonPath: "Licenses[0].tradeName"
       }),
       reviewTradeMobility: getLabelWithValue("Trade Mobility", "Immovable"),
-      reviewCommencementDate: getLabelWithValue(
-        "Commencement Date",
-        "12/12/2018"
-      ),
-      reviewOperationalArea: getLabelWithValue("Operational Area", "2000 Sqft"),
-      reviewNoOfEmployee: getLabelWithValue("No of Employees", "200"),
-      reviewGSTNo: getLabelWithValue("GST No.", "364565")
+      reviewCommencementDate: getLabelWithValue({
+        textLabel: {
+          label: "Commencement Date",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"
+        },
+        jsonPath: "Licenses[0].commencementDate"
+      }),
+      reviewOperationalArea: getLabelWithValue({
+        textLabel: {
+          label: "Operational Area",
+          labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.operationalArea"
+      }),
+      reviewNoOfEmployee: getLabelWithValue({
+        textLabel: {
+          label: "No of Employees",
+          labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees"
+      }),
+      reviewGSTNo: getLabelWithValue({
+        textLabel: {
+          label: "GST No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_LABEL"
+        },
+        jsonPath: "Licenses[0].tradeName"
+      })
     }),
     div1: getDivider(),
     viewTwo: getCommonContainer({
-      reviewTradeCategory: getLabelWithValue("Trade Category", "Goods"),
-      reviewTradeType: getLabelWithValue("Trade Type", "Value"),
-      reviewTradeSubtype: getLabelWithValue(
-        "Trade Sub-Type",
-        "Manufacuring Plant"
-      ),
-      reviewTradeUOM: getLabelWithValue("UOM (Unit of Measurement)", "Sq Ft"),
-      reviewTradeUOMValue: getLabelWithValue("UOM Value", "2000")
+      reviewTradeCategory: getLabelWithValue({
+        textLabel: {
+          label: "Trade Category",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
+        },
+        jsonPath: "LicencesTemp[0].tradeType"
+      }),
+      reviewTradeType: getLabelWithValue({
+        textLabel: {
+          label: "Trade Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
+        },
+        jsonPath: "LicencesTemp[0].tradeSubType"
+      }),
+      reviewTradeSubtype: getLabelWithValue({
+        textLabel: {
+          label: "Trade Sub-Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+      }),
+
+      reviewTradeUOM: getLabelWithValue({
+        textLabel: {
+          label: "UOM (Unit of Measurement)",
+          labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
+        },
+        jSonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uom"
+      }),
+      reviewTradeUOMValue: getLabelWithValue({
+        textLabel: {
+          label: "UOM Value",
+          labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue"
+      })
     }),
     div2: getDivider(),
     viewThree: getCommonContainer({
-      reviewAccessoryType: getLabelWithValue("Accesory Type", "Generator"),
-      reviewAccessoryUOM: getLabelWithValue("UOM", "Watt"),
-      reviewAccessoryUOMValue: getLabelWithValue("UOM Value", "5000")
+      reviewAccessoryType: getLabelWithValue({
+        textLabel: {
+          label: "Accesory Type",
+          labelKey: "TL_REVIEWACCESSORY_TYPE_LABEL"
+        },
+        jsonPath:
+          "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory"
+      }),
+      reviewAccessoryUOM: getLabelWithValue({
+        textLabel: {
+          label: "UOM",
+          labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uom"
+      }),
+      reviewAccessoryUOMValue: getLabelWithValue({
+        textLabel: {
+          label: "UOM Value",
+          labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uomValue"
+      })
     }),
     div3: getDivider(),
     viewFour: getCommonContainer({
-      reviewPropertyID: getLabelWithValue("Property Assessment ID", "456"),
-      reviewElectricityNo: getLabelWithValue(
-        "Electricity Connection No.",
-        "789"
-      ),
-      reviewCity: getLabelWithValue("City", "Amritsar"),
-      reviewPincode: getLabelWithValue("Pincode", "875478"),
-      reviewDoorNo: getLabelWithValue("Door/House No.", "707/B"),
-      reviewBuildingName: getLabelWithValue(
-        "Building/Company Name",
-        "Suncity Apartments"
-      ),
-      reviewStreetName: getLabelWithValue(
-        "Street Name",
-        "Old Gurudwara Street"
-      ),
-      reviewMohalla: getLabelWithValue("Mohalla", "Old Gurudwara Street")
+      reviewPropertyID: getLabelWithValue({
+        textLabel: {
+          label: "Property Assessment ID",
+          labelKey: "TL_EMP_APPLICATION_PT_ASS_ID"
+        },
+        jsonPath: "Licences[0].propertyI"
+      }),
+      reviewElectricityNo: getLabelWithValue({
+        textLabel: {
+          label: "Electricity Connection No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
+        },
+        jsonPath: "Licences[0].propertyId"
+      }),
+      reviewCity: getLabelWithValue({
+        textLabel: {
+          label: "City",
+          labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.city"
+      }),
+      reviewPincode: getLabelWithValue({
+        textLabel: {
+          label: "Pincode",
+          labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.pincode"
+      }),
+      reviewDoorNo: getLabelWithValue({
+        textLabel: {
+          label: "Door/House No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.doorNo"
+      }),
+      reviewBuildingName: getLabelWithValue({
+        textLabel: {
+          label: "Building/Company Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.buildingName"
+      }),
+      reviewStreetName: getLabelWithValue({
+        textLabel: {
+          label: "Street Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.street"
+      }),
+      reviewMohalla: getLabelWithValue({
+        textLabel: {
+          label: "Mohalla",
+          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+        },
+        jsonPath: "Licences[0].tradeLicenseDetail.address.locality.name"
+      })
     })
   });
 };

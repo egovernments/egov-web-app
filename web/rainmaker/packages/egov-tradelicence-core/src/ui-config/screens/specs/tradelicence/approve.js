@@ -22,7 +22,12 @@ import { footerApprove } from "./applyResource/footer";
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValue = getQueryArg(window.location.href, "purpose");
 const header = getCommonContainer({
-  header: getCommonHeader("Trade License Application (2018-2019)"),
+  header: getCommonHeader({
+    textLabel: {
+      label: "Trade License Application (2018-2019)",
+      labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
+    }
+  }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",

@@ -38,7 +38,10 @@ export const getReviewDocuments = (isEditable = true) => {
                 iconName: "edit"
               }
             },
-            buttonLabel: getLabel("Edit")
+            buttonLabel: getLabel({
+              label: "Edit",
+              labelKey: "TL_SUMMARY_EDIT"
+            })
           },
           onClickDefination: {
             action: "condition",

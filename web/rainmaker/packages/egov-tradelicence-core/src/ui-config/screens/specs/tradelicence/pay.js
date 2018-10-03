@@ -15,7 +15,12 @@ import { adhocPopup } from "./applyResource/adhocPopup";
 import { showHideAdhocPopup } from "../utils";
 
 const header = getCommonContainer({
-  header: getCommonHeader("Payment for New Trade License (2018-2019)"),
+  header: getCommonHeader({
+    textLabel: {
+      label: "Payment for New Trade License (2018-2019)",
+      labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+    }
+  }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",
@@ -68,7 +73,10 @@ const screenConfig = {
                   style: {}
                 },
                 children: {
-                  previousButtonLabel: getLabel("ADD REBATE/PENALTY")
+                  previousButtonLabel: getLabel({
+                    label: "ADD REBATE/PENALTY",
+                    labelKey: "TL_PAYMENT_ADD_RBT_PEN"
+                  })
                 },
                 onClickDefination: {
                   action: "condition",
