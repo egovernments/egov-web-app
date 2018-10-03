@@ -453,3 +453,18 @@ export const getSearchResults = async queryObject => {
     console.log(error);
   }
 };
+
+export const convertEpochToDate = dateEpoch => {
+  const dateFromApi = new Date(dateEpoch);
+  let month = dateFromApi.getMonth() + 1;
+  let day = dateFromApi.getDate();
+  let year = dateFromApi.getFullYear();
+  month = (month > 9 ? "" : "0") + month;
+  day = (day > 9 ? "" : "0") + day;
+  return `${day}/${month}/${year}`;
+};
+
+export const convertDateToEpoch = dateString => {
+  const parts = dateString.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  return Date.UTC(parts[3], parts[2] - 1, parts[1]);
+};
