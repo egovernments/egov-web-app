@@ -67,7 +67,8 @@ export const getUploadFilesMultiple = () => {
       inputProps: {
         accept: "image/*, .pdf, .png, .jpeg"
       },
-      buttonLabel: "UPLOAD FILES"
+      buttonLabel: "UPLOAD FILES",
+      maxFileSize: 5000
     }
   };
 };

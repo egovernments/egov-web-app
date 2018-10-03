@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { UploadFile, UploadedDocument } from "ui-atoms-local";
 import { withStyles } from "@material-ui/core/styles";
+import { handleFileUpload } from "ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { uploadFile } from "ui-utils/api";
-
-const S3_BUCKET = {
-  endPoint: "filestore/v1/files"
-};
 
 const styles = theme => ({
   button: {
@@ -45,37 +41,6 @@ class UploadMultipleFiles extends Component {
     this.setState({ documents });
   };
 
-  handleFileUpload = event => {
-    const input = event.target;
-    const { maxFiles } = this.props;
-    if (input.files && input.files.length > 0) {
-      const files = input.files;
-      Object.keys(files)
-        .slice(0, maxFiles)
-        .forEach(async (key, index) => {
-          const file = files[key];
-          if (file.type.match(/^image\//)) {
-            // const imageUri = await getImageUrlByFile(file);
-            const fileStoreId = await uploadFile(
-              S3_BUCKET.endPoint,
-              "rainmaker-pgr",
-              file,
-              "pb"
-            );
-            console.log(fileStoreId);
-            this.handleDocument(file, fileStoreId);
-          } else {
-            const fileStoreId = await uploadFile(
-              S3_BUCKET.endPoint,
-              "RAINMAKER-PGR",
-              file,
-              "pb"
-            );
-            this.handleDocument(file, fileStoreId);
-          }
-        });
-    }
-  };
   render() {
     const { documents } = this.state;
     return (
@@ -83,12 +48,7 @@ class UploadMultipleFiles extends Component {
         {documents &&
           documents.map((document, index) => {
             return (
-              <div
-                style={
-                  index === documents.length - 1 ? {} : { marginBottom: 5 }
-                }
-                key={index}
-              >
+              <div style={{ marginTop: 10 }} key={index}>
                 <UploadedDocument
                   document={document}
                   removeDocument={() => this.removeDocument(index)}
@@ -100,9 +60,11 @@ class UploadMultipleFiles extends Component {
           buttonProps={{
             variant: "outlined",
             color: "primary",
-            style: { marginLeft: 0 }
+            style: { marginLeft: 0, marginTop: 10 }
           }}
-          handleFileUpload={this.handleFileUpload}
+          handleFileUpload={e =>
+            handleFileUpload(e, this.handleDocument, this.props)
+          }
           inputProps={{ multiple: true, ...this.props.inputProps }}
           classes={this.props.classes}
           buttonLabel={this.props.buttonLabel}

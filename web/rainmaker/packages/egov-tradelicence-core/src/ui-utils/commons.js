@@ -1,4 +1,5 @@
 import isEmpty from "lodash/isEmpty";
+import { uploadFile } from "ui-utils/api";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -122,4 +123,46 @@ export const acceptedFiles = acceptedExt => {
     return result;
   }, []);
   return acceptedFileTypes;
+};
+
+export const handleFileUpload = (event, handleDocument, props) => {
+  const S3_BUCKET = {
+    endPoint: "filestore/v1/files"
+  };
+  const { inputProps, maxFileSize } = props;
+  const input = event.target;
+  if (input.files && input.files.length > 0) {
+    const files = input.files;
+    Object.keys(files).forEach(async (key, index) => {
+      const file = files[key];
+      const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
+      const isSizeValid = getFileSize(file) <= maxFileSize;
+      if (!fileValid) {
+        alert(`Only image or pdf files can be uploaded`);
+        return;
+      }
+      if (!isSizeValid) {
+        alert(`Maximum file size can be ${5} MB`);
+        return;
+      }
+      if (file.type.match(/^image\//)) {
+        const imageUri = await getImageUrlByFile(file);
+        const fileStoreId = await uploadFile(
+          S3_BUCKET.endPoint,
+          "rainmaker-pgr",
+          file,
+          "pb"
+        );
+        handleDocument(file, fileStoreId);
+      } else {
+        const fileStoreId = await uploadFile(
+          S3_BUCKET.endPoint,
+          "RAINMAKER-PGR",
+          file,
+          "pb"
+        );
+        handleDocument(file, fileStoreId);
+      }
+    });
+  }
 };

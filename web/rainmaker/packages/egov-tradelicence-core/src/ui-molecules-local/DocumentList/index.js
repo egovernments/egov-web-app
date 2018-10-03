@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import { acceptedFiles, getFileSize, isFileValid } from "ui-utils/commons";
+import { handleFileUpload } from "ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { uploadFile } from "ui-utils/api";
@@ -88,48 +88,6 @@ class DocumentList extends Component {
     this.getFileUploadStatus(false, remDocIndex);
   };
 
-  handleFileUpload = event => {
-    const { inputProps, maxFileSize } = this.props;
-    const input = event.target;
-    if (input.files && input.files.length > 0) {
-      const files = input.files;
-      Object.keys(files).forEach(async (key, index) => {
-        const file = files[key];
-        const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
-
-        const isSizeValid = getFileSize(file) <= maxFileSize;
-        if (!fileValid || !isSizeValid) {
-          alert(
-            !fileValid
-              ? `Only image or pdf files can be uploaded`
-              : !isSizeValid
-                ? `Maximum file size can be ${5} MB`
-                : "Something went wrong"
-          );
-          return;
-        }
-        if (file.type.match(/^image\//)) {
-          //const imageUri = await getImageUrlByFile(file);
-          const fileStoreId = await uploadFile(
-            S3_BUCKET.endPoint,
-            "rainmaker-pgr",
-            file,
-            "pb"
-          );
-          this.handleDocument(file, fileStoreId);
-        } else {
-          const fileStoreId = await uploadFile(
-            S3_BUCKET.endPoint,
-            "RAINMAKER-PGR",
-            file,
-            "pb"
-          );
-          this.handleDocument(file, fileStoreId);
-        }
-      });
-    }
-  };
-
   getFileUploadStatus = (status, index) => {
     const { uploadedIndex } = this.state;
     if (status) {
@@ -173,7 +131,9 @@ class DocumentList extends Component {
                 <Grid item={true} xs={12} sm={5} align="right">
                   <UploadSingleFile
                     classes={this.props.classes}
-                    handleFileUpload={this.handleFileUpload}
+                    handleFileUpload={e =>
+                      handleFileUpload(e, this.handleDocument, this.props)
+                    }
                     uploaded={uploadedIndex.indexOf(key) > -1}
                     removeDocument={() => this.removeDocument(key)}
                     documents={this.state.uploadedDocuments[key]}
