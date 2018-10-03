@@ -21,10 +21,10 @@ export const searchApiCall = async (state, dispatch) => {
   const response = await getSearchResults(queryObject);
   let data = response.Licenses.map(item => ({
     "Application No": item.applicationNumber,
-    "License No": item.licenseNumber,
-    "Trade Name": item.tradeName,
-    "Owner Name": item.tradeLicenseDetail.owners[0].name,
-    "Application Date": convertEpochToDate(item.applicationDate),
+    "License No": item.licenseNumber || "NA",
+    "Trade Name": item.tradeName || "NA",
+    "Owner Name": item.tradeLicenseDetail.owners[0].name || "NA",
+    "Application Date": convertEpochToDate(item.applicationDate) || "NA",
     Status: item.status
   }));
 
