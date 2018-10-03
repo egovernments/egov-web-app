@@ -9,6 +9,7 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
+import { httpRequest } from "../../../../ui-utils/api";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
 
@@ -429,4 +430,19 @@ export const getLabelWithValueNew = textScheama => {
       value: getCommonValue({ jsonPath })
     }
   };
+};
+
+// Search API call
+export const getSearchResults = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/tl-services/v1/_search",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
