@@ -53,18 +53,13 @@ const getSearchResults = async (action, state, dispatch) => {
     { key: "tenantId", value: "pb.amritsar" },
     { key: "applicationNumber", value: queryValue }
   ];
-  try {
-    const payload = await httpRequest(
-      "post",
-      "/tl-services/v1/_search",
-      "",
-      queryObject
-    );
-    console.log("payload...", payload);
-    dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-  } catch (e) {
-    console.log(e);
-  }
+  const payload = await httpRequest(
+    "post",
+    "/tl-services/v1/_search",
+    "",
+    queryObject
+  );
+  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
 };
 
 const getMdmsData = async (action, state, dispatch) => {
@@ -86,7 +81,7 @@ const getMdmsData = async (action, state, dispatch) => {
             { name: "OwnerType" },
             { name: "OwnerShipCategory" },
             { name: "DocumentType" },
-            {name:"UOM"}
+            { name: "UOM" }
           ]
         },
         {
