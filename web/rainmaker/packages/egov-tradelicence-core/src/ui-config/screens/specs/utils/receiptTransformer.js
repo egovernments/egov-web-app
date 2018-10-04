@@ -23,8 +23,21 @@ export const transformedReceiptData = async () => {
   if (receiptResponse && applicationResponse) {
     receiptBody.receiptNumber =
       receiptResponse.Receipt[0].Bill[0].billDetails[0].receiptNumber;
+    receiptBody.amountPaid =
+      receiptResponse.Receipt[0].Bill[0].billDetails[0].amountPaid;
+    receiptBody.totalAmount =
+      receiptResponse.Receipt[0].Bill[0].billDetails[0].totalAmount;
+    receiptBody.amountDue = receiptBody.totalAmount - receiptBody.amountPaid;
+    receiptBody.paymentMode =
+      receiptResponse.Receipt[0].instrument.instrumentType.name;
+    receiptBody.transactionNumber =
+      receiptResponse.Receipt[0].instrument.transactionNumber;
+    receiptBody.bankName = receiptResponse.Receipt[0].instrument.bank.name;
+    receiptBody.branchName = receiptResponse.Receipt[0].instrument.branchName;
+
     receiptBody.applicationNumber =
       applicationResponse.Licenses[0].applicationNumber;
+    receiptBody.licenseNumber = applicationResponse.Licenses[0].licenseNumber;
     receiptBody.financialYear = applicationResponse.Licenses[0].financialYear;
     receiptBody.paymentDate = applicationResponse.Licenses[0].receiptDate;
     receiptBody.tradeName = applicationResponse.Licenses[0].tradeName;
@@ -40,17 +53,9 @@ export const transformedReceiptData = async () => {
       applicationResponse.Licenses[0].tradeLicenseDetail.owners[0].name;
     receiptBody.mobileNo =
       applicationResponse.Licenses[0].tradeLicenseDetail.owners[0].mobileNumber;
-    receiptBody.amountPaid =
-      receiptResponse.Receipt[0].Bill[0].billDetails[0].amountPaid;
-    receiptBody.totalAmount =
-      receiptResponse.Receipt[0].Bill[0].billDetails[0].totalAmount;
-    receiptBody.amountDue = receiptBody.totalAmount - receiptBody.amountPaid;
-    receiptBody.paymentMode =
-      receiptResponse.Receipt[0].instrument.instrumentType.name;
-    receiptBody.transactionNumber =
-      receiptResponse.Receipt[0].instrument.transactionNumber;
-    receiptBody.bankName = receiptResponse.Receipt[0].instrument.bank.name;
-    receiptBody.branchName = receiptResponse.Receipt[0].instrument.branchName;
+    receiptBody.licenseIssueDate = applicationResponse.Licenses[0].issuedDate;
+    receiptBody.licenseExpiryDate = applicationResponse.Licenses[0].validTo;
+    receiptBody.tradeType = applicationResponse.Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType;
   } else {
     return null;
   }
