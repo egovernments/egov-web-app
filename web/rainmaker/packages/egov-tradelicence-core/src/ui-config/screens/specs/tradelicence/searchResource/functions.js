@@ -13,9 +13,13 @@ export const searchApiCall = async (state, dispatch) => {
   if (Object.keys(searchScreenObject).length == 0) {
     alert("Please fill at least one field to start search");
   } else {
+    showHideTable(false, dispatch);
     showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
-      if (searchScreenObject.hasOwnProperty(key)) {
+      if (
+        searchScreenObject.hasOwnProperty(key) &&
+        searchScreenObject[key] !== ""
+      ) {
         if (key === "fromDate") {
           queryObject.push({
             key: key,
