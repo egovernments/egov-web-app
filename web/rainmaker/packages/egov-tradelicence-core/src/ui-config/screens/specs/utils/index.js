@@ -390,6 +390,7 @@ export const getSearchResults = async queryObject => {
     return response;
   } catch (error) {
     console.log(error);
+    return {};
   }
 };
 
