@@ -234,7 +234,7 @@ const tradeLicenseSearchAndResult = {
                   case "APPLIED":
                     store.dispatch(
                       setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=employee&applicationNumber=${
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
                           rowData[0]
                         }`
                       )
@@ -243,7 +243,7 @@ const tradeLicenseSearchAndResult = {
                   case "APPROVED":
                     store.dispatch(
                       setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=employee&applicationNumber=${
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
                           rowData[0]
                         }`
                       )
@@ -253,7 +253,7 @@ const tradeLicenseSearchAndResult = {
                   case "PAID":
                     store.dispatch(
                       setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=employee&applicationNumber=${
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
                           rowData[0]
                         }`
                       )
@@ -261,7 +261,7 @@ const tradeLicenseSearchAndResult = {
                   case "CANCELLED":
                     store.dispatch(
                       setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=employee&applicationNumber=${
+                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
                           rowData[0]
                         }`
                       )
@@ -269,7 +269,7 @@ const tradeLicenseSearchAndResult = {
                     break;
                   case "INITIATED":
                     store.dispatch(
-                      setRoute("/landing/mihy-ui-framework/tradelicence/apply")
+                      setRoute(`/landing/mihy-ui-framework/tradelicence/apply?applicationNumber=${rowData[0]}`)
                     );
                     break;
                   default:
