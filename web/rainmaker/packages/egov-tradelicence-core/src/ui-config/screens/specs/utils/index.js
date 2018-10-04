@@ -420,5 +420,6 @@ export const getReceiptData = async queryObject => {
     return response;
   } catch (error) {
     console.log(error);
+    return {};
   }
 };
