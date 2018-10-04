@@ -19,8 +19,8 @@ import { tradeDetails } from "./applyResource/tradeDetails";
 import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
-import { getMdmsResults } from "./applyResource/apiResource";
-import { updatePFOforSearchResults } from "ui-utils/commons";
+import { httpRequest } from "../../../../ui-utils";
+import {updatePFOforSearchResults} from "../../../../ui-utils/commons"
 
 const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
 const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
@@ -46,11 +46,11 @@ const tradeDocumentDetails = getCommonCard({
     labelName: "Please Upload the Required Documents for Verification",
     labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
   }),
-  paragraph: getCommonParagraph({
-    labelName:
-      "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",
-    labelKey: "TL_NEW-UPLOAD-DOCS_SUBHEADER"
-  }),
+  // paragraph: getCommonParagraph({
+  //   labelName:
+  //     "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",
+  //   labelKey: "TL_NEW-UPLOAD-DOCS_SUBHEADER"
+  // }),
   documentList
 });
 
@@ -73,7 +73,7 @@ const getMdmsData = async (action, state, dispatch) => {
             { name: "OwnerType" },
             { name: "OwnerShipCategory" },
             { name: "DocumentType" },
-            { name: "UOM" }
+            {name:"UOM"}
           ]
         },
         {
@@ -87,32 +87,43 @@ const getMdmsData = async (action, state, dispatch) => {
       ]
     }
   };
-
-  let payload = await getMdmsResults(mdmsBody);
-  payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
-  payload = commonTransform(
-    payload,
-    "MdmsRes.common-masters.OwnerShipCategory"
-  );
-  payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
-  set(
-    payload,
-    "MdmsRes.TradeLicense.TradeTypeTransformed",
-    objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
-  );
-  set(
-    payload,
-    "MdmsRes.common-masters.StructureTypeTransformed",
-    objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
-  );
-  set(
-    payload,
-    "MdmsRes.common-masters.OwnerShipCategoryTransformed",
-    objectToDropdown(
-      get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
-    )
-  );
-  dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  try {
+    let payload = null;
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    console.log("payload...", payload);
+    payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
+    payload = commonTransform(
+      payload,
+      "MdmsRes.common-masters.OwnerShipCategory"
+    );
+    payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
+    set(
+      payload,
+      "MdmsRes.TradeLicense.TradeTypeTransformed",
+      objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
+    );
+    set(
+      payload,
+      "MdmsRes.common-masters.StructureTypeTransformed",
+      objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
+    );
+    set(
+      payload,
+      "MdmsRes.common-masters.OwnerShipCategoryTransformed",
+      objectToDropdown(
+        get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
+      )
+    );
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const screenConfig = {

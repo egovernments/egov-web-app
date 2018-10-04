@@ -23,10 +23,10 @@ export const tradeLocationDetails = getCommonCard({
     labelName: "Please Provide Trade Location Details",
     labelKey: "TL_NEW_TRADE_DETAILS_HEADER_TRADE_LOC_DETAILS"
   }),
-  paragraph: getCommonParagraph({
-    labelName:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  }),
+  // paragraph: getCommonParagraph({
+  //   labelName:
+  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  // }),
   tradeDetailsConatiner: getCommonContainer({
     tradeLocPropertyID: {
       uiFramework: "custom-atoms",

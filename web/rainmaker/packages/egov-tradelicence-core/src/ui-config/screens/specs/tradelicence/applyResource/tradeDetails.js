@@ -212,7 +212,8 @@ const accessoriesCard = {
     headerName: "Accessory",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-    objectJsonPath: "Licenses[0].accessories"
+      sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+      prefixSourceJsonPath:"children.cardContent.children.accessoriesCardContainer.children"
   },
   type: "array"
 };
@@ -222,10 +223,10 @@ export const tradeDetails = getCommonCard({
     labelName: "Please Provide Trade Details",
     labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
   }),
-  paragraph: getCommonParagraph({
-    labelName:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  }),
+  // paragraph: getCommonParagraph({
+  //   labelName:
+  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  // }),
   tradeDetailsConatiner: getCommonContainer({
     tradeLicenseType: getSelectField({
       label: { labelName: "License Type" },

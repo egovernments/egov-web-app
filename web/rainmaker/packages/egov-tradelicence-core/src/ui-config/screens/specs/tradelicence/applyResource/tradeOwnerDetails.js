@@ -104,7 +104,7 @@ const OwnerInfoCard = {
             labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_PLACEHOLDER"
           },
           pattern: getPattern("Email"),
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
         }),
         ownerPAN: getTextField({
           label: {
@@ -142,7 +142,7 @@ const OwnerInfoCard = {
           },
           required: true,
           jsonPath:
-            "Licenses[0].tradeLicenseDetail.owners.subOwnerShipCategory",
+            "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
           sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType"
         })
       })
@@ -151,7 +151,9 @@ const OwnerInfoCard = {
     addItemLabel: "ADD OWNER",
     headerName: "Owner Information",
     headerJsonPath:
-      "children.cardContent.children.header.children.Owner Information.props.label"
+      "children.cardContent.children.header.children.Owner Information.props.label",
+      sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    prefixSourceJsonPath:"children.cardContent.children.accessoriesCardContainer.children"
   },
   type: "array"
 };
@@ -161,10 +163,10 @@ export const tradeOwnerDetails = getCommonCard({
     labelName: "Please Provide Trade Owner Details",
     labelKey: "TL_NEW_OWNER_DETAILS_HEADER"
   }),
-  paragraph: getCommonParagraph({
-    labelName:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  }),
+  // paragraph: getCommonParagraph({
+  //   labelName:
+  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+  // }),
   ownership: getSelectField({
     label: { labelName: "Type of ownership" },
     placeholder: { labelName: "Select Type of Ownership" },

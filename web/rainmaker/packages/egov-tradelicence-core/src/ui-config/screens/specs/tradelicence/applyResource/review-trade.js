@@ -86,14 +86,14 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Operational Area",
           labelKey: "TL_NEW_TRADE_DETAILS_OPR_AREA_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.operationalArea" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.operationalArea" }
       ),
       reviewNoOfEmployee: getLabelWithValue(
         {
           labelName: "No of Employees",
           labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees" }
       ),
       reviewGSTNo: getLabelWithValue(
         {
@@ -110,21 +110,21 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Trade Category",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
         },
-        { jsonPath: "LicencesTemp[0].tradeType" }
+        { jsonPath: "LicensesTemp[0].tradeType" }
       ),
       reviewTradeType: getLabelWithValue(
         {
           labelName: "Trade Type",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
         },
-        { jsonPath: "LicencesTemp[0].tradeSubType" }
+        { jsonPath: "LicensesTemp[0].tradeSubType" }
       ),
       reviewTradeSubtype: getLabelWithValue(
         {
           labelName: "Trade Sub-Type",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].tradeType" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType" }
       ),
 
       reviewTradeUOM: getLabelWithValue(
@@ -132,14 +132,14 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "UOM (Unit of Measurement)",
           labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
         },
-        { jSonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uom" }
+        { jSonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom" }
       ),
       reviewTradeUOMValue: getLabelWithValue(
         {
           labelName: "UOM Value",
           labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.tradeUnits[0].uomValue" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue" }
       )
     }),
     div2: getDivider(),
@@ -151,7 +151,7 @@ export const getReviewTrade = (isEditable = true) => {
         },
         {
           jsonPath:
-            "Licences[0].tradeLicenseDetail.accessories[0].accessoryCategory"
+            "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory"
         }
       ),
       reviewAccessoryUOM: getLabelWithValue(
@@ -159,14 +159,14 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "UOM",
           labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uom" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uom" }
       ),
       reviewAccessoryUOMValue: getLabelWithValue(
         {
           labelName: "UOM Value",
           labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.accessories[0].uomValue" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue" }
       )
     }),
     div3: getDivider(),
@@ -176,56 +176,56 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Property Assessment ID",
           labelKey: "TL_EMP_APPLICATION_PT_ASS_ID"
         },
-        { jsonPath: "Licences[0].propertyId" }
+        { jsonPath: "Licenses[0].propertyId" }
       ),
       reviewElectricityNo: getLabelWithValue(
         {
           labelName: "Electricity Connection No.",
           labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
         },
-        { jsonPath: "Licences[0].propertyId" }
+        { jsonPath: "Licenses[0].propertyId" }
       ),
       reviewCity: getLabelWithValue(
         {
           labelName: "City",
           labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.city" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.city" }
       ),
       reviewPincode: getLabelWithValue(
         {
           labelName: "Pincode",
           labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.pincode" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode" }
       ),
       reviewDoorNo: getLabelWithValue(
         {
           labelName: "Door/House No.",
           labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.doorNo" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.doorNo" }
       ),
       reviewBuildingName: getLabelWithValue(
         {
           labelName: "Building/Company Name",
           labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.buildingName" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName" }
       ),
       reviewStreetName: getLabelWithValue(
         {
           labelName: "Street Name",
           labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.street" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.street" }
       ),
       reviewMohalla: getLabelWithValue(
         {
           labelName: "Mohalla",
           labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.address.locality.name" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.name" }
       )
     })
   });
