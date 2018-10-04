@@ -394,7 +394,7 @@ export const getSearchResults = async queryObject => {
   }
 };
 
-export const convertEpochToDate = dateEpoch => {
+export const convertEpochToDate = (dateEpoch) => {
   const dateFromApi = new Date(dateEpoch);
   let month = dateFromApi.getMonth() + 1;
   let day = dateFromApi.getDate();
@@ -404,9 +404,15 @@ export const convertEpochToDate = dateEpoch => {
   return `${day}/${month}/${year}`;
 };
 
-export const convertDateToEpoch = dateString => {
-  const parts = dateString.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  return Date.UTC(parts[3], parts[2] - 1, parts[1]);
+export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
+  const parts = dateString.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  const DateObj = new Date(Date.UTC(parts[1], parts[2] - 1, parts[3]));
+  DateObj.setMinutes(DateObj.getMinutes() + DateObj.getTimezoneOffset());
+  if (dayStartOrEnd === "dayend") {
+    DateObj.setHours(DateObj.getHours() + 24);
+    DateObj.setSeconds(DateObj.getSeconds() - 1);
+  }
+  return DateObj.getTime();
 };
 
 export const getReceiptData = async queryObject => {
