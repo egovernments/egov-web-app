@@ -28,10 +28,16 @@ const UploadedDocument = Loadable({
   loading: () => <Loading />
 });
 
+const MapLocation = Loadable({
+  loader: () => import("./MapLocation"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
   UploadFile,
   Checkbox,
-  UploadedDocument
+  UploadedDocument,
+  MapLocation
 };

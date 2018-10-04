@@ -147,11 +147,16 @@ export const getApplicationNoContainer = number => {
   };
 };
 
-export const getContainerWithElement = (children, props = {}) => {
+export const getContainerWithElement = ({
+  children,
+  props = {},
+  gridDefination = {}
+}) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     children,
+    gridDefination,
     props: {
       ...props
     }
@@ -441,4 +446,43 @@ export const getReceiptData = async queryObject => {
     console.log(error);
     return {};
   }
+};
+
+export const getAutoSelector = textScheama => {
+  const { textLabel = {}, jsonPath, props = {} } = textScheama;
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "AutoSelector",
+    gridDefination: {
+      xs: 6,
+      sm: 3
+    },
+    props: {
+      data: []
+    }
+  };
+};
+
+export const getMapLocator = textSchema => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "MapLocator",
+    props: {}
+  };
+};
+
+export const showHideMapPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["apply"],
+    "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField(
+      "apply",
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
+      "props.open",
+      !toggle
+    )
+  );
 };

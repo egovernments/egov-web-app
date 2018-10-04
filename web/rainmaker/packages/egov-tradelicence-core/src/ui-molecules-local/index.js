@@ -47,6 +47,11 @@ const AutoSelector = Loadable({
   loading: () => <Loading />
 });
 
+const MapLocator = Loadable({
+  loader: () => import("./MapLocator"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -56,5 +61,6 @@ export {
   UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
-  AutoSelector
+  AutoSelector,
+  MapLocator
 };

@@ -7,8 +7,16 @@ import {
   getCommonContainer,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
-import { getIconStyle } from "../../utils";
+import { httpRequest } from "../../../../../ui-utils/api";
+import {
+  getIconStyle,
+  getContainerWithElement,
+  getMapLocator
+} from "../../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { showHideMapPopup } from "../../utils";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 export const tradeLocationDetails = getCommonCard({
   header: getCommonTitle({
@@ -61,11 +69,46 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
-    tradeLocCity: getSelectField({
-      label: { labelName: "City" },
-      placeholder: { labelName: "Select City" },
-      sourceJsonPath: "applyScreenMdmsData.tenant.tenants"
+    tradeLocCity: getContainerWithElement({
+      children: {
+        cityDropdown: {
+          ...getSelectField({
+            label: { labelName: "City" },
+            placeholder: { labelName: "Select City" },
+            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+            jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+            gridDefination: { sm: 12 }
+          }),
+          beforeFieldChange: async (action, state, dispatch) => {
+            try {
+              let payload = await httpRequest(
+                "post",
+                "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+                "_search",
+                [{ key: "tenantId", value: "pb.amritsar" }],
+                {}
+              );
+              dispatch(
+                prepareFinalObject(
+                  "applyScreenMdmsData.tenant.localities",
+                  payload.TenantBoundary[0].boundary
+                )
+              );
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        }
+      },
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      props: {
+        fullWidth: true
+      }
     }),
+
     tradeLocDoorHouseNo: getTextField({
       label: {
         labelName: "Door/House No.",
@@ -99,6 +142,13 @@ export const tradeLocationDetails = getCommonCard({
       },
       pattern: getPattern("BuildingStreet")
     }),
+    // tradeLocMohalla: getContainerWithElement({
+    //   mohallaAutoSelect: getAutoSelector({
+    //     props: {
+    //       data: []
+    //     }
+    //   })
+    // }),
     tradeLocMohalla: getTextField({
       label: {
         labelName: "Mohalla",
@@ -120,20 +170,47 @@ export const tradeLocationDetails = getCommonCard({
       },
       pattern: getPattern("Pincode")
     }),
-    tradeLocGISCoord: getTextField({
-      label: {
-        labelName: "GIS Coordinates",
-        labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_LABEL"
+
+    tradeLocGISCoord: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      props: {
+        className: "gis-div-css",
+        style: {
+          width: "100%"
+        }
       },
-      placeholder: {
-        labelName: "Select your trade location on map",
-        labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
+      onClickDefination: {
+        action: "condition",
+        callBack: showHideMapPopup
       },
-      iconObj: {
-        iconName: "gps_fixed",
-        position: "end"
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      children: {
+        gisTextField: {
+          ...getTextField({
+            label: {
+              labelName: "GIS Coordinates",
+              labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_LABEL"
+            },
+            placeholder: {
+              labelName: "Select your trade location on map",
+              labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
+            },
+            iconObj: {
+              iconName: "gps_fixed",
+              position: "end"
+            },
+            gridDefination: {
+              xs: 12,
+              sm: 12
+            }
+          })
+        }
       }
-    }),
+    },
     tradeLocElectricity: getTextField({
       label: {
         labelName: "Electricity Connection No.",
@@ -145,5 +222,19 @@ export const tradeLocationDetails = getCommonCard({
       },
       pattern: getPattern("ElectricityConnNo")
     })
-  })
+  }),
+  mapsDialog: {
+    componentPath: "Dialog",
+    props: {
+      open: false
+    },
+    children: {
+      dialogContent: {
+        componentPath: "DialogContent",
+        children: {
+          popup: getMapLocator()
+        }
+      }
+    }
+  }
 });
