@@ -17,10 +17,13 @@ import {
   getUploadFilesMultiple
 } from "../utils";
 
-import { footerApprove } from "./applyResource/footer";
+import { footerApprove } from "./approveResource/footer";
+import { updatePFOforSearchResults } from "ui-utils/commons";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
-const queryValue = getQueryArg(window.location.href, "purpose");
+const queryValuePurpose = getQueryArg(window.location.href, "purpose");
+const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
+
 const header = getCommonContainer({
   header: getCommonHeader({
     labelName: "Trade License Application (2018-2019)",
@@ -37,7 +40,7 @@ const header = getCommonContainer({
 
 const tradeDetails = getCommonCard({
   headerOne:
-    queryValue === "cancel"
+    queryValuePurpose === "cancel"
       ? getCommonSubHeader({
           labelName: "Please provide Cancellation remarks",
           labelKey: "TL_CANCEL_CHECKLIST_HEAD"
@@ -71,30 +74,33 @@ const tradeDetails = getCommonCard({
     }
   ),
   safetyNorms:
-    queryValue === "cancel"
+    queryValuePurpose === "cancel"
       ? {}
       : getRadioGroupWithLabel(
           "Are Safety Norms Satisfactory?",
           "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
-          radioButtonLabels
+          radioButtonLabels,
+          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms"
         ),
 
   hygieneMeasure:
-    queryValue === "cancel"
+    queryValuePurpose === "cancel"
       ? {}
       : getRadioGroupWithLabel(
           "Are Hygiene Levels Satisfactory?",
           "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
-          radioButtonLabels
+          radioButtonLabels,
+          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels"
         ),
 
   localityMeasure:
-    queryValue === "cancel"
+    queryValuePurpose === "cancel"
       ? {}
       : getRadioGroupWithLabel(
           "Is Locality harmed/disturbed by this trade?",
           "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
-          radioButtonLabels
+          radioButtonLabels,
+          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed"
         ),
 
   commentSection: getContainerWithElement(
@@ -125,15 +131,24 @@ const tradeDetails = getCommonCard({
       }
     }
   ),
-  uploadFiles: getUploadFilesMultiple(),
+  uploadFiles: getUploadFilesMultiple(
+    "Licenses[0].tradeLicenseDetail.verificationDocuments"
+  ),
   checkBoxContainer: getCheckbox(
-    "All information in the application are true upto best of my knowledge"
+    "All information in the application are true upto best of my knowledge",
+    "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck"
   )
 });
 
 const screenConfig = {
   uiFramework: "material-ui",
-  name: "mihytradeliceceapply",
+  name: "approve",
+  beforeInitScreen: (action, state, dispatch) => {
+    if (queryValueAN) {
+      updatePFOforSearchResults(action, state, dispatch, queryValueAN);
+    }
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",

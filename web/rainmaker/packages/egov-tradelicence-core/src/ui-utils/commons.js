@@ -1,5 +1,6 @@
 import isEmpty from "lodash/isEmpty";
-import { uploadFile } from "ui-utils/api";
+import { uploadFile, httpRequest } from "ui-utils/api";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -165,4 +166,47 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
     });
   }
+};
+
+export const updateTradeDetails = async requestBody => {
+  try {
+    const payload = await httpRequest(
+      "post",
+      "/tl-services/v1/_update",
+      "",
+      [],
+      requestBody
+    );
+    return payload;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSearchResults = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/tl-services/v1/_search",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePFOforSearchResults = async (
+  action,
+  state,
+  dispatch,
+  queryValue
+) => {
+  let queryObject = [
+    { key: "tenantId", value: "pb.amritsar" },
+    { key: "applicationNumber", value: queryValue }
+  ];
+  const payload = await getSearchResults(queryObject);
+  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
 };

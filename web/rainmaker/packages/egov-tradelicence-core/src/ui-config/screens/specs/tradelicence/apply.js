@@ -4,8 +4,7 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonTitle,
-  getCommonParagraph,
-  getLabel
+  getCommonParagraph
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import get from "lodash/get";
@@ -20,12 +19,12 @@ import { tradeDetails } from "./applyResource/tradeDetails";
 import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
-import { getSearchResults } from "../utils";
 import { getMdmsResults } from "./applyResource/apiResource";
+import { updatePFOforSearchResults } from "ui-utils/commons";
 
 const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
 const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
-const queryValue = getQueryArg(window.location.href, "number");
+const queryValue = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -54,15 +53,6 @@ const tradeDocumentDetails = getCommonCard({
   }),
   documentList
 });
-
-const searchResults = async (action, state, dispatch) => {
-  let queryObject = [
-    { key: "tenantId", value: "pb.amritsar" },
-    { key: "applicationNumber", value: queryValue }
-  ];
-  const payload = await getSearchResults(queryObject);
-  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-};
 
 const getMdmsData = async (action, state, dispatch) => {
   let mdmsBody = {
@@ -130,7 +120,7 @@ const screenConfig = {
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
     if (queryValue) {
-      searchResults(action, state, dispatch);
+      updatePFOforSearchResults(action, state, dispatch, queryValue);
     }
     getMdmsData(action, state, dispatch);
     return action;

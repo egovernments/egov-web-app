@@ -4,12 +4,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 
-import {
-  getFooterButtons,
-  getButtonVisibility,
-  onClickNextButton,
-  onClickPreviousButton
-} from "../../utils";
+import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
 
 export const callBackForNext = (state, dispatch) => {
   changeStep(state, dispatch);
@@ -143,16 +138,16 @@ export const callBackForPrevious = (state, dispatch) => {
   changeStep(state, dispatch, "previous");
 };
 
-export const getCommonApplyFooter = children => {
-  return {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    props: {
-      className: "apply-wizard-footer"
-    },
-    children
-  };
-};
+// export const getCommonApplyFooter = children => {
+//   return {
+//     uiFramework: "custom-atoms",
+//     componentPath: "Div",
+//     props: {
+//       className: "apply-wizard-footer"
+//     },
+//     children
+//   };
+// };
 
 export const footer = getCommonApplyFooter({
   previousButton: {
@@ -244,51 +239,6 @@ export const footer = getCommonApplyFooter({
         "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=apply&status=success&number=12345"
     },
     visible: false
-  }
-});
-
-export const footerApprove = getCommonApplyFooter({
-  previousButton: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "16px"
-      }
-    },
-    children: {
-      nextButtonLabel: getLabel({
-        labelName: "BACK",
-        labelKey: "TL_COMMON_BUTTON_BACK"
-      })
-    },
-    onClickDefination: {
-      action: "page_change",
-      path: onClickPreviousButton()
-    }
-  },
-
-  nextButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      nextButtonLabel: getFooterButtons()
-    },
-    onClickDefination: {
-      action: "page_change",
-      path: onClickNextButton()
-    }
   }
 });
 

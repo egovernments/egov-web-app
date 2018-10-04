@@ -8,10 +8,22 @@ const CustomTabContainer = Loadable({
   loader: () => import("./CustomTabContainer"),
   loading: () => <Loading />
 });
-
 const LabelContainer = Loadable({
   loader: () => import("./LabelContainer"),
   loading: () => <Loading />
 });
+const RadioGroupContainer = Loadable({
+  loader: () => import("./RadioGroupContainer"),
+  loading: () => <Loading />
+});
+const CheckboxContainer = Loadable({
+  loader: () => import("./CheckboxContainer"),
+  loading: () => <Loading />
+});
 
-export { CustomTabContainer, LabelContainer };
+export {
+  CustomTabContainer,
+  LabelContainer,
+  RadioGroupContainer,
+  CheckboxContainer
+};

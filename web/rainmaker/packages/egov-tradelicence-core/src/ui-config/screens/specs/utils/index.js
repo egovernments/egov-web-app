@@ -13,6 +13,17 @@ import { httpRequest } from "../../../../ui-utils/api";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
 
+export const getCommonApplyFooter = children => {
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    props: {
+      className: "apply-wizard-footer"
+    },
+    children
+  };
+};
+
 export const getTooltip = (children, toolTipProps) => {
   return {
     uiFramework: "custom-atoms",
@@ -34,12 +45,13 @@ export const getTooltip = (children, toolTipProps) => {
   };
 };
 
-export const getCheckbox = (content, props = {}) => {
+export const getCheckbox = (content, jsonPath, props = {}) => {
   return {
-    uiFramework: "custom-atoms-local",
-    componentPath: "Checkbox",
+    uiFramework: "custom-containers-local",
+    componentPath: "CheckboxContainer",
     props: {
       content,
+      jsonPath,
       ...props
     }
   };
@@ -57,13 +69,13 @@ export const getUploadFile = {
   }
 };
 
-export const getUploadFilesMultiple = () => {
+export const getUploadFilesMultiple = jsonPath => {
   return {
     uiFramework: "custom-molecules-local",
     componentPath: "UploadMultipleFiles",
     props: {
       maxFiles: 4,
-      jsonPath: "Trade[0].files",
+      jsonPath: jsonPath,
       inputProps: {
         accept: "image/*, .pdf, .png, .jpeg"
       },
@@ -73,16 +85,17 @@ export const getUploadFilesMultiple = () => {
   };
 };
 
-export const getRadioButtonGroup = buttons => {
+export const getRadioButtonGroup = (buttons, jsonPath) => {
   return {
-    uiFramework: "custom-molecules",
-    componentPath: "RadioGroup",
+    uiFramework: "custom-containers-local",
+    componentPath: "RadioGroupContainer",
     props: {
-      buttons
+      buttons,
+      jsonPath
     }
   };
 };
-export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
+export const getRadioGroupWithLabel = (label, labelKey, buttons, jsonPath) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Container",
@@ -117,7 +130,7 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons) => {
           sm: 8
         },
         children: {
-          div: getRadioButtonGroup(buttons)
+          div: getRadioButtonGroup(buttons, jsonPath)
         }
       }
     }
@@ -185,7 +198,7 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: ""
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
     });
   } else if (queryValue === "cancel") {
     return getTextField({
@@ -199,7 +212,7 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: ""
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
     });
   } else {
     return getTextField({
@@ -213,7 +226,7 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: ""
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
     });
   }
 };
