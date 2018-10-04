@@ -202,13 +202,10 @@ const tradeLicenseSearchAndResult = {
                   let color = "";
                   if (value.toLowerCase().indexOf("approved") !== -1) {
                     color = "green";
-                  } else if (value.toLowerCase().indexOf("pending") !== -1) {
+                  } else 
+                  {
                     color = "red";
-                  } else if (value.toLowerCase().indexOf("initiated") !== -1) {
-                    color = "orange";
-                  } else if (value.toLowerCase().indexOf("applied") !== -1) {
-                    color = "grey";
-                  }
+                  } 
                   return (
                     <span
                       style={{
@@ -258,7 +255,7 @@ const tradeLicenseSearchAndResult = {
                         }`
                       )
                     );
-                  case "CANCELLED":
+                  case "CANCELED":
                     store.dispatch(
                       setRoute(
                         `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
