@@ -122,7 +122,7 @@ export const tradeLicenseApplication = getCommonCard({
     toDate: getDateField({
       label: { labelName: "To Date" },
       placeholder: { labelName: "To Date" },
-      jsonPath: "",
+      jsonPath: "searchScreen.toDate",
       gridDefination: {
         xs: 12,
         sm: 4
