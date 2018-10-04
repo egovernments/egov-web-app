@@ -7,8 +7,9 @@ import React from "react";
 import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import store from "ui-redux/store";
-import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
+import { pendingApprovals } from "./searchResource/pendingApprovals";
+import { progressStatus } from "./searchResource/progressStatus";
+import { searchResults } from "./searchResource/searchResults";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -87,195 +88,11 @@ const tradeLicenseSearchAndResult = {
             }
           }
         },
-        divForPendingApprovals: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          visible: false,
-          children: {
-            breakPending: getBreak(),
-            pendingApprovals: {
-              uiFramework: "custom-molecules-local",
-              componentPath: "Table",
-              props: {
-                data: [
-                  {
-                    "Application No": 1234,
-                    "Trade Name": "Matchbox Plant",
-                    "Owner Name": "Satinder Singh",
-                    "Locality/Mohalla": "Gurudwara Mohalla",
-                    "Payment Date": "12/08/2018",
-                    "Days Elapsed": "2 Days"
-                  },
-                  {
-                    "Application No": 1234,
-                    "Trade Name": "Matchbox Plant",
-                    "Owner Name": "Satinder Singh",
-                    "Locality/Mohalla": "Railway Colony",
-                    "Payment Date": "12/08/2018",
-                    "Days Elapsed": "10 Days"
-                  },
-                  {
-                    "Application No": 1234,
-                    "Trade Name": "Matchbox Plant",
-                    "Owner Name": "Satinder Singh",
-                    "Locality/Mohalla": "Gurudwara Mohalla",
-                    "Payment Date": "12/08/2018",
-                    "Days Elapsed": "2 Days"
-                  },
-                  {
-                    "Application No": 1234,
-                    "Trade Name": "Matchbox Plant",
-                    "Owner Name": "Satinder Singh",
-                    "Locality/Mohalla": "Assi Mohalla",
-                    "Payment Date": "12/08/2018",
-                    "Days Elapsed": "2 Days"
-                  }
-                ],
-                columns: {
-                  "Application No": {},
-                  "Trade Name": {},
-                  "Owner Name": {},
-                  "Locality/Mohalla": {},
-                  "Payment Date": {},
-                  "Days Elapsed": {
-                    format: value => {
-                      let color = "";
-                      if (value.toLowerCase().indexOf("10") !== -1) {
-                        color = "green";
-                      } else if (value.toLowerCase().indexOf("2") !== -1) {
-                        color = "red";
-                      }
-                      return (
-                        <span
-                          style={{
-                            color: color,
-                            fontSize: "14px",
-                            fontWeight: 400
-                          }}
-                        >
-                          {value}
-                        </span>
-                      );
-                    }
-                  }
-                },
-                title: "Pending for your Approval (4)",
-                options: {
-                  filterType: "dropdown",
-                  responsive: "stacked",
-                  selectableRows: false
-                }
-              }
-            }
-          }
-        },
+        pendingApprovals,
         tradeLicenseApplication,
         breakAfterSearch: getBreak(),
-        progressStatus: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          props: {
-            style: { display: "flex", justifyContent: "center" }
-          },
-          visible: false,
-          children: {
-            progress: {
-              uiFramework: "material-ui",
-              componentPath: "CircularProgress"
-            }
-          }
-        },
-        searchResults: {
-          uiFramework: "custom-molecules-local",
-          componentPath: "Table",
-          visible: false,
-          props: {
-            data: [],
-            columns: {
-              "Application No": {},
-              "License No": {},
-              "Trade Name": {},
-              "Owner Name": {},
-              "Application Date": {},
-              Status: {
-                format: value => {
-                  let color = "";
-                  if (value.toLowerCase().indexOf("approved") !== -1) {
-                    color = "green";
-                  } else 
-                  {
-                    color = "red";
-                  } 
-                  return (
-                    <span
-                      style={{
-                        color: color,
-                        fontSize: "14px",
-                        fontWeight: 400
-                      }}
-                    >
-                      {value}
-                    </span>
-                  );
-                }
-              }
-            },
-            title: "Search Results for Trade License Applications",
-            options: {
-              filterType: "dropdown",
-              responsive: "stacked",
-              selectableRows: false,
-              hover: true,
-              onRowClick: (rowData, rowMetadata) => {
-                switch (rowData[5].props.children) {
-                  case "APPLIED":
-                    store.dispatch(
-                      setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
-                          rowData[0]
-                        }`
-                      )
-                    );
-                    break;
-                  case "APPROVED":
-                    store.dispatch(
-                      setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
-                          rowData[0]
-                        }`
-                      )
-                    );
-                    break;
-
-                  case "PAID":
-                    store.dispatch(
-                      setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
-                          rowData[0]
-                        }`
-                      )
-                    );
-                  case "CANCELED":
-                    store.dispatch(
-                      setRoute(
-                        `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
-                          rowData[0]
-                        }`
-                      )
-                    );
-                    break;
-                  case "INITIATED":
-                    store.dispatch(
-                      setRoute(`/landing/mihy-ui-framework/tradelicence/apply?applicationNumber=${rowData[0]}`)
-                    );
-                    break;
-                  default:
-                    break;
-                }
-              }
-            }
-          }
-        }
+        progressStatus,
+        searchResults
       }
     }
   }
