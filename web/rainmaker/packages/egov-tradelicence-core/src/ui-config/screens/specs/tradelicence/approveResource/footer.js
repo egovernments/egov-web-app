@@ -1,9 +1,10 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
+import get from "lodash/get";
 import {
   getFooterButtons,
   getCommonApplyFooter,
-  onClickPreviousButton
+  onClickPreviousButton,
+  onClickNextButton
 } from "../../utils";
 import { updateTradeDetails } from "ui-utils/commons";
 
@@ -13,11 +14,14 @@ const onConfirmApprove = async (state, dispatch) => {
   const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
   const { Licenses } = preparedFinalObject;
-  console.log("payload1....", Licenses);
-  let response = await updateTradeDetails(Licenses[0]);
-  console.log("payload2....", response);
-  //   let route = onClickNextButton();
-  //   dispatch(setRoute(route));
+  let response = await updateTradeDetails({ Licenses });
+  if (response) {
+    const applicationNumber = get(response, "Licenses[0].applicationNumber");
+    const tlNumber = get(response, "Licenses[0].licenseNumber");
+    console.log("payload ......", response);
+    let route = onClickNextButton(applicationNumber, tlNumber);
+    dispatch(setRoute(route));
+  }
 };
 
 export const footerApprove = getCommonApplyFooter({

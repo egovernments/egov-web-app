@@ -50,29 +50,29 @@ const tradeDetails = getCommonCard({
             "Please provide the following details on the basis of your field verification",
           labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
         }),
-  paragraphOne: getContainerWithElement(
-    {
+  paragraphOne: getContainerWithElement({
+    children: {
       paragraph: getCommonParagraph({
         labelName:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
       })
     },
-    {
+    props: {
       style: {
         marginTop: "8px"
       }
     }
-  ),
-  headerTwo: getContainerWithElement(
-    {
+  }),
+  headerTwo: getContainerWithElement({
+    children: {
       subHeader: getSubHeaderLabel()
     },
-    {
+    props: {
       style: {
         marginTop: "33px"
       }
     }
-  ),
+  }),
   safetyNorms:
     queryValuePurpose === "cancel"
       ? {}
@@ -103,16 +103,16 @@ const tradeDetails = getCommonCard({
           "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed"
         ),
 
-  commentSection: getContainerWithElement(
-    {
+  commentSection: getContainerWithElement({
+    children: {
       childrenomment: getApprovalTextField()
     },
-    {
+    props: {
       style: {
         marginTop: "20px"
       }
     }
-  ),
+  }),
 
   uploadFileHeader: getCommonSubHeader({
     labelName: "Upload Document",

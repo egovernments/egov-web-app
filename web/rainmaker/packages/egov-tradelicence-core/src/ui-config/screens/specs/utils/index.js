@@ -271,7 +271,7 @@ export const getFooterButtons = () => {
   }
 };
 
-export const onClickNextButton = () => {
+export const onClickNextButton = (applicationNumber, tlNumber) => {
   switch (queryValue) {
     case "reject":
       return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&number=12345";
@@ -279,7 +279,7 @@ export const onClickNextButton = () => {
       return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345";
 
     default:
-      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&number=12345";
+      return `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}`;
   }
 };
 
@@ -412,7 +412,7 @@ export const getSearchResults = async queryObject => {
   }
 };
 
-export const convertEpochToDate = (dateEpoch) => {
+export const convertEpochToDate = dateEpoch => {
   const dateFromApi = new Date(dateEpoch);
   let month = dateFromApi.getMonth() + 1;
   let day = dateFromApi.getDate();
