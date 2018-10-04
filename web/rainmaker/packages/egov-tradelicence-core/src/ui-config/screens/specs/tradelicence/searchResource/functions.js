@@ -4,53 +4,55 @@ import { getSearchResults } from "../../utils";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 
 export const searchApiCall = async (state, dispatch) => {
-  showHideTable(false, dispatch);
-  showHideProgress(true, dispatch);
   let queryObject = [{ key: "tenantId", value: "pb.amritsar" }];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
     "searchScreen",
     {}
   );
-
-  for (var key in searchScreenObject) {
-    if (searchScreenObject.hasOwnProperty(key)) {
-      if (key === "fromDate") {
-        queryObject.push({
-          key: key,
-          value: convertDateToEpoch(searchScreenObject[key], "daystart")
-        });
-      } else if (key === "toDate") {
-        queryObject.push({
-          key: key,
-          value: convertDateToEpoch(searchScreenObject[key], "dayend")
-        });
-      } else {
-        queryObject.push({ key: key, value: searchScreenObject[key] });
+  if (Object.keys(searchScreenObject).length == 0) {
+    alert("Please fill at least one field to start search");
+  } else {
+    showHideProgress(true, dispatch);
+    for (var key in searchScreenObject) {
+      if (searchScreenObject.hasOwnProperty(key)) {
+        if (key === "fromDate") {
+          queryObject.push({
+            key: key,
+            value: convertDateToEpoch(searchScreenObject[key], "daystart")
+          });
+        } else if (key === "toDate") {
+          queryObject.push({
+            key: key,
+            value: convertDateToEpoch(searchScreenObject[key], "dayend")
+          });
+        } else {
+          queryObject.push({ key: key, value: searchScreenObject[key] });
+        }
       }
     }
+
+    const response = await getSearchResults(queryObject);
+    let data = response.Licenses.map(item => ({
+      "Application No": item.applicationNumber,
+      "License No": item.licenseNumber || "NA",
+      "Trade Name": item.tradeName || "NA",
+      "Owner Name": item.tradeLicenseDetail.owners[0].name || "NA",
+      "Application Date": convertEpochToDate(item.applicationDate) || "NA",
+      Status: item.status
+    }));
+
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.searchResults",
+        "props.data",
+        data
+      )
+    );
+    showHideProgress(false, dispatch);
+    showHideTable(true, dispatch);
   }
-
-  const response = await getSearchResults(queryObject);
-  let data = response.Licenses.map(item => ({
-    "Application No": item.applicationNumber,
-    "License No": item.licenseNumber || "NA",
-    "Trade Name": item.tradeName || "NA",
-    "Owner Name": item.tradeLicenseDetail.owners[0].name || "NA",
-    "Application Date": convertEpochToDate(item.applicationDate) || "NA",
-    Status: item.status
-  }));
-
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.searchResults",
-      "props.data",
-      data
-    )
-  );
-  showHideProgress(false, dispatch);
-  showHideTable(true, dispatch);
 };
 const showHideProgress = (booleanHideOrShow, dispatch) => {
   dispatch(
