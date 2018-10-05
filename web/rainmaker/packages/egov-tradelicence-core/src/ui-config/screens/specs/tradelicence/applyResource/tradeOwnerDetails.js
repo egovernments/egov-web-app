@@ -11,6 +11,82 @@ import {
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+export const getOwnerMobNoField = getTextField({
+  label: {
+    labelName: "Mobile No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+  },
+  placeholder: {
+    labelName: "Enter Mobile No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
+  },
+  required: true,
+  pattern: getPattern("MobileNo"),
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+  iconObj: {
+    iconName: "search",
+    position: "end",
+    color: "#FE7A51",
+    label: "SEARCH"
+  }
+});
+
+export const getOwnerGenderField = getSelectField({
+  label: {
+    labelName: "Gender",
+    labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
+  },
+  placeholder: {
+    labelName: "Select Gender",
+    labelKey: "TL_NEW_OWNER_DETAILS_GENDER_PLACEHOLDER"
+  },
+  required: true,
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
+  data: [
+    {
+      code: "MALE"
+    },
+    {
+      code: "FEMALE"
+    }
+  ]
+});
+
+export const getOwnerDOBField = getDateField({
+  label: { labelName: "Date of Birth" },
+  placeholder: { labelName: "Enter Date of Birth" },
+  required: true,
+  pattern: getPattern("Date"),
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
+});
+
+export const getOwnerEmailField = getTextField({
+  label: {
+    labelName: "Email",
+    labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
+  },
+  placeholder: {
+    labelName: "Enter Email",
+    labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_PLACEHOLDER"
+  },
+  pattern: getPattern("Email"),
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
+});
+
+export const getFatherNameField = getTextField({
+  label: {
+    labelName: "Father/Spouse Name",
+    labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+  },
+  placeholder: {
+    labelName: "Enter Father/Spouse Name",
+    labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_PLACEHOLDER"
+  },
+  required: true,
+  pattern: getPattern("Name"),
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
+});
+
 const OwnerInfoCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
@@ -21,25 +97,7 @@ const OwnerInfoCard = {
         labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
       }),
       tradeUnitCardContainer: getCommonContainer({
-        ownerMobileNo: getTextField({
-          label: {
-            labelName: "Mobile No.",
-            labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Mobile No.",
-            labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
-          },
-          required: true,
-          pattern: getPattern("MobileNo"),
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-          iconObj: {
-            iconName: "search",
-            position: "end",
-            color: "#FE7A51",
-            label: "SEARCH"
-          }
-        }),
+        getOwnerMobNoField,
         ownerName: getTextField({
           label: {
             labelName: "Name",
@@ -53,59 +111,10 @@ const OwnerInfoCard = {
           pattern: getPattern("Name"),
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
         }),
-        ownerFatherName: getTextField({
-          label: {
-            labelName: "Father/Husband's Name",
-            labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Father/Husband's Name",
-            labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_PLACEHOLDER"
-          },
-          required: true,
-          pattern: getPattern("Name"),
-          jsonPath:
-            "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
-        }),
-        OwnerGender: getSelectField({
-          label: {
-            labelName: "Gender",
-            labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
-          },
-          placeholder: {
-            labelName: "Select Gender",
-            labelKey: "TL_NEW_OWNER_DETAILS_GENDER_PLACEHOLDER"
-          },
-          required: true,
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
-          data: [
-            {
-              code: "MALE"
-            },
-            {
-              code: "FEMALE"
-            }
-          ]
-        }),
-        ownerDOB: getDateField({
-          label: { labelName: "Date of Birth" },
-          placeholder: { labelName: "Enter Date of Birth" },
-          required: true,
-          pattern: getPattern("Date"),
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
-        }),
-        ownerEmail: getTextField({
-          label: {
-            labelName: "Email",
-            labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Email",
-            labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_PLACEHOLDER"
-          },
-          pattern: getPattern("Email"),
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
-        }),
+        getFatherNameField,
+        getOwnerGenderField,
+        getOwnerDOBField,
+        getOwnerEmailField,
         ownerPAN: getTextField({
           label: {
             labelName: "PAN No.",
@@ -141,8 +150,7 @@ const OwnerInfoCard = {
             labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
           },
           required: true,
-          jsonPath:
-            "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
           sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType"
         })
       })
@@ -152,8 +160,9 @@ const OwnerInfoCard = {
     headerName: "Owner Information",
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
-      sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
-    prefixSourceJsonPath:"children.cardContent.children.accessoriesCardContainer.children"
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    prefixSourceJsonPath:
+      "children.cardContent.children.accessoriesCardContainer.children"
   },
   type: "array"
 };

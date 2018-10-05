@@ -107,7 +107,7 @@ export const tradeLicenseApplication = getCommonCard({
           code: "REJECTED"
         },
         {
-          code: "CANCELED"
+          code: "CANCELLED"
         }
       ]
     }),

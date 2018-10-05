@@ -69,8 +69,8 @@ const onRowClick = rowData => {
       return `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
-    case "CANCELED":
-      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=canceled&role=approver&applicationNumber=${
+    case "CANCELLED":
+      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
     case "INITIATED":
