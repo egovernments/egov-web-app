@@ -142,7 +142,6 @@ class MapLocator extends Component {
       : isEmpty(location)
         ? { lat: 12.972442, lng: 77.580643 }
         : location;
-    console.log(currLoc);
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
         <div className="back-btn">

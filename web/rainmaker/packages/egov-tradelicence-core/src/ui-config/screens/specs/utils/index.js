@@ -274,10 +274,9 @@ export const getFooterButtons = () => {
 export const onClickNextButton = (applicationNumber, tlNumber) => {
   switch (queryValue) {
     case "reject":
-      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&number=12345";
+      return `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}`;
     case "cancel":
-      return "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&number=12345";
-
+      return `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}`;
     default:
       return `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}`;
   }

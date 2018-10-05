@@ -5,9 +5,7 @@ import {
   getCommonSubHeader,
   getCommonHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-
 import {
   getRadioGroupWithLabel,
   getApprovalTextField,
@@ -16,13 +14,11 @@ import {
   getContainerWithElement,
   getUploadFilesMultiple
 } from "../utils";
-
 import { footerApprove } from "./approveResource/footer";
 import { updatePFOforSearchResults } from "ui-utils/commons";
+import set from "lodash/set";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
-const queryValuePurpose = getQueryArg(window.location.href, "purpose");
-const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -38,117 +34,115 @@ const header = getCommonContainer({
   }
 });
 
-const tradeDetails = getCommonCard({
-  headerOne:
-    queryValuePurpose === "cancel"
-      ? getCommonSubHeader({
-          labelName: "Please provide Cancellation remarks",
-          labelKey: "TL_CANCEL_CHECKLIST_HEAD"
-        })
-      : getCommonSubHeader({
+const getApproveCard = queryValuePurpose => {
+  return getCommonCard({
+    headerOne:
+      queryValuePurpose === "cancel"
+        ? getCommonSubHeader({
+            labelName: "Please provide Cancellation remarks",
+            labelKey: "TL_CANCEL_CHECKLIST_HEAD"
+          })
+        : getCommonSubHeader({
+            labelName:
+              "Please provide the following details on the basis of your field verification",
+            labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
+          }),
+    paragraphOne: getContainerWithElement({
+      children: {
+        paragraph: getCommonParagraph({
           labelName:
-            "Please provide the following details on the basis of your field verification",
-          labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
-        }),
-  paragraphOne: getContainerWithElement({
-    children: {
-      paragraph: getCommonParagraph({
-        labelName:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-      })
-    },
-    props: {
-      style: {
-        marginTop: "8px"
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+        })
+      },
+      props: {
+        style: {
+          marginTop: "8px"
+        }
       }
-    }
-  }),
-  headerTwo: getContainerWithElement({
-    children: {
-      subHeader: getSubHeaderLabel()
-    },
-    props: {
-      style: {
-        marginTop: "33px"
+    }),
+    headerTwo: getContainerWithElement({
+      children: {
+        subHeader: getSubHeaderLabel()
+      },
+      props: {
+        style: {
+          marginTop: "33px"
+        }
       }
-    }
-  }),
-  safetyNorms:
-    queryValuePurpose === "cancel"
-      ? {}
-      : getRadioGroupWithLabel(
-          "Are Safety Norms Satisfactory?",
-          "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
-          radioButtonLabels,
-          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms"
-        ),
+    }),
+    safetyNorms:
+      queryValuePurpose === "cancel"
+        ? {}
+        : getRadioGroupWithLabel(
+            "Are Safety Norms Satisfactory?",
+            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
+            radioButtonLabels,
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms"
+          ),
 
-  hygieneMeasure:
-    queryValuePurpose === "cancel"
-      ? {}
-      : getRadioGroupWithLabel(
-          "Are Hygiene Levels Satisfactory?",
-          "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
-          radioButtonLabels,
-          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels"
-        ),
+    hygieneMeasure:
+      queryValuePurpose === "cancel"
+        ? {}
+        : getRadioGroupWithLabel(
+            "Are Hygiene Levels Satisfactory?",
+            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
+            radioButtonLabels,
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels"
+          ),
 
-  localityMeasure:
-    queryValuePurpose === "cancel"
-      ? {}
-      : getRadioGroupWithLabel(
-          "Is Locality harmed/disturbed by this trade?",
-          "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
-          radioButtonLabels,
-          "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed"
-        ),
+    localityMeasure:
+      queryValuePurpose === "cancel"
+        ? {}
+        : getRadioGroupWithLabel(
+            "Is Locality harmed/disturbed by this trade?",
+            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
+            radioButtonLabels,
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed"
+          ),
 
-  commentSection: getContainerWithElement({
-    children: {
-      childrenomment: getApprovalTextField()
-    },
-    props: {
-      style: {
-        marginTop: "20px"
+    commentSection: getContainerWithElement({
+      children: {
+        childrenomment: getApprovalTextField()
+      },
+      props: {
+        style: {
+          marginTop: "20px"
+        }
       }
-    }
-  }),
+    }),
 
-  uploadFileHeader: getCommonSubHeader({
-    labelName: "Upload Document",
-    labelKey: "TL_APPROVAL_UPLOAD_HEAD"
-  }),
-  uploadFileInfo: getCommonParagraph(
-    {
-      labelName: "Only .jpg and .pdf files. 5MB max file size."
-    },
-    {
-      style: {
-        fontSize: 12,
-        marginBottom: 0,
-        marginTop: 5,
-        color: "rgba(0, 0, 0, 0.6000000238418579)"
+    uploadFileHeader: getCommonSubHeader({
+      labelName: "Upload Document",
+      labelKey: "TL_APPROVAL_UPLOAD_HEAD"
+    }),
+    uploadFileInfo: getCommonParagraph(
+      {
+        labelName: "Only .jpg and .pdf files. 5MB max file size."
+      },
+      {
+        style: {
+          fontSize: 12,
+          marginBottom: 0,
+          marginTop: 5,
+          color: "rgba(0, 0, 0, 0.6000000238418579)"
+        }
       }
-    }
-  ),
-  uploadFiles: getUploadFilesMultiple(
-    "Licenses[0].tradeLicenseDetail.verificationDocuments"
-  ),
-  checkBoxContainer: getCheckbox(
-    "All information in the application are true upto best of my knowledge",
-    "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck"
-  )
-});
+    ),
+    uploadFiles: getUploadFilesMultiple(
+      "Licenses[0].tradeLicenseDetail.verificationDocuments"
+    ),
+    checkBoxContainer: getCheckbox(
+      "All information in the application are true upto best of my knowledge",
+      "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck"
+    )
+  });
+};
+
+// const tradeDetails =
 
 const screenConfig = {
   uiFramework: "material-ui",
   name: "approve",
-  beforeInitScreen: (action, state, dispatch) => {
-    if (queryValueAN) {
-      updatePFOforSearchResults(action, state, dispatch, queryValueAN);
-    }
-    return action;
-  },
   components: {
     div: {
       uiFramework: "custom-atoms",
@@ -161,14 +155,28 @@ const screenConfig = {
 
         approveForm: {
           uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            tradeDetails
-          }
+          componentPath: "Div"
+          // children: {
+          //   tradeDetails
+          // }
         },
         footerApprove
       }
     }
+  },
+  beforeInitScreen: (action, state, dispatch) => {
+    const queryValuePurpose = getQueryArg(window.location.href, "purpose");
+    const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
+    if (queryValueAN) {
+      updatePFOforSearchResults(action, state, dispatch, queryValueAN);
+    }
+    const data = getApproveCard(queryValuePurpose);
+    set(
+      action,
+      "screenConfig.components.div.children.approveForm.children.form",
+      data
+    );
+    return action;
   }
 };
 

@@ -20,7 +20,7 @@ import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
 import { httpRequest } from "../../../../ui-utils";
-import {updatePFOforSearchResults} from "../../../../ui-utils/commons"
+import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 
 const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
 const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
@@ -73,7 +73,7 @@ const getMdmsData = async (action, state, dispatch) => {
             { name: "OwnerType" },
             { name: "OwnerShipCategory" },
             { name: "DocumentType" },
-            {name:"UOM"}
+            { name: "UOM" }
           ]
         },
         {
@@ -96,7 +96,6 @@ const getMdmsData = async (action, state, dispatch) => {
       [],
       mdmsBody
     );
-    console.log("payload...", payload);
     payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
     payload = commonTransform(
       payload,

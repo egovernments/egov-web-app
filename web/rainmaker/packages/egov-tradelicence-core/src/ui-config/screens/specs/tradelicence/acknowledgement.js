@@ -24,7 +24,12 @@ const loadReceiptGenerationData = () => {
   loadReceiptData("PT-107-001330:AS-2018-08-29-001426");
 };
 
-const getAcknowledgementCard = (purpose, status, number) => {
+const getAcknowledgementCard = (
+  purpose,
+  status,
+  applicationNumber,
+  tlNumber
+) => {
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
@@ -42,7 +47,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
             body:
               "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
             tailText: "Application No.",
-            number: number
+            number: applicationNumber
           }),
           tradeReviewDetails: {
             uiFramework: "custom-atoms",
@@ -72,7 +77,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
           props: {
-            number: 5434
+            number: applicationNumber
           }
         }
       }),
@@ -87,7 +92,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
             body:
               "A copy of receipt has been sent to trade owner at registered Mobile No.",
             tailText: "Payment Receipt No.",
-            number: number
+            number: tlNumber
           })
         }
       },
@@ -105,7 +110,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
           props: {
-            number: 5434
+            number: applicationNumber
           }
         }
       }),
@@ -119,8 +124,8 @@ const getAcknowledgementCard = (purpose, status, number) => {
             header: "Trade License Approved Successfully",
             body:
               "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-            tailText: "Trade License No.",
-            number: number
+            tailText: !tlNumber || tlNumber === null ? "Trade License No." : "",
+            number: !tlNumber || tlNumber === null ? tlNumber : ""
           })
         }
       },
@@ -137,7 +142,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
           props: {
-            number: 5434
+            number: applicationNumber
           }
         }
       }),
@@ -167,7 +172,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
           uiFramework: "custom-atoms-local",
           componentPath: "ApplicationNoContainer",
           props: {
-            number: 5434
+            number: applicationNumber
           }
         }
       }),
@@ -182,7 +187,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
             body:
               "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
             tailText: "Trade License No.",
-            number: number
+            number: tlNumber
           })
         }
       },
@@ -206,8 +211,9 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const number = getQueryArg(window.location.href, "number");
-    const data = getAcknowledgementCard(purpose, status, number);
+    const number = getQueryArg(window.location.href, "applicationNumber");
+    const tlNumber = getQueryArg(window.location.href, "tlNumber");
+    const data = getAcknowledgementCard(purpose, status, number, tlNumber);
     set(action, "screenConfig.components.div.children", data);
     return action;
   }

@@ -16,7 +16,7 @@ const style = {
     fontWeight: 400
   },
   tailNumber: {
-    fontSize: 34,
+    fontSize: 24,
     fontWeight: 500
   },
   tailBox: {

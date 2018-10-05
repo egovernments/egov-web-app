@@ -1,5 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
+import set from "lodash/set";
 import {
   getFooterButtons,
   getCommonApplyFooter,
@@ -7,19 +8,37 @@ import {
   onClickNextButton
 } from "../../utils";
 import { updateTradeDetails } from "ui-utils/commons";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
+const queryValue = getQueryArg(window.location.href, "purpose");
 
-const onConfirmApprove = async (state, dispatch) => {
+const onNextButtonClick = async (state, dispatch) => {
   const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
   const { Licenses } = preparedFinalObject;
+  if (Licenses && Licenses.length > 0) {
+    const status = get(Licenses[0], "status");
+    switch (queryValue) {
+      case "cancel":
+        if (status === "APPROVED") {
+          set(Licenses[0], "action", "CANCEL");
+        }
+      case "reject":
+        if (status === "APPLIED") {
+          set(Licenses[0], "action", "REJECT");
+        }
+      default:
+        if (status === "APPLIED") {
+          set(Licenses[0], "action", "APPROVE");
+        }
+    }
+  }
   let response = await updateTradeDetails({ Licenses });
   if (response) {
     const applicationNumber = get(response, "Licenses[0].applicationNumber");
     const tlNumber = get(response, "Licenses[0].licenseNumber");
-    console.log("payload ......", response);
-    let route = onClickNextButton(applicationNumber, tlNumber);
+    const route = onClickNextButton(applicationNumber, tlNumber);
     dispatch(setRoute(route));
   }
 };
@@ -64,7 +83,7 @@ export const footerApprove = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "condition",
-      callBack: onConfirmApprove
+      callBack: onNextButtonClick
     }
   }
 });
