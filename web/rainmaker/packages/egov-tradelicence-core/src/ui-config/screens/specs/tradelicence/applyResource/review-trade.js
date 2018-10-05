@@ -73,13 +73,39 @@ export const getReviewTrade = (isEditable = true) => {
         },
         { jsonPath: "Licenses[0].tradeName" }
       ),
-      reviewTradeMobility: getLabelWithValue("Trade Mobility", "Immovable"),
+      reviewFromDate: getLabelWithValue(
+        { labelName: "From Date" },
+        { jsonPath: "Licenses[0].validFrom" }
+      ),
+      reviewToDate: getLabelWithValue(
+        { labelName: "To Date" },
+        { jsonPath: "Licenses[0].validTo" }
+      ),
+      reviewStructureType: getLabelWithValue(
+        { labelName: "Structure Type" },
+        {
+          jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType"
+        }
+      ),
+      reviewSubStructureType: getLabelWithValue(
+        { labelName: "Structure Sub Type" },
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.structureType"
+        }
+      ),
       reviewCommencementDate: getLabelWithValue(
         {
           labelName: "Commencement Date",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"
         },
         { jsonPath: "Licenses[0].commencementDate" }
+      ),
+      reviewGSTNo: getLabelWithValue(
+        {
+          labelName: "GST No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_LABEL"
+        },
+        { jsonPath: "Licenses[0].tradeName" }
       ),
       reviewOperationalArea: getLabelWithValue(
         {
@@ -93,14 +119,7 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "No of Employees",
           labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
         },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees" }
-      ),
-      reviewGSTNo: getLabelWithValue(
-        {
-          labelName: "GST No.",
-          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeName" }
+        { jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees" }
       )
     }),
     div1: getDivider(),
@@ -178,26 +197,12 @@ export const getReviewTrade = (isEditable = true) => {
         },
         { jsonPath: "Licenses[0].propertyId" }
       ),
-      reviewElectricityNo: getLabelWithValue(
-        {
-          labelName: "Electricity Connection No.",
-          labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
-        },
-        { jsonPath: "Licenses[0].propertyId" }
-      ),
       reviewCity: getLabelWithValue(
         {
           labelName: "City",
           labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
         },
         { jsonPath: "Licenses[0].tradeLicenseDetail.address.city" }
-      ),
-      reviewPincode: getLabelWithValue(
-        {
-          labelName: "Pincode",
-          labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode" }
       ),
       reviewDoorNo: getLabelWithValue(
         {
@@ -225,7 +230,21 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Mohalla",
           labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
         },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.name" }
+        { jsonPath: "Licences[0].tradeLicenseDetail.address.locality.name" }
+      ),
+      reviewPincode: getLabelWithValue(
+        {
+          labelName: "Pincode",
+          labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
+        },
+        { jsonPath: "Licences[0].tradeLicenseDetail.address.pincode" }
+      ),
+      reviewElectricityNo: getLabelWithValue(
+        {
+          labelName: "Electricity Connection No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
+        },
+        { jsonPath: "Licences[0].propertyId" }
       )
     })
   });

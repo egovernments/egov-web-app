@@ -499,3 +499,20 @@ export const showHideMapPopup = (state, dispatch) => {
     )
   );
 };
+
+export const getHeaderSideText = (status, licenseNo = null) => {
+  switch (status) {
+    case "PAID":
+      return "Status: Pending Approval";
+    case "APPLIED":
+      return "Status: Pending Payment";
+    case "REJECTED":
+      return "Status: Application Rejected";
+    case "CANCELLED":
+      return `Trade License No: ${licenseNo}`;
+    case "APPROVED":
+      return `Trade License No: ${licenseNo}`;
+    default:
+      return "";
+  }
+};
