@@ -842,16 +842,35 @@ const getCertificateData = (transformedData, ulbLogo) => {
 };
 
 const generateReceipt = async (state, dispatch, type) => {
-  let data1 = JSON.parse(localStorage.getItem("applicationDataForReceipt"));
-  let data2 = JSON.parse(localStorage.getItem("receiptDataForReceipt"));
+  let data1 = _.get(
+    state.screenConfiguration.preparedFinalObject,
+    "applicationDataForReceipt",
+    {}
+  );
+  let data2 = _.get(
+    state.screenConfiguration.preparedFinalObject,
+    "receiptDataForReceipt",
+    {}
+  );
+  let ulbLogo = _.get(
+    state.screenConfiguration.preparedFinalObject,
+    "base64UlbLogo",
+    ""
+  );
+  if (_.isEmpty(data1)) {
+    console.log("Error in application data");
+    return;
+  } else if (_.isEmpty(data2)) {
+    console.log("Error in receipt data");
+    return;
+  } else if (_.isEmpty(ulbLogo)) {
+    console.log("Error in image data");
+    return;
+  }
   let transformedData = {
     ...data1,
     ...data2
   };
-  let ulbLogo = localStorage.getItem("base64UlbLogo");
-  if (_.isEmpty(data1) || _.isEmpty(data2) || _.isEmpty(transformedData)) {
-    return;
-  }
   switch (type) {
     case "tlCertificate":
       let certificate_data = getCertificateData(transformedData, ulbLogo);

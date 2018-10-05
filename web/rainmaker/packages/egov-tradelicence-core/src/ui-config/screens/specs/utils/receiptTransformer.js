@@ -1,4 +1,6 @@
 import { getReceiptData, getSearchResults } from "../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import store from "ui-redux/store";
 
 const handleNull = value => {
   let response = value ? value : "";
@@ -23,7 +25,7 @@ export const loadUlbLogo = tenantid => {
     canvas.height = this.height;
     canvas.width = this.width;
     ctx.drawImage(this, 0, 0);
-    localStorage.setItem("base64UlbLogo", canvas.toDataURL());
+    store.dispatch(prepareFinalObject("base64UlbLogo", canvas.toDataURL()));
     canvas = null;
   };
   img.src = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantid}/logo.png`;
@@ -73,7 +75,7 @@ export const loadApplicationData = async applicationNumber => {
       data.locality
     );
   }
-  localStorage.setItem("applicationDataForReceipt", JSON.stringify(data));
+  store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
 };
 
 export const loadReceiptData = async consumerCode => {
@@ -110,5 +112,5 @@ export const loadReceiptData = async consumerCode => {
     data.bankName = handleNull(response.Receipt[0].instrument.bank.name);
     data.branchName = handleNull(response.Receipt[0].instrument.branchName);
   }
-  localStorage.setItem("receiptDataForReceipt", JSON.stringify(data));
+  store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
 };
