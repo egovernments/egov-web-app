@@ -412,6 +412,20 @@ export const getSearchResults = async queryObject => {
   }
 };
 
+export const getBill = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/tl-calculator/v1/_getbill",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const convertEpochToDate = dateEpoch => {
   const dateFromApi = new Date(dateEpoch);
   let month = dateFromApi.getMonth() + 1;

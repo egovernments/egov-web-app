@@ -7,7 +7,25 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 export const payeeDetails = getCommonContainer({
-  paidBy: getSelectField("Paid By", "Paid By", false, ""),
+  paidBy: getSelectField({
+    label: {
+      labelName: "Paid By",
+      labelKey: "TL_PAYMENT_PAID_BY_LABEL"
+    },
+    placeholder: {
+      labelName: "Paid By",
+      labelKey: "TL_PAYMENT_PAID_BY_LABEL"
+    },
+    data: [
+      {
+        code: "Owner"
+      },
+      {
+        code: "Others"
+      }
+    ],
+    jsonPath: "Receipt[0].Bill[0].payer"
+  }),
   payerName: getTextField({
     label: {
       labelName: "Payer Name",
@@ -16,7 +34,8 @@ export const payeeDetails = getCommonContainer({
     placeholder: {
       labelName: "Enter Payer Name",
       labelKey: "TL_PAYMENT_PAYER_NAME_PLACEHOLDER"
-    }
+    },
+    jsonPath: "Receipt[0].Bill[0].paidBy"
   }),
   payerMobileNo: getTextField({
     label: {
@@ -27,6 +46,7 @@ export const payeeDetails = getCommonContainer({
       labelName: "Enter Payer Mobile No.",
       labelKey: "TL_PAYMENT_PAYER_MOB_PLACEHOLDER"
     },
+    jsonPath: "Receipt[0].Bill[0].mobileNumber",
     pattern: getPattern("Date"),
     iconObj: {
       position: "start",
@@ -45,12 +65,14 @@ export const chequeDetails = getCommonContainer({
       labelName: "Enter Cheque  no.",
       labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
     },
+    jsonPath: "Receipt[0].instrument.transactionNumber",
     required: true
   }),
   chequeDate: getDateField({
     label: { labelName: "Cheque Date" },
     placeholder: { labelName: "dd/mm/yy" },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.transactionDateInput"
   }),
   chequeIFSC: getTextField({
     label: {
@@ -61,7 +83,8 @@ export const chequeDetails = getCommonContainer({
       labelName: "Enter bank IFSC",
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.ifscCode"
   })
 });
 
@@ -80,12 +103,14 @@ export const demandDraftDetails = getCommonContainer({
       labelName: "Enter DD  no.",
       labelKey: "TL_PAYMENT_DD_NO_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.transactionNumber"
   }),
   ddDate: getDateField({
     label: { labelName: "DD Date" },
     placeholder: { labelName: "dd/mm/yy" },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.transactionDateInput"
   }),
   ddIFSC: getTextField({
     label: {
@@ -96,7 +121,8 @@ export const demandDraftDetails = getCommonContainer({
       labelName: "Enter bank IFSC",
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.ifscCode"
   })
 });
 
@@ -115,7 +141,8 @@ export const cardDetails = getCommonContainer({
       labelName: "Enter Last 4 digits of the card",
       labelKey: "TL_CARD_LAST_DIGITS_LABEL_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.instrumentNumber"
   }),
   TrxNo: getTextField({
     label: {
@@ -126,7 +153,8 @@ export const cardDetails = getCommonContainer({
       labelName: "Enter transaction no.",
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.transactionNumber"
   }),
   repeatTrxNo: getTextField({
     label: {
@@ -137,7 +165,8 @@ export const cardDetails = getCommonContainer({
       labelName: "Enter transaction no.",
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
-    required: true
+    required: true,
+    jsonPath: "Receipt[0].instrument.transactionNumberConfirm"
   })
 });
 

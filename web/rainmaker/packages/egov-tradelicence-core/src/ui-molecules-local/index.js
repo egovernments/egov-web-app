@@ -52,6 +52,11 @@ const MapLocator = Loadable({
   loading: () => <Loading />
 });
 
+const FeesEstimateCard = Loadable({
+  loader: () => import("./FeesEstimateCard"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -62,5 +67,6 @@ export {
   UploadSingleFile,
   DocumentList,
   AutoSelector,
-  MapLocator
+  MapLocator,
+  FeesEstimateCard
 };
