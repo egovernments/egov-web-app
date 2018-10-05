@@ -9,7 +9,20 @@ import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
+import {
+  loadUlbLogo,
+  loadApplicationData,
+  loadReceiptData
+} from "../utils/receiptTransformer";
 import set from "lodash/set";
+
+/** Data used for creation of receipt is generated and stored in local storage here */
+const loadReceiptGenerationData = () => {
+  /** Logo loaded and stored in local storage in base64 */
+  loadUlbLogo("pb.amritsar");
+  loadApplicationData("PB-TL-2018-09-27-000004");
+  loadReceiptData("PT-107-001330:AS-2018-08-29-001426");
+};
 
 const getAcknowledgementCard = (purpose, status, number) => {
   if (purpose === "apply" && status === "success") {
@@ -48,6 +61,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
       applicationSuccessFooter
     };
   } else if (purpose === "pay" && status === "success") {
+    loadReceiptGenerationData();
     return {
       header: getCommonContainer({
         header: getCommonHeader({
@@ -80,6 +94,7 @@ const getAcknowledgementCard = (purpose, status, number) => {
       paymentSuccessFooter
     };
   } else if (purpose === "approve" && status === "success") {
+    loadReceiptGenerationData();
     return {
       header: getCommonContainer({
         header: getCommonHeader({
