@@ -118,8 +118,8 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
 };
 
 var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) {
-  var amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   var amountToPay = receiptDetails && (0, _get2.default)(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
+  var amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   var _property$propertyDet = property.propertyDetails[0],
       ownerDetails = _property$propertyDet.owners,
       financialYear = _property$propertyDet.financialYear,
