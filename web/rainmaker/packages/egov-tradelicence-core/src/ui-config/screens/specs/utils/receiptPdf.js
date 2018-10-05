@@ -1,5 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import _ from "lodash";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 let tableborder = {
@@ -33,14 +34,7 @@ let payableAmountTable = ["*", "*", "*", "*", "*", "*", "*"];
 let payableAmountBorderKey = [true, true, true, true, true, true, true];
 let payableInfoTable3 = ["*", "*", "*"];
 
-const getReceiptData = async () => {
-  let data1 = JSON.parse(localStorage.getItem("applicationDataForReceipt"));
-  let data2 = JSON.parse(localStorage.getItem("receiptDataForReceipt"));
-  let transformedData = {
-    ...data1,
-    ...data2
-  };
-  let ulbLogo = localStorage.getItem("base64UlbLogo");
+const getReceiptData = (transformedData, ulbLogo) => {
   var receiptData = {
     content: [
       {
@@ -552,14 +546,7 @@ const getReceiptData = async () => {
   return receiptData;
 };
 
-const getCertificateData = async () => {
-  let data1 = JSON.parse(localStorage.getItem("applicationDataForReceipt"));
-  let data2 = JSON.parse(localStorage.getItem("receiptDataForReceipt"));
-  let transformedData = {
-    ...data1,
-    ...data2
-  };
-  let ulbLogo = localStorage.getItem("base64UlbLogo");
+const getCertificateData = (transformedData, ulbLogo) => {
   var tlCertificateData = {
     content: [
       {
@@ -855,14 +842,24 @@ const getCertificateData = async () => {
 };
 
 const generateReceipt = async (state, dispatch, type) => {
+  let data1 = JSON.parse(localStorage.getItem("applicationDataForReceipt"));
+  let data2 = JSON.parse(localStorage.getItem("receiptDataForReceipt"));
+  let transformedData = {
+    ...data1,
+    ...data2
+  };
+  let ulbLogo = localStorage.getItem("base64UlbLogo");
+  if (_.isEmpty(data1) || _.isEmpty(data2) || _.isEmpty(transformedData)) {
+    return;
+  }
   switch (type) {
     case "tlCertificate":
-      let certificate_data = await getCertificateData();
+      let certificate_data = getCertificateData(transformedData, ulbLogo);
       certificate_data &&
         pdfMake.createPdf(certificate_data).download("tl_receipt.pdf");
       break;
     case "receipt":
-      let receipt_data = await getReceiptData();
+      let receipt_data = getReceiptData(transformedData, ulbLogo);
       receipt_data &&
         pdfMake.createPdf(receipt_data).download("tl_certificate.pdf");
       break;

@@ -37,7 +37,7 @@ export const loadApplicationData = async applicationNumber => {
   ];
   let response = await getSearchResults(applicationQueryObject);
 
-  if (response) {
+  if (response && response.Licenses) {
     data.applicationNumber = handleNull(response.Licenses[0].applicationNumber);
     data.licenseNumber = handleNull(response.Licenses[0].licenseNumber);
     data.financialYear = handleNull(response.Licenses[0].financialYear);
@@ -90,7 +90,7 @@ export const loadReceiptData = async consumerCode => {
   ];
   let response = await getReceiptData(receiptQueryObject);
 
-  if (response) {
+  if (response && response.Receipt) {
     data.receiptNumber = handleNull(
       response.Receipt[0].Bill[0].billDetails[0].receiptNumber
     );
@@ -112,20 +112,3 @@ export const loadReceiptData = async consumerCode => {
   }
   localStorage.setItem("receiptDataForReceipt", JSON.stringify(data));
 };
-
-// const convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {
-//   var img = new Image();
-//   img.crossOrigin = "Anonymous";
-//   img.onload = function() {
-//     var canvas = document.createElement("CANVAS");
-//     var ctx = canvas.getContext("2d");
-//     var dataURL;
-//     canvas.height = this.height;
-//     canvas.width = this.width;
-//     ctx.drawImage(this, 0, 0);
-//     dataURL = canvas.toDataURL(outputFormat);
-//     callback(dataURL);
-//     canvas = null;
-//   };
-//   img.src = url;
-// };
