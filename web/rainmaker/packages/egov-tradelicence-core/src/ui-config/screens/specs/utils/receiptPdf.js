@@ -557,19 +557,22 @@ const getCertificateData = (transformedData, ulbLogo) => {
               {
                 stack: [
                   {
-                    image: `${ulbLogo}`,
+                    image: ulbLogo,
                     width: 50,
                     height: 61.25,
                     alignment: "center"
                   },
                   {
-                    text: "AMRITSAR MUNICIPAL CORPORATION",
+                    text: transformedData.corporationName,
                     style: "receipt-logo-header",
                     margin: [0, 10, 0, 0]
                   },
                   {
-                    text:
-                      "C Block, Ranjit Avenue, Amritsar\nPunjab. (India)\nFax : +91-183-2503433\nWebsite : www.amritsarcorp.com\nEmail : cmcasr@punjab.gov.in",
+                    text: `${transformedData.corporationAddress}\nContact : ${
+                      transformedData.corporationContact
+                    }\nWebsite : ${
+                      transformedData.corporationWebsite
+                    }\nEmail : ${transformedData.corporationEmail}`,
                     style: "receipt-logo-sub-text",
                     margin: [0, 8, 0, 0]
                   },
@@ -588,29 +591,15 @@ const getCertificateData = (transformedData, ulbLogo) => {
         layout: noborder
       },
       {
-        style: "pt-reciept-citizen-header",
+        style: "tl-certificate-data",
         columns: [
           {
-            text: [
-              {
-                text: "Trade License No. "
-              },
-              {
-                text: `${transformedData.licenseNumber}`
-              }
-            ],
-            alignment: "left"
+            width: 160,
+            text: "Trade License No."
           },
           {
-            text: [
-              {
-                text: "Financial Year "
-              },
-              {
-                text: `${transformedData.financialYear}`
-              }
-            ],
-            alignment: "right"
+            width: "*",
+            text: transformedData.licenseNumber
           }
         ]
       },
@@ -618,26 +607,38 @@ const getCertificateData = (transformedData, ulbLogo) => {
         style: "tl-certificate-data-2",
         columns: [
           {
-            text: [
-              {
-                text: "Application Number "
-              },
-              {
-                text: `${transformedData.applicationNumber}`
-              }
-            ],
-            alignment: "left"
+            width: 160,
+            text: "Financial Year"
           },
           {
-            text: [
-              {
-                text: "Receipt Number "
-              },
-              {
-                text: `${transformedData.receiptNumber}`
-              }
-            ],
-            alignment: "right"
+            width: "*",
+            text: transformedData.financialYear
+          }
+        ]
+      },
+      {
+        style: "tl-certificate-data-2",
+        columns: [
+          {
+            width: 160,
+            text: "Application Number"
+          },
+          {
+            width: "*",
+            text: transformedData.applicationNumber
+          }
+        ]
+      },
+      {
+        style: "tl-certificate-data-2",
+        columns: [
+          {
+            width: 160,
+            text: "Receipt Number"
+          },
+          {
+            width: "*",
+            text: transformedData.receiptNumber
           }
         ]
       },
@@ -650,7 +651,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.tradeName}`
+            text: transformedData.tradeName
           }
         ]
       },
@@ -663,7 +664,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.ownerName}`
+            text: transformedData.ownerName
           }
         ]
       },
@@ -676,7 +677,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.address}`
+            text: transformedData.address
           }
         ]
       },
@@ -689,7 +690,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.tradeType}`
+            text: transformedData.tradeType
           }
         ]
       },
@@ -702,7 +703,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.totalAmount}`
+            text: transformedData.totalAmount
           }
         ]
       },
@@ -715,7 +716,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.licenseIssueDate}`
+            text: transformedData.licenseIssueDate
           }
         ]
       },
@@ -728,7 +729,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.licenseExpiryDate}`
+            text: transformedData.licenseExpiryDate
           }
         ]
       },
@@ -852,6 +853,11 @@ const generateReceipt = async (state, dispatch, type) => {
     "receiptDataForReceipt",
     {}
   );
+  let data3 = _.get(
+    state.screenConfiguration.preparedFinalObject,
+    "mdmsDataForReceipt",
+    {}
+  );
   let ulbLogo = _.get(
     state.screenConfiguration.preparedFinalObject,
     "base64UlbLogo",
@@ -863,13 +869,17 @@ const generateReceipt = async (state, dispatch, type) => {
   } else if (_.isEmpty(data2)) {
     console.log("Error in receipt data");
     return;
+  } else if (_.isEmpty(data3)) {
+    console.log("Error in mdms data");
+    return;
   } else if (_.isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
   }
   let transformedData = {
     ...data1,
-    ...data2
+    ...data2,
+    ...data3
   };
   switch (type) {
     case "tlCertificate":

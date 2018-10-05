@@ -1,4 +1,4 @@
-import { getReceiptData, getSearchResults } from "../utils";
+import { getReceiptData, getSearchResults, getMdmsData } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import store from "ui-redux/store";
 
@@ -33,11 +33,11 @@ export const loadUlbLogo = tenantid => {
 
 export const loadApplicationData = async applicationNumber => {
   let data = {};
-  let applicationQueryObject = [
+  let queryObject = [
     { key: "tenantId", value: "pb.amritsar" },
     { key: "applicationNumber", value: applicationNumber }
   ];
-  let response = await getSearchResults(applicationQueryObject);
+  let response = await getSearchResults(queryObject);
 
   if (response && response.Licenses) {
     data.applicationNumber = handleNull(response.Licenses[0].applicationNumber);
@@ -54,9 +54,15 @@ export const loadApplicationData = async applicationNumber => {
     data.streetName = handleNull(
       response.Licenses[0].tradeLicenseDetail.address.street
     );
-    data.locality = handleNull(
+    let localityCode = handleNull(
       response.Licenses[0].tradeLicenseDetail.address.locality.code
     );
+    let localityObject = JSON.parse(
+      localStorage.getItem("localization_en_IN")
+    ).find(item => {
+      return item.code == localityCode;
+    });
+    data.locality = localityObject ? localityObject.message : "";
     data.ownerName = handleNull(
       response.Licenses[0].tradeLicenseDetail.owners[0].name
     );
@@ -80,7 +86,7 @@ export const loadApplicationData = async applicationNumber => {
 
 export const loadReceiptData = async consumerCode => {
   let data = {};
-  let receiptQueryObject = [
+  let queryObject = [
     {
       key: "tenantId",
       value: "pb.amritsar"
@@ -90,7 +96,7 @@ export const loadReceiptData = async consumerCode => {
       value: consumerCode
     }
   ];
-  let response = await getReceiptData(receiptQueryObject);
+  let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt) {
     data.receiptNumber = handleNull(
@@ -113,4 +119,51 @@ export const loadReceiptData = async consumerCode => {
     data.branchName = handleNull(response.Receipt[0].instrument.branchName);
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
+};
+
+export const loadMdmsData = async tenantid => {
+  let data = {};
+  let queryObject = [
+    {
+      key: "tenantId",
+      value: `${tenantid}`
+    },
+    {
+      key: "moduleName",
+      value: "tenant"
+    },
+    {
+      key: "masterName",
+      value: "tenants"
+    }
+  ];
+  let response = await getMdmsData(queryObject);
+
+  if (response && response.MdmsRes.tenant.tenants.length > 0) {
+    let ulbData = response.MdmsRes.tenant.tenants.find(item => {
+      return item.code == tenantid;
+    });
+    /** START Corporation name generation logic */
+    let ulbGrade = handleNull(ulbData.city.ulbGrade);
+    let name = handleNull(ulbData.city.name);
+    if (ulbGrade) {
+      if (ulbGrade === "NP") {
+        data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
+      } else if (ulbGrade === "Municipal Corporation") {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+      } else if (ulbGrade.includes("MC Class")) {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+      } else {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+      }
+    } else {
+      data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    }
+    /** END */
+    data.corporationAddress = handleNull(ulbData.address);
+    data.corporationContact = handleNull(ulbData.contactNumber);
+    data.corporationWebsite = handleNull(ulbData.domainUrl);
+    data.corporationEmail = handleNull(ulbData.emailId);
+  }
+  store.dispatch(prepareFinalObject("mdmsDataForReceipt", data));
 };

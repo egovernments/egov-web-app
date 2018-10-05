@@ -12,7 +12,8 @@ import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
 import {
   loadUlbLogo,
   loadApplicationData,
-  loadReceiptData
+  loadReceiptData,
+  loadMdmsData
 } from "../utils/receiptTransformer";
 import set from "lodash/set";
 
@@ -22,6 +23,7 @@ const loadReceiptGenerationData = () => {
   loadUlbLogo("pb.amritsar");
   loadApplicationData("PB-TL-2018-09-27-000004");
   loadReceiptData("PT-107-001330:AS-2018-08-29-001426");
+  loadMdmsData("pb.amritsar");
 };
 
 const getAcknowledgementCard = (
