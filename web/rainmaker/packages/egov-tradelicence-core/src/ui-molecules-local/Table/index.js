@@ -1,10 +1,8 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
-import get from "lodash/get"
+import get from "lodash/get";
 import PropTypes from "prop-types";
-import "./index.css"
-
-
+import "./index.css";
 
 class Table extends React.Component {
   state = {
@@ -18,7 +16,7 @@ class Table extends React.Component {
       Object.keys(columns).forEach(column => {
         let columnValue = get(curr, `${column}`, "");
         if (get(columns, `${column}.format`, "")) {
-          columnValue = columns[column].format(columnValue);
+          columnValue = columns[column].format(curr);
         }
         dataRow.push(columnValue);
       });
@@ -30,12 +28,12 @@ class Table extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { data, columns } = nextProps;
-    this.updateTable(data, columns)
+    this.updateTable(data, columns);
   }
 
   componentDidMount() {
     const { data, columns } = this.props;
-    this.updateTable(data, columns)
+    this.updateTable(data, columns);
   }
 
   updateTable = (data, columns) => {
@@ -44,11 +42,11 @@ class Table extends React.Component {
       data: updatedData,
       columns: Object.keys(columns)
     });
-  }
+  };
 
   render() {
     const { data, columns } = this.state;
-    const { options, title } = this.props
+    const { options, title } = this.props;
     return (
       <MUIDataTable
         title={title}
@@ -64,7 +62,7 @@ Table.propTypes = {
   columns: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired
 };
 
-export default Table
+export default Table;

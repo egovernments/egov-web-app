@@ -13,10 +13,15 @@ import {
 import { searchApiCall } from "./functions";
 
 export const tradeLicenseApplication = getCommonCard({
-  subHeader: getCommonTitle("Search Trade License Application"),
-  subParagraph: getCommonParagraph(
-    "Please provide at least one parameter to search for an application"
-  ),
+  subHeader: getCommonTitle({
+    labelName: "Search Trade License Application",
+    labelKey: "TL_HOME_SEARCH_RESULTS_HEADING"
+  }),
+  subParagraph: getCommonParagraph({
+    labelName:
+      "Please provide at least one parameter to search for an application",
+    labelKey: "TL_HOME_SEARCH_RESULTS_DESC"
+  }),
   appTradeAndMobNumContainer: getCommonContainer({
     applicationNo: getTextField({
       label: {
