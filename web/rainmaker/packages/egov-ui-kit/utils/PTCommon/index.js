@@ -217,9 +217,12 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
     configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
     var units = data["Properties"][0]["propertyDetails"][0]["units"];
 
+    var floorIndexObj = prepareUniqueFloorIndexObj(units);
+
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
       var floorNo = units[unitIndex]["floorNo"];
-      var formKey = "floorDetails_" + floorNo + "_unit_" + unitIndex;
+      var floorIndex = floorIndexObj[floorNo];
+      var formKey = "floorDetails_" + floorIndex + "_unit_" + unitIndex;
       configFloor = (0, _cloneDeep2.default)(configFloor);
       Object.keys(configFloor["fields"]).map(function (item) {
         var jsonPath = configFloor["fields"][item]["jsonPath"];
@@ -238,10 +241,10 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
       configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
 
-      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+      if (!("customSelect_" + floorIndex in dictCustomSelect)) {
         customSelectconfig = (0, _cloneDeep2.default)(customSelectconfig);
         customSelectconfig["fields"]["floorName"]["value"] = floorNo;
-        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+        dictCustomSelect["customSelect_" + floorIndex] = customSelectconfig;
       }
     }
   }
@@ -254,6 +257,18 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
   // });
   // console.log(basicInfoConfig);
   return (0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect);
+};
+
+var prepareUniqueFloorIndexObj = function prepareUniqueFloorIndexObj(units) {
+  var index = 0;
+  var floorIndexObj = units.reduce(function (floorIndexObj, item) {
+    if (!floorIndexObj[item.floorNo]) {
+      floorIndexObj[item.floorNo] = index;
+      index++;
+    }
+    return floorIndexObj;
+  }, {});
+  return floorIndexObj;
 };
 
 var convertUnitsToSqFt = exports.convertUnitsToSqFt = function convertUnitsToSqFt(unitArray) {

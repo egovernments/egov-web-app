@@ -1,6 +1,8 @@
 import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
+import set from "lodash/set";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -209,4 +211,31 @@ export const updatePFOforSearchResults = async (
   ];
   const payload = await getSearchResults(queryObject);
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+};
+
+export const applyTradeLicense = async (state, dispatch) => {
+  try {
+    let queryObject = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses",
+      []
+    );
+    set(queryObject[0], "tradeLicenseDetail.address.locality.code", "SUN04");
+    set(queryObject[0], "validFrom", 1522540800000);
+    set(queryObject[0], "validTo", 1554076799000);
+    console.log(queryObject);
+    if (queryObject[0].status) {
+    } else {
+      const response = await httpRequest(
+        "post",
+        "/tl-services/v1/_create",
+        "",
+        [],
+        { Licenses: queryObject }
+      );
+      console.log(response);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

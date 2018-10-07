@@ -10,6 +10,7 @@ import {
   getDateField,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getDetailsForOwner } from "../../utils";
 
 export const getOwnerMobNoField = getTextField({
   label: {

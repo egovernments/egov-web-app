@@ -12,7 +12,6 @@ import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
-
 const queryValue = getQueryArg(window.location.href, "purpose");
 
 export const getCommonApplyFooter = children => {
@@ -519,27 +518,35 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   }
 };
 
-const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"]
+const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
 //applyScreenMdmsData.MdmsRes.TradeLicense.TradeType
-const reTrasnformerForNestedDropDown = (originaJsonPath, value, state, dispatch) => {
-  let nestedValues = value.split(".")
-  while(nestedValues.length > 1) {
-    const originalNestedValues = value.split(".")
-    const originalObject = get(state, `${originaJsonPath}`)
-    nestedValues = value.split(".")
-    const targetLevel = nestedValues.pop()
-    const targetpath = nestedValues.join(".")
-    let targetValues = get(originalObject, `${targetpath}`, [])
-    targetValues = targetValues.length && targetValues.length >= 0 ? targetValues : objectToDropdown(targetValues)
+const reTrasnformerForNestedDropDown = (
+  originaJsonPath,
+  value,
+  state,
+  dispatch
+) => {
+  let nestedValues = value.split(".");
+  while (nestedValues.length > 1) {
+    const originalNestedValues = value.split(".");
+    const originalObject = get(state, `${originaJsonPath}`);
+    nestedValues = value.split(".");
+    const targetLevel = nestedValues.pop();
+    const targetpath = nestedValues.join(".");
+    let targetValues = get(originalObject, `${targetpath}`, []);
+    targetValues =
+      targetValues.length && targetValues.length >= 0
+        ? targetValues
+        : objectToDropdown(targetValues);
 
     dispatch(
       pFO(
         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
         targetValues
       )
-    )
+    );
   }
-}
+};
 
 export const getMdmsData = async queryObject => {
   try {
@@ -553,5 +560,50 @@ export const getMdmsData = async queryObject => {
   } catch (error) {
     console.log(error);
     return {};
+  }
+};
+
+export const getDetailsFromProperty = async (state, dispatch) => {
+  try {
+    let payload = await httpRequest(
+      "post",
+      "/pt-services-v2/property/_search?tenantId=pb.amritsar&ids=PT-107-001890",
+      "_search",
+      [],
+      {}
+    );
+    console.log(payload);
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address",
+        payload.Properties[0].address
+      )
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getDetailsForOwner = async (state, dispatch) => {
+  try {
+    let payload = await httpRequest(
+      "post",
+      "/user/_search?tenantId=pb",
+      "_search",
+      [],
+      {
+        tenantId: "pb",
+        userName: "8050579149"
+      }
+    );
+    console.log(payload);
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.owners[0]",
+        payload.user[0]
+      )
+    );
+  } catch (e) {
+    console.log(e);
   }
 };

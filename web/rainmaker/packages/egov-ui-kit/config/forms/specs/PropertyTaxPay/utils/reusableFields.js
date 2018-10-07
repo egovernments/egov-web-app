@@ -92,6 +92,7 @@ var floorCount = exports.floorCount = {
 
       // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
+      console.log(previousFloorNo, field.value);
       localStorage.setItem("previousFloorNo", field.value);
       // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
@@ -268,8 +269,14 @@ var beforeInitForm = exports.beforeInitForm = {
           return updatedFields;
         }, {});
         (0, _set2.default)(action, "form.fields", (0, _extends3.default)({}, updatedFields));
-
-        !state.form[formKey] && dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[" + unitsCount + "].floorNo", "" + floorIndex));
+        // console.log(formKey);
+        if (!state.form[formKey]) {
+          var customSelectObj = state.form["customSelect_" + floorIndex];
+          // console.log(customSelectObj);
+          var floorNo = customSelectObj.fields && customSelectObj.fields.floorName && customSelectObj.fields.floorName.value;
+          // console.log(floorNo);
+          dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[" + unitsCount + "].floorNo", "" + floorNo));
+        }
       }
     }
 

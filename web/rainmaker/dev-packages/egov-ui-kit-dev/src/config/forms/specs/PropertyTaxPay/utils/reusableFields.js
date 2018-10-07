@@ -53,6 +53,7 @@ export const floorCount = {
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
+      console.log(previousFloorNo, field.value);
       localStorage.setItem("previousFloorNo", field.value);
       // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
@@ -224,8 +225,14 @@ export const beforeInitForm = {
           return updatedFields;
         }, {});
         set(action, "form.fields", { ...updatedFields });
-
-        !state.form[formKey] && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorIndex}`));
+        // console.log(formKey);
+        if (!state.form[formKey]) {
+          const customSelectObj = state.form[`customSelect_${floorIndex}`];
+          // console.log(customSelectObj);
+          const floorNo = customSelectObj.fields && customSelectObj.fields.floorName && customSelectObj.fields.floorName.value;
+          // console.log(floorNo);
+          dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorNo}`));
+        }
       }
     }
 
