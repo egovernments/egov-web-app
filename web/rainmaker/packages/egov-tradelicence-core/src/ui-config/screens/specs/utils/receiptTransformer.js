@@ -16,6 +16,18 @@ const createAddress = (doorNo, buildingName, street, locality) => {
   return address;
 };
 
+const epochToDate = et => {
+  if (!et) return null;
+  var date = new Date(Math.round(Number(et)));
+  var formattedDate =
+    date.getUTCDate() +
+    "/" +
+    (date.getUTCMonth() + 1) +
+    "/" +
+    date.getUTCFullYear();
+  return formattedDate;
+};
+
 export const loadUlbLogo = tenantid => {
   var img = new Image();
   img.crossOrigin = "Anonymous";
@@ -43,7 +55,6 @@ export const loadApplicationData = async applicationNumber => {
     data.applicationNumber = handleNull(response.Licenses[0].applicationNumber);
     data.licenseNumber = handleNull(response.Licenses[0].licenseNumber);
     data.financialYear = handleNull(response.Licenses[0].financialYear);
-    data.paymentDate = handleNull(response.Licenses[0].receiptDate);
     data.tradeName = handleNull(response.Licenses[0].tradeName);
     data.doorNo = handleNull(
       response.Licenses[0].tradeLicenseDetail.address.doorNo
@@ -79,6 +90,9 @@ export const loadApplicationData = async applicationNumber => {
       data.buildingName,
       data.streetName,
       data.locality
+    );
+    data.accessories = handleNull(
+      response.Licenses[0].tradeLicenseDetail.accessories.length
     );
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
@@ -117,6 +131,13 @@ export const loadReceiptData = async consumerCode => {
     );
     data.bankName = handleNull(response.Receipt[0].instrument.bank.name);
     data.branchName = handleNull(response.Receipt[0].instrument.branchName);
+    data.bankAndBranch =
+      data.bankName && data.branchName
+        ? data.bankName + ", " + data.branchName
+        : handleNull(data.bankName);
+    data.paymentDate = handleNull(
+      epochToDate(response.Receipt[0].Bill[0].billDetails[0].receiptDate)
+    );
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
 };

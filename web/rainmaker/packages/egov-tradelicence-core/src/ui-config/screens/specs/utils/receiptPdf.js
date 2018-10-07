@@ -30,7 +30,7 @@ let noborder = {
 let borderKey = [true, true, false, true];
 let borderValue = [false, true, true, true];
 let receiptTableWidth = ["*", "*", "*", "*"];
-let payableAmountTable = ["*", "*", "*", "*", "*", "*", "*"];
+let payableAmountTable = ["*", "*", "*", "*"];
 let payableAmountBorderKey = [true, true, true, true, true, true, true];
 let payableInfoTable3 = ["*", "*", "*"];
 
@@ -44,7 +44,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
           body: [
             [
               {
-                image: `${ulbLogo}`,
+                image: ulbLogo,
                 width: 50,
                 height: 61.25,
                 margin: [41, 12, 10, 10]
@@ -53,7 +53,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 //stack is used here to give multiple sections one after another in same body
                 stack: [
                   {
-                    text: "AMRITSAR MUNICIPAL CORPORATION",
+                    text: transformedData.corporationName,
                     style: "receipt-logo-header"
                   },
                   {
@@ -90,7 +90,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: true
               },
               {
-                text: `${transformedData.applicationNumber}`,
+                text: transformedData.applicationNumber,
                 bold: false
               }
             ],
@@ -104,7 +104,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: true
               },
               {
-                text: `${transformedData.receiptNumber}`,
+                text: transformedData.receiptNumber,
                 bold: false
               }
             ],
@@ -122,7 +122,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: true
               },
               {
-                text: `${transformedData.financialYear}`,
+                text: transformedData.financialYear,
                 bold: false
               }
             ],
@@ -135,7 +135,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: true
               },
               {
-                text: `${transformedData.paymentDate}`,
+                text: transformedData.paymentDate,
                 bold: false
               }
             ],
@@ -155,14 +155,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: "Punjabi Dhaba", border: borderValue },
+              { text: transformedData.tradeName, border: borderValue },
               {
                 text: "Trade Category",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: "Goods",
+                text: transformedData.tradeType,
                 border: borderValue
               }
             ],
@@ -172,14 +172,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: "Type/Sub-Type", border: borderValue },
+              { text: transformedData.tradeType, border: borderValue },
               {
                 text: "Accessories",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: "2",
+                text: transformedData.accessories,
                 border: borderValue
               }
             ]
@@ -199,14 +199,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: `${transformedData.doorNo}`, border: borderValue },
+              { text: transformedData.doorNo, border: borderValue },
               {
                 text: "Building/Colony Name.",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: `${transformedData.buildingName}`,
+                text: transformedData.buildingName,
                 border: borderValue
               }
             ],
@@ -216,14 +216,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: `${transformedData.streetName}`, border: borderValue },
+              { text: transformedData.streetName, border: borderValue },
               {
                 text: "Locality/Mohalla",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: `${transformedData.locality}`,
+                text: transformedData.locality,
                 border: borderValue
               }
             ]
@@ -243,14 +243,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: `${transformedData.ownerName}`, border: borderValue },
+              { text: transformedData.ownerName, border: borderValue },
               {
                 text: "Mobile No",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: `${transformedData.mobileNo}`,
+                text: transformedData.mobileNo,
                 border: borderValue
               }
             ]
@@ -266,12 +266,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
           body: [
             [
               {
-                text: "License Tax",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: "Fire Cess",
+                text: "Trade License Fee",
                 border: payableAmountBorderKey,
                 style: "receipt-table-key"
               },
@@ -281,17 +276,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-key"
               },
               {
-                text: "Interest",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key"
-              },
-              {
                 text: "Additional Charges/Rebate",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: "Exemption",
                 border: payableAmountBorderKey,
                 style: "receipt-table-key"
               },
@@ -308,22 +293,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-value"
               },
               {
-                text: "160",
-                border: payableAmountBorderKey,
-                style: "receipt-table-value"
-              },
-              {
                 text: "-60",
-                border: payableAmountBorderKey,
-                style: "receipt-table-value"
-              },
-              {
-                text: "NA",
-                border: payableAmountBorderKey,
-                style: "receipt-table-value"
-              },
-              {
-                text: "NA",
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
@@ -354,14 +324,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: `${transformedData.amountPaid}`, border: borderValue },
+              { text: transformedData.amountPaid, border: borderValue },
               {
                 text: "Amount Due:",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: `${transformedData.amountDue}`,
+                text: transformedData.amountDue,
                 border: borderValue
               }
             ]
@@ -393,19 +363,17 @@ const getReceiptData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: `${transformedData.paymentMode}`,
+                text: transformedData.paymentMode,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
               {
-                text: `${transformedData.transactionNumber}`,
+                text: transformedData.transactionNumber,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
               {
-                text: `${transformedData.bankName}, ${
-                  transformedData.branchName
-                }`,
+                text: transformedData.bankAndBranch,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               }
