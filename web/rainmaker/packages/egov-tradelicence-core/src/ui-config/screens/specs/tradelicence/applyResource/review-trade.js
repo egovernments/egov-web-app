@@ -4,10 +4,60 @@ import {
   getCommonContainer,
   getLabelWithValue,
   getDivider,
-  getLabel
+  getLabel,
+  getTextField,
+  getSelectField,
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getIconStyle, objectToDropdown } from "../../utils";
 
 import { changeStep } from "./footer";
+import { array } from "prop-types";
+
+const accessoriesCard = {
+  uiFramework: "custom-containers",
+  componentPath: "MultiItem",
+  props: {
+    scheama: getCommonGrayCard({
+      accessoriesCardContainer: getCommonContainer({
+        reviewAccessoryType: getLabelWithValue(
+          {
+            labelName: "Accesory Type",
+            labelKey: "TL_REVIEWACCESSORY_TYPE_LABEL"
+          },
+          {
+            jsonPath:
+              "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory"
+          }
+        ),
+        reviewAccessoryUOM: getLabelWithValue(
+          {
+            labelName: "UOM",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uom" }
+        ),
+        reviewAccessoryUOMValue: getLabelWithValue(
+          {
+            labelName: "UOM Value",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue" }
+        )
+      })
+    }),
+
+    items: [],
+    addItemLabel: "ADD ACCESSORIES",
+    headerName: "Accessory",
+    headerJsonPath:
+      "children.cardContent.children.header.children.head.children.Accessories.props.label",
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    prefixSourceJsonPath:
+      "children.cardContent.children.accessoriesCardContainer.children"
+  },
+  type: "array"
+};
 
 export const getReviewTrade = (isEditable = true) => {
   return getCommonGrayCard({
@@ -188,6 +238,8 @@ export const getReviewTrade = (isEditable = true) => {
         { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue" }
       )
     }),
+    // viewThree: accessoriesCard,
+
     div3: getDivider(),
     viewFour: getCommonContainer({
       reviewPropertyID: getLabelWithValue(
