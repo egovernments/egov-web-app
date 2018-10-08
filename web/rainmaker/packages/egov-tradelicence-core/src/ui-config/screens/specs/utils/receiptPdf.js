@@ -276,7 +276,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-key"
               },
               {
-                text: "Additional Charges/Rebate",
+                text: "Adhoc Penalty/Rebate",
                 border: payableAmountBorderKey,
                 style: "receipt-table-key"
               },
@@ -293,12 +293,12 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-value"
               },
               {
-                text: transformedData.tlPenaltyRebate,
+                text: "NA",
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
               {
-                text: "NA",
+                text: transformedData.tlAdhocPenaltyRebate,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
@@ -418,7 +418,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: true
               },
               {
-                text: "Satpal Dhillon",
+                text: transformedData.auditorName,
                 bold: false
               }
             ],
@@ -710,7 +710,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
                 text: "Approved by: "
               },
               {
-                text: "Satpal Dhillon"
+                text: transformedData.auditorName
               }
             ],
             alignment: "left"
@@ -826,6 +826,11 @@ const generateReceipt = async (state, dispatch, type) => {
     "mdmsDataForReceipt",
     {}
   );
+  let data4 = _.get(
+    state.screenConfiguration.preparedFinalObject,
+    "userDataForReceipt",
+    {}
+  );
   let ulbLogo = _.get(
     state.screenConfiguration.preparedFinalObject,
     "base64UlbLogo",
@@ -840,6 +845,9 @@ const generateReceipt = async (state, dispatch, type) => {
   } else if (_.isEmpty(data3)) {
     console.log("Error in mdms data");
     return;
+  } else if (_.isEmpty(data4)) {
+    console.log("Error in auditor user data");
+    return;
   } else if (_.isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
@@ -847,7 +855,8 @@ const generateReceipt = async (state, dispatch, type) => {
   let transformedData = {
     ...data1,
     ...data2,
-    ...data3
+    ...data3,
+    ...data4
   };
   switch (type) {
     case "tlCertificate":

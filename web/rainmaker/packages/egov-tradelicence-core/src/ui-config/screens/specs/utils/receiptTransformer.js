@@ -1,4 +1,9 @@
-import { getReceiptData, getSearchResults, getMdmsData } from "../utils";
+import {
+  getReceiptData,
+  getSearchResults,
+  getMdmsData,
+  getUserDataFromUuid
+} from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import store from "ui-redux/store";
 
@@ -94,6 +99,7 @@ export const loadApplicationData = async applicationNumber => {
     data.accessories = handleNull(
       response.Licenses[0].tradeLicenseDetail.accessories.length
     );
+    loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
 };
@@ -144,20 +150,20 @@ export const loadReceiptData = async consumerCode => {
     data.g8ReceiptDate = handleNull(
       epochToDate(response.Receipt[0].Bill[0].billDetails[0].manualReceiptDate)
     );
-    /** START TL Fee, Penalty/Rebate Calculation */
-    var tlPenalty = 0,
-      tlRebate = 0;
+    /** START TL Fee, Adhoc Penalty/Rebate Calculation */
+    var tlAdhocPenalty = 0,
+      tlAdhocRebate = 0;
     response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
       let desc = item.accountDescription ? item.accountDescription : "";
       if (desc.startsWith("TL_TAX")) {
         data.tlFee = item.crAmountToBePaid;
       } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
-        tlPenalty = item.crAmountToBePaid;
+        tlAdhocPenalty = item.crAmountToBePaid;
       } else if (desc.startsWith("TL_ADHOC_REBATE")) {
-        tlRebate = item.crAmountToBePaid;
+        tlAdhocRebate = item.crAmountToBePaid;
       }
     });
-    data.tlPenaltyRebate = tlPenalty - tlRebate;
+    data.tlAdhocPenaltyRebate = tlAdhocPenalty - tlAdhocRebate;
     /** END */
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
@@ -208,4 +214,17 @@ export const loadMdmsData = async tenantid => {
     data.corporationEmail = handleNull(ulbData.emailId);
   }
   store.dispatch(prepareFinalObject("mdmsDataForReceipt", data));
+};
+
+export const loadUserNameData = async uuid => {
+  let data = {};
+  let bodyObject = {
+    uuid: [uuid]
+  };
+  let response = await getUserDataFromUuid(bodyObject);
+
+  if (response && response.user && response.user.length > 0) {
+    data.auditorName = handleNull(response.user[0].name);
+  }
+  store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };

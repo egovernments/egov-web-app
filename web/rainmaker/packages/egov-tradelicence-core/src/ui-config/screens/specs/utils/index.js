@@ -607,3 +607,20 @@ export const getDetailsForOwner = async (state, dispatch) => {
     console.log(e);
   }
 };
+
+// Get user data from uuid API call
+export const getUserDataFromUuid = async bodyObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/user/_search",
+      "",
+      [],
+      bodyObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
+};
