@@ -97,7 +97,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
-    fetchBill(action, state, dispatch);
+    // fetchBill(action, state, dispatch);
     return action;
   },
   components: {

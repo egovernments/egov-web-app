@@ -1,58 +1,125 @@
 import React from "react";
-import RenderScreen from "mihy-ui-framework/ui-molecules/RenderScreen";
-import CustomTab from "../../ui-molecules-local/CustomTab";
-import { connect } from "react-redux";
-import { addComponentJsonpath } from "../../ui-utils";
-import cloneDeep from "lodash/cloneDeep";
+// nodejs library that concatenates classes
+// import classNames from "classnames";
+// nodejs library to set properties for components
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
 
-class MultiItem extends React.Component {
-  onTabClick = tabIndex => {
-    const { onTabClick: tabClick, state, dispatch } = this.props;
-    tabClick(tabIndex, state, dispatch);
-  };
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
-  render() {
-    const {
-      uiFramework,
-      onFieldChange,
-      onComponentClick,
-      screenKey,
-      componentJsonpath
-    } = this.props;
+// core components
+import GridContainer from "@material-ui/core/Grid";
+import GridItem from "@material-ui/core/Grid";
 
-    const { onTabClick } = this;
+import navPillsStyle from "./css.js";
 
-    const transFormedProps = {
-      ...this.props,
-      tabs: this.props.tabs.map((tab, key) => {
-        return {
-          ...tab,
-          tabContent: (
-            <RenderScreen
-              key={key}
-              screenKey={screenKey}
-              components={cloneDeep(
-                addComponentJsonpath(
-                  tab.tabContent,
-                  `${componentJsonpath}.props.tabs[${key}].tabContent`
-                )
-              )}
-              uiFramework={uiFramework}
-              onFieldChange={onFieldChange}
-              onComponentClick={onComponentClick}
-            />
-          )
-        };
-      })
+class NavPills extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: props.active
     };
-    return <CustomTab handleClick={onTabClick} {...transFormedProps} />;
+  }
+  handleChange = (event, active) => {
+    const {handleClick}=this.props;
+    this.setState({ active });
+    handleClick(active)
+  };
+  handleChangeIndex = index => {
+    this.setState({ active: index });
+  };
+  render() {
+    const { classes, tabs, direction, horizontal, alignCenter } = this.props;
+    const tabButtons = (
+      <Tabs
+        classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
+        value={this.state.active}
+        onChange={this.handleChange}
+        centered={alignCenter}
+        scrollable
+        scrollButtons="off"
+      >
+        {tabs.map((prop, key) => {
+          return (
+            <Tab
+              label={prop.tabButton}
+              key={key}
+              classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+            />
+          );
+        })}
+      </Tabs>
+    );
+    const tabContent = (
+      <div className={classes.contentWrapper}>
+        <SwipeableViews
+          axis={direction === "rtl" ? "x-reverse" : "x"}
+          index={this.state.active}
+          onChangeIndex={this.handleChangeIndex}
+        >
+          {tabs.map((prop, key) => {
+            return (
+              <div className={classes.tabContent} key={key}>
+                {prop.tabContent}
+              </div>
+            );
+          })}
+        </SwipeableViews>
+      </div>
+    );
+    return horizontal !== undefined ? (
+      <div className={classes.root}>
+        <GridContainer container>
+          <GridItem item {...horizontal.tabsGrid}>
+            {tabButtons}
+          </GridItem>
+          <GridItem item {...horizontal.contentGrid}>
+            {tabContent}
+          </GridItem>
+        </GridContainer>
+      </div>
+    ) : (
+      <div className={classes.root}>
+        {tabButtons}
+        {tabContent}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => {
-  const { screenConfiguration } = state;
-  const { screenConfig, preparedFinalObject } = screenConfiguration;
-  return { screenConfig, preparedFinalObject,state };
+NavPills.defaultProps = {
+  active: 0,
+  color: "primary"
 };
 
-export default connect(mapStateToProps)(MultiItem);
+NavPills.propTypes = {
+  classes: PropTypes.object.isRequired,
+  // index of the default active pill
+  active: PropTypes.number,
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      tabButton: PropTypes.string,
+      tabIcon: PropTypes.func,
+      tabContent: PropTypes.node
+    })
+  ).isRequired,
+  color: PropTypes.oneOf([
+    "primary",
+    "warning",
+    "danger",
+    "success",
+    "info",
+    "rose"
+  ]),
+  direction: PropTypes.string,
+  horizontal: PropTypes.shape({
+    tabsGrid: PropTypes.object,
+    contentGrid: PropTypes.object
+  }),
+  alignCenter: PropTypes.bool
+};
+
+export default withStyles(navPillsStyle)(NavPills);
