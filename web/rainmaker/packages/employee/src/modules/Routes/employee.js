@@ -33,6 +33,8 @@ import EGFFinance from "modules/employee/Erp/EGF";
 
 //pt
 import ptRoutes from "./pt";
+import tlRoutes from "./tl";
+
 // import PTHome from "modules/employee/PropertyTax/PTHome";
 
 //Redirection Url
@@ -345,6 +347,7 @@ const routes = [
     },
   },
   ...ptRoutes,
+  ...tlRoutes
 ];
 
 export default routes;
