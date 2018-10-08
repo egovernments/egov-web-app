@@ -37,25 +37,32 @@ export const searchApiCall = async (state, dispatch) => {
     }
 
     const response = await getSearchResults(queryObject);
-    let data = response.Licenses.map(item => ({
-      "Application No": item.applicationNumber || "-",
-      "License No": item.licenseNumber || "-",
-      "Trade Name": item.tradeName || "-",
-      "Owner Name": item.tradeLicenseDetail.owners[0].name || "-",
-      "Application Date": convertEpochToDate(item.applicationDate) || "-",
-      Status: item.status || "-"
-    }));
+    try {
+      let data = response.Licenses.map(item => ({
+        "Application No": item.applicationNumber || "-",
+        "License No": item.licenseNumber || "-",
+        "Trade Name": item.tradeName || "-",
+        "Owner Name": item.tradeLicenseDetail.owners[0].name || "-",
+        "Application Date": convertEpochToDate(item.applicationDate) || "-",
+        Status: item.status || "-"
+      }));
+   
 
-    dispatch(
-      handleField(
-        "search",
-        "components.div.children.searchResults",
-        "props.data",
-        data
-      )
-    );
-    showHideProgress(false, dispatch);
-    showHideTable(true, dispatch);
+      dispatch(
+        handleField(
+          "search",
+          "components.div.children.searchResults",
+          "props.data",
+          data
+        )
+      );
+      showHideProgress(false, dispatch);
+      showHideTable(true, dispatch);
+    }
+    catch (error) {
+      showHideProgress(false, dispatch);
+      console.log(error);
+    }
   }
 };
 const showHideProgress = (booleanHideOrShow, dispatch) => {

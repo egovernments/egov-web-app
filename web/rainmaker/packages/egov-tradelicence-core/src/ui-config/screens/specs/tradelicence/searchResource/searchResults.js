@@ -46,7 +46,8 @@ export const searchResults = {
     },
     title: "Search Results for Trade License Applications",
     options: {
-      filterType: "dropdown",
+      filter: false,
+      download:false,
       responsive: "stacked",
       selectableRows: false,
       hover: true
