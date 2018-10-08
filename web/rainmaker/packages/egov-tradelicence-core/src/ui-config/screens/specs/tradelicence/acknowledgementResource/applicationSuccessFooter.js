@@ -13,7 +13,7 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const generatePdfAndDownload = () => {
+const generatePdfAndDownload = action => {
   let target = document.querySelector("#custom-atoms-tradeReviewDetails");
   html2canvas(target, {
     onclone: function(clonedDoc) {
@@ -31,7 +31,11 @@ export const generatePdfAndDownload = () => {
         }
       ]
     };
-    pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+    if (action === "download") {
+      pdfMake.createPdf(docDefinition).download("application_summary.pdf");
+    } else if (action === "print") {
+      pdfMake.createPdf(docDefinition).print();
+    }
   });
 };
 
@@ -56,7 +60,9 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       },
       onClickDefination: {
         action: "condition",
-        callBack: generatePdfAndDownload
+        callBack: () => {
+          generatePdfAndDownload("download");
+        }
       }
     },
     printFormButton: {
@@ -75,6 +81,12 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
           labelName: "PRINT CONFIRMATION FORM",
           labelKey: "TL_APPLICATION_BUTTON_PRINT_CONF"
         })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: () => {
+          generatePdfAndDownload("print");
+        }
       }
     },
     collectPaymentButton: {
