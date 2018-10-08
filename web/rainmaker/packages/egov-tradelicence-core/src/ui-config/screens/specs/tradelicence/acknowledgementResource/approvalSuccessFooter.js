@@ -33,7 +33,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "tlCertificate");
+        generateReceipt(state, dispatch, "certificate_download");
       }
     }
   },
@@ -53,6 +53,12 @@ export const approvalSuccessFooter = getCommonApplyFooter({
         labelName: "PRINT TRADE LICENSE",
         labelKey: "TL_APPROVAL_CHECKLIST_PRINT_LIC"
       })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        generateReceipt(state, dispatch, "certificate_print");
+      }
     }
   }
 });

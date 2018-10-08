@@ -33,7 +33,7 @@ export const paymentSuccessFooter = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "receipt");
+        generateReceipt(state, dispatch, "receipt_download");
       }
     }
   },
@@ -53,6 +53,12 @@ export const paymentSuccessFooter = getCommonApplyFooter({
         labelName: "PRINT RECEIPT",
         labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
       })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        generateReceipt(state, dispatch, "receipt_print");
+      }
     }
   }
 });
