@@ -10,7 +10,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const queryValue = getQueryArg(window.location.href, "purpose");
 
@@ -540,7 +540,7 @@ const reTrasnformerForNestedDropDown = (
         : objectToDropdown(targetValues);
 
     dispatch(
-      pFO(
+      prepareFinalObject(
         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
         targetValues
       )
