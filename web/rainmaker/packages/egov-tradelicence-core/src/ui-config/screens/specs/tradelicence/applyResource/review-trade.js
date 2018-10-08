@@ -50,10 +50,6 @@ const accessoriesCard = {
 
     items: [],
     hasAddItem:false,
-    addItemLabel: "ADD ACCESSORIES",
-    headerName: "Accessory",
-    headerJsonPath:
-      "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children"
