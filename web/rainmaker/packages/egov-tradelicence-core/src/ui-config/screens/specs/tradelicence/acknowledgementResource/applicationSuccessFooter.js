@@ -35,67 +35,69 @@ export const generatePdfAndDownload = () => {
   });
 };
 
-export const applicationSuccessFooter = getCommonApplyFooter({
-  downloadFormButton: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "290px",
-        height: "48px",
-        marginRight: "16px"
+export const applicationSuccessFooter = (applicationNumber, tenant) => {
+  return getCommonApplyFooter({
+    downloadFormButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "290px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadFormButtonLabel: getLabel({
+          labelName: "DOWNLOAD CONFIRMATION FORM",
+          labelKey: "TL_APPLICATION_BUTTON_DOWN_CONF"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: generatePdfAndDownload
       }
     },
-    children: {
-      downloadFormButtonLabel: getLabel({
-        labelName: "DOWNLOAD CONFIRMATION FORM",
-        labelKey: "TL_APPLICATION_BUTTON_DOWN_CONF"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: generatePdfAndDownload
-    }
-  },
-  printFormButton: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "250px",
-        height: "48px",
-        marginRight: "16px"
+    printFormButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "250px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        printFormButtonLabel: getLabel({
+          labelName: "PRINT CONFIRMATION FORM",
+          labelKey: "TL_APPLICATION_BUTTON_PRINT_CONF"
+        })
       }
     },
-    children: {
-      printFormButtonLabel: getLabel({
-        labelName: "PRINT CONFIRMATION FORM",
-        labelKey: "TL_APPLICATION_BUTTON_PRINT_CONF"
-      })
-    }
-  },
-  collectPaymentButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "40px"
+    collectPaymentButton: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "40px"
+        }
+      },
+      children: {
+        collectPaymentButtonLabel: getLabel({
+          labelName: "COLLECT PAYMENT",
+          labelKey: "TL_COLLECT_PAYMENT"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `/landing/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       }
-    },
-    children: {
-      collectPaymentButtonLabel: getLabel({
-        labelName: "COLLECT PAYMENT",
-        labelKey: "TL_COLLECT_PAYMENT"
-      })
-    },
-    onClickDefination: {
-      action: "page_change",
-      path: "/landing/mihy-ui-framework/tradelicence/pay"
     }
-  }
-});
+  });
+};
