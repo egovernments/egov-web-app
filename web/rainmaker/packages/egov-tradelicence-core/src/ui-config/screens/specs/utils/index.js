@@ -204,7 +204,12 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      props: {
+        style: {
+          paddingBottom: 5
+        }
+      }
     });
   } else if (queryValue === "cancel") {
     return getTextField({
@@ -218,7 +223,12 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      props: {
+        style: {
+          paddingBottom: 5
+        }
+      }
     });
   } else {
     return getTextField({
@@ -232,7 +242,12 @@ export const getApprovalTextField = () => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments"
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      props: {
+        style: {
+          paddingBottom: 5
+        }
+      }
     });
   }
 };
