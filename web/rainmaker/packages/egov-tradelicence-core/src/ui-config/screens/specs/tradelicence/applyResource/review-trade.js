@@ -18,6 +18,7 @@ const accessoriesCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
   props: {
+    className: "review-trade-search-preview",
     scheama: getCommonGrayCard({
       accessoriesCardContainer: getCommonContainer({
         reviewAccessoryType: getLabelWithValue(
@@ -48,10 +49,7 @@ const accessoriesCard = {
     }),
 
     items: [],
-    addItemLabel: "ADD ACCESSORIES",
-    headerName: "Accessory",
-    headerJsonPath:
-      "children.cardContent.children.header.children.head.children.Accessories.props.label",
+    hasAddItem:false,
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children"
@@ -212,33 +210,7 @@ export const getReviewTrade = (isEditable = true) => {
       )
     }),
     div2: getDivider(),
-    viewThree: getCommonContainer({
-      reviewAccessoryType: getLabelWithValue(
-        {
-          labelName: "Accesory Type",
-          labelKey: "TL_REVIEWACCESSORY_TYPE_LABEL"
-        },
-        {
-          jsonPath:
-            "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory"
-        }
-      ),
-      reviewAccessoryUOM: getLabelWithValue(
-        {
-          labelName: "UOM",
-          labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uom" }
-      ),
-      reviewAccessoryUOMValue: getLabelWithValue(
-        {
-          labelName: "UOM Value",
-          labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue" }
-      )
-    }),
-    // viewThree: accessoriesCard,
+    viewThree: accessoriesCard,
 
     div3: getDivider(),
     viewFour: getCommonContainer({

@@ -10,9 +10,20 @@ export const searchApiCall = async (state, dispatch) => {
     "searchScreen",
     {}
   );
+
+  
   if (Object.keys(searchScreenObject).length == 0) {
     alert("Please fill at least one field to start search");
-  } else {
+  } 
+  else if((searchScreenObject["fromDate"]===undefined)&&(searchScreenObject["toDate"]!==undefined))
+  {
+    alert("Please fill From Data");
+  }
+  else if((searchScreenObject["fromDate"]!==undefined)&&(searchScreenObject["toDate"]===undefined))
+  {
+    alert("Please fill To Date");
+  }
+  else {
     showHideTable(false, dispatch);
     showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
@@ -54,6 +65,14 @@ export const searchApiCall = async (state, dispatch) => {
           "components.div.children.searchResults",
           "props.data",
           data
+        )
+      );
+      dispatch(
+        handleField(
+          "search",
+          "components.div.children.searchResults",
+          "props.title",
+          `Search Results for Trade License Applications (${response.Licenses.length})`
         )
       );
       showHideProgress(false, dispatch);

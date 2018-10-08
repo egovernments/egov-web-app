@@ -90,6 +90,22 @@ span[class^="MuiFormLabel-asterisk"] {
     color:#E54D42;
 }
 
+div[id^="material-ui-item"] {
+  margin-top: 1px;
+}
+
+.search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] {
+  padding: 8px 1px 1px 1px;
+}
+
+.search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] span[class^=MuiIconButton-label]{
+  display: none;
+}
+
+.search-preview button[aria-label="Remove"] {
+  display: none;
+}
+
 /* div[class^="MuiGrid-item"]   {
     padding-right: 80px
 } */

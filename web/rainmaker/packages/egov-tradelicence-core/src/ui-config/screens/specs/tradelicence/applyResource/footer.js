@@ -523,12 +523,17 @@ export const footerReview = (role, status) =>
                   labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
                 })
               },
+              rolesDefination:
+              {
+                rolePath:"user-info.roles",
+                roles:['CITIZENn']
+              },
               onClickDefination: {
                 action: "page_change",
                 path:
                   "/landing/mihy-ui-framework/tradelicence/approve?purpose=cancel"
               },
-              visible: getButtonVisibility(role, status, "CANCEL TRADE LICENSE")
+              // visible: getButtonVisibility(role, status, "CANCEL TRADE LICENSE")
             }
           },
           gridDefination: {
