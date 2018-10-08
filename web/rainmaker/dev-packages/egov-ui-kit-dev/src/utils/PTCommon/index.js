@@ -200,9 +200,13 @@ export const transformPropertyDataToAssessInfo = (data) => {
     configFloor = require(`egov-ui-kit/config/forms/specs/${path}/floorDetails.js`).default;
     let units = data["Properties"][0]["propertyDetails"][0]["units"];
 
+    //For assigning consecutive indexes in formkeys irrespective of floor no.
+    const floorIndexObj = prepareUniqueFloorIndexObj(units);
+
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
-      var floorNo = units[unitIndex]["floorNo"];
-      let formKey = `floorDetails_${floorNo}_unit_${unitIndex}`;
+      const floorNo = units[unitIndex]["floorNo"];
+      const floorIndex = floorIndexObj[floorNo];
+      let formKey = `floorDetails_${floorIndex}_unit_${unitIndex}`;
       configFloor = cloneDeep(configFloor);
       Object.keys(configFloor["fields"]).map((item) => {
         let jsonPath = configFloor["fields"][item]["jsonPath"];
@@ -221,10 +225,10 @@ export const transformPropertyDataToAssessInfo = (data) => {
       configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
 
-      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+      if (!("customSelect_" + floorIndex in dictCustomSelect)) {
         customSelectconfig = cloneDeep(customSelectconfig);
         customSelectconfig["fields"]["floorName"]["value"] = floorNo;
-        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+        dictCustomSelect["customSelect_" + floorIndex] = customSelectconfig;
       }
     }
   }
@@ -237,6 +241,18 @@ export const transformPropertyDataToAssessInfo = (data) => {
   // });
   // console.log(basicInfoConfig);
   return { basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect };
+};
+
+const prepareUniqueFloorIndexObj = (units) => {
+  let index = 0;
+  let floorIndexObj = units.reduce((floorIndexObj, item) => {
+    if (!floorIndexObj[item.floorNo]) {
+      floorIndexObj[item.floorNo] = index;
+      index++;
+    }
+    return floorIndexObj;
+  }, {});
+  return floorIndexObj;
 };
 
 export const convertUnitsToSqFt = (unitArray) => {

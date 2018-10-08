@@ -7,7 +7,7 @@ import { MapLocation } from "../../ui-atoms-local";
 import { Button, Icon } from "mihy-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 
 const pickBtn = {
@@ -74,15 +74,35 @@ class MapLocator extends Component {
   setPickedLocation = (lati, long) => {
     add.lat = lati;
     add.lng = long;
+    console.log(add);
   };
 
-  onClickPick = () => {
+  closeMapPopup = () => {
     this.props.handleField(
       "apply",
       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
       "props.open",
       false
     );
+  };
+
+  onClickPick = () => {
+    this.props.handleField(
+      "apply",
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocGISCoord.children.gisTextField",
+      "props.value",
+      `${add.lat}, ${add.lng}`
+    );
+    this.props.prepareFinalObject(
+      "Licenses[0].tradeLicenseDetail.address.latitude",
+      add.lat
+    );
+    this.props.prepareFinalObject(
+      "Licenses[0].tradeLicenseDetail.address.longitude",
+      add.lng
+    );
+
+    this.closeMapPopup();
     // this.convertToAddress(add);
     // this.setPrevPageFlag();
     // this.props.history.goBack();
@@ -162,7 +182,7 @@ class MapLocator extends Component {
         <MapLocation
           currLoc={_currloc}
           setLocation={this.setPickedLocation}
-          getMyLoc={this.getMyLocation}
+          // getMyLoc={this.getMyLocation}
           // icon={pinIcon}
           hideTerrainBtn={true}
           dragInfoBox={false}
@@ -181,7 +201,7 @@ class MapLocator extends Component {
             }}
             variant={"outlined"}
             color={"primary"}
-            onClick={this.onClickPick}
+            onClick={this.closeMapPopup}
           />
           <Button
             id="map-pick-button"
@@ -220,7 +240,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     handleField: (formKey, path, props, value) =>
-      dispatch(handleField(formKey, path, props, value))
+      dispatch(handleField(formKey, path, props, value)),
+    prepareFinalObject: (path, value) =>
+      dispatch(prepareFinalObject(path, value))
   };
 };
 

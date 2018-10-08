@@ -2,12 +2,20 @@ import {
   getLabel,
   dispatchMultipleFieldChangeAction
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { applyTradeLicense } from "../../../../../ui-utils/commons";
 import get from "lodash/get";
 
 import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
 
 export const callBackForNext = (state, dispatch) => {
   changeStep(state, dispatch);
+  let activeStep = get(
+    state.screenConfiguration.screenConfig["apply"],
+    "components.div.children.stepper.props.activeStep",
+    0
+  );
+  console.log(activeStep);
+  if (activeStep === 2) applyTradeLicense(state, dispatch);
 };
 
 export const changeStep = (

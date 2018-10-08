@@ -268,8 +268,11 @@ var beforeInitForm = exports.beforeInitForm = {
           return updatedFields;
         }, {});
         (0, _set2.default)(action, "form.fields", (0, _extends3.default)({}, updatedFields));
-
-        !state.form[formKey] && dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[" + unitsCount + "].floorNo", "" + floorIndex));
+        if (!state.form[formKey]) {
+          var customSelectObj = state.form["customSelect_" + floorIndex];
+          var floorNo = customSelectObj.fields && customSelectObj.fields.floorName && customSelectObj.fields.floorName.value;
+          dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[" + unitsCount + "].floorNo", "" + floorNo));
+        }
       }
     }
 
@@ -630,9 +633,7 @@ var mergeMaster = exports.mergeMaster = function mergeMaster(masterOne, masterTw
     }
   }
   var masterOneData = getAbsentMasterObj(prepareDropDownData(masterOne, true), prepareDropDownData(masterTwo, true), parentName);
-  // console.log(masterOneData);
   for (var i = 0; i < masterOneData.length; i++) {
-    // masterOneData[i][parentName]=masterOneData[i].code;
     dropDownData.push({ label: masterOneData[i].name, value: masterOneData[i].code });
   }
   return dropDownData;

@@ -14,7 +14,7 @@ import {
   getMapLocator
 } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { showHideMapPopup } from "../../utils";
+import { showHideMapPopup, getDetailsFromProperty } from "../../utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 
@@ -56,7 +56,8 @@ export const tradeLocationDetails = getCommonCard({
           gridDefination: {
             xs: 11,
             sm: 11
-          }
+          },
+          jsonPath: "Licenses[0].propertyId"
         }),
         ico: {
           uiFramework: "custom-molecules-local",
@@ -69,6 +70,43 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
+
+    // getTextField({
+    //   label: {
+    //     labelName: "Property ID",
+    //     labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
+    //   },
+    //   placeholder: {
+    //     labelName: "Enter Property ID",
+    //     labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
+    //   },
+    //   pattern: getPattern("PropertyID"),
+    //   iconObj: {
+    //     iconName: "search",
+    //     position: "end",
+    //     color: "#FE7A51",
+    //     label: "SEARCH"
+    //     // onClickDefination: {
+    //     //   action: "condition",
+    //     //   callBack: getDetailsFromProperty
+    //     // }
+    //   },
+    //   gridDefination: {
+    //     xs: 12,
+    //     sm: 6
+    //   },
+    //   jsonPath: "Licenses[0].propertyId",
+    //   toolTip: {
+    //     uiFramework: "custom-molecules-local",
+    //     componentPath: "Tooltip",
+    //     props: {
+    //       val: "Property Id Information",
+    //       style: getIconStyle("textfieldIcon")
+    //     },
+    //     gridDefination: { xs: 1 }
+    //   }
+    // }),
+
     tradeLocCity: getContainerWithElement({
       children: {
         cityDropdown: {
@@ -77,7 +115,8 @@ export const tradeLocationDetails = getCommonCard({
             placeholder: { labelName: "Select City" },
             sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
             jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
-            gridDefination: { sm: 12 }
+            gridDefination: { sm: 12 },
+            required: true
           }),
           beforeFieldChange: async (action, state, dispatch) => {
             try {
@@ -118,7 +157,8 @@ export const tradeLocationDetails = getCommonCard({
         labelName: "Enter Door/House No.",
         labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_PLACEHOLDER"
       },
-      pattern: getPattern("DoorHouseNo")
+      pattern: getPattern("DoorHouseNo"),
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.doorNo"
     }),
     tradeLocBuilidingName: getTextField({
       label: {
@@ -129,7 +169,8 @@ export const tradeLocationDetails = getCommonCard({
         labelName: "Enter Building/Colony Name",
         labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_PLACEHOLDER"
       },
-      pattern: getPattern("BuildingStreet")
+      pattern: getPattern("BuildingStreet"),
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName"
     }),
     tradeLocStreetName: getTextField({
       label: {
@@ -140,7 +181,8 @@ export const tradeLocationDetails = getCommonCard({
         labelName: "Enter Street Name",
         labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_PLACEHOLDER"
       },
-      pattern: getPattern("BuildingStreet")
+      pattern: getPattern("BuildingStreet"),
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
     }),
     // tradeLocMohalla: getContainerWithElement({
     //   mohallaAutoSelect: getAutoSelector({
@@ -157,7 +199,9 @@ export const tradeLocationDetails = getCommonCard({
       placeholder: {
         labelName: "Enter Mohalla",
         labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
-      }
+      },
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+      required: true
     }),
     tradeLocPincode: getTextField({
       label: {
@@ -168,7 +212,8 @@ export const tradeLocationDetails = getCommonCard({
         labelName: "Enter Pincode",
         labelKey: "TL_NEW_TRADE_DETAILS_PIN_PLACEHOLDER"
       },
-      pattern: getPattern("Pincode")
+      pattern: getPattern("Pincode"),
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode"
     }),
 
     tradeLocGISCoord: {

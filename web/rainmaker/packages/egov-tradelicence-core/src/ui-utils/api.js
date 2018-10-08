@@ -13,7 +13,7 @@ const wrapRequestBody = (requestBody, action) => {
   let RequestInfo = {
     apiId: "Mihy",
     ver: ".01",
-    ts: getDateInEpoch(),
+    // ts: getDateInEpoch(),
     action: action,
     did: "1",
     key: "",

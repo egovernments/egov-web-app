@@ -100,7 +100,7 @@ const MapLocation = compose(
     onBoundsChanged={props.onBoundsChanged}
     draggable={true}
   >
-    {/* <div className="search-icon">
+    <div className="search-icon">
       <Icon
         id="searchIcon"
         style={{
@@ -109,9 +109,9 @@ const MapLocation = compose(
           color: "#484848"
         }}
         action="action"
-        name={"search"}
+        iconName={"search"}
       />
-      </div> */}
+    </div>
     <div className="myLoc">
       <Icon
         id="my-location"
