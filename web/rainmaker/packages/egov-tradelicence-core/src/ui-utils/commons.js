@@ -216,10 +216,10 @@ export const updatePFOforSearchResults = async (
 
 export const applyTradeLicense = async (state, dispatch) => {
   try {
-    let queryObject = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses",
-      []
+    let queryObject = JSON.parse(
+      JSON.stringify(
+        get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
+      )
     );
     set(queryObject[0], "tradeLicenseDetail.address.locality.code", "SUN04");
     set(queryObject[0], "validFrom", 1522540800000);
@@ -236,7 +236,10 @@ export const applyTradeLicense = async (state, dispatch) => {
     set(queryObject[0], "tenantId", "pb.amritsar");
     const status = get(queryObject[0], "status", "");
 
-    if (status === "INITIATED" || status === "APPLIED") {
+    if (
+      (status === "INITIATED" || status === "APPLIED") &&
+      queryObject[0].applicationNumber
+    ) {
       //call update
     } else {
       set(queryObject[0], "action", "INITIATE");
