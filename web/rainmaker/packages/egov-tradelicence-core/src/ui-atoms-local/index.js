@@ -33,11 +33,17 @@ const MapLocation = Loadable({
   loading: () => <Loading />
 });
 
+const AutoSuggest = Loadable({
+  loader: () => import("./AutoSuggest"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
   UploadFile,
   Checkbox,
   UploadedDocument,
-  MapLocation
+  MapLocation,
+  AutoSuggest
 };
