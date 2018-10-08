@@ -12,7 +12,8 @@ import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
-const queryValue = getQueryArg(window.location.href, "purpose");
+const queryValue = "purpose";
+// getQueryArg(window.location.href, "purpose");  
 
 export const getCommonApplyFooter = children => {
   return {
