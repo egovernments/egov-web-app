@@ -180,7 +180,7 @@ export const tradeReviewDetails = getCommonCard({
 
 const screenConfig = {
   uiFramework: "material-ui",
-  name: "searchPreview",
+  name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
     if (applicationNumber) {
       searchResults(action, state, dispatch);
@@ -193,7 +193,7 @@ const screenConfig = {
       uiFramework: "custom-atoms",
       componentPath: "Div",
       props: {
-        className: "common-div-css"
+        className: "common-div-css search-preview"
       },
       children: {
         headerDiv: {

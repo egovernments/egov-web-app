@@ -1,0 +1,36 @@
+import React, { Component } from "react";
+import { FeesEstimateCard } from "ui-molecules-local";
+import { connect } from "react-redux";
+import get from "lodash/get";
+
+class EstimateCardContainer extends Component {
+  render() {
+    return <FeesEstimateCard estimate={this.props.estimate} />;
+  }
+}
+
+const mapStateToProps = state => {
+  const { screenConfiguration } = state;
+  const fees = get(
+    screenConfiguration.preparedFinalObject,
+    "LicensesTemp[0].estimateCardData",
+    []
+  );
+  const estimate = {
+    header: "Trade License Fee",
+    fees,
+    extra: [
+      { textLeft: "Last Date for Rebate (20% of TL)" },
+      {
+        textLeft: "Penalty (10% of TL) applicable from"
+      },
+      { textLeft: "Additional Penalty (20% of TL) applicable from" }
+    ]
+  };
+  return { estimate };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(EstimateCardContainer);

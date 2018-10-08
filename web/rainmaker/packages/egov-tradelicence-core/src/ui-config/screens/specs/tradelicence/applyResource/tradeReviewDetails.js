@@ -12,21 +12,7 @@ import { getReviewOwner } from "./review-owner";
 import { getReviewDocuments } from "./review-documents";
 
 const estimate = getCommonGrayCard({
-  estimateSection: getFeesEstimateCard(
-    "Trade License Fee",
-    [
-      { name: "Trade License Charge" },
-      { name: "Penalty", value: 500, info: "Information about Penalty" },
-      { name: "Rebate", value: 200, info: "Information about Rebate" }
-    ],
-    [
-      { textLeft: "Last Date for Rebate (20% of TL)" },
-      {
-        textLeft: "Penalty (10% of TL) applicable from"
-      },
-      { textLeft: "Additoinal Penalty (20% of TL) applicable from" }
-    ]
-  )
+  estimateSection: getFeesEstimateCard()
 });
 
 const reviewTradeDetails = getReviewTrade();

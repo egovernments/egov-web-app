@@ -50,7 +50,8 @@ export const searchResults = {
       download:false,
       responsive: "stacked",
       selectableRows: false,
-      hover: true
+      hover: true,
+      rowsPerPageOptions:[10,20,40],
     }
   }
 };

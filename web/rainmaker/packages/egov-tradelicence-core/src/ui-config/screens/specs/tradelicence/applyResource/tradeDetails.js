@@ -132,7 +132,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
             currentObject[0].applicationDocument
           );
           dispatch(
-            pFO("LicensesTemp[0].applicationDocument", applicationDocument)
+            pFO("LicensesTemp[0].applicationDocuments", applicationDocument)
           );
           if (currentObject[0].uom !== null) {
             dispatch(
