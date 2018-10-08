@@ -137,7 +137,7 @@ function FeesEstimateCard(props) {
           Rs {total}
         </Typography>
         {estimate.extra &&
-          estimate.extra.length && (
+          estimate.extra.length > 0 && (
             <Card className={classes.whiteCard}>
               {estimate.extra.map((item, key) => {
                 let textLeft, textRight;
