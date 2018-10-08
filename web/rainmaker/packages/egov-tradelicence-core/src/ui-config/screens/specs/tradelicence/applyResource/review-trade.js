@@ -18,6 +18,7 @@ const accessoriesCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
   props: {
+    className: "review-trade-search-preview",
     scheama: getCommonGrayCard({
       accessoriesCardContainer: getCommonContainer({
         reviewAccessoryType: getLabelWithValue(
