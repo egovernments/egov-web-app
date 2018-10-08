@@ -256,7 +256,7 @@ export const applyTradeLicense = async (state, dispatch) => {
         [],
         { Licenses: queryObject }
       );
-      console.log(response);
+      response && dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
       set(queryObject[0], "action", "INITIATE");
       const response = await httpRequest(
