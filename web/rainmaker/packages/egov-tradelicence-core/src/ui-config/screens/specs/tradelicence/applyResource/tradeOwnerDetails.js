@@ -170,6 +170,7 @@ export const ownerInfoInstitutional = {
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children"
   },
+  visible: false,
   type: "array"
 };
 
@@ -250,7 +251,7 @@ const OwnerInfoCard = {
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children"
   },
-  visible: false,
+
   type: "array"
 };
 

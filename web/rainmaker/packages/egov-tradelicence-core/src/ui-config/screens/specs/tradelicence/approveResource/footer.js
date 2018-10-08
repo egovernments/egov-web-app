@@ -38,7 +38,7 @@ const onNextButtonClick = async (state, dispatch) => {
   if (response) {
     const applicationNumber = get(response, "Licenses[0].applicationNumber");
     const tlNumber = get(response, "Licenses[0].licenseNumber");
-    const route = onClickNextButton(applicationNumber, tlNumber);
+    const route = onClickNextButton(applicationNumber, tlNumber, queryValue);
     dispatch(setRoute(route));
   }
 };
@@ -63,7 +63,7 @@ export const footerApprove = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: onClickPreviousButton()
+      path: onClickPreviousButton(queryValue)
     }
   },
 
@@ -79,7 +79,7 @@ export const footerApprove = getCommonApplyFooter({
       }
     },
     children: {
-      nextButtonLabel: getFooterButtons()
+      nextButtonLabel: getFooterButtons(queryValue)
     },
     onClickDefination: {
       action: "condition",

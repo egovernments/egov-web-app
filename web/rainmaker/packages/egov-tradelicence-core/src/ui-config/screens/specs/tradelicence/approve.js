@@ -63,7 +63,7 @@ const getApproveCard = queryValuePurpose => {
     }),
     headerTwo: getContainerWithElement({
       children: {
-        subHeader: getSubHeaderLabel()
+        subHeader: getSubHeaderLabel(queryValuePurpose)
       },
       props: {
         style: {
@@ -103,7 +103,7 @@ const getApproveCard = queryValuePurpose => {
 
     commentSection: getContainerWithElement({
       children: {
-        childrenomment: getApprovalTextField()
+        childrenomment: getApprovalTextField(queryValuePurpose)
       },
       props: {
         style: {

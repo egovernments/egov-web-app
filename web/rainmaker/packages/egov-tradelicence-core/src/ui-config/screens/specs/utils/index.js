@@ -5,14 +5,11 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
 
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-
-const queryValue = "cancel";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -191,7 +188,7 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
   return translatedLabel || labelKey;
 };
 
-export const getApprovalTextField = () => {
+export const getApprovalTextField = queryValue => {
   if (queryValue === "reject") {
     return getTextField({
       label: {
@@ -252,7 +249,7 @@ export const getApprovalTextField = () => {
   }
 };
 
-export const getSubHeaderLabel = () => {
+export const getSubHeaderLabel = queryValue => {
   if (queryValue === "reject") {
     return getCommonSubHeader({
       labelName: "Rejection CheckList",
@@ -268,7 +265,7 @@ export const getSubHeaderLabel = () => {
   }
 };
 
-export const getFooterButtons = () => {
+export const getFooterButtons = queryValue => {
   if (queryValue === "reject") {
     return getLabel({
       labelName: "REJECT APPLICATION",
@@ -287,7 +284,7 @@ export const getFooterButtons = () => {
   }
 };
 
-export const onClickNextButton = (applicationNumber, tlNumber) => {
+export const onClickNextButton = (applicationNumber, tlNumber, queryValue) => {
   switch (queryValue) {
     case "reject":
       return `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}`;
@@ -298,7 +295,7 @@ export const onClickNextButton = (applicationNumber, tlNumber) => {
   }
 };
 
-export const onClickPreviousButton = () => {
+export const onClickPreviousButton = queryValue => {
   switch (queryValue) {
     case "reject":
       return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
