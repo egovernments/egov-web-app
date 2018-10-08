@@ -56,7 +56,7 @@ export const loadApplicationData = async applicationNumber => {
   ];
   let response = await getSearchResults(queryObject);
 
-  if (response && response.Licenses) {
+  if (response && response.Licenses && response.Licenses.length > 0) {
     data.applicationNumber = handleNull(response.Licenses[0].applicationNumber);
     data.licenseNumber = handleNull(response.Licenses[0].licenseNumber);
     data.financialYear = handleNull(response.Licenses[0].financialYear);
@@ -118,7 +118,7 @@ export const loadReceiptData = async consumerCode => {
   ];
   let response = await getReceiptData(queryObject);
 
-  if (response && response.Receipt) {
+  if (response && response.Receipt && response.Receipt.length > 0) {
     data.receiptNumber = handleNull(
       response.Receipt[0].Bill[0].billDetails[0].receiptNumber
     );
