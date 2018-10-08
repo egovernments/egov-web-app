@@ -574,7 +574,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
     );
     console.log(payload);
     dispatch(
-      prepareFinalObject(
+      pFO(
         "Licenses[0].tradeLicenseDetail.address",
         payload.Properties[0].address
       )
@@ -597,12 +597,7 @@ export const getDetailsForOwner = async (state, dispatch) => {
       }
     );
     console.log(payload);
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.owners[0]",
-        payload.user[0]
-      )
-    );
+    dispatch(pFO("Licenses[0].tradeLicenseDetail.owners[0]", payload.user[0]));
   } catch (e) {
     console.log(e);
   }

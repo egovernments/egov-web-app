@@ -11,6 +11,8 @@ import {
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getDetailsForOwner } from "../../utils";
+import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 export const getOwnerMobNoField = getTextField({
   label: {
@@ -177,12 +179,41 @@ export const tradeOwnerDetails = getCommonCard({
   //   labelName:
   //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   // }),
-  ownership: getSelectField({
-    label: { labelName: "Type of ownership" },
-    placeholder: { labelName: "Select Type of Ownership" },
-    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-    sourceJsonPath:
-      "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"
+  ownershipType: getCommonContainer({
+    ownership: {
+      ...getSelectField({
+        label: { labelName: "Type of ownership" },
+        placeholder: { labelName: "Select Type of Ownership" },
+        jsonPath: "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+        sourceJsonPath:
+          "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        try {
+          dispatch(
+            pFO(
+              "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                `applyScreenMdmsData.common-masters.OwnerShipCategory.${
+                  action.value
+                }`,
+                []
+              )
+            )
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
+    subOwnership: getSelectField({
+      label: { labelName: "Type of sub-ownership" },
+      placeholder: { labelName: "Select Type of Ownership" },
+      jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+      sourceJsonPath:
+        "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
+    })
   }),
   OwnerInfoCard
 });
