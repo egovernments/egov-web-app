@@ -35,13 +35,13 @@ export const getOwnerMobNoField = {
       },
       required: true,
       pattern: getPattern("MobileNo"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-      iconObj: {
-        iconName: "search",
-        position: "end",
-        color: "#FE7A51",
-        label: "SEARCH"
-      }
+      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
+      // iconObj: {
+      //   iconName: "search",
+      //   position: "end",
+      //   color: "#FE7A51",
+      //   label: "SEARCH"
+      // }
     }),
     button: {
       componentPath: "Button",

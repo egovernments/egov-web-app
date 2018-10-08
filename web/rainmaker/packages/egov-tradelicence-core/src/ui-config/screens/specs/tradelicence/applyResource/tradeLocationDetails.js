@@ -49,16 +49,16 @@ export const tradeLocationDetails = getCommonCard({
           },
 
           // pattern: getPattern("PropertyID"),
-          iconObj: {
-            iconName: "search",
-            position: "end",
-            color: "#FE7A51",
-            label: "SEARCH"
-            // onClickDefination: {
-            //   action: "condition",
-            //   callBack: getDetailsFromProperty
-            // }
-          },
+          // iconObj: {
+          //   iconName: "search",
+          //   position: "end",
+          //   color: "#FE7A51",
+          //   label: "SEARCH"
+          //   // onClickDefination: {
+          //   //   action: "condition",
+          //   //   callBack: getDetailsFromProperty
+          //   // }
+          // },
           gridDefination: {
             xs: 11,
             sm: 11
