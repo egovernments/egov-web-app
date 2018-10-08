@@ -1,4 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import html2canvas from "html2canvas";
+import pdfMake from "pdfmake/build/pdfmake";
 
 const getCommonApplyFooter = children => {
   return {
@@ -12,19 +14,25 @@ const getCommonApplyFooter = children => {
 };
 
 export const generatePdfAndDownload = () => {
-  // html2canvas(document.getElementById("custom-atoms-tradeReviewDetails")).then(
-  //   canvas => {
-  //     var data = canvas.toDataURL();
-  //     var docDefinition = {
-  //       content: [
-  //         {
-  //           image: data
-  //         }
-  //       ]
-  //     };
-  //     pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
-  //   }
-  // );
+  let target = document.querySelector("#custom-atoms-tradeReviewDetails");
+  html2canvas(target, {
+    onclone: function(clonedDoc) {
+      clonedDoc.getElementById(
+        "custom-atoms-tradeReviewDetails"
+      ).style.display = "block";
+    }
+  }).then(canvas => {
+    var data = canvas.toDataURL();
+    var docDefinition = {
+      content: [
+        {
+          image: data,
+          width: 500
+        }
+      ]
+    };
+    pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+  });
 };
 
 export const applicationSuccessFooter = getCommonApplyFooter({
