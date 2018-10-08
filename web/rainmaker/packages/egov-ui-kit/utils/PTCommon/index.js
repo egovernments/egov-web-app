@@ -217,6 +217,7 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
     configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
     var units = data["Properties"][0]["propertyDetails"][0]["units"];
 
+    //For assigning consecutive indexes in formkeys irrespective of floor no.
     var floorIndexObj = prepareUniqueFloorIndexObj(units);
 
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {

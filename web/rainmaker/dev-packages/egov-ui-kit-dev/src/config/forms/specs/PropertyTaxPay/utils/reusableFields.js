@@ -53,7 +53,6 @@ export const floorCount = {
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       // removeFormKey(formKey, field, dispatch, state);
       var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
-      console.log(previousFloorNo, field.value);
       localStorage.setItem("previousFloorNo", field.value);
       // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
@@ -225,12 +224,9 @@ export const beforeInitForm = {
           return updatedFields;
         }, {});
         set(action, "form.fields", { ...updatedFields });
-        // console.log(formKey);
         if (!state.form[formKey]) {
           const customSelectObj = state.form[`customSelect_${floorIndex}`];
-          // console.log(customSelectObj);
           const floorNo = customSelectObj.fields && customSelectObj.fields.floorName && customSelectObj.fields.floorName.value;
-          // console.log(floorNo);
           dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorNo}`));
         }
       }
@@ -633,9 +629,7 @@ export const mergeMaster = (masterOne, masterTwo, parentName = "") => {
     }
   }
   let masterOneData = getAbsentMasterObj(prepareDropDownData(masterOne, true), prepareDropDownData(masterTwo, true), parentName);
-  // console.log(masterOneData);
   for (var i = 0; i < masterOneData.length; i++) {
-    // masterOneData[i][parentName]=masterOneData[i].code;
     dropDownData.push({ label: masterOneData[i].name, value: masterOneData[i].code });
   }
   return dropDownData;
