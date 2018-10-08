@@ -5,7 +5,8 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { httpRequest } from "../../../../../ui-utils/api";
 import {
@@ -27,6 +28,7 @@ export const tradeLocationDetails = getCommonCard({
   //   labelName:
   //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   // }),
+
   tradeDetailsConatiner: getCommonContainer({
     tradeLocPropertyID: {
       uiFramework: "custom-atoms",
@@ -46,12 +48,16 @@ export const tradeLocationDetails = getCommonCard({
             labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
           },
 
-          pattern: getPattern("PropertyID"),
+          // pattern: getPattern("PropertyID"),
           iconObj: {
             iconName: "search",
             position: "end",
             color: "#FE7A51",
             label: "SEARCH"
+            // onClickDefination: {
+            //   action: "condition",
+            //   callBack: getDetailsFromProperty
+            // }
           },
           gridDefination: {
             xs: 11,
@@ -59,6 +65,31 @@ export const tradeLocationDetails = getCommonCard({
           },
           jsonPath: "Licenses[0].propertyId"
         }),
+        button: {
+          componentPath: "Button",
+          props: {
+            variant: "outlined",
+            color: "primary",
+            style: {
+              width: 25,
+              height: 4,
+              border: "none",
+              marginTop: 18,
+              left: 664,
+              position: "absolute"
+            }
+          },
+          children: {
+            downloadReceiptButtonLabel: getLabel({
+              labelName: "SEARCH",
+              labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+            })
+          },
+          onClickDefination: {
+            action: "condition",
+            callBack: getDetailsFromProperty
+          }
+        },
         ico: {
           uiFramework: "custom-molecules-local",
           componentPath: "Tooltip",
@@ -70,42 +101,6 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
-
-    // getTextField({
-    //   label: {
-    //     labelName: "Property ID",
-    //     labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
-    //   },
-    //   placeholder: {
-    //     labelName: "Enter Property ID",
-    //     labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
-    //   },
-    //   pattern: getPattern("PropertyID"),
-    //   iconObj: {
-    //     iconName: "search",
-    //     position: "end",
-    //     color: "#FE7A51",
-    //     label: "SEARCH"
-    //     // onClickDefination: {
-    //     //   action: "condition",
-    //     //   callBack: getDetailsFromProperty
-    //     // }
-    //   },
-    //   gridDefination: {
-    //     xs: 12,
-    //     sm: 6
-    //   },
-    //   jsonPath: "Licenses[0].propertyId",
-    //   toolTip: {
-    //     uiFramework: "custom-molecules-local",
-    //     componentPath: "Tooltip",
-    //     props: {
-    //       val: "Property Id Information",
-    //       style: getIconStyle("textfieldIcon")
-    //     },
-    //     gridDefination: { xs: 1 }
-    //   }
-    // }),
 
     tradeLocCity: getContainerWithElement({
       children: {
@@ -191,7 +186,7 @@ export const tradeLocationDetails = getCommonCard({
     //     }
     //   })
     // }),
-    tradeLocMohalla: getTextField({
+    tradeLocMohalla: getSelectField({
       label: {
         labelName: "Mohalla",
         labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
@@ -201,6 +196,7 @@ export const tradeLocationDetails = getCommonCard({
         labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
       },
       jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+      sourceJsonPath: "applyScreenMdmsData.tenant.localities",
       required: true
     }),
     tradeLocPincode: getTextField({

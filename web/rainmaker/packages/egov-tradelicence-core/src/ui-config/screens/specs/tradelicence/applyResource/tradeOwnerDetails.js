@@ -6,33 +6,70 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer,
+  getContainerWithElement,
   getDateField,
-  getPattern
+  getPattern,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getDetailsForOwner } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
-export const getOwnerMobNoField = getTextField({
-  label: {
-    labelName: "Mobile No.",
-    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+export const getOwnerMobNoField = {
+  uiFramework: "custom-atoms",
+  componentPath: "Container",
+  gridDefination: {
+    xs: 12,
+    sm: 12
   },
-  placeholder: {
-    labelName: "Enter Mobile No.",
-    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
-  },
-  required: true,
-  pattern: getPattern("MobileNo"),
-  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-  iconObj: {
-    iconName: "search",
-    position: "end",
-    color: "#FE7A51",
-    label: "SEARCH"
+  children: {
+    txt: getTextField({
+      label: {
+        labelName: "Mobile No.",
+        labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter Mobile No.",
+        labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
+      },
+      required: true,
+      pattern: getPattern("MobileNo"),
+      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+      iconObj: {
+        iconName: "search",
+        position: "end",
+        color: "#FE7A51",
+        label: "SEARCH"
+      }
+    }),
+    button: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: 25,
+          height: 4,
+          border: "none",
+          marginTop: 18,
+          left: 704,
+          position: "absolute"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "SEARCH",
+          labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: getDetailsForOwner
+      }
+    }
   }
-});
+};
 
 export const getOwnerGenderField = getSelectField({
   label: {

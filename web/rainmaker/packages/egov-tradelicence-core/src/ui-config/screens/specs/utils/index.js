@@ -581,20 +581,34 @@ export const getMdmsData = async queryObject => {
 
 export const getDetailsFromProperty = async (state, dispatch) => {
   try {
-    let payload = await httpRequest(
-      "post",
-      "/pt-services-v2/property/_search?tenantId=pb.amritsar&ids=PT-107-001890",
-      "_search",
-      [],
-      {}
+    const propertyId = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0].propertyId",
+      ""
     );
-    console.log(payload);
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address",
-        payload.Properties[0].address
-      )
-    );
+    if (propertyId) {
+      let payload = await httpRequest(
+        "post",
+        `/pt-services-v2/property/_search?tenantId=pb.amritsar&ids=${propertyId}`,
+        "_search",
+        [],
+        {}
+      );
+      dispatch(
+        prepareFinalObject(
+          "Licenses[0].tradeLicenseDetail.address",
+          payload.Properties[0].address
+        )
+      );
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.children.cityDropdown",
+          "props.value",
+          payload.Properties[0].address.tenantId
+        )
+      );
+    }
   } catch (e) {
     console.log(e);
   }
@@ -602,6 +616,11 @@ export const getDetailsFromProperty = async (state, dispatch) => {
 
 export const getDetailsForOwner = async (state, dispatch) => {
   try {
+    const ownerNo = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+      ""
+    );
     let payload = await httpRequest(
       "post",
       "/user/_search?tenantId=pb",
@@ -609,10 +628,9 @@ export const getDetailsForOwner = async (state, dispatch) => {
       [],
       {
         tenantId: "pb",
-        userName: "8050579149"
+        userName: `${ownerNo}`
       }
     );
-    console.log(payload);
     dispatch(
       prepareFinalObject(
         "Licenses[0].tradeLicenseDetail.owners[0]",
