@@ -241,6 +241,22 @@ export const applyTradeLicense = async (state, dispatch) => {
       queryObject[0].applicationNumber
     ) {
       //call update
+      let action = "INITIATE";
+      if (
+        queryObject[0].tradeLicenseDetail &&
+        queryObject[0].tradeLicenseDetail.applicationDocuments
+      ) {
+        action = "APPLY";
+      }
+      set(queryObject[0], "action", action);
+      const response = await httpRequest(
+        "post",
+        "/tl-services/v1/_update",
+        "",
+        [],
+        { Licenses: queryObject }
+      );
+      console.log(response);
     } else {
       set(queryObject[0], "action", "INITIATE");
       const response = await httpRequest(
