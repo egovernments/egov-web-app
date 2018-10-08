@@ -308,16 +308,16 @@ export const onClickPreviousButton = () => {
       return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
   }
 };
-export const getFeesEstimateCard = (header, fees, extra) => {
+export const getFeesEstimateCard = () => {
   return {
-    uiFramework: "custom-molecules",
-    componentPath: "FeesEstimateCard",
+    uiFramework: "custom-containers-local",
+    componentPath: "EstimateCardContainer",
     props: {
-      estimate: {
-        header,
-        fees,
-        extra
-      }
+      // estimate: {
+      //   header,
+      //   fees,
+      //   extra
+      // }
     }
   };
 };
@@ -651,7 +651,7 @@ export const prepareDocumentTypeObj = documents => {
           documentsArr.push({
             name: item,
             required: true,
-            jsonPath: `Licenses[0].tradeLicenseDetail.applicationDocument[${ind}]`
+            jsonPath: `Licenses[0].tradeLicenseDetail.applicationDocuments[${ind}]`
           });
           return documentsArr;
         }, [])

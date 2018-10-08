@@ -171,6 +171,24 @@ export const handleFileUpload = (event, handleDocument, props) => {
   }
 };
 
+export const getFileUrlFromAPI = async fileStoreId => {
+  const queryObject = [
+    { key: "tenantId", value: "pb" },
+    { key: "fileStoreIds", value: fileStoreId }
+  ];
+  try {
+    const fileUrl = await httpRequest(
+      "get",
+      "/filestore/v1/files/url",
+      "",
+      queryObject
+    );
+    return fileUrl;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const updateTradeDetails = async requestBody => {
   try {
     const payload = await httpRequest(

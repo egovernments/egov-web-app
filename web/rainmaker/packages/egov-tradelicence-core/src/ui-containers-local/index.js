@@ -20,10 +20,20 @@ const CheckboxContainer = Loadable({
   loader: () => import("./CheckboxContainer"),
   loading: () => <Loading />
 });
+const DownloadFileContainer = Loadable({
+  loader: () => import("./DownloadFileContainer"),
+  loading: () => <Loading />
+});
+const EstimateCardContainer = Loadable({
+  loader: () => import("./EstimateCardContainer"),
+  loading: () => <Loading />
+});
 
 export {
   CustomTabContainer,
   LabelContainer,
   RadioGroupContainer,
-  CheckboxContainer
+  CheckboxContainer,
+  DownloadFileContainer,
+  EstimateCardContainer
 };

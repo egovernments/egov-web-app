@@ -67,7 +67,7 @@ const getEstimateData = Bill => {
 };
 
 const fetchBill = async (action, state, dispatch) => {
-  localStorage.setItem("token", "d2e0cc69-be44-4ae4-aa28-64b1e81181a5");
+  // localStorage.setItem("token", "d8d7ffac-46c7-4a37-990b-e64520529676");
   const queryParams = [
     { key: "tenantId", value: getQueryArg(window.location.href, "tenantId") },
     {
