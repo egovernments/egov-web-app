@@ -10,7 +10,11 @@ import {
   getCommonContainer,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getIconStyle, objectToDropdown } from "../../utils";
+import {
+  getIconStyle,
+  objectToDropdown,
+  prepareDocumentTypeObj
+} from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import filter from "lodash/filter";
@@ -89,42 +93,51 @@ const multipleTradeUnitCard = getCommonGrayCard({
         }
       }
     },
-    tradeSubType: {...getSelectField({
-      label: { labelName: "Trade Sub-Type" },
-      placeholder: { labelName: "Select Trade Sub-Type" },
-      required: true,
-      jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-      sourceJsonPath:
-        "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
-      gridDefination: {
-        xs: 12,
-        sm: 4
+    tradeSubType: {
+      ...getSelectField({
+        label: { labelName: "Trade Sub-Type" },
+        placeholder: { labelName: "Select Trade Sub-Type" },
+        required: true,
+        jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+        sourceJsonPath:
+          "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+        gridDefination: {
+          xs: 12,
+          sm: 4
+        }
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        try {
+          let tradeType = get(
+            state.screenConfiguration.preparedFinalObject,
+            "LicensesTemp[0].tradeType",
+            ""
+          );
+          let tradeCategory = get(
+            state.screenConfiguration.preparedFinalObject,
+            "LicensesTemp[0].tradeSubType",
+            ""
+          );
+          let tradeSubCategories = get(
+            state.screenConfiguration.preparedFinalObject,
+            `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
+            []
+          );
+          let currentObject = filter(tradeSubCategories, {
+            code: action.value
+          });
+          console.log(currentObject);
+          const applicationDocument = prepareDocumentTypeObj(
+            currentObject[0].applicationDocument
+          );
+          dispatch(
+            pFO("LicensesTemp[0].applicationDocument", applicationDocument)
+          );
+        } catch (e) {
+          console.log(e);
+        }
       }
-    }),
-    beforeFieldChange: (action, state, dispatch) => {
-      try {
-        let tradeType = get(
-          state.screenConfiguration.preparedFinalObject,
-          "LicensesTemp[0].tradeType",
-          ""
-        );
-        let tradeCategory = get(
-          state.screenConfiguration.preparedFinalObject,
-          "LicensesTemp[0].tradeSubType",
-          ""
-        );
-        let tradeSubCategories=get(
-          state.screenConfiguration.preparedFinalObject,
-          `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
-          []
-        );
-        let currentObject=filter(tradeSubCategories,{code:action.value});
-        console.log(currentObject);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  },
+    },
     tradeUOM: getTextField({
       label: {
         labelName: "UOM (Unit of Measurement)",
@@ -135,6 +148,9 @@ const multipleTradeUnitCard = getCommonGrayCard({
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
       },
       required: true,
+      props: {
+        disabled: true
+      },
       jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom",
       gridDefination: {
         xs: 12,
@@ -151,6 +167,9 @@ const multipleTradeUnitCard = getCommonGrayCard({
         labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
       },
       required: true,
+      props: {
+        disabled: true
+      },
       pattern: getPattern("UOMValue"),
       jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue",
       gridDefination: {
@@ -207,6 +226,9 @@ const accessoriesCard = {
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
           },
           required: true,
+          props: {
+            disabled: true
+          },
           jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uom",
           gridDefination: {
             xs: 12,
@@ -223,6 +245,9 @@ const accessoriesCard = {
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
           },
           pattern: getPattern("UOMValue"),
+          props: {
+            disabled: true
+          },
           jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
           gridDefination: {
             xs: 12,
@@ -237,8 +262,9 @@ const accessoriesCard = {
     headerName: "Accessory",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-      sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
-      prefixSourceJsonPath:"children.cardContent.children.accessoriesCardContainer.children"
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    prefixSourceJsonPath:
+      "children.cardContent.children.accessoriesCardContainer.children"
   },
   type: "array"
 };

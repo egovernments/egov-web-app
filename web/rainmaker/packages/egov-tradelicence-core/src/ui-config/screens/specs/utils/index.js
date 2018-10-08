@@ -624,3 +624,18 @@ export const getUserDataFromUuid = async bodyObject => {
     return {};
   }
 };
+
+export const prepareDocumentTypeObj = documents => {
+  let documentsArr =
+    documents.length > 0
+      ? documents.reduce((documentsArr, item, ind) => {
+          documentsArr.push({
+            name: item,
+            required: true,
+            jsonPath: `Licenses[0].tradeLicenseDetail.applicationDocument[${ind}]`
+          });
+          return documentsArr;
+        }, [])
+      : [];
+  return documentsArr;
+};
