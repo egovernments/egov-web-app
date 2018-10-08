@@ -393,14 +393,14 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: "1000", border: borderValue },
+              { text: transformedData.g8ReceiptNo, border: borderValue },
               {
                 text: "G8 Receipt Issue Date:",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: "20/04/2018",
+                text: transformedData.g8ReceiptDate,
                 border: borderValue
               }
             ]

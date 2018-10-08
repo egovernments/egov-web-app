@@ -138,6 +138,12 @@ export const loadReceiptData = async consumerCode => {
     data.paymentDate = handleNull(
       epochToDate(response.Receipt[0].Bill[0].billDetails[0].receiptDate)
     );
+    data.g8ReceiptNo = handleNull(
+      response.Receipt[0].Bill[0].billDetails[0].manualReceiptNumber
+    );
+    data.g8ReceiptDate = handleNull(
+      epochToDate(response.Receipt[0].Bill[0].billDetails[0].manualReceiptDate)
+    );
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
 };
