@@ -7,6 +7,7 @@ import get from "lodash/get";
 
 import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { getBill } from "../../utils";
 
 const getTaxValue = item => {
@@ -74,6 +75,18 @@ const createEstimateData = async (LicenseData, dispatch) => {
   );
 };
 
+const moveToSuccess = (LicenseData, dispatch) => {
+  const applicationNo = get(LicenseData, "applicationNumber");
+  const tenantId = get(LicenseData, "tenantId");
+  const purpose = "apply";
+  const status = "success";
+  dispatch(
+    setRoute(
+      `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
+    )
+  );
+};
+
 export const callBackForNext = (state, dispatch) => {
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
@@ -100,11 +113,19 @@ export const callBackForNext = (state, dispatch) => {
         name: item.fileName
       };
     });
-    const estimateCardData = createEstimateData(LicenseData, dispatch);
+    const estimateCardData = createEstimateData(LicenseData, dispatch); //no need for assignment
     console.log(reviewDocData);
     dispatch(
       prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
     );
+  }
+  if (activeStep === 3) {
+    const LicenseData = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0]"
+    );
+    applyTradeLicense(state, dispatch);
+    moveToSuccess(LicenseData, dispatch);
   }
   changeStep(state, dispatch);
 };
@@ -333,9 +354,8 @@ export const footer = getCommonApplyFooter({
       }
     },
     onClickDefination: {
-      action: "page_change",
-      path:
-        "/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=apply&status=success&number=12345"
+      action: "condition",
+      callBack: callBackForNext
     },
     visible: false
   }

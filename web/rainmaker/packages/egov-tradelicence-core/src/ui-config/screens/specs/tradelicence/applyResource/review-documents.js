@@ -57,6 +57,7 @@ export const getReviewDocuments = (isEditable = true) => {
           uiFramework: "custom-containers-local",
           componentPath: "DownloadFileContainer",
           props: {
+            sourceJsonPath: "LicensesTemp[0].reviewDocData"
             // data: [
             //   {
             //     title: "PAN Card",

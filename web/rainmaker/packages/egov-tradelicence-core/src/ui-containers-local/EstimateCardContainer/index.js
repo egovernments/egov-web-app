@@ -9,22 +9,22 @@ class EstimateCardContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
   const fees = get(
     screenConfiguration.preparedFinalObject,
-    "LicensesTemp[0].estimateCardData",
+    ownProps.sourceJsonPath,
     []
   );
   const estimate = {
     header: "Trade License Fee",
     fees,
     extra: [
-      { textLeft: "Last Date for Rebate (20% of TL)" },
-      {
-        textLeft: "Penalty (10% of TL) applicable from"
-      },
-      { textLeft: "Additional Penalty (20% of TL) applicable from" }
+      //   { textLeft: "Last Date for Rebate (20% of TL)" },
+      //   {
+      //     textLeft: "Penalty (10% of TL) applicable from"
+      //   },
+      //   { textLeft: "Additional Penalty (20% of TL) applicable from" }
     ]
   };
   return { estimate };

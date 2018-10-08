@@ -9,11 +9,11 @@ class DownloadFileContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
   const data = get(
     screenConfiguration.preparedFinalObject,
-    "LicensesTemp[0].reviewDocData",
+    ownProps.sourceJsonPath,
     []
   );
   return { data };

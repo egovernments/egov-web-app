@@ -315,6 +315,7 @@ export const getFeesEstimateCard = () => {
       //   fees,
       //   extra
       // }
+      sourceJsonPath: "LicensesTemp[0].estimateCardData"
     }
   };
 };

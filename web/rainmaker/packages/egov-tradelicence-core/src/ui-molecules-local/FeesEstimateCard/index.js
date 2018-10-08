@@ -136,37 +136,40 @@ function FeesEstimateCard(props) {
         <Typography className={classes.bigheader} align="right">
           Rs {total}
         </Typography>
-        <Card className={classes.whiteCard}>
-          {estimate.extra.map((item, key) => {
-            let textLeft, textRight;
-            let colLeft = item.textRight ? 6 : 12;
-            let colRight = item.textLeft ? 6 : 12;
-            if (item.textLeft) {
-              textLeft = (
-                <Grid xs={colLeft}>
-                  <Typography>{item.textLeft}</Typography>
-                </Grid>
-              );
-            } else {
-              textLeft = <Grid xs={colLeft} />;
-            }
-            if (item.textRight) {
-              textRight = (
-                <Grid xs={colRight}>
-                  <Typography>{item.textRight}</Typography>
-                </Grid>
-              );
-            } else {
-              textRight = <Grid xs={colRight} />;
-            }
-            return (
-              <Grid container>
-                {textLeft}
-                {textRight}
-              </Grid>
-            );
-          })}
-        </Card>
+        {estimate.extra &&
+          estimate.extra.length && (
+            <Card className={classes.whiteCard}>
+              {estimate.extra.map((item, key) => {
+                let textLeft, textRight;
+                let colLeft = item.textRight ? 6 : 12;
+                let colRight = item.textLeft ? 6 : 12;
+                if (item.textLeft) {
+                  textLeft = (
+                    <Grid xs={colLeft}>
+                      <Typography>{item.textLeft}</Typography>
+                    </Grid>
+                  );
+                } else {
+                  textLeft = <Grid xs={colLeft} />;
+                }
+                if (item.textRight) {
+                  textRight = (
+                    <Grid xs={colRight}>
+                      <Typography>{item.textRight}</Typography>
+                    </Grid>
+                  );
+                } else {
+                  textRight = <Grid xs={colRight} />;
+                }
+                return (
+                  <Grid container>
+                    {textLeft}
+                    {textRight}
+                  </Grid>
+                );
+              })}
+            </Card>
+          )}
       </Grid>
     </Grid>
   );
