@@ -144,6 +144,21 @@ export const loadReceiptData = async consumerCode => {
     data.g8ReceiptDate = handleNull(
       epochToDate(response.Receipt[0].Bill[0].billDetails[0].manualReceiptDate)
     );
+    /** START TL Fee, Penalty/Rebate Calculation */
+    var tlPenalty = 0,
+      tlRebate = 0;
+    response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
+      let desc = item.accountDescription ? item.accountDescription : "";
+      if (desc.startsWith("TL_TAX")) {
+        data.tlFee = item.crAmountToBePaid;
+      } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
+        tlPenalty = item.crAmountToBePaid;
+      } else if (desc.startsWith("TL_ADHOC_REBATE")) {
+        tlRebate = item.crAmountToBePaid;
+      }
+    });
+    data.tlPenaltyRebate = tlPenalty - tlRebate;
+    /** END */
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
 };

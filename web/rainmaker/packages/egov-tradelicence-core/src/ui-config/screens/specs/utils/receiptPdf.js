@@ -288,12 +288,12 @@ const getReceiptData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "1600",
+                text: transformedData.tlFee,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
               {
-                text: "-60",
+                text: transformedData.tlPenaltyRebate,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               },
@@ -303,7 +303,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-value"
               },
               {
-                text: "1700",
+                text: transformedData.totalAmount,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value"
               }
