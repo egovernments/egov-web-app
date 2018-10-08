@@ -95,7 +95,7 @@ div[id^="material-ui-item"] {
 }
 
 .search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] {
-  padding: 1px;
+  padding: 8px 1px 1px 1px;
 }
 
 .search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] span[class^=MuiIconButton-label]{
