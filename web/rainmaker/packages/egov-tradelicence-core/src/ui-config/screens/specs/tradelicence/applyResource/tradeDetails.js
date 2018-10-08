@@ -13,6 +13,7 @@ import {
 import { getIconStyle, objectToDropdown } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
+import filter from "lodash/filter";
 
 const multipleTradeUnitCard = getCommonGrayCard({
   header: getCommonSubHeader({
@@ -88,7 +89,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
         }
       }
     },
-    tradeSubType: getSelectField({
+    tradeSubType: {...getSelectField({
       label: { labelName: "Trade Sub-Type" },
       placeholder: { labelName: "Select Trade Sub-Type" },
       required: true,
@@ -100,6 +101,30 @@ const multipleTradeUnitCard = getCommonGrayCard({
         sm: 4
       }
     }),
+    beforeFieldChange: (action, state, dispatch) => {
+      try {
+        let tradeType = get(
+          state.screenConfiguration.preparedFinalObject,
+          "LicensesTemp[0].tradeType",
+          ""
+        );
+        let tradeCategory = get(
+          state.screenConfiguration.preparedFinalObject,
+          "LicensesTemp[0].tradeSubType",
+          ""
+        );
+        let tradeSubCategories=get(
+          state.screenConfiguration.preparedFinalObject,
+          `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
+          []
+        );
+        let currentObject=filter(tradeSubCategories,{code:action.value});
+        console.log(currentObject);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  },
     tradeUOM: getTextField({
       label: {
         labelName: "UOM (Unit of Measurement)",

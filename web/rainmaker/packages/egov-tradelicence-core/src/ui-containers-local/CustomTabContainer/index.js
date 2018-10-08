@@ -2,17 +2,25 @@ import React from "react";
 import RenderScreen from "mihy-ui-framework/ui-molecules/RenderScreen";
 import CustomTab from "../../ui-molecules-local/CustomTab";
 import { connect } from "react-redux";
+import { addComponentJsonpath } from "../../ui-utils";
+import cloneDeep from "lodash/cloneDeep";
 
 class MultiItem extends React.Component {
-  componentDidMount = () => {};
+  onTabClick = tabIndex => {
+    const { onTabClick: tabClick, state, dispatch } = this.props;
+    tabClick(tabIndex, state, dispatch);
+  };
 
   render() {
     const {
       uiFramework,
       onFieldChange,
       onComponentClick,
-      screenKey
+      screenKey,
+      componentJsonpath
     } = this.props;
+
+    const { onTabClick } = this;
 
     const transFormedProps = {
       ...this.props,
@@ -23,7 +31,12 @@ class MultiItem extends React.Component {
             <RenderScreen
               key={key}
               screenKey={screenKey}
-              components={tab.tabContent}
+              components={cloneDeep(
+                addComponentJsonpath(
+                  tab.tabContent,
+                  `${componentJsonpath}.props.tabs[${key}].tabContent`
+                )
+              )}
               uiFramework={uiFramework}
               onFieldChange={onFieldChange}
               onComponentClick={onComponentClick}
@@ -32,21 +45,14 @@ class MultiItem extends React.Component {
         };
       })
     };
-    return <CustomTab {...transFormedProps} />;
+    return <CustomTab handleClick={onTabClick} {...transFormedProps} />;
   }
 }
 
 const mapStateToProps = state => {
   const { screenConfiguration } = state;
   const { screenConfig, preparedFinalObject } = screenConfiguration;
-  return { screenConfig, preparedFinalObject, state };
+  return { screenConfig, preparedFinalObject,state };
 };
 
-const mapDispatchToProps = dispatch => {
-  return null;
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MultiItem);
+export default connect(mapStateToProps)(MultiItem);
