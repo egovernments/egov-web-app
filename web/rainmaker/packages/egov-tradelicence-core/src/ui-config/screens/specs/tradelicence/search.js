@@ -83,7 +83,7 @@ const tradeLicenseSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/landing/mihy-ui-framework/tradelicence/apply"
+                path: "/mihy-ui-framework/tradelicence/apply"
               }
             }
           }

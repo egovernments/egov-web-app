@@ -17,7 +17,7 @@ const moveToSuccess = (LicenseData, dispatch) => {
   const status = "success";
   dispatch(
     setRoute(
-      `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
+      `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
     )
   );
 };
@@ -295,7 +295,8 @@ export const footer = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: callBackForNext
-    }
+    },
+    visible: false
   }
 });
 
@@ -413,7 +414,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/landing/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}`
               },
               visible: getButtonVisibility(status, "REJECT"),
               rolesDefination: {
@@ -440,7 +441,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/landing/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}`
               },
               visible: getButtonVisibility(status, "APPROVE"),
               rolesDefination: {
@@ -494,7 +495,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/landing/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}`
               },
               visible: getButtonVisibility(status, "CANCEL TRADE LICENSE")
             }

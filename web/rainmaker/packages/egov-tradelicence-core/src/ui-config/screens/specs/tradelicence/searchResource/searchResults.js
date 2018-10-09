@@ -59,27 +59,27 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData["Status"]) {
     case "APPLIED":
-      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
+      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
     case "APPROVED":
-      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
+      return `/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
 
     case "PAID":
-      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
+      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
     case "CANCELLED":
-      return `/landing/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
+      return `/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
         rowData["Application No"]
       }`;
     case "INITIATED":
-      return `/landing/mihy-ui-framework/tradelicence/apply?applicationNumber=${
+      return `/mihy-ui-framework/tradelicence/apply?applicationNumber=${
         rowData["Application No"]
       }`;
     default:
-      return `/landing/mihy-ui-framework/tradelicence/search`;
+      return `/mihy-ui-framework/tradelicence/search`;
   }
 };
