@@ -1,5 +1,5 @@
 import axios from "axios";
-import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
+import { prepareForm, fetchFromLocalStorage, addQueryArg, hasTokenExpired } from "./commons";
 import some from "lodash/some";
 import commonConfig from "egov-ui-kit/config/common.js";
 
@@ -81,7 +81,7 @@ export const httpRequest = async (
     }
   } catch (error) {
     const { data, status } = error.response;
-    if (status == 400 && data == "") {
+    if (hasTokenExpired(status, data)) {
       apiError = "INVALID_TOKEN";
     } else {
       apiError =
