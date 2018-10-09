@@ -10,7 +10,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "ui-utils/commons";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 export const getCommonApplyFooter = children => {
   return {

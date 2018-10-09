@@ -1,5 +1,5 @@
-import app from "ui-redux/app/reducer";
-import auth from "ui-redux/auth/reducer";
+import app from "mihy-ui-framework/ui-redux/app/reducer";
+import auth from "mihy-ui-framework/ui-redux/auth/reducer";
 import screenConfiguration from "mihy-ui-framework/ui-redux/screen-configuration/reducer";
 
 const rootReducer = {
