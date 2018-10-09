@@ -287,14 +287,9 @@ class ShowField extends Component {
 
               var intVal = function(i) {
                 if (typeof i === "string") {
-                  let pat2 = i.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g);
-                  if (pat2) {
-                    let a = i.split(pat2[0])[0];
-                    let inta = a && Number(a);
-                    return inta;
-                  } else {
-                    return Number(i);
-                  }
+                  let a = i.replace(/[^0-9.]/g,"")
+                  let inta = a && Number(a);
+                  return inta;
                 } else if (typeof i === "number") {
                   return i;
                 }
