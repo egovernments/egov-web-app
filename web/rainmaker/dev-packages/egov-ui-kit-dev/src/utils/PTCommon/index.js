@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import set from "lodash/set";
+import isUndefined from "lodash/isUndefined";
 import cloneDeep from "lodash/cloneDeep";
 import queryString from "query-string";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
@@ -244,11 +245,9 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
-  let index = 0;
-  let floorIndexObj = units.reduce((floorIndexObj, item) => {
-    if (!floorIndexObj[item.floorNo]) {
+  let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
+    if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;
-      index++;
     }
     return floorIndexObj;
   }, {});

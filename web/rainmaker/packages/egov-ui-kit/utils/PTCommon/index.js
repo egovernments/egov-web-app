@@ -17,6 +17,10 @@ var _set = require("lodash/set");
 
 var _set2 = _interopRequireDefault(_set);
 
+var _isUndefined = require("lodash/isUndefined");
+
+var _isUndefined2 = _interopRequireDefault(_isUndefined);
+
 var _cloneDeep = require("lodash/cloneDeep");
 
 var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
@@ -261,11 +265,9 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
 };
 
 var prepareUniqueFloorIndexObj = function prepareUniqueFloorIndexObj(units) {
-  var index = 0;
-  var floorIndexObj = units.reduce(function (floorIndexObj, item) {
-    if (!floorIndexObj[item.floorNo]) {
+  var floorIndexObj = units.reduce(function (floorIndexObj, item, index) {
+    if ((0, _isUndefined2.default)(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;
-      index++;
     }
     return floorIndexObj;
   }, {});
