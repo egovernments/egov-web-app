@@ -10,6 +10,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "ui-utils/commons";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -305,7 +306,8 @@ export const onClickPreviousButton = queryValue => {
       return "/landing/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
   }
 };
-export const getFeesEstimateCard = () => {
+export const getFeesEstimateCard = props => {
+  const { sourceJsonPath } = props;
   return {
     uiFramework: "custom-containers-local",
     componentPath: "EstimateCardContainer",
@@ -315,7 +317,7 @@ export const getFeesEstimateCard = () => {
       //   fees,
       //   extra
       // }
-      sourceJsonPath: "LicensesTemp[0].estimateCardData"
+      sourceJsonPath
     }
   };
 };
@@ -673,4 +675,77 @@ export const prepareDocumentTypeObj = documents => {
         }, [])
       : [];
   return documentsArr;
+};
+
+//Common functions for Estimate card
+
+const getTaxValue = item => {
+  return item
+    ? item.debitAmount
+      ? -Math.abs(item.debitAmount)
+      : item.crAmountToBePaid
+        ? item.crAmountToBePaid
+        : 0
+    : 0;
+};
+
+const getEstimateData = Bill => {
+  if (Bill && Bill.length) {
+    const extraData = ["Rebate", "Penalty"].map(item => {
+      return {
+        name: {
+          labelName: item,
+          labelKey: item
+        },
+        value: null,
+        info: {
+          labelName: `Information about ${item}`,
+          labelKey: `Information about ${item}`
+        }
+      };
+    });
+    const { billAccountDetails } = Bill[0].billDetails[0];
+    const transformedData = billAccountDetails.map(item => {
+      return {
+        name: {
+          labelName: "Default Label",
+          labelKey: item.taxHeadCode
+        },
+        value: getTaxValue(item),
+        info: {
+          labelName: "Information about NA",
+          labelKey: `Information about ${item.taxHeadCode}`
+        }
+      };
+    });
+    return [...transformedData, ...extraData];
+  }
+};
+
+export const createEstimateData = async (
+  LicenseData,
+  jsonPath,
+  dispatch,
+  href
+) => {
+  const applicationNo =
+    get(LicenseData, "applicationNumber") ||
+    getQueryArg(href, "applicationNumber");
+  const tenantId =
+    get(LicenseData, "tenantId") || getQueryArg(href, "tenantId");
+  const businessService = "TL"; //Hardcoding Alert
+  const queryObj = [
+    { key: "tenantId", value: tenantId },
+    {
+      key: "consumerCode",
+      value: applicationNo
+    },
+    {
+      key: "businessService",
+      value: businessService
+    }
+  ];
+  const payload = await getBill(queryObj);
+  const estimateData = getEstimateData(payload.Bill);
+  dispatch(prepareFinalObject(jsonPath, estimateData));
 };

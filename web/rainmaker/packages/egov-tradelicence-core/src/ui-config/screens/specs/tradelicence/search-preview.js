@@ -17,13 +17,11 @@ import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { getCancelDetails } from "./applyResource/cancel-details";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import { getSearchResults } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
-import store from "ui-redux/store"
-import { getBill } from "../utils";
+import { createEstimateData, getSearchResults } from "../utils";
+import { getFileUrlFromAPI } from "ui-utils/commons";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
@@ -33,49 +31,6 @@ const applicationNumber = getQueryArg(
   "applicationNumber"
 );
 let headerSideText = "";
-
-const getTaxValue = item => {
-  return item
-    ? item.debitAmount
-      ? -Math.abs(item.debitAmount)
-      : item.crAmountToBePaid
-        ? item.crAmountToBePaid
-        : 0
-    : 0;
-};
-
-const getEstimateData = Bill => {
-  if (Bill && Bill.length) {
-    const extraData = ["Rebate", "Penalty"].map(item => {
-      return {
-        name: {
-          labelName: item,
-          labelKey: item
-        },
-        value: null,
-        info: {
-          labelName: `Information about ${item}`,
-          labelKey: `Information about ${item}`
-        }
-      };
-    });
-    const { billAccountDetails } = Bill[0].billDetails[0];
-    const transformedData = billAccountDetails.map(item => {
-      return {
-        name: {
-          labelName: item.purpose,
-          labelKey: item.taxHeadCode
-        },
-        value: getTaxValue(item),
-        info: {
-          labelName: `Information about ${item.purpose}`,
-          labelKey: `Information about ${item.taxHeadCode}`
-        }
-      };
-    });
-    return [...transformedData, ...extraData];
-  }
-};
 
 const searchResults = async (action, state, dispatch) => {
   let queryObject = [
@@ -89,27 +44,32 @@ const searchResults = async (action, state, dispatch) => {
     get(payload, "Licenses[0].licenseNumber")
   );
   set(payload, "Licenses[0].headerSideText", headerSideText);
+  const uploadedDocData = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments"
+  );
+  const fileStoreIds = uploadedDocData
+    .map(item => {
+      return item.fileStoreId;
+    })
+    .join(",");
+  const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
+  const reviewDocData = uploadedDocData.map(item => {
+    return {
+      title: item.documentType || "",
+      link:
+        (fileUrlPayload &&
+          fileUrlPayload[item.fileStoreId] &&
+          fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+        "",
+      linkText: "View",
+      name: item.fileName || ""
+    };
+  });
+  dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   const LicenseData = payload.Licenses[0];
-  const applicationNo = get(LicenseData, "applicationNumber");
-  const tenantId = get(LicenseData, "tenantId");
-  const businessService = "TL";
-  const queryObj = [
-    { key: "tenantId", value: tenantId },
-    {
-      key: "consumerCode",
-      value: applicationNo
-    },
-    {
-      key: "businessService",
-      value: businessService
-    }
-  ];
-  payload = await getBill(queryObj);
-  const estimateData = getEstimateData(payload.Bill);
-  dispatch(
-    prepareFinalObject("LicensesTemp[0].estimateCardData", estimateData)
-  );
+  createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
 };
 // console.log(
 //   "1234...",
@@ -217,7 +177,9 @@ const headerrow = getCommonContainer({
 // });
 
 const estimate = getCommonGrayCard({
-  estimateSection: getFeesEstimateCard()
+  estimateSection: getFeesEstimateCard({
+    sourceJsonPath: "LicensesTemp[0].estimateCardData"
+  })
 });
 
 const reviewTradeDetails = getReviewTrade(false);

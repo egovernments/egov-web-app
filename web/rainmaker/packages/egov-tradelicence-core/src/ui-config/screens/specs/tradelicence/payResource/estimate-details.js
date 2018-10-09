@@ -1,23 +1,10 @@
 import { getCommonGrayCard } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getFeesEstimateCard } from "../../utils";
 
 const estimate = getCommonGrayCard({
-  estimateSection: {
-    uiFramework: "custom-molecules-local",
-    componentPath: "FeesEstimateCard",
-    props: {
-      estimate: {
-        header: "Trade License Fee",
-        fees: [],
-        extra: [
-          { textLeft: "Last Date for Rebate (20% of TL)" },
-          {
-            textLeft: "Penalty (10% of TL) applicable from"
-          },
-          { textLeft: "Additoinal Penalty (20% of TL) applicable from" }
-        ]
-      }
-    }
-  }
+  estimateSection: getFeesEstimateCard({
+    sourceJsonPath: "LicensesTemp[0].estimateCardData"
+  })
 });
 
 export default estimate;

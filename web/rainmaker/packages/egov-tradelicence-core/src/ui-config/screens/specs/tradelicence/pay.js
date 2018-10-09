@@ -19,6 +19,7 @@ import {
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "ui-utils/commons";
 import set from "lodash/set";
+import { createEstimateData } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -34,70 +35,22 @@ const header = getCommonContainer({
   }
 });
 
-const getTaxValue = item => {
-  return item
-    ? item.debitAmount
-      ? -Math.abs(item.debitAmount)
-      : item.crAmountToBePaid
-        ? item.crAmountToBePaid
-        : 0
-    : 0;
-};
-
-const getEstimateData = Bill => {
-  if (Bill && Bill.length) {
-    const { billAccountDetails } = Bill[0].billDetails[0];
-    const transformedData = billAccountDetails.map(item => {
-      return {
-        name: {
-          labelName: "Default Label",
-          labelKey: item.taxHeadCode
-        },
-        value: getTaxValue(item),
-        info: {
-          labelName: "Information about NA",
-          labelKey: `Information about ${item.taxHeadCode}`
-        }
-      };
-    });
-
-    console.log(transformedData);
-    return transformedData;
-  }
-};
-
 const fetchBill = async (action, state, dispatch) => {
   // localStorage.setItem("token", "d8d7ffac-46c7-4a37-990b-e64520529676");
-  const queryParams = [
-    { key: "tenantId", value: getQueryArg(window.location.href, "tenantId") },
-    {
-      key: "consumerCode",
-      value: getQueryArg(window.location.href, "applicationNumber")
-    },
-    {
-      key: "businessService",
-      value: getQueryArg(window.location.href, "businessService")
-    }
-  ];
-  const payload = await getBill(queryParams);
-  const estimateData = getEstimateData(payload.Bill);
-  set(state);
-  dispatch(
-    handleField(
-      "pay",
-      "components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.estimateDetails.children.cardContent.children.estimateSection",
-      "props.estimate.fees",
-      estimateData
-    )
-  );
-  dispatch(prepareFinalObject("Receipt[0].Bill[0]", payload.Bill[0]));
+  createEstimateData(
+    [],
+    "LicensesTemp[0].estimateCardData",
+    dispatch,
+    window.location.href
+  ); //get bill and populate estimate card
+  // dispatch(prepareFinalObject("Receipt[0].Bill[0]", payload.Bill[0]));
 };
 
 const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
-    // fetchBill(action, state, dispatch);
+    fetchBill(action, state, dispatch);
     return action;
   },
   components: {

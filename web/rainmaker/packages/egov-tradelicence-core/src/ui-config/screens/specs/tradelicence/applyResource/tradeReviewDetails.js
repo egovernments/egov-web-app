@@ -12,7 +12,9 @@ import { getReviewOwner } from "./review-owner";
 import { getReviewDocuments } from "./review-documents";
 
 const estimate = getCommonGrayCard({
-  estimateSection: getFeesEstimateCard()
+  estimateSection: getFeesEstimateCard({
+    sourceJsonPath: "LicensesTemp[0].estimateCardData"
+  })
 });
 
 const reviewTradeDetails = getReviewTrade();
