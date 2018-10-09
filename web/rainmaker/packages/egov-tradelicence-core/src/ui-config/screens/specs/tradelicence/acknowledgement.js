@@ -21,46 +21,16 @@ import set from "lodash/set";
 const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
   loadUlbLogo(tenant);
-  loadApplicationData(applicationNumber); //PB-TL-2018-09-27-000004
-  loadReceiptData(applicationNumber); //PT-107-001330:AS-2018-08-29-001426
+  loadApplicationData("PB-TL-2018-09-27-000004"); //PB-TL-2018-09-27-000004
+  loadReceiptData("PT-107-001330:AS-2018-08-29-001426"); //PT-107-001330:AS-2018-08-29-001426
   loadMdmsData(tenant);
 };
 
 // const suggestions = [
-//   { label: "Afghanistan" },
-//   { label: "Aland Islands" },
-//   { label: "Albania" },
-//   { label: "Algeria" },
-//   { label: "American Samoa" },
-//   { label: "Andorra" },
-//   { label: "Angola" },
-//   { label: "Anguilla" },
-//   { label: "Antarctica" },
-//   { label: "Antigua and Barbuda" },
-//   { label: "Argentina" },
-//   { label: "Armenia" },
-//   { label: "Aruba" },
-//   { label: "Australia" },
-//   { label: "Austria" },
-//   { label: "Azerbaijan" },
-//   { label: "Bahamas" },
-//   { label: "Bahrain" },
-//   { label: "Bangladesh" },
-//   { label: "Barbados" },
-//   { label: "Belarus" },
-//   { label: "Belgium" },
-//   { label: "Belize" },
-//   { label: "Benin" },
-//   { label: "Bermuda" },
-//   { label: "Bhutan" },
-//   { label: "Bolivia, Plurinational State of" },
-//   { label: "Bonaire, Sint Eustatius and Saba" },
-//   { label: "Bosnia and Herzegovina" },
-//   { label: "Botswana" },
-//   { label: "Bouvet Island" },
-//   { label: "Brazil" },
-//   { label: "British Indian Ocean Territory" },
-//   { label: "Brunei Darussalam" }
+//   { code: "af", name: "Afghanistan" },
+//   { code: "ai", name: "Aland Islands" },
+//   { code: "bh", name: "Bahamas" },
+//   { code: "ba", name: "Bahrain" }
 // ];
 
 const getAcknowledgementCard = (
@@ -234,14 +204,14 @@ const getAcknowledgementCard = (
           })
         }
       },
-      // asdasdasd: {
+      // div: {
       //   uiFramework: "custom-atoms-local",
       //   componentPath: "AutoSuggest",
       //   props: {
       //     suggestions: suggestions,
       //     label: "Mohalla",
       //     placeholder: "Select Mohalla",
-      //     fullwidth: false,
+      //     fullwidth: true,
       //     required: true,
       //     inputLabelProps: {
       //       shrink: true
