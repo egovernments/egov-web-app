@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import { handleFileUpload, getFileUrlFromAPI } from "ui-utils/commons";
+import { handleFileUpload, getFileUrlFromAPI } from "mihy-ui-framework/ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { uploadFile } from "ui-utils/api";

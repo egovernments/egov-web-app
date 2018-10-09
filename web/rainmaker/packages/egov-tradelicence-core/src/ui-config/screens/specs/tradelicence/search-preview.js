@@ -21,7 +21,7 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import get from "lodash/get";
 import set from "lodash/set";
 import { createEstimateData, getSearchResults } from "../utils";
-import { getFileUrlFromAPI } from "ui-utils/commons";
+import { getFileUrlFromAPI } from "mihy-ui-framework/ui-utils/commons";
 import cloneDeep from "lodash/cloneDeep";
 import store from "ui-redux/store";
 import { getBill } from "../utils";
