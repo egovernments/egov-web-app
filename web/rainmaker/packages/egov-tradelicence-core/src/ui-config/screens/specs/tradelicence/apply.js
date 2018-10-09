@@ -10,7 +10,11 @@ import {
 import get from "lodash/get";
 import set from "lodash/set";
 
-import { commonTransform, objectToDropdown } from "../utils";
+import {
+  commonTransform,
+  objectToDropdown,
+  getCurrentFinancialYear
+} from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { footer } from "./applyResource/footer";
@@ -30,7 +34,7 @@ const queryValue = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: "Apply for New Trade License (2018-2019)",
+    labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
     labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
   }),
   applicationNumber: {

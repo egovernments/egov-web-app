@@ -749,3 +749,17 @@ export const createEstimateData = async (
   const estimateData = getEstimateData(payload.Bill);
   dispatch(prepareFinalObject(jsonPath, estimateData));
 };
+
+export const getCurrentFinancialYear = () => {
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var fiscalYr = "";
+  if (curMonth > 3) {
+    var nextYr1 = (today.getFullYear() + 1).toString();
+    fiscalYr = today.getFullYear().toString() + "-" + nextYr1;
+  } else {
+    var nextYr2 = today.getFullYear().toString();
+    fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2;
+  }
+  return fiscalYr;
+};
