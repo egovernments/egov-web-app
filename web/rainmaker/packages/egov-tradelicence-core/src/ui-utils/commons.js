@@ -1,6 +1,6 @@
 import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
-import { convertDateToEpoch } from "../ui-config/screens/specs/utils";
+import {convertDateToEpoch} from "../ui-config/screens/specs/utils"
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";

@@ -171,6 +171,24 @@ export const handleFileUpload = (event, handleDocument, props) => {
   }
 };
 
+export const getFileUrlFromAPI = async fileStoreId => {
+  const queryObject = [
+    { key: "tenantId", value: "pb" },
+    { key: "fileStoreIds", value: fileStoreId }
+  ];
+  try {
+    const fileUrl = await httpRequest(
+      "get",
+      "/filestore/v1/files/url",
+      "",
+      queryObject
+    );
+    return fileUrl;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const updateTradeDetails = async requestBody => {
   try {
     const payload = await httpRequest(
@@ -216,10 +234,10 @@ export const updatePFOforSearchResults = async (
 
 export const applyTradeLicense = async (state, dispatch) => {
   try {
-    let queryObject = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses",
-      []
+    let queryObject = JSON.parse(
+      JSON.stringify(
+        get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
+      )
     );
     set(queryObject[0], "tradeLicenseDetail.address.locality.code", "SUN04");
     set(queryObject[0], "validFrom", 1522540800000);
@@ -236,8 +254,27 @@ export const applyTradeLicense = async (state, dispatch) => {
     set(queryObject[0], "tenantId", "pb.amritsar");
     const status = get(queryObject[0], "status", "");
 
-    if (status === "INITIATED" || status === "APPLIED") {
+    if (
+      (status === "INITIATED" || status === "APPLIED") &&
+      queryObject[0].applicationNumber
+    ) {
       //call update
+      let action = "INITIATE";
+      if (
+        queryObject[0].tradeLicenseDetail &&
+        queryObject[0].tradeLicenseDetail.applicationDocuments
+      ) {
+        action = "APPLY";
+      }
+      set(queryObject[0], "action", action);
+      const response = await httpRequest(
+        "post",
+        "/tl-services/v1/_update",
+        "",
+        [],
+        { Licenses: queryObject }
+      );
+      response && dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
       set(queryObject[0], "action", "INITIATE");
       const response = await httpRequest(
