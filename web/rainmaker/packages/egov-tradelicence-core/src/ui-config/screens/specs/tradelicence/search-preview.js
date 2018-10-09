@@ -15,17 +15,19 @@ import { getReviewOwner } from "./applyResource//review-owner";
 import { getReviewDocuments } from "./applyResource//review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { getCancelDetails } from "./applyResource/cancel-details";
-
+import { getRejectionDetails } from "./applyResource/reject-details";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 import { createEstimateData, getSearchResults } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
+import cloneDeep from "lodash/cloneDeep";
+import store from "ui-redux/store";
+import { getBill } from "../utils";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
-
 const applicationNumber = getQueryArg(
   window.location.href,
   "applicationNumber"
@@ -33,8 +35,10 @@ const applicationNumber = getQueryArg(
 let headerSideText = "";
 
 const searchResults = async (action, state, dispatch) => {
+  const tenantId = "pb.amritsar";
+  // console.log(tenantId);
   let queryObject = [
-    { key: "tenantId", value: "pb.amritsar" },
+    { key: "tenantId", value: tenantId },
     { key: "applicationNumber", value: applicationNumber }
   ];
   let payload = await getSearchResults(queryObject);
@@ -99,7 +103,7 @@ const searchResults = async (action, state, dispatch) => {
 // let found = arr.some(i => l.includes(i));
 // console.log("3456...", found);
 
-console.log("1234...", get(localStorage, "user-info.roles"));
+// console.log("1234...", get(localStorage, "user-info.roles"));
 
 let titleText = "";
 let paraText =
@@ -108,40 +112,68 @@ let titleVisibility = false;
 let paraVisibiliy = false;
 let approvalDetailsVisibility = false;
 let cancelDetailsVisibility = false;
+let RejectDetailsVisibility = false;
 
-switch (status) {
-  case "approved": {
-    approvalDetailsVisibility = true;
-    if (role === "approver") {
+const setStatusBasedValue = status => {
+  switch (status) {
+    case "approved": {
+      approvalDetailsVisibility = true;
+      if (role === "approver") {
+        titleText = "Please Review the Trade License";
+        titleVisibility = true;
+        paraVisibiliy = false;
+        approvalDetailsVisibility = false;
+        cancelDetailsVisibility = false;
+        RejectDetailsVisibility = false;
+      }
+      break;
+    }
+    case "pending_payment": {
+      titleText = "Please Review the Application and Proceed with Payment";
+      titleVisibility = true;
+      paraVisibiliy = false;
+      approvalDetailsVisibility = false;
+      cancelDetailsVisibility = false;
+      RejectDetailsVisibility = false;
+
+      break;
+    }
+    case "pending_approval": {
+      if (role === "approver") {
+        titleText = "Please Review the Application and Proceed with Approval";
+        titleVisibility = true;
+        paraText =
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
+        paraVisibiliy = true;
+        approvalDetailsVisibility = false;
+        cancelDetailsVisibility = false;
+        RejectDetailsVisibility = false;
+      }
+      break;
+    }
+    case "cancelled": {
+      cancelDetailsVisibility = true;
+      titleVisibility = false;
+      paraVisibiliy = false;
+      approvalDetailsVisibility = false;
+      RejectDetailsVisibility = false;
+
+      break;
+    }
+    case "rejected": {
       titleText = "Please Review the Trade License";
       titleVisibility = true;
-    }
-    break;
-  }
-  case "pending_payment": {
-    titleText = "Please Review the Application and Proceed with Payment";
-    titleVisibility = true;
-    break;
-  }
-  case "pending_approval": {
-    if (role === "approver") {
-      titleText = "Please Review the Application and Proceed with Approval";
-      titleVisibility = true;
-      paraText =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
       paraVisibiliy = true;
+      approvalDetailsVisibility = false;
+      cancelDetailsVisibility = false;
+      RejectDetailsVisibility = true;
     }
-    break;
-  }
-  case "cancelled": {
-    cancelDetailsVisibility = true;
-    break;
-  }
-  default:
-    break;
-}
 
-const footer = footerReview(role, status);
+    default:
+      break;
+  }
+};
+
 const headerrow = getCommonContainer({
   header: getCommonHeader({
     labelName: "Trade License Application (2018-2019)",
@@ -156,26 +188,6 @@ const headerrow = getCommonContainer({
   }
 });
 
-// const estimate = getCommonGrayCard({
-//   estimateSection: getFeesEstimateCard(
-//     "Trade License Fee",
-//     [
-//       { name: "Trade License Charge" },
-//       { name: "Penalty", value: 500 },
-//       { name: "Rebate", value: 200 }
-//     ],
-//     [
-//       { textLeft: "Receipt No.", textRight: "3456" },
-//       {
-//         textLeft: "Paid By:",
-//         textRight: "Satinder Singh"
-//       },
-//       { textLeft: "Paid On", textRight: "31 Aug 2018" },
-//       { textLeft: "Payment Mode", textRight: "Cash" }
-//     ]
-//   )
-// });
-
 const estimate = getCommonGrayCard({
   estimateSection: getFeesEstimateCard({
     sourceJsonPath: "LicensesTemp[0].estimateCardData"
@@ -189,6 +201,7 @@ const reviewOwnerDetails = getReviewOwner(false);
 const reviewDocumentDetails = getReviewDocuments(false);
 
 let approvalDetails = getApprovalDetails();
+let rejectionDetails = getRejectionDetails();
 let cancelDetails = getCancelDetails();
 let title = getCommonTitle({ labelName: titleText });
 let paragraph = getCommonParagraph({ labelName: paraText });
@@ -197,7 +210,7 @@ title = { ...title, visible: titleVisibility };
 paragraph = { ...paragraph, visible: paraVisibiliy };
 cancelDetails = { ...cancelDetails, visible: cancelDetailsVisibility };
 approvalDetails = { ...approvalDetails, visible: approvalDetailsVisibility };
-
+rejectionDetails = { ...rejectionDetails, visible: RejectDetailsVisibility };
 export const tradeReviewDetails = getCommonCard({
   title,
   paragraph,
@@ -213,6 +226,17 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
+    const role = getQueryArg(window.location.href, "role");
+    const status = getQueryArg(window.location.href, "status");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+
+    setStatusBasedValue(status);
+    const footer = footerReview(status, applicationNumber);
+    set(action, "screenConfig.components.div.children.footer", footer);
+
     if (applicationNumber) {
       searchResults(action, state, dispatch);
     }
@@ -250,15 +274,18 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: getCommonTitle({
-                  jsonPath: "Licenses[0].headerSideText"
-                })
+                buttonLabel: getCommonTitle(
+                  {
+                    jsonPath: "Licenses[0].headerSideText"
+                  },
+                  { style: { "justify-content": "flex - end" } }
+                )
               }
             }
           }
         },
-        tradeReviewDetails,
-        footer
+        tradeReviewDetails
+        //footer
       }
     }
   }

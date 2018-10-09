@@ -347,27 +347,12 @@ export const showHideAdhocPopup = (state, dispatch) => {
   dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
 };
 
-export const getButtonVisibility = (role, status, button) => {
+export const getButtonVisibility = (status, button) => {
   if (status === "pending_payment" && button === "PROCEED TO PAYMENT")
     return true;
-  if (
-    status === "pending_approval" &&
-    role === "approver" &&
-    button === "APPROVE"
-  )
-    return true;
-  if (
-    status === "pending_approval" &&
-    role === "approver" &&
-    button === "REJECT"
-  )
-    return true;
-  if (
-    status === "approved" &&
-    role === "approver" &&
-    button === "CANCEL TRADE LICENSE"
-  )
-    return true;
+  if (status === "pending_approval" && button === "APPROVE") return true;
+  if (status === "pending_approval" && button === "REJECT") return true;
+  if (status === "approved" && button === "CANCEL TRADE LICENSE") return true;
   return false;
 };
 

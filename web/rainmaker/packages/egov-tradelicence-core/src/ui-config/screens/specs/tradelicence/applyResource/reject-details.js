@@ -6,7 +6,7 @@ import {
   getCommonCaption
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-export const getApprovalDetails = () => {
+export const getRejectionDetails = () => {
   return getCommonGrayCard({
     headerDiv: {
       uiFramework: "custom-atoms",
@@ -18,22 +18,22 @@ export const getApprovalDetails = () => {
             sm: 10
           },
           ...getCommonSubHeader({
-            labelName: "Approval Details",
-            labelKey: "TL_EMP_APPLICATION_APPR_DETAILS"
+            labelName: "Rejection Details",
+            labelKey: "TL_EMP_APPLICATION_REJ_DETAILS"
           })
         },
         viewOne: getCommonContainer({
-          approvedBy: getLabelWithValue(
+          reviewLicenceType: getLabelWithValue(
             {
-              labelName: "Approved By",
-              labelKey: "TL_EMP_APPLICATION_APPR_BY"
+              labelName: "Rejected By",
+              labelKey: "TL_EMP_APPLICATION_REJ_BY"
             },
             { value: "Sukhwindar Singh" }
           ),
-          approvalComments: getLabelWithValue(
+          reviewTradeName: getLabelWithValue(
             {
-              labelName: "Approval Comments",
-              labelKey: "TL_EMP_APPLICATION_APPR_COM"
+              labelName: "Rejection Comments",
+              labelKey: "TL_EMP_APPLICATION_REJ_COM"
             },
             { jsonPath: "asdfgfdsafsds" }
           )

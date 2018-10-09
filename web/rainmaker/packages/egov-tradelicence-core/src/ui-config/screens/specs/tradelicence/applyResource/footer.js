@@ -295,13 +295,12 @@ export const footer = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: callBackForNext
-    },
-    visible: false
+    }
   }
 });
 
-export const footerReview = (role, status) =>
-  getCommonApplyFooter({
+export const footerReview = (status, applicationNumber) => {
+  return getCommonApplyFooter({
     container: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
@@ -414,10 +413,13 @@ export const footerReview = (role, status) =>
               },
               onClickDefination: {
                 action: "page_change",
-                path:
-                  "/landing/mihy-ui-framework/tradelicence/approve?purpose=reject"
+                path: `/landing/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}`
               },
-              visible: getButtonVisibility(role, status, "REJECT")
+              visible: getButtonVisibility(status, "REJECT"),
+              rolesDefination: {
+                rolePath: "user-info.roles",
+                roles: ["TL_APPROVER"]
+              }
             },
             approveButton: {
               componentPath: "Button",
@@ -438,9 +440,13 @@ export const footerReview = (role, status) =>
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/landing/mihy-ui-framework/tradelicence/approve"
+                path: `/landing/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}`
               },
-              visible: getButtonVisibility(role, status, "APPROVE")
+              visible: getButtonVisibility(status, "APPROVE"),
+              rolesDefination: {
+                rolePath: "user-info.roles",
+                roles: ["TL_APPROVER"]
+              }
             },
             proceedPayButton: {
               componentPath: "Button",
@@ -463,7 +469,11 @@ export const footerReview = (role, status) =>
                 action: "page_change",
                 path: "./pay"
               },
-              visible: getButtonVisibility(role, status, "PROCEED TO PAYMENT")
+              visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
+              rolesDefination: {
+                rolePath: "user-info.roles",
+                roles: ["TL_CEMP"]
+              }
             },
             cancelButton: {
               componentPath: "Button",
@@ -482,23 +492,23 @@ export const footerReview = (role, status) =>
                   labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
                 })
               },
-              rolesDefination: {
-                rolePath: "user-info.roles",
-                roles: ["CITIZENn"]
-              },
               onClickDefination: {
                 action: "page_change",
-                path:
-                  "/landing/mihy-ui-framework/tradelicence/approve?purpose=cancel"
-              }
-              // visible: getButtonVisibility(role, status, "CANCEL TRADE LICENSE")
+                path: `/landing/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}`
+              },
+              visible: getButtonVisibility(status, "CANCEL TRADE LICENSE")
             }
           },
           gridDefination: {
             xs: 12,
             sm: 6
+          },
+          rolesDefination: {
+            rolePath: "user-info.roles",
+            roles: ["TL_APPROVER"]
           }
         }
       }
     }
   });
+};
