@@ -94,39 +94,39 @@ export const callBackForNext = (state, dispatch) => {
     0
   );
   console.log(activeStep);
-  if (activeStep === 1) applyTradeLicense(state, dispatch);
-  if (activeStep === 2) {
-    const LicenseData = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses[0]"
-    );
-    const uploadedDocData = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses[0].tradeLicenseDetail.applicationDocuments"
-    );
-    console.log(uploadedDocData);
-    const reviewDocData = uploadedDocData.map(item => {
-      return {
-        title: item.name,
-        link: item.fileUrl,
-        linkText: "View",
-        name: item.fileName
-      };
-    });
-    const estimateCardData = createEstimateData(LicenseData, dispatch); //no need for assignment
-    console.log(reviewDocData);
-    dispatch(
-      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
-    );
-  }
-  if (activeStep === 3) {
-    const LicenseData = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses[0]"
-    );
-    applyTradeLicense(state, dispatch);
-    moveToSuccess(LicenseData, dispatch);
-  }
+  // if (activeStep === 1) applyTradeLicense(state, dispatch);
+  // if (activeStep === 2) {
+  //   const LicenseData = get(
+  //     state.screenConfiguration.preparedFinalObject,
+  //     "Licenses[0]"
+  //   );
+  //   const uploadedDocData = get(
+  //     state.screenConfiguration.preparedFinalObject,
+  //     "Licenses[0].tradeLicenseDetail.applicationDocuments"
+  //   );
+  //   console.log(uploadedDocData);
+  //   const reviewDocData = uploadedDocData.map(item => {
+  //     return {
+  //       title: item.name,
+  //       link: item.fileUrl,
+  //       linkText: "View",
+  //       name: item.fileName
+  //     };
+  //   });
+  //   const estimateCardData = createEstimateData(LicenseData, dispatch); //no need for assignment
+  //   console.log(reviewDocData);
+  //   dispatch(
+  //     prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+  //   );
+  // }
+  // if (activeStep === 3) {
+  //   const LicenseData = get(
+  //     state.screenConfiguration.preparedFinalObject,
+  //     "Licenses[0]"
+  //   );
+  //   applyTradeLicense(state, dispatch);
+  //   moveToSuccess(LicenseData, dispatch);
+  // }
   changeStep(state, dispatch);
 };
 
