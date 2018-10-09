@@ -26,13 +26,6 @@ const loadReceiptGenerationData = (applicationNumber, tenant) => {
   loadMdmsData(tenant);
 };
 
-// const suggestions = [
-//   { code: "af", name: "Afghanistan" },
-//   { code: "ai", name: "Aland Islands" },
-//   { code: "bh", name: "Bahamas" },
-//   { code: "ba", name: "Bahrain" }
-// ];
-
 const getAcknowledgementCard = (
   purpose,
   status,
@@ -204,20 +197,6 @@ const getAcknowledgementCard = (
           })
         }
       },
-      // div: {
-      //   uiFramework: "custom-atoms-local",
-      //   componentPath: "AutoSuggest",
-      //   props: {
-      //     suggestions: suggestions,
-      //     label: "Mohalla",
-      //     placeholder: "Select Mohalla",
-      //     fullwidth: true,
-      //     required: true,
-      //     inputLabelProps: {
-      //       shrink: true
-      //     }
-      //   }
-      // },
       gotoHomeFooter
     };
   }

@@ -1,6 +1,6 @@
 import isEmpty from "lodash/isEmpty";
-import { httpRequest } from "ui-utils/api";
-import {convertDateToEpoch} from "../ui-config/screens/specs/utils"
+import { uploadFile, httpRequest } from "ui-utils/api";
+import { convertDateToEpoch } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -55,7 +55,6 @@ export const applyTradeLicense = async (state, dispatch) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
-    set(queryObject[0], "tradeLicenseDetail.address.locality.code", "SUN04");
     set(queryObject[0], "validFrom", 1522540800000);
     set(queryObject[0], "validTo", 1554076799000);
     if (queryObject[0] && queryObject[0].commencementDate) {
@@ -100,7 +99,6 @@ export const applyTradeLicense = async (state, dispatch) => {
         [],
         { Licenses: queryObject }
       );
-      console.log(response);
       dispatch(prepareFinalObject("Licenses", response.Licenses));
     }
   } catch (error) {
@@ -115,6 +113,5 @@ const convertOwnerDobToEpoch = owners => {
       owner.dob = convertDateToEpoch(owner.dob, "dayend");
       return owner;
     });
-  console.log(updatedOwners);
   return updatedOwners;
 };

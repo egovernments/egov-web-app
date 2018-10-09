@@ -123,8 +123,10 @@ export const tradeLocationDetails = getCommonCard({
                 {}
               );
               dispatch(
-                prepareFinalObject(
-                  "applyScreenMdmsData.tenant.localities",
+                handleField(
+                  "apply",
+                  "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+                  "props.suggestions",
                   payload.TenantBoundary[0].boundary
                 )
               );
@@ -179,26 +181,38 @@ export const tradeLocationDetails = getCommonCard({
       pattern: getPattern("BuildingStreet"),
       jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
     }),
-    // tradeLocMohalla: getContainerWithElement({
-    //   mohallaAutoSelect: getAutoSelector({
-    //     props: {
-    //       data: []
-    //     }
-    //   })
-    // }),
-    tradeLocMohalla: getSelectField({
-      label: {
-        labelName: "Mohalla",
-        labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+
+    tradeLocMohalla: {
+      uiFramework: "custom-molecules-local",
+      componentPath: "AutoSelector",
+      props: {
+        suggestions: [],
+        label: "Mohalla",
+        style: {
+          width: "100%"
+        },
+        // label: {
+        //   labelName: "Mohalla",
+        //   labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+        // },
+        placeholder: "Select Mohalla",
+        // placeholder: {
+        //   labelName: "Enter Mohalla",
+        //   labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
+        // },
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+        sourceJsonPath: "applyScreenMdmsData.tenant.localities",
+        fullwidth: true,
+        required: true,
+        inputLabelProps: {
+          shrink: true
+        }
       },
-      placeholder: {
-        labelName: "Enter Mohalla",
-        labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
-      },
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-      sourceJsonPath: "applyScreenMdmsData.tenant.localities",
-      required: true
-    }),
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      }
+    },
     tradeLocPincode: getTextField({
       label: {
         labelName: "Pincode",

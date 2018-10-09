@@ -437,6 +437,7 @@ export const convertEpochToDate = dateEpoch => {
 };
 
 export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
+  //example input format : "2018-10-02"
   try {
     const parts = dateString.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
     const DateObj = new Date(Date.UTC(parts[1], parts[2] - 1, parts[3]));
@@ -448,6 +449,18 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
     return DateObj.getTime();
   } catch (e) {
     return dateString;
+  }
+};
+
+export const convertDateTimeToEpoch = dateTimeString => {
+  //example input format : "26-07-2018 17:43:21"
+  try {
+    const parts = dateTimeString.match(
+      /(\d{2})\-(\d{2})\-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+    );
+    return Date.UTC(+parts[3], parts[2] - 1, +parts[1], +parts[4], +parts[5]);
+  } catch (e) {
+    return dateTimeString;
   }
 };
 
@@ -619,11 +632,19 @@ export const getDetailsForOwner = async (state, dispatch) => {
         userName: `${ownerNo}`
       }
     );
+    const userInfo =
+      payload.user &&
+      payload.user[0] &&
+      JSON.parse(JSON.stringify(payload.user[0]));
+    if (userInfo && userInfo.createdDate) {
+      userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
+      userInfo.lastModifiedDate = convertDateTimeToEpoch(
+        userInfo.lastModifiedDate
+      );
+      userInfo.pwdExpiryDate = convertDateTimeToEpoch(userInfo.pwdExpiryDate);
+    }
     dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.owners[0]",
-        payload.user[0]
-      )
+      prepareFinalObject("Licenses[0].tradeLicenseDetail.owners[0]", userInfo)
     );
   } catch (e) {
     console.log(e);
