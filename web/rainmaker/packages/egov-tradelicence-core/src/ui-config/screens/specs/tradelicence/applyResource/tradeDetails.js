@@ -298,6 +298,7 @@ const accessoriesCard = {
           props: {
             disabled: true
           },
+          required: true,
           jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
           gridDefination: {
             xs: 12,
