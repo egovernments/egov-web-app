@@ -266,7 +266,8 @@ const screenConfig = {
               uiFramework: "custom-atoms",
               componentPath: "Container",
               props: {
-                color: "primary"
+                color: "primary",
+                style: { justifyContent: "flex-end" }
               },
               gridDefination: {
                 xs: 12,
@@ -274,12 +275,9 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: getCommonTitle(
-                  {
-                    jsonPath: "Licenses[0].headerSideText"
-                  },
-                  { style: { "justify-content": "flex - end" } }
-                )
+                buttonLabel: getCommonTitle({
+                  jsonPath: "Licenses[0].headerSideText"
+                })
               }
             }
           }
