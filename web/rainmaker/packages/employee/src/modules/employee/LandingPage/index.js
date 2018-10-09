@@ -70,7 +70,7 @@ class LandingPage extends Component {
     },
     TL: {
       moduleTitle: "TradeLicense",
-      button1: "Inbox",
+      button1: "Mseva TradeLicense",
       borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "custom",
       iconName: "rupee",

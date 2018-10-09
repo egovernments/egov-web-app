@@ -1,21 +1,20 @@
 import * as actionTypes from "./actionTypes";
 
-export const setRoute = (route) => {
+export const setRoute = route => {
   return { type: actionTypes.SET_ROUTE, route };
 };
 
-
-export const toggleSnackbarAndSetText = (open, message, error) => {
+export const toggleSnackbarAndSetText = (open, message, errorType) => {
   return {
     type: actionTypes.SHOW_TOAST,
     open,
     message,
-    error,
+    errorType
   };
 };
 
-export const toggleSpinner = ()=>{
+export const toggleSpinner = () => {
   return {
     type: actionTypes.TOGGLE_SPINNER
-  }
-}
+  };
+};

@@ -33,6 +33,8 @@ var onButton1Click = function onButton1Click(item, history, onPGRClick) {
     onPGRClick();
   } else if (item.moduleTitle === "Finance") {
     history && history.push(route);
+  } else if (item.moduleTitle === "TradeLicense") {
+    history && history.push(route);
   }
 };
 var onButton2Click = function onButton2Click(item, history) {

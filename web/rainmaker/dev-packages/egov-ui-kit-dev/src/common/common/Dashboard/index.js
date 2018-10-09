@@ -12,6 +12,8 @@ const onButton1Click = (item, history, onPGRClick) => {
     onPGRClick();
   } else if (item.moduleTitle === "Finance") {
     history && history.push(route);
+  } else if (item.moduleTitle === "TradeLicense") {
+    history && history.push(route);
   }
 };
 const onButton2Click = (item, history) => {

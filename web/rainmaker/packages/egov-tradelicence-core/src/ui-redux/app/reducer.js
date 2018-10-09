@@ -7,9 +7,9 @@ const initialState = {
   toast: {
     message: "",
     open: false,
-    error: true
+    errorType: ""
   },
-  spinner:false
+  spinner: false
 };
 
 const appReducer = (state = initialState, action) => {
@@ -28,14 +28,14 @@ const appReducer = (state = initialState, action) => {
         toast: {
           message: action.message,
           open: action.open,
-          error: action.error
+          errorType: action.errorType
         }
       };
     case actionTypes.TOGGLE_SPINNER:
       return {
         ...state,
-        spinner:!state.spinner
-      }
+        spinner: !state.spinner
+      };
     default:
       return state;
   }

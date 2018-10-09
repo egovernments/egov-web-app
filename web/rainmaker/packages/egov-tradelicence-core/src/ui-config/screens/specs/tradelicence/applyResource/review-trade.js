@@ -49,7 +49,7 @@ const accessoriesCard = {
     }),
 
     items: [],
-    hasAddItem:false,
+    hasAddItem: false,
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children"
@@ -199,7 +199,7 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "UOM (Unit of Measurement)",
           labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
         },
-        { jSonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom" }
       ),
       reviewTradeUOMValue: getLabelWithValue(
         {

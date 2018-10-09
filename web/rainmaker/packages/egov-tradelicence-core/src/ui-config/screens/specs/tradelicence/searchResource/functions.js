@@ -1,6 +1,6 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getSearchResults } from "../../utils";
+import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 
 export const searchApiCall = async (state, dispatch) => {
@@ -11,19 +11,19 @@ export const searchApiCall = async (state, dispatch) => {
     {}
   );
 
-  
   if (Object.keys(searchScreenObject).length == 0) {
     alert("Please fill at least one field to start search");
-  } 
-  else if((searchScreenObject["fromDate"]===undefined)&&(searchScreenObject["toDate"]!==undefined))
-  {
+  } else if (
+    searchScreenObject["fromDate"] === undefined &&
+    searchScreenObject["toDate"] !== undefined
+  ) {
     alert("Please fill From Data");
-  }
-  else if((searchScreenObject["fromDate"]!==undefined)&&(searchScreenObject["toDate"]===undefined))
-  {
+  } else if (
+    searchScreenObject["fromDate"] !== undefined &&
+    searchScreenObject["toDate"] === undefined
+  ) {
     alert("Please fill To Date");
-  }
-  else {
+  } else {
     showHideTable(false, dispatch);
     showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
@@ -57,7 +57,6 @@ export const searchApiCall = async (state, dispatch) => {
         "Application Date": convertEpochToDate(item.applicationDate) || "-",
         Status: item.status || "-"
       }));
-   
 
       dispatch(
         handleField(
@@ -72,13 +71,14 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `Search Results for Trade License Applications (${response.Licenses.length})`
+          `Search Results for Trade License Applications (${
+            response.Licenses.length
+          })`
         )
       );
       showHideProgress(false, dispatch);
       showHideTable(true, dispatch);
-    }
-    catch (error) {
+    } catch (error) {
       showHideProgress(false, dispatch);
       console.log(error);
     }
