@@ -754,6 +754,7 @@ export const createEstimateData = async (
   const payload = await getBill(queryObj);
   const estimateData = getEstimateData(payload.Bill);
   dispatch(prepareFinalObject(jsonPath, estimateData));
+  return payload;
 };
 
 export const getCurrentFinancialYear = () => {

@@ -17,7 +17,7 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "ui-utils/commons";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import set from "lodash/set";
 import { createEstimateData } from "../utils";
 
@@ -37,13 +37,44 @@ const header = getCommonContainer({
 
 const fetchBill = async (action, state, dispatch) => {
   // localStorage.setItem("token", "d8d7ffac-46c7-4a37-990b-e64520529676");
-  createEstimateData(
+  const payload = await createEstimateData(
     [],
     "LicensesTemp[0].estimateCardData",
     dispatch,
     window.location.href
   ); //get bill and populate estimate card
-  // dispatch(prepareFinalObject("Receipt[0].Bill[0]", payload.Bill[0]));
+
+  //initiate receipt object
+  dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.Bill[0]));
+
+  //set amount paid as total amount from bill
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+      payload.Bill[0].billDetails[0].totalAmount
+    )
+  );
+
+  //set total amount in instrument
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].instrument.amount",
+      payload.Bill[0].billDetails[0].totalAmount
+    )
+  );
+
+  //Initially select instrument type as text
+  dispatch(
+    prepareFinalObject("ReceiptTemp[0].instrument.instrumentType.name", "Cash")
+  );
+
+  //set tenantId
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].tenantId",
+      getQueryArg(window.location.href, "tenantId")
+    )
+  );
 };
 
 const screenConfig = {

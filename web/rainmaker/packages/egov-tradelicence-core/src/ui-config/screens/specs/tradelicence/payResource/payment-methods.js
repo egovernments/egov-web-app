@@ -24,7 +24,7 @@ export const payeeDetails = getCommonContainer({
         code: "Others"
       }
     ],
-    jsonPath: "Receipt[0].Bill[0].payer"
+    jsonPath: "ReceiptTemp[0].Bill[0].payer"
   }),
   payerName: getTextField({
     label: {
@@ -35,7 +35,7 @@ export const payeeDetails = getCommonContainer({
       labelName: "Enter Payer Name",
       labelKey: "TL_PAYMENT_PAYER_NAME_PLACEHOLDER"
     },
-    jsonPath: "Receipt[0].Bill[0].paidBy"
+    jsonPath: "ReceiptTemp[0].Bill[0].paidBy"
   }),
   payerMobileNo: getTextField({
     label: {
@@ -46,8 +46,8 @@ export const payeeDetails = getCommonContainer({
       labelName: "Enter Payer Mobile No.",
       labelKey: "TL_PAYMENT_PAYER_MOB_PLACEHOLDER"
     },
-    jsonPath: "Receipt[0].Bill[0].mobileNumber",
-    pattern: getPattern("Date"),
+    jsonPath: "ReceiptTemp[0].Bill[0].payerMobileNumber",
+    pattern: getPattern("MobileNo"),
     iconObj: {
       position: "start",
       label: "+91 |"
@@ -65,14 +65,14 @@ export const chequeDetails = getCommonContainer({
       labelName: "Enter Cheque  no.",
       labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
     },
-    jsonPath: "Receipt[0].instrument.transactionNumber",
+    jsonPath: "ReceiptTemp[0].instrument.transactionNumber",
     required: true
   }),
   chequeDate: getDateField({
     label: { labelName: "Cheque Date" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true,
-    jsonPath: "Receipt[0].instrument.transactionDateInput"
+    jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"
   }),
   chequeIFSC: getTextField({
     label: {
@@ -84,7 +84,37 @@ export const chequeDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.ifscCode"
+    jsonPath: "ReceiptTemp[0].instrument.ifscCode"
+  }),
+  chequeBank: getTextField({
+    label: {
+      labelName: "Bank Name",
+      labelKey: "TL_PAYMENT_BANK_NAME_LABEL"
+    },
+    placeholder: {
+      labelName: "Enter bank name",
+      labelKey: "TL_PAYMENT_BANK_NAME_PLACEHOLDER"
+    },
+    required: true,
+    props: {
+      disabled: true
+    },
+    jsonPath: "ReceiptTemp[0].instrument.bank.name"
+  }),
+  chequeBranch: getTextField({
+    label: {
+      labelName: "Bank Branch",
+      labelKey: "TL_PAYMENT_BANK_BRANCH_LABEL"
+    },
+    placeholder: {
+      labelName: "Enter bank branch",
+      labelKey: "TL_PAYMENT_BANK_BRANCH_PLACEHOLDER"
+    },
+    required: true,
+    props: {
+      disabled: true
+    },
+    jsonPath: "ReceiptTemp[0].instrument.branchName"
   })
 });
 
@@ -104,13 +134,13 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_DD_NO_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.transactionNumber"
+    jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
   ddDate: getDateField({
     label: { labelName: "DD Date" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true,
-    jsonPath: "Receipt[0].instrument.transactionDateInput"
+    jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"
   }),
   ddIFSC: getTextField({
     label: {
@@ -122,7 +152,37 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.ifscCode"
+    jsonPath: "ReceiptTemp[0].instrument.ifscCode"
+  }),
+  ddBank: getTextField({
+    label: {
+      labelName: "Bank Name",
+      labelKey: "TL_PAYMENT_BANK_NAME_LABEL"
+    },
+    placeholder: {
+      labelName: "Enter bank name",
+      labelKey: "TL_PAYMENT_BANK_NAME_PLACEHOLDER"
+    },
+    required: true,
+    props: {
+      disabled: true
+    },
+    jsonPath: "ReceiptTemp[0].instrument.bank.name"
+  }),
+  ddBranch: getTextField({
+    label: {
+      labelName: "Bank Branch",
+      labelKey: "TL_PAYMENT_BANK_BRANCH_LABEL"
+    },
+    placeholder: {
+      labelName: "Enter bank branch",
+      labelKey: "TL_PAYMENT_BANK_BRANCH_PLACEHOLDER"
+    },
+    required: true,
+    props: {
+      disabled: true
+    },
+    jsonPath: "ReceiptTemp[0].instrument.branchName"
   })
 });
 
@@ -142,7 +202,7 @@ export const cardDetails = getCommonContainer({
       labelKey: "TL_CARD_LAST_DIGITS_LABEL_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.instrumentNumber"
+    jsonPath: "ReceiptTemp[0].instrument.instrumentNumber"
   }),
   TrxNo: getTextField({
     label: {
@@ -154,7 +214,7 @@ export const cardDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.transactionNumber"
+    jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
   repeatTrxNo: getTextField({
     label: {
@@ -166,7 +226,7 @@ export const cardDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "Receipt[0].instrument.transactionNumberConfirm"
+    jsonPath: "ReceiptTemp[0].instrument.transactionNumberConfirm"
   })
 });
 

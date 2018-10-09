@@ -8,7 +8,7 @@ const instance = axios.create({
   }
 });
 
-const wrapRequestBody = (requestBody, action) => {
+const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   const authToken = fetchFromLocalStorage("token");
   let RequestInfo = {
     apiId: "Mihy",
@@ -21,6 +21,7 @@ const wrapRequestBody = (requestBody, action) => {
     requesterId: "",
     authToken
   };
+  RequestInfo = { ...RequestInfo, ...customRequestInfo };
   return Object.assign(
     {},
     {
@@ -36,7 +37,8 @@ export const httpRequest = async (
   action,
   queryObject = [],
   requestBody = {},
-  headers = []
+  headers = [],
+  customRequestInfo = {}
 ) => {
   let apiError = "Api Error";
 
@@ -52,7 +54,7 @@ export const httpRequest = async (
       case "post":
         response = await instance.post(
           endPoint,
-          wrapRequestBody(requestBody, action)
+          wrapRequestBody(requestBody, action, customRequestInfo)
         );
         break;
       default:
