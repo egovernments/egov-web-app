@@ -15,7 +15,7 @@ import {
   getUploadFilesMultiple
 } from "../utils";
 import { footerApprove } from "./approveResource/footer";
-import { updatePFOforSearchResults } from "mihy-ui-framework/ui-utils/commons";
+import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 import set from "lodash/set";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];

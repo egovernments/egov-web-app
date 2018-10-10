@@ -23,8 +23,6 @@ import { tradeDetails } from "./applyResource/tradeDetails";
 import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
-// import { httpRequest } from "mihy-ui-framework/ui-utils";
-// import { updatePFOforSearchResults } from "mihy-ui-framework/ui-utils/commons";
 import { httpRequest } from "../../../../ui-utils";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 

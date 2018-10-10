@@ -20,7 +20,7 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
-import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
 import { createEstimateData } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
 import { convertEpochToDate } from "../utils";
