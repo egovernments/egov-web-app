@@ -18,10 +18,9 @@ import Hidden from "@material-ui/core/Hidden";
 import RenderRoutes from "mihy-ui-framework/ui-molecules/RenderRoutes";
 import appRoutes from "ui-config/routes/mihy";
 import styles from "./css";
-import {compose} from "recompose";
-import {connect} from "react-redux";
-import {logout} from "ui-redux/auth/actions";
-
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { logout } from "mihy-ui-framework/ui-redux/auth/actions";
 
 class Landing extends React.Component {
   state = {
@@ -32,12 +31,10 @@ class Landing extends React.Component {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
-  logout=async ()=>{
-
-  }
+  logout = async () => {};
 
   render() {
-    const { classes, theme, match ,logout} = this.props;
+    const { classes, theme, match, logout } = this.props;
 
     const drawer = (
       <Div>
@@ -53,9 +50,12 @@ class Landing extends React.Component {
           <ListItem button>
             <ListItemText primary="Contact Us" />
           </ListItem>
-          <ListItem button onClick={()=>{
-            logout()
-          }}>
+          <ListItem
+            button
+            onClick={() => {
+              logout();
+            }}
+          >
             <ListItemText primary="Logout" />
           </ListItem>
         </List>
@@ -119,11 +119,16 @@ Landing.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-
-const mapDispatchToProps=(dispatch)=>{
+const mapDispatchToProps = dispatch => {
   return {
-    logout:()=>dispatch(logout())
-  }
-}
+    logout: () => dispatch(logout())
+  };
+};
 
-export default compose(connect(null,mapDispatchToProps),withStyles(styles, { withTheme: true }))(Landing);
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withStyles(styles, { withTheme: true })
+)(Landing);
