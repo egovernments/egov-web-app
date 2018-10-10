@@ -115,3 +115,102 @@ const convertOwnerDobToEpoch = owners => {
     });
   return updatedOwners;
 };
+
+export const getFileSize = file => {
+  const size = parseFloat(file.size / 1024).toFixed(2);
+  return size;
+};
+
+export const isFileValid = (file, acceptedFiles) => {
+  const mimeType = file["type"];
+  return (
+    (mimeType &&
+      acceptedFiles &&
+      acceptedFiles.indexOf(mimeType.split("/")[1]) > -1) ||
+    false
+  );
+};
+
+export const acceptedFiles = acceptedExt => {
+  const splitExtByName = acceptedExt.split(",");
+  const acceptedFileTypes = splitExtByName.reduce((result, curr) => {
+    if (curr.includes("image")) {
+      result.push("image");
+    } else {
+      result.push(curr.split(".")[1]);
+    }
+    return result;
+  }, []);
+  return acceptedFileTypes;
+};
+
+export const handleFileUpload = (event, handleDocument, props) => {
+  const S3_BUCKET = {
+    endPoint: "filestore/v1/files"
+  };
+  const { inputProps, maxFileSize } = props;
+  const input = event.target;
+  if (input.files && input.files.length > 0) {
+    const files = input.files;
+    Object.keys(files).forEach(async (key, index) => {
+      const file = files[key];
+      const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
+      const isSizeValid = getFileSize(file) <= maxFileSize;
+      if (!fileValid) {
+        alert(`Only image or pdf files can be uploaded`);
+        return;
+      }
+      if (!isSizeValid) {
+        alert(`Maximum file size can be ${5} MB`);
+        return;
+      }
+      if (file.type.match(/^image\//)) {
+        const imageUri = await getImageUrlByFile(file);
+        const fileStoreId = await uploadFile(
+          S3_BUCKET.endPoint,
+          "rainmaker-pgr",
+          file,
+          "pb"
+        );
+        handleDocument(file, fileStoreId);
+      } else {
+        const fileStoreId = await uploadFile(
+          S3_BUCKET.endPoint,
+          "RAINMAKER-PGR",
+          file,
+          "pb"
+        );
+        handleDocument(file, fileStoreId);
+      }
+    });
+  }
+};
+
+export const getImageUrlByFile = file => {
+  return new Promise(resolve => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = e => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
+  });
+};
+
+export const getFileUrlFromAPI = async fileStoreId => {
+  const queryObject = [
+    { key: "tenantId", value: "pb" },
+    { key: "fileStoreIds", value: fileStoreId }
+  ];
+  try {
+    const fileUrl = await httpRequest(
+      "get",
+      "/filestore/v1/files/url",
+      "",
+      queryObject
+    );
+    return fileUrl;
+  } catch (e) {
+    console.log(e);
+  }
+};
