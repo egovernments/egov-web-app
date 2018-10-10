@@ -5,6 +5,8 @@ import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 export const searchApiCall = async (state, dispatch) => {
+
+  showHideTable(false, dispatch);
   let queryObject = [
     { key: "tenantId", value: "pb.amritsar" },
     { key: "limit", value: "200" },
@@ -37,7 +39,6 @@ export const searchApiCall = async (state, dispatch) => {
       toggleSnackbarAndSetText(true, "Please fill From Date", "warning")
     );
   } else {
-    showHideTable(false, dispatch);
     showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
       if (
@@ -86,7 +87,7 @@ export const searchApiCall = async (state, dispatch) => {
           "components.div.children.searchResults",
           "props.title",
           `Search Results for Trade License Applications (${
-            response.Licenses.length
+          response.Licenses.length
           })`
         )
       );
