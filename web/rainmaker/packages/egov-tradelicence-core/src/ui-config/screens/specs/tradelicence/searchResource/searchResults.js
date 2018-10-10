@@ -1,5 +1,3 @@
-import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import store from "ui-redux/store";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -78,7 +76,11 @@ const onRowClick = rowData => {
     case "INITIATED":
       return `/mihy-ui-framework/tradelicence/apply?applicationNumber=${
         rowData["Application No"]
-      }`;
+        }`;
+    case "REJECTED":
+      return `/mihy-ui-framework/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
+        rowData["Application No"]
+        }`;
     default:
       return `/mihy-ui-framework/tradelicence/search`;
   }

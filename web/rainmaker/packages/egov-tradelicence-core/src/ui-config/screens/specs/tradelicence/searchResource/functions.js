@@ -4,26 +4,23 @@ import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 
 export const searchApiCall = async (state, dispatch) => {
-  let queryObject = [{ key: "tenantId", value: "pb.amritsar" }];
+  let queryObject = [{ key: "tenantId", value: "pb.amritsar" },
+  { key: "limit", value: "200" }, { key: "offset", value: "0" }];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
     "searchScreen",
     {}
   );
 
-  if (Object.keys(searchScreenObject).length == 0) {
+
+  if ((Object.keys(searchScreenObject).length == 0) || (Object.values(searchScreenObject).every(x => (x === "")))) {
     alert("Please fill at least one field to start search");
-  } else if (
-    searchScreenObject["fromDate"] === undefined &&
-    searchScreenObject["toDate"] !== undefined
-  ) {
-    alert("Please fill From Data");
-  } else if (
-    searchScreenObject["fromDate"] !== undefined &&
-    searchScreenObject["toDate"] === undefined
-  ) {
-    alert("Please fill To Date");
-  } else {
+  }
+  else if (((searchScreenObject["fromDate"] === undefined) || (searchScreenObject["fromDate"].length === 0)) && (searchScreenObject["toDate"] !== undefined) && (searchScreenObject["toDate"].length !== 0)) {
+
+    alert("Please fill From Date");
+  }
+  else {
     showHideTable(false, dispatch);
     showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
@@ -72,7 +69,7 @@ export const searchApiCall = async (state, dispatch) => {
           "components.div.children.searchResults",
           "props.title",
           `Search Results for Trade License Applications (${
-            response.Licenses.length
+          response.Licenses.length
           })`
         )
       );
@@ -105,3 +102,5 @@ const showHideTable = (booleanHideOrShow, dispatch) => {
     )
   );
 };
+
+
