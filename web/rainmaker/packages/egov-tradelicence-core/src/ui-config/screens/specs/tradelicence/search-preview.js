@@ -23,7 +23,7 @@ import set from "lodash/set";
 import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
 import { createEstimateData } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
-
+import { convertEpochToDate } from "../utils";
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -39,7 +39,22 @@ const searchResults = async (action, state, dispatch) => {
     { key: "applicationNumber", value: applicationNumber }
   ];
   let payload = await getSearchResults(queryObject);
-
+  console.log("sudhanshu...", payload);
+  set(
+    payload,
+    "Licenses[0].validFrom",
+    convertEpochToDate(get(payload, "Licenses[0].validFrom"))
+  );
+  set(
+    payload,
+    "Licenses[0].validTo",
+    convertEpochToDate(get(payload, "Licenses[0].validTo"))
+  );
+  set(
+    payload,
+    "Licenses[0].commencementDate",
+    convertEpochToDate(get(payload, "Licenses[0].commencementDate"))
+  );
   headerSideText = getHeaderSideText(
     get(payload, "Licenses[0].status"),
     get(payload, "Licenses[0].licenseNumber")
