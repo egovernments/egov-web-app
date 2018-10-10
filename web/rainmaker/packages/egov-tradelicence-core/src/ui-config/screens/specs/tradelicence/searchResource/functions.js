@@ -52,6 +52,7 @@ export const searchApiCall = async (state, dispatch) => {
         "Trade Name": item.tradeName || "-",
         "Owner Name": item.tradeLicenseDetail.owners[0].name || "-",
         "Application Date": convertEpochToDate(item.applicationDate) || "-",
+        "tenantId": item.tenantId,
         Status: item.status || "-"
       }));
 
