@@ -33,6 +33,22 @@ const applicationNumber = getQueryArg(
 );
 let headerSideText = "";
 
+const getTradeTypeSubtypeDetails = payload => {
+  const tradeUnitsFromApi = get(payload, "Licenses[0].tradeLicenseDetail.tradeUnits", [])
+  const tradeUnitDetails = []
+  tradeUnitsFromApi.forEach(tradeUnit => {
+    const { tradeType } = tradeUnit
+    const tradeDetails = tradeType.split(".")
+    tradeUnitDetails.push({
+      trade: get(tradeDetails, "[0]", ""),
+      tradeType: get(tradeDetails, "[1]", ""),
+      tradeSubType: get(tradeDetails, "[2]", "")
+    })
+  })
+  console.log("tradeUnitDetails", tradeUnitDetails)
+  return tradeUnitDetails
+}
+
 const searchResults = async (action, state, dispatch) => {
   let queryObject = [
     { key: "tenantId", value: tenantId },
@@ -84,6 +100,9 @@ const searchResults = async (action, state, dispatch) => {
   });
   dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  dispatch(
+    prepareFinalObject("LicensesTemp[0].tradeDetailsResponse", getTradeTypeSubtypeDetails(payload))
+  );
   const LicenseData = payload.Licenses[0];
   createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
 };
