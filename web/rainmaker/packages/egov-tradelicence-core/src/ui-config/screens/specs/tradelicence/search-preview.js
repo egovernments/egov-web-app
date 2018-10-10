@@ -91,19 +91,24 @@ const searchResults = async (action, state, dispatch) => {
       .join(",");
   const fileUrlPayload =
     fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-  const reviewDocData = uploadedDocData.map(item => {
-    return {
-      title: item.documentType || "",
-      link:
-        (fileUrlPayload &&
-          fileUrlPayload[item.fileStoreId] &&
-          fileUrlPayload[item.fileStoreId].split(",")[0]) ||
-        "",
-      linkText: "View",
-      name: item.fileName || ""
-    };
-  });
-  dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
+  const reviewDocData =
+    uploadedDocData &&
+    uploadedDocData.map(item => {
+      return {
+        title: item.documentType || "",
+        link:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+          "",
+        linkText: "View",
+        name: item.fileName || ""
+      };
+    });
+  reviewDocData &&
+    dispatch(
+      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+    );
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   dispatch(
     prepareFinalObject(
