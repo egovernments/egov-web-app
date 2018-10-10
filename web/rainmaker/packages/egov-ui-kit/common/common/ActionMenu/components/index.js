@@ -174,7 +174,7 @@ var ActionMenuComp = function (_Component) {
           parentMenu: true
         };
         _this.menuChange(pathParam);
-        setRoute("/all-complaints");
+        setRoute("/");
       } else {
         var splitArray = (0, _lodash.split)(path, ".");
         var x = splitArray.slice(0, splitArray.length - 1).join(".");
