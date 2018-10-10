@@ -158,7 +158,7 @@ class ActionMenuComp extends Component {
         parentMenu: true,
       };
       this.menuChange(pathParam);
-      setRoute("/all-complaints");
+      setRoute("/");
     } else {
       let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
