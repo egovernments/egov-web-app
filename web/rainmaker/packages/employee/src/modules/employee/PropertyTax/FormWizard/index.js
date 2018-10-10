@@ -30,7 +30,7 @@ import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstima
 import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
-import { toggleSpinner, hideSpinner, showSpinner } from "egov-ui-kit/redux/common/actions";
+import { hideSpinner, showSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, generalMDMSFetchSuccess, updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
 import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
@@ -207,7 +207,7 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
+    const { fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft, location } = this.props;
     const { search } = location;
     const financialYearFromQuery = getFinancialYearFromQuery();
     const propertyId = getQueryValue(search, "propertyId");
@@ -216,17 +216,12 @@ class FormWizard extends Component {
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     this.getImportantDates();
     try {
-      //toggleSpinner();
       let currentDraft;
       if (!isReassesment) {
         let draftsResponse = await httpRequest(
           "pt-services-v2/drafts/_search",
           "_search",
           [
-            // {
-            //   key: "userId",
-            //   value: uuid,
-            // },
             {
               key: isReassesment ? "assessmentNumber" : "id",
               value: draftId,
@@ -380,7 +375,6 @@ class FormWizard extends Component {
           },
         },
         () => {
-          //toggleSpinner();
           {
             if (activeTab >= 3 && !isCompletePayment) {
               this.estimate().then((estimateResponse) => {
@@ -397,7 +391,6 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      //toggleSpinner();
       console.log(e);
     }
   };
@@ -416,9 +409,9 @@ class FormWizard extends Component {
   };
 
   componentDidMount = async () => {
-    let { location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
+    let { location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, showSpinner, hideSpinner } = this.props;
     let { search } = location;
-    toggleSpinner();
+    showSpinner();
     const propertyId = getQueryValue(search, "propertyId");
     const isReassesment = !!getQueryValue(search, "isReassesment");
     const draftUuid = getQueryValue(search, "uuid");
@@ -446,7 +439,7 @@ class FormWizard extends Component {
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
 
     renderCustomTitleForPt(customTitle);
-    toggleSpinner();
+    hideSpinner();
   };
 
   getImportantDates = async () => {
@@ -1343,7 +1336,6 @@ const mapDispatchToProps = (dispatch) => {
     setRoute: (route) => dispatch(setRoute(route)),
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
     updatePTForms: (forms) => dispatch(updateForms(forms)),
-    toggleSpinner: () => dispatch(toggleSpinner()),
     showSpinner: () => dispatch(showSpinner()),
     hideSpinner: () => dispatch(hideSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
