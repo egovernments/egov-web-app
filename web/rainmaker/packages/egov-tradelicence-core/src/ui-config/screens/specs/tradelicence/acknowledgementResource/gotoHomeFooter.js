@@ -28,6 +28,10 @@ export const gotoHomeFooter = getCommonApplyFooter({
         labelName: "GO TO HOME",
         labelKey: "TL_COMMON_BUTTON_HOME"
       })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: `/mihy-ui-framework/tradelicence/search`
     }
   }
 });
