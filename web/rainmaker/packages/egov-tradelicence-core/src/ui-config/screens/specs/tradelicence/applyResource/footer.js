@@ -471,8 +471,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path:
-                  "/pay?applicationNumber=${applicationNumber}&tenantId=pb.amritsar&businessService=TL"
+                path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
               },
               visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
               rolesDefination: {
