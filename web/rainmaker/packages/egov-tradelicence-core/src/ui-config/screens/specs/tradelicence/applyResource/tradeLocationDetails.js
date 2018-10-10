@@ -49,47 +49,27 @@ export const tradeLocationDetails = getCommonCard({
           },
 
           // pattern: getPattern("PropertyID"),
-          // iconObj: {
-          //   iconName: "search",
-          //   position: "end",
-          //   color: "#FE7A51",
-          //   label: "SEARCH"
-          //   // onClickDefination: {
-          //   //   action: "condition",
-          //   //   callBack: getDetailsFromProperty
-          //   // }
-          // },
+          iconObj: {
+            iconName: "search",
+            position: "end",
+            color: "#FE7A51",
+            // downloadReceiptButtonLabel: getLabel({
+            //   labelName: "SEARCH",
+            //   labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+            // }),
+            onClickDefination: {
+              action: "condition",
+              callBack: (state, dispatch) => {
+                getDetailsFromProperty(state, dispatch);
+              }
+            }
+          },
           gridDefination: {
             xs: 11,
             sm: 11
           },
           jsonPath: "Licenses[0].propertyId"
         }),
-        button: {
-          componentPath: "Button",
-          props: {
-            variant: "outlined",
-            color: "primary",
-            style: {
-              width: 25,
-              height: 4,
-              border: "none",
-              marginTop: 18,
-              left: 407,
-              position: "absolute"
-            }
-          },
-          children: {
-            downloadReceiptButtonLabel: getLabel({
-              labelName: "SEARCH",
-              labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-            })
-          },
-          onClickDefination: {
-            action: "condition",
-            callBack: getDetailsFromProperty
-          }
-        },
         ico: {
           uiFramework: "custom-molecules-local",
           componentPath: "Tooltip",

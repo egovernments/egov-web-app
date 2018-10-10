@@ -8,7 +8,7 @@ import "./index.css";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
-import { httpRequest } from "mihy-ui-framework/ui-utils/api";
+import { httpRequest } from "ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
@@ -761,7 +761,7 @@ export const createEstimateData = async (
     }
   ];
   const payload = await getBill(queryObj);
-  const estimateData = getEstimateData(payload.Bill);
+  const estimateData = payload && getEstimateData(payload.Bill);
   dispatch(prepareFinalObject(jsonPath, estimateData));
   return payload;
 };

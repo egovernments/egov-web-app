@@ -23,7 +23,7 @@ import set from "lodash/set";
 import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
 import { createEstimateData } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
-
+import { convertEpochToDate } from "../utils";
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -33,13 +33,46 @@ const applicationNumber = getQueryArg(
 );
 let headerSideText = "";
 
+const getTradeTypeSubtypeDetails = payload => {
+  const tradeUnitsFromApi = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.tradeUnits",
+    []
+  );
+  const tradeUnitDetails = [];
+  tradeUnitsFromApi.forEach(tradeUnit => {
+    const { tradeType } = tradeUnit;
+    const tradeDetails = tradeType.split(".");
+    tradeUnitDetails.push({
+      trade: get(tradeDetails, "[0]", ""),
+      tradeType: get(tradeDetails, "[1]", ""),
+      tradeSubType: get(tradeDetails, "[2]", "")
+    });
+  });
+  return tradeUnitDetails;
+};
+
 const searchResults = async (action, state, dispatch) => {
   let queryObject = [
     { key: "tenantId", value: tenantId },
     { key: "applicationNumber", value: applicationNumber }
   ];
   let payload = await getSearchResults(queryObject);
-
+  set(
+    payload,
+    "Licenses[0].validFrom",
+    convertEpochToDate(get(payload, "Licenses[0].validFrom"))
+  );
+  set(
+    payload,
+    "Licenses[0].validTo",
+    convertEpochToDate(get(payload, "Licenses[0].validTo"))
+  );
+  set(
+    payload,
+    "Licenses[0].commencementDate",
+    convertEpochToDate(get(payload, "Licenses[0].commencementDate"))
+  );
   headerSideText = getHeaderSideText(
     get(payload, "Licenses[0].status"),
     get(payload, "Licenses[0].licenseNumber")
@@ -49,26 +82,40 @@ const searchResults = async (action, state, dispatch) => {
     payload,
     "Licenses[0].tradeLicenseDetail.applicationDocuments"
   );
-  const fileStoreIds = uploadedDocData
-    .map(item => {
-      return item.fileStoreId;
-    })
-    .join(",");
-  const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
-  const reviewDocData = uploadedDocData.map(item => {
-    return {
-      title: item.documentType || "",
-      link:
-        (fileUrlPayload &&
-          fileUrlPayload[item.fileStoreId] &&
-          fileUrlPayload[item.fileStoreId].split(",")[0]) ||
-        "",
-      linkText: "View",
-      name: item.fileName || ""
-    };
-  });
-  dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
+  const fileStoreIds =
+    uploadedDocData &&
+    uploadedDocData
+      .map(item => {
+        return item.fileStoreId;
+      })
+      .join(",");
+  const fileUrlPayload =
+    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+  const reviewDocData =
+    uploadedDocData &&
+    uploadedDocData.map(item => {
+      return {
+        title: item.documentType || "",
+        link:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+          "",
+        linkText: "View",
+        name: item.fileName || ""
+      };
+    });
+  reviewDocData &&
+    dispatch(
+      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+    );
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].tradeDetailsResponse",
+      getTradeTypeSubtypeDetails(payload)
+    )
+  );
   const LicenseData = payload.Licenses[0];
   createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
 };
