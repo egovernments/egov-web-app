@@ -1,0 +1,12 @@
+
+.iframe-style {
+  width: 100%;
+  height: 100vh;
+  margin-top: -52px;
+}
+
+@media screen and (max-width: 960px) {
+  .iframe-style {
+    margin-top: 0px;
+  }
+}
