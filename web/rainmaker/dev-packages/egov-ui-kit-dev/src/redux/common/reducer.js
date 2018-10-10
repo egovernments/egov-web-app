@@ -1,7 +1,11 @@
 import * as commonTypes from "./actionTypes";
-import { transformById } from "egov-ui-kit/utils/commons";
+import {
+  transformById
+} from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
-import { commonActions } from "egov-ui-kit/utils/commons";
+import {
+  commonActions
+} from "egov-ui-kit/utils/commons";
 
 const intialState = {
   dropDownData: {},
@@ -131,7 +135,10 @@ const commonReducer = (state = intialState, action) => {
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
-      const { masterArray, key } = action;
+      const {
+        masterArray,
+        key
+      } = action;
       const generalMDMSDataById = masterArray.reduce((result, masterName) => {
         result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], key ? key : "code");
         return result;
@@ -154,6 +161,17 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         spinner: !state.spinner,
+      };
+    case commonTypes.SHOW_SPINNER:
+      return {
+        ...state,
+        spinner: true,
+      };
+
+    case commonTypes.HIDE_SPINNER:
+      return {
+        ...state,
+        spinner: false,
       };
     case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
       return {
