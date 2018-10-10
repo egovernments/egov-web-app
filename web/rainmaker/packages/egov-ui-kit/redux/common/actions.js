@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updatePrepareFormDataFromDraft = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.updatePrepareFormDataFromDraft = exports.hideSpinner = exports.showSpinner = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -326,6 +326,18 @@ var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralM
 var toggleSpinner = exports.toggleSpinner = function toggleSpinner() {
   return {
     type: actionTypes.TOGGLE_SPINNER
+  };
+};
+
+var showSpinner = exports.showSpinner = function showSpinner() {
+  return {
+    type: actionTypes.SHOW_SPINNER
+  };
+};
+
+var hideSpinner = exports.hideSpinner = function hideSpinner() {
+  return {
+    type: actionTypes.HIDE_SPINNER
   };
 };
 
