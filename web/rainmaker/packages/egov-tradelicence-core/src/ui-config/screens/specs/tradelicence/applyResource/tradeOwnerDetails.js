@@ -35,39 +35,19 @@ export const getOwnerMobNoField = {
       },
       required: true,
       pattern: getPattern("MobileNo"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
-      // iconObj: {
-      //   iconName: "search",
-      //   position: "end",
-      //   color: "#FE7A51",
-      //   label: "SEARCH"
-      // }
-    }),
-    button: {
-      componentPath: "Button",
-      props: {
-        variant: "outlined",
-        color: "primary",
-        style: {
-          width: 25,
-          height: 4,
-          border: "none",
-          marginTop: 18,
-          left: 448,
-          position: "absolute"
+      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+      iconObj: {
+        iconName: "search",
+        position: "end",
+        color: "#FE7A51",
+        onClickDefination: {
+          action: "condition",
+          callBack: (state, dispatch) => {
+            getDetailsForOwner(state, dispatch);
+          }
         }
-      },
-      children: {
-        downloadReceiptButtonLabel: getLabel({
-          labelName: "SEARCH",
-          labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-        })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: getDetailsForOwner
       }
-    }
+    })
   }
 };
 
