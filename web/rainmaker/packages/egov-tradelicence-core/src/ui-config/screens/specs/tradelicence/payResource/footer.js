@@ -12,7 +12,7 @@ const moveToSuccess = (href, dispatch) => {
   const status = "success";
   dispatch(
     setRoute(
-      `/landing/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
+      `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
     )
   );
 };
@@ -33,23 +33,6 @@ const callBackForPay = async (state, dispatch) => {
 
   console.log(ReceiptBody);
   try {
-    const userInfo = {
-      id: 23432,
-      userName: "8050579149",
-      name: "Gyan",
-      type: "CITIZEN",
-      mobileNumber: "8050579149",
-      emailId: null,
-      roles: [
-        {
-          id: 281,
-          name: "Citizen",
-          code: "CITIZEN"
-        }
-      ],
-      tenantId: "pb",
-      uuid: "7737b382-1bc5-4e84-a57b-b9a9a9ceef46"
-    };
     await httpRequest(
       "post",
       "collection-services/receipts/_create",
@@ -57,7 +40,7 @@ const callBackForPay = async (state, dispatch) => {
       [],
       ReceiptBody,
       [],
-      { userInfo, ts: 0 }
+      {}
     );
     moveToSuccess(href, dispatch);
   } catch (e) {

@@ -26,11 +26,11 @@ const onNextButtonClick = async (state, dispatch) => {
           set(Licenses[0], "action", "CANCEL");
         }
       case "reject":
-        if (status === "APPLIED") {
+        if (status === "PAID") {
           set(Licenses[0], "action", "REJECT");
         }
       default:
-        if (status === "APPLIED") {
+        if (status === "PAID") {
           set(Licenses[0], "action", "APPROVE");
         }
     }

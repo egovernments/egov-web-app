@@ -2,7 +2,7 @@ import React from "react";
 import RenderScreen from "mihy-ui-framework/ui-molecules/RenderScreen";
 import CustomTab from "../../ui-molecules-local/CustomTab";
 import { connect } from "react-redux";
-import { addComponentJsonpath } from "../../ui-utils";
+import { addComponentJsonpath } from "mihy-ui-framework/ui-utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import cloneDeep from "lodash/cloneDeep";
 

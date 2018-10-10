@@ -20,6 +20,24 @@ export const updateTradeDetails = async requestBody => {
   }
 };
 
+export const getFileUrlFromAPI = async fileStoreId => {
+  const queryObject = [
+    { key: "tenantId", value: "pb" },
+    { key: "fileStoreIds", value: fileStoreId }
+  ];
+  try {
+    const fileUrl = await httpRequest(
+      "get",
+      "/filestore/v1/files/url",
+      "",
+      queryObject
+    );
+    return fileUrl;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getSearchResults = async queryObject => {
   try {
     const response = await httpRequest(
@@ -116,6 +134,17 @@ const convertOwnerDobToEpoch = owners => {
   return updatedOwners;
 };
 
+export const getImageUrlByFile = file => {
+  return new Promise(resolve => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = e => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
+  });
+};
+
 export const getFileSize = file => {
   const size = parseFloat(file.size / 1024).toFixed(2);
   return size;
@@ -183,34 +212,5 @@ export const handleFileUpload = (event, handleDocument, props) => {
         handleDocument(file, fileStoreId);
       }
     });
-  }
-};
-
-export const getImageUrlByFile = file => {
-  return new Promise(resolve => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = e => {
-      const fileurl = e.target.result;
-      resolve(fileurl);
-    };
-  });
-};
-
-export const getFileUrlFromAPI = async fileStoreId => {
-  const queryObject = [
-    { key: "tenantId", value: "pb" },
-    { key: "fileStoreIds", value: fileStoreId }
-  ];
-  try {
-    const fileUrl = await httpRequest(
-      "get",
-      "/filestore/v1/files/url",
-      "",
-      queryObject
-    );
-    return fileUrl;
-  } catch (e) {
-    console.log(e);
   }
 };
