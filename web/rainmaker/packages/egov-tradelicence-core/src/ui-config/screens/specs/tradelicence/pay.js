@@ -45,23 +45,26 @@ const fetchBill = async (action, state, dispatch) => {
   ); //get bill and populate estimate card
 
   //initiate receipt object
-  dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.Bill[0]));
+  payload &&
+    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.Bill[0]));
 
   //set amount paid as total amount from bill
-  dispatch(
-    prepareFinalObject(
-      "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-      payload.Bill[0].billDetails[0].totalAmount
-    )
-  );
+  payload &&
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+        payload.Bill[0].billDetails[0].totalAmount
+      )
+    );
 
   //set total amount in instrument
-  dispatch(
-    prepareFinalObject(
-      "ReceiptTemp[0].instrument.amount",
-      payload.Bill[0].billDetails[0].totalAmount
-    )
-  );
+  payload &&
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].instrument.amount",
+        payload.Bill[0].billDetails[0].totalAmount
+      )
+    );
 
   //Initially select instrument type as text
   dispatch(

@@ -761,7 +761,7 @@ export const createEstimateData = async (
     }
   ];
   const payload = await getBill(queryObj);
-  const estimateData = getEstimateData(payload.Bill);
+  const estimateData = payload && getEstimateData(payload.Bill);
   dispatch(prepareFinalObject(jsonPath, estimateData));
   return payload;
 };
