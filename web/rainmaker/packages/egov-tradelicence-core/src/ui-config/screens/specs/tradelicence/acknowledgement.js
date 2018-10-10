@@ -22,7 +22,7 @@ const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
   loadUlbLogo(tenant); //pb.amritsar
   loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
-  loadReceiptData(applicationNumber); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
+  loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
   loadMdmsData(tenant);
 };
 
