@@ -10,9 +10,9 @@ import {
 
 import { getFeesEstimateCard, getHeaderSideText } from "../utils";
 import { footerReview } from "./applyResource/footer";
-import { getReviewTrade } from "./applyResource//review-trade";
-import { getReviewOwner } from "./applyResource//review-owner";
-import { getReviewDocuments } from "./applyResource//review-documents";
+import { getReviewTrade } from "./applyResource/review-trade";
+import { getReviewOwner } from "./applyResource/review-owner";
+import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { getCancelDetails } from "./applyResource/cancel-details";
 import { getRejectionDetails } from "./applyResource/reject-details";
@@ -20,11 +20,9 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
-import { createEstimateData, getSearchResults } from "../utils";
-import { getFileUrlFromAPI } from "mihy-ui-framework/ui-utils/commons";
-import cloneDeep from "lodash/cloneDeep";
-import store from "ui-redux/store";
-import { getBill } from "../utils";
+import { getSearchResults } from "mihy-ui-framework/ui-utils/commons";
+import { createEstimateData } from "../utils";
+import { getFileUrlFromAPI } from "ui-utils/commons";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
@@ -35,85 +33,48 @@ const applicationNumber = getQueryArg(
 let headerSideText = "";
 
 const searchResults = async (action, state, dispatch) => {
-  try {
-    const tenantId = "pb.amritsar";
-    // console.log(tenantId);
-    let queryObject = [
-      { key: "tenantId", value: tenantId },
-      { key: "applicationNumber", value: applicationNumber }
-    ];
-    let payload = await getSearchResults(queryObject);
+  const tenantId = "pb.amritsar";
+  // console.log(tenantId);
+  let queryObject = [
+    { key: "tenantId", value: tenantId },
+    { key: "applicationNumber", value: applicationNumber }
+  ];
+  let payload = await getSearchResults(queryObject);
 
-    headerSideText = getHeaderSideText(
-      get(payload, "Licenses[0].status"),
-      get(payload, "Licenses[0].licenseNumber")
-    );
-    set(payload, "Licenses[0].headerSideText", headerSideText);
-    const uploadedDocData = get(
-      payload,
-      "Licenses[0].tradeLicenseDetail.applicationDocuments"
-    );
-    const fileStoreIds = uploadedDocData
-      .map(item => {
-        return item.fileStoreId;
-      })
-      .join(",");
-    const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
-    const reviewDocData = uploadedDocData.map(item => {
-      return {
-        title: item.documentType || "",
-        link:
-          (fileUrlPayload &&
-            fileUrlPayload[item.fileStoreId] &&
-            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
-          "",
-        linkText: "View",
-        name: item.fileName || ""
-      };
-    });
-    dispatch(
-      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
-    );
-    dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-    const LicenseData = payload.Licenses[0];
-    createEstimateData(
-      LicenseData,
-      "LicensesTemp[0].estimateCardData",
-      dispatch
-    ); //Fetch Bill and populate estimate card
-  } catch (e) {
-    console.log(e);
-  }
+  headerSideText = getHeaderSideText(
+    get(payload, "Licenses[0].status"),
+    get(payload, "Licenses[0].licenseNumber")
+  );
+  set(payload, "Licenses[0].headerSideText", headerSideText);
+  const uploadedDocData = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments"
+  );
+  console.log("uploadedDocData is .....", uploadedDocData);
+  const fileStoreIds = uploadedDocData
+    .map(item => {
+      return item.fileStoreId;
+    })
+    .join(",");
+  console.log("filestore idis.....", fileStoreIds);
+  const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
+  const reviewDocData = uploadedDocData.map(item => {
+    return {
+      title: item.documentType || "",
+      link:
+        (fileUrlPayload &&
+          fileUrlPayload[item.fileStoreId] &&
+          fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+        "",
+      linkText: "View",
+      name: item.fileName || ""
+    };
+  });
+  dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
+  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  const LicenseData = payload.Licenses[0];
+  createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
 };
-// console.log(
-//   "1234...",
-//   get(JSON.parse(get(localStorage, "user-info")), "roles")
-// );
-
-// const r = [
-//   {
-//     id: 231,
-//     code: "EMPLOYEE",
-//     name: "Employee"
-//   },
-//   {
-//     id: 2314,
-//     code: "EMPLOYEE1",
-//     name: "Employee1"
-//   }
-// ];
-
-// const l = r.map(a => {
-//   return get(a, "code");
-// });
-// console.log("2345...", l);
-
-// const arr = ["emp", "EMPLOYEE2"];
-
-// let found = arr.some(i => l.includes(i));
-// console.log("3456...", found);
-
-// console.log("1234...", get(localStorage, "user-info.roles"));
 
 let titleText = "";
 let paraText =
