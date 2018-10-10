@@ -56,6 +56,9 @@ export const getReviewTrade = (isEditable = true) => {
     headerDiv: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
+      props: {
+        style: { marginBottom: "10px" }
+      },
       children: {
         header: {
           gridDefination: {
