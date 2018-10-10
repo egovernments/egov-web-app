@@ -4,15 +4,9 @@ import {
   getCommonContainer,
   getLabelWithValue,
   getDivider,
-  getLabel,
-  getTextField,
-  getSelectField,
-  getPattern
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getIconStyle, objectToDropdown } from "../../utils";
-
 import { changeStep } from "./footer";
-import { array } from "prop-types";
 
 const accessoriesCard = {
   uiFramework: "custom-containers",

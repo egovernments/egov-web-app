@@ -25,21 +25,30 @@ const onNextButtonClick = async (state, dispatch) => {
         if (status === "APPROVED") {
           set(Licenses[0], "action", "CANCEL");
         }
+        break;
       case "reject":
         if (status === "PAID") {
           set(Licenses[0], "action", "REJECT");
         }
+        break;
       default:
         if (status === "PAID") {
           set(Licenses[0], "action", "APPROVE");
         }
+        break;
     }
   }
   let response = await updateTradeDetails({ Licenses });
   if (response) {
     const applicationNumber = get(response, "Licenses[0].applicationNumber");
     const secondNumber = get(response, "Licenses[0].licenseNumber");
-    const route = onClickNextButton(applicationNumber, secondNumber, queryValue);
+    const tenantId = get(response, "Licenses[0].tenantId");
+    const route = onClickNextButton(
+      applicationNumber,
+      secondNumber,
+      queryValue,
+      tenantId
+    );
     dispatch(setRoute(route));
   } else {
     dispatch(
@@ -48,47 +57,49 @@ const onNextButtonClick = async (state, dispatch) => {
   }
 };
 
-export const footerApprove = getCommonApplyFooter({
-  previousButton: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "16px"
+export const footerApprove = (applicationNumber, tenantId) => {
+  return getCommonApplyFooter({
+    previousButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        nextButtonLabel: getLabel({
+          labelName: "BACK",
+          labelKey: "TL_COMMON_BUTTON_BACK"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: onClickPreviousButton(queryValue, applicationNumber, tenantId)
       }
     },
-    children: {
-      nextButtonLabel: getLabel({
-        labelName: "BACK",
-        labelKey: "TL_COMMON_BUTTON_BACK"
-      })
-    },
-    onClickDefination: {
-      action: "page_change",
-      path: onClickPreviousButton(queryValue)
-    }
-  },
 
-  nextButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "45px"
+    nextButton: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "45px"
+        }
+      },
+      children: {
+        nextButtonLabel: getFooterButtons(queryValue)
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: onNextButtonClick
       }
-    },
-    children: {
-      nextButtonLabel: getFooterButtons(queryValue)
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: onNextButtonClick
     }
-  }
-});
+  });
+};
