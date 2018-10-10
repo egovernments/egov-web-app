@@ -732,7 +732,7 @@ export const createEstimateData = async (
   LicenseData,
   jsonPath,
   dispatch,
-  href
+  href = {}
 ) => {
   const applicationNo =
     get(LicenseData, "applicationNumber") ||

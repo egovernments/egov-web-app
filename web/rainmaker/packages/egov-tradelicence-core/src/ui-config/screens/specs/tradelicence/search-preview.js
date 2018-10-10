@@ -35,45 +35,55 @@ const applicationNumber = getQueryArg(
 let headerSideText = "";
 
 const searchResults = async (action, state, dispatch) => {
-  const tenantId = "pb.amritsar";
-  // console.log(tenantId);
-  let queryObject = [
-    { key: "tenantId", value: tenantId },
-    { key: "applicationNumber", value: applicationNumber }
-  ];
-  let payload = await getSearchResults(queryObject);
+  try {
+    const tenantId = "pb.amritsar";
+    // console.log(tenantId);
+    let queryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "applicationNumber", value: applicationNumber }
+    ];
+    let payload = await getSearchResults(queryObject);
 
-  headerSideText = getHeaderSideText(
-    get(payload, "Licenses[0].status"),
-    get(payload, "Licenses[0].licenseNumber")
-  );
-  set(payload, "Licenses[0].headerSideText", headerSideText);
-  const uploadedDocData = get(
-    payload,
-    "Licenses[0].tradeLicenseDetail.applicationDocuments"
-  );
-  const fileStoreIds = uploadedDocData
-    .map(item => {
-      return item.fileStoreId;
-    })
-    .join(",");
-  const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
-  const reviewDocData = uploadedDocData.map(item => {
-    return {
-      title: item.documentType || "",
-      link:
-        (fileUrlPayload &&
-          fileUrlPayload[item.fileStoreId] &&
-          fileUrlPayload[item.fileStoreId].split(",")[0]) ||
-        "",
-      linkText: "View",
-      name: item.fileName || ""
-    };
-  });
-  dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
-  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-  const LicenseData = payload.Licenses[0];
-  createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
+    headerSideText = getHeaderSideText(
+      get(payload, "Licenses[0].status"),
+      get(payload, "Licenses[0].licenseNumber")
+    );
+    set(payload, "Licenses[0].headerSideText", headerSideText);
+    const uploadedDocData = get(
+      payload,
+      "Licenses[0].tradeLicenseDetail.applicationDocuments"
+    );
+    const fileStoreIds = uploadedDocData
+      .map(item => {
+        return item.fileStoreId;
+      })
+      .join(",");
+    const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
+    const reviewDocData = uploadedDocData.map(item => {
+      return {
+        title: item.documentType || "",
+        link:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+          "",
+        linkText: "View",
+        name: item.fileName || ""
+      };
+    });
+    dispatch(
+      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+    );
+    dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+    const LicenseData = payload.Licenses[0];
+    createEstimateData(
+      LicenseData,
+      "LicensesTemp[0].estimateCardData",
+      dispatch
+    ); //Fetch Bill and populate estimate card
+  } catch (e) {
+    console.log(e);
+  }
 };
 // console.log(
 //   "1234...",
