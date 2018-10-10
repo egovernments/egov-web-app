@@ -44,19 +44,15 @@ class MultiItem extends React.Component {
     switch (tabIndex) {
       case 0:
         this.setInstrumentType("Cash", dispatch);
-
         break;
       case 1:
         this.setInstrumentType("Cheque", dispatch);
-
         break;
       case 2:
         this.setInstrumentType("DD", dispatch);
-
         break;
       case 3:
         this.setInstrumentType("Card", dispatch);
-
         break;
       default:
         this.setInstrumentType("Cash", dispatch);

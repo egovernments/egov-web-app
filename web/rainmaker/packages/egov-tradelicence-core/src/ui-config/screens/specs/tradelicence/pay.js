@@ -36,13 +36,13 @@ const header = getCommonContainer({
 });
 
 const fetchBill = async (action, state, dispatch) => {
-  // localStorage.setItem("token", "d8d7ffac-46c7-4a37-990b-e64520529676");
+  //get bill and populate estimate card
   const payload = await createEstimateData(
     [],
     "LicensesTemp[0].estimateCardData",
     dispatch,
     window.location.href
-  ); //get bill and populate estimate card
+  );
 
   //initiate receipt object
   payload &&
@@ -66,7 +66,7 @@ const fetchBill = async (action, state, dispatch) => {
       )
     );
 
-  //Initially select instrument type as text
+  //Initially select instrument type as Cash
   dispatch(
     prepareFinalObject("ReceiptTemp[0].instrument.instrumentType.name", "Cash")
   );

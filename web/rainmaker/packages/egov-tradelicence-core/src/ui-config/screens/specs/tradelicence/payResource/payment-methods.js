@@ -5,6 +5,54 @@ import {
   getDateField,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import get from "lodash/get";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+
+const onIconClick = (state, dispatch, index) => {
+  const ifscCode = get(
+    state.screenConfiguration.preparedFinalObject,
+    "ReceiptTemp[0].instrument.ifscCode"
+  );
+  if (ifscCode) {
+    fetch(`https://ifsc.razorpay.com/${ifscCode}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(payload => {
+        if (payload === "Not Found") {
+          dispatch(
+            prepareFinalObject("ReceiptTemp[0].instrument.bank.name", "")
+          );
+          dispatch(
+            prepareFinalObject("ReceiptTemp[0].instrument.branchName", "")
+          );
+          dispatch(
+            toggleSnackbarAndSetText(
+              true,
+              "Bankdetails not found for this IFSC",
+              "error"
+            )
+          );
+        } else {
+          const bankName = get(payload, "BANK");
+          const bankBranch = get(payload, "BRANCH");
+          dispatch(
+            prepareFinalObject("ReceiptTemp[0].instrument.bank.name", bankName)
+          );
+          dispatch(
+            prepareFinalObject(
+              "ReceiptTemp[0].instrument.branchName",
+              bankBranch
+            )
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+};
 
 export const payeeDetails = getCommonContainer({
   paidBy: getSelectField({
@@ -84,7 +132,18 @@ export const chequeDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "ReceiptTemp[0].instrument.ifscCode"
+    jsonPath: "ReceiptTemp[0].instrument.ifscCode",
+    iconObj: {
+      iconName: "search",
+      position: "end",
+      color: "#FE7A51",
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          onIconClick(state, dispatch, 1);
+        }
+      }
+    }
   }),
   chequeBank: getTextField({
     label: {
@@ -152,7 +211,18 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_IFSC_CODE_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "ReceiptTemp[0].instrument.ifscCode"
+    jsonPath: "ReceiptTemp[0].instrument.ifscCode",
+    iconObj: {
+      iconName: "search",
+      position: "end",
+      color: "#FE7A51",
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          onIconClick(state, dispatch, 2);
+        }
+      }
+    }
   }),
   ddBank: getTextField({
     label: {
