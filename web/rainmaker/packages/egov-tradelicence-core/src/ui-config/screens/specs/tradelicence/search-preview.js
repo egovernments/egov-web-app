@@ -26,6 +26,7 @@ import { getFileUrlFromAPI } from "ui-utils/commons";
 
 const role = getQueryArg(window.location.href, "role");
 const status = getQueryArg(window.location.href, "status");
+const tenantId = getQueryArg(window.location.href, "tenantId");
 const applicationNumber = getQueryArg(
   window.location.href,
   "applicationNumber"
@@ -33,8 +34,6 @@ const applicationNumber = getQueryArg(
 let headerSideText = "";
 
 const searchResults = async (action, state, dispatch) => {
-  const tenantId = "pb.amritsar";
-  // console.log(tenantId);
   let queryObject = [
     { key: "tenantId", value: tenantId },
     { key: "applicationNumber", value: applicationNumber }
@@ -50,13 +49,11 @@ const searchResults = async (action, state, dispatch) => {
     payload,
     "Licenses[0].tradeLicenseDetail.applicationDocuments"
   );
-  console.log("uploadedDocData is .....", uploadedDocData);
   const fileStoreIds = uploadedDocData
     .map(item => {
       return item.fileStoreId;
     })
     .join(",");
-  console.log("filestore idis.....", fileStoreIds);
   const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
   const reviewDocData = uploadedDocData.map(item => {
     return {
@@ -77,8 +74,7 @@ const searchResults = async (action, state, dispatch) => {
 };
 
 let titleText = "";
-let paraText =
-  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
+let paraText = "";
 let titleVisibility = false;
 let paraVisibiliy = false;
 let approvalDetailsVisibility = false;
@@ -205,7 +201,7 @@ const screenConfig = {
     );
 
     setStatusBasedValue(status);
-    const footer = footerReview(status, applicationNumber);
+    const footer = footerReview(status, applicationNumber, tenantId);
     set(action, "screenConfig.components.div.children.footer", footer);
 
     if (applicationNumber) {

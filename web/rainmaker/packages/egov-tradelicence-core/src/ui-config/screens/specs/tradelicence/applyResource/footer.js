@@ -300,7 +300,7 @@ export const footer = getCommonApplyFooter({
   }
 });
 
-export const footerReview = (status, applicationNumber) => {
+export const footerReview = (status, applicationNumber, tenantId) => {
   return getCommonApplyFooter({
     container: {
       uiFramework: "custom-atoms",
@@ -309,6 +309,9 @@ export const footerReview = (status, applicationNumber) => {
         leftdiv: {
           uiFramework: "custom-atoms",
           componentPath: "Div",
+          props: {
+            style: { textAlign: "left" }
+          },
           children: {
             downloadButton: {
               componentPath: "Button",
@@ -414,7 +417,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "REJECT"),
               rolesDefination: {
@@ -441,7 +444,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "APPROVE"),
               rolesDefination: {
@@ -468,7 +471,8 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "./pay"
+                path:
+                  "/pay?applicationNumber=${applicationNumber}&tenantId=pb.amritsar&businessService=TL"
               },
               visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
               rolesDefination: {
@@ -495,7 +499,7 @@ export const footerReview = (status, applicationNumber) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}`
+                path: `/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "CANCEL TRADE LICENSE")
             }
