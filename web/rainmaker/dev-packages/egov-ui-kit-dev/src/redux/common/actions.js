@@ -161,6 +161,15 @@ export const toggleSpinner = () => ({
   type: actionTypes.TOGGLE_SPINNER,
 });
 
+export const showSpinner = () => ({
+  type: actionTypes.SHOW_SPINNER,
+});
+
+export const hideSpinner = () => ({
+  type: actionTypes.HIDE_SPINNER,
+});
+
+
 export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
   type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
   prepareFormData,
