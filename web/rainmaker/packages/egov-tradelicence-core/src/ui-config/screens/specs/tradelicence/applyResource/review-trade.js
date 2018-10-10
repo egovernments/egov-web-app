@@ -13,6 +13,7 @@ import { getIconStyle, objectToDropdown } from "../../utils";
 
 import { changeStep } from "./footer";
 import { array } from "prop-types";
+import get from "lodash/get"
 
 const accessoriesCard = {
   uiFramework: "custom-containers",
@@ -177,14 +178,14 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Trade Category",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
         },
-        { jsonPath: "LicensesTemp[0].tradeType" }
+        { jsonPath: "LicensesTemp[0].tradeDetailsResponse[0].trade" }
       ),
       reviewTradeType: getLabelWithValue(
         {
           labelName: "Trade Type",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
         },
-        { jsonPath: "LicensesTemp[0].tradeSubType" }
+        { jsonPath: "LicensesTemp[0].tradeDetailsResponse[0].tradeType" }
       ),
       reviewTradeSubtype: getLabelWithValue(
         {
