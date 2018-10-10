@@ -134,6 +134,17 @@ const convertOwnerDobToEpoch = owners => {
   return updatedOwners;
 };
 
+export const getImageUrlByFile = file => {
+  return new Promise(resolve => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = e => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
+  });
+};
+
 export const getFileSize = file => {
   const size = parseFloat(file.size / 1024).toFixed(2);
   return size;
@@ -202,15 +213,4 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
     });
   }
-};
-
-export const getImageUrlByFile = file => {
-  return new Promise(resolve => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = e => {
-      const fileurl = e.target.result;
-      resolve(fileurl);
-    };
-  });
 };
