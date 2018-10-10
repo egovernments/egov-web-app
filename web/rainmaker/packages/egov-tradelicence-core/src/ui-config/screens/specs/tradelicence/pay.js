@@ -30,7 +30,7 @@ const header = getCommonContainer({
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",
     props: {
-      number: 5434
+      number: getQueryArg(window.location.href, "applicationNumber")
     }
   }
 });
@@ -118,10 +118,9 @@ const screenConfig = {
                   "Review your estimated fees and enter the payment collection details",
                 labelKey: "TL_PAYMENT_HEAD"
               }),
-              paragraph: getCommonParagraph({
-                labelName:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-              }),
+              // paragraph: getCommonParagraph({
+              //   labelName: ""
+              // }),
               estimateDetails,
               addPenaltyRebateButton: {
                 componentPath: "Button",

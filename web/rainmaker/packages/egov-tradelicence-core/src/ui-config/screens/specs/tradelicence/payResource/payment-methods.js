@@ -155,9 +155,9 @@ export const chequeDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_BANK_NAME_PLACEHOLDER"
     },
     required: true,
-    // props: {
-    //   disabled: true
-    // },
+    props: {
+      disabled: true
+    },
     jsonPath: "ReceiptTemp[0].instrument.bank.name"
   }),
   chequeBranch: getTextField({
@@ -170,9 +170,9 @@ export const chequeDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_BANK_BRANCH_PLACEHOLDER"
     },
     required: true,
-    // props: {
-    //   disabled: true
-    // },
+    props: {
+      disabled: true
+    },
     jsonPath: "ReceiptTemp[0].instrument.branchName"
   })
 });
@@ -234,9 +234,9 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_BANK_NAME_PLACEHOLDER"
     },
     required: true,
-    // props: {
-    //   disabled: true
-    // },
+    props: {
+      disabled: true
+    },
     jsonPath: "ReceiptTemp[0].instrument.bank.name"
   }),
   ddBranch: getTextField({
@@ -249,9 +249,9 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_BANK_BRANCH_PLACEHOLDER"
     },
     required: true,
-    // props: {
-    //   disabled: true
-    // },
+    props: {
+      disabled: true
+    },
     jsonPath: "ReceiptTemp[0].instrument.branchName"
   })
 });

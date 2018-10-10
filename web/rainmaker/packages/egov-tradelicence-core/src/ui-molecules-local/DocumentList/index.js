@@ -10,7 +10,7 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import { uploadFile } from "ui-utils/api";
 import { UploadSingleFile } from "ui-molecules-local";
 import get from "lodash/get";
-import * as complete from "mihy-ui-framework/ui-utils/commons";
+import { LabelContainer } from "mihy-ui-framework/ui-containers";
 
 const styles = theme => ({
   documentContainer: {
@@ -51,6 +51,14 @@ const styles = theme => ({
     display: "none"
   }
 });
+const documentTitle = {
+  color: "rgba(0, 0, 0, 0.87)",
+  fontFamily: "Roboto",
+  fontSize: "16px",
+  fontWeight: 400,
+  letterSpacing: "0.67px",
+  lineHeight: "19px"
+};
 const S3_BUCKET = {
   endPoint: "filestore/v1/files"
 };
@@ -109,11 +117,10 @@ class DocumentList extends Component {
     }
   };
   render() {
-    console.log(complete);
     const { classes, documents, description } = this.props;
     const { uploadedIndex } = this.state;
     return (
-      <div>
+      <div style={{ paddingTop: 10 }}>
         {documents &&
           documents.map((document, key) => {
             return (
@@ -131,12 +138,15 @@ class DocumentList extends Component {
                     )}
                   </Grid>
                   <Grid item={true} xs={6} sm={6} align="left">
-                    <Typography variant="body2">
-                      {document.name}
-                      {document.required && (
-                        <sup style={{ color: "#E54D42" }}>*</sup>
-                      )}
-                    </Typography>
+                    <LabelContainer
+                      labelName={document.name}
+                      labelKey={document.name}
+                      style={documentTitle}
+                    />
+                    {document.required && (
+                      <sup style={{ color: "#E54D42" }}>*</sup>
+                    )}
+
                     <Typography variant="caption">{description}</Typography>
                   </Grid>
                   <Grid item={true} xs={12} sm={5} align="right">

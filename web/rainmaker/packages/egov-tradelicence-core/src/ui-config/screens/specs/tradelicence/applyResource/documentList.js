@@ -18,10 +18,10 @@ export const documentList = {
     //   }
     // ],
     buttonLabel: "UPLOAD FILE",
-    description: "Only .jpg and .pdf files. 500kb max file size.",
+    description: "Only .jpg and .pdf files. 6MB max file size.",
     inputProps: {
       accept: "image/*, .pdf, .png, .jpeg"
     },
-    maxFileSize: 5000
+    maxFileSize: 6000
   }
 };
