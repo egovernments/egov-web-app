@@ -20,9 +20,9 @@ import set from "lodash/set";
 /** Data used for creation of receipt is generated and stored in local storage here */
 const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
-  loadUlbLogo(tenant);
-  loadApplicationData("PB-TL-2018-09-27-000004"); //PB-TL-2018-09-27-000004
-  loadReceiptData("PT-107-001330:AS-2018-08-29-001426"); //PT-107-001330:AS-2018-08-29-001426
+  loadUlbLogo(tenant); //pb.amritsar
+  loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
+  loadReceiptData(applicationNumber); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
   loadMdmsData(tenant);
 };
 
