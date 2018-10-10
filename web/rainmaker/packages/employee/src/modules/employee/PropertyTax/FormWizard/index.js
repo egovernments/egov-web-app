@@ -30,7 +30,7 @@ import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstima
 import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
-import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
+import { toggleSpinner, hideSpinner, showSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, generalMDMSFetchSuccess, updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
 import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
@@ -63,6 +63,7 @@ class FormWizard extends Component {
     totalAmountToBePaid: 100,
     isFullPayment: true,
     valueSelected: "Full_Amount",
+    nextButtonEnabled: true
   };
 
   updateDraftinLocalStorage = (draftInfo, assessmentNumber) => {
@@ -848,11 +849,10 @@ class FormWizard extends Component {
   };
 
   callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId, amountExpected) => {
-    const { location, toggleSpinner } = this.props;
+    const { location } = this.props;
     const { isFullPayment, totalAmountToBePaid, estimation, valueSelected } = this.state;
     const { search } = location;
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-    toggleSpinner();
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
@@ -864,10 +864,8 @@ class FormWizard extends Component {
 
     try {
       const billResponse = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
-      toggleSpinner();
       return billResponse;
     } catch (e) {
-      toggleSpinner();
       console.log(e);
     }
   };
@@ -962,7 +960,7 @@ class FormWizard extends Component {
   };
 
   createReceipt = async (Bill = []) => {
-    const { prepareFormData } = this.props;
+    const { prepareFormData, hideSpinner } = this.props;
     const { propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
@@ -1010,30 +1008,12 @@ class FormWizard extends Component {
     }
 
     try {
-      const userInfo = {
-        id: 23432,
-        userName: "8050579149",
-        name: "Gyan",
-        type: "CITIZEN",
-        mobileNumber: "8050579149",
-        emailId: null,
-        roles: [
-          {
-            id: 281,
-            name: "Citizen",
-            code: "CITIZEN",
-          },
-        ],
-        tenantId: "pb",
-        uuid: "7737b382-1bc5-4e84-a57b-b9a9a9ceef46",
-      };
-      const getReceipt = await httpRequest("collection-services/receipts/_create", "_create", [], formData, [], {
-        userInfo,
-        ts: 0,
-      });
+      const getReceipt = await httpRequest("collection-services/receipts/_create", "_create", [], formData, []);
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
         set(prepareFormData, "Receipt[0].Bill", []);
         set(prepareFormData, "Receipt[0].instrument", {}); // Clear prepareFormData
+        hideSpinner();
+        this.setState({nextButtonEnabled: true})
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
       }
@@ -1042,13 +1022,15 @@ class FormWizard extends Component {
       set(prepareFormData, "Receipt[0].Bill", []);
       set(prepareFormData, "Receipt[0].instrument", {});
       this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
+    } finally {
+      
     }
   };
 
   estimate = async () => {
-    let { form, common, toggleSpinner } = this.props;
+    let { form, common, showSpinner, hideSpinner } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
-    toggleSpinner();
+    showSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const financialYearFromQuery = getFinancialYearFromQuery();
@@ -1092,13 +1074,13 @@ class FormWizard extends Component {
           },
         ],
       });
-      toggleSpinner();
       return estimateResponse;
     } catch (e) {
-      toggleSpinner();
       if (e.message) {
         alert(e.message);
       } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
+    } finally {
+      hideSpinner()
     }
   };
 
@@ -1261,56 +1243,66 @@ class FormWizard extends Component {
 
   onPayButtonClick = async () => {
     const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
+    const { showSpinner, hideSpinner } = this.props;
+
     if (!isFullPayment && partialAmountError) return;
-    if (totalAmountToBePaid % 1 === 0) {
-      //Fractions Check
-      this.setState({ dialogueOpen: true });
-      const { form, prepareFormData } = this.props;
-      const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
-      let modeOfPaymentExists = false;
-      for (let i = 0; i < formKeysToValidate.length; i++) {
-        if (Object.keys(form).indexOf(formKeysToValidate[i]) > -1) {
-          modeOfPaymentExists = true;
-          break;
+    try {
+      if (totalAmountToBePaid % 1 === 0) {
+        //Fractions Check
+        this.setState({ dialogueOpen: true });
+        const { form, prepareFormData } = this.props;
+        const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
+        let modeOfPaymentExists = false;
+        for (let i = 0; i < formKeysToValidate.length; i++) {
+          if (Object.keys(form).indexOf(formKeysToValidate[i]) > -1) {
+            modeOfPaymentExists = true;
+            break;
+          }
         }
-      }
-      if (modeOfPaymentExists) {
-        const validateArray = Object.keys(form).reduce((result, item) => {
-          if (formKeysToValidate.indexOf(item) > -1) {
-            result.push({ formKey: item, formValid: validateForm(form[item]) });
-          }
-          return result;
-        }, []);
-
-        const areFormsValid = validateArray.reduce((result, current) => {
-          if (!current.formValid) {
-            result = false;
-          } else {
-            result = true;
-          }
-          return result;
-        }, false);
-
-        if (areFormsValid) {
-          this.pay();
-        } else {
-          validateArray.forEach((item) => {
-            if (!item.formValid) {
-              this.props.displayFormErrorsAction(item.formKey);
+        if (modeOfPaymentExists) {
+          const validateArray = Object.keys(form).reduce((result, item) => {
+            if (formKeysToValidate.indexOf(item) > -1) {
+              result.push({ formKey: item, formValid: validateForm(form[item]) });
             }
-          });
+            return result;
+          }, []);
+
+          const areFormsValid = validateArray.reduce((result, current) => {
+            if (!current.formValid) {
+              result = false;
+            } else {
+              result = true;
+            }
+            return result;
+          }, false);
+
+          if (areFormsValid) {
+            this.setState({nextButtonEnabled: false})
+            showSpinner()
+            this.pay();
+          } else {
+            validateArray.forEach((item) => {
+              if (!item.formValid) {
+                this.props.displayFormErrorsAction(item.formKey);
+              }
+            });
+          }
+        } else {
+          this.setState({nextButtonEnabled: false})
+          showSpinner()
+          this.pay();
         }
       } else {
-        this.pay();
-      }
-    } else {
-      alert("Amount cannot be a fraction!");
+        alert("Amount cannot be a fraction!");
+      }    
+    } finally {
+      
     }
   };
 
   render() {
     const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
-    const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
+    const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen, nextButtonEnabled } = this.state;
     const fromReviewPage = selected === 3;
     const { history } = this.props;
     return (
@@ -1330,6 +1322,7 @@ class FormWizard extends Component {
           dialogueOpen={dialogueOpen}
           history={history}
           onPayButtonClick={onPayButtonClick}
+          nextButtonEnabled={nextButtonEnabled}
         />
       </div>
     );
@@ -1351,6 +1344,8 @@ const mapDispatchToProps = (dispatch) => {
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
     updatePTForms: (forms) => dispatch(updateForms(forms)),
     toggleSpinner: () => dispatch(toggleSpinner()),
+    showSpinner: () => dispatch(showSpinner()),
+    hideSpinner: () => dispatch(hideSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),

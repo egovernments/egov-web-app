@@ -285,25 +285,34 @@ export const getFooterButtons = queryValue => {
   }
 };
 
-export const onClickNextButton = (applicationNumber, secondNumber, queryValue) => {
+export const onClickNextButton = (
+  applicationNumber,
+  secondNumber,
+  queryValue,
+  tenantId
+) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     default:
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
   }
 };
 
-export const onClickPreviousButton = queryValue => {
+export const onClickPreviousButton = (
+  queryValue,
+  applicationNumber,
+  tenantId
+) => {
   switch (queryValue) {
     case "reject":
-      return "/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
+      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return "/mihy-ui-framework/tradelicence/search-preview?role=approver&status=approved";
+      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     default:
-      return "/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval";
+      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
   }
 };
 export const getFeesEstimateCard = props => {

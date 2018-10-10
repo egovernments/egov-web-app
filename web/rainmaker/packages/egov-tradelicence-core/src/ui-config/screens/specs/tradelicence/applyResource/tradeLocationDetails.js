@@ -75,7 +75,7 @@ export const tradeLocationDetails = getCommonCard({
               height: 4,
               border: "none",
               marginTop: 18,
-              left: 664,
+              left: 407,
               position: "absolute"
             }
           },

@@ -19,6 +19,7 @@ const WizardComponent = ({
   backLabel,
   nextLabel,
   history,
+  nextButtonEnabled
 }) => {
   return (
     <div className="wizard-cont">
@@ -50,6 +51,7 @@ const WizardComponent = ({
                     updateIndex(selected + 1);
                   }
             }
+            disabled={!nextButtonEnabled}
           />
         </div>
       </div>

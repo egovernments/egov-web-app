@@ -40,7 +40,7 @@ class MultiItem extends React.Component {
   };
 
   onTabChange = (tabIndex, dispatch) => {
-    this.resetFields(dispatch);
+    // this.resetFields(dispatch);
     switch (tabIndex) {
       case 0:
         this.setInstrumentType("Cash", dispatch);

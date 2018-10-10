@@ -53,7 +53,7 @@ export const getOwnerMobNoField = {
           height: 4,
           border: "none",
           marginTop: 18,
-          left: 704,
+          left: 448,
           position: "absolute"
         }
       },

@@ -20,6 +20,7 @@ import set from "lodash/set";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
+const queryValueTenantId = getQueryArg(window.location.href, "tenantId");
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -177,7 +178,7 @@ const screenConfig = {
           //   tradeDetails
           // }
         },
-        footerApprove
+        footerApprove: footerApprove(queryValueAN, queryValueTenantId)
       }
     }
   },
@@ -187,7 +188,7 @@ const screenConfig = {
     if (queryValueAN) {
       updatePFOforSearchResults(action, state, dispatch, queryValueAN);
     }
-    const data = getApproveCard(queryValuePurpose);
+    const data = getApproveCard(queryValuePurpose, queryValueTenantId);
     set(
       action,
       "screenConfig.components.div.children.approveForm.children.form",
