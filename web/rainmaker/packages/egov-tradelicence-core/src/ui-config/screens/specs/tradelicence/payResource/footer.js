@@ -6,6 +6,7 @@ import { httpRequest } from "ui-utils/api";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch } from "../../utils";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const moveToSuccess = (href, dispatch, receiptNumber) => {
   const applicationNo = getQueryArg(href, "applicationNumber");
@@ -51,7 +52,7 @@ const callBackForPay = async (state, dispatch) => {
 
   ReceiptBody.Receipt.push(finalReceiptData);
 
-  console.log(ReceiptBody);
+  // console.log(ReceiptBody);
   try {
     let response = await httpRequest(
       "post",
@@ -69,6 +70,7 @@ const callBackForPay = async (state, dispatch) => {
     );
     moveToSuccess(href, dispatch, receiptNumber);
   } catch (e) {
+    dispatch(toggleSnackbarAndSetText(true, e.message, "error"));
     console.log(e);
   }
 };
