@@ -30,7 +30,7 @@ const getAcknowledgementCard = (
   purpose,
   status,
   applicationNumber,
-  tlNumber,
+  secondNumber,
   tenant
 ) => {
   if (purpose === "apply" && status === "success") {
@@ -98,7 +98,7 @@ const getAcknowledgementCard = (
             body:
               "A copy of receipt has been sent to trade owner at registered Mobile No.",
             tailText: "Payment Receipt No.",
-            number: tlNumber
+            number: secondNumber
           })
         }
       },
@@ -130,8 +130,8 @@ const getAcknowledgementCard = (
             header: "Trade License Approved Successfully",
             body:
               "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-            tailText: !tlNumber || tlNumber === null ? "Trade License No." : "",
-            number: !tlNumber || tlNumber === null ? tlNumber : ""
+            tailText: "Trade License No.",
+            number: secondNumber
           })
         }
       },
@@ -193,7 +193,7 @@ const getAcknowledgementCard = (
             body:
               "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
             tailText: "Trade License No.",
-            number: tlNumber
+            number: secondNumber
           })
         }
       },
@@ -217,14 +217,14 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const number = getQueryArg(window.location.href, "applicationNumber");
-    const tlNumber = getQueryArg(window.location.href, "tlNumber");
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
     const data = getAcknowledgementCard(
       purpose,
       status,
-      number,
-      tlNumber,
+      applicationNumber,
+      secondNumber,
       tenant
     );
     set(action, "screenConfig.components.div.children", data);

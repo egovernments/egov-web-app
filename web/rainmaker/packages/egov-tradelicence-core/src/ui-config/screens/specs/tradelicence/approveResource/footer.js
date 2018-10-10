@@ -38,8 +38,8 @@ const onNextButtonClick = async (state, dispatch) => {
   let response = await updateTradeDetails({ Licenses });
   if (response) {
     const applicationNumber = get(response, "Licenses[0].applicationNumber");
-    const tlNumber = get(response, "Licenses[0].licenseNumber");
-    const route = onClickNextButton(applicationNumber, tlNumber, queryValue);
+    const secondNumber = get(response, "Licenses[0].licenseNumber");
+    const route = onClickNextButton(applicationNumber, secondNumber, queryValue);
     dispatch(setRoute(route));
   } else {
     dispatch(

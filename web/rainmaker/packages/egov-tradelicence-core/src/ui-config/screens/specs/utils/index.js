@@ -285,14 +285,14 @@ export const getFooterButtons = queryValue => {
   }
 };
 
-export const onClickNextButton = (applicationNumber, tlNumber, queryValue) => {
+export const onClickNextButton = (applicationNumber, secondNumber, queryValue) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
     default:
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&tlNumber=${tlNumber}&tenantId=pb.amritsar`;
+      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=pb.amritsar`;
   }
 };
 
