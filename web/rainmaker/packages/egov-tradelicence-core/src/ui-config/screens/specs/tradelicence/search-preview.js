@@ -34,20 +34,23 @@ const applicationNumber = getQueryArg(
 let headerSideText = "";
 
 const getTradeTypeSubtypeDetails = payload => {
-  const tradeUnitsFromApi = get(payload, "Licenses[0].tradeLicenseDetail.tradeUnits", [])
-  const tradeUnitDetails = []
+  const tradeUnitsFromApi = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.tradeUnits",
+    []
+  );
+  const tradeUnitDetails = [];
   tradeUnitsFromApi.forEach(tradeUnit => {
-    const { tradeType } = tradeUnit
-    const tradeDetails = tradeType.split(".")
+    const { tradeType } = tradeUnit;
+    const tradeDetails = tradeType.split(".");
     tradeUnitDetails.push({
       trade: get(tradeDetails, "[0]", ""),
       tradeType: get(tradeDetails, "[1]", ""),
       tradeSubType: get(tradeDetails, "[2]", "")
-    })
-  })
-  console.log("tradeUnitDetails", tradeUnitDetails)
-  return tradeUnitDetails
-}
+    });
+  });
+  return tradeUnitDetails;
+};
 
 const searchResults = async (action, state, dispatch) => {
   let queryObject = [
@@ -55,7 +58,6 @@ const searchResults = async (action, state, dispatch) => {
     { key: "applicationNumber", value: applicationNumber }
   ];
   let payload = await getSearchResults(queryObject);
-  console.log("sudhanshu...", payload);
   set(
     payload,
     "Licenses[0].validFrom",
@@ -80,12 +82,15 @@ const searchResults = async (action, state, dispatch) => {
     payload,
     "Licenses[0].tradeLicenseDetail.applicationDocuments"
   );
-  const fileStoreIds = uploadedDocData
-    .map(item => {
-      return item.fileStoreId;
-    })
-    .join(",");
-  const fileUrlPayload = await getFileUrlFromAPI(fileStoreIds);
+  const fileStoreIds =
+    uploadedDocData &&
+    uploadedDocData
+      .map(item => {
+        return item.fileStoreId;
+      })
+      .join(",");
+  const fileUrlPayload =
+    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
   const reviewDocData = uploadedDocData.map(item => {
     return {
       title: item.documentType || "",
@@ -101,7 +106,10 @@ const searchResults = async (action, state, dispatch) => {
   dispatch(prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData));
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   dispatch(
-    prepareFinalObject("LicensesTemp[0].tradeDetailsResponse", getTradeTypeSubtypeDetails(payload))
+    prepareFinalObject(
+      "LicensesTemp[0].tradeDetailsResponse",
+      getTradeTypeSubtypeDetails(payload)
+    )
   );
   const LicenseData = payload.Licenses[0];
   createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
