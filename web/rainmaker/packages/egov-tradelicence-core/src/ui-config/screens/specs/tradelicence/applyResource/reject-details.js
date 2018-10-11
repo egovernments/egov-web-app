@@ -33,14 +33,19 @@ export const getRejectionDetails = () => {
           labelName: "Rejected By",
           labelKey: "TL_EMP_APPLICATION_REJ_BY"
         },
-        { value: "Sukhwindar Singh" }
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.rejectedBy"
+        }
       ),
       rejectComments: getLabelWithValue(
         {
           labelName: "Rejection Comments",
           labelKey: "TL_EMP_APPLICATION_REJ_COM"
         },
-        { jsonPath: "asdfgfdsafsds" }
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.additionalDetail.rejectComments"
+        }
       )
     }),
     viewTow: getCommonContainer({

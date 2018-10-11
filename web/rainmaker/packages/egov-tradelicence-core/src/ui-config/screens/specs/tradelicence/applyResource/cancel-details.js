@@ -17,14 +17,20 @@ export const getCancelDetails = () =>
           labelName: "Cancelled By",
           labelKey: "TL_EMP_APPLICATION_CANC_BY"
         },
-        { jsonPath: "Sukhwinder Singh" }
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.additionalDetail.cancelledBy"
+        }
       ),
       Comments: getLabelWithValue(
         {
           labelName: "Cancellation Comments",
           labelKey: "TL_EMP_APPLICATION_CANC_COM"
         },
-        { jsonPath: "lorel Ispum" }
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.additionalDetail.cancelComments"
+        }
       )
     })
   });

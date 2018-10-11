@@ -30,14 +30,17 @@ export const getApprovalDetails = () =>
           labelName: "Approved By",
           labelKey: "TL_EMP_APPLICATION_APPR_BY"
         },
-        { value: "Sukhwindar Singh" }
+        { value: "Licenses[0].tradeLicenseDetail.additionalDetail.approvedBy" }
       ),
       approvalComments: getLabelWithValue(
         {
           labelName: "Approval Comments",
           labelKey: "TL_EMP_APPLICATION_APPR_COM"
         },
-        { jsonPath: "asdfgfdsafsds" }
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approvalComments"
+        }
       )
     }),
     viewTow: getCommonContainer({
