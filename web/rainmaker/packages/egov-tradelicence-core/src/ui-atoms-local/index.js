@@ -38,6 +38,11 @@ const AutoSuggest = Loadable({
   loading: () => <Loading />
 });
 
+const Asteric = Loadable({
+  loader: () => import("./Asteric"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -45,5 +50,6 @@ export {
   Checkbox,
   UploadedDocument,
   MapLocation,
-  AutoSuggest
+  AutoSuggest,
+  Asteric
 };

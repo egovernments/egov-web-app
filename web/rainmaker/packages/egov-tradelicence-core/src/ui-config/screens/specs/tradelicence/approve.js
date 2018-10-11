@@ -79,7 +79,8 @@ const getApproveCard = queryValuePurpose => {
             "Are Safety Norms Satisfactory?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms"
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms",
+            "Yes"
           ),
 
     hygieneMeasure:
@@ -89,7 +90,8 @@ const getApproveCard = queryValuePurpose => {
             "Are Hygiene Levels Satisfactory?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels"
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels",
+            "Yes"
           ),
 
     localityMeasure:
@@ -99,7 +101,8 @@ const getApproveCard = queryValuePurpose => {
             "Is Locality harmed/disturbed by this trade?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed"
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed",
+            "No"
           ),
 
     commentSection: getContainerWithElement({

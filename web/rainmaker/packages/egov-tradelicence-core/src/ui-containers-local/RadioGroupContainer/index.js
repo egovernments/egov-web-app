@@ -29,7 +29,13 @@ const styles = theme => ({
 
 class RadioButtonsGroup extends React.Component {
   state = {
-    value: "No"
+    value: ""
+  };
+  componentDidMount = () => {
+    const { defaultValue } = this.props;
+    this.setState({
+      value: defaultValue
+    });
   };
 
   handleChange = event => {

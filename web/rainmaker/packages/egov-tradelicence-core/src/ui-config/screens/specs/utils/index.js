@@ -23,6 +23,13 @@ export const getCommonApplyFooter = children => {
   };
 };
 
+export const getAsteric = () => {
+  return {
+    uiFramework: "custom-atoms-local",
+    componentPath: "Asteric"
+  };
+};
+
 export const getTooltip = (children, toolTipProps) => {
   return {
     uiFramework: "custom-atoms",
@@ -84,17 +91,24 @@ export const getUploadFilesMultiple = jsonPath => {
   };
 };
 
-export const getRadioButtonGroup = (buttons, jsonPath) => {
+export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
   return {
     uiFramework: "custom-containers-local",
     componentPath: "RadioGroupContainer",
     props: {
       buttons,
-      jsonPath
+      jsonPath,
+      defaultValue
     }
   };
 };
-export const getRadioGroupWithLabel = (label, labelKey, buttons, jsonPath) => {
+export const getRadioGroupWithLabel = (
+  label,
+  labelKey,
+  buttons,
+  jsonPath,
+  defaultValue
+) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Container",
@@ -118,7 +132,8 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons, jsonPath) => {
             style: {
               fontSize: "14px"
             }
-          })
+          }),
+          asteric: getAsteric()
         }
       },
       div2: {
@@ -129,7 +144,7 @@ export const getRadioGroupWithLabel = (label, labelKey, buttons, jsonPath) => {
           sm: 8
         },
         children: {
-          div: getRadioButtonGroup(buttons, jsonPath)
+          div: getRadioButtonGroup(buttons, jsonPath, defaultValue)
         }
       }
     }
