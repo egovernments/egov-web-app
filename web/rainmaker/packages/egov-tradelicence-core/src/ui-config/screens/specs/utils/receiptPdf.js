@@ -162,7 +162,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-key"
               },
               {
-                text: transformedData.tradeType,
+                text: transformedData.tradeCategory,
                 border: borderValue
               }
             ],

@@ -6,11 +6,7 @@ import {
 } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import store from "ui-redux/store";
-
-const handleNull = value => {
-  let response = value ? value : "";
-  return response;
-};
+import get from "lodash/get";
 
 const createAddress = (doorNo, buildingName, street, locality) => {
   let address = "";
@@ -31,6 +27,15 @@ const epochToDate = et => {
     "/" +
     date.getUTCFullYear();
   return formattedDate;
+};
+
+const getMessageFromLocalization = code => {
+  let messageObject = JSON.parse(
+    localStorage.getItem("localization_en_IN")
+  ).find(item => {
+    return item.code == code;
+  });
+  return messageObject ? messageObject.message : "NA";
 };
 
 export const loadUlbLogo = tenantid => {
@@ -57,39 +62,70 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
   let response = await getSearchResults(queryObject);
 
   if (response && response.Licenses && response.Licenses.length > 0) {
-    data.applicationNumber = handleNull(response.Licenses[0].applicationNumber);
-    data.licenseNumber = handleNull(response.Licenses[0].licenseNumber);
-    data.financialYear = handleNull(response.Licenses[0].financialYear);
-    data.tradeName = handleNull(response.Licenses[0].tradeName);
-    data.doorNo = handleNull(
-      response.Licenses[0].tradeLicenseDetail.address.doorNo
+    data.applicationNumber = get(
+      response,
+      "Licenses[0].applicationNumber",
+      "NA"
     );
-    data.buildingName = handleNull(
-      response.Licenses[0].tradeLicenseDetail.address.buildingName
+    data.licenseNumber = get(response, "Licenses[0].licenseNumber", "NA");
+    data.financialYear = get(response, "Licenses[0].financialYear", "NA");
+    data.tradeName = get(response, "Licenses[0].tradeName", "NA");
+    data.doorNo = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.doorNo",
+      "NA"
     );
-    data.streetName = handleNull(
-      response.Licenses[0].tradeLicenseDetail.address.street
+    data.buildingName = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.buildingName",
+      "NA"
     );
-    let localityCode = handleNull(
-      response.Licenses[0].tradeLicenseDetail.address.locality.code
+    data.streetName = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.street",
+      "NA"
     );
-    let localityObject = JSON.parse(
-      localStorage.getItem("localization_en_IN")
-    ).find(item => {
-      return item.code == localityCode;
-    });
-    data.locality = localityObject ? localityObject.message : "";
-    data.ownerName = handleNull(
-      response.Licenses[0].tradeLicenseDetail.owners[0].name
+    let localityCode = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.locality.code",
+      "NA"
     );
-    data.mobileNo = handleNull(
-      response.Licenses[0].tradeLicenseDetail.owners[0].mobileNumber
+    data.locality = getMessageFromLocalization(localityCode);
+    data.ownerName = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.owners[0].name",
+      "NA"
     );
-    data.licenseIssueDate = handleNull(response.Licenses[0].issuedDate);
-    data.licenseExpiryDate = handleNull(response.Licenses[0].validTo);
-    data.tradeType = handleNull(
-      response.Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType
+    data.mobileNo = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+      "NA"
     );
+    data.licenseIssueDate = get(response, "Licenses[0].issuedDate", "NA");
+    data.licenseExpiryDate = get(response, "Licenses[0].validTo", "NA");
+    /** Trade settings */
+    let tradeCategory = "NA";
+    let tradeType = "NA";
+    let tradeCode = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      null
+    );
+    if (tradeCode) {
+      let tradeCodeArray = tradeCode.split(".");
+      if (tradeCodeArray.length == 1) {
+        tradeCategory = "TL_" + tradeCode;
+      } else if (tradeCodeArray.length == 2) {
+        tradeCategory = "TL_" + tradeCodeArray[0];
+        tradeType = "TL_" + tradeCode;
+      } else if (tradeCodeArray.length > 2) {
+        tradeCategory = "TL_" + tradeCodeArray[0];
+        tradeType = "TL_" + tradeCodeArray[1];
+      }
+    }
+    /** End */
+    data.tradeCategory = getMessageFromLocalization(tradeCategory);
+    data.tradeType = getMessageFromLocalization(tradeType);
     data.address = createAddress(
       data.doorNo,
       data.buildingName,
@@ -99,7 +135,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     let accessories = response.Licenses[0].tradeLicenseDetail.accessories
       ? response.Licenses[0].tradeLicenseDetail.accessories.length
       : 0;
-    data.accessories = handleNull(accessories);
+    data.accessories = accessories;
     loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
@@ -120,36 +156,48 @@ export const loadReceiptData = async (consumerCode, tenant) => {
   let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt && response.Receipt.length > 0) {
-    data.receiptNumber = handleNull(
-      response.Receipt[0].Bill[0].billDetails[0].receiptNumber
+    data.receiptNumber = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].receiptNumber",
+      "NA"
     );
-    data.amountPaid = handleNull(
-      response.Receipt[0].Bill[0].billDetails[0].amountPaid
+    data.amountPaid = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].amountPaid",
+      0
     );
-    data.totalAmount = handleNull(
-      response.Receipt[0].Bill[0].billDetails[0].totalAmount
+    data.totalAmount = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].totalAmount",
+      0
     );
-    data.amountDue = handleNull(data.totalAmount - data.amountPaid);
-    data.paymentMode = handleNull(
-      response.Receipt[0].instrument.instrumentType.name
+    data.amountDue = data.totalAmount - data.amountPaid;
+    data.paymentMode = get(
+      response,
+      "Receipt[0].instrument.instrumentType.name",
+      "NA"
     );
-    data.transactionNumber = handleNull(
-      response.Receipt[0].instrument.transactionNumber
+    data.transactionNumber = get(
+      response,
+      "Receipt[0].instrument.transactionNumber",
+      "NA"
     );
-    data.bankName = handleNull(response.Receipt[0].instrument.bank.name);
-    data.branchName = handleNull(response.Receipt[0].instrument.branchName);
+    data.bankName = get(response, "Receipt[0].instrument.bank.name", "NA");
+    data.branchName = get(response, "Receipt[0].instrument.branchName", null);
     data.bankAndBranch =
       data.bankName && data.branchName
         ? data.bankName + ", " + data.branchName
-        : handleNull(data.bankName);
-    data.paymentDate = handleNull(
-      epochToDate(response.Receipt[0].Bill[0].billDetails[0].receiptDate)
+        : get(data, "bankName", "NA");
+    data.paymentDate = epochToDate(
+      get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)
     );
-    data.g8ReceiptNo = handleNull(
-      response.Receipt[0].Bill[0].billDetails[0].manualReceiptNumber
+    data.g8ReceiptNo = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber",
+      "NA"
     );
-    data.g8ReceiptDate = handleNull(
-      epochToDate(response.Receipt[0].Bill[0].billDetails[0].manualReceiptDate)
+    data.g8ReceiptDate = epochToDate(
+      get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)
     );
     /** START TL Fee, Adhoc Penalty/Rebate Calculation */
     var tlAdhocPenalty = 0,
@@ -197,8 +245,8 @@ export const loadMdmsData = async tenantid => {
       return item.code == tenantid;
     });
     /** START Corporation name generation logic */
-    let ulbGrade = handleNull(ulbData.city.ulbGrade);
-    let name = handleNull(ulbData.city.name);
+    let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
+    let name = get(ulbData, "city.name", "NA");
     if (ulbGrade) {
       if (ulbGrade === "NP") {
         data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
@@ -213,10 +261,10 @@ export const loadMdmsData = async tenantid => {
       data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
     }
     /** END */
-    data.corporationAddress = handleNull(ulbData.address);
-    data.corporationContact = handleNull(ulbData.contactNumber);
-    data.corporationWebsite = handleNull(ulbData.domainUrl);
-    data.corporationEmail = handleNull(ulbData.emailId);
+    data.corporationAddress = get(ulbData, "address", "NA");
+    data.corporationContact = get(ulbData, "contactNumber", "NA");
+    data.corporationWebsite = get(ulbData, "domainUrl", "NA");
+    data.corporationEmail = get(ulbData, "emailId", "NA");
   }
   store.dispatch(prepareFinalObject("mdmsDataForReceipt", data));
 };
@@ -229,7 +277,7 @@ export const loadUserNameData = async uuid => {
   let response = await getUserDataFromUuid(bodyObject);
 
   if (response && response.user && response.user.length > 0) {
-    data.auditorName = handleNull(response.user[0].name);
+    data.auditorName = get(response, "user[0].name", "NA");
   }
   store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };
