@@ -33,13 +33,14 @@ class EGFFinance extends Component{
             let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"-"+subdomainurl+menuUrl;
             // let erp_url='http://jalandhar.test.egov.com:8080'+menuUrl;
             console.log("ERP URL : "+erp_url);
+            let tenantId = localStorage.getItem('tenant-id');
 
             return (
                     <div>
                     <iframe name="erp_iframe" id="erp_iframe" height={winheight} width="100%"></iframe>
                      <form action={erp_url} id="erp_form" method="post" target="erp_iframe">
                       
-                        <input readOnly hidden="true" name="auth_token" value={auth_token}  />
+                        <input readOnly hidden="true" name="tenantId"   value={tenantId} />
                     
                   </form>
 
