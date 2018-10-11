@@ -409,7 +409,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
         layout: tableborder
       },
       {
-        style: "pt-reciept-citizen-subheader",
+        style: "receipt-approver",
         columns: [
           {
             text: [
@@ -508,7 +508,13 @@ const getReceiptData = (transformedData, ulbLogo) => {
       "receipt-no": {
         color: "#484848",
         fontSize: 10
-      }
+      },
+      "receipt-approver": {
+        fontSize: 10,
+        bold: true,
+        margin: [0, 60, 0, 8], //left top right bottom
+        color: "#484848"
+      },
     }
   };
   return receiptData;
@@ -563,24 +569,11 @@ const getCertificateData = (transformedData, ulbLogo) => {
         columns: [
           {
             width: 160,
-            text: "Trade License No."
+            text: "Trade License Number"
           },
           {
             width: "*",
             text: transformedData.licenseNumber
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Financial Year"
-          },
-          {
-            width: "*",
-            text: transformedData.financialYear
           }
         ]
       },
@@ -607,6 +600,19 @@ const getCertificateData = (transformedData, ulbLogo) => {
           {
             width: "*",
             text: transformedData.receiptNumber
+          }
+        ]
+      },
+      {
+        style: "tl-certificate-data-2",
+        columns: [
+          {
+            width: 160,
+            text: "Financial Year"
+          },
+          {
+            width: "*",
+            text: transformedData.financialYear
           }
         ]
       },
@@ -671,7 +677,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: transformedData.totalAmount
+            text: `Rs. ${transformedData.totalAmount}`
           }
         ]
       },
@@ -702,7 +708,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
         ]
       },
       {
-        style: "tl-certificate-data",
+        style: "tl-certificate-footer",
         columns: [
           {
             text: [
@@ -804,7 +810,12 @@ const getCertificateData = (transformedData, ulbLogo) => {
       "receipt-no": {
         color: "#484848",
         fontSize: 10
-      }
+      },
+      "tl-certificate-footer": {
+        fontSize: 14,
+        margin: [0, 80, 0, 0], //left top right bottom
+        color: "#1E1E1E"
+      },
     }
   };
   return tlCertificateData;
