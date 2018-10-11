@@ -164,6 +164,19 @@ class IntegrationReactSelect extends React.Component {
     single: null
   };
 
+  // componentDidMount = () => {
+  // const { fieldValue } = this.props;
+  // this.setState({ single: fieldValue });
+  // };
+
+  componentWillReceiveProps = nextProps => {
+    if (this.props.fieldValue.label !== nextProps.fieldValue.label) {
+      const { fieldValue } = nextProps;
+      // this.props.onSelect(fieldValue);
+      this.setState({ single: fieldValue });
+    }
+  };
+
   handleChange = name => value => {
     this.setState({
       [name]: value

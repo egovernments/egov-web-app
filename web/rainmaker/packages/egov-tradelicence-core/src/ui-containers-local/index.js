@@ -28,6 +28,10 @@ const EstimateCardContainer = Loadable({
   loader: () => import("./EstimateCardContainer"),
   loading: () => <Loading />
 });
+const AutosuggestContainer = Loadable({
+  loader: () => import("./AutosuggestContainer"),
+  loading: () => <Loading />
+});
 
 export {
   CustomTabContainer,
@@ -35,5 +39,6 @@ export {
   RadioGroupContainer,
   CheckboxContainer,
   DownloadFileContainer,
-  EstimateCardContainer
+  EstimateCardContainer,
+  AutosuggestContainer
 };

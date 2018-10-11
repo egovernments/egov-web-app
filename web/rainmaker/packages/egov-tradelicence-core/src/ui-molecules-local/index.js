@@ -42,10 +42,10 @@ const DocumentList = Loadable({
   loading: () => <Loading />
 });
 
-const AutoSelector = Loadable({
-  loader: () => import("./AutoSelector"),
-  loading: () => <Loading />
-});
+// const AutoSelector = Loadable({
+//   loader: () => import("./AutoSelector"),
+//   loading: () => <Loading />
+// });
 
 const MapLocator = Loadable({
   loader: () => import("./MapLocator"),
@@ -66,7 +66,7 @@ export {
   UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
-  AutoSelector,
+  // AutoSelector,
   MapLocator,
   FeesEstimateCard
 };

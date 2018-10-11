@@ -90,32 +90,45 @@ export const tradeLocationDetails = getCommonCard({
         cityDropdown: {
           ...getSelectField({
             label: { labelName: "City" },
+            optionLabel: "name",
             placeholder: { labelName: "Select City" },
             sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
             jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
             gridDefination: { sm: 12 },
-            required: true
+            required: true,
+            props: {
+              disabled: true,
+              value: localStorage.getItem("tenant-id")
+            }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
-            try {
-              let payload = await httpRequest(
-                "post",
-                "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-                "_search",
-                [{ key: "tenantId", value: "pb.amritsar" }],
-                {}
-              );
-              dispatch(
-                handleField(
-                  "apply",
-                  "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-                  "props.suggestions",
-                  payload.TenantBoundary[0].boundary
-                )
-              );
-            } catch (e) {
-              console.log(e);
-            }
+            // try {
+            //   let payload = await httpRequest(
+            //     "post",
+            //     "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+            //     "_search",
+            //     [{ key: "tenantId", value: action.value }],
+            //     {}
+            //   );
+            //   dispatch(
+            //     handleField(
+            //       "apply",
+            //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+            //       "props.suggestions",
+            //       payload.TenantBoundary && payload.TenantBoundary[0].boundary
+            //     )
+            //   );
+            //   dispatch(
+            //     handleField(
+            //       "apply",
+            //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+            //       "props.value",
+            //       ""
+            //     )
+            //   );
+            // } catch (e) {
+            //   console.log(e);
+            // }
           }
         }
       },
@@ -166,8 +179,8 @@ export const tradeLocationDetails = getCommonCard({
     }),
 
     tradeLocMohalla: {
-      uiFramework: "custom-molecules-local",
-      componentPath: "AutoSelector",
+      uiFramework: "custom-containers-local",
+      componentPath: "AutosuggestContainer",
       props: {
         suggestions: [],
         label: "Mohalla",

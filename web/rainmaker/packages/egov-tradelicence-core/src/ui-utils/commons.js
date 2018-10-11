@@ -1,8 +1,12 @@
 import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
-import { convertDateToEpoch } from "../ui-config/screens/specs/utils";
+import {
+  convertDateToEpoch,
+  getCurrentFinancialYear
+} from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -80,6 +84,41 @@ export const updatePFOforSearchResults = async (
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
 };
 
+export const getBoundaryData = async (
+  action,
+  state,
+  dispatch,
+  queryObject,
+  componentPath
+) => {
+  try {
+    let payload = await httpRequest(
+      "post",
+      "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+      "_search",
+      queryObject,
+      {}
+    );
+    dispatch(
+      prepareFinalObject(
+        "applyScreenMdmsData.tenant.localities",
+        payload.TenantBoundary && payload.TenantBoundary[0].boundary
+      )
+    );
+
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+        "props.suggestions",
+        payload.TenantBoundary && payload.TenantBoundary[0].boundary
+      )
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const applyTradeLicense = async (state, dispatch) => {
   try {
     let queryObject = JSON.parse(
@@ -87,6 +126,11 @@ export const applyTradeLicense = async (state, dispatch) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
+    let currentFinancialYr = getCurrentFinancialYear();
+    let fY1 = currentFinancialYr.split("-")[1];
+    fY1 = fY1.substring(2, 4);
+    currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
+    set(queryObject[0], "financialYear", currentFinancialYr);
     set(queryObject[0], "validFrom", 1522540800000);
     set(queryObject[0], "validTo", 1554076799000);
     if (queryObject[0] && queryObject[0].commencementDate) {
@@ -99,12 +143,9 @@ export const applyTradeLicense = async (state, dispatch) => {
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
     set(queryObject[0], "tradeLicenseDetail.owners", owners);
     set(queryObject[0], "tenantId", "pb.amritsar");
-    const status = get(queryObject[0], "status", "");
+    // const status = get(queryObject[0], "status", "");
 
-    if (
-      (status === "INITIATED" || status === "APPLIED") &&
-      queryObject[0].applicationNumber
-    ) {
+    if (queryObject[0].applicationNumber) {
       //call update
       let action = "INITIATE";
       if (

@@ -12,9 +12,10 @@ class AutoSuggestor extends Component {
   };
 
   render() {
+    const { value, ...rest } = this.props;
     return (
       <div>
-        <AutoSuggest onSelect={this.onSelect} {...this.props} />
+        <AutoSuggest onSelect={this.onSelect} value={value} {...rest} />
       </div>
     );
   }
