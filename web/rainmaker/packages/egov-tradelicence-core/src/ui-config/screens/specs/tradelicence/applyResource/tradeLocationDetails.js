@@ -92,7 +92,7 @@ export const tradeLocationDetails = getCommonCard({
             label: { labelName: "City" },
             placeholder: { labelName: "Select City" },
             sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-            jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+            jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
             gridDefination: { sm: 12 },
             required: true
           }),
