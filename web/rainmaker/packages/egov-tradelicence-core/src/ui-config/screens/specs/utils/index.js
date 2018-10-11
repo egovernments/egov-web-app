@@ -676,20 +676,37 @@ export const getDetailsForOwner = async (state, dispatch) => {
         userName: `${ownerNo}`
       }
     );
-    const userInfo =
-      payload.user &&
-      payload.user[0] &&
-      JSON.parse(JSON.stringify(payload.user[0]));
-    if (userInfo && userInfo.createdDate) {
-      userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
-      userInfo.lastModifiedDate = convertDateTimeToEpoch(
-        userInfo.lastModifiedDate
-      );
-      userInfo.pwdExpiryDate = convertDateTimeToEpoch(userInfo.pwdExpiryDate);
+    if (payload && payload.user && payload.user.hasOwnProperty("length")) {
+      if (payload.user.length === 0) {
+        dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            "Owner is not found with this user id !",
+            "info"
+          )
+        );
+      } else {
+        const userInfo =
+          payload.user &&
+          payload.user[0] &&
+          JSON.parse(JSON.stringify(payload.user[0]));
+        if (userInfo && userInfo.createdDate) {
+          userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
+          userInfo.lastModifiedDate = convertDateTimeToEpoch(
+            userInfo.lastModifiedDate
+          );
+          userInfo.pwdExpiryDate = convertDateTimeToEpoch(
+            userInfo.pwdExpiryDate
+          );
+        }
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.owners[0]",
+            userInfo
+          )
+        );
+      }
     }
-    dispatch(
-      prepareFinalObject("Licenses[0].tradeLicenseDetail.owners[0]", userInfo)
-    );
   } catch (e) {
     console.log(e);
   }
