@@ -30,7 +30,9 @@ const generatePdfFromDiv = (action, applicationNumber) => {
   html2canvas(target, {
     onclone: function(clonedDoc) {
       // clonedDoc.getElementById("custom-atoms-footer").style = "width: 900px"; //Not Working
-      clonedDoc.getElementById("custom-atoms-footer")["data-html2canvas-ignore"] = "true";
+      clonedDoc.getElementById("custom-atoms-footer")[
+        "data-html2canvas-ignore"
+      ] = "true";
     }
   }).then(canvas => {
     var data = canvas.toDataURL();
@@ -370,17 +372,17 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                     marginLeft: "10px",
                     marginRight: "10px"
                   }
-                }),
-                dropdown: {
-                  uiFramework: "custom-atoms",
-                  componentPath: "Icon",
-                  props: {
-                    style: {
-                      float: "right"
-                    },
-                    iconName: "arrow_drop_down"
-                  }
-                }
+                })
+                // dropdown: {
+                //   uiFramework: "custom-atoms",
+                //   componentPath: "Icon",
+                //   props: {
+                //     style: {
+                //       float: "right"
+                //     },
+                //     iconName: "arrow_drop_down"
+                //   }
+                // }
               },
               onClickDefination: {
                 action: "condition",
@@ -417,14 +419,14 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                     marginLeft: "10px",
                     marginRight: "10px"
                   }
-                }),
-                dropdown: {
-                  uiFramework: "custom-atoms",
-                  componentPath: "Icon",
-                  props: {
-                    iconName: "arrow_drop_down"
-                  }
-                }
+                })
+                // dropdown: {
+                //   uiFramework: "custom-atoms",
+                //   componentPath: "Icon",
+                //   props: {
+                //     iconName: "arrow_drop_down"
+                //   }
+                // }
               },
               onClickDefination: {
                 action: "condition",
@@ -551,11 +553,11 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 rolePath: "user-info.roles",
                 roles: ["TL_APPROVER"]
               }
-            },
-            gridDefination: {
-              xs: 12,
-              sm: 6
             }
+          },
+          gridDefination: {
+            xs: 12,
+            sm: 6
           }
         }
       }
