@@ -74,12 +74,12 @@ const onNextButtonClick = async (state, dispatch) => {
       dispatch(setRoute(route));
     } else {
       dispatch(
-        toggleSnackbarAndSetText(true, "Please accept the terms !", "error")
+        toggleSnackbarAndSetText(true, "Update TL returned error", "error")
       );
     }
   } else {
     dispatch(
-      toggleSnackbarAndSetText(true, "Update TL retuned error", "error")
+      toggleSnackbarAndSetText(true, "Please accept the terms !", "error")
     );
   }
 };
