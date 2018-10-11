@@ -1,15 +1,19 @@
-import {
-  getReceiptData,
-  getSearchResults,
-  getMdmsData,
-  getUserDataFromUuid
-} from "../utils";
+import get from "lodash/get";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import store from "ui-redux/store";
-import get from "lodash/get";
+import {
+  getMdmsData,
+  getReceiptData,
+  getSearchResults,
+  getUserDataFromUuid
+} from "../utils";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
+};
+
+const nullToNa = value => {
+  return ["", "NA", "null", null].includes(value) ? "NA" : value;
 };
 
 const createAddress = (doorNo, buildingName, street, locality, city) => {
@@ -67,56 +71,52 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
   let response = await getSearchResults(queryObject);
 
   if (response && response.Licenses && response.Licenses.length > 0) {
-    data.applicationNumber = get(
-      response,
-      "Licenses[0].applicationNumber",
-      "NA"
+    data.applicationNumber = nullToNa(
+      get(response, "Licenses[0].applicationNumber", "NA")
     );
-    data.licenseNumber = get(response, "Licenses[0].licenseNumber", "NA");
-    data.financialYear = get(response, "Licenses[0].financialYear", "NA");
-    data.tradeName = get(response, "Licenses[0].tradeName", "NA");
-    data.doorNo = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.address.doorNo",
-      "NA"
+    data.licenseNumber = nullToNa(
+      get(response, "Licenses[0].licenseNumber", "NA")
     );
-    data.buildingName = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.address.buildingName",
-      "NA"
+    data.financialYear = nullToNa(
+      get(response, "Licenses[0].financialYear", "NA")
     );
-    data.streetName = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.address.street",
-      "NA"
+    data.tradeName = nullToNa(get(response, "Licenses[0].tradeName", "NA"));
+    data.doorNo = nullToNa(
+      get(response, "Licenses[0].tradeLicenseDetail.address.doorNo", "NA")
     );
-    let localityCode = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.address.locality.code",
-      "NA"
+    data.buildingName = nullToNa(
+      get(response, "Licenses[0].tradeLicenseDetail.address.buildingName", "NA")
+    );
+    data.streetName = nullToNa(
+      get(response, "Licenses[0].tradeLicenseDetail.address.street", "NA")
+    );
+    let localityCode = nullToNa(
+      get(
+        response,
+        "Licenses[0].tradeLicenseDetail.address.locality.code",
+        "NA"
+      )
     );
     data.locality = getMessageFromLocalization(localityCode);
-    let cityCode = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.address.tenantId",
-      "NA"
+    let cityCode = nullToNa(
+      get(response, "Licenses[0].tradeLicenseDetail.address.tenantId", "NA")
     );
     data.city = getMessageFromLocalization(cityCode);
-    data.ownerName = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.owners[0].name",
-      "NA"
+    data.ownerName = nullToNa(
+      get(response, "Licenses[0].tradeLicenseDetail.owners[0].name", "NA")
     );
-    data.mobileNo = get(
-      response,
-      "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-      "NA"
+    data.mobileNo = nullToNa(
+      get(
+        response,
+        "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+        "NA"
+      )
     );
-    data.licenseIssueDate = epochToDate(
-      get(response, "Licenses[0].issuedDate", 0)
+    data.licenseIssueDate = nullToNa(
+      epochToDate(get(response, "Licenses[0].issuedDate", "NA"))
     );
-    data.licenseExpiryDate = epochToDate(
-      get(response, "Licenses[0].validTo", 0)
+    data.licenseExpiryDate = nullToNa(
+      epochToDate(get(response, "Licenses[0].validTo", "NA"))
     );
     /** Trade settings */
     let tradeCategory = "NA";
@@ -129,29 +129,31 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     if (tradeCode) {
       let tradeCodeArray = tradeCode.split(".");
       if (tradeCodeArray.length == 1) {
-        tradeCategory = tradeCode;
+        tradeCategory = nullToNa(tradeCode);
       } else if (tradeCodeArray.length == 2) {
-        tradeCategory = tradeCodeArray[0];
-        tradeType = tradeCode;
+        tradeCategory = nullToNa(tradeCodeArray[0]);
+        tradeType = nullToNa(tradeCode);
       } else if (tradeCodeArray.length > 2) {
-        tradeCategory = tradeCodeArray[0];
-        tradeType = tradeCodeArray[1];
+        tradeCategory = nullToNa(tradeCodeArray[0]);
+        tradeType = nullToNa(tradeCodeArray[1]);
       }
     }
     /** End */
     data.tradeCategory = getMessageFromLocalization(tradeCategory);
     data.tradeType = getMessageFromLocalization(tradeType);
-    data.address = createAddress(
-      data.doorNo,
-      data.buildingName,
-      data.streetName,
-      data.locality,
-      data.city
+    data.address = nullToNa(
+      createAddress(
+        data.doorNo,
+        data.buildingName,
+        data.streetName,
+        data.locality,
+        data.city
+      )
     );
     let accessories = response.Licenses[0].tradeLicenseDetail.accessories
       ? response.Licenses[0].tradeLicenseDetail.accessories.length
       : 0;
-    data.accessories = accessories;
+    data.accessories = nullToNa(accessories);
     loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
@@ -172,10 +174,8 @@ export const loadReceiptData = async (consumerCode, tenant) => {
   let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt && response.Receipt.length > 0) {
-    data.receiptNumber = get(
-      response,
-      "Receipt[0].Bill[0].billDetails[0].receiptNumber",
-      "NA"
+    data.receiptNumber = nullToNa(
+      get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", "NA")
     );
     data.amountPaid = get(
       response,
@@ -188,32 +188,35 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       0
     );
     data.amountDue = data.totalAmount - data.amountPaid;
-    data.paymentMode = get(
-      response,
-      "Receipt[0].instrument.instrumentType.name",
-      "NA"
+    data.paymentMode = nullToNa(
+      get(response, "Receipt[0].instrument.instrumentType.name", "NA")
     );
-    data.transactionNumber = get(
-      response,
-      "Receipt[0].instrument.transactionNumber",
-      "NA"
+    data.transactionNumber = nullToNa(
+      get(response, "Receipt[0].instrument.transactionNumber", "NA")
     );
     data.bankName = get(response, "Receipt[0].instrument.bank.name", "NA");
     data.branchName = get(response, "Receipt[0].instrument.branchName", null);
-    data.bankAndBranch =
+    data.bankAndBranch = nullToNa(
       data.bankName && data.branchName
         ? data.bankName + ", " + data.branchName
-        : get(data, "bankName", "NA");
-    data.paymentDate = epochToDate(
-      get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)
+        : get(data, "bankName", "NA")
     );
-    data.g8ReceiptNo = get(
-      response,
-      "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber",
-      "NA"
+    data.paymentDate = nullToNa(
+      epochToDate(
+        get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)
+      )
     );
-    data.g8ReceiptDate = epochToDate(
-      get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)
+    data.g8ReceiptNo = nullToNa(
+      get(
+        response,
+        "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber",
+        "NA"
+      )
+    );
+    data.g8ReceiptDate = nullToNa(
+      epochToDate(
+        get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)
+      )
     );
     /** START TL Fee, Adhoc Penalty/Rebate Calculation */
     var tlAdhocPenalty = 0,
@@ -228,6 +231,7 @@ export const loadReceiptData = async (consumerCode, tenant) => {
         tlAdhocRebate = item.crAmountToBePaid;
       }
     });
+    data.tlRebatePenalty = "NA";
     data.tlAdhocPenaltyRebate = tlAdhocPenalty - tlAdhocRebate;
     /** END */
   }
