@@ -58,24 +58,49 @@ const onNextButtonClick = async (state, dispatch) => {
         break;
     }
   }
-  let response = await updateTradeDetails({ Licenses });
-  if (response) {
-    const applicationNumber = get(response, "Licenses[0].applicationNumber");
-    const secondNumber = get(response, "Licenses[0].licenseNumber");
-    const tenantId = get(response, "Licenses[0].tenantId");
-    const route = onClickNextButton(
-      applicationNumber,
-      secondNumber,
-      queryValue,
-      tenantId
-    );
-    dispatch(setRoute(route));
+
+  if (get(Licenses[0], "tradeLicenseDetail.additionalDetail.approveCheck")) {
+    let response = await updateTradeDetails({ Licenses });
+    if (response) {
+      const applicationNumber = get(response, "Licenses[0].applicationNumber");
+      const secondNumber = get(response, "Licenses[0].licenseNumber");
+      const tenantId = get(response, "Licenses[0].tenantId");
+      const route = onClickNextButton(
+        applicationNumber,
+        secondNumber,
+        queryValue,
+        tenantId
+      );
+      dispatch(setRoute(route));
+    } else {
+      dispatch(
+        toggleSnackbarAndSetText(true, "Please accept the terms !", "error")
+      );
+    }
   } else {
     dispatch(
       toggleSnackbarAndSetText(true, "Update TL retuned error", "error")
     );
   }
 };
+
+// let response = await updateTradeDetails({ Licenses });
+// if (response) {
+//   const applicationNumber = get(response, "Licenses[0].applicationNumber");
+//   const secondNumber = get(response, "Licenses[0].licenseNumber");
+//   const tenantId = get(response, "Licenses[0].tenantId");
+//   const route = onClickNextButton(
+//     applicationNumber,
+//     secondNumber,
+//     queryValue,
+//     tenantId
+//   );
+//   dispatch(setRoute(route));
+// } else {
+//   dispatch(
+//     toggleSnackbarAndSetText(true, "Update TL retuned error", "error")
+//   );
+// }
 
 export const footerApprove = (applicationNumber, tenantId) => {
   return getCommonApplyFooter({

@@ -21,13 +21,14 @@ const styles = {
 
 class CheckboxLabels extends React.Component {
   state = {
-    checkedG: false
+    checkedG: true
   };
 
   handleChange = name => event => {
     const { jsonPath, approveCheck } = this.props;
-    this.setState({ [name]: event.target.checked });
-    approveCheck(jsonPath, this.state.checkedG);
+    this.setState({ [name]: event.target.checked }, () =>
+      approveCheck(jsonPath, this.state.checkedG)
+    );
   };
 
   render() {
