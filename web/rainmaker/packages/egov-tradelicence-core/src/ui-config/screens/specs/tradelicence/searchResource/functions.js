@@ -3,9 +3,11 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { textToLocalMapping } from "./searchResults";
+
 
 export const searchApiCall = async (state, dispatch) => {
-
+  console.log(textToLocalMapping);
   showHideTable(false, dispatch);
   let queryObject = [
     { key: "tenantId", value: "pb.amritsar" },
@@ -64,13 +66,13 @@ export const searchApiCall = async (state, dispatch) => {
     const response = await getSearchResults(queryObject);
     try {
       let data = response.Licenses.map(item => ({
-        "Application No": item.applicationNumber || "-",
-        "License No": item.licenseNumber || "-",
-        "Trade Name": item.tradeName || "-",
-        "Owner Name": item.tradeLicenseDetail.owners[0].name || "-",
-        "Application Date": convertEpochToDate(item.applicationDate) || "-",
-        tenantId: item.tenantId,
-        Status: item.status || "-"
+        [get(textToLocalMapping, "Application No")]: item.applicationNumber || "-",
+        [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
+        [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
+        [get(textToLocalMapping, "Owner Name")]: item.tradeLicenseDetail.owners[0].name || "-",
+        [get(textToLocalMapping, "Application Date")]: convertEpochToDate(item.applicationDate) || "-",
+        "tenantId": item.tenantId,
+        [get(textToLocalMapping, "Status")]: get(textToLocalMapping, item.status) || "-"
       }));
 
       dispatch(
@@ -86,7 +88,7 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `Search Results for Trade License Applications (${
+          `${textToLocalMapping["Search Results for Trade License Applications"]} (${
           response.Licenses.length
           })`
         )
