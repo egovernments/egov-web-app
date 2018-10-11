@@ -63,7 +63,7 @@ class FormWizard extends Component {
     totalAmountToBePaid: 100,
     isFullPayment: true,
     valueSelected: "Full_Amount",
-    nextButtonEnabled: true
+    nextButtonEnabled: true,
   };
 
   updateDraftinLocalStorage = (draftInfo, assessmentNumber) => {
@@ -191,18 +191,33 @@ class FormWizard extends Component {
   };
 
   getTargetPropertiesDetails = (propertyDetails) => {
-    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-    if (propertyDetails[propertyDetails.length - 1].propertySubType === "SHAREDPROPERTY") {
-      propertyDetails[propertyDetails.length - 1].buildUpArea =
-        propertyDetails[propertyDetails.length - 1] &&
-        propertyDetails[propertyDetails.length - 1].buildUpArea &&
-        this.convertBuiltUpAreaToSqFt(propertyDetails[propertyDetails.length - 1].buildUpArea);
+    const { search } = this.props.location;
+    const FY = getQueryValue(search, "FY");
+    let selectedPropertyDetails = [];
+    //filter property details by financial year
+    const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
+
+    //if present sort the filtered property details else sort the original property details
+    if (filteredPropertyDetails && filteredPropertyDetails.length) {
+      filteredPropertyDetails.sort(
+        (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
+      );
+      selectedPropertyDetails.push(...filteredPropertyDetails);
+    } else {
+      propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+      selectedPropertyDetails.push(...propertyDetails);
     }
-    propertyDetails[propertyDetails.length - 1].units =
-      propertyDetails[propertyDetails.length - 1] &&
-      propertyDetails[propertyDetails.length - 1].units &&
-      convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
-    return [propertyDetails[propertyDetails.length - 1]];
+    const lastIndex = selectedPropertyDetails.length - 1;
+    // return the latest proeprty details of the selected year
+    if (selectedPropertyDetails[lastIndex].propertySubType === "SHAREDPROPERTY") {
+      selectedPropertyDetails[lastIndex].buildUpArea =
+        selectedPropertyDetails[lastIndex] &&
+        selectedPropertyDetails[lastIndex].buildUpArea &&
+        this.convertBuiltUpAreaToSqFt(selectedPropertyDetails[lastIndex].buildUpArea);
+    }
+    selectedPropertyDetails[lastIndex].units =
+      selectedPropertyDetails[lastIndex] && selectedPropertyDetails[lastIndex].units && convertUnitsToSqFt(selectedPropertyDetails[lastIndex].units);
+    return [selectedPropertyDetails[lastIndex]];
   };
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
@@ -964,12 +979,24 @@ class FormWizard extends Component {
     }
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].instrument.tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
-    get(prepareFormData, "Receipt[0].instrument.transactionDateInput") &&
+    if (get(prepareFormData, "Receipt[0].instrument.transactionDateInput")) {
       set(
         prepareFormData,
         "Receipt[0].instrument.transactionDateInput",
         this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput"))
       );
+      //Dont delete
+      // set(
+      //   prepareFormData,
+      //   "Receipt[0].instrument.instrumentDate",
+      //   this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput"))
+      // );
+    }
+    //Dont delete
+    // if (get(prepareFormData, "Receipt[0].instrument.transactionNumber")) {
+    //   set(prepareFormData, "Receipt[0].instrument.instrumentNumber", get(prepareFormData, "Receipt[0].instrument.transactionNumber"));
+    // }
+
     get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate") &&
       set(
         prepareFormData,
@@ -1006,7 +1033,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Receipt[0].Bill", []);
         set(prepareFormData, "Receipt[0].instrument", {}); // Clear prepareFormData
         hideSpinner();
-        this.setState({nextButtonEnabled: true})
+        this.setState({ nextButtonEnabled: true });
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
       }
@@ -1016,7 +1043,6 @@ class FormWizard extends Component {
       set(prepareFormData, "Receipt[0].instrument", {});
       this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
     } finally {
-      
     }
   };
 
@@ -1073,7 +1099,7 @@ class FormWizard extends Component {
         alert(e.message);
       } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     } finally {
-      hideSpinner()
+      hideSpinner();
     }
   };
 
@@ -1272,8 +1298,8 @@ class FormWizard extends Component {
           }, false);
 
           if (areFormsValid) {
-            this.setState({nextButtonEnabled: false})
-            showSpinner()
+            this.setState({ nextButtonEnabled: false });
+            showSpinner();
             this.pay();
           } else {
             validateArray.forEach((item) => {
@@ -1283,8 +1309,8 @@ class FormWizard extends Component {
             });
           }
         } else {
-          this.setState({nextButtonEnabled: false})
-          showSpinner()
+          this.setState({ nextButtonEnabled: false });
+          showSpinner();
           this.pay();
         }
       } else {

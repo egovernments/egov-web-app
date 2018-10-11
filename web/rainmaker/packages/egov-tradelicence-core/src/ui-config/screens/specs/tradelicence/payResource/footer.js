@@ -37,9 +37,29 @@ const callBackForPay = async (state, dispatch) => {
       finalReceiptData,
       "instrument.transactionDateInput"
     );
+    set(
+      finalReceiptData,
+      "instrument.instrumentDate",
+      get(finalReceiptData, "instrument.transactionDateInput")
+    );
+  }
+
+  if (get(finalReceiptData, "instrument.transactionNumber")) {
+    set(
+      finalReceiptData,
+      "instrument.instrumentNumber",
+      get(finalReceiptData, "instrument.transactionNumber")
+    );
   }
 
   if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
+    convertDateFieldToEpoch(
+      finalReceiptData,
+      "Bill[0].billDetails[0].manualReceiptDate"
+    );
+  }
+
+  if (get(finalReceiptData, "instrument.transactionDateInput")) {
     convertDateFieldToEpoch(
       finalReceiptData,
       "Bill[0].billDetails[0].manualReceiptDate"

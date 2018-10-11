@@ -78,6 +78,14 @@ const fetchBill = async (action, state, dispatch) => {
       getQueryArg(window.location.href, "tenantId")
     )
   );
+
+  //set tenantId in instrument
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].instrument.tenantId",
+      getQueryArg(window.location.href, "tenantId")
+    )
+  );
 };
 
 const screenConfig = {
