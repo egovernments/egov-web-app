@@ -1080,13 +1080,13 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const financialYearFromQuery = getFinancialYearFromQuery();
-    let { form, common, location } = this.props;
+    let { form, common, location, hideSpinner } = this.props;
     const { search } = location;
     const propertyId = getQueryValue(search, "propertyId");
     const assessmentId = getQueryValue(search, "assessmentId");
     const tenantId = getQueryValue(search, "tenantId");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-
+    
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
     let prepareFormData = { ...this.props.prepareFormData };
 
@@ -1163,6 +1163,8 @@ class FormWizard extends Component {
         );
       }
     } catch (e) {
+      hideSpinner()
+      this.setState({nextButtonEnabled: true})
       alert(e);
     }
   };
@@ -1288,8 +1290,8 @@ class FormWizard extends Component {
       } else {
         alert("Amount cannot be a fraction!");
       }    
-    } finally {
-      
+    } catch(e) {
+      hideSpinner()
     }
   };
 
