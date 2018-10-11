@@ -84,6 +84,10 @@ const tradeLicenseSearchAndResult = {
               onClickDefination: {
                 action: "page_change",
                 path: "/mihy-ui-framework/tradelicence/apply"
+              },
+              roleDefination: {
+                rolePath: "user-info.roles",
+                roles: ["TL_CEMP"]
               }
             }
           }
