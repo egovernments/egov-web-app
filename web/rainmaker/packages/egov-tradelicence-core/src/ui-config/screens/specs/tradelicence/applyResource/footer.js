@@ -10,6 +10,9 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { createEstimateData } from "../../utils";
 
+import html2canvas from "html2canvas";
+import pdfMake from "pdfmake/build/pdfmake";
+
 const moveToSuccess = (LicenseData, dispatch) => {
   const applicationNo = get(LicenseData, "applicationNumber");
   const tenantId = get(LicenseData, "tenantId");
@@ -20,6 +23,33 @@ const moveToSuccess = (LicenseData, dispatch) => {
       `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
     )
   );
+};
+
+const generatePdfFromDiv = (action, applicationNumber) => {
+  let target = document.querySelector("#custom-atoms-div");
+  html2canvas(target, {
+    onclone: function(clonedDoc) {
+      // clonedDoc.getElementById("custom-atoms-footer").style = "width: 900px"; //Not Working
+      clonedDoc.getElementById("custom-atoms-footer")["data-html2canvas-ignore"] = "true";
+    }
+  }).then(canvas => {
+    var data = canvas.toDataURL();
+    var docDefinition = {
+      content: [
+        {
+          image: data,
+          width: 500
+        }
+      ]
+    };
+    if (action === "download") {
+      pdfMake
+        .createPdf(docDefinition)
+        .download(`preview-${applicationNumber}.pdf`);
+    } else if (action === "print") {
+      pdfMake.createPdf(docDefinition).print();
+    }
+  });
 };
 
 export const callBackForNext = (state, dispatch) => {
@@ -354,7 +384,9 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: callBackForPrevious
+                callBack: () => {
+                  generatePdfFromDiv("download", applicationNumber);
+                }
               },
               visible: true
             },
@@ -396,7 +428,9 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: callBackForPrevious
+                callBack: () => {
+                  generatePdfFromDiv("print", applicationNumber);
+                }
               },
               visible: true
             }
