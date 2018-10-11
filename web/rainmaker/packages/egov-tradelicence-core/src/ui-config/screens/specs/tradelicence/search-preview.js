@@ -130,58 +130,59 @@ const searchResults = async (action, state, dispatch) => {
 };
 
 let titleText = "";
-let titleVisibility = false;
-let approvalDetailsVisibility = true;
-let cancelDetailsVisibility = true;
-let RejectDetailsVisibility = true;
 
 const setStatusBasedValue = status => {
   switch (status) {
-    case "approved": {
-      approvalDetailsVisibility = true;
+    case "approved":
+      return {
+        approvalDetailsVisibility: true,
 
-      titleText = "Review the Trade License";
-      titleVisibility = true;
-      cancelDetailsVisibility = false;
-      RejectDetailsVisibility = false;
-
-      break;
-    }
-    case "pending_payment": {
-      titleText = "Review the Application and Proceed";
-      titleVisibility = true;
-      approvalDetailsVisibility = false;
-      cancelDetailsVisibility = false;
-      RejectDetailsVisibility = false;
-
-      break;
-    }
-    case "pending_approval": {
-      titleText = "Review the Application and Proceed";
-      titleVisibility = true;
-      approvalDetailsVisibility = false;
-      cancelDetailsVisibility = false;
-      RejectDetailsVisibility = false;
-
-      break;
-    }
-    case "cancelled": {
-      cancelDetailsVisibility = true;
-      titleVisibility = false;
-      approvalDetailsVisibility = false;
-      RejectDetailsVisibility = false;
-
-      break;
-    }
-    case "rejected": {
-      titleVisibility = false;
-      approvalDetailsVisibility = false;
-      cancelDetailsVisibility = false;
-      RejectDetailsVisibility = true;
-    }
+        titleText: "Review the Trade License",
+        titleVisibility: true,
+        cancelDetailsVisibility: false,
+        rejectDetailsVisibility: false
+      };
+    case "pending_payment":
+      return {
+        titleText: "Review the Application and Proceed",
+        titleVisibility: true,
+        approvalDetailsVisibility: false,
+        cancelDetailsVisibility: false,
+        rejectDetailsVisibility: false
+      };
+    case "pending_approval":
+      return {
+        titleText: "Review the Application and Proceed",
+        titleVisibility: true,
+        approvalDetailsVisibility: false,
+        cancelDetailsVisibility: false,
+        rejectDetailsVisibility: false
+      };
+    case "cancelled":
+      return {
+        titleText: "",
+        cancelDetailsVisibility: true,
+        titleVisibility: false,
+        approvalDetailsVisibility: false,
+        rejectDetailsVisibility: false
+      };
+    case "rejected":
+      return {
+        titleText: "",
+        titleVisibility: false,
+        approvalDetailsVisibility: false,
+        cancelDetailsVisibility: false,
+        rejectDetailsVisibility: true
+      };
 
     default:
-      break;
+      return {
+        titleText: "",
+        titleVisibility: false,
+        approvalDetailsVisibility: false,
+        cancelDetailsVisibility: false,
+        rejectDetailsVisibility: false
+      };
   }
 };
 
@@ -216,15 +217,32 @@ let rejectionDetails = getRejectionDetails();
 let cancelDetails = getCancelDetails();
 let title = getCommonTitle({ labelName: titleText });
 
-title = { ...title, visible: titleVisibility };
-cancelDetails = { ...cancelDetails, visible: cancelDetailsVisibility };
-approvalDetails = {
-  ...approvalDetails,
-  visible: approvalDetailsVisibility
-};
-rejectionDetails = {
-  ...rejectionDetails,
-  visible: RejectDetailsVisibility
+const setActionItems = (action, object) => {
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.cancelDetails.visible",
+    get(object, "cancelDetailsVisibility")
+  );
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.rejectionDetails.visible",
+    get(object, "rejectDetailsVisibility")
+  );
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.visible",
+    get(object, "approvalDetailsVisibility")
+  );
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title",
+    getCommonTitle({ labelName: get(object, "titleText") })
+  );
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title.visible",
+    get(object, "titleVisibility")
+  );
 };
 
 export const tradeReviewDetails = getCommonCard({
@@ -248,9 +266,10 @@ const screenConfig = {
       window.location.href,
       "applicationNumber"
     );
-    setStatusBasedValue(status);
+    const obj = setStatusBasedValue(status);
     const footer = footerReview(status, applicationNumber, tenantId);
     set(action, "screenConfig.components.div.children.footer", footer);
+    setActionItems(action, obj);
 
     if (applicationNumber) {
       searchResults(action, state, dispatch);
