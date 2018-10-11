@@ -9,6 +9,7 @@ import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { createEstimateData } from "../../utils";
+import "./index.css"
 
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
