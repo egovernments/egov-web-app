@@ -8,11 +8,13 @@ import {
   onClickPreviousButton,
   onClickNextButton
 } from "../../utils";
+import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { updateTradeDetails } from "ui-utils/commons";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 const queryValue = getQueryArg(window.location.href, "purpose");
+const userName = JSON.parse(window.localStorage.getItem("user-info")).name;
 
 const onNextButtonClick = async (state, dispatch) => {
   const { screenConfiguration } = state;
@@ -24,16 +26,34 @@ const onNextButtonClick = async (state, dispatch) => {
       case "cancel":
         if (status === "APPROVED") {
           set(Licenses[0], "action", "CANCEL");
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.cancelledBy",
+              userName
+            )
+          );
         }
         break;
       case "reject":
         if (status === "PAID") {
           set(Licenses[0], "action", "REJECT");
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.rejectedBy",
+              userName
+            )
+          );
         }
         break;
       default:
         if (status === "PAID") {
           set(Licenses[0], "action", "APPROVE");
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.approvedBy",
+              userName
+            )
+          );
         }
         break;
     }
