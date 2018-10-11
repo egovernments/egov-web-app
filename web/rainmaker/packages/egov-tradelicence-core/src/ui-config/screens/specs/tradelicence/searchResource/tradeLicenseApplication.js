@@ -9,8 +9,9 @@ import {
   getDateField,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-
+import get from "lodash/get";
 import { searchApiCall } from "./functions";
+import { textToLocalMapping } from "./searchResults";
 
 export const tradeLicenseApplication = getCommonCard({
   subHeader: getCommonTitle({
