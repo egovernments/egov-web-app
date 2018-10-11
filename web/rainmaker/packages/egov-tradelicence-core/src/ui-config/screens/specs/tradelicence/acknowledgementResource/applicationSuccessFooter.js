@@ -76,6 +76,28 @@ const generatePdfAndDownload = (action, applicationNumber, tenant) => {
 
 export const applicationSuccessFooter = (applicationNumber, tenant) => {
   return getCommonApplyFooter({
+    gotoHome: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "GO TO HOME",
+          labelKey: "TL_COMMON_BUTTON_HOME"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `/mihy-ui-framework/tradelicence/search`
+      }
+    },
     downloadFormButton: {
       componentPath: "Button",
       props: {

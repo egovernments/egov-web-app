@@ -13,6 +13,28 @@ const getCommonApplyFooter = children => {
 };
 
 export const approvalSuccessFooter = getCommonApplyFooter({
+  gotoHome: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      downloadReceiptButtonLabel: getLabel({
+        labelName: "GO TO HOME",
+        labelKey: "TL_COMMON_BUTTON_HOME"
+      })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: `/mihy-ui-framework/tradelicence/search`
+    }
+  },
   downloadLicenseButton: {
     componentPath: "Button",
     props: {
