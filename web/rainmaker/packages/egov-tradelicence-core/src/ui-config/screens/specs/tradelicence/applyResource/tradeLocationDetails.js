@@ -74,7 +74,10 @@ export const tradeLocationDetails = getCommonCard({
           uiFramework: "custom-molecules-local",
           componentPath: "Tooltip",
           props: {
-            val: "Property Id Information",
+            val: {
+              value: "Property Id Information",
+              key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+            },
             style: getIconStyle("textfieldIcon")
           },
           gridDefination: { xs: 1 }

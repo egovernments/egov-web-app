@@ -2,6 +2,7 @@ import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import { convertDateToEpoch } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -17,6 +18,19 @@ export const updateTradeDetails = async requestBody => {
     return payload;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
+  if (labelKey) {
+    let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+    if (!translatedLabel || labelKey === translatedLabel) {
+      return label;
+    } else {
+      return translatedLabel;
+    }
+  } else {
+    return label;
   }
 };
 

@@ -3,6 +3,7 @@ import {
   getTextField,
   getCommonSubHeader
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
 
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -622,20 +623,36 @@ export const getDetailsFromProperty = async (state, dispatch) => {
         [],
         {}
       );
-      dispatch(
-        prepareFinalObject(
-          "Licenses[0].tradeLicenseDetail.address",
-          payload.Properties[0].address
-        )
-      );
-      dispatch(
-        handleField(
-          "apply",
-          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.children.cityDropdown",
-          "props.value",
-          payload.Properties[0].address.tenantId
-        )
-      );
+      if (
+        payload &&
+        payload.Properties &&
+        payload.Properties.hasOwnProperty("length")
+      ) {
+        if (payload.Properties.length === 0) {
+          dispatch(
+            toggleSnackbarAndSetText(
+              true,
+              "Property is not found with this Property Id",
+              "info"
+            )
+          );
+        } else {
+          dispatch(
+            prepareFinalObject(
+              "Licenses[0].tradeLicenseDetail.address",
+              payload.Properties[0].address
+            )
+          );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.children.cityDropdown",
+              "props.value",
+              payload.Properties[0].address.tenantId
+            )
+          );
+        }
+      }
     }
   } catch (e) {
     console.log(e);

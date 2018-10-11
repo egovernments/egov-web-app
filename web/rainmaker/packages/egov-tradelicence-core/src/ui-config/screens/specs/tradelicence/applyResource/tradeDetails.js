@@ -214,7 +214,10 @@ const accessoriesCard = {
             uiFramework: "custom-molecules-local",
             componentPath: "Tooltip",
             props: {
-              val: "Accessories Information",
+              val: {
+                value: "Accessories Information",
+                key: "TL_ACCESSORIES_TOOLTIP_MESSAGE"
+              },
               style: getIconStyle("headerIcon")
             }
           }
