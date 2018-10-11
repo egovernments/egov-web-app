@@ -8,7 +8,7 @@ import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplicatio
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
-import { progressStatus } from "./searchResource/progressStatus";
+// import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
@@ -91,7 +91,7 @@ const tradeLicenseSearchAndResult = {
         pendingApprovals,
         tradeLicenseApplication,
         breakAfterSearch: getBreak(),
-        progressStatus,
+        // progressStatus,
         searchResults
       }
     }

@@ -7,10 +7,9 @@ import { textToLocalMapping } from "./searchResults";
 
 
 export const searchApiCall = async (state, dispatch) => {
-  console.log(textToLocalMapping);
   showHideTable(false, dispatch);
   let queryObject = [
-    { key: "tenantId", value: "pb.amritsar" },
+    { key: "tenantId", value: JSON.parse(localStorage.getItem("user-info")).tenantId},
     { key: "limit", value: "200" },
     { key: "offset", value: "0" }
   ];
@@ -41,7 +40,7 @@ export const searchApiCall = async (state, dispatch) => {
       toggleSnackbarAndSetText(true, "Please fill From Date", "warning")
     );
   } else {
-    showHideProgress(true, dispatch);
+    // showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
       if (
         searchScreenObject.hasOwnProperty(key) &&
@@ -93,25 +92,25 @@ export const searchApiCall = async (state, dispatch) => {
           })`
         )
       );
-      showHideProgress(false, dispatch);
+      // showHideProgress(false, dispatch);
       showHideTable(true, dispatch);
     } catch (error) {
-      showHideProgress(false, dispatch);
+      // showHideProgress(false, dispatch);
       dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
       console.log(error);
     }
   }
 };
-const showHideProgress = (booleanHideOrShow, dispatch) => {
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.progressStatus",
-      "visible",
-      booleanHideOrShow
-    )
-  );
-};
+// const showHideProgress = (booleanHideOrShow, dispatch) => {
+//   dispatch(
+//     handleField(
+//       "search",
+//       "components.div.children.progressStatus",
+//       "visible",
+//       booleanHideOrShow
+//     )
+//   );
+// };
 
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
