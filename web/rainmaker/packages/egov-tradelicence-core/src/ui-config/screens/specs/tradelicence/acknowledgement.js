@@ -8,7 +8,6 @@ import { approvalSuccessFooter } from "./acknowledgementResource/approvalSuccess
 import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
 import {
   loadUlbLogo,
   loadApplicationData,
@@ -51,20 +50,12 @@ const getAcknowledgementCard = (
               "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
             tailText: "Application No.",
             number: applicationNumber
-          }),
-          tradeReviewDetails: {
-            uiFramework: "custom-atoms",
-            componentPath: "Div",
-            children: {
-              tradeReviewDetails
-            },
-            props: {
-              style: {
-                display: "none"
-              }
-            }
-          }
+          })
         }
+      },
+      iframeForPdf: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div"
       },
       applicationSuccessFooter: applicationSuccessFooter(
         applicationNumber,
@@ -217,7 +208,10 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
     const data = getAcknowledgementCard(
