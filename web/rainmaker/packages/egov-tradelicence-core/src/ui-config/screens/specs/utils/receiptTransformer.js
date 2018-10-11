@@ -8,12 +8,17 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import store from "ui-redux/store";
 import get from "lodash/get";
 
-const createAddress = (doorNo, buildingName, street, locality) => {
+const ifNotNull = value => {
+  return !["", "NA", "null", null].includes(value);
+};
+
+const createAddress = (doorNo, buildingName, street, locality, city) => {
   let address = "";
-  address += doorNo !== "" ? doorNo + ", " : "";
-  address += buildingName !== "" ? buildingName + ", " : "";
-  address += street !== "" ? street + ", " : "";
-  address += locality;
+  address += ifNotNull(doorNo) ? doorNo + ", " : "";
+  address += ifNotNull(buildingName) ? buildingName + ", " : "";
+  address += ifNotNull(street) ? street + ", " : "";
+  address += locality + ", ";
+  address += city;
   return address;
 };
 
@@ -33,9 +38,9 @@ const getMessageFromLocalization = code => {
   let messageObject = JSON.parse(
     localStorage.getItem("localization_en_IN")
   ).find(item => {
-    return item.code == code;
+    return item.code == "TL_" + code;
   });
-  return messageObject ? messageObject.message : "NA";
+  return messageObject ? messageObject.message : code;
 };
 
 export const loadUlbLogo = tenantid => {
@@ -91,6 +96,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       "NA"
     );
     data.locality = getMessageFromLocalization(localityCode);
+    let cityCode = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.tenantId",
+      "NA"
+    );
+    data.city = getMessageFromLocalization(cityCode);
     data.ownerName = get(
       response,
       "Licenses[0].tradeLicenseDetail.owners[0].name",
@@ -101,8 +112,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
       "NA"
     );
-    data.licenseIssueDate = get(response, "Licenses[0].issuedDate", "NA");
-    data.licenseExpiryDate = get(response, "Licenses[0].validTo", "NA");
+    data.licenseIssueDate = epochToDate(
+      get(response, "Licenses[0].issuedDate", 0)
+    );
+    data.licenseExpiryDate = epochToDate(
+      get(response, "Licenses[0].validTo", 0)
+    );
     /** Trade settings */
     let tradeCategory = "NA";
     let tradeType = "NA";
@@ -114,13 +129,13 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     if (tradeCode) {
       let tradeCodeArray = tradeCode.split(".");
       if (tradeCodeArray.length == 1) {
-        tradeCategory = "TL_" + tradeCode;
+        tradeCategory = tradeCode;
       } else if (tradeCodeArray.length == 2) {
-        tradeCategory = "TL_" + tradeCodeArray[0];
-        tradeType = "TL_" + tradeCode;
+        tradeCategory = tradeCodeArray[0];
+        tradeType = tradeCode;
       } else if (tradeCodeArray.length > 2) {
-        tradeCategory = "TL_" + tradeCodeArray[0];
-        tradeType = "TL_" + tradeCodeArray[1];
+        tradeCategory = tradeCodeArray[0];
+        tradeType = tradeCodeArray[1];
       }
     }
     /** End */
@@ -130,7 +145,8 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       data.doorNo,
       data.buildingName,
       data.streetName,
-      data.locality
+      data.locality,
+      data.city
     );
     let accessories = response.Licenses[0].tradeLicenseDetail.accessories
       ? response.Licenses[0].tradeLicenseDetail.accessories.length
