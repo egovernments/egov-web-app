@@ -98,9 +98,7 @@ class FormWizard extends Component {
     const { search } = location;
 
     let prepareFormData = {
-      Properties: [
-        ...this.props.prepareFormData.Properties,
-      ],
+      Properties: [...this.props.prepareFormData.Properties],
     };
     //toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
@@ -231,18 +229,33 @@ class FormWizard extends Component {
   };
 
   getTargetPropertiesDetails = (propertyDetails) => {
-    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-    if (propertyDetails[propertyDetails.length - 1].propertySubType === "SHAREDPROPERTY") {
-      propertyDetails[propertyDetails.length - 1].buildUpArea =
-        propertyDetails[propertyDetails.length - 1] &&
-        propertyDetails[propertyDetails.length - 1].buildUpArea &&
-        this.convertBuiltUpAreaToSqFt(propertyDetails[propertyDetails.length - 1].buildUpArea);
+    const { search } = this.props.location;
+    const FY = getQueryValue(search, "FY");
+    let selectedPropertyDetails = [];
+    //filter property details by financial year
+    const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
+
+    //if present sort the filtered property details else sort the original property details
+    if (filteredPropertyDetails && filteredPropertyDetails.length) {
+      filteredPropertyDetails.sort(
+        (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
+      );
+      selectedPropertyDetails.push(...filteredPropertyDetails);
+    } else {
+      propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+      selectedPropertyDetails.push(...propertyDetails);
     }
-    propertyDetails[propertyDetails.length - 1].units =
-      propertyDetails[propertyDetails.length - 1] &&
-      propertyDetails[propertyDetails.length - 1].units &&
-      convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
-    return [propertyDetails[propertyDetails.length - 1]];
+    const lastIndex = selectedPropertyDetails.length - 1;
+    // return the latest proeprty details of the selected year
+    if (selectedPropertyDetails[lastIndex].propertySubType === "SHAREDPROPERTY") {
+      selectedPropertyDetails[lastIndex].buildUpArea =
+        selectedPropertyDetails[lastIndex] &&
+        selectedPropertyDetails[lastIndex].buildUpArea &&
+        this.convertBuiltUpAreaToSqFt(selectedPropertyDetails[lastIndex].buildUpArea);
+    }
+    selectedPropertyDetails[lastIndex].units =
+      selectedPropertyDetails[lastIndex] && selectedPropertyDetails[lastIndex].units && convertUnitsToSqFt(selectedPropertyDetails[lastIndex].units);
+    return [selectedPropertyDetails[lastIndex]];
   };
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
