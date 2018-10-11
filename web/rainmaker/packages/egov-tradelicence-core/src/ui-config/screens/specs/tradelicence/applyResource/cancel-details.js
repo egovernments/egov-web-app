@@ -5,8 +5,8 @@ import {
   getLabelWithValue
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-export const getCancelDetails = (isEditable = true) => {
-  return getCommonGrayCard({
+export const getCancelDetails = () =>
+  getCommonGrayCard({
     header: getCommonSubHeader({
       labelName: "Cancellation Details",
       labelKey: "TL_EMP_APPLICATION_CANC_DET"
@@ -28,4 +28,3 @@ export const getCancelDetails = (isEditable = true) => {
       )
     })
   });
-};

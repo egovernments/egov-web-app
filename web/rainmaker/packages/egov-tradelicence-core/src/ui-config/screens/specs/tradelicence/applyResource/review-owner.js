@@ -94,8 +94,8 @@ export const getReviewOwner = (isEditable = true) => {
             ),
             reviewOwnerAge: getLabelWithValue(
               {
-                labelName: "Age",
-                labelKey: "TL_EMP_APPLICATION_AGE"
+                labelName: "Date of Birth",
+                labelKey: "TL_EMP_APPLICATION_DOB"
               },
               { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob" }
             ),

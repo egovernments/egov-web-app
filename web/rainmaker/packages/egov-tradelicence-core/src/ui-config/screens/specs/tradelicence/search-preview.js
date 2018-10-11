@@ -7,24 +7,24 @@ import {
   getCommonContainer,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import get from "lodash/get";
+import set from "lodash/set";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getSearchResults } from "../../../../ui-utils/commons";
+import { createEstimateData } from "../utils";
+import { getFileUrlFromAPI } from "ui-utils/commons";
 
+import { convertEpochToDate } from "../utils";
 import { getFeesEstimateCard, getHeaderSideText } from "../utils";
-import { footerReview } from "./applyResource/footer";
 import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { getCancelDetails } from "./applyResource/cancel-details";
 import { getRejectionDetails } from "./applyResource/reject-details";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import get from "lodash/get";
-import set from "lodash/set";
-import { getSearchResults } from "../../../../ui-utils/commons";
-import { createEstimateData } from "../utils";
-import { getFileUrlFromAPI } from "ui-utils/commons";
-import { convertEpochToDate } from "../utils";
-const role = getQueryArg(window.location.href, "role");
+import { footerReview } from "./applyResource/footer";
+
 const status = getQueryArg(window.location.href, "status");
 const tenantId = getQueryArg(window.location.href, "tenantId");
 const applicationNumber = getQueryArg(
@@ -73,6 +73,15 @@ const searchResults = async (action, state, dispatch) => {
     "Licenses[0].commencementDate",
     convertEpochToDate(get(payload, "Licenses[0].commencementDate"))
   );
+
+  set(
+    payload,
+    "Licenses[0].tradeLicenseDetail.owners[0].dob",
+    convertEpochToDate(
+      get(payload, "Licenses[0].tradeLicenseDetail.owners[0].dob")
+    )
+  );
+
   headerSideText = getHeaderSideText(
     get(payload, "Licenses[0].status"),
     get(payload, "Licenses[0].licenseNumber")
@@ -121,31 +130,26 @@ const searchResults = async (action, state, dispatch) => {
 };
 
 let titleText = "";
-let paraText = "";
 let titleVisibility = false;
-let paraVisibiliy = false;
-let approvalDetailsVisibility = false;
-let cancelDetailsVisibility = false;
-let RejectDetailsVisibility = false;
+let approvalDetailsVisibility = true;
+let cancelDetailsVisibility = true;
+let RejectDetailsVisibility = true;
 
 const setStatusBasedValue = status => {
   switch (status) {
     case "approved": {
       approvalDetailsVisibility = true;
-      if (role === "approver") {
-        titleText = "Please Review the Trade License";
-        titleVisibility = true;
-        paraVisibiliy = false;
-        approvalDetailsVisibility = false;
-        cancelDetailsVisibility = false;
-        RejectDetailsVisibility = false;
-      }
+
+      titleText = "Review the Trade License";
+      titleVisibility = true;
+      cancelDetailsVisibility = false;
+      RejectDetailsVisibility = false;
+
       break;
     }
     case "pending_payment": {
-      titleText = "Please Review the Application and Proceed with Payment";
+      titleText = "Review the Application and Proceed";
       titleVisibility = true;
-      paraVisibiliy = false;
       approvalDetailsVisibility = false;
       cancelDetailsVisibility = false;
       RejectDetailsVisibility = false;
@@ -153,31 +157,24 @@ const setStatusBasedValue = status => {
       break;
     }
     case "pending_approval": {
-      if (role === "approver") {
-        titleText = "Please Review the Application and Proceed with Approval";
-        titleVisibility = true;
-        paraText =
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard.";
-        paraVisibiliy = true;
-        approvalDetailsVisibility = false;
-        cancelDetailsVisibility = false;
-        RejectDetailsVisibility = false;
-      }
+      titleText = "Review the Application and Proceed";
+      titleVisibility = true;
+      approvalDetailsVisibility = false;
+      cancelDetailsVisibility = false;
+      RejectDetailsVisibility = false;
+
       break;
     }
     case "cancelled": {
       cancelDetailsVisibility = true;
       titleVisibility = false;
-      paraVisibiliy = false;
       approvalDetailsVisibility = false;
       RejectDetailsVisibility = false;
 
       break;
     }
     case "rejected": {
-      titleText = "Please Review the Trade License";
-      titleVisibility = true;
-      paraVisibiliy = true;
+      titleVisibility = false;
       approvalDetailsVisibility = false;
       cancelDetailsVisibility = false;
       RejectDetailsVisibility = true;
@@ -218,22 +215,27 @@ let approvalDetails = getApprovalDetails();
 let rejectionDetails = getRejectionDetails();
 let cancelDetails = getCancelDetails();
 let title = getCommonTitle({ labelName: titleText });
-let paragraph = getCommonParagraph({ labelName: paraText });
 
 title = { ...title, visible: titleVisibility };
-paragraph = { ...paragraph, visible: paraVisibiliy };
 cancelDetails = { ...cancelDetails, visible: cancelDetailsVisibility };
-approvalDetails = { ...approvalDetails, visible: approvalDetailsVisibility };
-rejectionDetails = { ...rejectionDetails, visible: RejectDetailsVisibility };
+approvalDetails = {
+  ...approvalDetails,
+  visible: approvalDetailsVisibility
+};
+rejectionDetails = {
+  ...rejectionDetails,
+  visible: RejectDetailsVisibility
+};
+
 export const tradeReviewDetails = getCommonCard({
   title,
-  paragraph,
   estimate,
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails,
   approvalDetails,
-  cancelDetails
+  cancelDetails,
+  rejectionDetails
 });
 
 const screenConfig = {
@@ -246,7 +248,6 @@ const screenConfig = {
       window.location.href,
       "applicationNumber"
     );
-
     setStatusBasedValue(status);
     const footer = footerReview(status, applicationNumber, tenantId);
     set(action, "screenConfig.components.div.children.footer", footer);
@@ -254,6 +255,7 @@ const screenConfig = {
     if (applicationNumber) {
       searchResults(action, state, dispatch);
     }
+
     return action;
   },
 
