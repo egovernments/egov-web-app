@@ -319,8 +319,10 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "outlined",
                 style: {
                   width: "200px",
-                  height: "48px",
-                  marginLeft: "24px"
+                  height: "40px",
+                  marginLeft: "24px",
+                  border: "none",
+                  backgroundColor: "#F2F2F2"
                 }
               },
               children: {
@@ -333,7 +335,11 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 },
                 nextButtonLabel: getLabel({
                   labelName: "Download",
-                  labelKey: "TL_COMMON_DOWNLOAD"
+                  labelKey: "TL_COMMON_DOWNLOAD",
+                  style: {
+                    marginLeft: "10px",
+                    marginRight: "10px"
+                  }
                 }),
                 dropdown: {
                   uiFramework: "custom-atoms",
@@ -358,8 +364,10 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "outlined",
                 style: {
                   width: "200px",
-                  height: "48px",
-                  marginRight: "16px"
+                  height: "40px",
+                  marginLeft: "16px",
+                  border: "none",
+                  backgroundColor: "#F2F2F2"
                 }
               },
               children: {
@@ -372,7 +380,11 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 },
                 nextButtonLabel: getLabel({
                   labelName: "Print",
-                  labelKey: "TL_COMMON_PRINT"
+                  labelKey: "TL_COMMON_PRINT",
+                  style: {
+                    marginLeft: "10px",
+                    marginRight: "10px"
+                  }
                 }),
                 dropdown: {
                   uiFramework: "custom-atoms",

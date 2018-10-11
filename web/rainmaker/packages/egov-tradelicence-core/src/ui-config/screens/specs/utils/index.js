@@ -217,7 +217,8 @@ export const getApprovalTextField = queryValue => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      jsonPath:
+        "Licenses[0].tradeLicenseDetail.additionalDetail.rejectComments",
       props: {
         style: {
           paddingBottom: 5
@@ -236,7 +237,8 @@ export const getApprovalTextField = queryValue => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      jsonPath:
+        "Licenses[0].tradeLicenseDetail.additionalDetail.cancelComments",
       props: {
         style: {
           paddingBottom: 5
@@ -255,7 +257,8 @@ export const getApprovalTextField = queryValue => {
       },
       required: false,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.comments",
+      jsonPath:
+        "Licenses[0].tradeLicenseDetail.additionalDetail.approvalComments",
       props: {
         style: {
           paddingBottom: 5
