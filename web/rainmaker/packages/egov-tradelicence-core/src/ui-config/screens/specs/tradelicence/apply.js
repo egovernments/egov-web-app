@@ -141,6 +141,12 @@ const screenConfig = {
     }
     getMdmsData(action, state, dispatch);
     const tenantId = localStorage.getItem("tenant-id");
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address.city",
+        tenantId
+      )
+    );
     const queryObj = [{ key: "tenantId", value: tenantId }];
     getBoundaryData(action, state, dispatch, queryObj);
     return action;
