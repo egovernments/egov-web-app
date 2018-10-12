@@ -7,6 +7,7 @@ import {
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -177,8 +178,15 @@ export const applyTradeLicense = async (state, dispatch) => {
     }
     /** Application no. box setting */
     setApplicationNumberBox(state, dispatch);
+    return true;
   } catch (error) {
+    toggleSnackbarAndSetText(
+      true,
+      "Could not create/update trade license appication",
+      "error"
+    );
     console.log(error);
+    return false;
   }
 };
 

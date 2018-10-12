@@ -57,7 +57,8 @@ const generatePdfFromDiv = (action, applicationNumber) => {
   });
 };
 
-export const callBackForNext = (state, dispatch) => {
+export const callBackForNext = async (state, dispatch) => {
+  let applicationSuccess = true;
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -152,7 +153,7 @@ export const callBackForNext = (state, dispatch) => {
       }
     }
     if (isFormValid) {
-      applyTradeLicense(state, dispatch);
+      applicationSuccess = await applyTradeLicense(state, dispatch);
     }
   }
   if (activeStep === 2) {
@@ -208,10 +209,10 @@ export const callBackForNext = (state, dispatch) => {
       state.screenConfiguration.preparedFinalObject,
       "Licenses[0]"
     );
-    applyTradeLicense(state, dispatch);
+    applicationSuccess = await applyTradeLicense(state, dispatch);
     moveToSuccess(LicenseData, dispatch);
   }
-  if (isFormValid) {
+  if (isFormValid && applicationSuccess) {
     changeStep(state, dispatch);
   } else {
     dispatch(

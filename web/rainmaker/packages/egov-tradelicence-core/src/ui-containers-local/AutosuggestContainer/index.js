@@ -8,7 +8,9 @@ import get from "lodash/get";
 
 class AutoSuggestor extends Component {
   onSelect = value => {
-    const { prepareFinalObject, jsonPath } = this.props;
+    const { prepareFinalObject, jsonPath, onChange } = this.props;
+    let e = { target: { value: value.value } };
+    // onChange(e);
     prepareFinalObject(jsonPath, value.value);
   };
 
@@ -23,7 +25,7 @@ class AutoSuggestor extends Component {
       <div>
         <AutoSuggest
           onSelect={this.onSelect}
-          //   value={value}
+          value={value}
           fieldValue={_fieldValue}
           {...rest}
         />
