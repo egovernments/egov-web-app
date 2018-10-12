@@ -3,10 +3,12 @@ import {
   getCommonSubHeader,
   getLabelWithValue,
   getCommonContainer,
-  getCommonCaption
+  getCommonCaption,
+  getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { changeStep } from "./footer";
 
-export const getApprovalDetails = () =>
+export const getApprovalDetails = (status,isEditable=false) =>
   getCommonGrayCard({
     headerDiv: {
       uiFramework: "custom-atoms",
@@ -17,30 +19,18 @@ export const getApprovalDetails = () =>
             xs: 12,
             sm: 10
           },
-          ...getCommonSubHeader({
-            labelName: "Approval Details",
-            labelKey: "TL_EMP_APPLICATION_APPR_DETAILS"
-          })
+          ...getCommonSubHeader(getView(status).header)
         }
       }
     },
     viewOne: getCommonContainer({
       approvedBy: getLabelWithValue(
-        {
-          labelName: "Approved By",
-          labelKey: "TL_EMP_APPLICATION_APPR_BY"
-        },
-        { value: "Licenses[0].tradeLicenseDetail.additionalDetail.approvedBy" }
+        getView(status).subHeader1.label,
+        getView(status).subHeader1.json
       ),
       approvalComments: getLabelWithValue(
-        {
-          labelName: "Approval Comments",
-          labelKey: "TL_EMP_APPLICATION_APPR_COM"
-        },
-        {
-          jsonPath:
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approvalComments"
-        }
+        getView(status).subHeader2.label,
+        getView(status).subHeader2.json
       )
     }),
     viewTow: getCommonContainer({
@@ -48,6 +38,7 @@ export const getApprovalDetails = () =>
         gridDefination: {
           xs: 12
         },
+        visible:true,
         props: {
           style: {
             padding: "12px 24px 12px 0"
@@ -58,27 +49,89 @@ export const getApprovalDetails = () =>
           labelKey: "TL_EMP_APPLICATION_UP_DOC"
         })
       },
-      documents: {
-        uiFramework: "custom-molecules",
-        componentPath: "MultiDownloadCard",
-        props: {
-          data: [
-            {
-              title: "Document-1",
-              name: "Filename.jpg",
-              link:
-                "https://egov-rainmaker.s3.ap-south-1.amazonaws.com/pb.jalandhar/rainmaker-pgr/July/26/Potholes_3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180919T113611Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3599&X-Amz-Credential=AKIAJLBRPPEUXFAI3Z6Q%2F20180919%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=be0913d89a67348485c0f91420b957793aa23075196cc11df2ffad49e986913d",
-              linkText: "View"
+      
+            editSection: {
+              componentPath: "Button",
+              props: {
+                color: "primary"
+              },
+              gridDefination: {
+                xs: 12,
+                sm: 2,
+                align: "right"
+              },
+              visible: isEditable,
+              children: {
+                editIcon: {
+                  uiFramework: "custom-atoms",
+                  componentPath: "Icon",
+                  props: {
+                    iconName: "edit"
+                  }
+                },
+                buttonLabel: getLabel({
+                  labelName: "Edit",
+                  labelKey: "TL_SUMMARY_EDIT"
+                })
+              },
+              onClickDefination: {
+                action: "condition",
+                callBack: (state, dispatch) => {
+                  changeStep(state, dispatch, "", 2);
+                }
+              }
             },
-            {
-              title: "Document-2",
-              name: "Filename.jpg",
-              link:
-                "https://egov-rainmaker.s3.ap-south-1.amazonaws.com/pb.jalandhar/rainmaker-pgr/July/26/Potholes_3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180919T113611Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3599&X-Amz-Credential=AKIAJLBRPPEUXFAI3Z6Q%2F20180919%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=be0913d89a67348485c0f91420b957793aa23075196cc11df2ffad49e986913d",
-              linkText: "View"
+            documents: {
+              uiFramework: "custom-containers-local",
+              componentPath: "DownloadFileContainer",
+              props: {
+                sourceJsonPath: "LicensesTemp[0].verifyDocData"
+              }
             }
-          ]
-        }
-      }
     })
   });
+
+const getView=(status)=>{
+  switch(status)
+  {
+    case "approved":
+      return getDetails({
+        labelName: "Approval Details",
+        labelKey: ""
+      },getSubHeader("Approved By","TL_EMP_APPLICATION_APPR_BY","Licenses[0].tradeLicenseDetail.additionalDetail.approvedBy")
+      ,getSubHeader("Approval Comments","TL_EMP_APPLICATION_APPR_COM","Licenses[0].tradeLicenseDetail.additionalDetail.approvalComments"));
+   
+    case "rejected":
+      return getDetails({
+        labelName: "Rejection Details",
+        labelKey: "TL_EMP_APPLICATION_REJ_DETAILS"
+      },getSubHeader("Rejected By","TL_EMP_APPLICATION_REJ_BY","Licenses[0].tradeLicenseDetail.additionalDetail.rejectedBy")
+      ,getSubHeader("Rejection Comments","TL_EMP_APPLICATION_REJ_COM","Licenses[0].tradeLicenseDetail.additionalDetail.rejectComments"));
+
+    case "cancelled":
+      return getDetails({
+        labelName: "Cancellation Details",
+        labelKey: "TL_EMP_APPLICATION_CANC_DET"
+      },getSubHeader("Cancelled By","TL_EMP_APPLICATION_CANC_BY","Licenses[0].tradeLicenseDetail.additionalDetail.cancelledBy")
+      ,getSubHeader("Cancellation Comments","TL_EMP_APPLICATION_CANC_COM","Licenses[0].tradeLicenseDetail.additionalDetail.cancelComments"));     
+
+      default:
+      return getDetails({
+        labelName: "",
+        labelKey: ""
+      },getSubHeader("","","")
+      ,getSubHeader("","",""));     
+      
+    }
+};
+
+const getDetails=(header,subHeader1,subHeader2)=>{
+  return {
+  header,
+  subHeader1,
+  subHeader2
+};
+}
+const getSubHeader=(labelName,labelKey,jsonPath)=>{
+  return {label:{labelName,labelKey},json:{jsonPath}}
+}
