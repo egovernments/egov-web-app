@@ -265,8 +265,7 @@ const OwnerInfoCard = {
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-    prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer"
+    prefixSourceJsonPath: "children.cardContent.children.tradeUnitCardContainer"
   },
 
   type: "array"
@@ -283,6 +282,7 @@ export const tradeOwnerDetails = getCommonCard({
         label: { labelName: "Type of ownership" },
         placeholder: { labelName: "Select Type of Ownership" },
         jsonPath: "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+        required: true,
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"
       }),
@@ -344,6 +344,7 @@ export const tradeOwnerDetails = getCommonCard({
       label: { labelName: "Type of sub-ownership" },
       placeholder: { labelName: "Select Type of Ownership" },
       jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+      required: true,
       sourceJsonPath:
         "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
     })
