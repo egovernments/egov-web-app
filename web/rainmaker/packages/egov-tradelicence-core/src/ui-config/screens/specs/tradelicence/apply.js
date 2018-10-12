@@ -40,7 +40,7 @@ const queryValue = getQueryArg(window.location.href, "applicationNumber");
 const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
-    labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+    labelKey: "TL_COMMON_APPL_NEW_LICe"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
