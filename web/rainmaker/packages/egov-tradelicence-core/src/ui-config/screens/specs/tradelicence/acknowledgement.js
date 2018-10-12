@@ -47,7 +47,7 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: "Application Submitted Successfully",
             body:
-              "A copy of application confirmation has been sent to trade owner at registered Mobile No.",
+              "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
             tailText: "Application No.",
             number: applicationNumber
           })
@@ -87,7 +87,7 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: "Payment has been collected successfully!",
             body:
-              "A copy of receipt has been sent to trade owner at registered Mobile No.",
+              "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
             tailText: "Payment Receipt No.",
             number: secondNumber
           })

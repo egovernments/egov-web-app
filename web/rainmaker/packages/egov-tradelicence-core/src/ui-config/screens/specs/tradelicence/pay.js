@@ -137,8 +137,7 @@ const screenConfig = {
           children: {
             paymentDetails: getCommonCard({
               header: getCommonTitle({
-                labelName:
-                  "Review your estimated fees and enter the payment collection details",
+                labelName: "Payment Collection Details",
                 labelKey: "TL_PAYMENT_HEAD"
               }),
               // paragraph: getCommonParagraph({

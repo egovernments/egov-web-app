@@ -40,27 +40,33 @@ const getApproveCard = queryValuePurpose => {
     headerOne:
       queryValuePurpose === "cancel"
         ? getCommonSubHeader({
-            labelName: "Please provide Cancellation remarks",
+            labelName: "Cancellation Remarks",
             labelKey: "TL_CANCEL_CHECKLIST_HEAD"
           })
-        : getCommonSubHeader({
-            labelName:
-              "Please provide the following details on the basis of field verification",
-            labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
-          }),
-    paragraphOne: getContainerWithElement({
-      children: {
-        paragraph: getCommonParagraph({
-          labelName:
-            "Please provide the following details on the basis of your field verification."
-        })
-      },
-      props: {
-        style: {
-          marginTop: "8px"
-        }
-      }
-    }),
+        : getCommonSubHeader(
+            {
+              labelName: "Verification Details",
+              labelKey: "TL_APPROVAL_CHECKLIST_HEAD"
+            },
+            {
+              style: {
+                fontSize: "20px"
+              }
+            }
+          ),
+    // paragraphOne: getContainerWithElement({
+    //   children: {
+    //     paragraph: getCommonParagraph({
+    //       labelName:
+    //         "Please provide the following details on the basis of your field verification."
+    //     })
+    //   },
+    //   props: {
+    //     style: {
+    //       marginTop: "8px"
+    //     }
+    //   }
+    // }),
     headerTwo: getContainerWithElement({
       children: {
         subHeader: getSubHeaderLabel(queryValuePurpose)
@@ -128,7 +134,7 @@ const getApproveCard = queryValuePurpose => {
     ),
     uploadFileHeader: getCommonSubHeader(
       {
-        labelName: "Upload Document",
+        labelName: "Supporting Documents",
         labelKey: "TL_APPROVAL_UPLOAD_HEAD"
       },
       {
