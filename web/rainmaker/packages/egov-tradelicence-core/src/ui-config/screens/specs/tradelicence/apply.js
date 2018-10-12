@@ -23,10 +23,6 @@ import { tradeDetails } from "./applyResource/tradeDetails";
 import { tradeLocationDetails } from "./applyResource/tradeLocationDetails";
 import { tradeOwnerDetails } from "./applyResource/tradeOwnerDetails";
 import { documentList } from "./applyResource/documentList";
-// import { httpRequest } from "mihy-ui-framework/ui-utils";
-// import { updatePFOforSearchResults } from "mihy-ui-framework/ui-utils/commons";
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
 import {
   updatePFOforSearchResults,
@@ -54,14 +50,14 @@ const header = getCommonContainer({
 
 const tradeDocumentDetails = getCommonCard({
   header: getCommonTitle({
-    labelName: "Please Upload the Required Documents for Verification",
+    labelName: "Required Documents",
     labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
   }),
-  // paragraph: getCommonParagraph({
-  //   labelName:
-  //     "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",
-  //   labelKey: "TL_NEW-UPLOAD-DOCS_SUBHEADER"
-  // }),
+  paragraph: getCommonParagraph({
+    labelName:
+      "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",
+    labelKey: "TL_NEW-UPLOAD-DOCS_SUBHEADER"
+  }),
   documentList
 });
 

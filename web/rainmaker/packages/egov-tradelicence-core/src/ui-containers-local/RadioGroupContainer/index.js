@@ -32,10 +32,22 @@ class RadioButtonsGroup extends React.Component {
     value: ""
   };
   componentDidMount = () => {
-    const { defaultValue } = this.props;
+    const { defaultValue, approveCheck } = this.props;
     this.setState({
       value: defaultValue
     });
+    approveCheck(
+      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms",
+      "Yes"
+    );
+    approveCheck(
+      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels",
+      "Yes"
+    );
+    approveCheck(
+      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed",
+      "No"
+    );
   };
 
   handleChange = event => {

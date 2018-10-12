@@ -20,7 +20,6 @@ import set from "lodash/set";
 
 const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
-const queryValueTenantId = getQueryArg(window.location.href, "tenantId");
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -159,7 +158,23 @@ const getApproveCard = queryValuePurpose => {
   });
 };
 
-// const tradeDetails =
+const getTopChildren = (
+  queryValueAN,
+  queryValueTenantId,
+  queryValuePurpose
+) => {
+  return {
+    header,
+    getApproveCard: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      children: {
+        form: getApproveCard(queryValuePurpose)
+      }
+    },
+    footerApprove: footerApprove(queryValueAN, queryValueTenantId)
+  };
+};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -170,33 +185,23 @@ const screenConfig = {
       componentPath: "Div",
       props: {
         className: "common-div-css"
-      },
-      children: {
-        header,
-
-        approveForm: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div"
-          // children: {
-          //   tradeDetails
-          // }
-        },
-        footerApprove: footerApprove(queryValueAN, queryValueTenantId)
       }
     }
   },
   beforeInitScreen: (action, state, dispatch) => {
     const queryValuePurpose = getQueryArg(window.location.href, "purpose");
+    const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
+    const queryValueTenantId = getQueryArg(window.location.href, "tenantId");
 
     if (queryValueAN) {
       updatePFOforSearchResults(action, state, dispatch, queryValueAN);
     }
-    const data = getApproveCard(queryValuePurpose, queryValueTenantId);
-    set(
-      action,
-      "screenConfig.components.div.children.approveForm.children.form",
-      data
+    const data = getTopChildren(
+      queryValueAN,
+      queryValueTenantId,
+      queryValuePurpose
     );
+    set(action, "screenConfig.components.div.children", data);
     return action;
   }
 };

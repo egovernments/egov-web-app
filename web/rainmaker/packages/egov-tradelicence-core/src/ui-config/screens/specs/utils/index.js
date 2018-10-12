@@ -5,7 +5,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
-
+import { validate } from "mihy-ui-framework/ui-redux/screen-configuration/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -872,4 +872,32 @@ export const getCurrentFinancialYear = () => {
     fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2;
   }
   return fiscalYr;
+};
+
+export const validateFields = (objectJsonPath, state, dispatch) => {
+  const fields = get(
+    state.screenConfiguration.screenConfig.apply,
+    objectJsonPath,
+    {}
+  );
+  console.log("fields is.....", fields);
+  let isFormValid = true;
+  for (var variable in fields) {
+    if (fields.hasOwnProperty(variable)) {
+      if (
+        fields[variable] &&
+        fields[variable].props &&
+        (fields[variable].props.disabled === undefined ||
+          !fields[variable].props.disabled) &&
+        !validate(
+          "apply",
+          { ...fields[variable], value: fields[variable].props.value },
+          dispatch
+        )
+      ) {
+        isFormValid = false;
+      }
+    }
+  }
+  return isFormValid;
 };

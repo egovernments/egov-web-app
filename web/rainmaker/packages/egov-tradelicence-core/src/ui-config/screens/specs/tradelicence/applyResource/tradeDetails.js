@@ -332,7 +332,7 @@ const accessoriesCard = {
 
 export const tradeDetails = getCommonCard({
   header: getCommonTitle({
-    labelName: "Please Provide Trade Details",
+    labelName: "Trade Details",
     labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
   }),
   // paragraph: getCommonParagraph({

@@ -21,7 +21,15 @@ const styles = {
 
 class CheckboxLabels extends React.Component {
   state = {
-    checkedG: false
+    checkedG: true
+  };
+
+  componentDidMount = () => {
+    const { approveCheck } = this.props;
+    approveCheck(
+      "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck",
+      true
+    );
   };
 
   handleChange = name => event => {
