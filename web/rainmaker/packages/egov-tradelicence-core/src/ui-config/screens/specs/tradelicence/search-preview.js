@@ -128,7 +128,14 @@ const searchResults = async (action, state, dispatch) => {
     )
   );
   const LicenseData = payload.Licenses[0];
-  createEstimateData(LicenseData, "LicensesTemp[0].estimateCardData", dispatch); //Fetch Bill and populate estimate card
+  const fetchFromReceipt = true;
+  createEstimateData(
+    LicenseData,
+    "LicensesTemp[0].estimateCardData",
+    dispatch,
+    {},
+    fetchFromReceipt
+  ); //Fetch Bill and populate estimate card
 };
 
 let titleText = "";

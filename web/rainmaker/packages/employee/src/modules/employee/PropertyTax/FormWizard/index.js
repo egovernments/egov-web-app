@@ -1112,7 +1112,7 @@ class FormWizard extends Component {
     const assessmentId = getQueryValue(search, "assessmentId");
     const tenantId = getQueryValue(search, "tenantId");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-    
+
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
     let prepareFormData = { ...this.props.prepareFormData };
 
@@ -1189,8 +1189,8 @@ class FormWizard extends Component {
         );
       }
     } catch (e) {
-      hideSpinner()
-      this.setState({nextButtonEnabled: true})
+      hideSpinner();
+      this.setState({ nextButtonEnabled: true });
       alert(e);
     }
   };
@@ -1315,9 +1315,9 @@ class FormWizard extends Component {
         }
       } else {
         alert("Amount cannot be a fraction!");
-      }    
-    } catch(e) {
-      hideSpinner()
+      }
+    } catch (e) {
+      hideSpinner();
     }
   };
 

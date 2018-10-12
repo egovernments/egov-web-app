@@ -454,6 +454,20 @@ export const getBill = async queryObject => {
   }
 };
 
+export const getReceipt = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/collection-services/receipts/_search",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const convertEpochToDate = dateEpoch => {
   const dateFromApi = new Date(dateEpoch);
   let month = dateFromApi.getMonth() + 1;
@@ -756,7 +770,7 @@ const getTaxValue = item => {
     : 0;
 };
 
-const getEstimateData = Bill => {
+const getEstimateData = (Bill, getFromReceipt) => {
   if (Bill && Bill.length) {
     const extraData = ["Rebate", "Penalty"].map(item => {
       return {
@@ -772,19 +786,40 @@ const getEstimateData = Bill => {
       };
     });
     const { billAccountDetails } = Bill[0].billDetails[0];
-    const transformedData = billAccountDetails.map(item => {
-      return {
-        name: {
-          labelName: "Default Label",
-          labelKey: item.taxHeadCode
-        },
-        value: getTaxValue(item),
-        info: {
-          labelName: "Information about NA",
-          labelKey: `Information about ${item.taxHeadCode}`
-        }
-      };
-    });
+    const transformedData = billAccountDetails.reduce((result, item) => {
+      if (getFromReceipt) {
+        item.accountDescription &&
+          result.push({
+            name: {
+              labelName: item.accountDescription.split("-")[0],
+              labelKey: item.accountDescription.split("-")[0]
+            },
+            value: getTaxValue(item),
+            info: {
+              labelName: `Information about ${
+                item.accountDescription.split("-")[0]
+              }`,
+              labelKey: `Information about ${
+                item.accountDescription.split("-")[0]
+              }`
+            }
+          });
+      } else {
+        item.taxHeadCode &&
+          result.push({
+            name: {
+              labelName: item.taxHeadCode,
+              labelKey: item.taxHeadCode
+            },
+            value: getTaxValue(item),
+            info: {
+              labelName: `Information about ${item.taxHeadCode}`,
+              labelKey: `Information about ${item.taxHeadCode}`
+            }
+          });
+      }
+      return result;
+    }, []);
     return [...transformedData, ...extraData];
   }
 };
@@ -793,7 +828,8 @@ export const createEstimateData = async (
   LicenseData,
   jsonPath,
   dispatch,
-  href = {}
+  href = {},
+  getFromReceipt
 ) => {
   const applicationNo =
     get(LicenseData, "applicationNumber") ||
@@ -812,8 +848,14 @@ export const createEstimateData = async (
       value: businessService
     }
   ];
-  const payload = await getBill(queryObj);
-  const estimateData = payload && getEstimateData(payload.Bill);
+  const payload = getFromReceipt
+    ? await getReceipt(queryObj.filter(item => item.key !== "businessService"))
+    : await getBill(queryObj);
+  const estimateData = payload
+    ? getFromReceipt
+      ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt)
+      : getEstimateData(payload.Bill)
+    : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
   return payload;
 };

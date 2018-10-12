@@ -19,6 +19,7 @@ import {
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import set from "lodash/set";
+import { getSearchResults } from "ui-utils/commons";
 import { createEstimateData } from "../utils";
 
 const header = getCommonContainer({
@@ -43,6 +44,20 @@ const fetchBill = async (action, state, dispatch) => {
     dispatch,
     window.location.href
   );
+
+  //For Adhoc
+  // Search License
+  let queryObject = [
+    { key: "tenantId", value: getQueryArg(window.location.href, "tenantId") },
+    {
+      key: "applicationNumber",
+      value: getQueryArg(window.location.href, "applicationNumber")
+    }
+  ];
+  const LicensesPayload = await getSearchResults(queryObject);
+  console.log(LicensesPayload);
+  //set in redux to be used for adhoc
+  dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
 
   //initiate receipt object
   payload &&
