@@ -891,8 +891,9 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
           !fields[variable].props.disabled) &&
         !validate(
           "apply",
-          { ...fields[variable], value: fields[variable].props.value },
-          dispatch
+          { ...fields[variable], value: get(state.screenConfiguration.preparedFinalObject,fields[variable].jsonPath) },
+          dispatch,
+          true
         )
       ) {
         isFormValid = false;
