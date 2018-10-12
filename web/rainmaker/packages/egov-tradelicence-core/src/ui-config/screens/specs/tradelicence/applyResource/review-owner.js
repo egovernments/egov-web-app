@@ -115,7 +115,7 @@ export const getReviewOwner = (isEditable = true) => {
                 labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
               },
               {
-                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob.emailId"
+                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
               }
             ),
             reviewOwnerPAN: getLabelWithValue(
@@ -141,8 +141,7 @@ export const getReviewOwner = (isEditable = true) => {
                 labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
               },
               {
-                jsonPath:
-                  "Licenses[0].tradeLicenseDetail.owners[0].subOwnerShipCategory"
+                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType"
               }
             )
           })
