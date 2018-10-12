@@ -5,6 +5,8 @@ import {
   getCommonParagraph,
   getCommonGrayCard,
   getCommonContainer,
+  getCommonValue,
+  getCommonCaption,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
@@ -288,6 +290,13 @@ const screenConfig = {
     const obj = setStatusBasedValue(status);
     const footer = footerReview(status, applicationNumber, tenantId);
     set(action, "screenConfig.components.div.children.footer", footer);
+    if (status === "cancelled")
+      set(
+        action,
+        "screenConfig.components.div.children.headerDiv.children.helpSection.children.cancelledLabel.visible",
+        true
+      );
+
     setActionItems(action, obj);
 
     if (applicationNumber) {
@@ -329,9 +338,23 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: getCommonTitle({
-                  jsonPath: "Licenses[0].headerSideText"
-                })
+                buttonLabel: {
+                  ...getCommonTitle({
+                    jsonPath: "Licenses[0].headerSideText"
+                  }),
+                  gridDefination: {
+                    xs: 12
+                  }
+                },
+                cancelledLabel: {
+                  ...getCommonHeader(
+                    {
+                      labelName: "Cancelled"
+                    },
+                    { variant: "body1", style: { color: "#E54D42" } }
+                  ),
+                  visible: false
+                }
               }
             }
           }
