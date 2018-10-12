@@ -183,9 +183,9 @@ export const ownerInfoInstitutional = {
     hasAddItem: false,
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children"
+      "children.cardContent.children.tradeUnitCardContainer.children"
   },
   visible: false,
   type: "array"
@@ -264,9 +264,9 @@ const OwnerInfoCard = {
     headerName: "Owner Information",
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children"
+      "children.cardContent.children.tradeUnitCardContainer"
   },
 
   type: "array"

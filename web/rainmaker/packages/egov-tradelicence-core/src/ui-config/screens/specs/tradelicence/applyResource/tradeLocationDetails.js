@@ -33,10 +33,6 @@ export const tradeLocationDetails = getCommonCard({
     tradeLocPropertyID: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      },
       children: {
         txt: getTextField({
           label: {
@@ -82,65 +78,56 @@ export const tradeLocationDetails = getCommonCard({
           },
           gridDefination: { xs: 1 }
         }
+      },
+      gridDefination:{
+        xs:12,
+        sm:6
       }
     },
-
-    tradeLocCity: getContainerWithElement({
-      children: {
-        cityDropdown: {
-          ...getSelectField({
-            label: { labelName: "City" },
-            optionLabel: "name",
-            placeholder: { labelName: "Select City" },
-            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-            jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
-            gridDefination: { sm: 12 },
-            required: true,
-            props: {
-              disabled: true,
-              value: localStorage.getItem("tenant-id")
-            }
-          }),
-          beforeFieldChange: async (action, state, dispatch) => {
-            // try {
-            //   let payload = await httpRequest(
-            //     "post",
-            //     "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-            //     "_search",
-            //     [{ key: "tenantId", value: action.value }],
-            //     {}
-            //   );
-            //   dispatch(
-            //     handleField(
-            //       "apply",
-            //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-            //       "props.suggestions",
-            //       payload.TenantBoundary && payload.TenantBoundary[0].boundary
-            //     )
-            //   );
-            //   dispatch(
-            //     handleField(
-            //       "apply",
-            //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-            //       "props.value",
-            //       ""
-            //     )
-            //   );
-            // } catch (e) {
-            //   console.log(e);
-            // }
-          }
+    tradeLocCity: {
+      ...getSelectField({
+        label: { labelName: "City" },
+        optionLabel: "name",
+        placeholder: { labelName: "Select City" },
+        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
+        required: true,
+        props: {
+          required: true,
+          disabled: true,
+          value: localStorage.getItem("tenant-id")
         }
-      },
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      },
-      props: {
-        fullWidth: true
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        // try {
+        //   let payload = await httpRequest(
+        //     "post",
+        //     "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+        //     "_search",
+        //     [{ key: "tenantId", value: action.value }],
+        //     {}
+        //   );
+        //   dispatch(
+        //     handleField(
+        //       "apply",
+        //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+        //       "props.suggestions",
+        //       payload.TenantBoundary && payload.TenantBoundary[0].boundary
+        //     )
+        //   );
+        //   dispatch(
+        //     handleField(
+        //       "apply",
+        //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+        //       "props.value",
+        //       ""
+        //     )
+        //   );
+        // } catch (e) {
+        //   console.log(e);
+        // }
       }
-    }),
-
+    },
     tradeLocDoorHouseNo: getTextField({
       label: {
         labelName: "Door/House No.",
@@ -177,7 +164,6 @@ export const tradeLocationDetails = getCommonCard({
       pattern: getPattern("BuildingStreet"),
       jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
     }),
-
     tradeLocMohalla: {
       uiFramework: "custom-containers-local",
       componentPath: "AutosuggestContainer",
@@ -199,7 +185,7 @@ export const tradeLocationDetails = getCommonCard({
         jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
         sourceJsonPath: "applyScreenMdmsData.tenant.localities",
         fullwidth: true,
-        required: true,
+        // required: true,
         inputLabelProps: {
           shrink: true
         }
@@ -207,7 +193,8 @@ export const tradeLocationDetails = getCommonCard({
       gridDefination: {
         xs: 12,
         sm: 6
-      }
+      },
+      // required: true
     },
     tradeLocPincode: getTextField({
       label: {
@@ -221,7 +208,6 @@ export const tradeLocationDetails = getCommonCard({
       pattern: getPattern("Pincode"),
       jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode"
     }),
-
     tradeLocGISCoord: {
       uiFramework: "custom-atoms",
       componentPath: "Div",
@@ -271,7 +257,9 @@ export const tradeLocationDetails = getCommonCard({
         labelName: "Enter Electricity Connection No. of Trade Loaction",
         labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_PLACEHOLDER"
       },
-      pattern: getPattern("ElectricityConnNo")
+      pattern: getPattern("ElectricityConnNo"),
+      jsonPath:
+        "Licenses[0].tradeLicenseDetail.additionalDetail.electricityConnNo"
     })
   }),
   mapsDialog: {

@@ -4,9 +4,12 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { applyTradeLicense } from "../../../../../ui-utils/commons";
 import get from "lodash/get";
+import some from "lodash/some";
+
 
 import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { validate } from "mihy-ui-framework/ui-redux/screen-configuration/utils";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { createEstimateData } from "../../utils";
 import "./index.css"
@@ -61,35 +64,89 @@ export const callBackForNext = (state, dispatch) => {
     "components.div.children.stepper.props.activeStep",
     0
   );
-  console.log(activeStep);
-  if (activeStep === 1) applyTradeLicense(state, dispatch);
+  // console.log(activeStep);
+  let isFormValid = true;
+  if (activeStep === 0) {
+    const isTradeDetailsValid = validateFields(
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children",
+      state,
+      dispatch
+    );
+    const isTradeLocationValid=validateFields("components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children",state,dispatch);
+    let accessoriesJsonPath="components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.accessoriesCard.props.items";
+    let accessories=get(state.screenConfiguration.screenConfig.apply,accessoriesJsonPath,[]);
+    let isAccessoriesValid=true;
+    for (var i = 0; i < accessories.length; i++) {
+      if(!validateFields(`${accessoriesJsonPath}[${i}].item${i}.children.cardContent.children.accessoriesCardContainer.children`,state,dispatch)) isAccessoriesValid=false;
+    }
+    const isTradeUnitValid=validateFields("components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.multipleTradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",state,dispatch);
+    if (!isTradeDetailsValid || !isTradeLocationValid || !isAccessoriesValid || !isTradeUnitValid) {
+      isFormValid=false;
+    }
+  }
+  if (activeStep === 1) {
+    let ownership=get(state.screenConfiguration.preparedFinalObject,"LicensesTemp[0].tradeLicenseDetail.ownerShipCategory","INDIVIDUAL");
+    if (ownership==="INDIVIDUAL") {
+      let ownersJsonPath="components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items";
+      let owners=get(state.screenConfiguration.screenConfig.apply,ownersJsonPath,[])
+      for (var i = 0; i < owners.length; i++) {
+        if(!validateFields(`${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,state,dispatch)) isFormValid=false;
+      }
+    } else {
+      let ownersJsonPath="components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.props.items";
+      let owners=get(state.screenConfiguration.screenConfig.apply,ownersJsonPath,[])
+      for (var i = 0; i < owners.length; i++) {
+        if(!validateFields(`${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,state,dispatch)) isFormValid=false;
+      }
+    }
+    if (isFormValid) {
+      applyTradeLicense(state, dispatch);
+    }
+  }
   if (activeStep === 2) {
     const LicenseData = get(
       state.screenConfiguration.preparedFinalObject,
-      "Licenses[0]"
+      "Licenses[0]",{}
     );
+
     const uploadedDocData = get(
-      state.screenConfiguration.preparedFinalObject,
-      "Licenses[0].tradeLicenseDetail.applicationDocuments"
-    );
-    console.log(uploadedDocData);
-    const reviewDocData = uploadedDocData.map(item => {
-      return {
-        title: item.documentType,
-        link: item.fileUrl.split(",")[0],
-        linkText: "View",
-        name: item.fileName
-      };
-    });
-    createEstimateData(
       LicenseData,
-      "LicensesTemp[0].estimateCardData",
-      dispatch
-    ); //get bill and populate estimate card
-    console.log(reviewDocData);
-    dispatch(
-      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+      "tradeLicenseDetail.applicationDocuments",[]
     );
+
+    const uploadedTempDocData= get(
+      state.screenConfiguration.preparedFinalObject,
+      "LicensesTemp[0].applicationDocuments",[]
+    );
+
+    for (var i = 0; i < uploadedTempDocData.length; i++) {
+      if (uploadedTempDocData[i].required && !some(uploadedDocData,{documentType:uploadedTempDocData[i].name})) {
+        isFormValid=false;
+      }
+    }
+    // console.log(uploadedDocData);
+    if (isFormValid) {
+      const reviewDocData = uploadedDocData.map(item => {
+        return {
+          title: item.documentType,
+          link: item.fileUrl.split(",")[0],
+          linkText: "View",
+          name: item.fileName
+        };
+      });
+      createEstimateData(
+        LicenseData,
+        "LicensesTemp[0].estimateCardData",
+        dispatch
+      ); //get bill and populate estimate card
+      console.log(reviewDocData);
+      dispatch(
+        prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
+      );
+    }
+    else {
+      alert("please upload requied documents");
+    }
   }
   if (activeStep === 3) {
     const LicenseData = get(
@@ -99,7 +156,28 @@ export const callBackForNext = (state, dispatch) => {
     applyTradeLicense(state, dispatch);
     moveToSuccess(LicenseData, dispatch);
   }
-  changeStep(state, dispatch);
+  if (isFormValid) {
+    changeStep(state, dispatch);
+  }
+};
+
+export const validateFields = (objectJsonPath, state, dispatch) => {
+  console.log(
+    get(state.screenConfiguration.screenConfig.apply, objectJsonPath,{})
+  );
+  const fields = get(
+    state.screenConfiguration.screenConfig.apply,
+    objectJsonPath,{}
+  );
+  let isFormValid = true;
+  for (var variable in fields) {
+    if (fields.hasOwnProperty(variable)) {
+      if (fields[variable] && fields[variable].props && (fields[variable].props.disabled===undefined || !fields[variable].props.disabled) && !validate("apply", {...fields[variable],value:fields[variable].props.value}, dispatch)) {
+        isFormValid = false;
+      }
+    }
+  }
+  return isFormValid;
 };
 
 export const changeStep = (
