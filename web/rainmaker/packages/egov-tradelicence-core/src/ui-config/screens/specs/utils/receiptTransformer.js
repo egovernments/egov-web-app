@@ -102,16 +102,20 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       get(response, "Licenses[0].tradeLicenseDetail.address.tenantId", "NA")
     );
     data.city = getMessageFromLocalization(cityCode);
-    data.ownerName = nullToNa(
-      get(response, "Licenses[0].tradeLicenseDetail.owners[0].name", "NA")
-    );
-    data.mobileNo = nullToNa(
-      get(
-        response,
-        "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-        "NA"
-      )
-    );
+    /** Make owners data array */
+    let ownersData = get(response, "Licenses[0].tradeLicenseDetail.owners", []);
+    data.owners = ownersData.map(owner => {
+      return {
+        name: get(owner, "name", "NA"),
+        mobile: get(owner, "mobileNumber", "NA")
+      };
+    });
+    data.ownersList = ownersData
+      .map(owner => {
+        return get(owner, "name", "NA");
+      })
+      .join(", ");
+    /** End */
     data.licenseIssueDate = nullToNa(
       epochToDate(get(response, "Licenses[0].issuedDate", "NA"))
     );
