@@ -167,6 +167,7 @@ export const tradeLocationDetails = getCommonCard({
     tradeLocMohalla: {
       uiFramework: "custom-containers-local",
       componentPath: "AutosuggestContainer",
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
       props: {
         suggestions: [],
         label: "Mohalla",
@@ -217,6 +218,7 @@ export const tradeLocationDetails = getCommonCard({
           width: "100%"
         }
       },
+      jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
       onClickDefination: {
         action: "condition",
         callBack: showHideMapPopup
