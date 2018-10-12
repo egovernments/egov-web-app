@@ -485,7 +485,7 @@ export const tradeDetails = getCommonCard({
         labelName: "Enter Trade GST No.",
         labelKey: "TL_NEW_TRADE_DETAILS_TRADE_GST_NO_PLACEHOLDER"
       },
-      pattern: getPattern("GSTNo"),
+      // pattern: getPattern("GSTNo"),
       jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.gstNo"
     }),
     tradeOperationalArea: getTextField({

@@ -27,6 +27,8 @@ import { getCancelDetails } from "./applyResource/cancel-details";
 import { getRejectionDetails } from "./applyResource/reject-details";
 import { footerReview } from "./applyResource/footer";
 
+import { getBoundaryData } from "../../../../ui-utils/commons";
+
 const status = getQueryArg(window.location.href, "status");
 const tenantId = getQueryArg(window.location.href, "tenantId");
 const applicationNumber = getQueryArg(
@@ -136,6 +138,12 @@ const searchResults = async (action, state, dispatch) => {
     {},
     fetchFromReceipt
   ); //Fetch Bill and populate estimate card
+  const code = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.address.locality.code"
+  );
+  const queryObj = [{ key: "tenantId", value: tenantId }];
+  getBoundaryData(action, state, dispatch, queryObj, code);
 };
 
 let titleText = "";
@@ -305,7 +313,6 @@ const screenConfig = {
       );
 
     setActionItems(action, obj);
-
     if (applicationNumber) {
       searchResults(action, state, dispatch);
     }

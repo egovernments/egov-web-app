@@ -91,6 +91,7 @@ export const getBoundaryData = async (
   state,
   dispatch,
   queryObject,
+  code,
   componentPath
 ) => {
   try {
@@ -116,6 +117,21 @@ export const getBoundaryData = async (
         payload.TenantBoundary && payload.TenantBoundary[0].boundary
       )
     );
+    if (code) {
+      let data = payload.TenantBoundary[0].boundary;
+      let messageObject =
+        data &&
+        data.find(item => {
+          return item.code == code;
+        });
+      if (messageObject)
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.address.locality.label",
+            messageObject.name
+          )
+        );
+    }
   } catch (e) {
     console.log(e);
   }
