@@ -82,6 +82,7 @@ export const updatePFOforSearchResults = async (
   ];
   const payload = await getSearchResults(queryObject);
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  setApplicationNumberBox(state, dispatch);
 };
 
 export const getBoundaryData = async (
@@ -174,6 +175,8 @@ export const applyTradeLicense = async (state, dispatch) => {
       );
       dispatch(prepareFinalObject("Licenses", response.Licenses));
     }
+    /** Application no. box setting */
+    setApplicationNumberBox(state, dispatch);
   } catch (error) {
     console.log(error);
   }
@@ -267,5 +270,31 @@ export const handleFileUpload = (event, handleDocument, props) => {
         handleDocument(file, fileStoreId);
       }
     });
+  }
+};
+
+const setApplicationNumberBox = (state, dispatch) => {
+  let applicationNumber = get(
+    state,
+    "screenConfiguration.preparedFinalObject.Licenses[0].applicationNumber",
+    null
+  );
+  if (applicationNumber) {
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.headerDiv.children.header.children.applicationNumber",
+        "visible",
+        true
+      )
+    );
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.headerDiv.children.header.children.applicationNumber",
+        "props.number",
+        applicationNumber
+      )
+    );
   }
 };

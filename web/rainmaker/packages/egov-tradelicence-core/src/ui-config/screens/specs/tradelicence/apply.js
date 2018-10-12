@@ -46,7 +46,7 @@ const header = getCommonContainer({
     uiFramework: "custom-atoms-local",
     componentPath: "ApplicationNoContainer",
     props: {
-      number: 5434
+      number: "NA"
     },
     visible: false
   }
