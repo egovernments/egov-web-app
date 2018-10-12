@@ -35,6 +35,20 @@ let payableAmountBorderKey = [true, true, true, true, true, true, true];
 let payableInfoTable3 = ["*", "*", "*"];
 
 const getReceiptData = (transformedData, ulbLogo) => {
+  let owners = transformedData.owners.map(owner => [
+    {
+      text: "Owner Name",
+      border: [true, true, false, true],
+      style: "receipt-table-key"
+    },
+    { text: owner.name, border: [false, true, true, true] },
+    {
+      text: "Mobile No.",
+      border: [true, true, false, true],
+      style: "receipt-table-key"
+    },
+    { text: owner.mobile, border: [false, true, true, true] }
+  ]);
   var receiptData = {
     content: [
       {
@@ -236,25 +250,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
         style: "pt-reciept-citizen-table",
         table: {
           widths: receiptTableWidth,
-          body: [
-            [
-              {
-                text: "Owner Name",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              { text: transformedData.ownerName, border: borderValue },
-              {
-                text: "Mobile No",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.mobileNo,
-                border: borderValue
-              }
-            ]
-          ]
+          body: owners
         },
         layout: tableborder
       },
@@ -528,7 +524,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
         bold: true,
         margin: [0, 60, 0, 8], //left top right bottom
         color: "#484848"
-      },
+      }
     }
   };
   return receiptData;
@@ -652,7 +648,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: transformedData.ownerName
+            text: transformedData.ownersList
           }
         ]
       },
@@ -836,7 +832,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
         fontSize: 14,
         margin: [0, 80, 0, 0], //left top right bottom
         color: "#1E1E1E"
-      },
+      }
     }
   };
   return tlCertificateData;
