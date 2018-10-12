@@ -128,7 +128,7 @@ const searchResults = async (action, state, dispatch) => {
     )
   );
   const LicenseData = payload.Licenses[0];
-  const fetchFromReceipt = true;
+  const fetchFromReceipt = status !== "pending_payment";
   createEstimateData(
     LicenseData,
     "LicensesTemp[0].estimateCardData",
