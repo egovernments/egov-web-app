@@ -11,6 +11,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../ui-utils/commons";
@@ -23,8 +24,6 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-import { getCancelDetails } from "./applyResource/cancel-details";
-import { getRejectionDetails } from "./applyResource/reject-details";
 import { footerReview } from "./applyResource/footer";
 
 import { getBoundaryData } from "../../../../ui-utils/commons";
@@ -36,6 +35,42 @@ const applicationNumber = getQueryArg(
   "applicationNumber"
 );
 let headerSideText = "";
+
+
+const setDocuments = async (payload, sourceJsonPath, destJsonPath, dispatch) => {
+  const uploadedDocData = get(
+    payload,
+    sourceJsonPath
+  );
+
+  const fileStoreIds =
+    uploadedDocData &&
+    uploadedDocData
+      .map(item => {
+        return item.fileStoreId;
+      })
+      .join(",");
+  const fileUrlPayload =
+    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+  const reviewDocData =
+    uploadedDocData &&
+    uploadedDocData.map(item => {
+      return {
+        title: item.documentType || "",
+        link:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
+          "",
+        linkText: "View",
+        name: item.fileName || ""
+      };
+    });
+  reviewDocData &&
+    dispatch(
+      prepareFinalObject(destJsonPath, reviewDocData)
+    );
+}
 
 const getTradeTypeSubtypeDetails = payload => {
   const tradeUnitsFromApi = get(
@@ -91,37 +126,24 @@ const searchResults = async (action, state, dispatch) => {
     get(payload, "Licenses[0].licenseNumber")
   );
   set(payload, "Licenses[0].headerSideText", headerSideText);
-  const uploadedDocData = get(
-    payload,
-    "Licenses[0].tradeLicenseDetail.applicationDocuments"
-  );
-  const fileStoreIds =
-    uploadedDocData &&
-    uploadedDocData
-      .map(item => {
-        return item.fileStoreId;
-      })
-      .join(",");
-  const fileUrlPayload =
-    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-  const reviewDocData =
-    uploadedDocData &&
-    uploadedDocData.map(item => {
-      return {
-        title: item.documentType || "",
-        link:
-          (fileUrlPayload &&
-            fileUrlPayload[item.fileStoreId] &&
-            fileUrlPayload[item.fileStoreId].split(",")[0]) ||
-          "",
-        linkText: "View",
-        name: item.fileName || ""
-      };
-    });
-  reviewDocData &&
-    dispatch(
-      prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
-    );
+
+  await setDocuments(payload, "Licenses[0].tradeLicenseDetail.applicationDocuments", "LicensesTemp[0].reviewDocData", dispatch);
+  if ((status === "approved") || (status === "rejected") || (status === "cancelled")) {
+    if (get(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments")) {
+
+      await setDocuments(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments", "LicensesTemp[0].verifyDocData", dispatch);
+    }
+    else {
+      dispatch(
+        handleField(
+          "search-preview",
+          "components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.children.cardContent.children.viewTow.children.lbl",
+          "visible",
+          false
+        )
+      );
+    }
+  }
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   dispatch(
     prepareFinalObject(
@@ -155,8 +177,6 @@ const setStatusBasedValue = status => {
         approvalDetailsVisibility: true,
         titleText: "Review the Trade License",
         titleVisibility: true,
-        cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false,
         roleDefination: {
           rolePath: "user-info.roles",
           roles: ["TL_APPROVER"]
@@ -167,8 +187,6 @@ const setStatusBasedValue = status => {
         titleText: "Review the Application and Proceed",
         titleVisibility: true,
         approvalDetailsVisibility: false,
-        cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false,
         roleDefination: {
           rolePath: "user-info.roles",
           roles: ["TL_CEMP"]
@@ -179,8 +197,6 @@ const setStatusBasedValue = status => {
         titleText: "Review the Application and Proceed",
         titleVisibility: true,
         approvalDetailsVisibility: false,
-        cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false,
         roleDefination: {
           rolePath: "user-info.roles",
           roles: ["TL_APPROVER"]
@@ -189,19 +205,15 @@ const setStatusBasedValue = status => {
     case "cancelled":
       return {
         titleText: "",
-        cancelDetailsVisibility: true,
         titleVisibility: false,
-        approvalDetailsVisibility: false,
-        rejectDetailsVisibility: false,
+        approvalDetailsVisibility: true,
         roleDefination: {}
       };
     case "rejected":
       return {
         titleText: "",
         titleVisibility: false,
-        approvalDetailsVisibility: false,
-        cancelDetailsVisibility: false,
-        rejectDetailsVisibility: true,
+        approvalDetailsVisibility: true,
         roleDefination: {}
       };
 
@@ -210,8 +222,6 @@ const setStatusBasedValue = status => {
         titleText: "",
         titleVisibility: false,
         approvalDetailsVisibility: false,
-        cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false,
         roleDefination: {}
       };
   }
@@ -241,24 +251,12 @@ const reviewTradeDetails = getReviewTrade(false);
 
 const reviewOwnerDetails = getReviewOwner(false);
 
-const reviewDocumentDetails = getReviewDocuments(false);
+const reviewDocumentDetails = getReviewDocuments(false, false);
 
-let approvalDetails = getApprovalDetails();
-let rejectionDetails = getRejectionDetails();
-let cancelDetails = getCancelDetails();
+let approvalDetails = getApprovalDetails(status);
 let title = getCommonTitle({ labelName: titleText });
 
 const setActionItems = (action, object) => {
-  set(
-    action,
-    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.cancelDetails.visible",
-    get(object, "cancelDetailsVisibility")
-  );
-  set(
-    action,
-    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.rejectionDetails.visible",
-    get(object, "rejectDetailsVisibility")
-  );
   set(
     action,
     "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.visible",
@@ -287,9 +285,7 @@ export const tradeReviewDetails = getCommonCard({
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails,
-  approvalDetails,
-  cancelDetails,
-  rejectionDetails
+  approvalDetails
 });
 
 const screenConfig = {
