@@ -136,11 +136,14 @@ const setStatusBasedValue = status => {
     case "approved":
       return {
         approvalDetailsVisibility: true,
-
         titleText: "Review the Trade License",
         titleVisibility: true,
         cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false
+        rejectDetailsVisibility: false,
+        roleDefination: {
+          rolePath: "user-info.roles",
+          roles: ["TL_APPROVER"]
+        }
       };
     case "pending_payment":
       return {
@@ -148,7 +151,11 @@ const setStatusBasedValue = status => {
         titleVisibility: true,
         approvalDetailsVisibility: false,
         cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false
+        rejectDetailsVisibility: false,
+        roleDefination: {
+          rolePath: "user-info.roles",
+          roles: ["TL_CEMP"]
+        }
       };
     case "pending_approval":
       return {
@@ -156,7 +163,11 @@ const setStatusBasedValue = status => {
         titleVisibility: true,
         approvalDetailsVisibility: false,
         cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false
+        rejectDetailsVisibility: false,
+        roleDefination: {
+          rolePath: "user-info.roles",
+          roles: ["TL_APPROVER"]
+        }
       };
     case "cancelled":
       return {
@@ -164,7 +175,8 @@ const setStatusBasedValue = status => {
         cancelDetailsVisibility: true,
         titleVisibility: false,
         approvalDetailsVisibility: false,
-        rejectDetailsVisibility: false
+        rejectDetailsVisibility: false,
+        roleDefination: {}
       };
     case "rejected":
       return {
@@ -172,7 +184,8 @@ const setStatusBasedValue = status => {
         titleVisibility: false,
         approvalDetailsVisibility: false,
         cancelDetailsVisibility: false,
-        rejectDetailsVisibility: true
+        rejectDetailsVisibility: true,
+        roleDefination: {}
       };
 
     default:
@@ -181,7 +194,8 @@ const setStatusBasedValue = status => {
         titleVisibility: false,
         approvalDetailsVisibility: false,
         cancelDetailsVisibility: false,
-        rejectDetailsVisibility: false
+        rejectDetailsVisibility: false,
+        roleDefination: {}
       };
   }
 };
@@ -242,6 +256,11 @@ const setActionItems = (action, object) => {
     action,
     "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title.visible",
     get(object, "titleVisibility")
+  );
+  set(
+    action,
+    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title.roleDefination",
+    get(object, "roleDefination")
   );
 };
 
