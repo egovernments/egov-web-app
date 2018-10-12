@@ -26,7 +26,11 @@ class UploadMultipleFiles extends Component {
     if (documents.length + 1 > maxFiles) {
       alert(`Can only upload ${maxFiles} files`);
     } else {
-      documents.push({ fileName: file.name, fileStoreId });
+      documents.push({
+        fileName: file.name,
+        fileStoreId,
+        documentType: `Document - ${documents.length + 1}`
+      });
       documents.slice(0, maxFiles);
       prepareFinalObject(jsonPath, documents);
       this.setState({ documents });
