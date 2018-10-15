@@ -107,7 +107,7 @@ const withAuthorization = (options = {}) => (Component) => {
             {!hideActionMenu &&
               authenticated && (
                 <div>
-                  <div className="col-xs-2 action-menu-drawer show-action-menu">
+                  <div className="col-xs-2 action-menu-drawer show-action-menu" id="menu-container">
                     <div className="rainmaker-action-menu">
                       <ActionMenu role={role} />
                     </div>

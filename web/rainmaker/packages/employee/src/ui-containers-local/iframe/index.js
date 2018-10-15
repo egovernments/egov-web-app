@@ -1,8 +1,31 @@
 import React from "react";
+import get from "lodash/get";
 import "./index.css";
 
-const Iframe = (props) => {
-  return <iframe src={props.src} frameBorder="0" allowFullScreen className="iframe-style" {...props} />;
-};
+
+class Iframe extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ifrmheight: "777px",
+    }
+  }
+
+  getIframeheight = () => get(document.getElementById('menu-container'), "clientHeight", "777")
+
+  updateFrame = () => this.setState({
+    ifrmheight: `${this.getIframeheight()}px`,
+  })
+
+  componentDidMount() {
+    this.updateFrame()
+  }
+
+  render() {
+    return (
+      <iframe src={this.props.src} frameBorder="0" allowFullScreen className="iframe-style" {...this.props} height={this.state.ifrmheight}/>
+    )
+  }
+}
 
 export default Iframe;

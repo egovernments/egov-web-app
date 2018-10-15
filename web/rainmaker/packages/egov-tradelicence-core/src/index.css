@@ -104,17 +104,6 @@ span[class^="MuiFormLabel-asterisk"] {
 }
 
 
-@media only screen and (min-width: 953px) {
-  .apply-wizard-footer {
-    bottom: 71px !important;
-  }
-
-  div[class^="MuiSnackbar-anchorOriginBottomCenter"] {
-    bottom: 59px !important;
-  }
-}
-
-
 
 /* div[class^="MuiGrid-item"]   {
     padding-right: 80px

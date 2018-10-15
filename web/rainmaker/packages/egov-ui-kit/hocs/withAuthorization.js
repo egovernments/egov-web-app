@@ -156,7 +156,7 @@ var withAuthorization = function withAuthorization() {
                 null,
                 _react2.default.createElement(
                   "div",
-                  { className: "col-xs-2 action-menu-drawer show-action-menu" },
+                  { className: "col-xs-2 action-menu-drawer show-action-menu", id: "menu-container" },
                   _react2.default.createElement(
                     "div",
                     { className: "rainmaker-action-menu" },
