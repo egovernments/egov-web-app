@@ -71,7 +71,7 @@ const tradeLicenseSearchAndResult = {
                   props: {
                     iconName: "add",
                     style: {
-                      fontSize: "36px"
+                      fontSize: "24px"
                     }
                   }
                 },

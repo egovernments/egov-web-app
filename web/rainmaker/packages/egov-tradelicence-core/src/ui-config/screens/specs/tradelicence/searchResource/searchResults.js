@@ -63,7 +63,14 @@ export const searchResults = {
         format: rowData => {
           return (
             <Link to={onRowClick(rowData)}>
+             <span
+              style={{
+                color:"#FE7A51"
+              }}
+            >
               {rowData[get(textToLocalMapping, "Application No")]}
+            </span>
+              
             </Link>
           );
         }
@@ -72,28 +79,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Trade Name")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
       [get(textToLocalMapping, "Application Date")]: {},
-      [get(textToLocalMapping, "Status")]: {
-        format: rowData => {
-          let value = rowData[get(textToLocalMapping, "Status")];
-          let color = "";
-          if (value.indexOf(get(textToLocalMapping, "APPROVED")) !== -1) {
-            color = "green";
-          } else {
-            color = "red";
-          }
-          return (
-            <span
-              style={{
-                color: color,
-                fontSize: "14px",
-                fontWeight: 400
-              }}
-            >
-              {value}
-            </span>
-          );
-        }
-      }
+      [get(textToLocalMapping, "Status")]: {}
     },
     title: get(
       textToLocalMapping,

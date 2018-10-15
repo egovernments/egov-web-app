@@ -44,7 +44,7 @@ export const searchApiCall = async (state, dispatch) => {
     for (var key in searchScreenObject) {
       if (
         searchScreenObject.hasOwnProperty(key) &&
-        searchScreenObject[key] !== ""
+        searchScreenObject[key].trim() !== ""
       ) {
         if (key === "fromDate") {
           queryObject.push({
@@ -57,7 +57,7 @@ export const searchApiCall = async (state, dispatch) => {
             value: convertDateToEpoch(searchScreenObject[key], "dayend")
           });
         } else {
-          queryObject.push({ key: key, value: searchScreenObject[key] });
+          queryObject.push({ key: key, value: searchScreenObject[key].trim() });
         }
       }
     }
