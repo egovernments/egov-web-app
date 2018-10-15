@@ -23,6 +23,7 @@ const localizationLabels = JSON.parse(
 
 class LabelContainer extends React.Component {
   render() {
+    console.log("Label container");
     let { labelName, labelKey, fieldValue, ...rest } = this.props;
     let transfomedKeys = transformById(localizationLabels, "code");
     let translatedLabel = getLocaleLabelsforTL(

@@ -46,8 +46,6 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
-var _uiUtils = require("../ui-utils");
-
 var _jquery = require("jquery");
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -58,6 +56,7 @@ var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { addComponentJsonpath } from "../ui-utils";
 var screenHoc = function screenHoc(_ref) {
   var _ref$path = _ref.path,
       path = _ref$path === undefined ? "" : _ref$path,
@@ -139,9 +138,9 @@ var screenHoc = function screenHoc(_ref) {
           } else {
             _this.screenConfig = getConfig(path, screenKey);
           }
-          if (!(0, _isEmpty2.default)(_this.screenConfig)) {
-            (0, _uiUtils.addComponentJsonpath)(_this.screenConfig.components);
-          }
+          // if (!isEmpty(this.screenConfig)) {
+          //   addComponentJsonpath(this.screenConfig.components);
+          // }
           initScreen(screenKey, (0, _cloneDeep2.default)(_this.screenConfig));
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
