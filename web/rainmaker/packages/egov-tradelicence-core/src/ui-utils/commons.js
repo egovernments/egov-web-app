@@ -285,7 +285,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
         return;
       }
       if (!isSizeValid) {
-        alert(`Maximum file size can be ${5} MB`);
+        alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
         return;
       }
       if (file.type.match(/^image\//)) {

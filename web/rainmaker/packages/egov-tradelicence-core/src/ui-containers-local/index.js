@@ -32,6 +32,10 @@ const AutosuggestContainer = Loadable({
   loader: () => import("./AutosuggestContainer"),
   loading: () => <Loading />
 });
+const DocumentListContainer = Loadable({
+  loader: () => import("./DocumentListContainer"),
+  loading: () => <Loading />
+});
 
 export {
   CustomTabContainer,
@@ -40,5 +44,6 @@ export {
   CheckboxContainer,
   DownloadFileContainer,
   EstimateCardContainer,
-  AutosuggestContainer
+  AutosuggestContainer,
+  DocumentListContainer
 };

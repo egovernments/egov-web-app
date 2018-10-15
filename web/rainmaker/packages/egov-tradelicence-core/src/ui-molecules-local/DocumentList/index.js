@@ -70,6 +70,16 @@ class DocumentList extends Component {
     uploadedDocuments: []
   };
 
+  componentDidMount = () => {
+    const { uploadedDocsInRedux: uploadedDocuments } = this.props;
+    if (uploadedDocuments) {
+      const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
+        return parseInt(item); //returns string so convert to integer
+      });
+      this.setState({ uploadedDocuments, uploadedIndex });
+    }
+  };
+
   onUploadClick = uploadedDocIndex => {
     this.setState({ uploadedDocIndex });
   };
@@ -83,6 +93,10 @@ class DocumentList extends Component {
       ...uploadedDocuments,
       [uploadedDocIndex]: [{ fileName: file.name, fileStoreId }]
     };
+
+    prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", {
+      ...uploadedDocuments
+    });
 
     prepareFinalObject(jsonPath, {
       fileName: file.name,
@@ -176,20 +190,20 @@ DocumentList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
-  const { screenConfiguration } = state;
-  const documents = get(
-    screenConfiguration.preparedFinalObject,
-    "LicensesTemp[0].applicationDocuments",
-    []
-  );
-  const tenantId = get(
-    screenConfiguration.preparedFinalObject,
-    "LicensesTemp[0].tenantId",
-    ""
-  );
-  return { documents, tenantId };
-};
+// const mapStateToProps = state => {
+//   const { screenConfiguration } = state;
+//   const documents = get(
+//     screenConfiguration.preparedFinalObject,
+//     "LicensesTemp[0].applicationDocuments",
+//     []
+//   );
+//   const tenantId = get(
+//     screenConfiguration.preparedFinalObject,
+//     "LicensesTemp[0].tenantId",
+//     ""
+//   );
+//   return { documents, tenantId };
+// };
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -200,7 +214,7 @@ const mapDispatchToProps = dispatch => {
 
 export default withStyles(styles)(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(DocumentList)
 );

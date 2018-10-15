@@ -1,6 +1,6 @@
 export const documentList = {
-  uiFramework: "custom-molecules-local",
-  componentPath: "DocumentList",
+  uiFramework: "custom-containers-local",
+  componentPath: "DocumentListContainer",
   props: {
     // documents: [
     //   {
