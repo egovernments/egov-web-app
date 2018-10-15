@@ -44,13 +44,15 @@ class LabelContainer extends React.Component {
 
 const mapStateToProps = (state, ownprops) => {
   let fieldValue = "";
-  const { jsonPath } = ownprops;
+  const { jsonPath, callBack } = ownprops;
   const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
   if (jsonPath) {
     fieldValue = get(preparedFinalObject, jsonPath);
+    if (fieldValue && callBack && typeof callBack === "function") {
+      fieldValue = callBack(fieldValue);
+    }
   }
-
   return { fieldValue };
 };
 

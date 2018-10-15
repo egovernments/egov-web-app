@@ -36,12 +36,13 @@ const applicationNumber = getQueryArg(
 );
 let headerSideText = "";
 
-
-const setDocuments = async (payload, sourceJsonPath, destJsonPath, dispatch) => {
-  const uploadedDocData = get(
-    payload,
-    sourceJsonPath
-  );
+const setDocuments = async (
+  payload,
+  sourceJsonPath,
+  destJsonPath,
+  dispatch
+) => {
+  const uploadedDocData = get(payload, sourceJsonPath);
 
   const fileStoreIds =
     uploadedDocData &&
@@ -66,11 +67,8 @@ const setDocuments = async (payload, sourceJsonPath, destJsonPath, dispatch) => 
         name: item.fileName || ""
       };
     });
-  reviewDocData &&
-    dispatch(
-      prepareFinalObject(destJsonPath, reviewDocData)
-    );
-}
+  reviewDocData && dispatch(prepareFinalObject(destJsonPath, reviewDocData));
+};
 
 const getTradeTypeSubtypeDetails = payload => {
   const tradeUnitsFromApi = get(
@@ -97,29 +95,6 @@ const searchResults = async (action, state, dispatch) => {
     { key: "applicationNumber", value: applicationNumber }
   ];
   let payload = await getSearchResults(queryObject);
-  set(
-    payload,
-    "Licenses[0].validFrom",
-    convertEpochToDate(get(payload, "Licenses[0].validFrom"))
-  );
-  set(
-    payload,
-    "Licenses[0].validTo",
-    convertEpochToDate(get(payload, "Licenses[0].validTo"))
-  );
-  set(
-    payload,
-    "Licenses[0].commencementDate",
-    convertEpochToDate(get(payload, "Licenses[0].commencementDate"))
-  );
-
-  set(
-    payload,
-    "Licenses[0].tradeLicenseDetail.owners[0].dob",
-    convertEpochToDate(
-      get(payload, "Licenses[0].tradeLicenseDetail.owners[0].dob")
-    )
-  );
 
   headerSideText = getHeaderSideText(
     get(payload, "Licenses[0].status"),
@@ -127,13 +102,25 @@ const searchResults = async (action, state, dispatch) => {
   );
   set(payload, "Licenses[0].headerSideText", headerSideText);
 
-  await setDocuments(payload, "Licenses[0].tradeLicenseDetail.applicationDocuments", "LicensesTemp[0].reviewDocData", dispatch);
-  if ((status === "approved") || (status === "rejected") || (status === "cancelled")) {
+  await setDocuments(
+    payload,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    "LicensesTemp[0].reviewDocData",
+    dispatch
+  );
+  if (
+    status === "approved" ||
+    status === "rejected" ||
+    status === "cancelled"
+  ) {
     if (get(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments")) {
-
-      await setDocuments(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments", "LicensesTemp[0].verifyDocData", dispatch);
-    }
-    else {
+      await setDocuments(
+        payload,
+        "Licenses[0].tradeLicenseDetail.verificationDocuments",
+        "LicensesTemp[0].verifyDocData",
+        dispatch
+      );
+    } else {
       dispatch(
         handleField(
           "search-preview",
