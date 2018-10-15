@@ -20,11 +20,11 @@ const header = getCommonHeader({
 });
 
 const screenConfig = {
-  ...tradeLicenseSearchAndResult,
   beforeInitScreen: (action, state, dispatch) => {
     // console.log(action);
     return action;
-  }
+  },
+  ...tradeLicenseSearchAndResult
 };
 
 export default screenConfig;
