@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Snackbar } from "mihy-ui-framework/ui-atoms";
+import { Snackbar } from "../../ui-atoms";
 import { connect } from "react-redux";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "../../ui-redux/app/actions";
 
 class SnackbarContainer extends Component {
   handleClose = (event, reason) => {

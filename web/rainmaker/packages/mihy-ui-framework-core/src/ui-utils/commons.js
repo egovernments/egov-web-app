@@ -1,6 +1,6 @@
 import isEmpty from "lodash/isEmpty";
-import { uploadFile, httpRequest } from "mihy-ui-framework/ui-utils/api";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { uploadFile, httpRequest } from "../ui-utils/api";
+import { prepareFinalObject } from "../ui-redux/screen-configuration/actions";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {

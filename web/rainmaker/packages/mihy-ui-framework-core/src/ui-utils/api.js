@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
-import { toggleSpinner } from "mihy-ui-framework/ui-redux/app/actions";
-import store from "mihy-ui-framework/ui-redux/store";
+import { toggleSpinner } from "../ui-redux/app/actions";
+import store from "../ui-redux/store";
 
 const instance = axios.create({
   baseURL: window.location.origin,

@@ -19,9 +19,9 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _commons = require("./commons");
 
-var _actions = require("mihy-ui-framework/ui-redux/app/actions");
+var _actions = require("../ui-redux/app/actions");
 
-var _store = require("mihy-ui-framework/ui-redux/store");
+var _store = require("../ui-redux/store");
 
 var _store2 = _interopRequireDefault(_store);
 

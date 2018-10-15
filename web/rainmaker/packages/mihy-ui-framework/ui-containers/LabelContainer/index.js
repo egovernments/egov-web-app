@@ -32,7 +32,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _uiAtoms = require("mihy-ui-framework/ui-atoms");
+var _uiAtoms = require("../..//ui-atoms");
 
 var _get = require("lodash/get");
 

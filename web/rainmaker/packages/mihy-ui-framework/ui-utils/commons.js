@@ -17,9 +17,9 @@ var _isEmpty = require("lodash/isEmpty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
-var _api = require("mihy-ui-framework/ui-utils/api");
+var _api = require("../ui-utils/api");
 
-var _actions = require("mihy-ui-framework/ui-redux/screen-configuration/actions");
+var _actions = require("../ui-redux/screen-configuration/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

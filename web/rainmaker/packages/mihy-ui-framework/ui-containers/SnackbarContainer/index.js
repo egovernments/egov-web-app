@@ -24,11 +24,11 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _uiAtoms = require("mihy-ui-framework/ui-atoms");
+var _uiAtoms = require("../../ui-atoms");
 
 var _reactRedux = require("react-redux");
 
-var _actions = require("mihy-ui-framework/ui-redux/app/actions");
+var _actions = require("../../ui-redux/app/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

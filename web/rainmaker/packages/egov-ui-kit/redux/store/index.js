@@ -24,6 +24,10 @@ var _middleware3 = require("egov-ui-kit/redux/app/middleware");
 
 var _middleware4 = _interopRequireDefault(_middleware3);
 
+var _middlewares3 = require("mihy-ui-framework/ui-redux/screen-configuration/middlewares");
+
+var _middlewares4 = _interopRequireDefault(_middlewares3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var middlewares = [];
@@ -31,6 +35,7 @@ var middlewares = [];
 middlewares = middlewares.concat(_middleware2.default);
 middlewares = middlewares.concat(_middlewares2.default);
 middlewares = middlewares.concat(_middleware4.default);
+middlewares = middlewares.concat(_middlewares4.default);
 middlewares = middlewares.concat(_reduxThunk2.default);
 
 if (process.env.NODE_ENV === "development") {
