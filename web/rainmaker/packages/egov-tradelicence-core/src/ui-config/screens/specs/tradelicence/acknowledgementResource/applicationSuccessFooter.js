@@ -1,6 +1,7 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
+import { getBaseURL } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {
@@ -75,6 +76,7 @@ const generatePdfAndDownload = (action, applicationNumber, tenant) => {
 };
 
 export const applicationSuccessFooter = (applicationNumber, tenant) => {
+  const baseURL = getBaseURL();
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -166,6 +168,36 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       onClickDefination: {
         action: "page_change",
         path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+      },
+      roleDefination: {
+        rolePath: "user-info.roles",
+        roles: ["EMPLOYEE"]
+      }
+    },
+    proceedToPay: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "40px"
+        }
+      },
+      children: {
+        collectPaymentButtonLabel: getLabel({
+          labelName: "PROCEED TO PAYMENT",
+          labelKey: "TL_PROCEED_PAYMENT"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `${baseURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+      },
+      roleDefination: {
+        rolePath: "user-info.roles",
+        roles: ["CITIZEN"]
       }
     }
   });

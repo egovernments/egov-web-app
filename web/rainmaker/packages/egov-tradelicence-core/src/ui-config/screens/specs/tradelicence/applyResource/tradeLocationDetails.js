@@ -95,39 +95,45 @@ export const tradeLocationDetails = getCommonCard({
         jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
         required: true,
         props: {
-          required: true,
-          disabled: true,
-          value: localStorage.getItem("tenant-id")
+          required: true
+          // disabled: true,
+          // value: localStorage.getItem("tenant-id")
         }
       }),
       beforeFieldChange: async (action, state, dispatch) => {
-        // try {
-        //   let payload = await httpRequest(
-        //     "post",
-        //     "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-        //     "_search",
-        //     [{ key: "tenantId", value: action.value }],
-        //     {}
-        //   );
-        //   dispatch(
-        //     handleField(
-        //       "apply",
-        //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-        //       "props.suggestions",
-        //       payload.TenantBoundary && payload.TenantBoundary[0].boundary
-        //     )
-        //   );
-        //   dispatch(
-        //     handleField(
-        //       "apply",
-        //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-        //       "props.value",
-        //       ""
-        //     )
-        //   );
-        // } catch (e) {
-        //   console.log(e);
-        // }
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.address.city",
+            action.value
+          )
+        );
+        try {
+          let payload = await httpRequest(
+            "post",
+            "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+            "_search",
+            [{ key: "tenantId", value: action.value }],
+            {}
+          );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+              "props.suggestions",
+              payload.TenantBoundary && payload.TenantBoundary[0].boundary
+            )
+          );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+              "props.value",
+              ""
+            )
+          );
+        } catch (e) {
+          console.log(e);
+        }
       }
     },
     tradeLocDoorHouseNo: getTextField({
@@ -192,6 +198,9 @@ export const tradeLocationDetails = getCommonCard({
         inputLabelProps: {
           shrink: true
         }
+      },
+      beforeFieldChange: async (action, state, dispatch) => {
+        // console.log(action);
       },
       gridDefination: {
         xs: 12,

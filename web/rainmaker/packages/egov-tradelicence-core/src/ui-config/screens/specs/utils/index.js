@@ -961,3 +961,11 @@ export const epochToYmdDate = et => {
     date.getUTCDate();
   return formattedDate;
 };
+
+export const getBaseURL = () => {
+  if (process.env.REACT_APP_NAME !== "Citizen") {
+    return "/mihy-ui-framework/tradelicence";
+  } else {
+    return "/mihy-ui-framework/tradelicense-citizen";
+  }
+};

@@ -29,11 +29,22 @@ import {
   getBoundaryData
 } from "../../../../ui-utils/commons";
 
-const stepsData = ["Trade Details", "Owner Details", "Documents", "Summary"];
-const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
-const queryValue = getQueryArg(window.location.href, "applicationNumber");
+export const stepsData = [
+  "Trade Details",
+  "Owner Details",
+  "Documents",
+  "Summary"
+];
+export const stepper = getStepperObject(
+  { props: { activeStep: 0 } },
+  stepsData
+);
+export const queryValue = getQueryArg(
+  window.location.href,
+  "applicationNumber"
+);
 
-const header = getCommonContainer({
+export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
     labelKey: "TL_COMMON_APPL_NEW_LICe"
@@ -48,7 +59,7 @@ const header = getCommonContainer({
   }
 });
 
-const tradeDocumentDetails = getCommonCard({
+export const tradeDocumentDetails = getCommonCard({
   header: getCommonTitle(
     {
       labelName: "Required Documents",
@@ -68,7 +79,7 @@ const tradeDocumentDetails = getCommonCard({
   documentList
 });
 
-const getMdmsData = async (action, state, dispatch) => {
+export const getMdmsData = async (action, state, dispatch) => {
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: "pb",
@@ -139,6 +150,42 @@ const getMdmsData = async (action, state, dispatch) => {
   }
 };
 
+export const formwizardFirstStep = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  children: {
+    tradeDetails,
+    tradeLocationDetails
+  }
+};
+
+export const formwizardSecondStep = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  children: {
+    tradeOwnerDetails
+  },
+  visible: false
+};
+
+export const formwizardThirdStep = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  children: {
+    tradeDocumentDetails
+  },
+  visible: false
+};
+
+export const formwizardFourthStep = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  children: {
+    tradeReviewDetails
+  },
+  visible: false
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -148,6 +195,19 @@ const screenConfig = {
     }
     getMdmsData(action, state, dispatch);
     const tenantId = localStorage.getItem("tenant-id");
+    console.log(action);
+    let props = get(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+      {}
+    );
+    props.value = tenantId;
+    props.disabled = true;
+    set(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+      props
+    );
     dispatch(
       prepareFinalObject(
         "Licenses[0].tradeLicenseDetail.address.city",
@@ -180,38 +240,10 @@ const screenConfig = {
           }
         },
         stepper,
-        formwizardFirstStep: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            tradeDetails,
-            tradeLocationDetails
-          }
-        },
-        formwizardSecondStep: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            tradeOwnerDetails
-          },
-          visible: false
-        },
-        formwizardThirdStep: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            tradeDocumentDetails
-          },
-          visible: false
-        },
-        formwizardFourthStep: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            tradeReviewDetails
-          },
-          visible: false
-        },
+        formwizardFirstStep,
+        formwizardSecondStep,
+        formwizardThirdStep,
+        formwizardFourthStep,
         footer
       }
     }
