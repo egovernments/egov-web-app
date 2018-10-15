@@ -88,14 +88,17 @@ var LabelContainer = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownprops) {
   var fieldValue = "";
-  var jsonPath = ownprops.jsonPath;
+  var jsonPath = ownprops.jsonPath,
+      callBack = ownprops.callBack;
   var screenConfiguration = state.screenConfiguration;
   var preparedFinalObject = screenConfiguration.preparedFinalObject;
 
   if (jsonPath) {
     fieldValue = (0, _get2.default)(preparedFinalObject, jsonPath);
+    if (fieldValue && callBack && typeof callBack === "function") {
+      fieldValue = callBack(fieldValue);
+    }
   }
-
   return { fieldValue: fieldValue };
 };
 

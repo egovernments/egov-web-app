@@ -8,6 +8,12 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { changeStep } from "./footer";
 
+import { convertEpochToDate } from "../../utils";
+
+const getFirstV = value => {
+  return value.split(".")[1];
+};
+
 const accessoriesCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
@@ -120,16 +126,25 @@ export const getReviewTrade = (isEditable = true) => {
       ),
       reviewFromDate: getLabelWithValue(
         { labelName: "From Date" },
-        { jsonPath: "Licenses[0].validFrom" }
+        {
+          jsonPath: "Licenses[0].validFrom",
+          callBack: convertEpochToDate
+        }
       ),
       reviewToDate: getLabelWithValue(
         { labelName: "To Date" },
-        { jsonPath: "Licenses[0].validTo" }
+        {
+          jsonPath: "Licenses[0].validTo",
+          callBack: convertEpochToDate
+        }
       ),
       reviewStructureType: getLabelWithValue(
         { labelName: "Structure Type" },
         {
-          jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType"
+          jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
+          callBack: value => {
+            return value.split(".")[0];
+          }
         }
       ),
       reviewSubStructureType: getLabelWithValue(
@@ -143,7 +158,10 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Commencement Date",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"
         },
-        { jsonPath: "Licenses[0].commencementDate" }
+        {
+          jsonPath: "Licenses[0].commencementDate",
+          callBack: convertEpochToDate
+        }
       ),
       reviewGSTNo: getLabelWithValue(
         {
@@ -176,14 +194,24 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Trade Category",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
         },
-        { jsonPath: "LicensesTemp[0].tradeDetailsResponse[0].trade" }
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+          callBack: value => {
+            return value.split(".")[0];
+          }
+        }
       ),
       reviewTradeType: getLabelWithValue(
         {
           labelName: "Trade Type",
           labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
         },
-        { jsonPath: "LicensesTemp[0].tradeDetailsResponse[0].tradeType" }
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+          callBack: value => {
+            return value.split(".")[1];
+          }
+        }
       ),
       reviewTradeSubtype: getLabelWithValue(
         {

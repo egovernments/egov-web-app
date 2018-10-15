@@ -6,6 +6,7 @@ import {
   getLabelWithValue,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { convertEpochToDate } from "../../utils";
 
 import { changeStep } from "./footer";
 
@@ -97,7 +98,10 @@ export const getReviewOwner = (isEditable = true) => {
                 labelName: "Date of Birth",
                 labelKey: "TL_EMP_APPLICATION_DOB"
               },
-              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob" }
+              {
+                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+                callBack: convertEpochToDate
+              }
             ),
             reviewOwnerPhoneNo: getLabelWithValue(
               {
