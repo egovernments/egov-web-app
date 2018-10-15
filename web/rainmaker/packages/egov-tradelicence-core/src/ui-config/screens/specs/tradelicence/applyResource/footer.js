@@ -117,6 +117,11 @@ export const callBackForNext = async (state, dispatch) => {
     }
   }
   if (activeStep === 1) {
+    let isOwnerShipValid=validateFields(
+      "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownershipType.children",
+      state,
+      dispatch
+    );
     let ownership = get(
       state.screenConfiguration.preparedFinalObject,
       "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
@@ -159,8 +164,11 @@ export const callBackForNext = async (state, dispatch) => {
           isFormValid = false;
       }
     }
-    if (isFormValid) {
+    if (isFormValid && isOwnerShipValid) {
       applicationSuccess = await applyTradeLicense(state, dispatch);
+    }
+    else {
+      isFormValid=false
     }
   }
   if (activeStep === 2) {
