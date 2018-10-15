@@ -6,6 +6,7 @@ import {
   getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import tradeLicenseSearchAndResult from "../tradelicence/search";
 
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
