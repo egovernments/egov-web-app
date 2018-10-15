@@ -356,44 +356,7 @@ export const getActionDefinationForStepper = path => {
   return actionDefination;
 };
 
-const setDatesOnPrevious = (state, dispatch) => {
-  let commencementDate = get(
-    state.screenConfiguration.preparedFinalObject,
-    "Licenses[0].commencementDate",
-    null
-  );
-  dispatch(
-    handleField(
-      "apply",
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeCommencementDate",
-      "props.value",
-      epochToYmdDate(commencementDate)
-    )
-  );
-  let owners = get(
-    state.screenConfiguration.preparedFinalObject,
-    "Licenses[0].tradeLicenseDetail.owners",
-    null
-  );
-  // console.log(owners);
-  let transformedOwner = owners.reduce((transformedOwner, owner) => {
-    let itemDob = epochToYmdDate(owner.dob);
-    owner.dob = itemDob;
-    transformedOwner.push(owner);
-    return transformedOwner;
-  }, []);
-  // console.log(transformedOwner);
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].tradeLicenseDetail.owners",
-      transformedOwner
-    )
-  );
-  // console.log(state);
-};
-
 export const callBackForPrevious = (state, dispatch) => {
-  setDatesOnPrevious(state, dispatch);
   changeStep(state, dispatch, "previous");
 };
 

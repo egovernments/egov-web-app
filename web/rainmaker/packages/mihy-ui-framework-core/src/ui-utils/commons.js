@@ -139,3 +139,12 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
   }
   return translatedLabel || labelKey;
 };
+
+export const epochToYmd = et => {
+  // Return null if et already null
+  if (!et) return null;
+  // Return the same format if et is already a string (boundary case)
+  if (typeof et === "string") return et;
+  var formatted_date = new Date(et).toISOString().substr(0, 10);
+  return formatted_date;
+};

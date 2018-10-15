@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
+exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -141,4 +141,13 @@ var getTranslatedLabel = exports.getTranslatedLabel = function getTranslatedLabe
     if (translatedLabel && (typeof translatedLabel === "undefined" ? "undefined" : (0, _typeof3.default)(translatedLabel)) === "object" && translatedLabel.hasOwnProperty("message")) translatedLabel = translatedLabel.message;
   }
   return translatedLabel || labelKey;
+};
+
+var epochToYmd = exports.epochToYmd = function epochToYmd(et) {
+  // Return null if et already null
+  if (!et) return null;
+  // Return the same format if et is already a string (boundary case)
+  if (typeof et === "string") return et;
+  var formatted_date = new Date(et).toISOString().substr(0, 10);
+  return formatted_date;
 };

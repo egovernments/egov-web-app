@@ -158,6 +158,8 @@ var mapStateToProps = function mapStateToProps(state, ownprops) {
   var preparedFinalObject = screenConfiguration.preparedFinalObject;
 
   var fieldValue = value === undefined ? (0, _get2.default)(preparedFinalObject, jsonPath) : value;
+  // Convert epoch to YYYY-MM-DD and set date picker value
+  if (ownprops.type && ownprops.type === "date") fieldValue = (0, _commons.epochToYmd)(fieldValue);
   var dropdownData = [];
   if (select) {
     var constructDropdown = function constructDropdown(dt) {
