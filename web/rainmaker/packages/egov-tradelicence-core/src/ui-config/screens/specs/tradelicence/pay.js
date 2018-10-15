@@ -36,7 +36,7 @@ const header = getCommonContainer({
   }
 });
 
-const fetchBill = async (action, state, dispatch) => {
+export const fetchBill = async (action, state, dispatch) => {
   //get bill and populate estimate card
   const payload = await createEstimateData(
     [],

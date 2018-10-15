@@ -134,6 +134,88 @@ export const footer = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: callBackForPay
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      roles: ["EMPLOYEE"]
+    }
+  },
+  downloadConfirmationform: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      submitButtonLabel: getLabel({
+        labelName: "DOWNLOAD CONFIRMATION FORM",
+        labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPay
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      roles: ["CITIZEN"]
+    }
+  },
+  printConfirmationform: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      submitButtonLabel: getLabel({
+        labelName: "PRINT CONFIRMATION FORM",
+        labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPay
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      roles: ["CITIZEN"]
+    }
+  },
+  makePayment: {
+    componentPath: "Button",
+    props: {
+      variant: "contained",
+      color: "primary",
+      style: {
+        width: "200px",
+        height: "48px",
+        marginRight: "45px"
+      }
+    },
+    children: {
+      submitButtonLabel: getLabel({
+        labelName: "MAKE PAYMENT",
+        labelKey: "TL_COMMON_BUTTON_CITIZEN_MAKE_PAYMENT"
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: callBackForPay
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      roles: ["CITIZEN"]
     }
   }
 });
