@@ -902,3 +902,16 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
   }
   return isFormValid;
 };
+
+export const epochToYmdDate = et => {
+  if (!et) return null;
+  if (typeof(et) === "string") return et;
+  var date = new Date(Math.round(Number(et)));
+  var formattedDate =
+    date.getUTCFullYear() +
+    "-" +
+    (date.getUTCMonth() + 1) +
+    "-" +
+    date.getUTCDate();
+  return formattedDate;
+};

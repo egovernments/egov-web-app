@@ -5,8 +5,15 @@ import {
 import { applyTradeLicense } from "../../../../../ui-utils/commons";
 import get from "lodash/get";
 import some from "lodash/some";
-import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  getButtonVisibility,
+  getCommonApplyFooter,
+  epochToYmdDate
+} from "../../utils";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { createEstimateData } from "../../utils";
 import { validateFields } from "../../utils";
@@ -349,7 +356,44 @@ export const getActionDefinationForStepper = path => {
   return actionDefination;
 };
 
+const setDatesOnPrevious = (state, dispatch) => {
+  let commencementDate = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].commencementDate",
+    null
+  );
+  dispatch(
+    handleField(
+      "apply",
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeCommencementDate",
+      "props.value",
+      epochToYmdDate(commencementDate)
+    )
+  );
+  let owners = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.owners",
+    null
+  );
+  // console.log(owners);
+  let transformedOwner = owners.reduce((transformedOwner, owner) => {
+    let itemDob = epochToYmdDate(owner.dob);
+    owner.dob = itemDob;
+    transformedOwner.push(owner);
+    return transformedOwner;
+  }, []);
+  // console.log(transformedOwner);
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].tradeLicenseDetail.owners",
+      transformedOwner
+    )
+  );
+  // console.log(state);
+};
+
 export const callBackForPrevious = (state, dispatch) => {
+  setDatesOnPrevious(state, dispatch);
   changeStep(state, dispatch, "previous");
 };
 
