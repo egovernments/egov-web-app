@@ -253,7 +253,6 @@ const OwnerInfoCard = {
             labelName: "Select Special Owner Category",
             labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
           },
-          required: true,
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
           sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType"
         })

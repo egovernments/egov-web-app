@@ -2,12 +2,17 @@ import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import {
   convertDateToEpoch,
-  getCurrentFinancialYear
+  getCurrentFinancialYear,
+  getCheckBoxJsonpath,
+  getSafetyNormsJson,
+  getHygeneLevelJson,
+  getLocalityHarmedJson
 } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -22,7 +27,7 @@ export const updateTradeDetails = async requestBody => {
     );
     return payload;
   } catch (error) {
-    console.log(error);
+    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
   }
 };
 
@@ -67,7 +72,7 @@ export const getSearchResults = async queryObject => {
     );
     return response;
   } catch (error) {
-    console.log(error);
+    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
   }
 };
 
@@ -75,14 +80,22 @@ export const updatePFOforSearchResults = async (
   action,
   state,
   dispatch,
-  queryValue
+  queryValue,
+  queryValuePurpose
 ) => {
   let queryObject = [
     { key: "tenantId", value: "pb.amritsar" },
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
-  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  if (queryValuePurpose !== "cancel") {
+    set(payload, getSafetyNormsJson(queryValuePurpose), "yes");
+    set(payload, getHygeneLevelJson(queryValuePurpose), "yes");
+    set(payload, getLocalityHarmedJson(queryValuePurpose), "No");
+  }
+  set(payload, getCheckBoxJsonpath(queryValuePurpose), true);
+
+  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   setApplicationNumberBox(state, dispatch);
 };
 

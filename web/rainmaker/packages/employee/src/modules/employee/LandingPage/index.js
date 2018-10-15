@@ -48,7 +48,7 @@ class LandingPage extends Component {
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
       iconName: "dashboard-propertytax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     PT: {
       moduleTitle: "Property Tax",
@@ -57,7 +57,7 @@ class LandingPage extends Component {
       iconAction: "custom",
       iconName: "dashboard-complaint",
       route: "property-tax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     Finance: {
       moduleTitle: "Finance",
@@ -66,16 +66,16 @@ class LandingPage extends Component {
       iconAction: "custom",
       iconName: "rupee",
       route: "services/EGF/inbox",
-      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     TL: {
       moduleTitle: "TradeLicense",
       button1: "Mseva TradeLicense",
       borderLeftColor: { borderLeft: "4px solid #add8e6" },
-      iconAction: "custom",
-      iconName: "rupee",
+      iconAction: "places",
+      iconName: "business-center",
       route: "tradelicense/search",
-      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
   render() {

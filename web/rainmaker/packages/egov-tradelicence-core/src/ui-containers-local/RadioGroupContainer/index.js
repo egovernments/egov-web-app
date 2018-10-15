@@ -6,9 +6,16 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import set from "lodash/set";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import {
+  getSafetyNormsJson,
+  getHygeneLevelJson,
+  getLocalityHarmedJson
+} from "../../ui-config/screens/specs/utils";
 import "./index.css";
+
+const queryValue = getQueryArg(window.location.href, "purpose");
 
 const styles = theme => ({
   root: {
@@ -36,18 +43,9 @@ class RadioButtonsGroup extends React.Component {
     this.setState({
       value: defaultValue
     });
-    approveCheck(
-      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms",
-      "Yes"
-    );
-    approveCheck(
-      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels",
-      "Yes"
-    );
-    approveCheck(
-      "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed",
-      "No"
-    );
+    approveCheck(getSafetyNormsJson(queryValue), "Yes");
+    approveCheck(getHygeneLevelJson(queryValue), "Yes");
+    approveCheck(getLocalityHarmedJson(queryValue), "No");
   };
 
   handleChange = event => {

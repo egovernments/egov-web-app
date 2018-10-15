@@ -6,60 +6,43 @@ import {
   getFooterButtons,
   getCommonApplyFooter,
   onClickPreviousButton,
-  onClickNextButton
+  onClickNextButton,
+  getCheckBoxJsonpath
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { updateTradeDetails } from "ui-utils/commons";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-const queryValue = getQueryArg(window.location.href, "purpose");
+
 const userName = JSON.parse(window.localStorage.getItem("user-info")).name;
 
 const onNextButtonClick = async (state, dispatch) => {
   const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
   const { Licenses } = preparedFinalObject;
+  const queryValue = getQueryArg(window.location.href, "purpose");
   if (Licenses && Licenses.length > 0) {
     const status = get(Licenses[0], "status");
     switch (queryValue) {
       case "cancel":
         if (status === "APPROVED") {
           set(Licenses[0], "action", "CANCEL");
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.cancelledBy",
-              userName
-            )
-          );
         }
         break;
       case "reject":
         if (status === "PAID") {
           set(Licenses[0], "action", "REJECT");
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.rejectedBy",
-              userName
-            )
-          );
         }
         break;
       default:
         if (status === "PAID") {
           set(Licenses[0], "action", "APPROVE");
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.approvedBy",
-              userName
-            )
-          );
         }
         break;
     }
   }
-
-  if (get(Licenses[0], "tradeLicenseDetail.additionalDetail.approveCheck")) {
+  if (get(preparedFinalObject, getCheckBoxJsonpath(queryValue))) {
     let response = await updateTradeDetails({ Licenses });
     if (response) {
       const applicationNumber = get(response, "Licenses[0].applicationNumber");
@@ -71,11 +54,44 @@ const onNextButtonClick = async (state, dispatch) => {
         queryValue,
         tenantId
       );
+      switch (queryValue) {
+        case "cancel":
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.cancelledBy",
+              userName
+            )
+          );
+          break;
+        case "reject":
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.rejectedBy",
+              userName
+            )
+          );
+          break;
+        default:
+          dispatch(
+            pFO(
+              "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.approvedBy",
+              userName
+            )
+          );
+          break;
+      }
       dispatch(setRoute(route));
     } else {
-      dispatch(
-        toggleSnackbarAndSetText(true, "Update TL returned error", "error")
-      );
+      response &&
+        response.Error &&
+        response.Error[0] &&
+        dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            get("response", Error[0].message),
+            "error"
+          )
+        );
     }
   } else {
     dispatch(
@@ -84,25 +100,7 @@ const onNextButtonClick = async (state, dispatch) => {
   }
 };
 
-// let response = await updateTradeDetails({ Licenses });
-// if (response) {
-//   const applicationNumber = get(response, "Licenses[0].applicationNumber");
-//   const secondNumber = get(response, "Licenses[0].licenseNumber");
-//   const tenantId = get(response, "Licenses[0].tenantId");
-//   const route = onClickNextButton(
-//     applicationNumber,
-//     secondNumber,
-//     queryValue,
-//     tenantId
-//   );
-//   dispatch(setRoute(route));
-// } else {
-//   dispatch(
-//     toggleSnackbarAndSetText(true, "Update TL retuned error", "error")
-//   );
-// }
-
-export const footerApprove = (applicationNumber, tenantId) => {
+export const footerApprove = (applicationNumber, tenantId, queryPurpose) => {
   return getCommonApplyFooter({
     previousButton: {
       componentPath: "Button",
@@ -123,7 +121,7 @@ export const footerApprove = (applicationNumber, tenantId) => {
       },
       onClickDefination: {
         action: "page_change",
-        path: onClickPreviousButton(queryValue, applicationNumber, tenantId)
+        path: onClickPreviousButton(queryPurpose, applicationNumber, tenantId)
       }
     },
 
@@ -139,7 +137,7 @@ export const footerApprove = (applicationNumber, tenantId) => {
         }
       },
       children: {
-        nextButtonLabel: getFooterButtons(queryValue)
+        nextButtonLabel: getFooterButtons(queryPurpose)
       },
       onClickDefination: {
         action: "condition",

@@ -12,7 +12,11 @@ import {
   getSubHeaderLabel,
   getCheckbox,
   getContainerWithElement,
-  getUploadFilesMultiple
+  getUploadFilesMultiple,
+  getCheckBoxJsonpath,
+  getSafetyNormsJson,
+  getHygeneLevelJson,
+  getLocalityHarmedJson
 } from "../utils";
 import { footerApprove } from "./approveResource/footer";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
@@ -54,19 +58,6 @@ const getApproveCard = queryValuePurpose => {
               }
             }
           ),
-    // paragraphOne: getContainerWithElement({
-    //   children: {
-    //     paragraph: getCommonParagraph({
-    //       labelName:
-    //         "Please provide the following details on the basis of your field verification."
-    //     })
-    //   },
-    //   props: {
-    //     style: {
-    //       marginTop: "8px"
-    //     }
-    //   }
-    // }),
     headerTwo: getContainerWithElement({
       children: {
         subHeader: getSubHeaderLabel(queryValuePurpose)
@@ -84,7 +75,7 @@ const getApproveCard = queryValuePurpose => {
             "Are Safety Norms Satisfactory?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.safetyNorms",
+            getSafetyNormsJson(queryValuePurpose),
             "Yes"
           ),
 
@@ -95,7 +86,7 @@ const getApproveCard = queryValuePurpose => {
             "Are Hygiene Levels Satisfactory?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.hygieneLevels",
+            getHygeneLevelJson(queryValuePurpose),
             "Yes"
           ),
 
@@ -106,13 +97,13 @@ const getApproveCard = queryValuePurpose => {
             "Is Locality harmed/disturbed by this trade?",
             "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
             radioButtonLabels,
-            "Licenses[0].tradeLicenseDetail.additionalDetail.approveChecklist.localityHarmed",
+            getLocalityHarmedJson(queryValuePurpose),
             "No"
           ),
 
     commentSection: getContainerWithElement({
       children: {
-        childrenomment: getApprovalTextField(queryValuePurpose)
+        div: getApprovalTextField(queryValuePurpose)
       },
       props: {
         style: {
@@ -159,7 +150,7 @@ const getApproveCard = queryValuePurpose => {
     ),
     checkBoxContainer: getCheckbox(
       "All information provided above is true up to the best of my knowledge.",
-      "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck"
+      getCheckBoxJsonpath(queryValuePurpose)
     )
   });
 };
@@ -178,7 +169,11 @@ const getTopChildren = (
         form: getApproveCard(queryValuePurpose)
       }
     },
-    footerApprove: footerApprove(queryValueAN, queryValueTenantId)
+    footerApprove: footerApprove(
+      queryValueAN,
+      queryValueTenantId,
+      queryValuePurpose
+    )
   };
 };
 
@@ -200,7 +195,13 @@ const screenConfig = {
     const queryValueTenantId = getQueryArg(window.location.href, "tenantId");
 
     if (queryValueAN) {
-      updatePFOforSearchResults(action, state, dispatch, queryValueAN);
+      updatePFOforSearchResults(
+        action,
+        state,
+        dispatch,
+        queryValueAN,
+        queryValuePurpose
+      );
     }
     const data = getTopChildren(
       queryValueAN,

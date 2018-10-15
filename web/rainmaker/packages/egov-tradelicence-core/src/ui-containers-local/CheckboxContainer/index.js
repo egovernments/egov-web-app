@@ -5,9 +5,12 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import set from "lodash/set";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getCheckBoxJsonpath } from "../../ui-config/screens/specs/utils";
 import "./index.css";
+
+const queryValue = getQueryArg(window.location.href, "purpose");
 
 const styles = {
   root: {
@@ -26,10 +29,7 @@ class CheckboxLabels extends React.Component {
 
   componentDidMount = () => {
     const { approveCheck } = this.props;
-    approveCheck(
-      "Licenses[0].tradeLicenseDetail.additionalDetail.approveCheck",
-      true
-    );
+    approveCheck(getCheckBoxJsonpath(queryValue), true);
   };
 
   handleChange = name => event => {

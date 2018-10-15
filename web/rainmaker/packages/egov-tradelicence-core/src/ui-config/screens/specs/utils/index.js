@@ -219,7 +219,7 @@ export const getApprovalTextField = queryValue => {
       required: false,
       pattern: "",
       jsonPath:
-        "Licenses[0].tradeLicenseDetail.additionalDetail.rejectComments",
+        "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.comments",
       props: {
         style: {
           paddingBottom: 5
@@ -239,7 +239,7 @@ export const getApprovalTextField = queryValue => {
       required: false,
       pattern: "",
       jsonPath:
-        "Licenses[0].tradeLicenseDetail.additionalDetail.cancelComments",
+        "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.comments",
       props: {
         style: {
           paddingBottom: 5
@@ -259,13 +259,53 @@ export const getApprovalTextField = queryValue => {
       required: false,
       pattern: "",
       jsonPath:
-        "Licenses[0].tradeLicenseDetail.additionalDetail.approvalComments",
+        "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.comments",
       props: {
         style: {
           paddingBottom: 5
         }
       }
     });
+  }
+};
+
+export const getCheckBoxJsonpath = queryValue => {
+  if (queryValue === "reject") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.check";
+  } else if (queryValue === "cancel") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.check";
+  } else {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.check";
+  }
+};
+
+export const getSafetyNormsJson = queryValue => {
+  if (queryValue === "reject") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.checklist.safetyNorms";
+  } else if (queryValue === "cancel") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.checklist.safetyNorms";
+  } else {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.checklist.safetyNorms";
+  }
+};
+
+export const getHygeneLevelJson = queryValue => {
+  if (queryValue === "reject") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.checklist.hygieneLevels";
+  } else if (queryValue === "cancel") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.checklist.hygieneLevels";
+  } else {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.checklist.hygieneLevels";
+  }
+};
+
+export const getLocalityHarmedJson = queryValue => {
+  if (queryValue === "reject") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.checklist.localityHarmed";
+  } else if (queryValue === "cancel") {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.checklist.localityHarmed";
+  } else {
+    return "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.checklist.localityHarmed";
   }
 };
 
@@ -891,7 +931,13 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
           !fields[variable].props.disabled) &&
         !validate(
           "apply",
-          { ...fields[variable], value: get(state.screenConfiguration.preparedFinalObject,fields[variable].jsonPath) },
+          {
+            ...fields[variable],
+            value: get(
+              state.screenConfiguration.preparedFinalObject,
+              fields[variable].jsonPath
+            )
+          },
           dispatch,
           true
         )
