@@ -4,13 +4,11 @@ import { AutoSuggest } from "../../ui-atoms-local";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 
-// import "./index.css";
-
 class AutoSuggestor extends Component {
   onSelect = value => {
     const { prepareFinalObject, jsonPath, onChange } = this.props;
-    let e = { target: { value: value.value } };
-    // onChange(e);
+    let e = { target: { value: value } };
+    onChange(e);
     prepareFinalObject(jsonPath, value.value);
   };
 
@@ -25,7 +23,6 @@ class AutoSuggestor extends Component {
       <div>
         <AutoSuggest
           onSelect={this.onSelect}
-          value={value}
           fieldValue={_fieldValue}
           {...rest}
         />
@@ -47,7 +44,7 @@ const mapStateToProps = (state, ownprops) => {
     let label = get(preparedFinalObject, jP);
     fieldValue = { value: value, label: label };
   }
-  return { fieldValue, value, preparedFinalObject };
+  return { fieldValue, preparedFinalObject };
 };
 
 const mapDispatchToProps = dispatch => {
