@@ -73,6 +73,7 @@ export const callBackForNext = async (state, dispatch) => {
   );
   // console.log(activeStep);
   let isFormValid = true;
+  let hasFieldToaster=true;
   if (activeStep === 0) {
     const isTradeDetailsValid = validateFields(
       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children",
@@ -93,7 +94,7 @@ export const callBackForNext = async (state, dispatch) => {
     );
     let isAccessoriesValid = true;
     for (var i = 0; i < accessories.length; i++) {
-      if ((!accessories[i].isDeleted || accessories[i].isDeleted!==false) &&
+      if ((accessories[i].isDeleted===undefined || accessories[i].isDeleted!==false) &&
         !validateFields(
           `${accessoriesJsonPath}[${i}].item${i}.children.cardContent.children.accessoriesCardContainer.children`,
           state,
@@ -154,7 +155,7 @@ export const callBackForNext = async (state, dispatch) => {
         []
       );
       for (var i = 0; i < owners.length; i++) {
-        if ((owners[i].isDeleted || owners[i].isDeleted!==false) &&
+        if ((owners[i].isDeleted===undefined || owners[i].isDeleted!==false) &&
           !validateFields(
             `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
@@ -165,7 +166,10 @@ export const callBackForNext = async (state, dispatch) => {
       }
     }
     if (isFormValid && isOwnerShipValid) {
-      applicationSuccess = await applyTradeLicense(state, dispatch);
+      isFormValid = await applyTradeLicense(state, dispatch);
+      if (!isFormValid) {
+        hasFieldToaster=false
+      }
     }
     else {
       isFormValid=false
@@ -224,19 +228,23 @@ export const callBackForNext = async (state, dispatch) => {
       state.screenConfiguration.preparedFinalObject,
       "Licenses[0]"
     );
-    applicationSuccess = await applyTradeLicense(state, dispatch);
-    moveToSuccess(LicenseData, dispatch);
+    isFormValid = await applyTradeLicense(state, dispatch);
+    if (isFormValid) {
+      moveToSuccess(LicenseData, dispatch);
+    }
   }
-  if (isFormValid && applicationSuccess) {
-    changeStep(state, dispatch);
-  } else {
-    dispatch(
-      toggleSnackbarAndSetText(
-        true,
-        "Please fill all mandatory fields !",
-        "warning"
-      )
-    );
+  if (activeStep!==3) {
+    if (isFormValid) {
+      changeStep(state, dispatch);
+    } else if(hasFieldToaster) {
+      dispatch(
+        toggleSnackbarAndSetText(
+          true,
+          "Please fill all mandatory fields !",
+          "warning"
+        )
+      );
+    }
   }
 };
 
