@@ -8,10 +8,7 @@ import {
 import { footer } from "../tradelicence/payResource/footer";
 import estimateDetails from "../tradelicence/payResource/estimate-details";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-// import set from "lodash/set";
-// import { getSearchResults } from "ui-utils/commons";
-// import { createEstimateData } from "../utils";
-import { fetchBill } from "../tradelicence/pay";
+import { fetchBill } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader({
