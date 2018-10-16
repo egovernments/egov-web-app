@@ -299,7 +299,7 @@ export const tradeOwnerDetails = getCommonCard({
       ...getSelectField({
         label: { labelName: "Type of ownership" },
         placeholder: { labelName: "Select Type of Ownership" },
-        jsonPath: "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+        jsonPath: "LicensesTemp[0].tradeLicenseDetail.ownerType.level1",
         required: true,
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"

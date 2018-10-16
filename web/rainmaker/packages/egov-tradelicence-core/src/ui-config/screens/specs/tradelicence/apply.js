@@ -143,10 +143,10 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
+    getMdmsData(action, state, dispatch);
     if (queryValue) {
       updatePFOforSearchResults(action, state, dispatch, queryValue);
     }
-    getMdmsData(action, state, dispatch);
     const tenantId = localStorage.getItem("tenant-id");
     dispatch(
       prepareFinalObject(

@@ -112,6 +112,8 @@ export const updatePFOforSearchResults = async (
   ));
   dispatch(prepareFinalObject("LicensesTemp[0].tradeLicenseDetail.structureType", getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType")))
   dispatch(prepareFinalObject("Licenses[0].tradeLicenseDetail.structureType", get(getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType"), "level2")))  
+  dispatch(prepareFinalObject("LicensesTemp[0].tradeLicenseDetail.ownerType", getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory")))   
+  dispatch(prepareFinalObject("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", get(getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"),"level2")))   
 };
 
 export const getBoundaryData = async (
