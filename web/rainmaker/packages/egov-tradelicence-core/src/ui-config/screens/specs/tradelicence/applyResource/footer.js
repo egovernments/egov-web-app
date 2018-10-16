@@ -8,7 +8,8 @@ import some from "lodash/some";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
-  epochToYmdDate
+  epochToYmdDate,
+  setMultiOwnerForApply
 } from "../../utils";
 import {
   prepareFinalObject,
@@ -118,6 +119,7 @@ export const callBackForNext = async (state, dispatch) => {
       isFormValid = false;
     }
   }
+
   if (activeStep === 1) {
     let isOwnerShipValid = validateFields(
       "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownershipType.children",
@@ -186,6 +188,13 @@ export const callBackForNext = async (state, dispatch) => {
       {}
     );
 
+    get(LicenseData, "tradeLicenseDetail.subOwnerShipCategory") &&
+    get(LicenseData, "tradeLicenseDetail.subOwnerShipCategory").split(
+      "."
+    )[0] === "INDIVIDUAL"
+      ? setMultiOwnerForApply(state, true)
+      : setMultiOwnerForApply(state, false);
+
     const uploadedDocData = get(
       LicenseData,
       "tradeLicenseDetail.applicationDocuments",
@@ -207,14 +216,16 @@ export const callBackForNext = async (state, dispatch) => {
       }
     }
     if (isFormValid) {
-      const reviewDocData = uploadedDocData.map(item => {
-        return {
-          title: item.documentType,
-          link: item.fileUrl.split(",")[0],
-          linkText: "View",
-          name: item.fileName
-        };
-      });
+      const reviewDocData =
+        uploadedDocData &&
+        uploadedDocData.map(item => {
+          return {
+            title: item.documentType,
+            link: item.fileUrl.split(",")[0],
+            linkText: "View",
+            name: item.fileName
+          };
+        });
       createEstimateData(
         LicenseData,
         "LicensesTemp[0].estimateCardData",

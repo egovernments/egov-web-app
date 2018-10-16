@@ -70,7 +70,6 @@ var LabelContainer = function (_React$Component) {
   (0, _createClass3.default)(LabelContainer, [{
     key: "render",
     value: function render() {
-      console.log("Label container");
       var _props = this.props,
           labelName = _props.labelName,
           labelKey = _props.labelKey,
