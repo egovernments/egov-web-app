@@ -20,7 +20,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import get from "lodash/get";
 import filter from "lodash/filter";
 
-const multipleTradeUnitCard = getCommonGrayCard({
+const tradeUnitCard = getCommonGrayCard({
   header: getCommonSubHeader(
     {
       labelName: "Trade Unit  ",
@@ -151,7 +151,7 @@ const multipleTradeUnitCard = getCommonGrayCard({
             dispatch(
               handleField(
                 "apply",
-                "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.multipleTradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children.tradeUOMValue",
+                "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children.tradeUOMValue",
                 "props.disabled",
                 false
               )
@@ -530,6 +530,6 @@ export const tradeDetails = getCommonCard({
       jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees"
     })
   }),
-  multipleTradeUnitCard,
+  tradeUnitCard,
   accessoriesCard
 });

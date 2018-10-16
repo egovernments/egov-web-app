@@ -16,40 +16,30 @@ import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-con
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
-export const getOwnerMobNoField = {
-  uiFramework: "custom-atoms",
-  componentPath: "Container",
-  gridDefination: {
-    xs: 12,
-    sm: 12
+export const getOwnerMobNoField = getTextField({
+  label: {
+    labelName: "Mobile No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
   },
-  children: {
-    txt: getTextField({
-      label: {
-        labelName: "Mobile No.",
-        labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Mobile No.",
-        labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
-      },
-      required: true,
-      pattern: getPattern("MobileNo"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
-      iconObj: {
-        iconName: "search",
-        position: "end",
-        color: "#FE7A51",
-        onClickDefination: {
-          action: "condition",
-          callBack: (state, dispatch) => {
-            getDetailsForOwner(state, dispatch);
-          }
-        }
+  placeholder: {
+    labelName: "Enter Mobile No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_PLACEHOLDER"
+  },
+  required: true,
+  pattern: getPattern("MobileNo"),
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+  iconObj: {
+    iconName: "search",
+    position: "end",
+    color: "#FE7A51",
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        getDetailsForOwner(state, dispatch);
       }
-    })
+    }
   }
-};
+});
 
 export const getOwnerGenderField = getSelectField({
   label: {
@@ -107,88 +97,88 @@ export const getFatherNameField = getTextField({
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
 });
 
-export const ownerInfoInstitutional ={
-// {
-//   uiFramework: "custom-containers",
-//   componentPath: "MultiItem",
-//   props: {
-//     scheama:
-    ...getCommonGrayCard({
-      header: getCommonSubHeader(
-        {
-          labelName: "Owner Information",
-          labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
-        },
-        {
-          style: {
-            marginBottom: 18
-          }
+export const ownerInfoInstitutional = {
+  // {
+  //   uiFramework: "custom-containers",
+  //   componentPath: "MultiItem",
+  //   props: {
+  //     scheama:
+  ...getCommonGrayCard({
+    header: getCommonSubHeader(
+      {
+        labelName: "Owner Information",
+        labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
+      },
+      {
+        style: {
+          marginBottom: 18
         }
-      ),
-      tradeUnitCardContainer: getCommonContainer({
-        getOwnerMobNoField,
-        offTelephone: getTextField({
-          label: {
-            labelName: "Official Telephone No.",
-            labelKey: "TL_NEW_OWNER_PHONE_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Official Telephone No.",
-            labelKey: "TL_NEW_OWNER_PHONE_PLACEHOLDER"
-          },
-          required: true,
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].altContactNumber"
-        }),
+      }
+    ),
+    tradeUnitCardContainer: getCommonContainer({
+      getOwnerMobNoField,
+      offTelephone: getTextField({
+        label: {
+          labelName: "Official Telephone No.",
+          labelKey: "TL_NEW_OWNER_PHONE_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Official Telephone No.",
+          labelKey: "TL_NEW_OWNER_PHONE_PLACEHOLDER"
+        },
+        required: true,
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].altContactNumber"
+      }),
 
-        authPerson: getTextField({
-          label: {
-            labelName: "Name of Authorised Person",
-            labelKey: "TL_NEW_OWNER_AUTH_PER_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Name of Authorised Person",
-            labelKey: "TL_NEW_OWNER_AUTH_PER_PLACEHOLDER"
-          },
-          pattern: getPattern("Name"),
-          required: true,
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
-        }),
+      authPerson: getTextField({
+        label: {
+          labelName: "Name of Authorised Person",
+          labelKey: "TL_NEW_OWNER_AUTH_PER_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Name of Authorised Person",
+          labelKey: "TL_NEW_OWNER_AUTH_PER_PLACEHOLDER"
+        },
+        pattern: getPattern("Name"),
+        required: true,
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
+      }),
 
-        designation: getTextField({
-          label: {
-            labelName: "Designation",
-            labelKey: "TL_NEW_OWNER_DESIG_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Designation",
-            labelKey: "TL_NEW_OWNER_DESIG_PLACEHOLDER"
-          },
-          pattern: getPattern("Name"),
-          required: true,
-          jsonPath: "Licenses[0].tradeLicenseDetail.institution.designation"
-        }),
-        getFatherNameField,
-        getOwnerGenderField,
-        getOwnerDOBField,
-        getOwnerEmailField,
-        ownerAddress: getTextField({
-          label: {
-            labelName: "Official Corrospondence Address",
-            labelKey: "TL_NEW_OWNER_OFF_ADDR_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Official Corrospondence Address",
-            labelKey: "TL_NEW_OWNER_OFF_ADDR_PLACEHOLDER"
-          },
-          required: true,
-          pattern: getPattern("Address"),
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-        })
+      designation: getTextField({
+        label: {
+          labelName: "Designation",
+          labelKey: "TL_NEW_OWNER_DESIG_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Designation",
+          labelKey: "TL_NEW_OWNER_DESIG_PLACEHOLDER"
+        },
+        pattern: getPattern("Name"),
+        required: true,
+        jsonPath: "Licenses[0].tradeLicenseDetail.institution.designation"
+      }),
+      getFatherNameField,
+      getOwnerGenderField,
+      getOwnerDOBField,
+      getOwnerEmailField,
+      ownerAddress: getTextField({
+        label: {
+          labelName: "Official Corrospondence Address",
+          labelKey: "TL_NEW_OWNER_OFF_ADDR_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Official Corrospondence Address",
+          labelKey: "TL_NEW_OWNER_OFF_ADDR_PLACEHOLDER"
+        },
+        required: true,
+        pattern: getPattern("Address"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
       })
-    }),
-    visible: false
-  }
-  //   ,
+    })
+  }),
+  visible: false
+};
+//   ,
 //   items: [],
 //   addItemLabel: "ADD OWNER",
 //   headerName: "Owner Information",
@@ -285,7 +275,8 @@ const OwnerInfoCard = {
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-    prefixSourceJsonPath: "children.cardContent.children.tradeUnitCardContainer"
+    prefixSourceJsonPath:
+      "children.cardContent.children.tradeUnitCardContainer.children"
   },
 
   type: "array"
