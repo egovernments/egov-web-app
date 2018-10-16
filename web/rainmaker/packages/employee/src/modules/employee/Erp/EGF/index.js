@@ -26,7 +26,8 @@ class EGFFinance extends Component{
             }else if(hostname.search('qa')!=-1){
                 subdomainurl = hostname.substring(hostname.search('qa'),hostname.length);
             }else if(hostname.search('uat')!=-1){
-                subdomainurl = hostname.substring(hostname.search('uat'),hostname.length);
+                // subdomainurl = hostname.substring(hostname.search('uat'),hostname.length);
+                  subdomainurl = "uat.egovernments.org";
             }else
                 subdomainurl = hostname;
 
