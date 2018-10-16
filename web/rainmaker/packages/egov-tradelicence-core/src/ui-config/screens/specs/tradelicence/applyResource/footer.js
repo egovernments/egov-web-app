@@ -93,7 +93,7 @@ export const callBackForNext = async (state, dispatch) => {
     );
     let isAccessoriesValid = true;
     for (var i = 0; i < accessories.length; i++) {
-      if (
+      if ((!accessories[i].isDeleted || accessories[i].isDeleted!==false) &&
         !validateFields(
           `${accessoriesJsonPath}[${i}].item${i}.children.cardContent.children.accessoriesCardContainer.children`,
           state,
@@ -136,7 +136,7 @@ export const callBackForNext = async (state, dispatch) => {
         []
       );
       for (var i = 0; i < owners.length; i++) {
-        if (
+        if ((owners[i].isDeleted===undefined || owners[i].isDeleted!==false) &&
           !validateFields(
             `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
@@ -154,7 +154,7 @@ export const callBackForNext = async (state, dispatch) => {
         []
       );
       for (var i = 0; i < owners.length; i++) {
-        if (
+        if ((owners[i].isDeleted || owners[i].isDeleted!==false) &&
           !validateFields(
             `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,

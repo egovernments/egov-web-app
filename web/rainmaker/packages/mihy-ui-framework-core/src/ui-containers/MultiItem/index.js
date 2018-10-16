@@ -22,7 +22,7 @@ const checkActiveItems=(items)=>{
 }
 
 const checkActiveItem=(item)=>{
-  return item && (item.active===undefined || item.active!==false)
+  return item && (item.isDeleted===undefined || item.isDeleted!==false)
 }
 
 class MultiItem extends React.Component {
@@ -115,8 +115,8 @@ class MultiItem extends React.Component {
       screenConfig,
       `${screenKey}.${componentJsonpath}.props.items`
     );
-    updatePreparedFormObject(`${sourceJsonPath}[${index}].active`,false);
-    items[index].active=false;
+    updatePreparedFormObject(`${sourceJsonPath}[${index}].isDeleted`,false);
+    items[index].isDeleted=false;
     // items.splice(index,1);
     removeItem(screenKey, componentJsonpath, `props.items`, items);
   };

@@ -85,7 +85,7 @@ var checkActiveItems = function checkActiveItems(items) {
 };
 
 var checkActiveItem = function checkActiveItem(item) {
-  return item && (item.active === undefined || item.active !== false);
+  return item && (item.isDeleted === undefined || item.isDeleted !== false);
 };
 
 var MultiItem = function (_React$Component) {
@@ -161,8 +161,8 @@ var MultiItem = function (_React$Component) {
           sourceJsonPath = _this$props3.sourceJsonPath;
 
       var items = (0, _get2.default)(screenConfig, screenKey + "." + componentJsonpath + ".props.items");
-      updatePreparedFormObject(sourceJsonPath + "[" + index + "].active", false);
-      items[index].active = false;
+      updatePreparedFormObject(sourceJsonPath + "[" + index + "].isDeleted", false);
+      items[index].isDeleted = false;
       // items.splice(index,1);
       removeItem(screenKey, componentJsonpath, "props.items", items);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);

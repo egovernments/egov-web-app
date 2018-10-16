@@ -107,11 +107,13 @@ export const getFatherNameField = getTextField({
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
 });
 
-export const ownerInfoInstitutional = {
-  uiFramework: "custom-containers",
-  componentPath: "MultiItem",
-  props: {
-    scheama: getCommonGrayCard({
+export const ownerInfoInstitutional ={
+// {
+//   uiFramework: "custom-containers",
+//   componentPath: "MultiItem",
+//   props: {
+//     scheama:
+    ...getCommonGrayCard({
       header: getCommonSubHeader(
         {
           labelName: "Owner Information",
@@ -184,19 +186,24 @@ export const ownerInfoInstitutional = {
         })
       })
     }),
-    items: [],
-    addItemLabel: "ADD OWNER",
-    headerName: "Owner Information",
-    hasAddItem: false,
-    headerJsonPath:
-      "children.cardContent.children.header.children.Owner Information.props.label",
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-    prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer.children"
-  },
-  visible: false,
-  type: "array"
-};
+    visible: false
+  }
+  //   ,
+//   items: [],
+//   addItemLabel: "ADD OWNER",
+//   headerName: "Owner Information",
+//   hasAddItem: false,
+//   headerJsonPath:
+//     "children.cardContent.children.header.children.Owner Information.props.label",
+//   sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
+//   prefixSourceJsonPath:
+//     "children.cardContent.children.tradeUnitCardContainer.children"
+// }
+
+//   ,
+//   visible: false,
+//   type: "array"
+// };
 
 const OwnerInfoCard = {
   uiFramework: "custom-containers",
