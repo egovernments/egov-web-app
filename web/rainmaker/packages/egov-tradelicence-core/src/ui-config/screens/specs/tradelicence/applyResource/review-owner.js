@@ -26,7 +26,7 @@ export const getReviewOwner = (isEditable = true) => {
           },
           ...getCommonSubHeader({
             labelName: "Owner Details",
-            labelKey: "TL_COMMON_TR_DETAILS"
+            labelKey: "TL_COMMON_OWN_DETAILS"
           })
         },
         editSection: {
