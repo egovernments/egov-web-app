@@ -96,11 +96,10 @@ export const tradeLocationDetails = getCommonCard({
         required: true,
         props: {
           required: true
-          // disabled: true,
-          // value: localStorage.getItem("tenant-id")
         }
       }),
       beforeFieldChange: async (action, state, dispatch) => {
+        //Below only runs for citizen - not required here in employee
         dispatch(
           prepareFinalObject(
             "Licenses[0].tradeLicenseDetail.address.city",
@@ -200,13 +199,17 @@ export const tradeLocationDetails = getCommonCard({
         }
       },
       beforeFieldChange: async (action, state, dispatch) => {
-        // console.log(action);
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.address.locality.label",
+            action.value && action.value.label
+          )
+        );
       },
       gridDefination: {
         xs: 12,
         sm: 6
       }
-      // required: true
     },
     tradeLocPincode: getTextField({
       label: {
