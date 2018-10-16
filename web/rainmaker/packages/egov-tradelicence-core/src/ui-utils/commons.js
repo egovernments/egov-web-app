@@ -10,6 +10,7 @@ import {
 } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
+import { getTypeSubTypeDetails } from "ui-config/screens/specs/tradelicence/search-preview"
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import store from "../ui-redux/store";
@@ -97,6 +98,20 @@ export const updatePFOforSearchResults = async (
 
   payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   setApplicationNumberBox(state, dispatch);
+  dispatch(handleField(
+    "apply",
+    "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeStructureType",
+    "props.value",
+    get(getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType"), "level1")
+  ));
+  dispatch(handleField(
+    "apply",
+    "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeStructureSubType",
+    "props.value",
+    get(getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType"), "level2", "")
+  ));
+  dispatch(prepareFinalObject("LicensesTemp[0].tradeLicenseDetail.structureType", getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType")))
+  dispatch(prepareFinalObject("Licenses[0].tradeLicenseDetail.structureType", get(getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType"), "level2")))  
 };
 
 export const getBoundaryData = async (

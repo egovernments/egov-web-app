@@ -87,6 +87,18 @@ const getTradeTypeSubtypeDetails = payload => {
     });
   });
   return tradeUnitDetails;
+}
+
+export const getTypeSubTypeDetails = (payload, sourceJsonPath) => {
+  const typeSubType = get(payload, sourceJsonPath, "");
+  const targetDetails = {};
+  const levels = typeSubType.split(".");
+  set(targetDetails, "level1", levels.slice(0,1).join("."))
+  set(targetDetails, "level2", levels.slice(0,2).join("."))
+  set(targetDetails, "level3", levels.slice(0,3).join("."))
+  set(targetDetails, "level4", levels.slice(0,4).join("."))
+  set(targetDetails, "level5", levels.slice(0,5).join("."))
+  return targetDetails;
 };
 
 const searchResults = async (action, state, dispatch) => {
@@ -135,7 +147,13 @@ const searchResults = async (action, state, dispatch) => {
   dispatch(
     prepareFinalObject(
       "LicensesTemp[0].tradeDetailsResponse",
-      getTradeTypeSubtypeDetails(payload)
+      getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.tradeUnits[1].tradeType")
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].structureDetails",
+      getTypeSubTypeDetails(payload, "Licenses[0].tradeLicenseDetail.structureType")
     )
   );
   const LicenseData = payload.Licenses[0];

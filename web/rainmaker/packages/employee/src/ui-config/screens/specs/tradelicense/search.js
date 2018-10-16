@@ -12,7 +12,7 @@ const tradeLicenseSearchAndResult = {
     iframe: {
       componentPath: "Iframe",
       props: {
-        src
+        src: "http://localhost:3001/mihy-ui-framework/tradelicence/search",
       },
     },
   },

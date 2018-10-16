@@ -450,7 +450,7 @@ export const tradeDetails = getCommonCard({
         label: { labelName: "Structure Type" },
         placeholder: { labelName: "Select Structure Type" },
         required: true,
-        jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType",
+        jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType.level1",
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.StructureTypeTransformed"
       }),
@@ -476,7 +476,7 @@ export const tradeDetails = getCommonCard({
       label: { labelName: "Structure Sub Type" },
       placeholder: { labelName: "Select Structure Sub Type" },
       required: true,
-      jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
+      jsonPath: "Licenses[0].tradeLicenseDetail.structureType",//"LicensesTemp[0].tradeLicenseDetail.structureType.level2",
       sourceJsonPath:
         "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
     }),

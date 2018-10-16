@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 
 const getLocalTextFromCode = localCode => {
-  return JSON.parse(localStorage.getItem("localization_en_IN")).find(
-    item => item.code == localCode
-  );
+  try {
+    const x = JSON.parse(localStorage.getItem("localization_en_IN")).find(
+      item => item.code == localCode
+    );
+    return x
+  } catch (e) {
+    return ""
+  }
 };
 
 export const textToLocalMapping = {
