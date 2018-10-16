@@ -15,8 +15,7 @@ import {
   handleScreenConfigurationFieldChange as handleField
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import { createEstimateData } from "../../utils";
-import { validateFields } from "../../utils";
+import { createEstimateData, validateFields, getBaseURL } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
 
@@ -73,7 +72,7 @@ export const callBackForNext = async (state, dispatch) => {
   );
   // console.log(activeStep);
   let isFormValid = true;
-  let hasFieldToaster=true;
+  let hasFieldToaster = true;
   if (activeStep === 0) {
     const isTradeDetailsValid = validateFields(
       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children",
@@ -94,7 +93,9 @@ export const callBackForNext = async (state, dispatch) => {
     );
     let isAccessoriesValid = true;
     for (var i = 0; i < accessories.length; i++) {
-      if ((accessories[i].isDeleted===undefined || accessories[i].isDeleted!==false) &&
+      if (
+        (accessories[i].isDeleted === undefined ||
+          accessories[i].isDeleted !== false) &&
         !validateFields(
           `${accessoriesJsonPath}[${i}].item${i}.children.cardContent.children.accessoriesCardContainer.children`,
           state,
@@ -118,7 +119,7 @@ export const callBackForNext = async (state, dispatch) => {
     }
   }
   if (activeStep === 1) {
-    let isOwnerShipValid=validateFields(
+    let isOwnerShipValid = validateFields(
       "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownershipType.children",
       state,
       dispatch
@@ -137,7 +138,9 @@ export const callBackForNext = async (state, dispatch) => {
         []
       );
       for (var i = 0; i < owners.length; i++) {
-        if ((owners[i].isDeleted===undefined || owners[i].isDeleted!==false) &&
+        if (
+          (owners[i].isDeleted === undefined ||
+            owners[i].isDeleted !== false) &&
           !validateFields(
             `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
@@ -155,7 +158,9 @@ export const callBackForNext = async (state, dispatch) => {
         []
       );
       for (var i = 0; i < owners.length; i++) {
-        if ((owners[i].isDeleted===undefined || owners[i].isDeleted!==false) &&
+        if (
+          (owners[i].isDeleted === undefined ||
+            owners[i].isDeleted !== false) &&
           !validateFields(
             `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
@@ -168,11 +173,10 @@ export const callBackForNext = async (state, dispatch) => {
     if (isFormValid && isOwnerShipValid) {
       isFormValid = await applyTradeLicense(state, dispatch);
       if (!isFormValid) {
-        hasFieldToaster=false
+        hasFieldToaster = false;
       }
-    }
-    else {
-      isFormValid=false
+    } else {
+      isFormValid = false;
     }
   }
   if (activeStep === 2) {
@@ -233,10 +237,10 @@ export const callBackForNext = async (state, dispatch) => {
       moveToSuccess(LicenseData, dispatch);
     }
   }
-  if (activeStep!==3) {
+  if (activeStep !== 3) {
     if (isFormValid) {
       changeStep(state, dispatch);
-    } else if(hasFieldToaster) {
+    } else if (hasFieldToaster) {
       dispatch(
         toggleSnackbarAndSetText(
           true,
@@ -655,12 +659,12 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
+                path: `${getBaseURL()}/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
               },
               visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["TL_CEMP"]
+                roles: ["TL_CEMP", "CITIZEN"]
               }
             },
             cancelButton: {
