@@ -27,10 +27,10 @@ class CheckboxLabels extends React.Component {
     checkedG: true
   };
 
-  componentDidMount = () => {
-    const { approveCheck } = this.props;
-    approveCheck(getCheckBoxJsonpath(queryValue), true);
-  };
+  // componentDidMount = () => {
+  //   const { approveCheck } = this.props;
+  //   approveCheck(getCheckBoxJsonpath(queryValue), true);
+  // };
 
   handleChange = name => event => {
     const { jsonPath, approveCheck } = this.props;

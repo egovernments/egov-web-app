@@ -112,10 +112,17 @@ export const ownerInfoInstitutional = {
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
-      header: getCommonSubHeader({
-        labelName: "Owner Information",
-        labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
-      }),
+      header: getCommonSubHeader(
+        {
+          labelName: "Owner Information",
+          labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
+        },
+        {
+          style: {
+            marginBottom: 18
+          }
+        }
+      ),
       tradeUnitCardContainer: getCommonContainer({
         getOwnerMobNoField,
         offTelephone: getTextField({
@@ -196,10 +203,17 @@ const OwnerInfoCard = {
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
-      header: getCommonSubHeader({
-        labelName: "Owner Information",
-        labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
-      }),
+      header: getCommonSubHeader(
+        {
+          labelName: "Owner Information",
+          labelKey: "TL_NEW_OWNER_DETAILS_HEADER_OWNER_INFO"
+        },
+        {
+          style: {
+            marginBottom: 18
+          }
+        }
+      ),
       tradeUnitCardContainer: getCommonContainer({
         getOwnerMobNoField,
         ownerName: getTextField({
@@ -271,10 +285,17 @@ const OwnerInfoCard = {
 };
 
 export const tradeOwnerDetails = getCommonCard({
-  header: getCommonTitle({
-    labelName: "Trade Owner Details",
-    labelKey: "TL_NEW_OWNER_DETAILS_HEADER"
-  }),
+  header: getCommonTitle(
+    {
+      labelName: "Trade Owner Details",
+      labelKey: "TL_NEW_OWNER_DETAILS_HEADER"
+    },
+    {
+      style: {
+        marginBottom: 18
+      }
+    }
+  ),
   ownershipType: getCommonContainer({
     ownership: {
       ...getSelectField({

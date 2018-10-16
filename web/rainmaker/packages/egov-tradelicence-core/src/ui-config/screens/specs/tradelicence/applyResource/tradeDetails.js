@@ -21,10 +21,17 @@ import get from "lodash/get";
 import filter from "lodash/filter";
 
 const multipleTradeUnitCard = getCommonGrayCard({
-  header: getCommonSubHeader({
-    labelName: "Trade Unit  ",
-    labelKey: "TL_NEW_TRADE_DETAILS_TRADE_UNIT_HEADER"
-  }),
+  header: getCommonSubHeader(
+    {
+      labelName: "Trade Unit  ",
+      labelKey: "TL_NEW_TRADE_DETAILS_TRADE_UNIT_HEADER"
+    },
+    {
+      style: {
+        marginBottom: 18
+      }
+    }
+  ),
   tradeUnitCardContainer: getCommonContainer({
     tradeCategory: {
       ...getSelectField({
@@ -206,10 +213,17 @@ const accessoriesCard = {
         uiFramework: "custom-atoms",
         componentPath: "Container",
         children: {
-          head: getCommonSubHeader({
-            labelName: "Accessories",
-            labelKey: "TL_NEW_TRADE_DETAILS_HEADER_ACC"
-          }),
+          head: getCommonSubHeader(
+            {
+              labelName: "Accessories",
+              labelKey: "TL_NEW_TRADE_DETAILS_HEADER_ACC"
+            },
+            {
+              style: {
+                marginBottom: 18
+              }
+            }
+          ),
           ico: {
             uiFramework: "custom-molecules-local",
             componentPath: "Tooltip",
@@ -331,14 +345,17 @@ const accessoriesCard = {
 };
 
 export const tradeDetails = getCommonCard({
-  header: getCommonTitle({
-    labelName: "Trade Details",
-    labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
-  }),
-  // paragraph: getCommonParagraph({
-  //   labelName:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  // }),
+  header: getCommonTitle(
+    {
+      labelName: "Trade Details",
+      labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
+    },
+    {
+      style: {
+        marginBottom: 18
+      }
+    }
+  ),
   tradeDetailsConatiner: getCommonContainer({
     tradeLicenseType: {
       ...getSelectField({

@@ -49,10 +49,17 @@ const header = getCommonContainer({
 });
 
 const tradeDocumentDetails = getCommonCard({
-  header: getCommonTitle({
-    labelName: "Required Documents",
-    labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
-  }),
+  header: getCommonTitle(
+    {
+      labelName: "Required Documents",
+      labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
+    },
+    {
+      style: {
+        marginBottom: 18
+      }
+    }
+  ),
   paragraph: getCommonParagraph({
     labelName:
       "Only one file can be uploaded for one document. If multiple files need to be uploaded then please combine all files in a pdf and then upload",

@@ -762,7 +762,7 @@ export const getDetailsForOwner = async (state, dispatch) => {
       }
     }
   } catch (e) {
-    console.log(e);
+    dispatch(toggleSnackbarAndSetText(true, e.message, "info"));
   }
 };
 
@@ -951,7 +951,7 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
 
 export const epochToYmdDate = et => {
   if (!et) return null;
-  if (typeof(et) === "string") return et;
+  if (typeof et === "string") return et;
   var date = new Date(Math.round(Number(et)));
   var formattedDate =
     date.getUTCFullYear() +

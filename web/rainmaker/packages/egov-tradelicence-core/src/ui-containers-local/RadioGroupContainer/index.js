@@ -43,9 +43,9 @@ class RadioButtonsGroup extends React.Component {
     this.setState({
       value: defaultValue
     });
-    approveCheck(getSafetyNormsJson(queryValue), "Yes");
-    approveCheck(getHygeneLevelJson(queryValue), "Yes");
-    approveCheck(getLocalityHarmedJson(queryValue), "No");
+    // approveCheck(getSafetyNormsJson(queryValue), "Yes");
+    // approveCheck(getHygeneLevelJson(queryValue), "Yes");
+    // approveCheck(getLocalityHarmedJson(queryValue), "No");
   };
 
   handleChange = event => {
