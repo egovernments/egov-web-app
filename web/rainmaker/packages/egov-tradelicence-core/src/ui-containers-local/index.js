@@ -36,6 +36,10 @@ const DocumentListContainer = Loadable({
   loader: () => import("./DocumentListContainer"),
   loading: () => <Loading />
 });
+const PaymentRedirectPage = Loadable({
+  loader: () => import("./PaymentRedirectPage"),
+  loading: () => <Loading />
+});
 
 export {
   CustomTabContainer,
@@ -45,5 +49,6 @@ export {
   DownloadFileContainer,
   EstimateCardContainer,
   AutosuggestContainer,
-  DocumentListContainer
+  DocumentListContainer,
+  PaymentRedirectPage
 };
