@@ -1,7 +1,10 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
-import { getBaseURL } from "../../utils";
+import { getBaseURL, getBill } from "../../utils";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { httpRequest } from "mihy-ui-framework/ui-utils/api";
+import get from "lodash/get";
 
 const getCommonApplyFooter = children => {
   return {
@@ -12,6 +15,57 @@ const getCommonApplyFooter = children => {
     },
     children
   };
+};
+
+const callPGService = async (state, dispatch) => {
+  const tenantId = getQueryArg(window.location.href, "tenantId");
+  let callbackUrl = `${
+    window.origin
+  }/mihy-ui-framework/tradelicense-citizen/PaymentRedirectPage`;
+  try {
+    const queryObj = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "consumerCode",
+        value: getQueryArg(window.location.href, "applicationNumber")
+      },
+      {
+        key: "businessService",
+        value: "TL"
+      }
+    ];
+    const billPayload = await getBill(queryObj);
+    try {
+      const requestBody = {
+        Transaction: {
+          tenantId,
+          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
+          module: "TL",
+          billId: get(billPayload, "Bill[0].id"),
+          moduleId: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
+          productInfo: "Trade License Payment",
+          gateway: "AXIS",
+          callbackUrl
+        }
+      };
+      const goToPaymentGateway = await httpRequest(
+        "post",
+        "pg-service/transaction/v1/_create",
+        "_create",
+        [],
+        requestBody
+      );
+      const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+      window.location = redirectionUrl;
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const generatePdfAndDownload = (action, applicationNumber, tenant) => {
@@ -192,8 +246,8 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
         })
       },
       onClickDefination: {
-        action: "page_change",
-        path: `${baseURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        action: "condition",
+        callBack: callPGService
       },
       roleDefination: {
         rolePath: "user-info.roles",
