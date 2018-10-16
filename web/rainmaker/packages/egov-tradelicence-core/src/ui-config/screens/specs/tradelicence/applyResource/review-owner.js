@@ -10,6 +10,83 @@ import { convertEpochToDate } from "../../utils";
 
 import { changeStep } from "./footer";
 
+export const reviewownershipType = getLabelWithValue(
+  {
+    labelName: "Type of ownership",
+    labelKey: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+    callBack: value => {
+      return value.split(".")[0];
+    }
+  }
+);
+export const reviewsubOwnership = getLabelWithValue(
+  {
+    labelName: "Type of sub-ownership"
+    // labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+  }
+);
+export const reviewOwnerFatherName = getLabelWithValue(
+  {
+    labelName: "Father/Husband's Name",
+    labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
+  }
+);
+
+export const reviewOwnerGender = getLabelWithValue(
+  {
+    labelName: "Gender",
+    labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
+  },
+
+  { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender" }
+);
+
+export const reviewOwnerDOB = getLabelWithValue(
+  {
+    labelName: "Date of Birth",
+    labelKey: "TL_EMP_APPLICATION_DOB"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+    callBack: convertEpochToDate
+  }
+);
+
+export const reviewOwnerPhoneNo = getLabelWithValue(
+  {
+    labelName: "Mobile No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
+  }
+);
+export const reviewOwnerEmail = getLabelWithValue(
+  {
+    labelName: "Email",
+    labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
+  },
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
+  }
+);
+export const reviewOwnerPAN = getLabelWithValue(
+  {
+    labelName: "PAN No.",
+    labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL"
+  },
+  { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan" }
+);
+
 export const getReviewOwner = (isEditable = true) => {
   return getCommonGrayCard({
     headerDiv: {
@@ -68,6 +145,9 @@ export const getReviewOwner = (isEditable = true) => {
       props: {
         scheama: getCommonGrayCard({
           viewFive: getCommonContainer({
+            reviewownershipType,
+            reviewsubOwnership,
+            reviewOwnerPhoneNo,
             reviewOwnerName: getLabelWithValue(
               {
                 labelName: "Name",
@@ -75,60 +155,11 @@ export const getReviewOwner = (isEditable = true) => {
               },
               { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
             ),
-            reviewOwnerFatherName: getLabelWithValue(
-              {
-                labelName: "Father/Husband's Name",
-                labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
-              },
-              {
-                jsonPath:
-                  "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
-              }
-            ),
-            reviewOwnerGender: getLabelWithValue(
-              {
-                labelName: "Gender",
-                labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
-              },
-
-              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender" }
-            ),
-            reviewOwnerAge: getLabelWithValue(
-              {
-                labelName: "Date of Birth",
-                labelKey: "TL_EMP_APPLICATION_DOB"
-              },
-              {
-                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
-                callBack: convertEpochToDate
-              }
-            ),
-            reviewOwnerPhoneNo: getLabelWithValue(
-              {
-                labelName: "Mobile No.",
-                labelKey: "TL_NEW_OWNER_DETAILS_MOB_NO_LABEL"
-              },
-              {
-                jsonPath:
-                  "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
-              }
-            ),
-            reviewOwnerEmail: getLabelWithValue(
-              {
-                labelName: "Email",
-                labelKey: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL"
-              },
-              {
-                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].emailId"
-              }
-            ),
-            reviewOwnerPAN: getLabelWithValue(
-              {
-                labelName: "PAN No.",
-                labelKey: "TL_NEW_OWNER_DETAILS_PAN_LABEL"
-              },
-              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].pan" }
-            ),
+            reviewOwnerFatherName,
+            reviewOwnerGender,
+            reviewOwnerDOB,
+            reviewOwnerEmail,
+            reviewOwnerPAN,
             reviewOwnerAddr: getLabelWithValue(
               {
                 labelName: "Corrospondence Address",
@@ -146,6 +177,64 @@ export const getReviewOwner = (isEditable = true) => {
               },
               {
                 jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType"
+              }
+            )
+          })
+        }),
+
+        items: [],
+        hasAddItem: false,
+        sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
+        prefixSourceJsonPath: "children.cardContent.children.viewFive.children"
+      },
+      type: "array"
+    },
+    multiOwnerInstitutional: {
+      uiFramework: "custom-containers",
+      componentPath: "MultiItem",
+      props: {
+        scheama: getCommonGrayCard({
+          viewFive: getCommonContainer({
+            reviewownershipType,
+            reviewsubOwnership,
+            reviewOwnerPhoneNo,
+            reviewoffTelephone: getLabelWithValue(
+              {
+                labelName: "Official Telephone No.",
+                labelKey: "TL_NEW_OWNER_PHONE_LABEL"
+              },
+              {
+                jsonPath:
+                  "Licenses[0].tradeLicenseDetail.owners[0].altContactNumber"
+              }
+            ),
+            reviewOwnerName: getLabelWithValue(
+              {
+                labelName: "Name of the Authorised Person",
+                labelKey: "TL_NEW_OWNER_AUTH_PER_LABEL"
+              },
+              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
+            ),
+            reviewDesignation: getLabelWithValue(
+              {
+                labelName: "Designation",
+                labelKey: "TL_NEW_OWNER_DESIG_LABEL"
+              },
+              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
+            ),
+            reviewOwnerFatherName,
+            reviewOwnerGender,
+            reviewOwnerDOB,
+
+            reviewOwnerEmail,
+            reviewOwnerAddr: getLabelWithValue(
+              {
+                labelName: "Official Corrospondence Address",
+                labelKey: "TL_NEW_OWNER_OFF_ADDR_LABEL"
+              },
+              {
+                jsonPath:
+                  "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
               }
             )
           })

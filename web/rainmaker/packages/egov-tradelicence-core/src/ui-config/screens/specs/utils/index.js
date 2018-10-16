@@ -938,7 +938,7 @@ export const validateFields = (
           screen,
           {
             ...fields[variable],
-            value:get(
+            value: get(
               state.screenConfiguration.preparedFinalObject,
               fields[variable].jsonPath
             )
@@ -1039,4 +1039,56 @@ export const fetchBill = async (action, state, dispatch) => {
       getQueryArg(window.location.href, "tenantId")
     )
   );
+};
+
+export const setMultiOwnerForSV = (action, isIndividual) => {
+  if (isIndividual) {
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwner.visible",
+      true
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwnerInstitutional.visible",
+      false
+    );
+  } else {
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwner.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwnerInstitutional.visible",
+      true
+    );
+  }
+};
+
+export const setMultiOwnerForApply = (state, isIndividual) => {
+  if (isIndividual) {
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwner.visible",
+      true
+    );
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwnerInstitutional.visible",
+      false
+    );
+  } else {
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwner.visible",
+      false
+    );
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewOwnerDetails.children.cardContent.children.multiOwnerInstitutional.visible",
+      true
+    );
+  }
 };

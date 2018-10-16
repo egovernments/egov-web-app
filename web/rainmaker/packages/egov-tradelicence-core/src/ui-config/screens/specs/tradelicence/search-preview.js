@@ -15,7 +15,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../ui-utils/commons";
-import { createEstimateData } from "../utils";
+import { createEstimateData, setMultiOwnerForSV } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
 
 import { convertEpochToDate } from "../utils";
@@ -101,6 +101,13 @@ const searchResults = async (action, state, dispatch) => {
     get(payload, "Licenses[0].licenseNumber")
   );
   set(payload, "Licenses[0].headerSideText", headerSideText);
+
+  get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory") &&
+  get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory").split(
+    "."
+  )[0] === "INDIVIDUAL"
+    ? setMultiOwnerForSV(action, true)
+    : setMultiOwnerForSV(action, false);
 
   await setDocuments(
     payload,
@@ -279,7 +286,6 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    const role = getQueryArg(window.location.href, "role");
     const status = getQueryArg(window.location.href, "status");
     const applicationNumber = getQueryArg(
       window.location.href,

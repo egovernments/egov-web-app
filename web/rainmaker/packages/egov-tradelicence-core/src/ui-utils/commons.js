@@ -162,8 +162,8 @@ export const applyTradeLicense = async (state, dispatch) => {
     fY1 = fY1.substring(2, 4);
     currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
     set(queryObject[0], "financialYear", currentFinancialYr);
-    set(queryObject[0], "validFrom", 1522540800000);
-    set(queryObject[0], "validTo", 1554076799000);
+    // set(queryObject[0], "validFrom", 1522540800000);
+    // set(queryObject[0], "validTo", 1554076799000);
     if (queryObject[0] && queryObject[0].commencementDate) {
       queryObject[0].commencementDate = convertDateToEpoch(
         queryObject[0].commencementDate,
