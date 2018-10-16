@@ -26,6 +26,7 @@ import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
 import ptRoutes from "./pt";
+import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
 // const ptRoutes = [];
 
@@ -183,6 +184,7 @@ const routes = [
     options: { hideFooter: true },
   },
   ...ptRoutes,
+  ...tlRoutes
 ];
 
 export default routes;

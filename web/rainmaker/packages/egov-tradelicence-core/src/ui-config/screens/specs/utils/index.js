@@ -920,7 +920,7 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
     objectJsonPath,
     {}
   );
-  console.log("fields is.....", fields);
+  // console.log("fields is.....", fields);
   let isFormValid = true;
   for (var variable in fields) {
     if (fields.hasOwnProperty(variable)) {
@@ -933,7 +933,7 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
           "apply",
           {
             ...fields[variable],
-            value: get(
+            value:get(
               state.screenConfiguration.preparedFinalObject,
               fields[variable].jsonPath
             )
