@@ -6,7 +6,7 @@ import {
   getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import tradeLicenseSearchAndResult from "../tradelicence/search";
+// import tradeLicenseSearchAndResult from "../tradelicence/search";
 
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
@@ -46,10 +46,10 @@ const tradeLicenseSearchAndResult = {
                       labelName: "Apply for New Trade License",
                       labelKey: "TL_COMMON_APPL_NEW_LICe"
                     }),
-                    paragraph: getCommonParagraph({
-                      labelName:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-                    }),
+                    // paragraph: getCommonParagraph({
+                    //   labelName:
+                    //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
+                    // }),
                     collectPaymentButton: {
                       componentPath: "Button",
                       props: {
