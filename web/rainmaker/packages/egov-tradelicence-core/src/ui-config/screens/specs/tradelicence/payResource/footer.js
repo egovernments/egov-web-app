@@ -5,7 +5,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { httpRequest } from "ui-utils/api";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import { convertDateToEpoch } from "../../utils";
+import { convertDateToEpoch, validateFields } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const moveToSuccess = (href, dispatch, receiptNumber) => {
@@ -20,23 +20,124 @@ const moveToSuccess = (href, dispatch, receiptNumber) => {
   );
 };
 
+const getSelectedTabIndex = paymentType => {
+  switch (paymentType) {
+    case "Cash":
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+    case "Cheque":
+      return {
+        selectedPaymentMode: "cheque",
+        selectedTabIndex: 1,
+        fieldsToValidate: ["payeeDetails", "chequeDetails"]
+      };
+    case "DD":
+      return {
+        selectedPaymentMode: "demandDraft",
+        selectedTabIndex: 2,
+        fieldsToValidate: ["payeeDetails", "demandDraftDetails"]
+      };
+    case "Card":
+      return {
+        selectedPaymentMode: "card",
+        selectedTabIndex: 3,
+        fieldsToValidate: ["payeeDetails", "cardDetails"]
+      };
+    default:
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+  }
+};
+
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
   const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
+const allDateToEpoch = (finalObj, jsonPaths) => {
+  jsonPaths.forEach(jsonPath => {
+    if (get(finalObj, jsonPath)) {
+      convertDateFieldToEpoch(finalObj, jsonPath);
+    }
+  });
+};
+
 const callBackForPay = async (state, dispatch) => {
   const { href } = window.location;
+  let isFormValid = true;
+
+  // --- Validation related -----//
+
+  const selectedPaymentType = get(
+    state.screenConfiguration.preparedFinalObject,
+    "ReceiptTemp[0].instrument.instrumentType.name"
+  );
+  const {
+    selectedTabIndex,
+    selectedPaymentMode,
+    fieldsToValidate
+  } = getSelectedTabIndex(selectedPaymentType);
+
+  isFormValid =
+    fieldsToValidate
+      .map(curr => {
+        return validateFields(
+          `components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.capturePaymentDetails.children.cardContent.children.tabSection.props.tabs[${selectedTabIndex}].tabContent.${selectedPaymentMode}.children.${curr}.children`,
+          state,
+          dispatch,
+          "pay"
+        );
+      })
+      .indexOf(false) === -1;
+  if (
+    get(
+      state.screenConfiguration.preparedFinalObject,
+      "Bill[0].billDetails[0].manualReceiptDate"
+    )
+  ) {
+    isFormValid = validateFields(
+      `components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.g8Details.children.cardContent.children.receiptDetailsCardContainer.children`,
+      state,
+      dispatch,
+      "pay"
+    );
+  }
+
+  //------------ Validation End -------------//
+
+  //------------- Form related ----------------//
+
   const ReceiptDataTemp = get(
     state.screenConfiguration.preparedFinalObject,
     "ReceiptTemp[0]"
   );
   let finalReceiptData = cloneDeep(ReceiptDataTemp);
+
+  allDateToEpoch(finalReceiptData, [
+    "Bill[0].billDetails[0].manualReceiptDate",
+    "instrument.transactionDateInput"
+  ]);
+
+  // if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
+  //   convertDateFieldToEpoch(
+  //     finalReceiptData,
+  //     "Bill[0].billDetails[0].manualReceiptDate"
+  //   );
+  // }
+
+  // if (get(finalReceiptData, "instrument.transactionDateInput")) {
+  //   convertDateFieldToEpoch(
+  //     finalReceiptData,
+  //     "Bill[0].billDetails[0].manualReceiptDate"
+  //   );
+  // }
   if (get(finalReceiptData, "instrument.transactionDateInput")) {
-    convertDateFieldToEpoch(
-      finalReceiptData,
-      "instrument.transactionDateInput"
-    );
     set(
       finalReceiptData,
       "instrument.instrumentDate",
@@ -52,19 +153,24 @@ const callBackForPay = async (state, dispatch) => {
     );
   }
 
-  if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
-    convertDateFieldToEpoch(
-      finalReceiptData,
-      "Bill[0].billDetails[0].manualReceiptDate"
-    );
+  if (selectedPaymentType === "Card") {
+    //Extra check - remove once clearing forms onTabChange is fixed
+    if (
+      get(finalReceiptData, "instrument.transactionNumber") !==
+      get(finalReceiptData, "instrument.transactionNumberConfirm")
+    ) {
+      dispatch(
+        toggleSnackbarAndSetText(
+          true,
+          "Transaction numbers don't match !",
+          "error"
+        )
+      );
+      return;
+    }
   }
 
-  if (get(finalReceiptData, "instrument.transactionDateInput")) {
-    convertDateFieldToEpoch(
-      finalReceiptData,
-      "Bill[0].billDetails[0].manualReceiptDate"
-    );
-  }
+  //------------- Form End ----------------//
 
   let ReceiptBody = {
     Receipt: []
@@ -73,25 +179,37 @@ const callBackForPay = async (state, dispatch) => {
   ReceiptBody.Receipt.push(finalReceiptData);
 
   // console.log(ReceiptBody);
-  try {
-    let response = await httpRequest(
-      "post",
-      "collection-services/receipts/_create",
-      "_create",
-      [],
-      ReceiptBody,
-      [],
-      {}
+
+  //---------------- Create Receipt ------------------//
+  if (isFormValid) {
+    try {
+      let response = await httpRequest(
+        "post",
+        "collection-services/receipts/_create",
+        "_create",
+        [],
+        ReceiptBody,
+        [],
+        {}
+      );
+      let receiptNumber = get(
+        response,
+        "Receipt[0].Bill[0].billDetails[0].receiptNumber",
+        null
+      );
+      moveToSuccess(href, dispatch, receiptNumber);
+    } catch (e) {
+      dispatch(toggleSnackbarAndSetText(true, e.message, "error"));
+      console.log(e);
+    }
+  } else {
+    dispatch(
+      toggleSnackbarAndSetText(
+        true,
+        "Please fill all the mandatory fields",
+        "warning"
+      )
     );
-    let receiptNumber = get(
-      response,
-      "Receipt[0].Bill[0].billDetails[0].receiptNumber",
-      null
-    );
-    moveToSuccess(href, dispatch, receiptNumber);
-  } catch (e) {
-    dispatch(toggleSnackbarAndSetText(true, e.message, "error"));
-    console.log(e);
   }
 };
 

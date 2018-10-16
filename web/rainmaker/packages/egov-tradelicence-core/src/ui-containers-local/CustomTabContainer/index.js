@@ -68,7 +68,6 @@ class MultiItem extends React.Component {
   };
 
   render() {
-    console.log("Render!!!");
     const {
       uiFramework,
       onFieldChange,

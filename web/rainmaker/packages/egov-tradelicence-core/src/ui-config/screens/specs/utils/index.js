@@ -914,9 +914,14 @@ export const getCurrentFinancialYear = () => {
   return fiscalYr;
 };
 
-export const validateFields = (objectJsonPath, state, dispatch) => {
+export const validateFields = (
+  objectJsonPath,
+  state,
+  dispatch,
+  screen = "apply"
+) => {
   const fields = get(
-    state.screenConfiguration.screenConfig.apply,
+    state.screenConfiguration.screenConfig[screen],
     objectJsonPath,
     {}
   );
@@ -930,7 +935,7 @@ export const validateFields = (objectJsonPath, state, dispatch) => {
         (fields[variable].props.disabled === undefined ||
           !fields[variable].props.disabled) &&
         !validate(
-          "apply",
+          screen,
           {
             ...fields[variable],
             value:get(
