@@ -193,7 +193,7 @@ export const tradeLocationDetails = getCommonCard({
         jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
         sourceJsonPath: "applyScreenMdmsData.tenant.localities",
         fullwidth: true,
-        required: false,
+        required: true,
         inputLabelProps: {
           shrink: true
         }
@@ -259,6 +259,9 @@ export const tradeLocationDetails = getCommonCard({
             gridDefination: {
               xs: 12,
               sm: 12
+            },
+            props: {
+              disabled: true
             }
           })
         }
