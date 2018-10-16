@@ -249,7 +249,15 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
     sm: 6
   } : _textScheama$gridDefi,
       _textScheama$props = textScheama.props,
-      props = _textScheama$props === undefined ? {} : _textScheama$props;
+      props = _textScheama$props === undefined ? {} : _textScheama$props,
+      minLength = textScheama.minLength,
+      maxLength = textScheama.maxLength,
+      minValue = textScheama.minValue,
+      maxValue = textScheama.maxValue,
+      _textScheama$errorMes = textScheama.errorMessage,
+      errorMessage = _textScheama$errorMes === undefined ? "" : _textScheama$errorMes,
+      _textScheama$required2 = textScheama.requiredMessage,
+      requiredMessage = _textScheama$required2 === undefined ? "" : _textScheama$required2;
 
   return {
     uiFramework: "custom-containers",
@@ -272,7 +280,13 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
     gridDefination: gridDefination,
     required: required,
     pattern: pattern,
-    jsonPath: jsonPath
+    jsonPath: jsonPath,
+    minLength: minLength,
+    maxLength: maxLength,
+    minValue: minValue,
+    maxValue: maxValue,
+    errorMessage: errorMessage,
+    requiredMessage: requiredMessage
   };
 };
 

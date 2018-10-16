@@ -50,7 +50,7 @@ var validateField = exports.validateField = function validateField(field) {
 
   if (required && !value) {
     isFieldValid = false;
-    errorText = field.requiredmessage || "Required";
+    errorText = field.requiredMessage || "Required";
   }
 
   if (value) {

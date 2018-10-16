@@ -224,7 +224,13 @@ export const getTextField = textScheama => {
       xs: 12,
       sm: 6
     },
-    props = {}
+    props = {},
+    minLength ,
+    maxLength,
+    minValue,
+    maxValue,
+    errorMessage="",
+    requiredMessage=""
   } = textScheama;
   return {
     uiFramework: "custom-containers",
@@ -248,7 +254,13 @@ export const getTextField = textScheama => {
     gridDefination,
     required,
     pattern,
-    jsonPath
+    jsonPath,
+    minLength ,
+    maxLength,
+    minValue,
+    maxValue,
+    errorMessage,
+    requiredMessage
   };
 };
 
