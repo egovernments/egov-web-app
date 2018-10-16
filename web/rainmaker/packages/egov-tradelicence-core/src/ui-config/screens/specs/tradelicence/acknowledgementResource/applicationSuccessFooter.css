@@ -1,0 +1,21 @@
+@media only screen and (max-width: 400px) {
+    .apply-wizard-footer .apply-wizard-footer_button {
+        width:100%;
+   height:2.75rem;
+    }
+    /* .apply-wizard-footer{
+        background-color: green
+      } */
+
+      .apply-wizard-footer {
+        margin: 10px;
+        border: 5px solid blue;
+        display: table;
+        table-layout: fixed;
+        width: 300px;
+    }
+    .apply-wizard-footer .apply-wizard-footer_button {
+        border: 3px solid red;
+        display: table-cell;
+    }
+};

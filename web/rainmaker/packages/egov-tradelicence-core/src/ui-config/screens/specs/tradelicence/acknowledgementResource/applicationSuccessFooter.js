@@ -1,17 +1,63 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
+import "./applicationSuccessFooter.css";
+import React, { Component } from 'react';
 
-const getCommonApplyFooter = children => {
+const getCommonApplyFooter = (children,cssClassName) => {
+  alert(window.innerWidth);
   return {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     props: {
-      className: "apply-wizard-footer"
+      className: `apply-wizard-footer ${cssClassName}`
     },
     children
   };
 };
+
+
+class CommonApplyFooter extends Component {
+  constructor() {
+    super();
+    this.state = { screenWidth: null };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+  
+  componentDidMount() {
+
+    alert("calll");
+      window.addEventListener("resize", this.updateWindowDimensions());
+  }
+  
+  componentWillUnmount() {
+      window.removeEventListener("resize", this.updateWindowDimensions)
+  }
+  
+  updateWindowDimensions() {
+     this.setState({ screenWidth: window.innerWidth });
+  }
+
+  render() {
+    alert("calll");
+    return 
+    <div className={this.props.cssClassName}>
+      "{
+        Object.keys(this.props.children).map(child =>
+          <div>{child}</div>
+        )
+      }"
+    </div>
+  }
+}
+
+
+
+
+
+
+
+
 
 const generatePdfAndDownload = (action, applicationNumber, tenant) => {
   var iframe = document.createElement("iframe");
@@ -75,11 +121,12 @@ const generatePdfAndDownload = (action, applicationNumber, tenant) => {
 };
 
 export const applicationSuccessFooter = (applicationNumber, tenant) => {
-  return getCommonApplyFooter({
+  return <CommonApplyFooter children={{
     gotoHome: {
       componentPath: "Button",
       props: {
         variant: "outlined",
+        className: "apply-wizard-footer_button",
         color: "primary",
         style: {
           width: "200px",
@@ -103,10 +150,11 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       props: {
         variant: "outlined",
         color: "primary",
+        className: "apply-wizard-footer_button",
         style: {
           width: "290px",
           height: "48px",
-          marginRight: "16px"
+          marginRight: "16px",
         }
       },
       children: {
@@ -127,6 +175,7 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       props: {
         variant: "outlined",
         color: "primary",
+        className: "apply-wizard-footer_button",
         style: {
           width: "250px",
           height: "48px",
@@ -151,6 +200,7 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       props: {
         variant: "contained",
         color: "primary",
+        className: "apply-wizard-footer_button",
         style: {
           width: "200px",
           height: "48px",
@@ -168,5 +218,7 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
         path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       }
     }
-  });
+  }}
+  cssClassName={"application_success_footer"}
+  /> 
 };
