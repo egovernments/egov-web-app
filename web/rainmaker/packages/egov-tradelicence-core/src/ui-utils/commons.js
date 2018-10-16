@@ -157,8 +157,11 @@ export const applyTradeLicense = async (state, dispatch) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
+    let isfreshApplication = true;
     let currentFinancialYr = getCurrentFinancialYear();
     let fY1 = currentFinancialYr.split("-")[1];
+    let applicationNumber = get(queryObject[0], "applicationNumber");
+    let tenantId = get(queryObject[0], "tenantId");
     fY1 = fY1.substring(2, 4);
     currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
     set(queryObject[0], "financialYear", currentFinancialYr);
@@ -174,11 +177,35 @@ export const applyTradeLicense = async (state, dispatch) => {
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
     set(queryObject[0], "tradeLicenseDetail.owners", owners);
     set(queryObject[0], "tenantId", "pb.amritsar");
-    // const status = get(queryObject[0], "status", "");
 
     if (queryObject[0].applicationNumber) {
       //call update
+      let accessories = get(
+        queryObject[0],
+        "tradeLicenseDetail.accessories"
+      ).reduce((result, item) => {
+        if (item && item !== null) {
+          if (item.hasOwnProperty("id")) {
+            if (item.hasOwnProperty("active") && item.active) {
+              if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+                set(item, "active", false);
+                result.push(item);
+              } else {
+                result.push(item);
+              }
+            } else if (item.hasOwnProperty("active") && !item.active) {
+              // result.push(item);
+            }
+          } else {
+            result.push(item);
+          }
+        }
+        return result;
+      }, []);
+      set(queryObject[0], "tradeLicenseDetail.accessories", accessories);
+
       let action = "INITIATE";
+      isfreshApplication = false;
       if (
         queryObject[0].tradeLicenseDetail &&
         queryObject[0].tradeLicenseDetail.applicationDocuments
@@ -193,8 +220,20 @@ export const applyTradeLicense = async (state, dispatch) => {
         [],
         { Licenses: queryObject }
       );
-      response && dispatch(prepareFinalObject("Licenses", response.Licenses));
+
+      // const searchResponse = await getSearchResults([
+      //   { key: "tenantId", value: tenantId },
+      //   { key: "applicationNumber", value: applicationNumber }
+      // ]);
+
+      // searchResponse &&
+      dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
+      let accessories = get(
+        queryObject[0],
+        "tradeLicenseDetail.accessories"
+      ).filter(item => !item.hasOwnProperty("isDeleted"));
+      set(queryObject[0], "tradeLicenseDetail.accessories", accessories);
       set(queryObject[0], "action", "INITIATE");
       const response = await httpRequest(
         "post",
@@ -209,10 +248,12 @@ export const applyTradeLicense = async (state, dispatch) => {
     setApplicationNumberBox(state, dispatch);
     return true;
   } catch (error) {
-    toggleSnackbarAndSetText(
-      true,
-      "Could not create/update trade license appication",
-      "error"
+    dispatch(
+      toggleSnackbarAndSetText(
+        true,
+        "Could not create/update trade license appication",
+        "error"
+      )
     );
     console.log(error);
     return false;

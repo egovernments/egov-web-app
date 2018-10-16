@@ -445,6 +445,7 @@ export const tradeDetails = getCommonCard({
       }),
       visible: false
     },
+
     tradeStructureType: {
       ...getSelectField({
         label: { labelName: "Structure Type" },
@@ -487,7 +488,7 @@ export const tradeDetails = getCommonCard({
       },
       placeholder: {
         labelName: "Enter Trade Commencement Date",
-        labekKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_PLACEHOLDER"
+        labelKey: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_PLACEHOLDER"
       },
       required: true,
       pattern: getPattern("Date"),

@@ -234,8 +234,6 @@ export const callBackForNext = async (state, dispatch) => {
       dispatch(
         prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
       );
-    } else {
-      alert("please upload requied documents");
     }
   }
   if (activeStep === 3) {
@@ -255,7 +253,7 @@ export const callBackForNext = async (state, dispatch) => {
       dispatch(
         toggleSnackbarAndSetText(
           true,
-          "Please fill all mandatory fields !",
+          "Please fill all mandatory fields and upload the documents !",
           "warning"
         )
       );
