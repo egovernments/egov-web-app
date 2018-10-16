@@ -77,7 +77,8 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       pattern: getPattern("MobileNo"),
-      jsonPath: "searchScreen.mobileNumber"
+      jsonPath: "searchScreen.mobileNumber",
+      errorMessage:"Invalid Mobile Number"
     })
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
