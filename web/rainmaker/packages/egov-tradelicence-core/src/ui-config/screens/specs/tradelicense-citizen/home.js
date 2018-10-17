@@ -38,6 +38,16 @@ const tradeLicenseSearchAndResult = {
           children: {
             card: getCommonCard({
               applicationSuccessContainer: getCommonContainer({
+                icon: {
+                  uiFramework: "custom-atoms",
+                  componentPath: "Icon",
+                  props: {
+                    iconName: "book",
+                    style: {
+                      fontSize: "110px"
+                    }
+                  }
+                },
                 body: {
                   uiFramework: "custom-atoms",
                   componentPath: "Div",
@@ -46,6 +56,7 @@ const tradeLicenseSearchAndResult = {
                       labelName: "Apply for New Trade License",
                       labelKey: "TL_COMMON_APPL_NEW_LICe"
                     }),
+                    break: getBreak(),
                     // paragraph: getCommonParagraph({
                     //   labelName:
                     //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
@@ -70,6 +81,10 @@ const tradeLicenseSearchAndResult = {
                       onClickDefination: {
                         action: "page_change",
                         path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                      },
+                      roleDefination: {
+                        rolePath: "user-info.roles",
+                        roles: ["CITIZEN"]
                       }
                     }
                   }
