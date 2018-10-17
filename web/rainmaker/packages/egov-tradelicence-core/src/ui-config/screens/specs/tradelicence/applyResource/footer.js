@@ -9,7 +9,8 @@ import {
   getButtonVisibility,
   getCommonApplyFooter,
   epochToYmdDate,
-  setMultiOwnerForApply
+  setMultiOwnerForApply,
+  setValidToFromVisibilityForApply
 } from "../../utils";
 import {
   prepareFinalObject,
@@ -194,6 +195,10 @@ export const callBackForNext = async (state, dispatch) => {
     )[0] === "INDIVIDUAL"
       ? setMultiOwnerForApply(state, true)
       : setMultiOwnerForApply(state, false);
+
+    if (get(LicenseData, "licenseType")) {
+      setValidToFromVisibilityForApply(state, get(LicenseData, "licenseType"));
+    }
 
     const uploadedDocData = get(
       LicenseData,

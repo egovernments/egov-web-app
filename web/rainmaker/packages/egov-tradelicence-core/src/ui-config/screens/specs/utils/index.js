@@ -1092,3 +1092,55 @@ export const setMultiOwnerForApply = (state, isIndividual) => {
     );
   }
 };
+
+export const setValidToFromVisibilityForSV = (action, value) => {
+  if (value === "PERMANENT") {
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewToDate.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewFromDate.visible",
+      false
+    );
+  } else {
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewToDate.visible",
+      true
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewFromDate.visible",
+      true
+    );
+  }
+};
+
+export const setValidToFromVisibilityForApply = (state, value) => {
+  if (value === "PERMANENT") {
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewToDate.visible",
+      false
+    );
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewFromDate.visible",
+      false
+    );
+  } else {
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewToDate.visible",
+      true
+    );
+    set(
+      state,
+      "screenConfiguration.screenConfig.apply.components.div.children.formwizardFourthStep.children.tradeReviewDetails.children.cardContent.children.reviewTradeDetails.children.cardContent.children.viewOne.children.reviewFromDate.visible",
+      true
+    );
+  }
+};

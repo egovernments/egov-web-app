@@ -15,7 +15,11 @@ import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-fra
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../ui-utils/commons";
-import { createEstimateData, setMultiOwnerForSV } from "../utils";
+import {
+  createEstimateData,
+  setMultiOwnerForSV,
+  setValidToFromVisibilityForSV
+} from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
 
 import { convertEpochToDate } from "../utils";
@@ -108,6 +112,13 @@ const searchResults = async (action, state, dispatch) => {
   )[0] === "INDIVIDUAL"
     ? setMultiOwnerForSV(action, true)
     : setMultiOwnerForSV(action, false);
+
+  if (get(payload, "Licenses[0].licenseType")) {
+    setValidToFromVisibilityForSV(
+      action,
+      get(payload, "Licenses[0].licenseType")
+    );
+  }
 
   await setDocuments(
     payload,
