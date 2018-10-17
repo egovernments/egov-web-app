@@ -995,7 +995,7 @@ export const fetchBill = async (action, state, dispatch) => {
   ];
   const LicensesPayload = await getSearchResults(queryObject);
   //set in redux to be used for adhoc
-  dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
+  LicensesPayload && LicensesPayload.Licenses && dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
 
   //initiate receipt object
   payload &&
