@@ -50,7 +50,7 @@ const tradeLicenseSearchAndResult = {
                     //   labelName:
                     //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
                     // }),
-                    collectPaymentButton: {
+                    applyButton: {
                       componentPath: "Button",
                       props: {
                         variant: "contained",
@@ -70,10 +70,6 @@ const tradeLicenseSearchAndResult = {
                       onClickDefination: {
                         action: "page_change",
                         path: "/mihy-ui-framework/tradelicense-citizen/apply"
-                      },
-                      roleDefination: {
-                        rolePath: "user-info.roles",
-                        roles: ["EMPLOYEE"]
                       }
                     }
                   }

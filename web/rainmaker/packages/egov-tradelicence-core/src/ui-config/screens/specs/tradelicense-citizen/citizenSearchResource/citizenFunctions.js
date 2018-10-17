@@ -12,20 +12,21 @@ const getLocalTextFromCode = localCode => {
 export const fetchData = async (action, state, dispatch) => {
   const response = await getSearchResults();
   try {
-    let data = response.Licenses.map(item => ({
-      [get(textToLocalMapping, "Application No")]:
-        item.applicationNumber || "-",
-      [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
-      [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
-      [get(textToLocalMapping, "Owner Name")]:
-        item.tradeLicenseDetail.owners[0].name || "-",
-      [get(textToLocalMapping, "Application Date")]:
-        convertEpochToDate(item.applicationDate) || "-",
-      tenantId: item.tenantId,
-      [get(textToLocalMapping, "Status")]:
-        get(textToLocalMapping, item.status) || "-"
-    }));
-    console.log(data);
+    let data =
+      response &&
+      response.Licenses.map(item => ({
+        [get(textToLocalMapping, "Application No")]:
+          item.applicationNumber || "-",
+        [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
+        [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
+        [get(textToLocalMapping, "Owner Name")]:
+          item.tradeLicenseDetail.owners[0].name || "-",
+        [get(textToLocalMapping, "Application Date")]:
+          convertEpochToDate(item.applicationDate) || "-",
+        tenantId: item.tenantId,
+        [get(textToLocalMapping, "Status")]:
+          get(textToLocalMapping, item.status) || "-"
+      }));
     dispatch(
       handleField(
         "home",
