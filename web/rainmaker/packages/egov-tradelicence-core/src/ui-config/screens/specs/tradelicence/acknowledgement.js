@@ -190,6 +190,36 @@ const getAcknowledgementCard = (
       },
       gotoHomeFooter
     };
+  } else if (purpose === "pay" && status === "failure") {
+    return {
+      header: getCommonHeader({
+        labelName: "Application for New Trade License (2018-2019)",
+        labelKey: "TL_COMMON_APPL_NEW_LIC"
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "close",
+            backgroundColor: "#E54D42",
+            header: "Payment Failed",
+            body:
+              "Payment has failed. Please try again.",
+            tailText: "Application No.",
+            number: applicationNumber
+          })
+        }
+      },
+      iframeForPdf: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div"
+      },
+      applicationSuccessFooter: applicationSuccessFooter(
+        applicationNumber,
+        tenant
+      )
+    };
   }
 };
 
