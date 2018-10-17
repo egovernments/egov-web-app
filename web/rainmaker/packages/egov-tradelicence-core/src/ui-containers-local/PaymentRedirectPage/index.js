@@ -19,7 +19,7 @@ class PaymentRedirect extends Component {
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       let txnAmount = get(pgUpdateResponse, "Transaction[0].txnAmount");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-        this.props.toggleSpinner();
+       
         history.push(
           `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${moduleId}&tenantId=${tenantId}`
         );
