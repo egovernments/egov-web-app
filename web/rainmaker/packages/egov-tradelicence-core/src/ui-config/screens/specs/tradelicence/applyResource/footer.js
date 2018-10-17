@@ -173,6 +173,22 @@ export const callBackForNext = async (state, dispatch) => {
           isFormValid = false;
       }
     }
+    // check for multiple owners
+    if (
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+      ) === "INDIVIDUAL.MULTIPLEOWNERS" &&
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].tradeLicenseDetail.owners"
+      ).length <= 1
+    ) {
+      dispatch(
+        toggleSnackbarAndSetText(true, "Please add multiple owners !", "error")
+      );
+      return false; // to show the above message
+    }
     if (isFormValid && isOwnerShipValid) {
       isFormValid = await applyTradeLicense(state, dispatch);
       if (!isFormValid) {

@@ -358,14 +358,64 @@ export const tradeOwnerDetails = getCommonCard({
         }
       }
     },
-    subOwnership: getSelectField({
-      label: { labelName: "Type of sub-ownership" },
-      placeholder: { labelName: "Select Type of Ownership" },
-      jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
-      required: true,
-      sourceJsonPath:
-        "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
-    })
+    subOwnership: {
+      ...getSelectField({
+        label: { labelName: "Type of sub-ownership" },
+        placeholder: { labelName: "Select Type of Ownership" },
+        jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+        required: true,
+        sourceJsonPath:
+          "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        if (action.value === "INDIVIDUAL.SINGLEOWNER") {
+          const ownerInfoCards = get(
+            state.screenConfiguration.screenConfig.apply, //hardcoded to apply screen
+            "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items"
+          );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+              "props.hasAddItem",
+              false
+            )
+          );
+          if (ownerInfoCards && ownerInfoCards.length > 1) {
+            const singleCard = ownerInfoCards.slice(0, 1); //get the first element if multiple cards present
+
+            dispatch(
+              handleField(
+                "apply",
+                "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+                "props.items",
+                singleCard
+              )
+            );
+            dispatch(
+              pFO(
+                "Licenses[0].tradeLicenseDetail.owners",
+                get(
+                  state.screenConfiguration.preparedFinalObject,
+                  "Licenses[0].tradeLicenseDetail.owners"
+                ).slice(0, 1)
+              )
+            );
+          }
+        }
+
+        if (action.value === "INDIVIDUAL.MULTIPLEOWNERS") {
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+              "props.hasAddItem",
+              true
+            )
+          );
+        }
+      }
+    }
   }),
   OwnerInfoCard,
   ownerInfoInstitutional

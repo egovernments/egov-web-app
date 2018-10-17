@@ -735,7 +735,7 @@ export const getDetailsForOwner = async (state, dispatch) => {
         dispatch(
           toggleSnackbarAndSetText(
             true,
-            "Owner is not found with this user id !",
+            "This mobile number is not registered !",
             "info"
           )
         );

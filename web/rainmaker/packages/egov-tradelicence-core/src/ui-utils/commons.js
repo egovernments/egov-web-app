@@ -380,7 +380,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
         const imageUri = await getImageUrlByFile(file);
         const fileStoreId = await uploadFile(
           S3_BUCKET.endPoint,
-          "rainmaker-pgr",
+          "TL",
           file,
           "pb"
         );
@@ -388,7 +388,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       } else {
         const fileStoreId = await uploadFile(
           S3_BUCKET.endPoint,
-          "RAINMAKER-PGR",
+          "TL",
           file,
           "pb"
         );
