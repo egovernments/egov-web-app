@@ -281,7 +281,7 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Mohalla",
           labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
         },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.label" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.name" }
       ),
       reviewPincode: getLabelWithValue(
         {

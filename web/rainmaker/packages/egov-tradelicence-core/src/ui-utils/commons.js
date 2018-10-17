@@ -140,7 +140,7 @@ export const getBoundaryData = async (
       if (messageObject)
         dispatch(
           prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.locality.label",
+            "Licenses[0].tradeLicenseDetail.address.locality.name",
             messageObject.name
           )
         );
