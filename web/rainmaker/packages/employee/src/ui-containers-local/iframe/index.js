@@ -1,31 +1,11 @@
 import React from "react";
-import get from "lodash/get";
-import "./index.css";
+import Loadable from "react-loadable";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+const Loading = () => <CircularProgress />;
 
-class Iframe extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      ifrmheight: "777px",
-    }
-  }
-
-  getIframeheight = () => get(document.getElementById('menu-container'), "clientHeight", "777")
-
-  updateFrame = () => this.setState({
-    ifrmheight: `${this.getIframeheight()}px`,
-  })
-
-  componentDidMount() {
-    this.updateFrame()
-  }
-
-  render() {
-    return (
-      <iframe src={this.props.src} frameBorder="0" allowFullScreen className="iframe-style" {...this.props} height={this.state.ifrmheight}/>
-    )
-  }
-}
-
-export default Iframe;
+const Iframe = Loadable({
+  loader: () => import("./iframe"),
+  loading: Loading
+});
+export default Iframe
