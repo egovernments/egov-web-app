@@ -193,7 +193,7 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/mihy-ui-framework/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",
