@@ -1,12 +1,16 @@
 import React from "react";
 import Loadable from "react-loadable";
-import LinearProgress from "mihy-ui-framework/ui-atoms/LinearSpinner";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Loading = () => <LinearProgress />;
+const Loading = () => <CircularProgress />;
+
+const Loadingggggggggggggggggggggggggggg = () => {
+  return <div>Loading...</div>;
+}
 
 const Iframe = Loadable({
   loader: () => import("./iframe"),
-  loading: () => <Loading />
+  loading: Loading
 });
 
 

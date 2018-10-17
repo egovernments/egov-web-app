@@ -111,6 +111,15 @@ span[class^="MuiFormLabel-asterisk"] {
 } */
 
 
+
+.app-container-iframe {
+  div[class^="MuiCircularProgress"] {
+    position: sticky;
+    top: 90%;
+    left: 50%;
+  }
+}
+
 @media only screen and (min-width: 953px) {
   .app-container-iframe {
     position: fixed;
