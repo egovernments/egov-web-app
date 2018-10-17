@@ -6,6 +6,7 @@ import { applicationSuccessFooter } from "./acknowledgementResource/applicationS
 import { paymentSuccessFooter } from "./acknowledgementResource/paymentSuccessFooter";
 import { approvalSuccessFooter } from "./acknowledgementResource/approvalSuccessFooter";
 import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
+import { paymentFailureFooter } from "./acknowledgementResource/paymentFailureFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import {
@@ -15,6 +16,7 @@ import {
   loadMdmsData
 } from "../utils/receiptTransformer";
 import set from "lodash/set";
+import { getCurrentFinancialYear } from "../utils";
 
 /** Data used for creation of receipt is generated and stored in local storage here */
 const loadReceiptGenerationData = (applicationNumber, tenant) => {
@@ -35,8 +37,8 @@ const getAcknowledgementCard = (
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: "Application for New Trade License (2018-2019)",
-        labelKey: "TL_COMMON_APPL_NEW_LIC"
+        labelName: `Application for New Trade License (${getCurrentFinancialYear()})`
+        // labelKey: "TL_COMMON_APPL_NEW_LIC"
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -67,8 +69,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: "Payment for New Trade License (2018-2019)",
-          labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+          labelName: `Payment for New Trade License (${getCurrentFinancialYear()})`
+          // labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -100,8 +102,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: "Trade License Application (2018-2019)",
-          labelKey: "TL_TRADE_APPLICATION"
+          labelName: `Trade License Application (${getCurrentFinancialYear()})`
+          // labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -132,8 +134,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: "Trade License Application (2018-2019)",
-          labelKey: "TL_TRADE_APPLICATION"
+          labelName: `Trade License Application (${getCurrentFinancialYear()})`
+          // labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -162,8 +164,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: "Trade License Application (2018-2019)",
-          labelKey: "TL_TRADE_APPLICATION"
+          labelName: `Trade License Application (${getCurrentFinancialYear()})`
+          // labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -192,9 +194,18 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "pay" && status === "failure") {
     return {
-      header: getCommonHeader({
-        labelName: "Application for New Trade License (2018-2019)",
-        labelKey: "TL_COMMON_APPL_NEW_LIC"
+      header: getCommonContainer({
+        header: getCommonHeader({
+          labelName: `Trade License Application (${getCurrentFinancialYear()})`
+          // labelKey: "TL_TRADE_APPLICATION"
+        }),
+        applicationNumber: {
+          uiFramework: "custom-atoms-local",
+          componentPath: "ApplicationNoContainer",
+          props: {
+            number: applicationNumber
+          }
+        }
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -203,22 +214,13 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Payment Failed",
+            header: "Payment has failed!",
             body:
-              "Payment has failed. Please try again.",
-            tailText: "Application No.",
-            number: applicationNumber
+              "A notification regarding payment failure has been sent to the trade owner and applicant."
           })
         }
       },
-      iframeForPdf: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div"
-      },
-      applicationSuccessFooter: applicationSuccessFooter(
-        applicationNumber,
-        tenant
-      )
+      paymentFailureFooter
     };
   }
 };
