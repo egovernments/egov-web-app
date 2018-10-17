@@ -165,8 +165,16 @@ export const applyTradeLicense = async (state, dispatch) => {
     fY1 = fY1.substring(2, 4);
     currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
     set(queryObject[0], "financialYear", currentFinancialYr);
-    // set(queryObject[0], "validFrom", 1522540800000);
-    // set(queryObject[0], "validTo", 1554076799000);
+    set(
+      queryObject[0],
+      "validFrom",
+      convertDateToEpoch(queryObject[0].validFrom, "dayend")
+    );
+    set(
+      queryObject[0],
+      "validTo",
+      convertDateToEpoch(queryObject[0].validTo, "dayend")
+    );
     if (queryObject[0] && queryObject[0].commencementDate) {
       queryObject[0].commencementDate = convertDateToEpoch(
         queryObject[0].commencementDate,
@@ -226,7 +234,6 @@ export const applyTradeLicense = async (state, dispatch) => {
       //   { key: "applicationNumber", value: applicationNumber }
       // ]);
 
-      // searchResponse &&
       dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
       let accessories = get(
