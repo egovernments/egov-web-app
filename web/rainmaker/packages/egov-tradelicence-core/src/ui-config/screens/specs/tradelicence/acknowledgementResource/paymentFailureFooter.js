@@ -11,27 +11,29 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const paymentFailureFooter = getCommonApplyFooter({
-  gotoHome: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "16px"
+export const paymentFailureFooter = (applicationNumber, tenant) => {
+  return getCommonApplyFooter({
+    gotoHome: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "RETRY",
+          labelKey: "TL_RETRY"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       }
-    },
-    children: {
-      downloadReceiptButtonLabel: getLabel({
-        labelName: "RETRY",
-        labelKey: "TL_RETRY"
-      })
-    },
-    onClickDefination: {
-    //   action: "page_change",
-    //   path: `/mihy-ui-framework/tradelicence/search`
     }
-  }
-});
+  });
+};

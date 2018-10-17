@@ -7,6 +7,58 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { getBill } from "../../utils";
+
+export const callPGService = async (state, dispatch) => {
+  const tenantId = getQueryArg(window.location.href, "tenantId");
+  let callbackUrl = `${
+    window.origin
+  }/mihy-ui-framework/tradelicense-citizen/PaymentRedirectPage`;
+  try {
+    const queryObj = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "consumerCode",
+        value: getQueryArg(window.location.href, "applicationNumber")
+      },
+      {
+        key: "businessService",
+        value: "TL"
+      }
+    ];
+    const billPayload = await getBill(queryObj);
+    try {
+      const requestBody = {
+        Transaction: {
+          tenantId,
+          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
+          module: "TL",
+          billId: get(billPayload, "Bill[0].id"),
+          moduleId: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
+          productInfo: "Trade License Payment",
+          gateway: "AXIS",
+          callbackUrl
+        }
+      };
+      const goToPaymentGateway = await httpRequest(
+        "post",
+        "pg-service/transaction/v1/_create",
+        "_create",
+        [],
+        requestBody
+      );
+      const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+      window.location = redirectionUrl;
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const moveToSuccess = (href, dispatch, receiptNumber) => {
   const applicationNo = getQueryArg(href, "applicationNumber");
@@ -329,7 +381,7 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "condition",
-      callBack: callBackForPay
+      callBack: callPGService
     },
     roleDefination: {
       rolePath: "user-info.roles",

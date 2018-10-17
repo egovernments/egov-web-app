@@ -220,7 +220,7 @@ const getAcknowledgementCard = (
           })
         }
       },
-      paymentFailureFooter
+      paymentFailureFooter: paymentFailureFooter(applicationNumber, tenant)
     };
   }
 };
