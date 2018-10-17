@@ -150,6 +150,57 @@ export const getBoundaryData = async (
   }
 };
 
+const getMultipleAccessories = licenses => {
+  let accessories = get(licenses, "tradeLicenseDetail.accessories");
+  let mergedAccessories =
+    accessories &&
+    accessories.reduce((result, item) => {
+      if (item && item !== null && item.hasOwnProperty("accessoryCategory")) {
+        if (item.hasOwnProperty("id")) {
+          if (item.hasOwnProperty("active") && item.active) {
+            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+              set(item, "active", false);
+              result.push(item);
+            } else {
+              result.push(item);
+            }
+          }
+        } else {
+          if (!item.hasOwnProperty("isDeleted")) {
+            result.push(item);
+          }
+        }
+      }
+      return result;
+    }, []);
+
+  return mergedAccessories;
+};
+
+const getMultipleOwners = owners => {
+  let mergedOwners =
+    owners &&
+    owners.reduce((result, item) => {
+      if (item && item !== null && item.hasOwnProperty("mobileNumber")) {
+        if (item.hasOwnProperty("active") && item.active) {
+          if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+            set(item, "active", false);
+            result.push(item);
+          } else {
+            result.push(item);
+          }
+        } else {
+          if (!item.hasOwnProperty("isDeleted")) {
+            result.push(item);
+          }
+        }
+      }
+      return result;
+    }, []);
+
+  return mergedOwners;
+};
+
 export const applyTradeLicense = async (state, dispatch) => {
   try {
     let queryObject = JSON.parse(
@@ -157,11 +208,8 @@ export const applyTradeLicense = async (state, dispatch) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
-    let isfreshApplication = true;
     let currentFinancialYr = getCurrentFinancialYear();
     let fY1 = currentFinancialYr.split("-")[1];
-    let applicationNumber = get(queryObject[0], "applicationNumber");
-    let tenantId = get(queryObject[0], "tenantId");
     fY1 = fY1.substring(2, 4);
     currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
     set(queryObject[0], "financialYear", currentFinancialYr);
@@ -183,37 +231,25 @@ export const applyTradeLicense = async (state, dispatch) => {
     }
     let owners = get(queryObject[0], "tradeLicenseDetail.owners");
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
-    set(queryObject[0], "tradeLicenseDetail.owners", owners);
+
+    //set(queryObject[0], "tradeLicenseDetail.owners", getMultipleOwners(owners));
     set(queryObject[0], "tenantId", "pb.amritsar");
 
     if (queryObject[0].applicationNumber) {
       //call update
-      let accessories = get(
+
+      set(
         queryObject[0],
-        "tradeLicenseDetail.accessories"
-      ).reduce((result, item) => {
-        if (item && item !== null) {
-          if (item.hasOwnProperty("id")) {
-            if (item.hasOwnProperty("active") && item.active) {
-              if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
-                set(item, "active", false);
-                result.push(item);
-              } else {
-                result.push(item);
-              }
-            } else if (item.hasOwnProperty("active") && !item.active) {
-              // result.push(item);
-            }
-          } else {
-            result.push(item);
-          }
-        }
-        return result;
-      }, []);
-      set(queryObject[0], "tradeLicenseDetail.accessories", accessories);
+        "tradeLicenseDetail.accessories",
+        getMultipleAccessories(queryObject[0])
+      );
+      set(
+        queryObject[0],
+        "tradeLicenseDetail.owners",
+        getMultipleOwners(owners)
+      );
 
       let action = "INITIATE";
-      isfreshApplication = false;
       if (
         queryObject[0].tradeLicenseDetail &&
         queryObject[0].tradeLicenseDetail.applicationDocuments
@@ -228,19 +264,18 @@ export const applyTradeLicense = async (state, dispatch) => {
         [],
         { Licenses: queryObject }
       );
-
-      // const searchResponse = await getSearchResults([
-      //   { key: "tenantId", value: tenantId },
-      //   { key: "applicationNumber", value: applicationNumber }
-      // ]);
-
       dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
-      let accessories = get(
-        queryObject[0],
-        "tradeLicenseDetail.accessories"
-      ).filter(item => !item.hasOwnProperty("isDeleted"));
-      set(queryObject[0], "tradeLicenseDetail.accessories", accessories);
+      let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      // let owners = get(queryObject[0], "tradeLicenseDetail.owners");
+      let mergedAccessories =
+        accessories &&
+        accessories.filter(item => !item.hasOwnProperty("isDeleted"));
+      let mergedOwners =
+        owners && owners.filter(item => !item.hasOwnProperty("isDeleted"));
+
+      set(queryObject[0], "tradeLicenseDetail.accessories", mergedAccessories);
+      set(queryObject[0], "tradeLicenseDetail.owners", mergedOwners);
       set(queryObject[0], "action", "INITIATE");
       const response = await httpRequest(
         "post",
@@ -270,10 +305,15 @@ export const applyTradeLicense = async (state, dispatch) => {
 const convertOwnerDobToEpoch = owners => {
   let updatedOwners =
     owners &&
-    owners.map(owner => {
-      owner.dob = convertDateToEpoch(owner.dob, "dayend");
-      return owner;
-    });
+    owners
+      .map(owner => {
+        return {
+          ...owner,
+          dob:
+            owner && owner !== null && convertDateToEpoch(owner.dob, "dayend")
+        };
+      })
+      .filter(item => item && item !== null);
   return updatedOwners;
 };
 

@@ -11,36 +11,38 @@ import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import { addComponentJsonpath } from "../../ui-utils";
-import {prepareFinalObject as pFO} from "../../ui-redux/screen-configuration/actions";
+import { prepareFinalObject as pFO } from "../../ui-redux/screen-configuration/actions";
 
-const checkActiveItems=(items)=>{
-  let count=0;
+const checkActiveItems = items => {
+  let count = 0;
   for (var i = 0; i < items.length; i++) {
-    if(checkActiveItem(items[i])) count++
+    if (checkActiveItem(items[i])) count++;
   }
   return count;
-}
+};
 
-const checkActiveItem=(item)=>{
-  return item && (item.isDeleted===undefined || item.isDeleted!==false)
-}
+const checkActiveItem = item => {
+  return item && (item.isDeleted === undefined || item.isDeleted !== false);
+};
 
 class MultiItem extends React.Component {
   componentDidMount = () => {
     const { items, sourceJsonPath, preparedFinalObject } = this.props;
     const editItems = get(preparedFinalObject, sourceJsonPath, []);
-    if (!items.length && !editItems.length) {
-      this.addItem();
-    } else {
-      for (var i = 0; i < editItems.length; i++) {
-        if (checkActiveItem(editItems[i])) {
-          this.addItem(true);
+    if (editItems) {
+      if (!items.length && !editItems.length) {
+        this.addItem();
+      } else {
+        for (var i = 0; i < editItems.length; i++) {
+          if (checkActiveItem(editItems[i])) {
+            this.addItem(true);
+          }
         }
       }
     }
   };
 
-  addItem = (isNew=false) => {
+  addItem = (isNew = false) => {
     const {
       onFieldChange: addItemToState,
       screenKey,
@@ -52,11 +54,9 @@ class MultiItem extends React.Component {
       headerJsonPath,
       screenConfig
     } = this.props;
-    const items = isNew?[]:get(
-      screenConfig,
-      `${screenKey}.${componentJsonpath}.props.items`,
-      []
-    );
+    const items = isNew
+      ? []
+      : get(screenConfig, `${screenKey}.${componentJsonpath}.props.items`, []);
     const itemsLength = items.length;
     set(scheama, headerJsonPath, `${headerName} - ${itemsLength + 1}`);
     if (sourceJsonPath) {
@@ -115,8 +115,8 @@ class MultiItem extends React.Component {
       screenConfig,
       `${screenKey}.${componentJsonpath}.props.items`
     );
-    updatePreparedFormObject(`${sourceJsonPath}[${index}].isDeleted`,false);
-    items[index].isDeleted=false;
+    updatePreparedFormObject(`${sourceJsonPath}[${index}].isDeleted`, false);
+    items[index].isDeleted = false;
     // items.splice(index,1);
     removeItem(screenKey, componentJsonpath, `props.items`, items);
   };
@@ -192,8 +192,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updatePreparedFormObject:(jsonPath,value)=>dispatch(pFO(jsonPath,value))
+    updatePreparedFormObject: (jsonPath, value) =>
+      dispatch(pFO(jsonPath, value))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MultiItem);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MultiItem);

@@ -109,12 +109,14 @@ var MultiItem = function (_React$Component) {
           preparedFinalObject = _this$props.preparedFinalObject;
 
       var editItems = (0, _get2.default)(preparedFinalObject, sourceJsonPath, []);
-      if (!items.length && !editItems.length) {
-        _this.addItem();
-      } else {
-        for (var i = 0; i < editItems.length; i++) {
-          if (checkActiveItem(editItems[i])) {
-            _this.addItem(true);
+      if (editItems) {
+        if (!items.length && !editItems.length) {
+          _this.addItem();
+        } else {
+          for (var i = 0; i < editItems.length; i++) {
+            if (checkActiveItem(editItems[i])) {
+              _this.addItem(true);
+            }
           }
         }
       }
