@@ -4,7 +4,7 @@ import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { textToLocalMapping } from "./searchResults";
-
+import { validateFields} from "../../utils";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
@@ -18,8 +18,31 @@ export const searchApiCall = async (state, dispatch) => {
     "searchScreen",
     {}
   );
+  const isSearchBoxFirstRowValid = validateFields(
+    "components.div.children.tradeLicenseApplication.children.cardContent.children.appTradeAndMobNumContainer.children",
+    state,
+    dispatch,
+    "search"
+  );
 
-  if (
+  const isSearchBoxSecondRowValid= validateFields(
+    "components.div.children.tradeLicenseApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
+    state,
+    dispatch,
+    "search"
+  );
+
+  if(!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid))
+  {
+    dispatch(
+      toggleSnackbarAndSetText(
+        true,
+        "Please fill valid fields to start search",
+        "warning"
+      )
+    );
+  }
+  else if (
     Object.keys(searchScreenObject).length == 0 ||
     Object.values(searchScreenObject).every(x => x === "")
   ) {

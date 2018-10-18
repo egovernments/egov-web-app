@@ -37,7 +37,8 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: "",
+      pattern: (/^[a-zA-Z0-9\-]*$/i),
+      errorMessage:"Invalid Application No.",
       jsonPath: "searchScreen.applicationNumber"
     }),
 
@@ -56,6 +57,8 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       pattern: "",
+      pattern: (/^[a-zA-Z0-9\-]*$/i),
+      errorMessage:"Invalid Trade License No.",
       jsonPath: "searchScreen.licenseNumber"
     }),
     ownerMobNo: getTextField({
@@ -122,6 +125,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
+      errorMessage:"Invalid Date",
       required: false
     }),
 
@@ -134,6 +138,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
+      errorMessage:"Invalid Date",
       required: false
     })
   }),
