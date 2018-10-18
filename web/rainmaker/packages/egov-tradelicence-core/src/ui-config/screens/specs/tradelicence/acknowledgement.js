@@ -95,7 +95,7 @@ const getAcknowledgementCard = (
           })
         }
       },
-      paymentSuccessFooter
+      paymentSuccessFooter: paymentSuccessFooter()
     };
   } else if (purpose === "approve" && status === "success") {
     loadReceiptGenerationData(applicationNumber, tenant);
