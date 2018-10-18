@@ -61,6 +61,15 @@ class LandingPage extends Component {
       className: "pt-landing-card",
       // cities :
     },
+    TL: {
+      moduleTitle: "TradeLicense",
+      button1: "Mseva TradeLicense",
+      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      iconAction: "places",
+      iconName: "business-center",
+      route: "tradelicense/home",
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+    },
   };
 
   render() {
