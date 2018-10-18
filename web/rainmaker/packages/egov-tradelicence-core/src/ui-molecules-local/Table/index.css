@@ -10,3 +10,7 @@ div[class^=MUIDataTableHeadCell-data] {
   line-height: 17px;
   text-align: left;
 }
+
+table tbody  tr  td {
+  padding:4px 8px 4px 24px !important;
+}

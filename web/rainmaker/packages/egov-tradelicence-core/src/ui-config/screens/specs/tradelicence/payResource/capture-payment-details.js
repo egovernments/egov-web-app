@@ -28,7 +28,7 @@ const capturePaymentDetails = getCommonGrayCard({
           tabContent: { cash }
         },
         {
-          tabButton: "CHECK",
+          tabButton: "CHEQUE",
           tabIcon: "Schedule",
           tabContent: { cheque }
         },
