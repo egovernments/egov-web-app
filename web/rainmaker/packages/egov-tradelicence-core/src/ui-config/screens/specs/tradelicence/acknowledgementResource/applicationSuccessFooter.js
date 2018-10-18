@@ -18,7 +18,7 @@ const generatePdfAndDownload = (action, applicationNumber, tenant) => {
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
-    `/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+    `/employee-tradelicence/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   iframe.onload = function(e) {
     // note: this assumes html2canvas v5+
     let target = iframe.contentDocument.querySelector(
