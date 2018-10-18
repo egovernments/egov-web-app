@@ -192,6 +192,9 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     if (queryValue) {
       updatePFOforSearchResults(action, state, dispatch, queryValue);
+    } else {
+      dispatch(prepareFinalObject("Licenses", []))
+      dispatch(prepareFinalObject("LicensesTemp", []))
     }
     getMdmsData(action, state, dispatch);
 
