@@ -16,7 +16,8 @@ import {
   getCheckBoxJsonpath,
   getSafetyNormsJson,
   getHygeneLevelJson,
-  getLocalityHarmedJson
+  getLocalityHarmedJson,
+  getCurrentFinancialYear
 } from "../utils";
 import { footerApprove } from "./approveResource/footer";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
@@ -27,8 +28,8 @@ const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: "Trade License Application (2018-2019)",
-    labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
+    labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
+    // labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
