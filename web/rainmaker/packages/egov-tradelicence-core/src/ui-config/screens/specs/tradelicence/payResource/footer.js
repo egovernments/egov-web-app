@@ -13,7 +13,7 @@ export const callPGService = async (state, dispatch) => {
   const tenantId = getQueryArg(window.location.href, "tenantId");
   let callbackUrl = `${
     window.origin
-  }/mihy-ui-framework/tradelicense-citizen/PaymentRedirectPage`;
+  }/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/PaymentRedirectPage`;
   try {
     const queryObj = [
       {
