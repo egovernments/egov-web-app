@@ -333,7 +333,7 @@ export const footer = getCommonApplyFooter({
     },
     roleDefination: {
       rolePath: "user-info.roles",
-      roles: ["CITIZEN", "TL_CEMP"]
+      roles: ["CITIZEN"]
     }
   },
   printConfirmationform: {
@@ -356,6 +356,10 @@ export const footer = getCommonApplyFooter({
     onClickDefination: {
       action: "condition",
       callBack: callBackForPay
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      roles: ["CITIZEN"]
     }
   },
   makePayment: {
