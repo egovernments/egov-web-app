@@ -1,5 +1,5 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getBaseURL } from "../../utils";
+import { ifUserRoleExists } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {
@@ -13,6 +13,11 @@ const getCommonApplyFooter = children => {
 };
 
 export const paymentFailureFooter = (applicationNumber, tenant) => {
+  const roleExists = ifUserRoleExists("CITIZEN");
+  const redirectionURL = roleExists
+    ? "/mihy-ui-framework/tradelicense-citizen"
+    : "/mihy-ui-framework/tradelicence";
+
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -33,7 +38,7 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
       },
       onClickDefination: {
         action: "page_change",
-        path: `${getBaseURL()}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `${redirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       }
     }
   });

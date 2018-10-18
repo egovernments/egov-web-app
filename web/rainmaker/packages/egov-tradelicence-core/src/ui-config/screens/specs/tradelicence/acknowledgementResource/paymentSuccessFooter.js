@@ -1,5 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import generateReceipt from "../../utils/receiptPdf";
+import { ifUserRoleExists } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {
@@ -12,75 +13,82 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const paymentSuccessFooter = getCommonApplyFooter({
-  gotoHome: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "16px"
+export const paymentSuccessFooter = () => {
+  const roleExists = ifUserRoleExists("CITIZEN");
+  const redirectionURL = roleExists
+    ? "/mihy-ui-framework/tradelicense-citizen/home"
+    : "/mihy-ui-framework/tradelicence/search";
+
+  return getCommonApplyFooter({
+    gotoHome: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "GO TO HOME",
+          labelKey: "TL_COMMON_BUTTON_HOME"
+        })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: redirectionURL
       }
     },
-    children: {
-      downloadReceiptButtonLabel: getLabel({
-        labelName: "GO TO HOME",
-        labelKey: "TL_COMMON_BUTTON_HOME"
-      })
+    downloadReceiptButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "DOWNLOAD RECEIPT",
+          labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          generateReceipt(state, dispatch, "receipt_download");
+        }
+      }
     },
-    onClickDefination: {
-      action: "page_change",
-      path: `/mihy-ui-framework/tradelicence/search`
+    printReceiptButton: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          width: "200px",
+          height: "48px",
+          marginRight: "40px"
+        }
+      },
+      children: {
+        printReceiptButtonLabel: getLabel({
+          labelName: "PRINT RECEIPT",
+          labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          generateReceipt(state, dispatch, "receipt_print");
+        }
+      }
     }
-  },
-  downloadReceiptButton: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "16px"
-      }
-    },
-    children: {
-      downloadReceiptButtonLabel: getLabel({
-        labelName: "DOWNLOAD RECEIPT",
-        labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "receipt_download");
-      }
-    }
-  },
-  printReceiptButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        width: "200px",
-        height: "48px",
-        marginRight: "40px"
-      }
-    },
-    children: {
-      printReceiptButtonLabel: getLabel({
-        labelName: "PRINT RECEIPT",
-        labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "receipt_print");
-      }
-    }
-  }
-});
+  });
+};
