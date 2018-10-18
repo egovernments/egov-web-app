@@ -234,10 +234,16 @@ export const applyTradeLicense = async (state, dispatch) => {
 
     //set(queryObject[0], "tradeLicenseDetail.owners", getMultipleOwners(owners));
     const city = get(queryObject[0], "tradeLicenseDetail.address.city", "");
-    const tenantId =
-      process.env.REACT_APP_NAME === "Citizen"
-        ? city
-        : localStorage.getItem("tenant-id");
+    let userInfo = JSON.parse(localStorage.getItem("user-info"));
+    const roles = get(userInfo, "roles");
+    const roleCodes = roles ? roles.map(role => role.code) : [];
+    let tenantId = "";
+    if (roleCodes.indexOf("CITIZEN") > -1) {
+      tenantId = city;
+    } else {
+      tenantId = localStorage.getItem("tenant-id");
+    }
+
     set(queryObject[0], "tenantId", tenantId);
 
     if (queryObject[0].applicationNumber) {
