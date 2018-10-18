@@ -4,14 +4,14 @@ import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "mihy-ui-fram
 const instance = axios.create({
   baseURL: window.location.origin,
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
 
 const wrapRequestBody = (requestBody, action) => {
   const authToken = fetchFromLocalStorage("token");
   let RequestInfo = {
-    apiId: "Mihy",
+    apiId: "Rainmaker",
     ver: ".01",
     // ts: getDateInEpoch(),
     action: action,
@@ -19,30 +19,23 @@ const wrapRequestBody = (requestBody, action) => {
     key: "",
     msgId: "20170310130900|en_IN",
     requesterId: "",
-    authToken
+    authToken,
   };
   return Object.assign(
     {},
     {
-      RequestInfo
+      RequestInfo,
     },
     requestBody
   );
 };
 
-export const httpRequest = async (
-  method = "get",
-  endPoint,
-  action,
-  queryObject = [],
-  requestBody = {},
-  headers = []
-) => {
+export const httpRequest = async (method = "get", endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
   let apiError = "Api Error";
 
   if (headers)
     instance.defaults = Object.assign(instance.defaults, {
-      headers
+      headers,
     });
 
   endPoint = addQueryArg(endPoint, queryObject);
@@ -50,10 +43,7 @@ export const httpRequest = async (
   try {
     switch (method) {
       case "post":
-        response = await instance.post(
-          endPoint,
-          wrapRequestBody(requestBody, action)
-        );
+        response = await instance.post(endPoint, wrapRequestBody(requestBody, action));
         break;
       default:
         response = await instance.get(endPoint);
@@ -68,14 +58,8 @@ export const httpRequest = async (
       apiError = "INVALID_TOKEN";
     } else {
       apiError =
-        (data.hasOwnProperty("Errors") &&
-          data.Errors &&
-          data.Errors.length &&
-          data.Errors[0].message) ||
-        (data.hasOwnProperty("error") &&
-          data.error.fields &&
-          data.error.fields.length &&
-          data.error.fields[0].message) ||
+        (data.hasOwnProperty("Errors") && data.Errors && data.Errors.length && data.Errors[0].message) ||
+        (data.hasOwnProperty("error") && data.error.fields && data.error.fields.length && data.error.fields[0].message) ||
         (data.hasOwnProperty("error_description") && data.error_description) ||
         apiError;
     }
@@ -111,7 +95,7 @@ export const logoutRequest = async () => {
   throw new Error(apiError);
 };
 
-export const prepareForm = params => {
+export const prepareForm = (params) => {
   let formData = new FormData();
   for (var k in params) {
     formData.append(k, params[k]);
@@ -129,14 +113,14 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
-      "Content-Type": "multipart/form-data"
-    }
+      "Content-Type": "multipart/form-data",
+    },
   });
 
   const requestParams = {
     tenantId,
     module,
-    file
+    file,
   };
   const requestBody = prepareForm(requestParams);
 
@@ -148,7 +132,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
     if (responseStatus === 201) {
       const responseData = response.data;
       const files = responseData.files || [];
-      fileStoreIds = files.map(f => f.fileStoreId);
+      fileStoreIds = files.map((f) => f.fileStoreId);
       return fileStoreIds[0];
     }
   } catch (error) {

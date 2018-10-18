@@ -16,7 +16,7 @@ const instance = axios.create({
 const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   const authToken = fetchFromLocalStorage("token");
   let RequestInfo = {
-    apiId: "Mihy",
+    apiId: "Rainmaker",
     ver: ".01",
     // ts: getDateInEpoch(),
     action: action,
