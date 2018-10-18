@@ -995,7 +995,9 @@ export const fetchBill = async (action, state, dispatch) => {
   ];
   const LicensesPayload = await getSearchResults(queryObject);
   //set in redux to be used for adhoc
-  LicensesPayload && LicensesPayload.Licenses && dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
+  LicensesPayload &&
+    LicensesPayload.Licenses &&
+    dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
 
   //initiate receipt object
   payload &&
@@ -1143,4 +1145,13 @@ export const setValidToFromVisibilityForApply = (state, value) => {
       true
     );
   }
+};
+
+export const ifUserRoleExists = role => {
+  let userInfo = JSON.parse(localStorage.getItem("user-info"));
+  const roles = get(userInfo, "roles");
+  const roleCodes = roles ? roles.map(role => role.code) : [];
+  if (roleCodes.indexOf(role) > -1) {
+    return true;
+  } else return false;
 };

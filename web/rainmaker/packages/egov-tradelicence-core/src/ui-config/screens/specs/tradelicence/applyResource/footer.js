@@ -17,7 +17,12 @@ import {
   handleScreenConfigurationFieldChange as handleField
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import { createEstimateData, validateFields, getBaseURL } from "../../utils";
+import {
+  createEstimateData,
+  validateFields,
+  getBaseURL,
+  ifUserRoleExists
+} from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
 
@@ -503,6 +508,11 @@ export const footer = getCommonApplyFooter({
 });
 
 export const footerReview = (status, applicationNumber, tenantId) => {
+  const roleExists = ifUserRoleExists("CITIZEN");
+  const redirectionURL = roleExists
+    ? "/mihy-ui-framework/tradelicense-citizen"
+    : "/mihy-ui-framework/tradelicence";
+
   return getCommonApplyFooter({
     container: {
       uiFramework: "custom-atoms",
@@ -689,7 +699,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               },
               onClickDefination: {
                 action: "page_change",
-                path: `${getBaseURL()}/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
+                path: `${redirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
               },
               visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
               roleDefination: {
