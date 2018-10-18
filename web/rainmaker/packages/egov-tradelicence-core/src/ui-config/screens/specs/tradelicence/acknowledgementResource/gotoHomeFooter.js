@@ -1,4 +1,5 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getBaseURL } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {
@@ -31,7 +32,7 @@ export const gotoHomeFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: `/mihy-ui-framework/tradelicence/search`
+      path: `${getBaseURL()}/search`
     }
   }
 });

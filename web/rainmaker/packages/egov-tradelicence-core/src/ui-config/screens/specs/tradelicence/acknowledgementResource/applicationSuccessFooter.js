@@ -171,7 +171,7 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       },
       roleDefination: {
         rolePath: "user-info.roles",
-        roles: ["EMPLOYEE"]
+        roles: ["TL_CEMP"]
       }
     },
     proceedToPay: {

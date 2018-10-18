@@ -1,4 +1,5 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getBaseURL } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {
@@ -32,7 +33,7 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `${getBaseURL()}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       }
     }
   });
