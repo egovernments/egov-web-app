@@ -233,7 +233,12 @@ export const applyTradeLicense = async (state, dispatch) => {
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
 
     //set(queryObject[0], "tradeLicenseDetail.owners", getMultipleOwners(owners));
-    set(queryObject[0], "tenantId", localStorage.getItem("tenant-id"));
+    const city = get(queryObject[0], "tradeLicenseDetail.address.city", "");
+    const tenantId =
+      process.env.REACT_APP_NAME === "Citizen"
+        ? city
+        : localStorage.getItem("tenant-id");
+    set(queryObject[0], "tenantId", tenantId);
 
     if (queryObject[0].applicationNumber) {
       //call update
