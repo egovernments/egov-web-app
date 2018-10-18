@@ -84,7 +84,7 @@ export const updatePFOforSearchResults = async (
   queryValuePurpose
 ) => {
   let queryObject = [
-    { key: "tenantId", value: "pb.amritsar" },
+    { key: "tenantId", value: localStorage.getItem("tenant-id") },
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
@@ -233,7 +233,7 @@ export const applyTradeLicense = async (state, dispatch) => {
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
 
     //set(queryObject[0], "tradeLicenseDetail.owners", getMultipleOwners(owners));
-    set(queryObject[0], "tenantId", "pb.amritsar");
+    set(queryObject[0], "tenantId", localStorage.getItem("tenant-id"));
 
     if (queryObject[0].applicationNumber) {
       //call update
