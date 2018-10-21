@@ -43,8 +43,11 @@ const tradeLicenseSearchAndResult = {
                   componentPath: "Icon",
                   props: {
                     iconName: "book",
+                    variant: "outlined",
                     style: {
-                      fontSize: "110px"
+                      fontSize: "110px",
+                      width: 120,
+                      height: 100
                     }
                   }
                 },
