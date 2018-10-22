@@ -235,8 +235,10 @@ export const loadReceiptData = async (consumerCode, tenant) => {
         tlAdhocRebate = item.crAmountToBePaid;
       }
     });
-    data.tlRebatePenalty = "NA";
-    data.tlAdhocPenaltyRebate = tlAdhocPenalty - tlAdhocRebate;
+    data.tlPenalty = "NA";
+    data.tlRebate = "NA";
+    data.tlAdhocPenalty = tlAdhocPenalty;
+    data.tlAdhocRebate = tlAdhocRebate;
     /** END */
   }
   store.dispatch(prepareFinalObject("receiptDataForReceipt", data));

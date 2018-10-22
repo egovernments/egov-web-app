@@ -30,7 +30,7 @@ let noborder = {
 let borderKey = [true, true, false, true];
 let borderValue = [false, true, true, true];
 let receiptTableWidth = ["*", "*", "*", "*"];
-let payableAmountTable = ["*", "*", "*", "*"];
+let payableAmountTable = ["*", "*", "*", "*", "*", "*"];
 let payableAmountBorderKey = [true, true, true, true, true, true, true];
 let payableInfoTable3 = ["*", "*", "*"];
 
@@ -273,13 +273,25 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 alignment: "center"
               },
               {
-                text: "Rebate/ Penalty",
+                text: "Penalty",
                 border: payableAmountBorderKey,
                 style: "receipt-table-key",
                 alignment: "center"
               },
               {
-                text: "Adhoc Penalty/Rebate",
+                text: "Rebate",
+                border: payableAmountBorderKey,
+                style: "receipt-table-key",
+                alignment: "center"
+              },
+              {
+                text: "Adhoc Penalty",
+                border: payableAmountBorderKey,
+                style: "receipt-table-key",
+                alignment: "center"
+              },
+              {
+                text: "Adhoc Rebate",
                 border: payableAmountBorderKey,
                 style: "receipt-table-key",
                 alignment: "center"
@@ -299,13 +311,25 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 alignment: "center"
               },
               {
-                text: transformedData.tlRebatePenalty,
+                text: transformedData.tlPenalty,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value",
                 alignment: "center"
               },
               {
-                text: transformedData.tlAdhocPenaltyRebate,
+                text: transformedData.tlRebate,
+                border: payableAmountBorderKey,
+                style: "receipt-table-value",
+                alignment: "center"
+              },
+              {
+                text: transformedData.tlAdhocPenalty,
+                border: payableAmountBorderKey,
+                style: "receipt-table-value",
+                alignment: "center"
+              },
+              {
+                text: transformedData.tlAdhocRebate,
                 border: payableAmountBorderKey,
                 style: "receipt-table-value",
                 alignment: "center"
