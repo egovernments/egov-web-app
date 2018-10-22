@@ -143,7 +143,7 @@ var TextFieldContainer = function (_React$Component) {
           label: translatedLabel,
           placeholder: translatedPlaceholder,
           iconObj: iconObj,
-          value: value
+          value: this.props.type === "date" && !value ? translatedPlaceholder : value
         }, rest));
       }
     }

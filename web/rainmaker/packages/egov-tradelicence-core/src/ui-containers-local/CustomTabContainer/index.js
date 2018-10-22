@@ -4,7 +4,9 @@ import CustomTab from "../../ui-molecules-local/CustomTab";
 import { connect } from "react-redux";
 import { addComponentJsonpath } from "mihy-ui-framework/ui-utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
 
 class MultiItem extends React.Component {
   state = {
@@ -24,13 +26,106 @@ class MultiItem extends React.Component {
     "ReceiptTemp[0].instrument.branchName"
   ];
 
-  resetFields = dispatch => {
-    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].payer", ""));
-    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].paidBy", ""));
-    dispatch(
-      prepareFinalObject("ReceiptTemp[0].Bill[0].payerMobileNumber", "")
-    );
-    dispatch(prepareFinalObject("ReceiptTemp[0].instrument", {}));
+  resetAllFields = (children, dispatch, state) => {
+    for (var child in children) {
+      if (children[child].children) {
+        for (var innerChild in children[child].children) {
+          if (
+            get(
+              state.screenConfiguration.screenConfig["pay"],
+              `${
+                children[child].children[innerChild].componentJsonpath
+              }.props.value`
+            )
+          ) {
+            dispatch(
+              handleField(
+                "pay",
+                children[child].children[innerChild].componentJsonpath,
+                "props.value",
+                ""
+              )
+            );
+            dispatch(
+              handleField(
+                "pay",
+                children[child].children[innerChild].componentJsonpath,
+                "props.error",
+                false
+              )
+            );
+            dispatch(
+              handleField(
+                "pay",
+                children[child].children[innerChild].componentJsonpath,
+                "isFieldValid",
+                true
+              )
+            );
+            dispatch(
+              handleField(
+                "pay",
+                children[child].children[innerChild].componentJsonpath,
+                "props.helperText",
+                ""
+              )
+            );
+          }
+        }
+      }
+    }
+  };
+
+  resetFields = (dispatch, state) => {
+    // dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].payer", ""));
+    // dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].paidBy", ""));
+    // dispatch(
+    //   prepareFinalObject("ReceiptTemp[0].Bill[0].payerMobileNumber", "")
+    // );
+    // dispatch(prepareFinalObject("ReceiptTemp[0].instrument", {}));
+    if (
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "ReceiptTemp[0].instrument.bank.name"
+      ) &&
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "ReceiptTemp[0].instrument.branchName"
+      )
+    ) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].instrument.bank.name", ""));
+      dispatch(prepareFinalObject("ReceiptTemp[0].instrument.branchName", ""));
+    } // Has to manually clear bank name and branch
+    const keyToIndexMapping = [
+      {
+        index: 0,
+        key: "cash"
+      },
+      {
+        index: 1,
+        key: "cheque"
+      },
+      {
+        index: 2,
+        key: "demandDraft"
+      },
+      {
+        index: 3,
+        key: "card"
+      }
+    ];
+
+    keyToIndexMapping.forEach(item => {
+      const objectJsonPath = `components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.capturePaymentDetails.children.cardContent.children.tabSection.props.tabs[${
+        item.index
+      }].tabContent[${item.key}].children`;
+      const children = get(
+        state.screenConfiguration.screenConfig["pay"],
+        objectJsonPath,
+        {}
+      );
+      this.resetAllFields(children, dispatch, state);
+    });
   };
 
   setInstrumentType = (value, dispatch) => {
@@ -39,8 +134,8 @@ class MultiItem extends React.Component {
     );
   };
 
-  onTabChange = (tabIndex, dispatch) => {
-    // this.resetFields(dispatch);
+  onTabChange = (tabIndex, dispatch, state) => {
+    this.resetFields(dispatch, state);
     switch (tabIndex) {
       case 0:
         this.setInstrumentType("Cash", dispatch);
@@ -63,7 +158,7 @@ class MultiItem extends React.Component {
   onTabClick = tabIndex => {
     const { onTabClick: tabClick, state, dispatch } = this.props;
     // tabClick(tabIndex, state, dispatch);
-    this.onTabChange(tabIndex, dispatch);
+    this.onTabChange(tabIndex, dispatch, state);
     this.setState({ tabIndex });
   };
 

@@ -7,6 +7,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSpinner } from "mihy-ui-framework/ui-redux/app/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const onIconClick = (state, dispatch, index) => {
@@ -15,6 +16,7 @@ const onIconClick = (state, dispatch, index) => {
     "ReceiptTemp[0].instrument.ifscCode"
   );
   if (ifscCode) {
+    dispatch(toggleSpinner());
     fetch(`https://ifsc.razorpay.com/${ifscCode}`)
       .then(response => {
         return response.json();
@@ -34,6 +36,7 @@ const onIconClick = (state, dispatch, index) => {
               "error"
             )
           );
+          dispatch(toggleSpinner());
         } else {
           const bankName = get(payload, "BANK");
           const bankBranch = get(payload, "BRANCH");
@@ -46,10 +49,12 @@ const onIconClick = (state, dispatch, index) => {
               bankBranch
             )
           );
+          dispatch(toggleSpinner());
         }
       })
       .catch(error => {
         console.log(error);
+        dispatch(toggleSpinner());
       });
   }
 };
