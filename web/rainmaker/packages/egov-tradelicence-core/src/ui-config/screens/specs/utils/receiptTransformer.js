@@ -122,6 +122,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     /** Trade settings */
     let tradeCategory = "NA";
     let tradeType = "NA";
+    let tradeSubType = "NA";
     let tradeCode = get(
       response,
       "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
@@ -137,11 +138,13 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       } else if (tradeCodeArray.length > 2) {
         tradeCategory = nullToNa(tradeCodeArray[0]);
         tradeType = nullToNa(tradeCodeArray[1]);
+        tradeSubType = nullToNa(tradeCode);
       }
     }
     /** End */
     data.tradeCategory = getMessageFromLocalization(tradeCategory);
     data.tradeType = getMessageFromLocalization(tradeType);
+    data.tradeSubType = getMessageFromLocalization(tradeSubType);
     data.address = nullToNa(
       createAddress(
         data.doorNo,

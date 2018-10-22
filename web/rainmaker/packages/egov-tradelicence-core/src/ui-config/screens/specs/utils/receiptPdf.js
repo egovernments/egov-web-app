@@ -186,7 +186,12 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 border: borderKey,
                 style: "receipt-table-key"
               },
-              { text: transformedData.tradeType, border: borderValue },
+              {
+                text: `${transformedData.tradeType}/${
+                  transformedData.tradeSubType
+                }`,
+                border: borderValue
+              },
               {
                 text: "Accessories",
                 border: borderKey,
@@ -674,7 +679,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: transformedData.tradeType
+            text: `${transformedData.tradeType}/${transformedData.tradeSubType}`
           }
         ]
       },
