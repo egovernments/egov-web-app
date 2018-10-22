@@ -28,7 +28,7 @@ const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
+    labelName: `Trade License Application (${getCurrentFinancialYear()})`,
     // labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
   }),
   applicationNumber: {
