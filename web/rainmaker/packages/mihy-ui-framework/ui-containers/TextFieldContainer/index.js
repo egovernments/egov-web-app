@@ -118,12 +118,17 @@ var TextFieldContainer = function (_React$Component) {
             label: translatedLabel,
             placeholder: translatedPlaceholder,
             iconObj: iconObj,
-            value: value ? value : translatedPlaceholder
+            value: value ? value : translatedPlaceholder,
+            className: "select-field"
           }, rest),
           _react2.default.createElement(
             _MenuItem2.default,
             { value: translatedPlaceholder, disabled: true },
-            translatedPlaceholder
+            _react2.default.createElement(
+              "div",
+              { className: "select-field-placeholder" },
+              translatedPlaceholder
+            )
           ),
           dropdownData.map(function (option, key) {
             return _react2.default.createElement(
