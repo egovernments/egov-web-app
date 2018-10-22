@@ -10,10 +10,6 @@ import { changeStep } from "./footer";
 
 import { convertEpochToDate } from "../../utils";
 
-const getFirstV = value => {
-  return value.split(".")[1];
-};
-
 const accessoriesCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
@@ -184,7 +180,7 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "No of Employees",
           labelKey: "TL_NEW_TRADE_DETAILS_NO_EMPLOYEES_LABEL"
         },
-        { jsonPath: "Licences[0].tradeLicenseDetail.noOfEmployees" }
+        { jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees" }
       )
     }),
     div1: getDivider(),

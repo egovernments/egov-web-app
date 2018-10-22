@@ -150,6 +150,16 @@ export const getMdmsData = async (action, state, dispatch) => {
   }
 };
 
+export const getData = async (action, state, dispatch, queryValue) => {
+  await getMdmsData(action, state, dispatch);
+  if (queryValue) {
+    await updatePFOforSearchResults(action, state, dispatch, queryValue);
+  } else {
+    dispatch(prepareFinalObject("Licenses", []));
+    dispatch(prepareFinalObject("LicensesTemp", []));
+  }
+};
+
 export const formwizardFirstStep = {
   uiFramework: "custom-atoms",
   componentPath: "Div",
@@ -190,13 +200,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
-    if (queryValue) {
-      updatePFOforSearchResults(action, state, dispatch, queryValue);
-    } else {
-      dispatch(prepareFinalObject("Licenses", []))
-      dispatch(prepareFinalObject("LicensesTemp", []))
-    }
-    getMdmsData(action, state, dispatch);
+    getData(action, state, dispatch, queryValue);
 
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
