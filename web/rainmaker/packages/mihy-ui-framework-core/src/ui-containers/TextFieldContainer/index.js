@@ -4,7 +4,11 @@ import { TextfieldWithIcon } from "../../ui-molecules";
 import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
-import { getTranslatedLabel, transformById, epochToYmd } from "../../ui-utils/commons";
+import {
+  getTranslatedLabel,
+  transformById,
+  epochToYmd
+} from "../../ui-utils/commons";
 
 const localizationLabels = JSON.parse(
   window.localStorage.getItem("localization_en_IN")
@@ -24,7 +28,6 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
 };
 
 class TextFieldContainer extends React.Component {
-
   render() {
     let {
       label = {},
@@ -43,10 +46,10 @@ class TextFieldContainer extends React.Component {
     } = this.props;
 
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
-      iconObj={
+      iconObj = {
         ...iconObj,
-        onClick : () => iconObj.onClickDefination.callBack(state, dispatch)
-      }
+        onClick: () => iconObj.onClickDefination.callBack(state, dispatch)
+      };
     }
     let transfomedKeys = transformById(localizationLabels, "code");
     let translatedLabel = getLocaleLabelsforTL(
@@ -70,7 +73,9 @@ class TextFieldContainer extends React.Component {
           {...rest}
         >
           <MenuItem value={translatedPlaceholder} disabled>
-            {translatedPlaceholder}
+            <div className="select-field-placeholder">
+              {translatedPlaceholder}
+            </div>
           </MenuItem>
           {dropdownData.map((option, key) => (
             <MenuItem key={key} value={option.value}>
@@ -112,7 +117,8 @@ const mapStateToProps = (state, ownprops) => {
   let fieldValue =
     value === undefined ? get(preparedFinalObject, jsonPath) : value;
   // Convert epoch to YYYY-MM-DD and set date picker value
-  if (ownprops.type && ownprops.type === "date") fieldValue = epochToYmd(fieldValue);
+  if (ownprops.type && ownprops.type === "date")
+    fieldValue = epochToYmd(fieldValue);
   let dropdownData = [];
   if (select) {
     const constructDropdown = dt => {

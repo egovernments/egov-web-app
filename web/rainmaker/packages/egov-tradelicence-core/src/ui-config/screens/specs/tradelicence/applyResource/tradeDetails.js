@@ -293,13 +293,28 @@ const accessoriesCard = {
                   )
                 );
               } else {
-                dispatch(pFO(`${jsonArr.join(".")}.uom`, ""));
                 dispatch(
                   handleField(
                     "apply",
                     `${currentUOMValueFieldPath}.accessoriesUOMValue`,
                     "required",
                     false
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOM`,
+                    "required",
+                    false
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOM`,
+                    "props.value",
+                    ""
                   )
                 );
                 dispatch(
@@ -318,6 +333,8 @@ const accessoriesCard = {
                     true
                   )
                 );
+                dispatch(pFO(`${jsonArr.join(".")}.uom`, null));
+                dispatch(pFO(`${jsonArr.join(".")}.uomValue`, null));
               }
             } catch (e) {
               console.log(e);
