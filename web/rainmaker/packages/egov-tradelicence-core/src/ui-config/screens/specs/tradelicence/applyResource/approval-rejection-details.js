@@ -8,11 +8,18 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { changeStep } from "./footer";
 
+export const getVisibleforApprovalDetails = status => {
+  if (status === "approved" || status === "rejected" || status === "cancelled")
+    return true;
+  else return false;
+};
+
 export const getApprovalDetails = (status, isEditable = false) =>
   getCommonGrayCard({
     headerDiv: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
+      visible: getVisibleforApprovalDetails(status),
       children: {
         header: {
           gridDefination: {

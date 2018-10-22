@@ -129,11 +129,8 @@ const searchResults = async (action, state, dispatch) => {
     "LicensesTemp[0].reviewDocData",
     dispatch
   );
-  if (
-    status === "approved" ||
-    status === "rejected" ||
-    status === "cancelled"
-  ) {
+  let sts = getTransformedStatus(get(payload, "Licenses[0].status"));
+  if (sts === "approved" || sts === "rejected" || sts === "cancelled") {
     if (get(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments")) {
       await setDocuments(
         payload,
@@ -160,7 +157,7 @@ const searchResults = async (action, state, dispatch) => {
     )
   );
   const LicenseData = payload.Licenses[0];
-  const fetchFromReceipt = status !== "pending_payment";
+  const fetchFromReceipt = sts !== "pending_payment";
   createEstimateData(
     LicenseData,
     "LicensesTemp[0].estimateCardData",
@@ -216,7 +213,6 @@ const setStatusBasedValue = status => {
   switch (status) {
     case "approved":
       return {
-        approvalDetailsVisibility: true,
         titleText: "Review the Trade License",
         titleVisibility: true,
         roleDefination: {
@@ -228,7 +224,6 @@ const setStatusBasedValue = status => {
       return {
         titleText: "Review the Application and Proceed",
         titleVisibility: true,
-        approvalDetailsVisibility: false,
         roleDefination: {
           rolePath: "user-info.roles",
           roles: ["TL_CEMP"]
@@ -238,7 +233,6 @@ const setStatusBasedValue = status => {
       return {
         titleText: "Review the Application and Proceed",
         titleVisibility: true,
-        approvalDetailsVisibility: false,
         roleDefination: {
           rolePath: "user-info.roles",
           roles: ["TL_APPROVER"]
@@ -248,14 +242,12 @@ const setStatusBasedValue = status => {
       return {
         titleText: "",
         titleVisibility: false,
-        approvalDetailsVisibility: true,
         roleDefination: {}
       };
     case "rejected":
       return {
         titleText: "",
         titleVisibility: false,
-        approvalDetailsVisibility: true,
         roleDefination: {}
       };
 
@@ -263,7 +255,6 @@ const setStatusBasedValue = status => {
       return {
         titleText: "",
         titleVisibility: false,
-        approvalDetailsVisibility: false,
         roleDefination: {}
       };
   }
@@ -299,11 +290,6 @@ const reviewDocumentDetails = getReviewDocuments(false, false);
 let title = getCommonTitle({ labelName: titleText });
 
 const setActionItems = (action, object) => {
-  set(
-    action,
-    "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.visible",
-    get(object, "approvalDetailsVisibility")
-  );
   set(
     action,
     "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title",
