@@ -23,7 +23,11 @@ import {
 import { getFileUrlFromAPI } from "ui-utils/commons";
 
 import { convertEpochToDate } from "../utils";
-import { getFeesEstimateCard, getHeaderSideText } from "../utils";
+import {
+  getFeesEstimateCard,
+  getHeaderSideText,
+  getTransformedStatus
+} from "../utils";
 import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
@@ -32,7 +36,6 @@ import { footerReview } from "./applyResource/footer";
 
 import { getBoundaryData } from "../../../../ui-utils/commons";
 
-const status = getQueryArg(window.location.href, "status");
 const tenantId = getQueryArg(window.location.href, "tenantId");
 const applicationNumber = getQueryArg(
   window.location.href,
@@ -170,7 +173,41 @@ const searchResults = async (action, state, dispatch) => {
     "Licenses[0].tradeLicenseDetail.address.locality.code"
   );
   const queryObj = [{ key: "tenantId", value: tenantId }];
-  getBoundaryData(action, state, dispatch, queryObj, code);
+  // getBoundaryData(action, state, dispatch, queryObj, code);
+};
+
+const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
+  //
+  //Search details for given application Number
+  if (applicationNumber) {
+    await searchResults(action, state, dispatch);
+
+    const status = getTransformedStatus(
+      get(
+        state.getState(),
+        "screenConfiguration.preparedFinalObject.Licenses[0].status"
+      )
+    );
+
+    const obj = setStatusBasedValue(status);
+    let approvalDetails = getApprovalDetails(status);
+    set(
+      action,
+      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails",
+      approvalDetails
+    );
+    const footer = footerReview(status, applicationNumber, tenantId);
+    set(action, "screenConfig.components.div.children.footer", footer);
+
+    if (status === "cancelled")
+      set(
+        action,
+        "screenConfig.components.div.children.headerDiv.children.helpSection.children.cancelledLabel.visible",
+        true
+      );
+
+    setActionItems(action, obj);
+  }
 };
 
 let titleText = "";
@@ -258,7 +295,7 @@ const reviewOwnerDetails = getReviewOwner(false);
 
 const reviewDocumentDetails = getReviewDocuments(false, false);
 
-let approvalDetails = getApprovalDetails(status);
+// let approvalDetails = getApprovalDetails(status);
 let title = getCommonTitle({ labelName: titleText });
 
 const setActionItems = (action, object) => {
@@ -289,33 +326,19 @@ export const tradeReviewDetails = getCommonCard({
   estimate,
   reviewTradeDetails,
   reviewOwnerDetails,
-  reviewDocumentDetails,
-  approvalDetails
+  reviewDocumentDetails
+  // approvalDetails
 });
 
 const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    const status = getQueryArg(window.location.href, "status");
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
     );
-    const obj = setStatusBasedValue(status);
-    const footer = footerReview(status, applicationNumber, tenantId);
-    set(action, "screenConfig.components.div.children.footer", footer);
-    if (status === "cancelled")
-      set(
-        action,
-        "screenConfig.components.div.children.headerDiv.children.helpSection.children.cancelledLabel.visible",
-        true
-      );
-
-    setActionItems(action, obj);
-    if (applicationNumber) {
-      searchResults(action, state, dispatch);
-    }
+    beforeInitFn(action, state, dispatch, applicationNumber);
 
     return action;
   },

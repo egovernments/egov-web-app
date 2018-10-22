@@ -1155,3 +1155,64 @@ export const ifUserRoleExists = role => {
     return true;
   } else return false;
 };
+
+export const getTransformedStatus = status => {
+  switch (status) {
+    case "PAID":
+      return "pending_approval";
+    case "APPLIED":
+      return "pending_payment";
+    case "REJECTED":
+      return "rejected";
+    case "CANCELLED":
+      return "cancelled";
+    case "APPROVED":
+      return "approved";
+    default:
+      return "";
+  }
+};
+
+export const updateDropDowns = (payload, action, state, dispatch) => {
+  console.log("Sudhanshu123...", payload);
+  const structType = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.structureType"
+  );
+
+  const tradeType = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+  );
+
+  if (structType) {
+    set(
+      payload,
+      "LicensesTemp[0].tradeLicenseDetail.structureType",
+      structType.split(".")[0]
+    );
+    try {
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.common-masters.StructureSubTypeTransformed",
+          get(
+            state.screenConfiguration.preparedFinalObject.applyScreenMdmsData[
+              "common-masters"
+            ],
+            `StructureType.${structType.split(".")[0]}`,
+            []
+          )
+        )
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  payload &&
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].tradeLicenseDetail.structureType",
+        payload.LicensesTemp[0].tradeLicenseDetail.structureType
+      )
+    );
+};
