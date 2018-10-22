@@ -103,6 +103,10 @@ span[class^="MuiFormLabel-asterisk"] {
   display: none;
 }
 
+.select-field-placeholder {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 
 
 /* div[class^="MuiGrid-item"]   {
