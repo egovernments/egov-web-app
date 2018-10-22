@@ -269,19 +269,53 @@ const accessoriesCard = {
               var jsonArr = currentUOMField.jsonPath.split(".");
               jsonArr.pop();
 
+              let currentUOMValueFieldPath = action.componentJsonpath.split(
+                "."
+              );
+              currentUOMValueFieldPath.pop();
+              currentUOMValueFieldPath = currentUOMValueFieldPath.join(".");
               if (currentObject[0].uom) {
                 dispatch(pFO(`${jsonArr.join(".")}.uom`, currentObject[0].uom));
-                let currentUOMValueFieldPath = action.componentJsonpath.split(
-                  "."
-                );
-                currentUOMValueFieldPath.pop();
-                currentUOMValueFieldPath = currentUOMValueFieldPath.join(".");
                 dispatch(
                   handleField(
                     "apply",
                     `${currentUOMValueFieldPath}.accessoriesUOMValue`,
                     "props.disabled",
                     false
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOMValue`,
+                    "required",
+                    true
+                  )
+                );
+              } else {
+                dispatch(pFO(`${jsonArr.join(".")}.uom`, ""));
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOMValue`,
+                    "required",
+                    false
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOMValue`,
+                    "props.value",
+                    ""
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOMValue`,
+                    "props.disabled",
+                    true
                   )
                 );
               }
