@@ -90,14 +90,11 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.streetName = nullToNa(
       get(response, "Licenses[0].tradeLicenseDetail.address.street", "NA")
     );
-    let localityCode = nullToNa(
-      get(
-        response,
-        "Licenses[0].tradeLicenseDetail.address.locality.code",
-        "NA"
-      )
+    data.locality = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.address.locality.name",
+      "NA"
     );
-    data.locality = getMessageFromLocalization(localityCode);
     let cityCode = nullToNa(
       get(response, "Licenses[0].tradeLicenseDetail.address.tenantId", "NA")
     );
