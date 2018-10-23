@@ -287,7 +287,8 @@ class ShowField extends Component {
 
               var intVal = function(i) {
                 if (typeof i === "string") {
-                  let a = i.replace(/[^0-9.]/g,"")
+                  let a = i.replace(/,/g, "")
+                  a = a.replace(/[^-+0-9. ]/g," ").split(" ")[0]
                   let inta = a && Number(a);
                   return inta;
                 } else if (typeof i === "number") {
