@@ -10,7 +10,8 @@ import {
   getCommonApplyFooter,
   epochToYmdDate,
   setMultiOwnerForApply,
-  setValidToFromVisibilityForApply
+  setValidToFromVisibilityForApply,
+  getDocList
 } from "../../utils";
 import {
   prepareFinalObject,
@@ -127,6 +128,8 @@ export const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep === 1) {
+    getDocList(state, dispatch);
+
     let isOwnerShipValid = validateFields(
       "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownershipType.children",
       state,

@@ -135,12 +135,6 @@ const tradeUnitCard = getCommonGrayCard({
             code: action.value
           });
           console.log(currentObject);
-          const applicationDocument = prepareDocumentTypeObj(
-            currentObject[0].applicationDocument
-          );
-          dispatch(
-            pFO("LicensesTemp[0].applicationDocuments", applicationDocument)
-          );
           if (currentObject[0].uom !== null) {
             dispatch(
               pFO(

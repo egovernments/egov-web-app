@@ -9,6 +9,7 @@ import { validate } from "mihy-ui-framework/ui-redux/screen-configuration/utils"
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
+import filter from "lodash/filter";
 import { httpRequest } from "ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -1327,4 +1328,31 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
       console.log(e);
     }
   }
+};
+
+export const getDocList = (state, dispatch) => {
+  const tradeSubType = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+  );
+
+  const tradeSubCategories = get(
+    state.screenConfiguration.preparedFinalObject,
+    "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed"
+  );
+
+  let currentObject = filter(tradeSubCategories, {
+    code: tradeSubType
+  });
+  console.log(currentObject);
+  const applicationDocument = prepareDocumentTypeObj(
+    currentObject[0].applicationDocument
+  );
+
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].applicationDocuments",
+      applicationDocument
+    )
+  );
 };
