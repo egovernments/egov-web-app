@@ -91,48 +91,7 @@ export const updatePFOforSearchResults = async (
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
-
-  // updateDropDowns(payload, action, state, dispatch);
-  // const structType = get(
-  //   payload,
-  //   "Licenses[0].tradeLicenseDetail.structureType"
-  // );
-
-  // const tradeType = get(
-  //   payload,
-  //   "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
-  // );
-
-  // if (structType) {
-  //   set(
-  //     payload,
-  //     "LicensesTemp[0].tradeLicenseDetail.structureType",
-  //     structType.split(".")[0]
-  //   );
-  // }
-  // payload &&
-  //   dispatch(
-  //     prepareFinalObject(
-  //       "applyScreenMdmsData.common-masters.StructureSubTypeTransformed",
-  //       get(
-  //         state.screenConfiguration.preparedFinalObject.applyScreenMdmsData[
-  //           "common-masters"
-  //         ],
-  //         `StructureType.${structType.split(".")[0]}`,
-  //         []
-  //       )
-  //     )
-  //   );
-
-  // console.log("sudhanshu123", state);
-  // debugger;
-  // payload &&
-  //   dispatch(
-  //     prepareFinalObject(
-  //       "LicensesTemp[0].tradeLicenseDetail.structureType",
-  //       payload.LicensesTemp[0].tradeLicenseDetail.structureType
-  //     )
-  //   );
+  await updateDropDowns(payload, action, state, dispatch);
 
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");

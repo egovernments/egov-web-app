@@ -170,13 +170,10 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
     await searchResults(action, state, dispatch);
 
     const status = getTransformedStatus(
-      get(
-        state.getState(),
-        "screenConfiguration.preparedFinalObject.Licenses[0].status"
-      )
+      get(state, "screenConfiguration.preparedFinalObject.Licenses[0].status")
     );
 
-    let data = get(state.getState(), "screenConfiguration.preparedFinalObject");
+    let data = get(state, "screenConfiguration.preparedFinalObject");
 
     const obj = setStatusBasedValue(status);
     let approvalDetails = getApprovalDetails(status);

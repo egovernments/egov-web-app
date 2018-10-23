@@ -1178,16 +1178,10 @@ export const getTransformedStatus = status => {
   }
 };
 
-export const updateDropDowns = (payload, action, state, dispatch) => {
-  console.log("Sudhanshu123...", payload);
+export const updateDropDowns = async (payload, action, state, dispatch) => {
   const structType = get(
     payload,
     "Licenses[0].tradeLicenseDetail.structureType"
-  );
-
-  const tradeType = get(
-    payload,
-    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
   );
 
   if (structType) {
@@ -1196,6 +1190,7 @@ export const updateDropDowns = (payload, action, state, dispatch) => {
       "LicensesTemp[0].tradeLicenseDetail.structureType",
       structType.split(".")[0]
     );
+    debugger;
     try {
       dispatch(
         prepareFinalObject(
@@ -1209,15 +1204,109 @@ export const updateDropDowns = (payload, action, state, dispatch) => {
           )
         )
       );
+
+      payload &&
+        dispatch(
+          prepareFinalObject(
+            "LicensesTemp[0].tradeLicenseDetail.structureType",
+            payload.LicensesTemp[0].tradeLicenseDetail.structureType
+          )
+        );
     } catch (e) {
       console.log(e);
     }
   }
-  payload &&
-    dispatch(
-      prepareFinalObject(
-        "LicensesTemp[0].tradeLicenseDetail.structureType",
-        payload.LicensesTemp[0].tradeLicenseDetail.structureType
-      )
+
+  const tradeSubType = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+  );
+
+  if (tradeSubType) {
+    const tradeCat = tradeSubType.split(".")[0];
+    const tradeType = tradeSubType.split(".")[1];
+    set(payload, "LicensesTemp[0].tradeType", tradeCat);
+    set(payload, "LicensesTemp[0].tradeSubType", tradeType);
+
+    try {
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+          objectToDropdown(
+            get(
+              state.screenConfiguration.preparedFinalObject,
+              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+              []
+            )
+          )
+        )
+      );
+
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+          get(
+            state.screenConfiguration.preparedFinalObject,
+            `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+            []
+          )
+        )
+      );
+
+      payload &&
+        dispatch(
+          prepareFinalObject(
+            "LicensesTemp[0].tradeType",
+            payload.LicensesTemp[0].tradeType
+          )
+        );
+
+      payload &&
+        dispatch(
+          prepareFinalObject(
+            "LicensesTemp[0].tradeSubType",
+            payload.LicensesTemp[0].tradeSubType
+          )
+        );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const tradeSubOwnershipCat = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+  );
+
+  console.log(tradeSubOwnershipCat);
+  if (tradeSubOwnershipCat) {
+    const tradeOwnershipCat = tradeSubOwnershipCat.split(".")[0];
+    set(
+      payload,
+      "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+      tradeOwnershipCat
     );
+
+    try {
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
+          get(
+            state.screenConfiguration.preparedFinalObject,
+            `applyScreenMdmsData.common-masters.OwnerShipCategory.${tradeOwnershipCat}`,
+            []
+          )
+        )
+      );
+      payload &&
+        dispatch(
+          prepareFinalObject(
+            "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+            payload.LicensesTemp[0].tradeLicenseDetail.ownerShipCategory
+          )
+        );
+    } catch (e) {
+      console.log(e);
+    }
+  }
 };
