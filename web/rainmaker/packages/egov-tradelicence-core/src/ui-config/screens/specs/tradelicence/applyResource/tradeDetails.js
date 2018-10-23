@@ -275,7 +275,15 @@ const accessoriesCard = {
               currentUOMValueFieldPath.pop();
               currentUOMValueFieldPath = currentUOMValueFieldPath.join(".");
               if (currentObject[0].uom) {
-                dispatch(pFO(`${jsonArr.join(".")}.uom`, currentObject[0].uom));
+                // dispatch(pFO(`${jsonArr.join(".")}.uom`, currentObject[0].uom));
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesUOM`,
+                    "props.value",
+                    currentObject[0].uom
+                  )
+                );
                 dispatch(
                   handleField(
                     "apply",
