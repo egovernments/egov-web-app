@@ -30,8 +30,11 @@
 .sideMenuItem:hover{
   background-color: rgba(254, 122, 81, 0.11999999731779099);
 
-  div:nth-of-type(1) > span > div > div > div > span{
-    color:#FE7A51 !important;
+  div:nth-of-type(1) > span {
+    background: none !important;
+    div > div > div > span{
+      color:#FE7A51 !important;
+    }
   }
 }
 
