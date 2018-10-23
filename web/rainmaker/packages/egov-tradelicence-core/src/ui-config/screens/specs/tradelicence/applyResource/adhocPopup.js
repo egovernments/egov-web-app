@@ -29,7 +29,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
   // clear data from form
 
   const billPayload = await createEstimateData(
-    [],
+    TLpayload.Licenses[0],
     "LicensesTemp[0].estimateCardData",
     dispatch,
     window.location.href

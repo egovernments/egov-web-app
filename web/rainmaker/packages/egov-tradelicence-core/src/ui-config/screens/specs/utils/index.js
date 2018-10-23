@@ -811,7 +811,19 @@ const getTaxValue = item => {
     : 0;
 };
 
-const getEstimateData = (Bill, getFromReceipt) => {
+const getToolTipInfo = (taxHead, LicenseData) => {
+  switch (taxHead) {
+    case "TL_ADHOC_PENALTY":
+      console.log(LicenseData);
+      return get(LicenseData, "tradeLicenseDetail.adhocPenaltyReason");
+    case "TL_ADHOC_REBATE":
+      return get(LicenseData, "tradeLicenseDetail.adhocExemptionReason");
+    default:
+      return "";
+  }
+};
+
+const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   if (Bill && Bill.length) {
     const extraData = ["Rebate", "Penalty"].map(item => {
       return {
@@ -820,9 +832,9 @@ const getEstimateData = (Bill, getFromReceipt) => {
           labelKey: item
         },
         value: null,
-        info: {
-          labelName: `Information about ${item}`,
-          labelKey: `Information about ${item}`
+        info: getToolTipInfo(item, LicenseData) && {
+          labelName: getToolTipInfo(item, LicenseData),
+          labelKey: getToolTipInfo(item, LicenseData)
         }
       };
     });
@@ -836,13 +848,18 @@ const getEstimateData = (Bill, getFromReceipt) => {
               labelKey: item.accountDescription.split("-")[0]
             },
             value: getTaxValue(item),
-            info: {
-              labelName: `Information about ${
-                item.accountDescription.split("-")[0]
-              }`,
-              labelKey: `Information about ${
-                item.accountDescription.split("-")[0]
-              }`
+            info: getToolTipInfo(
+              item.accountDescription.split("-")[0],
+              LicenseData
+            ) && {
+              labelName: getToolTipInfo(
+                item.accountDescription.split("-")[0],
+                LicenseData
+              ),
+              labelKey: getToolTipInfo(
+                item.accountDescription.split("-")[0],
+                LicenseData
+              )
             }
           });
       } else {
@@ -853,9 +870,9 @@ const getEstimateData = (Bill, getFromReceipt) => {
               labelKey: item.taxHeadCode
             },
             value: getTaxValue(item),
-            info: {
-              labelName: `Information about ${item.taxHeadCode}`,
-              labelKey: `Information about ${item.taxHeadCode}`
+            info: getToolTipInfo(item.taxHeadCode, LicenseData) && {
+              labelName: getToolTipInfo(item.taxHeadCode, LicenseData),
+              labelKey: getToolTipInfo(item.taxHeadCode, LicenseData)
             }
           });
       }
@@ -898,8 +915,8 @@ export const createEstimateData = async (
     : await getBill(queryObj);
   const estimateData = payload
     ? getFromReceipt
-      ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt)
-      : getEstimateData(payload.Bill)
+      ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt, LicenseData)
+      : getEstimateData(payload.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
   return payload;
@@ -981,14 +998,6 @@ export const getBaseURL = () => {
 };
 
 export const fetchBill = async (action, state, dispatch) => {
-  //get bill and populate estimate card
-  const payload = await createEstimateData(
-    [],
-    "LicensesTemp[0].estimateCardData",
-    dispatch,
-    window.location.href
-  );
-
   //For Adhoc
   // Search License
   let queryObject = [
@@ -999,6 +1008,16 @@ export const fetchBill = async (action, state, dispatch) => {
     }
   ];
   const LicensesPayload = await getSearchResults(queryObject);
+  //get bill and populate estimate card
+  const payload =
+    LicensesPayload &&
+    LicensesPayload.Licenses &&
+    (await createEstimateData(
+      LicensesPayload.Licenses[0],
+      "LicensesTemp[0].estimateCardData",
+      dispatch,
+      window.location.href
+    ));
   //set in redux to be used for adhoc
   LicensesPayload &&
     LicensesPayload.Licenses &&
