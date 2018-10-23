@@ -43,6 +43,32 @@ const onNextButtonClick = async (state, dispatch) => {
     }
   }
   if (get(preparedFinalObject, getCheckBoxJsonpath(queryValue))) {
+    switch (queryValue) {
+      case "cancel":
+        dispatch(
+          pFO(
+            "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.cancelledBy",
+            userName
+          )
+        );
+        break;
+      case "reject":
+        dispatch(
+          pFO(
+            "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.rejectedBy",
+            userName
+          )
+        );
+        break;
+      default:
+        dispatch(
+          pFO(
+            "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.approvedBy",
+            userName
+          )
+        );
+        break;
+    }
     let response = await updateTradeDetails({ Licenses });
     if (response) {
       const applicationNumber = get(response, "Licenses[0].applicationNumber");
@@ -54,32 +80,6 @@ const onNextButtonClick = async (state, dispatch) => {
         queryValue,
         tenantId
       );
-      switch (queryValue) {
-        case "cancel":
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.cancelDetail.cancelledBy",
-              userName
-            )
-          );
-          break;
-        case "reject":
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.rejectedBy",
-              userName
-            )
-          );
-          break;
-        default:
-          dispatch(
-            pFO(
-              "Licenses[0].tradeLicenseDetail.additionalDetail.approveDetail.approvedBy",
-              userName
-            )
-          );
-          break;
-      }
       dispatch(setRoute(route));
     } else {
       response &&
