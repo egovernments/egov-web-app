@@ -177,7 +177,7 @@ body.employee-user-profile {
   visibility: hidden;
   width: 100%;
   float: left;
-  background-color: #00bbd3;
+  background-color:rgba(254, 122, 81, 0.11999999731779099);
   color: #fff;
   border-radius: 2px;
   padding: 0px 0px;
@@ -197,7 +197,7 @@ body.employee-user-profile {
   visibility: visible; }
 
 .action-menu-drawer {
-  background-color: #3d4951;
+  background-color: white;
   min-height: calc(100vh - 64px);
   position: fixed;
   z-index: 1001; }
