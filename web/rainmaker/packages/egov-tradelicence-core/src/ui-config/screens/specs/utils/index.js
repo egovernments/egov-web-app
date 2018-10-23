@@ -1190,7 +1190,6 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
       "LicensesTemp[0].tradeLicenseDetail.structureType",
       structType.split(".")[0]
     );
-    debugger;
     try {
       dispatch(
         prepareFinalObject(
