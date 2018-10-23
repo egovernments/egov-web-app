@@ -40,6 +40,8 @@ class TextFieldContainer extends React.Component {
       optionValue = "code",
       optionLabel = "code",
       sourceJsonPath,
+      index,
+      componentJsonpath,
       state,
       dispatch,
       ...rest
@@ -48,7 +50,7 @@ class TextFieldContainer extends React.Component {
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
-        onClick: () => iconObj.onClickDefination.callBack(state, dispatch)
+        onClick: () => iconObj.onClickDefination.callBack(state, dispatch,{index,componentJsonpath})
       };
     }
     let transfomedKeys = transformById(localizationLabels, "code");

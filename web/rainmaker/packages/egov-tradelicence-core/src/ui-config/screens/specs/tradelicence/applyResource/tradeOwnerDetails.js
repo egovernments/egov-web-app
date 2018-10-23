@@ -34,7 +34,7 @@ export const getOwnerMobNoField = getTextField({
     color: "#FE7A51",
     onClickDefination: {
       action: "condition",
-      callBack: (state, dispatch) => {
+      callBack: (state, dispatch,info) => {
         getDetailsForOwner(state, dispatch);
       }
     }

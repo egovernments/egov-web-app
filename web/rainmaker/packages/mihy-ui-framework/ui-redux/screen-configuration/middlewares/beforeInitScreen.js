@@ -26,7 +26,7 @@ var beforeInitScreen = function beforeInitScreen(store) {
         var dispatch = store.dispatch;
         var state = store.getState();
         if (typeof (0, _get2.default)(action, "screenConfig.beforeInitScreen") === "function") {
-          action = action.screenConfig.beforeInitScreen(action, store, dispatch);
+          action = action.screenConfig.beforeInitScreen(action, state, dispatch);
         }
         next(action);
       } else {

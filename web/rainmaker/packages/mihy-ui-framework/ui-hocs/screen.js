@@ -84,6 +84,7 @@ var screenHoc = function screenHoc(_ref) {
 
         _this.onClick = function (onClickDefination) {
           var componentJsonpath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+          var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
 
           switch (onClickDefination.action) {
             case "submit":
@@ -104,7 +105,7 @@ var screenHoc = function screenHoc(_ref) {
               var callBack = onClickDefination.callBack;
 
               if (typeof callBack === "function") {
-                callBack(state, dispatchAction);
+                callBack(state, dispatchAction, { componentJsonpath: componentJsonpath, index: index });
               }
               break;
             case "page_change":

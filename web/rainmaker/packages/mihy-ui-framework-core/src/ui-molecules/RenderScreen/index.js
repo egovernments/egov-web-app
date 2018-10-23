@@ -21,7 +21,8 @@ const RenderScreen = ({
           gridDefination,
           visible,
           type,
-          roleDefination
+          roleDefination,
+          index
         } = components[componentKey];
         let extraProps = jsonPath
           ? {
@@ -39,7 +40,7 @@ const RenderScreen = ({
           extraProps = {
             ...extraProps,
             onClick: e => {
-              onComponentClick(onClickDefination, componentJsonpath);
+              onComponentClick(onClickDefination, componentJsonpath,index);
             }
           };
         }
@@ -51,6 +52,13 @@ const RenderScreen = ({
             uiFramework: rootFramework,
             componentJsonpath,
             screenKey
+          };
+        }
+        if (index) {
+          extraProps=index{
+            ...extraProps,
+            componentJsonpath,
+            index
           };
         }
         if (!isEmpty(components[componentKey].children)) {

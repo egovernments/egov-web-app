@@ -95,15 +95,17 @@ var TextFieldContainer = function (_React$Component) {
           _props$optionLabel = _props.optionLabel,
           optionLabel = _props$optionLabel === undefined ? "code" : _props$optionLabel,
           sourceJsonPath = _props.sourceJsonPath,
+          index = _props.index,
+          componentJsonpath = _props.componentJsonpath,
           state = _props.state,
           dispatch = _props.dispatch,
-          rest = (0, _objectWithoutProperties3.default)(_props, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "state", "dispatch"]);
+          rest = (0, _objectWithoutProperties3.default)(_props, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "dispatch"]);
 
 
       if (!(0, _isEmpty2.default)(iconObj) && iconObj.onClickDefination) {
         iconObj = (0, _extends3.default)({}, iconObj, {
           onClick: function onClick() {
-            return iconObj.onClickDefination.callBack(state, dispatch);
+            return iconObj.onClickDefination.callBack(state, dispatch, { index: index, componentJsonpath: componentJsonpath });
           }
         });
       }
@@ -118,8 +120,7 @@ var TextFieldContainer = function (_React$Component) {
             label: translatedLabel,
             placeholder: translatedPlaceholder,
             iconObj: iconObj,
-            value: value ? value : translatedPlaceholder,
-            className: "select-field"
+            value: value ? value : translatedPlaceholder
           }, rest),
           _react2.default.createElement(
             _MenuItem2.default,

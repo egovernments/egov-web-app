@@ -83,6 +83,9 @@ class MultiItem extends React.Component {
               ].props.jsonPath = `${sourceJsonPath}[${itemsLength}]${
                 propertyName[1]
               }`;
+              multiItemContent[
+                variable
+              ].index=itemsLength;
             }
           }
         }

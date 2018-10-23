@@ -69,7 +69,7 @@ const screenHoc = ({
       );
     };
 
-    onClick = (onClickDefination, componentJsonpath = "") => {
+    onClick = (onClickDefination, componentJsonpath = "",index=-1) => {
       switch (onClickDefination.action) {
         case "submit":
           const { submitForm } = this.props;
@@ -95,7 +95,7 @@ const screenHoc = ({
           const { state, dispatchAction } = this.props;
           const { callBack } = onClickDefination;
           if (typeof callBack === "function") {
-            callBack(state, dispatchAction);
+            callBack(state, dispatchAction,{componentJsonpath,index});
           }
           break;
         case "page_change":

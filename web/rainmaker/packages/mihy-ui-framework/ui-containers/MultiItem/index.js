@@ -146,6 +146,7 @@ var MultiItem = function (_React$Component) {
               if (propertyName.length > 1) {
                 multiItemContent[variable].jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
                 multiItemContent[variable].props.jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
+                multiItemContent[variable].index = itemsLength;
               }
             }
           }

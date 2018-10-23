@@ -7,7 +7,7 @@ const beforeInitScreen = store => next => action => {
     const dispatch = store.dispatch;
     const state = store.getState();
     if (typeof get(action, "screenConfig.beforeInitScreen") === "function") {
-      action = action.screenConfig.beforeInitScreen(action, store, dispatch);
+      action = action.screenConfig.beforeInitScreen(action, state, dispatch);
     }
     next(action);
   } else {
