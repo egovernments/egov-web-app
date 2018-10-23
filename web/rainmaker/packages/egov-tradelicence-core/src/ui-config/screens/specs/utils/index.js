@@ -713,11 +713,12 @@ export const getDetailsFromProperty = async (state, dispatch) => {
   }
 };
 
-export const getDetailsForOwner = async (state, dispatch) => {
+export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
   try {
+    const cardIndex = fieldInfo && fieldInfo.index;
     const ownerNo = get(
       state.screenConfiguration.preparedFinalObject,
-      "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber",
+      `Licenses[0].tradeLicenseDetail.owners[${cardIndex}].mobileNumber`,
       ""
     );
     let payload = await httpRequest(
@@ -755,7 +756,7 @@ export const getDetailsForOwner = async (state, dispatch) => {
         }
         dispatch(
           prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.owners[0]",
+            `Licenses[0].tradeLicenseDetail.owners[${cardIndex}]`,
             userInfo
           )
         );
