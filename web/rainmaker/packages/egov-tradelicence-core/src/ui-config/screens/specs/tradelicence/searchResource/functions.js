@@ -4,12 +4,15 @@ import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { textToLocalMapping } from "./searchResults";
-import { validateFields} from "../../utils";
+import { validateFields } from "../../utils";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
   let queryObject = [
-    { key: "tenantId", value: JSON.parse(localStorage.getItem("user-info")).tenantId},
+    {
+      key: "tenantId",
+      value: JSON.parse(localStorage.getItem("user-info")).tenantId
+    },
     { key: "limit", value: "200" },
     { key: "offset", value: "0" }
   ];
@@ -25,15 +28,14 @@ export const searchApiCall = async (state, dispatch) => {
     "search"
   );
 
-  const isSearchBoxSecondRowValid= validateFields(
+  const isSearchBoxSecondRowValid = validateFields(
     "components.div.children.tradeLicenseApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
     state,
     dispatch,
     "search"
   );
 
-  if(!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid))
-  {
+  if (!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid)) {
     dispatch(
       toggleSnackbarAndSetText(
         true,
@@ -41,8 +43,7 @@ export const searchApiCall = async (state, dispatch) => {
         "warning"
       )
     );
-  }
-  else if (
+  } else if (
     Object.keys(searchScreenObject).length == 0 ||
     Object.values(searchScreenObject).every(x => x === "")
   ) {
@@ -88,13 +89,17 @@ export const searchApiCall = async (state, dispatch) => {
     const response = await getSearchResults(queryObject);
     try {
       let data = response.Licenses.map(item => ({
-        [get(textToLocalMapping, "Application No")]: item.applicationNumber || "-",
+        [get(textToLocalMapping, "Application No")]:
+          item.applicationNumber || "-",
         [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
         [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
-        [get(textToLocalMapping, "Owner Name")]: item.tradeLicenseDetail.owners[0].name || "-",
-        [get(textToLocalMapping, "Application Date")]: convertEpochToDate(item.applicationDate) || "-",
-        "tenantId": item.tenantId,
-        [get(textToLocalMapping, "Status")]: get(textToLocalMapping, item.status) || "-"
+        [get(textToLocalMapping, "Owner Name")]:
+          item.tradeLicenseDetail.owners[0].name || "-",
+        [get(textToLocalMapping, "Application Date")]:
+          convertEpochToDate(item.applicationDate) || "-",
+        tenantId: item.tenantId,
+        [get(textToLocalMapping, "Status")]:
+          get(textToLocalMapping, item.status) || "-"
       }));
 
       dispatch(
@@ -110,9 +115,9 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${textToLocalMapping["Search Results for Trade License Applications"]} (${
-          response.Licenses.length
-          })`
+          `${
+            textToLocalMapping["Search Results for Trade License Applications"]
+          } (${response.Licenses.length})`
         )
       );
       // showHideProgress(false, dispatch);

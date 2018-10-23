@@ -199,111 +199,114 @@ class ActionMenuComp extends Component {
           }
           if (!item.url) {
             return (
-              <MenuItem
-                key={index}
-                innerDivStyle={styles.defaultMenuItemStyle}
-                style={{ whiteSpace: "initial" }}
-                leftIcon={
-                  iconLeft &&
-                  iconLeft.length == 2 && (
+              <div className="sideMenuItem">
+                <MenuItem
+                  key={index}
+                  innerDivStyle={styles.defaultMenuItemStyle}
+                  style={{ whiteSpace: "initial" }}
+                  leftIcon={
+                    iconLeft &&
+                    iconLeft.length == 2 && (
+                      <Icon
+                        name={iconLeft[1]}
+                        action={iconLeft[0]}
+                        color="rgba(0, 0, 0, 0.6000000238418579)"
+                        style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                        className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                      />
+                    )
+                  }
+                  primaryText={
+                    <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                      <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)"}}>{item.name || ""}</span>
+                    </div>
+                  }
+                  rightIcon={
                     <Icon
-                      name={iconLeft[1]}
-                      action={iconLeft[0]}
-                      color="#b3b3b3"
-                      style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
-                      className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                      name="chevron-right"
+                      action="navigation"
+                      color="rgba(0, 0, 0, 0.8700000047683716)"
+                      className="material-icons whiteColor"
+                      style={styles.arrowIconStyle}
                     />
-                  )
-                }
-                primaryText={
-                  <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                    <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                    <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
-                  </div>
-                }
-                rightIcon={
-                  <Icon
-                    name="chevron-right"
-                    action="navigation"
-                    color="#b3b3b3"
-                    className="material-icons whiteColor"
-                    style={styles.arrowIconStyle}
-                  />
-                }
-                onClick={() => {
-                  let pathParam = {
-                    path: !item.path ? item.name : item.path,
-                    parentPath: false,
-                  };
-                  menuChange(pathParam);
-                }}
-              />
+                  }
+                  onClick={() => {
+                    let pathParam = {
+                      path: !item.path ? item.name : item.path,
+                      parentPath: false,
+                    };
+                    menuChange(pathParam);
+                  }}
+                />
+              </div>
             );
           } else {
             if (item.navigationURL && item.navigationURL !== "newTab") {
               return (
                 <Link key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
-                  <MenuItem
-                    innerDivStyle={styles.defaultMenuItemStyle}
-                    style={{ whiteSpace: "initial" }}
-                    key={index}
-                    onClick={() => {
-                      localStorage.setItem("menuPath", item.path);
-                      document.title = item.name;
-                    }}
-                    leftIcon={
-                      iconLeft &&
-                      iconLeft.length === 2 && (
-                        <Icon
-                          name={iconLeft[1]}
-                          action={iconLeft[0]}
-                          fill={"#b3b3b3"}
-                          color="#b3b3b3"
-                          style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
-                          className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
-                        />
-                      )
-                    }
-                    primaryText={
-                      <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                        <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                        <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
-                      </div>
-                    }
-                  />
+                  <div className="sideMenuItem">
+                    <MenuItem
+                      innerDivStyle={styles.defaultMenuItemStyle}
+                      style={{ whiteSpace: "initial" }}
+                      key={index}
+                      onClick={() => {
+                        localStorage.setItem("menuPath", item.path);
+                        document.title = item.name;
+                      }}
+                      leftIcon={
+                        iconLeft &&
+                        iconLeft.length === 2 && (
+                          <Icon
+                            name={iconLeft[1]}
+                            action={iconLeft[0]}
+                            fill="rgba(0, 0, 0, 0.6000000238418579)"
+                            color="rgba(0, 0, 0, 0.6000000238418579)"
+                            style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                            className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                          />
+                        )
+                      }
+                      primaryText={
+                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                          <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
+                        </div>
+                      }
+                    />
+                  </div>
                 </Link>
               );
             } else {
               return (
                 <a href={item.url} target="_blank">
-                  <MenuItem
-                    innerDivStyle={styles.defaultMenuItemStyle}
-                    style={{ whiteSpace: "initial" }}
-                    key={index}
-                    onClick={() => {
-                      localStorage.setItem("menuPath", item.path);
-                      document.title = item.name;
-                    }}
-                    leftIcon={
-                      iconLeft &&
-                      iconLeft.length === 2 && (
-                        <Icon
-                          name={iconLeft[1]}
-                          action={iconLeft[0]}
-                          fill={"#b3b3b3"}
-                          color="#b3b3b3"
-                          style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
-                          className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
-                        />
-                      )
-                    }
-                    primaryText={
-                      <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                        <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                        <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
-                      </div>
-                    }
-                  />
+                  <div className="sideMenuItem">
+                    <MenuItem
+                      innerDivStyle={styles.defaultMenuItemStyle}
+                      style={{ whiteSpace: "initial" }}
+                      key={index}
+                      onClick={() => {
+                        localStorage.setItem("menuPath", item.path);
+                        document.title = item.name;
+                      }}
+                      leftIcon={
+                        iconLeft &&
+                        iconLeft.length === 2 && (
+                          <Icon
+                            name={iconLeft[1]}
+                            action={iconLeft[0]}
+                            fill="rgba(0, 0, 0, 0.6000000238418579)"
+                            color="rgba(0, 0, 0, 0.6000000238418579)"
+                            style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                            className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                          />
+                        )
+                      }
+                      primaryText={
+                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                          <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
+                        </div>
+                      }
+                    />
+                  </div>
                 </a>
               );
             }
@@ -321,35 +324,36 @@ class ActionMenuComp extends Component {
               if (item.navigationURL) {
                 return (
                   <Link key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
-                    <MenuItem
-                      innerDivStyle={styles.defaultMenuItemStyle}
-                      style={{ whiteSpace: "initial" }}
-                      onClick={() => {
-                        document.title = item.displayName;
-                      }}
-                      leftIcon={
-                        iconLeft &&
-                        iconLeft.length === 2 && (
-                          <Icon
-                            name={iconLeft[1]}
-                            action={iconLeft[0]}
-                            name={item.leftIcon.name}
-                            action={item.leftIcon.action}
-                            color={"#b3b3b3"}
-                            style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
-                            className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
-                          />
-                        )
-                      }
-                      primaryText={
-                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                          <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
-                          <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>
-                            {item.displayName || ""}
-                          </span>
-                        </div>
-                      }
-                    />
+                    <div className="sideMenuItem">
+                      <MenuItem
+                        innerDivStyle={styles.defaultMenuItemStyle}
+                        style={{ whiteSpace: "initial" }}
+                        onClick={() => {
+                          document.title = item.displayName;
+                        }}
+                        leftIcon={
+                          iconLeft &&
+                          iconLeft.length === 2 && (
+                            <Icon
+                              name={iconLeft[1]}
+                              action={iconLeft[0]}
+                              name={item.leftIcon.name}
+                              action={item.leftIcon.action}
+                              color={"rgba(0, 0, 0, 0.6000000238418579)"}
+                              style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                              className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                            />
+                          )
+                        }
+                        primaryText={
+                          <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                            <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" }}>
+                              {item.displayName || ""}
+                            </span>
+                          </div>
+                        }
+                      />
+                    </div>
                   </Link>
                 );
               }

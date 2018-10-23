@@ -151,6 +151,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   const requestBody = prepareForm(requestParams);
 
   try {
+    store.dispatch(toggleSpinner());
     const response = await uploadInstance.post(endPoint, requestBody);
     const responseStatus = parseInt(response.status, 10);
     let fileStoreIds = [];
@@ -159,9 +160,11 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
       const responseData = response.data;
       const files = responseData.files || [];
       fileStoreIds = files.map(f => f.fileStoreId);
+      store.dispatch(toggleSpinner());
       return fileStoreIds[0];
     }
   } catch (error) {
+    store.dispatch(toggleSpinner());
     throw new Error(error);
   }
 };

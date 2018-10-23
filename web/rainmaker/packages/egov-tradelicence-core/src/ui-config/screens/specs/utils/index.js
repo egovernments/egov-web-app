@@ -860,7 +860,11 @@ const getEstimateData = (Bill, getFromReceipt) => {
       }
       return result;
     }, []);
-    return [...transformedData, ...extraData];
+    return [
+      ...transformedData.filter(item => item.name.labelKey === "TL_TAX"),
+      ...transformedData.filter(item => item.name.labelKey !== "TL_TAX"),
+      ...extraData
+    ];
   }
 };
 
