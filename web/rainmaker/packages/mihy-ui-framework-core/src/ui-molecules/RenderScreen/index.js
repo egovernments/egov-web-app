@@ -55,7 +55,7 @@ const RenderScreen = ({
           };
         }
         if (index) {
-          extraProps=index{
+          extraProps={
             ...extraProps,
             componentJsonpath,
             index

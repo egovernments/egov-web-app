@@ -64,10 +64,12 @@ var RenderScreen = function RenderScreen(_ref) {
         screenKey: screenKey
       });
     }
-    extraProps = (0, _extends3.default)({}, extraProps, {
-      componentJsonpath: componentJsonpath,
-      index: index
-    });
+    if (index) {
+      extraProps = (0, _extends3.default)({}, extraProps, {
+        componentJsonpath: componentJsonpath,
+        index: index
+      });
+    }
     if (!(0, _isEmpty2.default)(components[componentKey].children)) {
       return _react2.default.createElement(
         _ComponentInterface2.default,
