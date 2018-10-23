@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { MapLocation } from "../../ui-atoms-local";
 // import { Button, Icon } from "components";
 // import pinIcon from "https://image.flaticon.com/icons/svg/1161/1161263.svg";
-// import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { defaultLocation } from "../../ui-config/tl-app-config";
 import { Button, Icon } from "mihy-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -36,7 +36,7 @@ class MapLocator extends Component {
   }
 
   componentDidMount() {
-    var myLocation = { lat: 12.9279, lng: 77.6271 };
+    let myLocation = {};
     //To set the map to any defined location.
     if (this.state.showMyAddress === true && myLocation) {
       this.setState({
@@ -47,14 +47,7 @@ class MapLocator extends Component {
 
   //For Compass Click -- set map to current location
   getMyLocation = () => {
-    const { currentLocation } = this.props;
-    if (!isEmpty(currentLocation)) {
-      const { lat, lng } = currentLocation;
-      this.setState({
-        currLoc: { lat: parseFloat(lat), lng: parseFloat(lng) }
-      });
-    } else if (navigator.geolocation) {
-      // can be resused
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
           this.setState({
@@ -160,7 +153,7 @@ class MapLocator extends Component {
     var _currloc = !isEmpty(currLoc)
       ? currLoc
       : isEmpty(location)
-        ? { lat: 12.972442, lng: 77.580643 }
+        ? defaultLocation
         : location;
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
@@ -182,7 +175,7 @@ class MapLocator extends Component {
         <MapLocation
           currLoc={_currloc}
           setLocation={this.setPickedLocation}
-          // getMyLoc={this.getMyLocation}
+          getMyLoc={this.getMyLocation}
           // icon={pinIcon}
           hideTerrainBtn={true}
           dragInfoBox={false}

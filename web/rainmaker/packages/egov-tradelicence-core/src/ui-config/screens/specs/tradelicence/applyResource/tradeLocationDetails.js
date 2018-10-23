@@ -179,7 +179,8 @@ export const tradeLocationDetails = getCommonCard({
         suggestions: [],
         label: "Mohalla",
         style: {
-          width: "100%"
+          width: "100%",
+          cursor: "pointer"
         },
         // label: {
         //   labelName: "Mohalla",
@@ -229,7 +230,8 @@ export const tradeLocationDetails = getCommonCard({
       props: {
         className: "gis-div-css",
         style: {
-          width: "100%"
+          width: "100%",
+          cursor: "pointer"
         }
       },
       jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
@@ -261,7 +263,8 @@ export const tradeLocationDetails = getCommonCard({
               sm: 12
             },
             props: {
-              disabled: true
+              disabled: true,
+              cursor: "pointer"
             }
           })
         }

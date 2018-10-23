@@ -4,6 +4,7 @@ import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
 // import Icon from "../Icon";
 // import commonConfig from "config/common";
+import { MAP_API_KEY } from "../../ui-config/tl-app-config";
 import { Icon } from "mihy-ui-framework/ui-atoms";
 
 const {
@@ -21,11 +22,11 @@ const {
 
 const MapLocation = compose(
   withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyCH9PmCbk_mcpgijAAlTeltC4deOxC5wEM&v=3.exp&libraries=geometry,drawing,places`,
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${MAP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div className="map-container" />,
-    mapElement: <div style={{ height: `100%` }} />,
-    center: { lat: 12.972442, lng: 77.580643 }
+    mapElement: <div style={{ height: `100%` }} />
+    // center: { lat: 30.7333, lng: 76.7794 }
   }),
   lifecycle({
     componentWillMount() {
