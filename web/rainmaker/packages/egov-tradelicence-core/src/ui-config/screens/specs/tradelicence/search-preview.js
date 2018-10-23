@@ -130,25 +130,6 @@ const searchResults = async (action, state, dispatch) => {
     dispatch
   );
   let sts = getTransformedStatus(get(payload, "Licenses[0].status"));
-  if (sts === "approved" || sts === "rejected" || sts === "cancelled") {
-    if (get(payload, "Licenses[0].tradeLicenseDetail.verificationDocuments")) {
-      await setDocuments(
-        payload,
-        "Licenses[0].tradeLicenseDetail.verificationDocuments",
-        "LicensesTemp[0].verifyDocData",
-        dispatch
-      );
-    } else {
-      dispatch(
-        handleField(
-          "search-preview",
-          "components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.children.cardContent.children.viewTow.children.lbl",
-          "visible",
-          false
-        )
-      );
-    }
-  }
   dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   dispatch(
     prepareFinalObject(
@@ -165,12 +146,12 @@ const searchResults = async (action, state, dispatch) => {
     {},
     fetchFromReceipt
   ); //Fetch Bill and populate estimate card
-  const code = get(
-    payload,
-    "Licenses[0].tradeLicenseDetail.address.locality.code"
-  );
-  const queryObj = [{ key: "tenantId", value: tenantId }];
-  // getBoundaryData(action, state, dispatch, queryObj, code);
+  // const code = get(
+  //   payload,
+  //   "Licenses[0].tradeLicenseDetail.address.locality.code"
+  // );
+  // const queryObj = [{ key: "tenantId", value: tenantId }];
+  // // getBoundaryData(action, state, dispatch, queryObj, code);
 };
 
 const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
@@ -186,13 +167,52 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       )
     );
 
+    let data = get(state.getState(), "screenConfiguration.preparedFinalObject");
+
     const obj = setStatusBasedValue(status);
     let approvalDetails = getApprovalDetails(status);
     set(
       action,
       "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails",
       approvalDetails
-    );
+    ); // Get approval details based on status and set it in screenconfig
+
+    if (
+      status === "approved" ||
+      status === "rejected" ||
+      status === "cancelled"
+    ) {
+      set(
+        action,
+        "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.visible",
+        true
+      );
+
+      if (get(data, "Licenses[0].tradeLicenseDetail.verificationDocuments")) {
+        await setDocuments(
+          data,
+          "Licenses[0].tradeLicenseDetail.verificationDocuments",
+          "LicensesTemp[0].verifyDocData",
+          dispatch
+        );
+      } else {
+        dispatch(
+          handleField(
+            "search-preview",
+            "components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.children.cardContent.children.viewTow.children.lbl",
+            "visible",
+            false
+          )
+        );
+      }
+    } else {
+      set(
+        action,
+        "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails.visible",
+        false
+      );
+    }
+
     const footer = footerReview(status, applicationNumber, tenantId);
     set(action, "screenConfig.components.div.children.footer", footer);
 
