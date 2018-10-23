@@ -62,7 +62,7 @@ const setDocuments = async (
     fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
   const reviewDocData =
     uploadedDocData &&
-    uploadedDocData.map(item => {
+    uploadedDocData.map((item, index) => {
       return {
         title: item.documentType || "",
         link:
@@ -71,7 +71,16 @@ const setDocuments = async (
             fileUrlPayload[item.fileStoreId].split(",")[0]) ||
           "",
         linkText: "View",
-        name: item.fileName || ""
+        name:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            fileUrlPayload[item.fileStoreId]
+              .split(",")[0]
+              .split("?")[0]
+              .split("/")
+              .pop()
+              .slice(13)) ||
+          `Document - ${index}`
       };
     });
   reviewDocData && dispatch(prepareFinalObject(destJsonPath, reviewDocData));

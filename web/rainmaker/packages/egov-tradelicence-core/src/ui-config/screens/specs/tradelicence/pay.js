@@ -105,7 +105,8 @@ const screenConfig = {
     adhocDialog: {
       componentPath: "Dialog",
       props: {
-        open: false
+        open: false,
+        maxWidth: "md"
       },
       children: {
         dialogContent: {
