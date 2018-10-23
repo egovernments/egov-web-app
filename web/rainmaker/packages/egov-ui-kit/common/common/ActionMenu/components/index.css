@@ -23,5 +23,7 @@
 
 .sideMenuItem:hover {
   background-color: rgba(254, 122, 81, 0.12); }
-  .sideMenuItem:hover div:nth-of-type(1) > span > div > div > div > span {
-    color: #FE7A51 !important; }
+  .sideMenuItem:hover div:nth-of-type(1) > span {
+    background: none !important; }
+    .sideMenuItem:hover div:nth-of-type(1) > span div > div > div > span {
+      color: #FE7A51 !important; }
