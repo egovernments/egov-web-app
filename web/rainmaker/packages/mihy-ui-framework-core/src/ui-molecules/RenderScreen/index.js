@@ -40,7 +40,7 @@ const RenderScreen = ({
           extraProps = {
             ...extraProps,
             onClick: e => {
-              onComponentClick(onClickDefination, componentJsonpath,index);
+              onComponentClick(onClickDefination, componentJsonpath, index);
             }
           };
         }
@@ -55,7 +55,7 @@ const RenderScreen = ({
           };
         }
         if (index) {
-          extraProps={
+          extraProps = {
             ...extraProps,
             componentJsonpath,
             index
