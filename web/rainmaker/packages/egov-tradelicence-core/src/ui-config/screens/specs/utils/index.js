@@ -715,7 +715,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
 
 export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
   try {
-    const cardIndex = fieldInfo && fieldInfo.index;
+    const cardIndex = fieldInfo && fieldInfo.index ? fieldInfo.index : "0";
     const ownerNo = get(
       state.screenConfiguration.preparedFinalObject,
       `Licenses[0].tradeLicenseDetail.owners[${cardIndex}].mobileNumber`,
