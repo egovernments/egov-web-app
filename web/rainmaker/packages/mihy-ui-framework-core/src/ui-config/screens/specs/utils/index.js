@@ -175,7 +175,10 @@ export const getLabel = (label, labelKey, props = {}) => {
 };
 
 export const getSelectField = selectScheama => {
-  return getTextField({ ...selectScheama, props: { select: true ,...selectScheama.props} });
+  return getTextField({
+    ...selectScheama,
+    props: { select: true, ...selectScheama.props }
+  });
 };
 
 export const getDateField = dateScheama => {
@@ -225,12 +228,12 @@ export const getTextField = textScheama => {
       sm: 6
     },
     props = {},
-    minLength ,
+    minLength,
     maxLength,
     minValue,
     maxValue,
-    errorMessage="",
-    requiredMessage=""
+    errorMessage = "",
+    requiredMessage = ""
   } = textScheama;
   return {
     uiFramework: "custom-containers",
@@ -255,7 +258,7 @@ export const getTextField = textScheama => {
     required,
     pattern,
     jsonPath,
-    minLength ,
+    minLength,
     maxLength,
     minValue,
     maxValue,
@@ -438,7 +441,7 @@ export const getPattern = type => {
     case "PAN":
       return /^[A-Za-z]{5}\d{4}[A-Za-z]{1}$/i;
     case "TradeName":
-      return /^[a-zA-Z0-9\s()-@#&.,?/]{1,100}$/i;
+      return /^[a-zA-Z0-9\s()!-@#&.,?/]{1,100}$/i;
     case "Date":
       return /^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/i;
     case "UOMValue":

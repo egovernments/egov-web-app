@@ -196,7 +196,9 @@ var getLabel = exports.getLabel = function getLabel(label, labelKey) {
 };
 
 var getSelectField = exports.getSelectField = function getSelectField(selectScheama) {
-  return getTextField((0, _extends3.default)({}, selectScheama, { props: (0, _extends3.default)({ select: true }, selectScheama.props) }));
+  return getTextField((0, _extends3.default)({}, selectScheama, {
+    props: (0, _extends3.default)({ select: true }, selectScheama.props)
+  }));
 };
 
 var getDateField = exports.getDateField = function getDateField(dateScheama) {
@@ -475,7 +477,7 @@ var getPattern = exports.getPattern = function getPattern(type) {
       return (/^[A-Za-z]{5}\d{4}[A-Za-z]{1}$/i
       );
     case "TradeName":
-      return (/^[a-zA-Z0-9\s()-@#&.,?/]{1,100}$/i
+      return (/^[a-zA-Z0-9\s()!-@#&.,?/]{1,100}$/i
       );
     case "Date":
       return (/^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/i
