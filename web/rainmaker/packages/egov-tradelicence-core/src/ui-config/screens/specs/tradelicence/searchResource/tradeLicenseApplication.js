@@ -37,8 +37,8 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: (/^[a-zA-Z0-9\-]*$/i),
-      errorMessage:"Invalid Application No.",
+      pattern: /^[a-zA-Z0-9\-]*$/i,
+      errorMessage: "Invalid Application No.",
       jsonPath: "searchScreen.applicationNumber"
     }),
 
@@ -57,8 +57,8 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       pattern: "",
-      pattern: (/^[a-zA-Z0-9\-]*$/i),
-      errorMessage:"Invalid Trade License No.",
+      pattern: /^[a-zA-Z0-9\-]*$/i,
+      errorMessage: "Invalid Trade License No.",
       jsonPath: "searchScreen.licenseNumber"
     }),
     ownerMobNo: getTextField({
@@ -81,7 +81,7 @@ export const tradeLicenseApplication = getCommonCard({
       required: false,
       pattern: getPattern("MobileNo"),
       jsonPath: "searchScreen.mobileNumber",
-      errorMessage:"Invalid Mobile Number"
+      errorMessage: "Invalid Mobile Number"
     })
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
@@ -125,7 +125,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage:"Invalid Date",
+      errorMessage: "Invalid Date",
       required: false
     }),
 
@@ -138,40 +138,60 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage:"Invalid Date",
+      errorMessage: "Invalid Date",
       required: false
     })
   }),
 
-  buttonContainer: getCommonContainer({
-    searchButton: {
-      componentPath: "Button",
-      gridDefination: {
-        xs: 12,
-        sm: 12,
-        align: "center"
-      },
-      props: {
-        variant: "contained",
-        style: {
-          color: "white",
+  button: getCommonContainer({
+    // firstCont: {
 
-          backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
-          borderRadius: "2px",
-          width: "280px",
-          height: "48px"
+    buttonContainer: getCommonContainer({
+      firstCont: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 12,
+          sm: 4
         }
       },
-      children: {
-        buttonLabel: getLabel({
-          labelName: "Search",
-          labelKey: "TL_HOME_SEARCH_RESULTS_BUTTON_SEARCH"
-        })
+      searchButton: {
+        componentPath: "Button",
+        gridDefination: {
+          xs: 12,
+          sm: 4
+          // align: "center"
+        },
+        props: {
+          variant: "contained",
+          style: {
+            color: "white",
+
+            backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
+            borderRadius: "2px",
+            width: "365px",
+            height: "48px"
+          }
+        },
+        children: {
+          buttonLabel: getLabel({
+            labelName: "Search",
+            labelKey: "TL_HOME_SEARCH_RESULTS_BUTTON_SEARCH"
+          })
+        },
+        onClickDefination: {
+          action: "condition",
+          callBack: searchApiCall
+        }
       },
-      onClickDefination: {
-        action: "condition",
-        callBack: searchApiCall
+      lastCont: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 12,
+          sm: 4
+        }
       }
-    }
+    })
   })
 });
