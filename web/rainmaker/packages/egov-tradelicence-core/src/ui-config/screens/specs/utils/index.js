@@ -678,6 +678,16 @@ export const getDetailsFromProperty = async (state, dispatch) => {
     const tenantId = ifUserRoleExists("CITIZEN")
       ? cityId
       : localStorage.getItem("tenant-id");
+    if (!tenantId) {
+      dispatch(
+        toggleSnackbarAndSetText(
+          true,
+          "Please select city to search by property id !!",
+          "warning"
+        )
+      );
+      return;
+    }
     if (propertyId) {
       let payload = await httpRequest(
         "post",
