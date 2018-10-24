@@ -32,6 +32,55 @@ export const tradeLocationDetails = getCommonCard({
     }
   ),
   tradeDetailsConatiner: getCommonContainer({
+    tradeLocCity: {
+      ...getSelectField({
+        label: { labelName: "City" },
+        optionLabel: "name",
+        placeholder: { labelName: "Select City" },
+        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+        required: true,
+        props: {
+          required: true
+        }
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        //Below only runs for citizen - not required here in employee
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.address.city",
+            action.value
+          )
+        );
+        try {
+          let payload = await httpRequest(
+            "post",
+            "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+            "_search",
+            [{ key: "tenantId", value: action.value }],
+            {}
+          );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+              "props.suggestions",
+              payload.TenantBoundary && payload.TenantBoundary[0].boundary
+            )
+          );
+          // dispatch(
+          //   handleField(
+          //     "apply",
+          //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+          //     "props.value",
+          //     ""
+          //   )
+          // );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
     tradeLocPropertyID: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
@@ -86,55 +135,6 @@ export const tradeLocationDetails = getCommonCard({
         sm: 6
       }
     },
-    tradeLocCity: {
-      ...getSelectField({
-        label: { labelName: "City" },
-        optionLabel: "name",
-        placeholder: { labelName: "Select City" },
-        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
-        required: true,
-        props: {
-          required: true
-        }
-      }),
-      beforeFieldChange: async (action, state, dispatch) => {
-        //Below only runs for citizen - not required here in employee
-        dispatch(
-          prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.city",
-            action.value
-          )
-        );
-        try {
-          let payload = await httpRequest(
-            "post",
-            "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-            "_search",
-            [{ key: "tenantId", value: action.value }],
-            {}
-          );
-          dispatch(
-            handleField(
-              "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-              "props.suggestions",
-              payload.TenantBoundary && payload.TenantBoundary[0].boundary
-            )
-          );
-          // dispatch(
-          //   handleField(
-          //     "apply",
-          //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-          //     "props.value",
-          //     ""
-          //   )
-          // );
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    },
     tradeLocDoorHouseNo: getTextField({
       label: {
         labelName: "Door/House No.",
@@ -175,7 +175,7 @@ export const tradeLocationDetails = getCommonCard({
       uiFramework: "custom-containers-local",
       componentPath: "AutosuggestContainer",
       jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-      required:true,
+      required: true,
       props: {
         suggestions: [],
         label: "Mohalla",
