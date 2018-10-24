@@ -122,14 +122,14 @@ export const tradeLocationDetails = getCommonCard({
               payload.TenantBoundary && payload.TenantBoundary[0].boundary
             )
           );
-          dispatch(
-            handleField(
-              "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-              "props.value",
-              ""
-            )
-          );
+          // dispatch(
+          //   handleField(
+          //     "apply",
+          //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+          //     "props.value",
+          //     ""
+          //   )
+          // );
         } catch (e) {
           console.log(e);
         }

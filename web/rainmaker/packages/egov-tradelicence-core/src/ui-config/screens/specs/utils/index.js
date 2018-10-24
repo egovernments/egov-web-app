@@ -670,10 +670,18 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       "Licenses[0].propertyId",
       ""
     );
+    const cityId = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0].tradeLicenseDetail.address.tenantId",
+      ""
+    );
+    const tenantId = ifUserRoleExists("CITIZEN")
+      ? cityId
+      : localStorage.getItem("tenant-id");
     if (propertyId) {
       let payload = await httpRequest(
         "post",
-        `/pt-services-v2/property/_search?tenantId=pb.amritsar&ids=${propertyId}`,
+        `/pt-services-v2/property/_search?tenantId=${tenantId}&ids=${propertyId}`,
         "_search",
         [],
         {}
