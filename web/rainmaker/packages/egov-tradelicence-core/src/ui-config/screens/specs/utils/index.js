@@ -939,6 +939,12 @@ export const createEstimateData = async (
       : getEstimateData(payload.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
+
+  /** Waiting for estimate to load while downloading confirmation form */
+  var event = new CustomEvent("estimateLoaded", { detail: true });
+  window.parent.document.dispatchEvent(event);
+  /** END */
+
   return payload;
 };
 

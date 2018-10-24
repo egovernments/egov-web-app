@@ -28,6 +28,8 @@ const loadReceiptGenerationData = (applicationNumber, tenant) => {
 };
 
 const getAcknowledgementCard = (
+  state,
+  dispatch,
   purpose,
   status,
   applicationNumber,
@@ -60,6 +62,8 @@ const getAcknowledgementCard = (
         componentPath: "Div"
       },
       applicationSuccessFooter: applicationSuccessFooter(
+        state,
+        dispatch,
         applicationNumber,
         tenant
       )
@@ -247,6 +251,8 @@ const screenConfig = {
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
     const data = getAcknowledgementCard(
+      state,
+      dispatch,
       purpose,
       status,
       applicationNumber,

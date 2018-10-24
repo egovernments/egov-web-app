@@ -2,6 +2,7 @@ import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
 import { getBaseURL } from "../../utils";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const getCommonApplyFooter = children => {
   return {
@@ -14,33 +15,55 @@ const getCommonApplyFooter = children => {
   };
 };
 
-const generatePdfAndDownload = (action, applicationNumber, tenant) => {
+const generatePdfAndDownload = (
+  state,
+  dispatch,
+  action,
+  applicationNumber,
+  tenant
+) => {
+  dispatch(
+    toggleSnackbarAndSetText(
+      true,
+      "Preparing confirmation form, please wait...",
+      "info"
+    )
+  );
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
     `/employee-tradelicence/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   iframe.onload = function(e) {
     // note: this assumes html2canvas v5+
-    let target = iframe.contentDocument.querySelector(
-      "#material-ui-tradeReviewDetails"
-    );
-    html2canvas(target).then(function(canvas) {
-      document.querySelector("#custom-atoms-iframeForPdf").removeChild(iframe);
-      var data = canvas.toDataURL();
-      var docDefinition = {
-        content: [
-          {
-            image: data,
-            width: 500
+    window.document.addEventListener("estimateLoaded", handleEvent, false);
+    function handleEvent(e) {
+      if (e.detail && iframe.contentDocument) {
+        let target = iframe.contentDocument.querySelector(
+          "#material-ui-tradeReviewDetails"
+        );
+        html2canvas(target).then(function(canvas) {
+          document
+            .querySelector("#custom-atoms-iframeForPdf")
+            .removeChild(iframe);
+          var data = canvas.toDataURL();
+          var docDefinition = {
+            content: [
+              {
+                image: data,
+                width: 500
+              }
+            ]
+          };
+          if (action === "download") {
+            pdfMake
+              .createPdf(docDefinition)
+              .download(`application_summary_${applicationNumber}.pdf`);
+          } else if (action === "print") {
+            pdfMake.createPdf(docDefinition).print();
           }
-        ]
-      };
-      if (action === "download") {
-        pdfMake.createPdf(docDefinition).download("application_summary.pdf");
-      } else if (action === "print") {
-        pdfMake.createPdf(docDefinition).print();
+        });
       }
-    });
+    }
   };
   // To hide the iframe
   iframe.style.cssText =
@@ -75,7 +98,12 @@ const generatePdfAndDownload = (action, applicationNumber, tenant) => {
   // });
 };
 
-export const applicationSuccessFooter = (applicationNumber, tenant) => {
+export const applicationSuccessFooter = (
+  state,
+  dispatch,
+  applicationNumber,
+  tenant
+) => {
   const baseURL = getBaseURL();
   return getCommonApplyFooter({
     gotoHome: {
@@ -120,7 +148,13 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       onClickDefination: {
         action: "condition",
         callBack: () => {
-          generatePdfAndDownload("download", applicationNumber, tenant);
+          generatePdfAndDownload(
+            state,
+            dispatch,
+            "download",
+            applicationNumber,
+            tenant
+          );
         }
       }
     },
@@ -144,7 +178,13 @@ export const applicationSuccessFooter = (applicationNumber, tenant) => {
       onClickDefination: {
         action: "condition",
         callBack: () => {
-          generatePdfAndDownload("print", applicationNumber, tenant);
+          generatePdfAndDownload(
+            state,
+            dispatch,
+            "print",
+            applicationNumber,
+            tenant
+          );
         }
       }
     },
