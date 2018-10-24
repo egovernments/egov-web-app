@@ -285,15 +285,15 @@ var ActionMenuComp = function (_Component) {
                     name: iconLeft[1],
                     action: iconLeft[0],
                     color: "rgba(0, 0, 0, 0.6000000238418579)",
-                    style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
-                    className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
+                    style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                    className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                   }),
                   primaryText: _react2.default.createElement(
                     "div",
                     { className: "menuStyle whiteColor", style: styles.menuStyle },
                     _react2.default.createElement(
                       "span",
-                      { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
+                      { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
                       item.name || ""
                     )
                   ),
@@ -301,7 +301,7 @@ var ActionMenuComp = function (_Component) {
                     name: "chevron-right",
                     action: "navigation",
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
-                    className: "material-icons whiteColor",
+                    className: "iconClassHover material-icons whiteColor",
                     style: styles.arrowIconStyle
                   }),
                   onClick: function onClick() {
@@ -317,7 +317,7 @@ var ActionMenuComp = function (_Component) {
               if (item.navigationURL && item.navigationURL !== "newTab") {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
+                  { style: { textDecoration: 'none' }, key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },
@@ -334,15 +334,15 @@ var ActionMenuComp = function (_Component) {
                         action: iconLeft[0],
                         fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
-                        className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
+                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
                         { className: "menuStyle whiteColor", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
-                          { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
+                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
                           item.name || ""
                         )
                       )
@@ -369,15 +369,15 @@ var ActionMenuComp = function (_Component) {
                         action: iconLeft[0],
                         fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
-                        className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
+                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
                         { className: "menuStyle whiteColor", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
-                          { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
+                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
                           item.name || ""
                         )
                       )
@@ -399,7 +399,7 @@ var ActionMenuComp = function (_Component) {
 
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
+                  { style: { textDecoration: 'none' }, key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },
@@ -412,13 +412,13 @@ var ActionMenuComp = function (_Component) {
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, (_React$createElement = {
                         name: iconLeft[1],
                         action: iconLeft[0]
-                      }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
+                      }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
                       primaryText: _react2.default.createElement(
                         "div",
                         { className: "menuStyle whiteColor", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
-                          { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
+                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
                           item.displayName || ""
                         )
                       )
@@ -453,7 +453,7 @@ var ActionMenuComp = function (_Component) {
                 changeLevel(path);
               }
             },
-            _react2.default.createElement(_components.Icon, { name: "arrow-back", action: "navigation", color: "#ffffff" })
+            _react2.default.createElement(_components.Icon, { name: "arrow-back", action: "navigation", color: "rgba(0, 0, 0, 0.6000000238418579)" })
           ),
           path && _react2.default.createElement(
             "div",
@@ -463,7 +463,7 @@ var ActionMenuComp = function (_Component) {
                 changeLevel("");
               }
             },
-            _react2.default.createElement(_components.Icon, { name: "home", action: "action", color: "#ffffff" })
+            _react2.default.createElement(_components.Icon, { name: "home", action: "action", color: "rgba(0, 0, 0, 0.6000000238418579)" })
           ),
           _react2.default.createElement("div", { className: "clearfix" }),
           _react2.default.createElement(
