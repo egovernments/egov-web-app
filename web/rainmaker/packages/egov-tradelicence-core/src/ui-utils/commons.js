@@ -11,7 +11,8 @@ import {
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getTranslatedLabel,
-  updateDropDowns
+  updateDropDowns,
+  ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
@@ -215,6 +216,7 @@ export const applyTradeLicense = async (state, dispatch) => {
       )
     );
     let currentFinancialYr = getCurrentFinancialYear();
+    //Changing the format of FY
     let fY1 = currentFinancialYr.split("-")[1];
     fY1 = fY1.substring(2, 4);
     currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
@@ -239,16 +241,14 @@ export const applyTradeLicense = async (state, dispatch) => {
     owners = (owners && convertOwnerDobToEpoch(owners)) || [];
 
     //set(queryObject[0], "tradeLicenseDetail.owners", getMultipleOwners(owners));
-    const city = get(queryObject[0], "tradeLicenseDetail.address.city", "");
-    let userInfo = JSON.parse(localStorage.getItem("user-info"));
-    const roles = get(userInfo, "roles");
-    const roleCodes = roles ? roles.map(role => role.code) : [];
-    let tenantId = "";
-    if (roleCodes.indexOf("CITIZEN") > -1) {
-      tenantId = city;
-    } else {
-      tenantId = localStorage.getItem("tenant-id");
-    }
+    const cityId = get(
+      queryObject[0],
+      "tradeLicenseDetail.address.tenantId",
+      ""
+    );
+    const tenantId = ifUserRoleExists("CITIZEN")
+      ? cityId
+      : localStorage.getItem("tenant-id");
 
     set(queryObject[0], "tenantId", tenantId);
 
