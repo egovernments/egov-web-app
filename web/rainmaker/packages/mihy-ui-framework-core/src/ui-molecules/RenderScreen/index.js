@@ -22,7 +22,8 @@ const RenderScreen = ({
           visible,
           type,
           roleDefination,
-          index
+          index,
+          beforeFieldChange
         } = components[componentKey];
         let extraProps = jsonPath
           ? {
@@ -60,6 +61,12 @@ const RenderScreen = ({
             componentJsonpath,
             index
           };
+        }
+        if (beforeFieldChange && typeof beforeFieldChange === "function") {
+          extraProps={
+            ...extraProps,
+            hasDependant:true
+          }
         }
         if (!isEmpty(components[componentKey].children)) {
           return (

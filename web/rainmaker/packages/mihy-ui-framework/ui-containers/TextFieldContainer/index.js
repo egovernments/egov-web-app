@@ -76,30 +76,45 @@ var TextFieldContainer = function (_React$Component) {
   }
 
   (0, _createClass3.default)(TextFieldContainer, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log(this.props);
+      var _props = this.props,
+          dispatch = _props.dispatch,
+          state = _props.state,
+          hasDependant = _props.hasDependant,
+          onChange = _props.onChange,
+          value = _props.value;
+
+      if (hasDependant && value) {
+        onChange({ target: { value: value } });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _props = this.props,
-          _props$label = _props.label,
-          label = _props$label === undefined ? {} : _props$label,
-          _props$placeholder = _props.placeholder,
-          placeholder = _props$placeholder === undefined ? {} : _props$placeholder,
-          jsonPath = _props.jsonPath,
-          _props$iconObj = _props.iconObj,
-          iconObj = _props$iconObj === undefined ? {} : _props$iconObj,
-          value = _props.value,
-          dropdownData = _props.dropdownData,
-          _props$data = _props.data,
-          data = _props$data === undefined ? [] : _props$data,
-          _props$optionValue = _props.optionValue,
-          optionValue = _props$optionValue === undefined ? "code" : _props$optionValue,
-          _props$optionLabel = _props.optionLabel,
-          optionLabel = _props$optionLabel === undefined ? "code" : _props$optionLabel,
-          sourceJsonPath = _props.sourceJsonPath,
-          index = _props.index,
-          componentJsonpath = _props.componentJsonpath,
-          state = _props.state,
-          dispatch = _props.dispatch,
-          rest = (0, _objectWithoutProperties3.default)(_props, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "dispatch"]);
+      var _props2 = this.props,
+          _props2$label = _props2.label,
+          label = _props2$label === undefined ? {} : _props2$label,
+          _props2$placeholder = _props2.placeholder,
+          placeholder = _props2$placeholder === undefined ? {} : _props2$placeholder,
+          jsonPath = _props2.jsonPath,
+          _props2$iconObj = _props2.iconObj,
+          iconObj = _props2$iconObj === undefined ? {} : _props2$iconObj,
+          value = _props2.value,
+          dropdownData = _props2.dropdownData,
+          _props2$data = _props2.data,
+          data = _props2$data === undefined ? [] : _props2$data,
+          _props2$optionValue = _props2.optionValue,
+          optionValue = _props2$optionValue === undefined ? "code" : _props2$optionValue,
+          _props2$optionLabel = _props2.optionLabel,
+          optionLabel = _props2$optionLabel === undefined ? "code" : _props2$optionLabel,
+          sourceJsonPath = _props2.sourceJsonPath,
+          index = _props2.index,
+          componentJsonpath = _props2.componentJsonpath,
+          state = _props2.state,
+          dispatch = _props2.dispatch,
+          rest = (0, _objectWithoutProperties3.default)(_props2, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "dispatch"]);
 
 
       if (!(0, _isEmpty2.default)(iconObj) && iconObj.onClickDefination) {

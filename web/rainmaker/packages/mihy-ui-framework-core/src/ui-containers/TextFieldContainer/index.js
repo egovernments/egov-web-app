@@ -28,6 +28,14 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
 };
 
 class TextFieldContainer extends React.Component {
+  componentDidMount()
+  {
+      const {hasDependant,onChange,value}=this.props;
+      if (hasDependant && value) {
+        onChange({target:{value}})
+      }
+  }
+
   render() {
     let {
       label = {},
