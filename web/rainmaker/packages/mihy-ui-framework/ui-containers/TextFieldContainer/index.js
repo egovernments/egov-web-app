@@ -78,10 +78,7 @@ var TextFieldContainer = function (_React$Component) {
   (0, _createClass3.default)(TextFieldContainer, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log(this.props);
       var _props = this.props,
-          dispatch = _props.dispatch,
-          state = _props.state,
           hasDependant = _props.hasDependant,
           onChange = _props.onChange,
           value = _props.value;
@@ -120,7 +117,10 @@ var TextFieldContainer = function (_React$Component) {
       if (!(0, _isEmpty2.default)(iconObj) && iconObj.onClickDefination) {
         iconObj = (0, _extends3.default)({}, iconObj, {
           onClick: function onClick() {
-            return iconObj.onClickDefination.callBack(state, dispatch, { index: index, componentJsonpath: componentJsonpath });
+            return iconObj.onClickDefination.callBack(state, dispatch, {
+              index: index,
+              componentJsonpath: componentJsonpath
+            });
           }
         });
       }
@@ -155,7 +155,24 @@ var TextFieldContainer = function (_React$Component) {
           })
         );
       } else {
-        return _react2.default.createElement(_uiMolecules.TextfieldWithIcon, (0, _extends3.default)({
+        return this.props.select ? _react2.default.createElement(
+          _uiMolecules.TextfieldWithIcon,
+          (0, _extends3.default)({
+            label: translatedLabel,
+            placeholder: translatedPlaceholder,
+            iconObj: iconObj,
+            value: value ? value : translatedPlaceholder
+          }, rest),
+          _react2.default.createElement(
+            _MenuItem2.default,
+            { value: translatedPlaceholder, disabled: true },
+            _react2.default.createElement(
+              "div",
+              { className: "select-field-placeholder" },
+              translatedPlaceholder
+            )
+          )
+        ) : _react2.default.createElement(_uiMolecules.TextfieldWithIcon, (0, _extends3.default)({
           label: translatedLabel,
           placeholder: translatedPlaceholder,
           iconObj: iconObj,

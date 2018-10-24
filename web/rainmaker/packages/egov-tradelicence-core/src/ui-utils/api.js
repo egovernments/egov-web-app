@@ -5,6 +5,7 @@ import {
 } from "mihy-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
 import { toggleSpinner } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -165,6 +166,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
     }
   } catch (error) {
     store.dispatch(toggleSpinner());
-    throw new Error(error);
+    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    console.log(error);
   }
 };

@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #F4F7FB;
+  background: #f4f7fb;
 }
 
 .text-center {
@@ -88,14 +88,17 @@ body {
 }
 
 span[class^="MuiFormLabel-asterisk"] {
-  color:#E54D42;
+  color: #e54d42;
 }
 
 .search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] {
   padding: 8px 1px 1px 1px;
 }
 
-.search-preview div[id^="material-ui-item"] div[id^="material-ui-cardContent"] span[class^=MuiIconButton-label]{
+.search-preview
+  div[id^="material-ui-item"]
+  div[id^="material-ui-cardContent"]
+  span[class^="MuiIconButton-label"] {
   display: none;
 }
 
@@ -104,10 +107,19 @@ span[class^="MuiFormLabel-asterisk"] {
 }
 
 .select-field-placeholder {
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(162, 162, 162, 0.77);
 }
 
+input[type="date"]::before {
+  content: attr(placeholder);
+  width: 100%;
+  color: rgba(162, 162, 162, 0.77);
+}
 
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  display: none;
+}
 
 /* div[class^="MuiGrid-item"]   {
     padding-right: 80px

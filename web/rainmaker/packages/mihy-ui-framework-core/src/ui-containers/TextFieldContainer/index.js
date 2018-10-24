@@ -28,12 +28,11 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
 };
 
 class TextFieldContainer extends React.Component {
-  componentDidMount()
-  {
-      const {hasDependant,onChange,value}=this.props;
-      if (hasDependant && value) {
-        onChange({target:{value}})
-      }
+  componentDidMount() {
+    const { hasDependant, onChange, value } = this.props;
+    if (hasDependant && value) {
+      onChange({ target: { value } });
+    }
   }
 
   render() {
@@ -58,7 +57,11 @@ class TextFieldContainer extends React.Component {
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
-        onClick: () => iconObj.onClickDefination.callBack(state, dispatch,{index,componentJsonpath})
+        onClick: () =>
+          iconObj.onClickDefination.callBack(state, dispatch, {
+            index,
+            componentJsonpath
+          })
       };
     }
     let transfomedKeys = transformById(localizationLabels, "code");
@@ -99,7 +102,21 @@ class TextFieldContainer extends React.Component {
         </TextfieldWithIcon>
       );
     } else {
-      return (
+      return this.props.select ? (
+        <TextfieldWithIcon
+          label={translatedLabel}
+          placeholder={translatedPlaceholder}
+          iconObj={iconObj}
+          value={value ? value : translatedPlaceholder}
+          {...rest}
+        >
+          <MenuItem value={translatedPlaceholder} disabled>
+            <div className="select-field-placeholder">
+              {translatedPlaceholder}
+            </div>
+          </MenuItem>
+        </TextfieldWithIcon>
+      ) : (
         <TextfieldWithIcon
           label={translatedLabel}
           placeholder={translatedPlaceholder}
