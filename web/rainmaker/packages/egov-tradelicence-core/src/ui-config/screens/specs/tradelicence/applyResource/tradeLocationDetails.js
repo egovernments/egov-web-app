@@ -92,7 +92,7 @@ export const tradeLocationDetails = getCommonCard({
         optionLabel: "name",
         placeholder: { labelName: "Select City" },
         sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
         required: true,
         props: {
           required: true
@@ -202,7 +202,7 @@ export const tradeLocationDetails = getCommonCard({
       beforeFieldChange: async (action, state, dispatch) => {
         dispatch(
           prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.locality.label",
+            "Licenses[0].tradeLicenseDetail.address.locality.name",
             action.value && action.value.label
           )
         );

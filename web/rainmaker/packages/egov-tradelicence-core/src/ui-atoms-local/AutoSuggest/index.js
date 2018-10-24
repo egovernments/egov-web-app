@@ -164,15 +164,9 @@ class IntegrationReactSelect extends React.Component {
     single: null
   };
 
-  // componentDidMount = () => {
-  // const { fieldValue } = this.props;
-  // this.setState({ single: fieldValue });
-  // };
-
-  componentWillReceiveProps = nextProps => {
-    if (this.props.fieldValue.label !== nextProps.fieldValue.label) {
-      const { fieldValue } = nextProps;
-      // this.props.onSelect(fieldValue);
+  componentDidMount = () => {
+    const { fieldValue } = this.props;
+    if (fieldValue && fieldValue.code) {
       this.setState({ single: fieldValue });
     }
   };
@@ -193,6 +187,7 @@ class IntegrationReactSelect extends React.Component {
       placeholder,
       fullwidth = true,
       required = true,
+      value,
       inputLabelProps = {
         shrink: true
       }
@@ -220,7 +215,7 @@ class IntegrationReactSelect extends React.Component {
           }}
           options={getSuggestions(suggestions) || []}
           components={components}
-          value={this.state.single}
+          value={value ? value : this.state.single}
           onChange={this.handleChange("single")}
           placeholder={placeholder}
         />
