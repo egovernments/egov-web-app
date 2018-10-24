@@ -113,7 +113,7 @@ export const callBackForNext = async (state, dispatch) => {
         isAccessoriesValid = false;
     }
     const isTradeUnitValid = validateFields(
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.multipleTradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
       state,
       dispatch
     );
