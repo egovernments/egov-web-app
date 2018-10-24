@@ -1302,43 +1302,7 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
       console.log(e);
     }
   }
-
-  const tradeSubOwnershipCat = get(
-    payload,
-    "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
-  );
-
-  console.log(tradeSubOwnershipCat);
-  if (tradeSubOwnershipCat) {
-    const tradeOwnershipCat = tradeSubOwnershipCat.split(".")[0];
-    set(
-      payload,
-      "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
-      tradeOwnershipCat
-    );
-
-    try {
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
-          get(
-            state.screenConfiguration.preparedFinalObject,
-            `applyScreenMdmsData.common-masters.OwnerShipCategory.${tradeOwnershipCat}`,
-            []
-          )
-        )
-      );
-      payload &&
-        dispatch(
-          prepareFinalObject(
-            "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
-            payload.LicensesTemp[0].tradeLicenseDetail.ownerShipCategory
-          )
-        );
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  setOwnerShipDropDownFieldChange(state, dispatch, payload);
 };
 
 export const getDocList = (state, dispatch) => {
@@ -1366,4 +1330,152 @@ export const getDocList = (state, dispatch) => {
       applicationDocument
     )
   );
+};
+
+export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
+  let tradeSubOwnershipCat = get(
+    payload,
+    "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+  );
+  let tradeOwnershipCat = "";
+  if (tradeSubOwnershipCat) {
+    tradeOwnershipCat = tradeSubOwnershipCat.split(".")[0];
+  } else {
+    tradeOwnershipCat = get(
+      state.screenConfiguration.preparedFinalObject,
+      "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed[0].code",
+      ""
+    );
+    tradeSubOwnershipCat = get(
+      state.screenConfiguration.preparedFinalObject,
+      `applyScreenMdmsData.common-masters.OwnerShipCategory.${tradeOwnershipCat}[0].code`,
+      ""
+    );
+    set(
+      payload,
+      "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+      tradeSubOwnershipCat
+    );
+    payload &&
+      dispatch(
+        prepareFinalObject(
+          "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+          payload.Licenses[0].tradeLicenseDetail.subOwnerShipCategory
+        )
+      );
+  }
+
+  set(
+    payload,
+    "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+    tradeOwnershipCat
+  );
+
+  try {
+    payload &&
+      dispatch(
+        prepareFinalObject(
+          "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
+          payload.LicensesTemp[0].tradeLicenseDetail.ownerShipCategory
+        )
+      );
+    dispatch(
+      prepareFinalObject(
+        "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
+        get(
+          state.screenConfiguration.preparedFinalObject,
+          `applyScreenMdmsData.common-masters.OwnerShipCategory.${tradeOwnershipCat}`,
+          []
+        )
+      )
+    );
+
+    //handlefield for Type of OwnerShip while setting drop down values as beforeFieldChange won't be callled
+    if (tradeOwnershipCat === "INDIVIDUAL") {
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+          "visible",
+          true
+        )
+      );
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional",
+          "visible",
+          false
+        )
+      );
+    } else {
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+          "visible",
+          false
+        )
+      );
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional",
+          "visible",
+          true
+        )
+      );
+    }
+
+    //handlefield for type of sub ownership while setting drop down values as beforeFieldChange won't be callled
+
+    if (tradeSubOwnershipCat === "INDIVIDUAL.SINGLEOWNER") {
+      const ownerInfoCards = get(
+        state.screenConfiguration.screenConfig.apply, //hardcoded to apply screen
+        "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items"
+      );
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+          "props.hasAddItem",
+          false
+        )
+      );
+      if (ownerInfoCards && ownerInfoCards.length > 1) {
+        const singleCard = ownerInfoCards.slice(0, 1); //get the first element if multiple cards present
+
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+            "props.items",
+            singleCard
+          )
+        );
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.owners",
+            get(
+              state.screenConfiguration.preparedFinalObject,
+              "Licenses[0].tradeLicenseDetail.owners"
+            ).slice(0, 1)
+          )
+        );
+      }
+    }
+
+    if (tradeSubOwnershipCat === "INDIVIDUAL.MULTIPLEOWNERS") {
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard",
+          "props.hasAddItem",
+          true
+        )
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };
