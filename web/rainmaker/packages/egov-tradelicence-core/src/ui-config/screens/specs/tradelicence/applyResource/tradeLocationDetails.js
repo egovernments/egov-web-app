@@ -175,6 +175,7 @@ export const tradeLocationDetails = getCommonCard({
       uiFramework: "custom-containers-local",
       componentPath: "AutosuggestContainer",
       jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+      required:true,
       props: {
         suggestions: [],
         label: "Mohalla",
