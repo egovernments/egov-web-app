@@ -41,7 +41,7 @@ const applicationNumber = getQueryArg(
   window.location.href,
   "applicationNumber"
 );
-let headerSideText = "";
+let headerSideText = { word1: "", word2: "" };
 
 const setDocuments = async (
   payload,
@@ -389,13 +389,24 @@ const screenConfig = {
                 align: "right"
               },
               children: {
-                buttonLabel: {
+                word1: {
+                  ...getCommonTitle(
+                    {
+                      jsonPath: "Licenses[0].headerSideText.word1"
+                    },
+                    {
+                      style: {
+                        marginRight: "10px",
+                        color: "rgba(0, 0, 0, 0.6000000238418579)"
+                      }
+                    }
+                  )
+                },
+
+                word2: {
                   ...getCommonTitle({
-                    jsonPath: "Licenses[0].headerSideText"
-                  }),
-                  gridDefination: {
-                    xs: 12
-                  }
+                    jsonPath: "Licenses[0].headerSideText.word2"
+                  })
                 },
                 cancelledLabel: {
                   ...getCommonHeader(

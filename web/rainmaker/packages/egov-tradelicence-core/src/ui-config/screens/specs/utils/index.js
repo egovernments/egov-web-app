@@ -604,17 +604,17 @@ export const showHideMapPopup = (state, dispatch) => {
 export const getHeaderSideText = (status, licenseNo = null) => {
   switch (status) {
     case "PAID":
-      return "Status: Pending Approval";
+      return { word1: "Status: ", word2: "Pending Approval" };
     case "APPLIED":
-      return "Status: Pending Payment";
+      return { word1: "Status: ", word2: "Pending Payment" };
     case "REJECTED":
-      return "Status: Application Rejected";
+      return { word1: "Status: ", word2: "Application Rejected" };
     case "CANCELLED":
-      return `Trade License No: ${licenseNo}`;
+      return { word1: `Trade License No: `, word2: `${licenseNo}` };
     case "APPROVED":
-      return `Trade License No: ${licenseNo}`;
+      return { word1: `Trade License No: `, word2: `${licenseNo}` };
     default:
-      return "";
+      return { word1: "", word2: "" };
   }
 };
 
