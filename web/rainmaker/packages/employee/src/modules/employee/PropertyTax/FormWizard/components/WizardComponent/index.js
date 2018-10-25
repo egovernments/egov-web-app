@@ -27,8 +27,8 @@ const WizardComponent = ({
       {header}
       <div className="wizard-content clearfix">{content}</div>
       {footer}
-      <div className="wizard-footer col-sm-10" style={{ textAlign: "right" }}>
-        <div className="col-xs-6" style={{ float: "right" }}>
+      <div id="tax-wizard-buttons" className="wizard-footer col-sm-10" style={{ textAlign: "right" }}>
+        <div className="button-container col-xs-6" style={{ float: "right" }}>
           <Button
             label={<Label buttonLabel={true} label={backLabel} color="#fe7a51" />}
             onClick={() => {
