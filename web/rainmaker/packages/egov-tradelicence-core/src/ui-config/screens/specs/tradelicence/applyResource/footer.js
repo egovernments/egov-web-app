@@ -429,7 +429,7 @@ export const footer = getCommonApplyFooter({
       variant: "outlined",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "16px"
       }
@@ -459,7 +459,7 @@ export const footer = getCommonApplyFooter({
       variant: "contained",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }
@@ -488,7 +488,7 @@ export const footer = getCommonApplyFooter({
       variant: "contained",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }
@@ -537,7 +537,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               props: {
                 variant: "outlined",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "40px",
                   marginLeft: "24px",
                   border: "none",
@@ -584,7 +584,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
               props: {
                 variant: "outlined",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "40px",
                   marginLeft: "16px",
                   border: "none",
@@ -639,7 +639,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "outlined",
                 color: "primary",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "48px",
                   marginRight: "16px"
                 }
@@ -666,7 +666,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "contained",
                 color: "primary",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "48px",
                   marginRight: "45px"
                 }
@@ -693,7 +693,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "contained",
                 color: "primary",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "48px",
                   marginRight: "45px"
                 }
@@ -720,7 +720,7 @@ export const footerReview = (status, applicationNumber, tenantId) => {
                 variant: "contained",
                 color: "primary",
                 style: {
-                  width: "200px",
+                  minWidth: "200px",
                   height: "48px",
                   marginRight: "45px"
                 }

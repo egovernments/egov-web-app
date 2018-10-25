@@ -112,7 +112,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "16px"
         }
@@ -134,7 +134,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          width: "290px",
+          minWidth: "290px",
           height: "48px",
           marginRight: "16px"
         }
@@ -164,7 +164,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          width: "250px",
+          minWidth: "250px",
           height: "48px",
           marginRight: "16px"
         }
@@ -194,7 +194,7 @@ export const applicationSuccessFooter = (
         variant: "contained",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "40px"
         }
@@ -220,7 +220,7 @@ export const applicationSuccessFooter = (
         variant: "contained",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "40px"
         }

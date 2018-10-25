@@ -283,7 +283,7 @@ export const footer = getCommonApplyFooter({
       variant: "contained",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }
@@ -316,7 +316,7 @@ export const footer = getCommonApplyFooter({
       variant: "outlined",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }
@@ -342,7 +342,7 @@ export const footer = getCommonApplyFooter({
       variant: "outlined",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }
@@ -368,7 +368,7 @@ export const footer = getCommonApplyFooter({
       variant: "contained",
       color: "primary",
       style: {
-        width: "200px",
+        minWidth: "200px",
         height: "48px",
         marginRight: "45px"
       }

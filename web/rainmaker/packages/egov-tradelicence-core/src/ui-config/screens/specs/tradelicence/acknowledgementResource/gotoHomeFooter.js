@@ -25,7 +25,7 @@ export const gotoHomeFooter = () => {
         variant: "outlined",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "16px"
         }
