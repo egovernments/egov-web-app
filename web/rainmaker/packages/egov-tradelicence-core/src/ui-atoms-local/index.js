@@ -43,6 +43,11 @@ const Asteric = Loadable({
   loading: () => <Loading />
 });
 
+const MenuButton = Loadable({
+  loader: () => import("./MenuButton"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -51,5 +56,6 @@ export {
   UploadedDocument,
   MapLocation,
   AutoSuggest,
-  Asteric
+  Asteric,
+  MenuButton
 };

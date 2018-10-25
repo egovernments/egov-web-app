@@ -27,6 +27,7 @@ import {
 } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
+import generateReceipt from "../../utils/receiptPdf";
 
 import html2canvas from "html2canvas";
 import pdfMake from "pdfmake/build/pdfmake";
@@ -514,7 +515,14 @@ export const footer = getCommonApplyFooter({
   }
 });
 
-export const footerReview = (status, applicationNumber, tenantId) => {
+export const footerReview = (
+  action,
+  state,
+  dispatch,
+  status,
+  applicationNumber,
+  tenantId
+) => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
     ? "/mihy-ui-framework/tradelicense-citizen"
@@ -529,99 +537,82 @@ export const footerReview = (status, applicationNumber, tenantId) => {
           uiFramework: "custom-atoms",
           componentPath: "Div",
           props: {
-            style: { textAlign: "left" }
+            style: { textAlign: "left", display: "flex" }
           },
           children: {
-            downloadButton: {
-              componentPath: "Button",
+            downloadMenu: {
+              uiFramework: "custom-atoms-local",
+              componentPath: "MenuButton",
               props: {
-                variant: "outlined",
-                style: {
-                  minWidth: "200px",
-                  height: "40px",
-                  marginLeft: "24px",
-                  border: "none",
-                  backgroundColor: "#F2F2F2"
+                data: {
+                  label: "Download",
+                  leftIcon: "cloud_download",
+                  rightIcon: "arrow_drop_down",
+                  props: { variant: "outlined", style: { marginLeft: 10 } },
+                  menu: [
+                    {
+                      label: "TL Certificate",
+                      link: () => {
+                        generateReceipt(
+                          state,
+                          dispatch,
+                          "certificate_download"
+                        );
+                      },
+                      leftIcon: "book"
+                    },
+                    {
+                      label: "Receipt",
+                      link: () => {
+                        generateReceipt(state, dispatch, "receipt_download");
+                      },
+                      leftIcon: "receipt"
+                    },
+                    {
+                      label: "Application",
+                      link: () => {
+                        generatePdfFromDiv("download", applicationNumber);
+                      },
+                      leftIcon: "assignment"
+                    }
+                  ]
                 }
-              },
-              children: {
-                downloadIcon: {
-                  uiFramework: "custom-atoms",
-                  componentPath: "Icon",
-                  props: {
-                    iconName: "cloud_download"
-                  }
-                },
-                nextButtonLabel: getLabel({
-                  labelName: "Download",
-                  labelKey: "TL_COMMON_DOWNLOAD",
-                  style: {
-                    marginLeft: "10px",
-                    marginRight: "10px"
-                  }
-                })
-                // dropdown: {
-                //   uiFramework: "custom-atoms",
-                //   componentPath: "Icon",
-                //   props: {
-                //     style: {
-                //       float: "right"
-                //     },
-                //     iconName: "arrow_drop_down"
-                //   }
-                // }
-              },
-              onClickDefination: {
-                action: "condition",
-                callBack: () => {
-                  generatePdfFromDiv("download", applicationNumber);
-                }
-              },
-              visible: true
+              }
             },
-            printButton: {
-              componentPath: "Button",
+            printMenu: {
+              uiFramework: "custom-atoms-local",
+              componentPath: "MenuButton",
               props: {
-                variant: "outlined",
-                style: {
-                  minWidth: "200px",
-                  height: "40px",
-                  marginLeft: "16px",
-                  border: "none",
-                  backgroundColor: "#F2F2F2"
+                data: {
+                  label: "Print",
+                  leftIcon: "print",
+                  rightIcon: "arrow_drop_down",
+                  props: { variant: "outlined", style: { marginLeft: 10 } },
+                  menu: [
+                    {
+                      label: "TL Certificate",
+                      link: () => {
+                        generateReceipt(state, dispatch, "certificate_print");
+                      },
+                      leftIcon: "book"
+                    },
+                    {
+                      label: "Receipt",
+                      link: () => {
+                        generateReceipt(state, dispatch, "receipt_print");
+                      },
+                      leftIcon: "receipt"
+                    },
+                    {
+                      label: "Application",
+                      link: () => {
+                        generatePdfFromDiv("print", applicationNumber);
+                      },
+                      leftIcon: "assignment"
+                    }
+                  ]
                 }
-              },
-              children: {
-                downloadIcon: {
-                  uiFramework: "custom-atoms",
-                  componentPath: "Icon",
-                  props: {
-                    iconName: "print"
-                  }
-                },
-                nextButtonLabel: getLabel({
-                  labelName: "Print",
-                  labelKey: "TL_COMMON_PRINT",
-                  style: {
-                    marginLeft: "10px",
-                    marginRight: "10px"
-                  }
-                })
-                // dropdown: {
-                //   uiFramework: "custom-atoms",
-                //   componentPath: "Icon",
-                //   props: {
-                //     iconName: "arrow_drop_down"
-                //   }
-                // }
-              },
-              onClickDefination: {
-                action: "condition",
-                callBack: () => {
-                  generatePdfFromDiv("print", applicationNumber);
-                }
-              },
-              visible: true
+              }
             }
           },
           gridDefination: {

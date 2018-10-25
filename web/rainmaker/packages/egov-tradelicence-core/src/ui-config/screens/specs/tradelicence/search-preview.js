@@ -33,8 +33,7 @@ import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { footerReview } from "./applyResource/footer";
-
-import { getBoundaryData } from "../../../../ui-utils/commons";
+import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
 const applicationNumber = getQueryArg(
@@ -221,7 +220,14 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
     }
 
-    const footer = footerReview(status, applicationNumber, tenantId);
+    const footer = footerReview(
+      action,
+      state,
+      dispatch,
+      status,
+      applicationNumber,
+      tenantId
+    );
     set(action, "screenConfig.components.div.children.footer", footer);
 
     if (status === "cancelled")
@@ -232,6 +238,7 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
 
     setActionItems(action, obj);
+    loadReceiptGenerationData(applicationNumber, tenantId);
   }
 };
 

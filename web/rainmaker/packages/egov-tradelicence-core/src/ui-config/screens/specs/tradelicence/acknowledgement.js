@@ -9,23 +9,9 @@ import { gotoHomeFooter } from "./acknowledgementResource/gotoHomeFooter";
 import { paymentFailureFooter } from "./acknowledgementResource/paymentFailureFooter";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import {
-  loadUlbLogo,
-  loadApplicationData,
-  loadReceiptData,
-  loadMdmsData
-} from "../utils/receiptTransformer";
+import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
-
-/** Data used for creation of receipt is generated and stored in local storage here */
-const loadReceiptGenerationData = (applicationNumber, tenant) => {
-  /** Logo loaded and stored in local storage in base64 */
-  loadUlbLogo(tenant); //pb.amritsar
-  loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
-  loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
-  loadMdmsData(tenant);
-};
 
 const getAcknowledgementCard = (
   state,
