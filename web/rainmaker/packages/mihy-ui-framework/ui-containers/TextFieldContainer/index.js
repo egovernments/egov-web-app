@@ -180,7 +180,7 @@ var TextFieldContainer = function (_React$Component) {
               )
             )
           ),
-          title && !(0, _isEmpty2.default)(title) && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
+          title && !(0, _isEmpty2.default)(title) && infoIcon && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
         ) : _react2.default.createElement(
           "div",
           null,
@@ -190,7 +190,7 @@ var TextFieldContainer = function (_React$Component) {
             iconObj: iconObj,
             value: this.props.type === "date" && !value ? translatedPlaceholder : value
           }, rest)),
-          title && !(0, _isEmpty2.default)(title) && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
+          title && !(0, _isEmpty2.default)(title) && infoIcon && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
         );
       }
     }

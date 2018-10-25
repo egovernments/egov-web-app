@@ -40,9 +40,8 @@ export const getOwnerMobNoField = getTextField({
     }
   },
   title: {
-    value:
-      "If you have already assessed your property, then please search your property by your PAID",
-    key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+    value: "Please search owner profile linked to the mobile no.",
+    key: "TL_MOBILE_NO_TOOLTIP_MESSAGE"
   },
   infoIcon: "info_circle"
 });

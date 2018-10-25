@@ -119,7 +119,9 @@ class TextFieldContainer extends React.Component {
               </div>
             </MenuItem>
           </TextfieldWithIcon>
-          {title && !isEmpty(title) && <Tooltip val={title} icon={infoIcon} />}
+          {title &&
+            !isEmpty(title) &&
+            infoIcon && <Tooltip val={title} icon={infoIcon} />}
         </div>
       ) : (
         <div>
@@ -134,7 +136,9 @@ class TextFieldContainer extends React.Component {
             }
             {...rest}
           />
-          {title && !isEmpty(title) && <Tooltip val={title} icon={infoIcon} />}
+          {title &&
+            !isEmpty(title) &&
+            infoIcon && <Tooltip val={title} icon={infoIcon} />}
         </div>
       );
     }
