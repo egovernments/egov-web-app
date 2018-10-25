@@ -81,60 +81,66 @@ export const tradeLocationDetails = getCommonCard({
         }
       }
     },
-    tradeLocPropertyID: {
-      uiFramework: "custom-atoms",
-      componentPath: "Container",
-      children: {
-        txt: getTextField({
-          label: {
-            labelName: "Property ID",
-            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Property ID",
-            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
-          },
+    tradeLocPropertyID:
+      //  {
+      //   uiFramework: "custom-atoms",
+      //   componentPath: "Container",
+      //   children: {
+      //     txt:
+      getTextField({
+        label: {
+          labelName: "Property ID",
+          labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Property ID",
+          labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
+        },
 
-          // pattern: getPattern("PropertyID"),
-          iconObj: {
-            iconName: "search",
-            position: "end",
-            color: "#FE7A51",
-            // downloadReceiptButtonLabel: getLabel({
-            //   labelName: "SEARCH",
-            //   labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-            // }),
-            onClickDefination: {
-              action: "condition",
-              callBack: (state, dispatch) => {
-                getDetailsFromProperty(state, dispatch);
-              }
+        // pattern: getPattern("PropertyID"),
+        iconObj: {
+          iconName: "search",
+          position: "end",
+          color: "#FE7A51",
+          onClickDefination: {
+            action: "condition",
+            callBack: (state, dispatch) => {
+              getDetailsFromProperty(state, dispatch);
             }
-          },
-          gridDefination: {
-            xs: 11,
-            sm: 11
-          },
-          jsonPath: "Licenses[0].propertyId"
-        }),
-        ico: {
-          uiFramework: "custom-molecules-local",
-          componentPath: "Tooltip",
-          props: {
-            val: {
-              value: "Property Id Information",
-              key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
-            },
-            style: getIconStyle("textfieldIcon")
-          },
-          gridDefination: { xs: 1 }
-        }
-      },
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      }
-    },
+          }
+        },
+        title: {
+          value:
+            "If you have already assessed your property, then please search your property by your PAID",
+          key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+        },
+        infoIcon: "info_circle",
+
+        // gridDefination: {
+        //   xs: 11,
+        //   sm: 11
+        // },
+        jsonPath: "Licenses[0].propertyId"
+      }),
+    // ico: {
+    //   uiFramework: "custom-molecules-local",
+    //   componentPath: "Tooltip",
+    //   props: {
+    //     val: {
+    //       value:
+    //         "If you have already assessed your property, then please search your property by your PAID",
+    //       key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+    //     },
+    //     style: getIconStyle("textfieldIcon")
+    //   },
+    //   gridDefination: { xs: 1 }
+    // }
+    // },
+    // gridDefination: {
+    //   xs: 12,
+    //   sm: 6
+    // }
+    //}
     tradeLocDoorHouseNo: getTextField({
       label: {
         labelName: "Door/House No.",

@@ -3,6 +3,7 @@ import AutoComplete from "material-ui/AutoComplete";
 import PropTypes from "prop-types";
 import filter from "lodash/filter";
 import isUndefined from "lodash/isUndefined";
+import sortBy from "lodash/sortBy";
 
 const hintBaseStyle = {
   fontSize: "16px",
@@ -68,7 +69,7 @@ class AutoSuggestDropdown extends React.Component {
 
     const { filterAutoComplete, getNameById, onChangeText } = this;
     const { searchText } = this.state;
-
+    const items = sortBy(dataSource, ["label"]);
     return (
       <AutoComplete
         className={`autosuggest ${className}`}
@@ -76,11 +77,11 @@ class AutoSuggestDropdown extends React.Component {
         floatingLabelStyle={{ ...floatingLabelStyle }}
         hintStyle={{ ...hintBaseStyle }}
         underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-        openOnFocus={false}
+        openOnFocus={true}
         fullWidth={true}
         searchText={searchText}
         underlineDisabledStyle={underlineDisabledStyle}
-        dataSource={(dataSource && [...dataSource]) || []}
+        dataSource={(items && [...items]) || []}
         menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
         dataSourceConfig={{ text: "label", value: "value" }}
         onNewRequest={onChange}

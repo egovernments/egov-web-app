@@ -58,6 +58,10 @@ var _isUndefined = require("lodash/isUndefined");
 
 var _isUndefined2 = _interopRequireDefault(_isUndefined);
 
+var _sortBy = require("lodash/sortBy");
+
+var _sortBy2 = _interopRequireDefault(_sortBy);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintBaseStyle = {
@@ -140,18 +144,18 @@ var AutoSuggestDropdown = function (_React$Component) {
           onChangeText = this.onChangeText;
       var searchText = this.state.searchText;
 
-
+      var items = (0, _sortBy2.default)(dataSource, ["label"]);
       return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
         className: "autosuggest " + className,
         floatingLabelFixed: true,
         floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
         hintStyle: (0, _extends3.default)({}, hintBaseStyle),
         underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
-        openOnFocus: false,
+        openOnFocus: true,
         fullWidth: true,
         searchText: searchText,
         underlineDisabledStyle: underlineDisabledStyle,
-        dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
+        dataSource: items && [].concat((0, _toConsumableArray3.default)(items)) || [],
         menuStyle: { maxHeight: "150px", overflowY: "auto" },
         dataSourceConfig: { text: "label", value: "value" },
         onNewRequest: onChange,

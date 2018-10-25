@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getPattern = exports.getTab = exports.getTabs = exports.getLabelWithValue = exports.dispatchMultipleFieldChangeAction = exports.getDivider = exports.getCommonContainer = exports.getRadiobuttonGroup = exports.getRadiobuttonwithLabel = exports.getCheckBoxwithLabel = exports.getTextField = exports.getDateTimeField = exports.getTimeField = exports.getDateField = exports.getSelectField = exports.getLabel = exports.getBreak = exports.getCommonGrayCard = exports.getCommonCardWithHeader = exports.getCommonCard = exports.getCommonValue = exports.getCommonCaption = exports.getCommonParagraph = exports.getCommonSubHeader = exports.getCommonTitle = exports.getCommonHeader = exports.getStepperObject = undefined;
+exports.getPattern = exports.getTab = exports.getTabs = exports.getLabelWithValue = exports.dispatchMultipleFieldChangeAction = exports.getDivider = exports.getCommonContainer = exports.getRadiobuttonGroup = exports.getRadiobuttonwithLabel = exports.getCheckBoxwithLabel = exports.getLocaleLabelsforTL = exports.getTextField = exports.getDateTimeField = exports.getTimeField = exports.getDateField = exports.getSelectField = exports.getLabel = exports.getBreak = exports.getCommonGrayCard = exports.getCommonCardWithHeader = exports.getCommonCard = exports.getCommonValue = exports.getCommonCaption = exports.getCommonParagraph = exports.getCommonSubHeader = exports.getCommonTitle = exports.getCommonHeader = exports.getStepperObject = undefined;
 
 var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
 
@@ -14,6 +14,8 @@ var _extends2 = require("babel-runtime/helpers/extends");
 var _extends3 = _interopRequireDefault(_extends2);
 
 var _actions = require("../../../../ui-redux/screen-configuration/actions");
+
+var _commons = require("../../../../ui-utils/commons");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -256,6 +258,9 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
       maxLength = textScheama.maxLength,
       minValue = textScheama.minValue,
       maxValue = textScheama.maxValue,
+      infoIcon = textScheama.infoIcon,
+      _textScheama$title = textScheama.title,
+      title = _textScheama$title === undefined ? {} : _textScheama$title,
       _textScheama$errorMes = textScheama.errorMessage,
       errorMessage = _textScheama$errorMes === undefined ? "" : _textScheama$errorMes,
       _textScheama$required2 = textScheama.requiredMessage,
@@ -277,7 +282,9 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
       optionLabel: optionLabel,
       sourceJsonPath: sourceJsonPath,
       jsonPath: jsonPath,
-      iconObj: iconObj
+      iconObj: iconObj,
+      title: title,
+      infoIcon: infoIcon
     }, props),
     gridDefination: gridDefination,
     required: required,
@@ -290,6 +297,19 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
     errorMessage: errorMessage,
     requiredMessage: requiredMessage
   };
+};
+
+var getLocaleLabelsforTL = exports.getLocaleLabelsforTL = function getLocaleLabelsforTL(label, labelKey, localizationLabels) {
+  if (labelKey) {
+    var translatedLabel = (0, _commons.getTranslatedLabel)(labelKey, localizationLabels);
+    if (!translatedLabel || labelKey === translatedLabel) {
+      return label;
+    } else {
+      return translatedLabel;
+    }
+  } else {
+    return label;
+  }
 };
 
 var getCheckBoxwithLabel = exports.getCheckBoxwithLabel = function getCheckBoxwithLabel(label) {

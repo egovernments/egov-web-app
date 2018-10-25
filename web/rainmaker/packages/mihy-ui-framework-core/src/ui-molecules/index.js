@@ -64,7 +64,6 @@ const Stepper = Loadable({
   loading: () => <Loading />
 });
 
-
 const Carousel = Loadable({
   loader: () => import("./Carousel"),
   loading: () => <Loading />
@@ -115,6 +114,10 @@ const CustomTab = Loadable({
   loading: () => <Loading />
 });
 
+const Tooltip = Loadable({
+  loader: () => import("./Tooltip"),
+  loading: () => <Loading />
+});
 
 export {
   RenderRoutes,
@@ -140,5 +143,6 @@ export {
   FeesEstimateCard,
   MultiDownloadCard,
   RadioGroup,
-  CustomTab
+  CustomTab,
+  Tooltip
 };

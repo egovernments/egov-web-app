@@ -50,22 +50,24 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
 var _commons = require("../../ui-utils/commons");
 
+var _utils = require("../../ui-config/screens/specs/utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var localizationLabels = JSON.parse(window.localStorage.getItem("localization_en_IN"));
 
-var getLocaleLabelsforTL = function getLocaleLabelsforTL(label, labelKey, localizationLabels) {
-  if (labelKey) {
-    var translatedLabel = (0, _commons.getTranslatedLabel)(labelKey, localizationLabels);
-    if (!translatedLabel || labelKey === translatedLabel) {
-      return label;
-    } else {
-      return translatedLabel;
-    }
-  } else {
-    return label;
-  }
-};
+// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
+//   if (labelKey) {
+//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+//     if (!translatedLabel || labelKey === translatedLabel) {
+//       return label;
+//     } else {
+//       return translatedLabel;
+//     }
+//   } else {
+//     return label;
+//   }
+// };
 
 var TextFieldContainer = function (_React$Component) {
   (0, _inherits3.default)(TextFieldContainer, _React$Component);
@@ -110,8 +112,10 @@ var TextFieldContainer = function (_React$Component) {
           index = _props2.index,
           componentJsonpath = _props2.componentJsonpath,
           state = _props2.state,
+          infoIcon = _props2.infoIcon,
           dispatch = _props2.dispatch,
-          rest = (0, _objectWithoutProperties3.default)(_props2, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "dispatch"]);
+          title = _props2.title,
+          rest = (0, _objectWithoutProperties3.default)(_props2, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "infoIcon", "dispatch", "title"]);
 
 
       if (!(0, _isEmpty2.default)(iconObj) && iconObj.onClickDefination) {
@@ -125,8 +129,8 @@ var TextFieldContainer = function (_React$Component) {
         });
       }
       var transfomedKeys = (0, _commons.transformById)(localizationLabels, "code");
-      var translatedLabel = getLocaleLabelsforTL(label.labelName, label.labelKey, transfomedKeys);
-      var translatedPlaceholder = getLocaleLabelsforTL(placeholder.labelName, placeholder.labelKey, transfomedKeys);
+      var translatedLabel = (0, _utils.getLocaleLabelsforTL)(label.labelName, label.labelKey, transfomedKeys);
+      var translatedPlaceholder = (0, _utils.getLocaleLabelsforTL)(placeholder.labelName, placeholder.labelKey, transfomedKeys);
 
       if (dropdownData.length > 0) {
         return _react2.default.createElement(
@@ -150,34 +154,44 @@ var TextFieldContainer = function (_React$Component) {
             return _react2.default.createElement(
               _MenuItem2.default,
               { key: key, value: option.value },
-              getLocaleLabelsforTL(option.value, "TL_" + option.value, transfomedKeys)
+              (0, _utils.getLocaleLabelsforTL)(option.value, "TL_" + option.value, transfomedKeys)
             );
           })
         );
       } else {
         return this.props.select ? _react2.default.createElement(
-          _uiMolecules.TextfieldWithIcon,
-          (0, _extends3.default)({
+          "div",
+          null,
+          _react2.default.createElement(
+            _uiMolecules.TextfieldWithIcon,
+            (0, _extends3.default)({
+              label: translatedLabel,
+              placeholder: translatedPlaceholder,
+              iconObj: iconObj,
+              value: value ? value : translatedPlaceholder
+            }, rest),
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { value: translatedPlaceholder, disabled: true },
+              _react2.default.createElement(
+                "div",
+                { className: "select-field-placeholder" },
+                translatedPlaceholder
+              )
+            )
+          ),
+          title && !(0, _isEmpty2.default)(title) && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
+        ) : _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(_uiMolecules.TextfieldWithIcon, (0, _extends3.default)({
             label: translatedLabel,
             placeholder: translatedPlaceholder,
             iconObj: iconObj,
-            value: value ? value : translatedPlaceholder
-          }, rest),
-          _react2.default.createElement(
-            _MenuItem2.default,
-            { value: translatedPlaceholder, disabled: true },
-            _react2.default.createElement(
-              "div",
-              { className: "select-field-placeholder" },
-              translatedPlaceholder
-            )
-          )
-        ) : _react2.default.createElement(_uiMolecules.TextfieldWithIcon, (0, _extends3.default)({
-          label: translatedLabel,
-          placeholder: translatedPlaceholder,
-          iconObj: iconObj,
-          value: this.props.type === "date" && !value ? translatedPlaceholder : value
-        }, rest));
+            value: this.props.type === "date" && !value ? translatedPlaceholder : value
+          }, rest)),
+          title && !(0, _isEmpty2.default)(title) && _react2.default.createElement(_uiMolecules.Tooltip, { val: title, icon: infoIcon })
+        );
       }
     }
   }]);

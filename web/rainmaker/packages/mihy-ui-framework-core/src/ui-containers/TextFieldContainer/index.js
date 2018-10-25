@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { TextfieldWithIcon } from "../../ui-molecules";
+import { TextfieldWithIcon, Tooltip } from "../../ui-molecules";
 import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
@@ -9,24 +9,24 @@ import {
   transformById,
   epochToYmd
 } from "../../ui-utils/commons";
+import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
 
 const localizationLabels = JSON.parse(
   window.localStorage.getItem("localization_en_IN")
 );
 
-const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-  if (labelKey) {
-    let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-    if (!translatedLabel || labelKey === translatedLabel) {
-      return label;
-    } else {
-      return translatedLabel;
-    }
-  } else {
-    return label;
-  }
-};
-
+// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
+//   if (labelKey) {
+//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+//     if (!translatedLabel || labelKey === translatedLabel) {
+//       return label;
+//     } else {
+//       return translatedLabel;
+//     }
+//   } else {
+//     return label;
+//   }
+// };
 class TextFieldContainer extends React.Component {
   componentDidMount() {
     const { hasDependant, onChange, value } = this.props;
@@ -50,7 +50,9 @@ class TextFieldContainer extends React.Component {
       index,
       componentJsonpath,
       state,
+      infoIcon,
       dispatch,
+      title,
       ...rest
     } = this.props;
 
@@ -103,29 +105,37 @@ class TextFieldContainer extends React.Component {
       );
     } else {
       return this.props.select ? (
-        <TextfieldWithIcon
-          label={translatedLabel}
-          placeholder={translatedPlaceholder}
-          iconObj={iconObj}
-          value={value ? value : translatedPlaceholder}
-          {...rest}
-        >
-          <MenuItem value={translatedPlaceholder} disabled>
-            <div className="select-field-placeholder">
-              {translatedPlaceholder}
-            </div>
-          </MenuItem>
-        </TextfieldWithIcon>
+        <div>
+          <TextfieldWithIcon
+            label={translatedLabel}
+            placeholder={translatedPlaceholder}
+            iconObj={iconObj}
+            value={value ? value : translatedPlaceholder}
+            {...rest}
+          >
+            <MenuItem value={translatedPlaceholder} disabled>
+              <div className="select-field-placeholder">
+                {translatedPlaceholder}
+              </div>
+            </MenuItem>
+          </TextfieldWithIcon>
+          {title && !isEmpty(title) && <Tooltip val={title} icon={infoIcon} />}
+        </div>
       ) : (
-        <TextfieldWithIcon
-          label={translatedLabel}
-          placeholder={translatedPlaceholder}
-          iconObj={iconObj}
-          value={
-            this.props.type === "date" && !value ? translatedPlaceholder : value
-          }
-          {...rest}
-        />
+        <div>
+          <TextfieldWithIcon
+            label={translatedLabel}
+            placeholder={translatedPlaceholder}
+            iconObj={iconObj}
+            value={
+              this.props.type === "date" && !value
+                ? translatedPlaceholder
+                : value
+            }
+            {...rest}
+          />
+          {title && !isEmpty(title) && <Tooltip val={title} icon={infoIcon} />}
+        </div>
       );
     }
   }

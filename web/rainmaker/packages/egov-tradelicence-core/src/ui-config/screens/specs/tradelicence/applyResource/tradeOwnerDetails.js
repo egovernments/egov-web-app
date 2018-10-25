@@ -38,7 +38,13 @@ export const getOwnerMobNoField = getTextField({
         getDetailsForOwner(state, dispatch, fieldInfo);
       }
     }
-  }
+  },
+  title: {
+    value:
+      "If you have already assessed your property, then please search your property by your PAID",
+    key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+  },
+  infoIcon: "info_circle"
 });
 
 export const getOwnerGenderField = getSelectField({

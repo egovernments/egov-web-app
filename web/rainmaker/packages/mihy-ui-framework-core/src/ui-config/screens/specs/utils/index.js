@@ -1,4 +1,5 @@
 import { handleScreenConfigurationFieldChange as handleField } from "../../../../ui-redux/screen-configuration/actions";
+import { getTranslatedLabel } from "../../../../ui-utils/commons";
 
 const appCardHeaderStyle = (colorOne = "#ec407a", colorTwo = "#d81b60") => {
   return {
@@ -232,6 +233,8 @@ export const getTextField = textScheama => {
     maxLength,
     minValue,
     maxValue,
+    infoIcon,
+    title = {},
     errorMessage = "",
     requiredMessage = ""
   } = textScheama;
@@ -252,6 +255,8 @@ export const getTextField = textScheama => {
       sourceJsonPath,
       jsonPath,
       iconObj,
+      title,
+      infoIcon,
       ...props
     },
     gridDefination,
@@ -265,6 +270,19 @@ export const getTextField = textScheama => {
     errorMessage,
     requiredMessage
   };
+};
+
+export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
+  if (labelKey) {
+    let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+    if (!translatedLabel || labelKey === translatedLabel) {
+      return label;
+    } else {
+      return translatedLabel;
+    }
+  } else {
+    return label;
+  }
 };
 
 export const getCheckBoxwithLabel = (
