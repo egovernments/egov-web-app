@@ -26,7 +26,7 @@ export const paymentSuccessFooter = () => {
         variant: "outlined",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "16px"
         }
@@ -48,7 +48,7 @@ export const paymentSuccessFooter = () => {
         variant: "outlined",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "16px"
         }
@@ -72,7 +72,7 @@ export const paymentSuccessFooter = () => {
         variant: "contained",
         color: "primary",
         style: {
-          width: "200px",
+          minWidth: "200px",
           height: "48px",
           marginRight: "40px"
         }
