@@ -1,9 +1,9 @@
 import React from "react";
 import Loadable from 'react-loadable';
-import LinearProgress from 'mihy-ui-framework/ui-atoms/LinearSpinner';
+import LoadingIndicator from 'mihy-ui-framework/ui-molecules/LoadingIndicator';
 import * as mainRouteConstants from "./route-names";
 
-const Loading = () => <LinearProgress/>;
+const Loading = () => <LoadingIndicator/>;
 
 const Landing = Loadable({
   loader: () => import('ui-views/Landing'),

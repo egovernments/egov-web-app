@@ -1,9 +1,10 @@
 import React from "react";
 import Loadable from 'react-loadable';
-import LinearProgress from 'mihy-ui-framework/ui-atoms/LinearSpinner';
 import * as mainRouteConstants from "./route-names";
+import LoadingIndicator from 'mihy-ui-framework/ui-molecules/LoadingIndicator';
 
-const Loading = () => <LinearProgress/>;
+const Loading = () => <LoadingIndicator/>;
+
 
 const ScreenInterface=Loadable({
   loader:()=>import ('ui-views/ScreenInterface'),

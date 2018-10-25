@@ -1,7 +1,8 @@
 import React from "react";
 import Loadable from 'react-loadable';
+import LoadingIndicator from 'mihy-ui-framework/ui-molecules/LoadingIndicator';
 
-const Loading = () => <div></div>;
+const Loading = () => <LoadingIndicator/>;
 
 
 const ScreenInterface=Loadable({
