@@ -363,7 +363,7 @@ class ActionMenuComp extends Component {
 
     return actionList ? (
       <div ref={this.setWrapperRef}>
-        <div className="whiteColor" style={{ marginTop: "22px" }} />
+        <div className="whiteColor" />
 
         <Menu
           disableAutoFocus={true}

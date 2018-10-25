@@ -434,7 +434,7 @@ var ActionMenuComp = function (_Component) {
       return actionList ? _react2.default.createElement(
         "div",
         { ref: this.setWrapperRef },
-        _react2.default.createElement("div", { className: "whiteColor", style: { marginTop: "22px" } }),
+        _react2.default.createElement("div", { className: "whiteColor" }),
         _react2.default.createElement(
           _Menu2.default,
           {
