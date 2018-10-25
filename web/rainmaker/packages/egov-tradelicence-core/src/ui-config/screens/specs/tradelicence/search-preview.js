@@ -74,13 +74,15 @@ const setDocuments = async (
         name:
           (fileUrlPayload &&
             fileUrlPayload[item.fileStoreId] &&
-            fileUrlPayload[item.fileStoreId]
-              .split(",")[0]
-              .split("?")[0]
-              .split("/")
-              .pop()
-              .slice(13)) ||
-          `Document - ${index}`
+            decodeURIComponent(
+              fileUrlPayload[item.fileStoreId]
+                .split(",")[0]
+                .split("?")[0]
+                .split("/")
+                .pop()
+                .slice(13)
+            )) ||
+          `Document - ${index + 1}`
       };
     });
   reviewDocData && dispatch(prepareFinalObject(destJsonPath, reviewDocData));
