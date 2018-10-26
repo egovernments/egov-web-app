@@ -8,7 +8,7 @@ import {
 
 const g8Details = getCommonGrayCard({
   header: getCommonSubHeader({
-    labelName: "G8 Receipt Details (Optional)",
+    labelName: "GEN\\G8 Receipt Details (Optional)",
     labelKey: "TL_PAYMENT_RCPT_DETAILS"
   }),
   receiptDetailsCardContainer: getCommonContainer({

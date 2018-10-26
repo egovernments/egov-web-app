@@ -28,7 +28,7 @@ const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Trade License Application (${getCurrentFinancialYear()})`,
+    labelName: `Trade License Application (${getCurrentFinancialYear()})`
     // labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
   }),
   applicationNumber: {
@@ -59,48 +59,48 @@ const getApproveCard = queryValuePurpose => {
               }
             }
           ),
-    headerTwo: getContainerWithElement({
-      children: {
-        subHeader: getSubHeaderLabel(queryValuePurpose)
-      },
-      props: {
-        style: {
-          marginTop: "33px"
-        }
-      }
-    }),
-    safetyNorms:
-      queryValuePurpose === "cancel"
-        ? {}
-        : getRadioGroupWithLabel(
-            "Are Safety Norms Satisfactory?",
-            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
-            radioButtonLabels,
-            getSafetyNormsJson(queryValuePurpose),
-            "Yes"
-          ),
+    // headerTwo: getContainerWithElement({
+    //   children: {
+    //     subHeader: getSubHeaderLabel(queryValuePurpose)
+    //   },
+    //   props: {
+    //     style: {
+    //       marginTop: "33px"
+    //     }
+    //   }
+    // }),
+    // safetyNorms:
+    //   queryValuePurpose === "cancel"
+    //     ? {}
+    //     : getRadioGroupWithLabel(
+    //         "Are Safety Norms Satisfactory?",
+    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
+    //         radioButtonLabels,
+    //         getSafetyNormsJson(queryValuePurpose),
+    //         "Yes"
+    //       ),
 
-    hygieneMeasure:
-      queryValuePurpose === "cancel"
-        ? {}
-        : getRadioGroupWithLabel(
-            "Are Hygiene Levels Satisfactory?",
-            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
-            radioButtonLabels,
-            getHygeneLevelJson(queryValuePurpose),
-            "Yes"
-          ),
+    // hygieneMeasure:
+    //   queryValuePurpose === "cancel"
+    //     ? {}
+    //     : getRadioGroupWithLabel(
+    //         "Are Hygiene Levels Satisfactory?",
+    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
+    //         radioButtonLabels,
+    //         getHygeneLevelJson(queryValuePurpose),
+    //         "Yes"
+    //       ),
 
-    localityMeasure:
-      queryValuePurpose === "cancel"
-        ? {}
-        : getRadioGroupWithLabel(
-            "Is Locality harmed/disturbed by this trade?",
-            "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
-            radioButtonLabels,
-            getLocalityHarmedJson(queryValuePurpose),
-            "No"
-          ),
+    // localityMeasure:
+    //   queryValuePurpose === "cancel"
+    //     ? {}
+    //     : getRadioGroupWithLabel(
+    //         "Is Locality harmed/disturbed by this trade?",
+    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
+    //         radioButtonLabels,
+    //         getLocalityHarmedJson(queryValuePurpose),
+    //         "No"
+    //       ),
 
     commentSection: getContainerWithElement({
       children: {
@@ -150,7 +150,7 @@ const getApproveCard = queryValuePurpose => {
       "Licenses[0].tradeLicenseDetail.verificationDocuments"
     ),
     checkBoxContainer: getCheckbox(
-      "All information provided above is true up to the best of my knowledge.",
+      "Self declaration provided by the applicant has been found correct and the trade running on the premises is same as given in the application form.",
       getCheckBoxJsonpath(queryValuePurpose)
     )
   });
