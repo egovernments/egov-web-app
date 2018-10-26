@@ -528,6 +528,85 @@ export const footerReview = (
     ? "/mihy-ui-framework/tradelicense-citizen"
     : "/mihy-ui-framework/tradelicence";
 
+  /** MenuButton data based on status */
+  let downloadMenu = [];
+  let printMenu = [];
+  let tlCertificateDownloadObject = {
+    label: "TL Certificate",
+    link: () => {
+      generateReceipt(state, dispatch, "certificate_download");
+    },
+    leftIcon: "book"
+  };
+  let tlCertificatePrintObject = {
+    label: "TL Certificate",
+    link: () => {
+      generateReceipt(state, dispatch, "certificate_print");
+    },
+    leftIcon: "book"
+  };
+  let receiptDownloadObject = {
+    label: "Receipt",
+    link: () => {
+      generateReceipt(state, dispatch, "receipt_download");
+    },
+    leftIcon: "receipt"
+  };
+  let receiptPrintObject = {
+    label: "Receipt",
+    link: () => {
+      generateReceipt(state, dispatch, "receipt_print");
+    },
+    leftIcon: "receipt"
+  };
+  let applicationDownloadObject = {
+    label: "Application",
+    link: () => {
+      generatePdfFromDiv("download", applicationNumber);
+    },
+    leftIcon: "assignment"
+  };
+  let applicationPrintObject = {
+    label: "Application",
+    link: () => {
+      generatePdfFromDiv("print", applicationNumber);
+    },
+    leftIcon: "assignment"
+  };
+  switch (status) {
+    case "approved":
+      downloadMenu = [
+        tlCertificateDownloadObject,
+        receiptDownloadObject,
+        applicationDownloadObject
+      ];
+      printMenu = [
+        tlCertificatePrintObject,
+        receiptPrintObject,
+        applicationPrintObject
+      ];
+      break;
+    case "pending_payment":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
+      break;
+    case "pending_approval":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    case "cancelled":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    case "rejected":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    default:
+      break;
+  }
+  /** END */
+
   return getCommonApplyFooter({
     container: {
       uiFramework: "custom-atoms",
@@ -549,33 +628,7 @@ export const footerReview = (
                   leftIcon: "cloud_download",
                   rightIcon: "arrow_drop_down",
                   props: { variant: "outlined", style: { marginLeft: 10 } },
-                  menu: [
-                    {
-                      label: "TL Certificate",
-                      link: () => {
-                        generateReceipt(
-                          state,
-                          dispatch,
-                          "certificate_download"
-                        );
-                      },
-                      leftIcon: "book"
-                    },
-                    {
-                      label: "Receipt",
-                      link: () => {
-                        generateReceipt(state, dispatch, "receipt_download");
-                      },
-                      leftIcon: "receipt"
-                    },
-                    {
-                      label: "Application",
-                      link: () => {
-                        generatePdfFromDiv("download", applicationNumber);
-                      },
-                      leftIcon: "assignment"
-                    }
-                  ]
+                  menu: downloadMenu
                 }
               }
             },
@@ -588,29 +641,7 @@ export const footerReview = (
                   leftIcon: "print",
                   rightIcon: "arrow_drop_down",
                   props: { variant: "outlined", style: { marginLeft: 10 } },
-                  menu: [
-                    {
-                      label: "TL Certificate",
-                      link: () => {
-                        generateReceipt(state, dispatch, "certificate_print");
-                      },
-                      leftIcon: "book"
-                    },
-                    {
-                      label: "Receipt",
-                      link: () => {
-                        generateReceipt(state, dispatch, "receipt_print");
-                      },
-                      leftIcon: "receipt"
-                    },
-                    {
-                      label: "Application",
-                      link: () => {
-                        generatePdfFromDiv("print", applicationNumber);
-                      },
-                      leftIcon: "assignment"
-                    }
-                  ]
+                  menu: printMenu
                 }
               }
             }
