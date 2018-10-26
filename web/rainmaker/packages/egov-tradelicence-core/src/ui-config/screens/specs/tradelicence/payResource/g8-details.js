@@ -8,24 +8,24 @@ import {
 
 const g8Details = getCommonGrayCard({
   header: getCommonSubHeader({
-    labelName: "GEN\\G8 Receipt Details (Optional)",
+    labelName: "GEN/G8 Receipt Details (Optional)",
     labelKey: "TL_PAYMENT_RCPT_DETAILS"
   }),
   receiptDetailsCardContainer: getCommonContainer({
     receiptNo: getTextField({
       label: {
-        labelName: "G8 Receipt No.",
+        labelName: "GEN/G8 Receipt No.",
         labelKey: "TL_PAYMENT_RCPT_NO_LABEL"
       },
       placeholder: {
-        labelName: "Enter G8 Receipt No.",
+        labelName: "Enter GEN/G8 Receipt No.",
         labelKey: "TL_PAYMENT_RCPT_NO_PLACEHOLDER"
       },
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptNumber"
     }),
     receiptIssueDate: getDateField({
-      label: { labelName: "G8 Receipt Issue Date" },
-      placeholder: { labelName: "Enter G8 Receipt Issue Date" },
+      label: { labelName: "GEN/G8 Receipt Issue Date" },
+      placeholder: { labelName: "Enter GEN/G8 Receipt Issue Date" },
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
     })
   })
