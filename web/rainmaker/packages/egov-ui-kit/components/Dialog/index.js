@@ -42,7 +42,9 @@ var defaultTitleStyle = {
 var defaultActionsContainerStyle = {
   padding: "14px"
 };
-var defaultContentStyle = {};
+var defaultContentStyle = {
+  width: "75%"
+};
 
 var defaultBodyStyle = {
   padding: "0 12px"
@@ -64,9 +66,9 @@ var DialogUI = function DialogUI(_ref) {
       _ref$bodyStyle = _ref.bodyStyle,
       bodyStyle = _ref$bodyStyle === undefined ? {} : _ref$bodyStyle,
       children = _ref.children,
+      className = _ref.className,
       actions = _ref.actions,
-      _ref$contentStyle = _ref.contentStyle,
-      contentStyle = _ref$contentStyle === undefined ? {} : _ref$contentStyle,
+      contentStyle = _ref.contentStyle,
       open = _ref.open,
       _ref$repositionOnUpda = _ref.repositionOnUpdate,
       repositionOnUpdate = _ref$repositionOnUpda === undefined ? false : _ref$repositionOnUpda,
@@ -77,6 +79,7 @@ var DialogUI = function DialogUI(_ref) {
       onRequestClose = _ref.onRequestClose;
 
   return _react2.default.createElement(_Dialog2.default, {
+    className: className,
     title: title,
     actions: actions,
     titleStyle: (0, _extends3.default)({}, defaultTitleStyle, titleStyle),

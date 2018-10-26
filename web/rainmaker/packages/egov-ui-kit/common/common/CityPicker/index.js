@@ -165,6 +165,7 @@ var CityPickerDialog = function (_Component) {
             open: open,
             autoScrollBodyContent: true,
             onRequestClose: onClose,
+            contentStyle: { width: "85%" },
             style: {
               paddingTop: "0",
               // marginTop: "-30px",

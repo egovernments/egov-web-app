@@ -47,7 +47,7 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 16px !important; }
 
 .dark-color {
-  color: #484848; }
+  color: "rgba(0, 0, 0, 0.8700000047683716)"; }
 
 .rainmaker-custom-gap {
   margin-bottom: 8px; }
@@ -177,7 +177,7 @@ body.employee-user-profile {
   visibility: hidden;
   width: 100%;
   float: left;
-  background-color:rgba(254, 122, 81, 0.11999999731779099);
+  background-color: #00bbd3;
   color: #fff;
   border-radius: 2px;
   padding: 0px 0px;
@@ -197,12 +197,10 @@ body.employee-user-profile {
   visibility: visible; }
 
 .action-menu-drawer {
-  background-color: white;
+  background-color: #3d4951;
   min-height: calc(100vh - 64px);
   position: fixed;
-  z-index: 1001; 
-  border-right: 1px solid #00000024;
-}
+  z-index: 1001; }
 
 .responsive-action-button-cont {
   position: fixed;

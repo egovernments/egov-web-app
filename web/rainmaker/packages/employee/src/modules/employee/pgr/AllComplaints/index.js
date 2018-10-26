@@ -195,7 +195,14 @@ class AllComplaints extends Component {
                     name="mobile-no"
                     type="number"
                     value={mobileNo}
-                    hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                    hintText={
+                      <Label
+                        label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER"
+                        color="rgba(0, 0, 0, 0.3799999952316284)"
+                        fontSize={16}
+                        labelStyle={hintTextStyle}
+                      />
+                    }
                     floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
@@ -208,7 +215,14 @@ class AllComplaints extends Component {
                     id="complaint-no"
                     name="complaint-no"
                     value={complaintNo}
-                    hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                    hintText={
+                      <Label
+                        label="ES_MYCOMPLAINTS_COMPLAINT_NO"
+                        color="rgba(0, 0, 0, 0.3799999952316284)"
+                        fontSize={16}
+                        labelStyle={hintTextStyle}
+                      />
+                    }
                     floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
