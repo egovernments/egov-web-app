@@ -13,7 +13,10 @@ import {
 import {
   getIconStyle,
   objectToDropdown,
-  prepareDocumentTypeObj
+  prepareDocumentTypeObj,
+  getTodaysDateInYMD,
+  getFinancialYearEndDate,
+  getNextMonthDateInYMD
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -134,7 +137,6 @@ const tradeUnitCard = getCommonGrayCard({
           let currentObject = filter(tradeSubCategories, {
             code: action.value
           });
-          console.log(currentObject);
           if (currentObject[0].uom !== null) {
             dispatch(
               pFO(
@@ -484,7 +486,13 @@ export const tradeDetails = getCommonCard({
         placeholder: { labelName: "Trade License From Date" },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].validFrom"
+        jsonPath: "Licenses[0].validFrom",
+        props: {
+          inputProps: {
+            min: getTodaysDateInYMD(),
+            max: getFinancialYearEndDate()
+          }
+        }
       }),
       visible: false
     },
@@ -494,11 +502,16 @@ export const tradeDetails = getCommonCard({
         placeholder: { labelName: "Trade License From Date" },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].validTo"
+        jsonPath: "Licenses[0].validTo",
+        props: {
+          inputProps: {
+            min: getNextMonthDateInYMD(),
+            max: getFinancialYearEndDate()
+          }
+        }
       }),
       visible: false
     },
-
     tradeStructureType: {
       ...getSelectField({
         label: { labelName: "Structure Type" },

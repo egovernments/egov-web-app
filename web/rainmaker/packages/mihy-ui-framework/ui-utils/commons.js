@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
+exports.getLocaleLabels = exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -150,4 +150,17 @@ var epochToYmd = exports.epochToYmd = function epochToYmd(et) {
   if (typeof et === "string") return et;
   var formatted_date = new Date(et).toISOString().substr(0, 10);
   return formatted_date;
+};
+
+var getLocaleLabels = exports.getLocaleLabels = function getLocaleLabels(label, labelKey, localizationLabels) {
+  if (labelKey) {
+    var translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+    if (!translatedLabel || labelKey === translatedLabel) {
+      return label;
+    } else {
+      return translatedLabel;
+    }
+  } else {
+    return label;
+  }
 };

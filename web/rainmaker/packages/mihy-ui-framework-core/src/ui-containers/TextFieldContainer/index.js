@@ -5,9 +5,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import {
-  getTranslatedLabel,
   transformById,
-  epochToYmd
+  epochToYmd,
+  getLocaleLabels
 } from "../../ui-utils/commons";
 import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
 
@@ -15,18 +15,6 @@ const localizationLabels = JSON.parse(
   window.localStorage.getItem("localization_en_IN")
 );
 
-// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-//   if (labelKey) {
-//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-//     if (!translatedLabel || labelKey === translatedLabel) {
-//       return label;
-//     } else {
-//       return translatedLabel;
-//     }
-//   } else {
-//     return label;
-//   }
-// };
 class TextFieldContainer extends React.Component {
   componentDidMount() {
     const { hasDependant, onChange, value } = this.props;
@@ -67,12 +55,12 @@ class TextFieldContainer extends React.Component {
       };
     }
     let transfomedKeys = transformById(localizationLabels, "code");
-    let translatedLabel = getLocaleLabelsforTL(
+    let translatedLabel = getLocaleLabels(
       label.labelName,
       label.labelKey,
       transfomedKeys
     );
-    let translatedPlaceholder = getLocaleLabelsforTL(
+    let translatedPlaceholder = getLocaleLabels(
       placeholder.labelName,
       placeholder.labelKey,
       transfomedKeys
@@ -94,7 +82,7 @@ class TextFieldContainer extends React.Component {
           </MenuItem>
           {dropdownData.map((option, key) => (
             <MenuItem key={key} value={option.value}>
-              {getLocaleLabelsforTL(
+              {getLocaleLabels(
                 option.value,
                 `TL_${option.value}`,
                 transfomedKeys

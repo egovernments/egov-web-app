@@ -56,19 +56,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var localizationLabels = JSON.parse(window.localStorage.getItem("localization_en_IN"));
 
-// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-//   if (labelKey) {
-//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-//     if (!translatedLabel || labelKey === translatedLabel) {
-//       return label;
-//     } else {
-//       return translatedLabel;
-//     }
-//   } else {
-//     return label;
-//   }
-// };
-
 var TextFieldContainer = function (_React$Component) {
   (0, _inherits3.default)(TextFieldContainer, _React$Component);
 
@@ -129,8 +116,8 @@ var TextFieldContainer = function (_React$Component) {
         });
       }
       var transfomedKeys = (0, _commons.transformById)(localizationLabels, "code");
-      var translatedLabel = (0, _utils.getLocaleLabelsforTL)(label.labelName, label.labelKey, transfomedKeys);
-      var translatedPlaceholder = (0, _utils.getLocaleLabelsforTL)(placeholder.labelName, placeholder.labelKey, transfomedKeys);
+      var translatedLabel = (0, _commons.getLocaleLabels)(label.labelName, label.labelKey, transfomedKeys);
+      var translatedPlaceholder = (0, _commons.getLocaleLabels)(placeholder.labelName, placeholder.labelKey, transfomedKeys);
 
       if (dropdownData.length > 0) {
         return _react2.default.createElement(
@@ -154,7 +141,7 @@ var TextFieldContainer = function (_React$Component) {
             return _react2.default.createElement(
               _MenuItem2.default,
               { key: key, value: option.value },
-              (0, _utils.getLocaleLabelsforTL)(option.value, "TL_" + option.value, transfomedKeys)
+              (0, _commons.getLocaleLabels)(option.value, "TL_" + option.value, transfomedKeys)
             );
           })
         );

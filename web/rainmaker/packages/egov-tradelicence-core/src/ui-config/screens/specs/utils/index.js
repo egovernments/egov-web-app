@@ -1025,6 +1025,29 @@ export const epochToYmdDate = et => {
   return formattedDate;
 };
 
+export const getTodaysDateInYMD = () => {
+  let date = new Date();
+  date = date.valueOf();
+  date = epochToYmdDate(date);
+  return date;
+};
+
+export const getNextMonthDateInYMD = () => {
+  //For getting date of same day but of next month
+  let date = getTodaysDateInYMD();
+  date =
+    date.substring(0, 5) +
+    (parseInt(date.substring(5, 7)) + 1) +
+    date.substring(7, 10);
+  return date;
+};
+
+export const getFinancialYearEndDate = () => {
+  const date = new Date();
+  let nextYear = date.getFullYear() + 1;
+  return `${nextYear}-03-31`;
+};
+
 export const getBaseURL = () => {
   if (process.env.REACT_APP_NAME !== "Citizen") {
     return "/mihy-ui-framework/tradelicence";

@@ -189,15 +189,14 @@ export const tradeLocationDetails = getCommonCard({
           width: "100%",
           cursor: "pointer"
         },
-        // label: {
-        //   labelName: "Mohalla",
-        //   labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
-        // },
-        placeholder: "Select Mohalla",
-        // placeholder: {
-        //   labelName: "Enter Mohalla",
-        //   labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
-        // },
+        label: {
+          labelName: "Mohalla",
+          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Mohalla",
+          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
+        },
         jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
         sourceJsonPath: "applyScreenMdmsData.tenant.localities",
         fullwidth: true,

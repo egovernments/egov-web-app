@@ -11,7 +11,7 @@ import {
   getPattern,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getDetailsForOwner } from "../../utils";
+import { getDetailsForOwner, getTodaysDateInYMD } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -72,7 +72,12 @@ export const getOwnerDOBField = getDateField({
   placeholder: { labelName: "Enter Date of Birth" },
   required: true,
   pattern: getPattern("Date"),
-  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob"
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+  props: {
+    inputProps: {
+      max: getTodaysDateInYMD()
+    }
+  }
 });
 
 export const getOwnerEmailField = getTextField({

@@ -148,3 +148,16 @@ export const epochToYmd = et => {
   var formatted_date = new Date(et).toISOString().substr(0, 10);
   return formatted_date;
 };
+
+export const getLocaleLabels = (label, labelKey, localizationLabels) => {
+  if (labelKey) {
+    let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+    if (!translatedLabel || labelKey === translatedLabel) {
+      return label;
+    } else {
+      return translatedLabel;
+    }
+  } else {
+    return label;
+  }
+};

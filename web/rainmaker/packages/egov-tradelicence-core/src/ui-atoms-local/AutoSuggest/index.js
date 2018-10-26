@@ -86,6 +86,8 @@ function Control(props) {
         }
       }}
       {...props.selectProps.textFieldProps}
+      helperText={props.selectProps.helperText}
+      error={props.selectProps.error}
     />
   );
 }
@@ -190,7 +192,8 @@ class IntegrationReactSelect extends React.Component {
       value,
       inputLabelProps = {
         shrink: true
-      }
+      },
+      ...rest
     } = this.props;
     const selectStyles = {
       input: base => ({
@@ -201,7 +204,6 @@ class IntegrationReactSelect extends React.Component {
         }
       })
     };
-
     return (
       <div className={classes.root}>
         <Select
@@ -216,8 +218,9 @@ class IntegrationReactSelect extends React.Component {
           options={getSuggestions(suggestions) || []}
           components={components}
           value={value ? value : this.state.single}
-          onChange={this.handleChange("single")}
           placeholder={placeholder}
+          {...rest}
+          onChange={this.handleChange("single")}
         />
       </div>
     );
