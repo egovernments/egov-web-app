@@ -273,7 +273,10 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         activeIndex === 1
       ) {
         set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
-      } else {
+      } else if (
+        queryObject[0].tradeLicenseDetail &&
+        queryObject[0].tradeLicenseDetail.applicationDocuments
+      ) {
         action = "APPLY";
       }
       set(queryObject[0], "action", action);
@@ -310,13 +313,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
     setApplicationNumberBox(state, dispatch);
     return true;
   } catch (error) {
-    dispatch(
-      toggleSnackbarAndSetText(
-        true,
-        "Could not create/update trade license appication",
-        "error"
-      )
-    );
+    dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
     console.log(error);
     return false;
   }

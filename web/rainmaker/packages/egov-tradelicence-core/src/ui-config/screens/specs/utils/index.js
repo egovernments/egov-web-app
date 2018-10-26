@@ -814,6 +814,17 @@ export const getUserDataFromUuid = async bodyObject => {
   }
 };
 
+const getStatementForDocType = docType => {
+  switch (docType) {
+    case "OWNERIDPROOF":
+      return "Allowed documents are Aadhar Card / Voter ID Card / Driving License";
+    case "OWNERSHIPPROOF":
+      return "Allowed documents are Rent Deed / Lease Doc / Property Registry / General or Special Power of Attorney";
+    default:
+      return "";
+  }
+};
+
 export const prepareDocumentTypeObj = documents => {
   let documentsArr =
     documents.length > 0
@@ -821,7 +832,8 @@ export const prepareDocumentTypeObj = documents => {
           documentsArr.push({
             name: item,
             required: true,
-            jsonPath: `Licenses[0].tradeLicenseDetail.applicationDocuments[${ind}]`
+            jsonPath: `Licenses[0].tradeLicenseDetail.applicationDocuments[${ind}]`,
+            statement: getStatementForDocType(item)
           });
           return documentsArr;
         }, [])
