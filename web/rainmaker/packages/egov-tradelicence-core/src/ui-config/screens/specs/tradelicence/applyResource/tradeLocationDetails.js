@@ -260,6 +260,7 @@ export const tradeLocationDetails = getCommonCard({
               labelName: "Select your trade location on map",
               labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
             },
+            jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
             iconObj: {
               iconName: "gps_fixed",
               position: "end"
