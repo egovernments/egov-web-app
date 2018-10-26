@@ -208,7 +208,7 @@ const getMultipleOwners = owners => {
   return mergedOwners;
 };
 
-export const applyTradeLicense = async (state, dispatch) => {
+export const applyTradeLicense = async (state, dispatch, activeIndex) => {
   try {
     let queryObject = JSON.parse(
       JSON.stringify(
@@ -269,8 +269,11 @@ export const applyTradeLicense = async (state, dispatch) => {
       let action = "INITIATE";
       if (
         queryObject[0].tradeLicenseDetail &&
-        queryObject[0].tradeLicenseDetail.applicationDocuments
+        queryObject[0].tradeLicenseDetail.applicationDocuments &&
+        activeIndex === 1
       ) {
+        set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
+      } else {
         action = "APPLY";
       }
       set(queryObject[0], "action", action);
@@ -377,6 +380,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
   const S3_BUCKET = {
     endPoint: "filestore/v1/files"
   };
+  let uploadDocument = true;
   const { inputProps, maxFileSize } = props;
   const input = event.target;
   if (input.files && input.files.length > 0) {
@@ -386,30 +390,46 @@ export const handleFileUpload = (event, handleDocument, props) => {
       const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
       const isSizeValid = getFileSize(file) <= maxFileSize;
       if (!fileValid) {
-        alert(`Only image or pdf files can be uploaded`);
-        return;
+        store.dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            `Only image or pdf files can be uploaded`,
+            "error"
+          )
+        );
+        // alert(`Only image or pdf files can be uploaded`);
+        uploadDocument = false;
       }
       if (!isSizeValid) {
-        alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
-        return;
+        store.dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
+            "error"
+          )
+        );
+        // alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
+        uploadDocument = false;
       }
-      if (file.type.match(/^image\//)) {
-        const imageUri = await getImageUrlByFile(file);
-        const fileStoreId = await uploadFile(
-          S3_BUCKET.endPoint,
-          "TL",
-          file,
-          "pb"
-        );
-        handleDocument(file, fileStoreId);
-      } else {
-        const fileStoreId = await uploadFile(
-          S3_BUCKET.endPoint,
-          "TL",
-          file,
-          "pb"
-        );
-        handleDocument(file, fileStoreId);
+      if (uploadDocument) {
+        if (file.type.match(/^image\//)) {
+          const imageUri = await getImageUrlByFile(file);
+          const fileStoreId = await uploadFile(
+            S3_BUCKET.endPoint,
+            "TL",
+            file,
+            "pb"
+          );
+          handleDocument(file, fileStoreId);
+        } else {
+          const fileStoreId = await uploadFile(
+            S3_BUCKET.endPoint,
+            "TL",
+            file,
+            "pb"
+          );
+          handleDocument(file, fileStoreId);
+        }
       }
     });
   }

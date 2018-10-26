@@ -203,7 +203,7 @@ export const callBackForNext = async (state, dispatch) => {
       return false; // to show the above message
     }
     if (isFormValid && isOwnerShipValid) {
-      isFormValid = await applyTradeLicense(state, dispatch);
+      isFormValid = await applyTradeLicense(state, dispatch, activeStep);
       if (!isFormValid) {
         hasFieldToaster = false;
       }

@@ -71,13 +71,22 @@ class DocumentList extends Component {
   };
 
   componentDidMount = () => {
-    const { uploadedDocsInRedux: uploadedDocuments } = this.props;
+    const {
+      prepareFinalObject,
+      uploadedDocsInRedux: uploadedDocuments
+    } = this.props;
     if (uploadedDocuments) {
       const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
         return parseInt(item); //returns string so convert to integer
       });
       this.setState({ uploadedDocuments, uploadedIndex });
     }
+    Object.values(uploadedDocuments).forEach((item, index) => {
+      prepareFinalObject(
+        `Licenses[0].tradeLicenseDetail.applicationDocuments[${index}]`,
+        { ...item[0] }
+      );
+    });
   };
 
   onUploadClick = uploadedDocIndex => {
@@ -91,7 +100,15 @@ class DocumentList extends Component {
     const fileUrl = await getFileUrlFromAPI(fileStoreId);
     uploadedDocuments = {
       ...uploadedDocuments,
-      [uploadedDocIndex]: [{ fileName: file.name, fileStoreId }]
+      [uploadedDocIndex]: [
+        {
+          fileName: file.name,
+          fileStoreId,
+          fileUrl: Object.values(fileUrl)[0],
+          documentType: name,
+          tenantId
+        }
+      ]
     };
 
     prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", {
