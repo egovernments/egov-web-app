@@ -158,6 +158,17 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       ? response.Licenses[0].tradeLicenseDetail.accessories.length
       : 0;
     data.accessories = nullToNa(accessories);
+    if (accessories > 0) {
+      data.accessoriesList = response.Licenses[0].tradeLicenseDetail.accessories
+        .map(item => {
+          return getMessageFromLocalization(item.accessoryCategory);
+        })
+        .reduce((pre, cur) => {
+          return pre.concat(", " + cur);
+        });
+    } else {
+      data.accessoriesList = "";
+    }
     loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));

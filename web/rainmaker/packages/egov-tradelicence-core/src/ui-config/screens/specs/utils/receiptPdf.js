@@ -33,6 +33,7 @@ let receiptTableWidth = ["*", "*", "*", "*"];
 let payableAmountTable = ["*", "*", "*", "*", "*", "*"];
 let payableAmountBorderKey = [true, true, true, true, true, true, true];
 let payableInfoTable3 = ["*", "*", "*"];
+let accessoriesTable = ["24%", "76%"];
 
 const getReceiptData = (transformedData, ulbLogo) => {
   let owners = transformedData.owners.map(owner => [
@@ -179,26 +180,39 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 text: transformedData.tradeCategory,
                 border: borderValue
               }
-            ],
+            ]
+          ]
+        },
+        layout: tableborder
+      },
+      {
+        style: "pt-reciept-citizen-table",
+        table: {
+          widths: accessoriesTable,
+          body: [
             [
               {
                 text: "Trade Type",
-                border: borderKey,
+                border: [true, false, false, true],
                 style: "receipt-table-key"
               },
               {
-                text: `${transformedData.tradeType}/${
+                text: `${transformedData.tradeType} / ${
                   transformedData.tradeSubType
                 }`,
-                border: borderValue
-              },
+                border: [false, false, true, true]
+              }
+            ],
+            [
               {
                 text: "Accessories",
                 border: borderKey,
                 style: "receipt-table-key"
               },
               {
-                text: transformedData.accessories,
+                text: `(${transformedData.accessories}) ${
+                  transformedData.accessoriesList
+                }`,
                 border: borderValue
               }
             ]
@@ -703,7 +717,20 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.tradeType}/${transformedData.tradeSubType}`
+            text: `${transformedData.tradeType} / ${transformedData.tradeSubType}`
+          }
+        ]
+      },
+      {
+        style: "tl-certificate-data-2",
+        columns: [
+          {
+            width: 160,
+            text: "Accessories"
+          },
+          {
+            width: "*",
+            text: `(${transformedData.accessories}) ${transformedData.accessoriesList}`
           }
         ]
       },
