@@ -418,6 +418,11 @@ export const tradeDetails = getCommonCard({
         placeholder: { labelName: "Select License Type" },
         required: true,
         jsonPath: "Licenses[0].licenseType",
+        props: {
+          disabled: true,
+          value: "PERMANENT",
+          className: "tl-trade-type"
+        },
         data: [
           {
             code: "TEMPORARY"

@@ -709,6 +709,14 @@ export const getDetailsFromProperty = async (state, dispatch) => {
               "info"
             )
           );
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocPropertyID",
+              "props.value",
+              ""
+            )
+          );
         } else {
           dispatch(
             handleField(

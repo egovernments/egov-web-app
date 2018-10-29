@@ -17,7 +17,11 @@
     width: 100% !important;
     margin: initial;
     border: none;
-    margin: 0!important;
-    border-radius:none !important;
+    margin: 0 !important;
+    border-radius: none !important;
   }
+}
+
+.tl-trade-type div {
+  color: rgba(0, 0, 0, 0.87);
 }
