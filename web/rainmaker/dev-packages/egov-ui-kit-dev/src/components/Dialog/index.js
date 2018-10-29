@@ -43,6 +43,7 @@ const DialogUI = ({
   repositionOnUpdate = false,
   autoScrollBodyContent,
   handleClose,
+  contentClassName,
   style,
   isClose,
   onRequestClose,
@@ -51,6 +52,7 @@ const DialogUI = ({
     <Dialog
       className={className}
       title={title}
+      contentClassName={contentClassName}
       actions={actions}
       titleStyle={{ ...defaultTitleStyle, ...titleStyle }}
       children={[

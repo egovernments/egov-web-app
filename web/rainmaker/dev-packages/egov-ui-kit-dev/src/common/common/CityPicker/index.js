@@ -81,7 +81,7 @@ class CityPickerDialog extends Component {
           open={open}
           autoScrollBodyContent={true}
           onRequestClose={onClose}
-          contentStyle={{ width: "85%" }}
+          contentStyle={{ width: "90%" }}
           style={{
             paddingTop: "0",
             // marginTop: "-30px",

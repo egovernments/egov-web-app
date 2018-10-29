@@ -74,6 +74,7 @@ var DialogUI = function DialogUI(_ref) {
       repositionOnUpdate = _ref$repositionOnUpda === undefined ? false : _ref$repositionOnUpda,
       autoScrollBodyContent = _ref.autoScrollBodyContent,
       handleClose = _ref.handleClose,
+      contentClassName = _ref.contentClassName,
       style = _ref.style,
       isClose = _ref.isClose,
       onRequestClose = _ref.onRequestClose;
@@ -81,6 +82,7 @@ var DialogUI = function DialogUI(_ref) {
   return _react2.default.createElement(_Dialog2.default, {
     className: className,
     title: title,
+    contentClassName: contentClassName,
     actions: actions,
     titleStyle: (0, _extends3.default)({}, defaultTitleStyle, titleStyle),
     children: [isClose && _react2.default.createElement(
