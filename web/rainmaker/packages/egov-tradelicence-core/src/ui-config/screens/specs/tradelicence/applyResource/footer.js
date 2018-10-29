@@ -255,7 +255,7 @@ export const callBackForNext = async (state, dispatch) => {
         uploadedDocData.map(item => {
           return {
             title: item.documentType,
-            link: item.fileUrl.split(",")[0],
+            link: item.fileUrl && item.fileUrl.split(",")[0],
             linkText: "View",
             name: item.fileName
           };
