@@ -15,7 +15,7 @@ import {
   objectToDropdown,
   prepareDocumentTypeObj,
   getTodaysDateInYMD,
-  getFinancialYearEndDate,
+  getFinancialYearDates,
   getNextMonthDateInYMD
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -490,7 +490,7 @@ export const tradeDetails = getCommonCard({
         props: {
           inputProps: {
             min: getTodaysDateInYMD(),
-            max: getFinancialYearEndDate()
+            max: getFinancialYearDates("yyyy-mm-dd").endDate
           }
         }
       }),
@@ -506,7 +506,7 @@ export const tradeDetails = getCommonCard({
         props: {
           inputProps: {
             min: getNextMonthDateInYMD(),
-            max: getFinancialYearEndDate()
+            max: getFinancialYearDates("yyyy-mm-dd").endDate
           }
         }
       }),

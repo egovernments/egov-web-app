@@ -5,7 +5,8 @@ import {
   getMdmsData,
   getReceiptData,
   getSearchResults,
-  getUserDataFromUuid
+  getUserDataFromUuid,
+  getFinancialYearDates
 } from "../utils";
 
 const ifNotNull = value => {
@@ -113,11 +114,14 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       })
       .join(", ");
     /** End */
-    data.licenseIssueDate = nullToNa(
-      epochToDate(get(response, "Licenses[0].issuedDate", "NA"))
-    );
+    let licenseIssueDate = get(response, "Licenses[0].issuedDate", "NA");
+    data.licenseIssueDate = nullToNa(epochToDate(licenseIssueDate));
     data.licenseExpiryDate = nullToNa(
       epochToDate(get(response, "Licenses[0].validTo", "NA"))
+    );
+    data.licenseValidity = getFinancialYearDates(
+      "dd/mm/yyyy",
+      licenseIssueDate
     );
     /** Trade settings */
     let tradeCategory = "NA";

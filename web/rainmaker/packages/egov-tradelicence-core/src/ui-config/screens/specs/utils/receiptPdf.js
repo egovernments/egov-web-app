@@ -717,7 +717,9 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.tradeType} / ${transformedData.tradeSubType}`
+            text: `${transformedData.tradeType} / ${
+              transformedData.tradeSubType
+            }`
           }
         ]
       },
@@ -730,7 +732,9 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `(${transformedData.accessories}) ${transformedData.accessoriesList}`
+            text: `(${transformedData.accessories}) ${
+              transformedData.accessoriesList
+            }`
           }
         ]
       },
@@ -765,11 +769,13 @@ const getCertificateData = (transformedData, ulbLogo) => {
         columns: [
           {
             width: 160,
-            text: "License Expiry Date"
+            text: "License Validity"
           },
           {
             width: "*",
-            text: transformedData.licenseExpiryDate
+            text: `${transformedData.licenseValidity.startDate} to ${
+              transformedData.licenseValidity.endDate
+            } `
           }
         ]
       },
