@@ -284,13 +284,23 @@ export const callBackForNext = async (state, dispatch) => {
     if (isFormValid) {
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {
-      dispatch(
-        toggleSnackbarAndSetText(
-          true,
-          "Please fill all mandatory fields and upload the documents !",
-          "warning"
-        )
-      );
+      let errorMessage =
+        "Please fill all mandatory fields and upload the documents !";
+      switch (activeStep) {
+        case 0:
+          errorMessage =
+            "Please fill all mandatory fields for Trade Details, then do next !";
+          break;
+        case 1:
+          errorMessage =
+            "Please fill all mandatory fields for Owner Details, then do next !";
+          break;
+        case 2:
+          errorMessage =
+            "Please upload all the required documents !";
+          break;
+      }
+      dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));
     }
   }
 };
