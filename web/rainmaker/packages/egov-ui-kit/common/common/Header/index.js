@@ -201,7 +201,8 @@ var Header = function (_Component) {
           ulbLogo: this.state.ulbLogo
         }, appBarProps, {
           fetchLocalizationLabel: fetchLocalizationLabel,
-          userInfo: userInfo
+          userInfo: userInfo,
+          history: this.props.history
         })),
         _react2.default.createElement(_NavigationDrawer2.default, (_React$createElement = {
           handleItemClick: _handleItemClick,
