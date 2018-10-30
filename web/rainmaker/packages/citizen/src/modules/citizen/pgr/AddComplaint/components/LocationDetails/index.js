@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, TextFieldIcon, TextField } from "components";
+import { Card, TextFieldIcon, TextField, DropDown, AutoSuggestDropdown } from "components";
 import { Link } from "react-router-dom";
 import TrackIcon from "material-ui/svg-icons/maps/my-location";
 
-const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange }) => {
+const LocationDetails = ({ formKey, locationDetails, landmark, city, mohalla, houseNo, handleFieldChange }) => {
   return (
     <div className="location-details-main-cont">
       <Card
@@ -20,6 +20,23 @@ const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange
                 name="location-details"
               />
             </Link>
+            <DropDown
+              className="fix-for-layout-break"
+              fullWidth={true}
+              onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+              {...city}
+            />
+            <AutoSuggestDropdown
+              className="fix-for-layout-break"
+              fullWidth={true}
+              dataSource={mohalla && mohalla.dropDownData}
+              onChange={(chosenRequest, index) => {
+                handleFieldChange("mohalla", chosenRequest.value);
+              }}
+              floatingLabelText={mohalla && mohalla.floatingLabelText}
+              {...mohalla}
+            />
+            <TextField id="addComplaint-house-no" {...houseNo} onChange={(e, value) => handleFieldChange("houseNo", value)} name="house-no" />
             <TextField
               id="addComplaint-landmark-details"
               {...landmark}

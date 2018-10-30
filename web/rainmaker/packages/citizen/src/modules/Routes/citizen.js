@@ -88,7 +88,7 @@ const routes = [
     path: "my-complaints",
     component: MyComplaints,
     needsAuthentication: true,
-    options: { title: "CS_HOME_MY_COMPLAINTS" },
+    options: { title: "CS_HOME_MY_COMPLAINTS", refreshButton: true, sortButton: true },
   },
   {
     path: "contact-us",
@@ -184,7 +184,7 @@ const routes = [
     options: { hideFooter: true },
   },
   ...ptRoutes,
-  ...tlRoutes
+  ...tlRoutes,
 ];
 
 export default routes;

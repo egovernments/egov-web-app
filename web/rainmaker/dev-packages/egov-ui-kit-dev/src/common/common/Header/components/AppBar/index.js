@@ -13,6 +13,12 @@ const styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 },
 };
 
+const iconButtonStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  width: 35,
+};
+
 // handle listners
 const EgovAppBar = ({
   className,
@@ -25,6 +31,9 @@ const EgovAppBar = ({
   fetchLocalizationLabel,
   userInfo = {},
   onToolBarIconClick,
+  refreshButton,
+  sortButton,
+  sortDialogOpen,
   history,
   ...rest
 }) => {
@@ -72,17 +81,29 @@ const EgovAppBar = ({
           <img src={digitLogo} />
         </div>
         <div className="icon-button">
-        {(role==="ao")&&(window.location.pathname==="/all-complaints")&&<IconButton onClick={e => onSearchClick(history)}> 
-          <Icon action="action" name="search" color="#fff" />
-        </IconButton>}
+          {refreshButton && (
+            <IconButton style={iconButtonStyle} onClick={(e) => location.reload()}>
+              <Icon action="navigation" name="refresh" color="#fff" />
+            </IconButton>
+          )}
+          {sortButton && (
+            <IconButton style={iconButtonStyle} onClick={sortDialogOpen}>
+              <Icon action="action" name="swap-vert" color="#fff" />
+            </IconButton>
+          )}
+          {role === "ao" &&
+            window.location.pathname === "/all-complaints" && (
+              <IconButton style={iconButtonStyle} onClick={(e) => onSearchClick(history)}>
+                <Icon action="action" name="search" color="#fff" />
+              </IconButton>
+            )}
         </div>
       </AppBar>
     </div>
   );
 };
 
-const onSearchClick=(history)=>
-{
+const onSearchClick = (history) => {
   history.push("search-complaint");
-}
+};
 export default EgovAppBar;

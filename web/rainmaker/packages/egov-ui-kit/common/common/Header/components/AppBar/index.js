@@ -50,6 +50,12 @@ var styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 }
 };
 
+var iconButtonStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  width: 35
+};
+
 // handle listners
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
@@ -63,8 +69,11 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
       onToolBarIconClick = _ref.onToolBarIconClick,
+      refreshButton = _ref.refreshButton,
+      sortButton = _ref.sortButton,
+      sortDialogOpen = _ref.sortDialogOpen,
       history = _ref.history,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "history"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "sortDialogOpen", "history"]);
 
   return _react2.default.createElement(
     "div",
@@ -114,9 +123,21 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _react2.default.createElement(
         "div",
         { className: "icon-button" },
+        refreshButton && _react2.default.createElement(
+          _IconButton2.default,
+          { style: iconButtonStyle, onClick: function onClick(e) {
+              return location.reload();
+            } },
+          _react2.default.createElement(_components.Icon, { action: "navigation", name: "refresh", color: "#fff" })
+        ),
+        sortButton && _react2.default.createElement(
+          _IconButton2.default,
+          { style: iconButtonStyle, onClick: sortDialogOpen },
+          _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#fff" })
+        ),
         role === "ao" && window.location.pathname === "/all-complaints" && _react2.default.createElement(
           _IconButton2.default,
-          { onClick: function onClick(e) {
+          { style: iconButtonStyle, onClick: function onClick(e) {
               return onSearchClick(history);
             } },
           _react2.default.createElement(_components.Icon, { action: "action", name: "search", color: "#fff" })

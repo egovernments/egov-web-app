@@ -48,6 +48,10 @@ var _LogoutDialog = require("./components/LogoutDialog");
 
 var _LogoutDialog2 = _interopRequireDefault(_LogoutDialog);
 
+var _SortDialog = require("./components/SortDialog");
+
+var _SortDialog2 = _interopRequireDefault(_SortDialog);
+
 var _NavigationDrawer = require("./components/NavigationDrawer");
 
 var _NavigationDrawer2 = _interopRequireDefault(_NavigationDrawer);
@@ -82,6 +86,7 @@ var Header = function (_Component) {
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       toggleMenu: false,
       logoutPopupOpen: false,
+      sortPopOpen: false,
       right: false,
       left: false,
       ulbLogo: ""
@@ -111,6 +116,15 @@ var Header = function (_Component) {
     }, _this._closeLogoutDialog = function () {
       _this.setState({
         logoutPopupOpen: false
+      });
+    }, _this.closeSortDialog = function () {
+      _this.setState({
+        sortPopOpen: false
+      });
+    }, _this.onSortClick = function () {
+      console.log("here is sorting....");
+      _this.setState({
+        sortPopOpen: true
       });
     }, _this._appBarProps = function () {
       var _this$props$options = _this.props.options,
@@ -169,12 +183,15 @@ var Header = function (_Component) {
 
       var _state = this.state,
           toggleMenu = _state.toggleMenu,
-          logoutPopupOpen = _state.logoutPopupOpen;
+          logoutPopupOpen = _state.logoutPopupOpen,
+          sortPopOpen = _state.sortPopOpen;
       var _onUpdateMenuStatus = this._onUpdateMenuStatus,
           _handleItemClick = this._handleItemClick,
           _logout = this._logout,
           _closeLogoutDialog = this._closeLogoutDialog,
-          _appBarProps = this._appBarProps;
+          _appBarProps = this._appBarProps,
+          closeSortDialog = this.closeSortDialog,
+          onSortClick = this.onSortClick;
 
       var appBarProps = _appBarProps();
       var _props = this.props,
@@ -187,7 +204,9 @@ var Header = function (_Component) {
           fetchLocalizationLabel = _props.fetchLocalizationLabel,
           userInfo = _props.userInfo,
           isHomeScreen = _props.isHomeScreen,
-          defaultTitle = _props.defaultTitle;
+          defaultTitle = _props.defaultTitle,
+          refreshButton = _props.refreshButton,
+          sortButton = _props.sortButton;
 
       return _react2.default.createElement(
         "div",
@@ -202,6 +221,9 @@ var Header = function (_Component) {
         }, appBarProps, {
           fetchLocalizationLabel: fetchLocalizationLabel,
           userInfo: userInfo,
+          refreshButton: refreshButton,
+          sortButton: sortButton,
+          sortDialogOpen: onSortClick,
           history: this.props.history
         })),
         _react2.default.createElement(_NavigationDrawer2.default, (_React$createElement = {
@@ -215,7 +237,8 @@ var Header = function (_Component) {
           role: role && role === "citizen" ? "citizen" : "employee",
           isCSR: role === "csr" ? true : false
         }, (0, _defineProperty3.default)(_React$createElement, "isCSR", role === "pgr-admin" ? true : false), (0, _defineProperty3.default)(_React$createElement, "openSecondary", window.innerWidth >= 768 ? true : false), (0, _defineProperty3.default)(_React$createElement, "width", 300), _React$createElement)),
-        _react2.default.createElement(_LogoutDialog2.default, { logoutPopupOpen: logoutPopupOpen, closeLogoutDialog: _closeLogoutDialog, logout: _logout })
+        _react2.default.createElement(_LogoutDialog2.default, { logoutPopupOpen: logoutPopupOpen, closeLogoutDialog: _closeLogoutDialog, logout: _logout }),
+        _react2.default.createElement(_SortDialog2.default, { sortPopOpen: sortPopOpen, closeSortDialog: closeSortDialog })
       );
     }
   }]);
