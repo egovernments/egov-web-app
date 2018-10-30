@@ -434,6 +434,25 @@ div[class^="floorDetails_"] .text-left {
   margin-left: 15px;
 }
 
+div[class^="MuiPaper-root"] {
+  svg {
+    text {
+      fill: #fff;
+      font-size: 1.2rem;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+    circle, path {
+      color: #FE7A51;
+    }
+  }
+  [class*="MuiStepLabel"] {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  > div > span > span:nth-of-type(2) > span {
+    font-size: 14px;
+  }
+}
+
 @media only screen and (max-width: 704px) {
   #tax-wizard-buttons {
     text-align: initial;
