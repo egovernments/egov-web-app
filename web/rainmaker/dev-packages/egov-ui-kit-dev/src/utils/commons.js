@@ -523,12 +523,8 @@ export const trimObj = (obj) => {
 
 export const hasTokenExpired = (status, data) => {
   if (status === 401) {
-    if (data 
-      && data.Errors 
-      && Array.isArray(data.Errors) 
-      && data.Errors.length > 0
-      && data.Errors[0].code === "InvalidAccessTokenException")
-      return true
+    if (data && data.Errors && Array.isArray(data.Errors) && data.Errors.length > 0 && data.Errors[0].code === "InvalidAccessTokenException")
+      return true;
   }
-  return false
-}
+  return false;
+};

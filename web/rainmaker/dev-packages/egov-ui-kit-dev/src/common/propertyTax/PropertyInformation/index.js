@@ -104,7 +104,7 @@ class Property extends Component {
     transformedAssessments.push(viewAllAssessmentItem);
     return [
       {
-        primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_INFO_HEADER" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -122,7 +122,7 @@ class Property extends Component {
         ),
       },
       {
-        primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_ASSESMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />

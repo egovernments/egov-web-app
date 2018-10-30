@@ -24,7 +24,14 @@ var _AssessmentInfoTable = require("../AssessmentInfoTable");
 
 var _AssessmentInfoTable2 = _interopRequireDefault(_AssessmentInfoTable);
 
+var _utils = require("egov-ui-kit/redux/app/utils");
+
+var _commons = require("../../../../../utils/commons");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var locale = window.localStorage.getItem("locale") || "en_IN";
+var localizationLabelsData = (0, _utils.initLocalizationLabels)(locale);
 
 var editIconStyle = (0, _defineProperty3.default)({
   fill: "#767676",
@@ -52,7 +59,8 @@ var ReceiptItems = function ReceiptItems(_ref) {
         _react2.default.createElement(_components.Icon, { action: "action", name: "assignment", color: "#767676" }),
         _react2.default.createElement(_translationNode2.default, {
           bold: true,
-          label: "Property Tax Unique ID.: " + propertyTaxAssessmentID,
+          label: (0, _commons.getTranslatedLabel)("PT_PROPERTY_PTUID", localizationLabelsData) + " " + propertyTaxAssessmentID,
+          "debugger": true,
           containerStyle: { marginLeft: "13px" },
           labelStyle: { letterSpacing: 0 },
           color: "#767676"
