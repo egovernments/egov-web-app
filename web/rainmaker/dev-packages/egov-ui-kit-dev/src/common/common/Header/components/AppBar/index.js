@@ -5,7 +5,8 @@ import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
-
+import IconButton from "material-ui/IconButton";
+import { Icon } from "components";
 import "./index.css";
 
 const styles = {
@@ -24,6 +25,7 @@ const EgovAppBar = ({
   fetchLocalizationLabel,
   userInfo = {},
   onToolBarIconClick,
+  history,
   ...rest
 }) => {
   return (
@@ -69,9 +71,18 @@ const EgovAppBar = ({
         <div className="appbar-right-logo">
           <img src={digitLogo} />
         </div>
+        <div className="icon-button">
+        {(role==="ao")&&(window.location.pathname==="/all-complaints")&&<IconButton onClick={e => onSearchClick(history)}> 
+          <Icon action="action" name="search" color="#fff" />
+        </IconButton>}
+        </div>
       </AppBar>
     </div>
   );
 };
 
+const onSearchClick=(history)=>
+{
+  history.push("search-complaint");
+}
 export default EgovAppBar;

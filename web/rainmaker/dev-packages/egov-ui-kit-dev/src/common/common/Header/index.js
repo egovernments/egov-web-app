@@ -121,6 +121,7 @@ class Header extends Component {
           {...appBarProps}
           fetchLocalizationLabel={fetchLocalizationLabel}
           userInfo={userInfo}
+          history={this.props.history}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
