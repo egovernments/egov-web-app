@@ -700,6 +700,19 @@ const getCertificateData = (transformedData, ulbLogo) => {
         columns: [
           {
             width: 160,
+            text: "Trade Owner Contact"
+          },
+          {
+            width: "*",
+            text: transformedData.owners[0].mobile
+          }
+        ]
+      },
+      {
+        style: "tl-certificate-data-2",
+        columns: [
+          {
+            width: 160,
             text: "Trade Address"
           },
           {
