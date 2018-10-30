@@ -30,7 +30,14 @@ const theme = {
     selectedColor: "#fe7a51",
   },
   stepper: {
-    connectorLineColor: "#f5a623",
+    backgroundColor: 'transparent',
+    hoverBackgroundColor: "#fe7a51",
+    iconColor: "#fe7a51",
+    hoveredIconColor: "red",
+    inactiveIconColor: "red",
+    textColor: "#fe7a51",
+    disabledTextColor: "#fe7a51",
+    connectorLineColor: "red",
   },
   radioButton: {
     background: "#fe7a51",
