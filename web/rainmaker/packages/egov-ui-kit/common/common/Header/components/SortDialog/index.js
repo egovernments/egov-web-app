@@ -17,8 +17,34 @@ var _translationNode2 = _interopRequireDefault(_translationNode);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = {
-  logoutContentStyle: { textAlign: "center", padding: "24px 20px" }
+  logoutContentStyle: { textAlign: "center", padding: "24px 20px" },
+
+  labelStyle: {
+    fontSize: "16px",
+    fontWeight: "normal",
+    color: "red",
+    letterSpacing: "0.3px",
+    marginBottom: "26px"
+  },
+
+  radioButtonItemStyle: {
+    marginBottom: "18px",
+    paddingLeft: "2px",
+    height: "16px",
+    color: "red"
+  },
+  selectedLabelStyle: {
+    color: "red"
+  },
+  radioButtonLabelStyle: {
+    fontSize: "16px",
+    fontWeight: "400",
+    color: "red",
+    letterSpacing: "0.3px"
+  }
 };
+
+var options = [{ value: "Complaint Date - Old to New", label: _react2.default.createElement(_translationNode2.default, { label: "CS_SORT_OPTION_ONE" }) }, { value: "Complaint Date - New to old", label: _react2.default.createElement(_translationNode2.default, { label: "CS_SORT_OPTION_TWO" }) }, { value: "Days Remaining to SLA", label: _react2.default.createElement(_translationNode2.default, { label: "CS_SORT_OPTION_THREE" }) }];
 
 var LogoutDialog = function LogoutDialog(_ref) {
   var closeSortDialog = _ref.closeSortDialog,
@@ -46,7 +72,20 @@ var LogoutDialog = function LogoutDialog(_ref) {
       fontSize: "20px",
       labelStyle: { padding: "16px 0px 0px 24px" }
     }),
-    children: [_react2.default.createElement(_translationNode2.default, { label: "CORE_LOGOUTPOPUP_CONFIRM", color: "rgba(0, 0, 0, 0.6000000238418579)", labelStyle: { padding: "16px 0px 0px 12px" } })],
+    children: [_react2.default.createElement(
+      "div",
+      { style: { paddingTop: "22px", paddingLeft: "8px" } },
+      _react2.default.createElement(_components.RadioButton, {
+        id: "sortcomplaint-radio-button",
+        name: "sortcomplaint-radio-button"
+        // valueSelected={valueSelected}
+        , options: options
+        // handleChange={handleChange}
+        , radioButtonItemStyle: styles.radioButtonItemStyle,
+        labelStyle: styles.radioButtonLabelStyle,
+        selectedLabelStyle: styles.selectedLabelStyle
+      })
+    )],
     handleClose: closeSortDialog,
     actions: actions,
     contentClassName: "logout-popup",

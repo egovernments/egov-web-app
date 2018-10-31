@@ -1,10 +1,40 @@
 import React from "react";
 import { Dialog, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import { RadioButton } from "components";
 
 const styles = {
   logoutContentStyle: { textAlign: "center", padding: "24px 20px" },
+  
+  labelStyle: {
+    fontSize: "16px",
+    fontWeight: "normal",
+    color: "#767676",
+    letterSpacing: "0.3px",
+    marginBottom: "26px",
+  },
+
+  radioButtonItemStyle: {
+    marginBottom: "18px",
+    paddingLeft: "2px",
+    height: "16px",
+  },
+  selectedLabelStyle: {
+    color: "#fe7a51",
+  },
+  radioButtonLabelStyle: {
+    fontSize: "16px",
+    fontWeight: "400",
+    color: "#767676",
+    letterSpacing: "0.3px",
+  },
 };
+
+const options = [
+  { value: "Complaint Date - Old to New", label: <Label label="CS_SORT_OPTION_ONE" /> },
+  { value: "Complaint Date - New to old", label: <Label label="CS_SORT_OPTION_TWO" /> },
+  { value: "Days Remaining to SLA", label: <Label label="CS_SORT_OPTION_THREE" /> },
+];
 
 const LogoutDialog = ({ closeSortDialog, sortPopOpen }) => {
   const actions = [
@@ -36,7 +66,18 @@ const LogoutDialog = ({ closeSortDialog, sortPopOpen }) => {
         />
       }
       children={[
-        <Label label={"CORE_LOGOUTPOPUP_CONFIRM"} color="rgba(0, 0, 0, 0.6000000238418579)" labelStyle={{ padding: "16px 0px 0px 12px" }} />,
+        <div style={{ paddingTop: "22px",paddingLeft:"8px" }}>
+          <RadioButton
+            id="sortcomplaint-radio-button"
+            name="sortcomplaint-radio-button"
+            // valueSelected={valueSelected}
+            options={options}
+            // handleChange={handleChange}
+            radioButtonItemStyle={styles.radioButtonItemStyle}
+            labelStyle={styles.radioButtonLabelStyle}
+            selectedLabelStyle={styles.selectedLabelStyle}
+          />
+        </div>  
       ]}
       handleClose={closeSortDialog}
       actions={actions}
