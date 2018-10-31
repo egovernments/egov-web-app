@@ -62,7 +62,7 @@ class EGFFinance extends Component{
     onMessage(){
          console.log('event recieved from iframe client')
            // document.getElementById('erp_iframe').style.display='none';
-           this.props.history.push('/all-complaints');
+           this.props.history.push('/landing-page');
     }
 
 }
