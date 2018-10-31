@@ -11,19 +11,22 @@ class Table extends React.Component {
   };
 
   formatData = (data, columns) => {
-    return [...data].reduce((acc, curr) => {
-      let dataRow = [];
-      Object.keys(columns).forEach(column => {
-        let columnValue = get(curr, `${column}`, "");
-        if (get(columns, `${column}.format`, "")) {
-          columnValue = columns[column].format(curr);
-        }
-        dataRow.push(columnValue);
-      });
-      let updatedAcc = [...acc];
-      updatedAcc.push(dataRow);
-      return updatedAcc;
-    }, []);
+    return (
+      data &&
+      [...data].reduce((acc, curr) => {
+        let dataRow = [];
+        Object.keys(columns).forEach(column => {
+          let columnValue = get(curr, `${column}`, "");
+          if (get(columns, `${column}.format`, "")) {
+            columnValue = columns[column].format(curr);
+          }
+          dataRow.push(columnValue);
+        });
+        let updatedAcc = [...acc];
+        updatedAcc.push(dataRow);
+        return updatedAcc;
+      }, [])
+    );
   };
 
   componentWillReceiveProps(nextProps) {

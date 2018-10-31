@@ -35,7 +35,11 @@ class MultiItem extends React.Component {
       } else {
         for (var i = 0; i < editItems.length; i++) {
           if (checkActiveItem(editItems[i])) {
-            this.addItem(true);
+            if (i) {
+              this.addItem();
+            } else {
+              this.addItem(true);
+            }
           }
         }
       }
@@ -83,9 +87,7 @@ class MultiItem extends React.Component {
               ].props.jsonPath = `${sourceJsonPath}[${itemsLength}]${
                 propertyName[1]
               }`;
-              multiItemContent[
-                variable
-              ].index=itemsLength;
+              multiItemContent[variable].index = itemsLength;
             }
           }
         }

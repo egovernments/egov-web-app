@@ -115,7 +115,11 @@ var MultiItem = function (_React$Component) {
         } else {
           for (var i = 0; i < editItems.length; i++) {
             if (checkActiveItem(editItems[i])) {
-              _this.addItem(true);
+              if (i) {
+                _this.addItem();
+              } else {
+                _this.addItem(true);
+              }
             }
           }
         }
