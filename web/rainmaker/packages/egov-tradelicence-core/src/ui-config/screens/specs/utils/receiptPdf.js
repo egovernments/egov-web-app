@@ -730,9 +730,9 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `${transformedData.tradeType} / ${
-              transformedData.tradeSubType
-            }`
+            text: `${transformedData.tradeCategory} / ${
+              transformedData.tradeType
+            } / ${transformedData.tradeSubType}`
           }
         ]
       },
@@ -821,7 +821,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
     footer: [
       {
         text:
-          "This Trade License is issued under rule 10.39 of the Municipal Account Code 2017 with condition that the applicant shall obtain relevant NOC from concerned departments like Punjab Pollution control board / Fire Office /Health Department/ Excise Department/Deputy Commissioner (under Explosive Act) whichever applicable. The Municipal Council/Corporation reserves the right to cancel this Trade License for Breach of any condition in accordance with law.",
+          "Disclaimer:\nThis license is not the proof of ownership.\nThis Trade License is issued under rule 10.39 of the Municipal Account Code 2017 with condition that the applicant shall obtain relevant NOC from concerned departments like Punjab Pollution control board / Fire Office /Health Department/ Excise Department/Deputy Commissioner (under Explosive Act) whichever applicable. The Municipal Council/Corporation reserves the right to cancel this Trade License for Breach of any condition in accordance with law.",
         style: "receipt-footer"
       }
     ],
@@ -897,7 +897,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
       "receipt-footer": {
         color: "#484848",
         fontSize: 8,
-        margin: [10, 0, 5, 5]
+        margin: [10, -15, 5, 5]
       },
       "receipt-no": {
         color: "#484848",
@@ -905,7 +905,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
       },
       "tl-certificate-footer": {
         fontSize: 14,
-        margin: [0, 80, 0, 0], //left top right bottom
+        margin: [0, 50, 0, 0], //left top right bottom
         color: "#1E1E1E"
       }
     }
