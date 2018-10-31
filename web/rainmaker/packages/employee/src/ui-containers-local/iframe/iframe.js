@@ -20,7 +20,12 @@ class Iframe extends React.Component {
   })
 
   componentDidMount() {
+    window.addEventListener("resize", this.updateFrame)
     this.updateFrame()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateFrame)
   }
 
   render() {
