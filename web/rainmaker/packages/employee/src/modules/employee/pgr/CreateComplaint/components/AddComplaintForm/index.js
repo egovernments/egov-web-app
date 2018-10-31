@@ -48,7 +48,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   additionalDetails={fields.additionalDetails}
                 />
               </div>
-              <div className="col-sm-6 col-xs-12">
+              {/* <div className="col-sm-6 col-xs-12">
                 <TextField
                   className="fix-for-layout-break"
                   {...address}
@@ -57,7 +57,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   name="complainant-mobile-no"
                   onChange={(e, value) => handleFieldChange("address", value)}
                 />
-              </div>
+              </div> */}
               <div className="col-sm-6 col-xs-12">
                 <DropDown
                   className="fix-for-layout-break"

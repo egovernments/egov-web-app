@@ -399,12 +399,17 @@ var getPropertyFromObj = exports.getPropertyFromObj = function getPropertyFromOb
 var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHours, submittedTime) {
   var millsToAdd = slaHours * 60 * 60 * 1000;
   var toBeFinishedBy = millsToAdd + submittedTime;
+  var slaStatement = "";
   var daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    return Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
+    slaStatement = Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
   } else {
-    return Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
+    slaStatement = Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
   }
+  return {
+    slaStatement: slaStatement,
+    daysCount: daysCount
+  };
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
@@ -532,7 +537,8 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       employeePhoneNumber: employeeById && employeeById[findLatestAssignee(complaintDetail.actions)] ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber : defaultPhoneNumber,
       status: role === "citizen" ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter(function (complaint) {
         return complaint.status;
-      })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)))
+      })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).slaStatement),
+      SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).daysCount
     };
   });
   return transformedComplaints;

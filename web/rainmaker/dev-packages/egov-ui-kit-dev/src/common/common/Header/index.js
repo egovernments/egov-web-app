@@ -67,7 +67,6 @@ class Header extends Component {
   };
 
   onSortClick = () => {
-    console.log("here is sorting....");
     this.setState({
       sortPopOpen: true,
     });

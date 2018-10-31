@@ -9,20 +9,19 @@ import "./index.css";
 const ComplaintFormHOC = formHoc({ formKey: "complaint" })(AddComplaintForm);
 
 class AddComplaints extends Component {
-  componentWillReceiveProps = (nextProps) => {
-    const { form, handleFieldChange } = this.props;
-    console.log("Location is...........", form);
-    // if (form) {
-    //   const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
-    //   // if (nextProps.currentLocation && nextProps.currentLocation.address) {
-    //   //   const { lat, lng, address } = nextProps.currentLocation;
-    //   //   handleFieldChange("complaint", "latitude", lat);
-    //   //   handleFieldChange("complaint", "longitude", lng);
-    //   //   handleFieldChange("complaint", "address", address);
-    //   // }
-    // handleFieldChange("complaint", "city", tenantId);
-    //}
-  };
+  // componentWillReceiveProps = (nextProps) => {
+  //   const { form, handleFieldChange } = this.props;
+  //    if (form) {
+  //const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+  //   // if (nextProps.currentLocation && nextProps.currentLocation.address) {
+  //   //   const { lat, lng, address } = nextProps.currentLocation;
+  //   //   handleFieldChange("complaint", "latitude", lat);
+  //   //   handleFieldChange("complaint", "longitude", lng);
+  //   //   handleFieldChange("complaint", "address", address);
+  //   // }
+  //handleFieldChange("complaint", "city", tenantId);
+  //}
+  //};
 
   render() {
     const { categories, localizationLabels } = this.props;

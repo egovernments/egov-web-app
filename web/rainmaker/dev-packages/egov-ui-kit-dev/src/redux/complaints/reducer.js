@@ -24,6 +24,7 @@ const intialState = {
   errorMessage: "",
   byId: {},
   categoriesById: {},
+  order: "",
 };
 
 const complaintsReducer = (state = intialState, action) => {
@@ -71,6 +72,12 @@ const complaintsReducer = (state = intialState, action) => {
       };
     default:
       return state;
+    case actionTypes.COMPLAINTS_SORT_ORDER:
+      return {
+        ...state,
+        loading: false,
+        order: action.order,
+      };
   }
 };
 

@@ -326,12 +326,17 @@ export const getPropertyFromObj = (obj, id, property, defaultValue) => {
 export const returnSLAStatus = (slaHours, submittedTime) => {
   const millsToAdd = slaHours * 60 * 60 * 1000;
   const toBeFinishedBy = millsToAdd + submittedTime;
+  let slaStatement = "";
   const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
+    slaStatement = Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
   } else {
-    return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
+    slaStatement = Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
   }
+  return {
+    slaStatement,
+    daysCount,
+  };
 };
 
 export const getCommaSeperatedAddress = (address, cities) => {
@@ -450,8 +455,10 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
                 returnSLAStatus(
                   getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
                   getLatestCreationTime(complaintDetail)
-                )
+                ).slaStatement
               ),
+      SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail))
+        .daysCount,
     };
   });
   return transformedComplaints;

@@ -275,7 +275,7 @@ class AllComplaints extends Component {
       </Screen>
     ) : (
       <Screen loading={loading}>
-          <div className="form-without-button-cont-generic">
+        <div className="form-without-button-cont-generic">
           <Card
             id="complaint-search-card"
             className="complaint-search-main-card"
@@ -382,7 +382,7 @@ const displayStatus = (status = "") => {
 
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
-  const { categoriesById, byId } = complaints;
+  const { categoriesById, byId, order } = complaints;
   const { fetchSuccess } = complaints;
   const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
   const { citizenById, employeeById } = common || {};
@@ -392,23 +392,65 @@ const mapStateToProps = (state) => {
   let assignedComplaints = [],
     unassignedComplaints = [],
     employeeComplaints = [];
+
   if (role === "ao") {
-    assignedComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
-    unassignedComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
+    if (order === "Old to New") {
+      assignedComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+        ["latestCreationTime"],
+        ["asc"]
+      );
+      unassignedComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+        ["latestCreationTime"],
+        ["asc"]
+      );
+    } else if (order === "New to old") {
+      assignedComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+        ["latestCreationTime"],
+        ["desc"]
+      );
+      unassignedComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+        ["latestCreationTime"],
+        ["desc"]
+      );
+    } else {
+      assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["SLA"], ["asc"]);
+      unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["SLA"], ["asc"]);
+    }
+
+    // assignedComplaints = orderby(
+    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+    //   ["latestCreationTime"],
+    //   ["asc"]
+    // );
+    // unassignedComplaints = orderby(
+    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+    //   ["latestCreationTime"],
+    //   ["asc"]
+    // );
   } else {
-    employeeComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
+    if (order === "Old to New") {
+      employeeComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
+        ["latestCreationTime"],
+        ["asc"]
+      );
+    } else if (order === "New to old") {
+      employeeComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
+        ["latestCreationTime"],
+        ["desc"]
+      );
+    } else {
+      employeeComplaints = orderby(
+        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
+        ["SLA"],
+        ["asc"]
+      );
+    }
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
   const numEmpComplaint = employeeComplaints.length;

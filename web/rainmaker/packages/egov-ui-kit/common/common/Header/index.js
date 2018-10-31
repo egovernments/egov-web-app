@@ -122,7 +122,6 @@ var Header = function (_Component) {
         sortPopOpen: false
       });
     }, _this.onSortClick = function () {
-      console.log("here is sorting....");
       _this.setState({
         sortPopOpen: true
       });
