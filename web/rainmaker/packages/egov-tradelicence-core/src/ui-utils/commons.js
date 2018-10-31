@@ -387,25 +387,25 @@ export const handleFileUpload = (event, handleDocument, props) => {
       const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
       const isSizeValid = getFileSize(file) <= maxFileSize;
       if (!fileValid) {
-        store.dispatch(
-          toggleSnackbarAndSetText(
-            true,
-            `Only image or pdf files can be uploaded`,
-            "error"
-          )
-        );
-        // alert(`Only image or pdf files can be uploaded`);
+        // store.dispatch(
+        //   toggleSnackbarAndSetText(
+        //     true,
+        //     `Only image or pdf files can be uploaded`,
+        //     "error"
+        //   )
+        // );
+        alert(`Only image or pdf files can be uploaded`);
         uploadDocument = false;
       }
       if (!isSizeValid) {
-        store.dispatch(
-          toggleSnackbarAndSetText(
-            true,
-            `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
-            "error"
-          )
-        );
-        // alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
+        // store.dispatch(
+        //   toggleSnackbarAndSetText(
+        //     true,
+        //     `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
+        //     "error"
+        //   )
+        // );
+        alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
         uploadDocument = false;
       }
       if (uploadDocument) {

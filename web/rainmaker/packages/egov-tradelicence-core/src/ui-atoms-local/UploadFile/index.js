@@ -19,6 +19,9 @@ const UploadFile = props => {
         multiple
         type="file"
         onChange={handleFileUpload}
+        onClick={event => {
+          event.target.value = null;
+        }}
         {...inputProps}
       />
       <label htmlFor="contained-button-file">
