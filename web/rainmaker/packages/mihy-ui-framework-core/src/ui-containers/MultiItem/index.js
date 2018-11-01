@@ -35,11 +35,12 @@ class MultiItem extends React.Component {
       } else {
         for (var i = 0; i < editItems.length; i++) {
           if (checkActiveItem(editItems[i])) {
-            if (i) {
-              this.addItem();
-            } else {
-              this.addItem(true);
-            }
+            // if (i) {
+            //   this.addItem();
+            // } else {
+            //   this.addItem(true);
+            // }
+            this.addItem(true);
           }
         }
       }
