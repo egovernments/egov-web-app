@@ -67,7 +67,6 @@ class MapLocator extends Component {
   setPickedLocation = (lati, long) => {
     add.lat = lati;
     add.lng = long;
-    console.log(add);
   };
 
   closeMapPopup = () => {
