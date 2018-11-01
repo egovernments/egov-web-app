@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AutoSuggest } from "../../ui-atoms-local";
+import { findItemInArrayOfObject } from "../../ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
   transformById,
   getLocaleLabels
 } from "mihy-ui-framework/ui-utils/commons";
+import get from "lodash/get";
 
 const localizationLabels = JSON.parse(
   window.localStorage.getItem("localization_en_IN")
 );
+const transfomedKeys = transformById(localizationLabels, "code");
 
 class AutoSuggestor extends Component {
   onSelect = value => {
-    const { prepareFinalObject, jsonPath, onChange } = this.props;
-    // let e = { target: { value: value } };
-    console.log("auto", { target: { value } });
-    onChange({ target: { value } });
-    prepareFinalObject(jsonPath, value.value);
+    const { onChange } = this.props;
+    onChange({ target: { value: value.value } });
   };
 
   render() {
@@ -26,9 +26,9 @@ class AutoSuggestor extends Component {
       preparedFinalObject,
       label,
       placeholder,
+      suggestions,
       ...rest
     } = this.props;
-    let transfomedKeys = transformById(localizationLabels, "code");
     let translatedLabel = getLocaleLabels(
       label.labelName,
       label.labelKey,
@@ -44,6 +44,7 @@ class AutoSuggestor extends Component {
       <div>
         <AutoSuggest
           onSelect={this.onSelect}
+          suggestions={suggestions}
           value={value}
           label={translatedLabel}
           placeholder={translatedPlaceholder}
@@ -53,9 +54,46 @@ class AutoSuggestor extends Component {
     );
   }
 }
+
+const getLocalisedSuggestions = suggestions => {
+  return (
+    suggestions &&
+    suggestions.length > 0 &&
+    suggestions.map((option, key) => {
+      option.name = getLocaleLabels(
+        option.code,
+        `TL_${option.code}`,
+        transfomedKeys
+      );
+      return option;
+    })
+  );
+};
+
 const mapStateToProps = (state, ownprops) => {
-  const { jsonPath, value } = ownprops;
-  return { value, jsonPath };
+  let { jsonPath, value, sourceJsonPath, labelsFromLocalisation } = ownprops;
+  let suggestions = get(
+    state.screenConfiguration.preparedFinalObject,
+    sourceJsonPath,
+    []
+  );
+  //To fetch corresponding labels from localisation for the suggestions, if needed.
+  if (labelsFromLocalisation) {
+    suggestions = getLocalisedSuggestions(
+      JSON.parse(JSON.stringify(suggestions))
+    );
+  }
+  //To find correct option object as per the value (for showing the selected value).
+  const selectedItem = findItemInArrayOfObject(suggestions, item => {
+    if (item.code === value) {
+      return true;
+    } else return false;
+  });
+  //Make value object as the Autosuggest expects.
+  if (selectedItem && selectedItem.name) {
+    value = { label: selectedItem.name, value: selectedItem.code };
+  }
+  return { value, jsonPath, suggestions };
 };
 
 const mapDispatchToProps = dispatch => {

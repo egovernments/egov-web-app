@@ -1417,10 +1417,9 @@ export const getDocList = (state, dispatch) => {
   let currentObject = filter(tradeSubCategories, {
     code: tradeSubType
   });
-  console.log(currentObject);
-  const applicationDocument = prepareDocumentTypeObj(
-    currentObject[0].applicationDocument
-  );
+  const applicationDocument =
+    currentObject[0] &&
+    prepareDocumentTypeObj(currentObject[0].applicationDocument);
 
   dispatch(
     prepareFinalObject(

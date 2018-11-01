@@ -29,7 +29,7 @@ const styles = theme => ({
   },
   ac_valueContainer: {
     display: "flex",
-    flexWrap: "wrap",
+    // flexWrap: "wrap",
     flex: 1,
     alignItems: "center"
   },
@@ -37,16 +37,18 @@ const styles = theme => ({
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
   },
   ac_singleValue: {
-    fontSize: 16
+    fontSize: 16,
+    marginBottom: 2
   },
   ac_placeholder: {
     position: "absolute",
     left: 2,
-    fontSize: 16
+    fontSize: 16,
+    color: "rgba(162, 162, 162, 0.77)"
   },
   ac_paper: {
     position: "absolute",
-    zIndex: 1,
+    zIndex: 1105,
     marginTop: theme.spacing.unit,
     left: 0,
     right: 0
