@@ -63,6 +63,8 @@ class LandingPage extends Component {
     },
     TL: {
       moduleTitle: "TradeLicense",
+      moduleDescription:
+        "A licensed trade will always enjoy a greater goodwill and attract more customers and investors than unregistered entities. Help your city to plan and support your business. Apply for your Trade License Now!",
       button1: "Mseva TradeLicense",
       borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
