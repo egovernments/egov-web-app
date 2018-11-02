@@ -78,11 +78,11 @@ var statusToLocalisationKeyMapping = exports.statusToLocalisationKeyMapping = {
 };
 
 var displayStatus = exports.displayStatus = function displayStatus(status) {
-  return status ? statusToMessageMapping[status.toLowerCase()] : "";
+  return status ? statusToMessageMapping[status && status.toLowerCase()] : "";
 };
 
 var displayLocalizedStatusMessage = exports.displayLocalizedStatusMessage = function displayLocalizedStatusMessage(status) {
-  return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
+  return status ? statusToLocalisationKeyMapping[status && status.toLowerCase()] : "";
 };
 var transformById = exports.transformById = function transformById(payload, id) {
   return payload && payload.reduce(function (result, item) {
@@ -357,7 +357,7 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
   var transformedStatus = "";
-  switch (status.toLowerCase()) {
+  switch (status && status.toLowerCase()) {
     case "open":
     case "new":
     case "reassignrequested":

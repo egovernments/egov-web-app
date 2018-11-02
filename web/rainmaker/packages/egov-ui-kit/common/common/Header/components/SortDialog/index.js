@@ -104,14 +104,6 @@ var SortDialog = function (_Component) {
 
   (0, _createClass3.default)(SortDialog, [{
     key: "render",
-
-
-    // onConfirmClick = (closeSortDialog) => {
-    //   const { getComplaintDisplayOrder } = this.props;
-    //   getComplaintDisplayOrder(this.state.valueSelected);
-    //   closeSortDialog();
-    // };
-
     value: function render() {
       var _this2 = this;
 

@@ -31,11 +31,11 @@ export const statusToLocalisationKeyMapping = {
 };
 
 export const displayStatus = (status) => {
-  return status ? statusToMessageMapping[status.toLowerCase()] : "";
+  return status ? statusToMessageMapping[status && status.toLowerCase()] : "";
 };
 
 export const displayLocalizedStatusMessage = (status) => {
-  return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
+  return status ? statusToLocalisationKeyMapping[status && status.toLowerCase()] : "";
 };
 export const transformById = (payload, id) => {
   return (
@@ -284,7 +284,7 @@ const dateDiffInDays = (a, b) => {
 
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
-  switch (status.toLowerCase()) {
+  switch (status && status.toLowerCase()) {
     case "open":
     case "new":
     case "reassignrequested":
