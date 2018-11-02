@@ -31,11 +31,11 @@ export const statusToLocalisationKeyMapping = {
 };
 
 export const displayStatus = (status) => {
-  return status ? statusToMessageMapping[status && status.toLowerCase()] : "";
+  return status ? statusToMessageMapping[status.toLowerCase()] : "";
 };
 
 export const displayLocalizedStatusMessage = (status) => {
-  return status ? statusToLocalisationKeyMapping[status && status.toLowerCase()] : "";
+  return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
 };
 export const transformById = (payload, id) => {
   return (
@@ -284,7 +284,7 @@ const dateDiffInDays = (a, b) => {
 
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
-  switch (status && status.toLowerCase()) {
+  switch (status.toLowerCase()) {
     case "open":
     case "new":
     case "reassignrequested":
@@ -326,17 +326,12 @@ export const getPropertyFromObj = (obj, id, property, defaultValue) => {
 export const returnSLAStatus = (slaHours, submittedTime) => {
   const millsToAdd = slaHours * 60 * 60 * 1000;
   const toBeFinishedBy = millsToAdd + submittedTime;
-  let slaStatement = "";
   const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    slaStatement = Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
+    return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
   } else {
-    slaStatement = Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
+    return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
   }
-  return {
-    slaStatement,
-    daysCount,
-  };
 };
 
 export const getCommaSeperatedAddress = (address, cities) => {
@@ -455,10 +450,8 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
                 returnSLAStatus(
                   getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
                   getLatestCreationTime(complaintDetail)
-                ).slaStatement
+                )
               ),
-      SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail))
-        .daysCount,
     };
   });
   return transformedComplaints;

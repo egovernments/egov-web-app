@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -114,7 +110,6 @@ var StatusIcon = function StatusIcon(_ref) {
 
   switch (status) {
     case "open":
-    case "pending":
       return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-plus", style: statusCommonIconStyle, color: "#fe7a51" });
     case "reassignrequested":
       return _react2.default.createElement(_components.Icon, { action: "custom", name: "reassign-request", style: statusCommonIconStyle, color: "#fe7a51" });
@@ -494,36 +489,16 @@ var StatusContent = function StatusContent(_ref2) {
         ),
         _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", label: comments ? "\" " + comments + " \"" : "" })
       );
-    case "pending":
-      return _react2.default.createElement(
-        "div",
-        { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, {
-          style: { paddingTop: "6px" },
-          labelClassName: "dark-color complaint-timeline-status",
-          containerStyle: filedBy && filedBy.includes("@CSR") ? {
-            display: "block",
-            marginBottom: 5,
-            paddingTop: "6px"
-          } : {
-            display: "inline-block",
-            marginRight: "3px",
-            paddingTop: "6px"
-          },
-          label: "Complaint pending at GRO"
-        })
-      );
   }
 };
 
 var DueDate = function DueDate(_ref3) {
   var duedateText = _ref3.duedateText;
 
-  console.log("duedateText is .......", duedateText);
-  return duedateText && duedateText.slaStatement && _react2.default.createElement(_translationNode2.default, {
-    labelStyle: duedateText.slaStatement.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" },
+  return _react2.default.createElement(_translationNode2.default, {
+    labelStyle: duedateText.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" },
     className: "Complaint-details-duedate",
-    label: duedateText.slaStatement
+    label: duedateText
   });
 };
 
@@ -554,11 +529,7 @@ var ComplaintTimeLine = function (_Component) {
           filedUserMobileNumber = _props.filedUserMobileNumber,
           timelineSLAStatus = _props.timelineSLAStatus;
 
-      if (timeLine && timeLine.length === 1 && timeLine[0].status === "open") {
-        // timeLine.push({ status: "pending" });
-        timeLine = [{ status: "pending" }].concat((0, _toConsumableArray3.default)(timeLine));
-        console.log("timeline is....", timeLine);
-      }
+
       var steps = timeLine.map(function (step, key) {
         return {
           props: {

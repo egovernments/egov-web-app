@@ -1,5 +1,5 @@
 body {
-  background-color: #F4F7FB !important; }
+  background-color: #f2f2f2 !important; }
 
 body,
 body p,
@@ -47,7 +47,7 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 16px !important; }
 
 .dark-color {
-  color: "rgba(0, 0, 0, 0.8700000047683716)"; }
+  color: #484848; }
 
 .rainmaker-custom-gap {
   margin-bottom: 8px; }
@@ -177,7 +177,7 @@ body.employee-user-profile {
   visibility: hidden;
   width: 100%;
   float: left;
-  background-color: #00bbd3;
+  background-color:rgba(254, 122, 81, 0.11999999731779099);
   color: #fff;
   border-radius: 2px;
   padding: 0px 0px;
@@ -200,7 +200,9 @@ body.employee-user-profile {
   background-color: #fff;
   min-height: calc(100vh - 64px);
   position: fixed;
-  z-index: 1001; }
+  z-index: 1001; 
+  border-right: 1px solid #00000024;
+}
 
 .responsive-action-button-cont {
   position: fixed;

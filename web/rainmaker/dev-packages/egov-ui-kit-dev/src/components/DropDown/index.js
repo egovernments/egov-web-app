@@ -6,7 +6,7 @@ import "./index.css";
 
 const floatingLabelStyle = {
   fontSize: "12px",
-  color: "rgba(0, 0, 0, 0.6000000238418579)",
+  color: "#00bcd1",
   fontWeight: 500,
   transform: "scale(1) translate(0px, -16px)",
   top: 30,
@@ -14,7 +14,7 @@ const floatingLabelStyle = {
 
 const floatingLabelBaseShrinkStyle = {
   fontSize: "12px",
-  color: "rgba(0, 0, 0, 0.6000000238418579)",
+  color: "#00bcd1",
   transform: "scale(1) translate(0px, -16px)",
   fontWeight: 500,
 };
@@ -22,7 +22,7 @@ const floatingLabelBaseShrinkStyle = {
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "rgba(0, 0, 0, 0.3799999952316284)",
+  color: "#b3b3b3",
 };
 
 const requiredStyle = {

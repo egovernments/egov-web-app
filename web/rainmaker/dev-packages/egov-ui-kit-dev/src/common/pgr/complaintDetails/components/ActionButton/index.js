@@ -18,19 +18,16 @@ class ActionButton extends Component {
     const button2Style = {};
     return (
       <div className="complaint-details-action-buttons">
-        {btnOneLabel && (
-          <Button
-            label={<Label buttonLabel={true} label={btnOneLabel} color="#fe7a51" />}
-            onClick={btnOneOnClick}
-            className="action-button-one"
-            id="actionOne"
-            backgroundColor="#ffffff"
-            labelStyle={{ padding: 0 }}
-            overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center", height: "inherit" }}
-            buttonStyle={{ ...defaultButtonStyle, ...button1Style }}
-          />
-        )}
-
+        <Button
+          label={<Label buttonLabel={true} label={btnOneLabel} color="#fe7a51" />}
+          onClick={btnOneOnClick}
+          className="action-button-one"
+          id="actionOne"
+          backgroundColor="#ffffff"
+          labelStyle={{ padding: 0 }}
+          overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center", height: "inherit" }}
+          buttonStyle={{ ...defaultButtonStyle, ...button1Style }}
+        />
         <Button
           label={<Label buttonLabel={true} label={btnTwoLabel} />}
           onClick={btnTwoOnClick}

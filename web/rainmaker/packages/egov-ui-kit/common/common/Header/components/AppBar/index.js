@@ -38,22 +38,12 @@ var _pblogo = require("egov-ui-kit/assets/images/pblogo.png");
 
 var _pblogo2 = _interopRequireDefault(_pblogo);
 
-var _IconButton = require("material-ui/IconButton");
-
-var _IconButton2 = _interopRequireDefault(_IconButton);
-
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 }
-};
-
-var iconButtonStyle = {
-  paddingLeft: 0,
-  paddingRight: 0,
-  width: 35
 };
 
 // handle listners
@@ -69,11 +59,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
       onToolBarIconClick = _ref.onToolBarIconClick,
-      refreshButton = _ref.refreshButton,
-      sortButton = _ref.sortButton,
-      sortDialogOpen = _ref.sortDialogOpen,
-      history = _ref.history,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "sortDialogOpen", "history"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -119,35 +105,9 @@ var EgovAppBar = function EgovAppBar(_ref) {
         "div",
         { className: "appbar-right-logo" },
         _react2.default.createElement("img", { src: _Digit_logo2.default })
-      ),
-      _react2.default.createElement(
-        "div",
-        { className: "icon-button" },
-        refreshButton && _react2.default.createElement(
-          _IconButton2.default,
-          { style: iconButtonStyle, onClick: function onClick(e) {
-              return location.reload();
-            } },
-          _react2.default.createElement(_components.Icon, { action: "navigation", name: "refresh", color: "#fff" })
-        ),
-        sortButton && _react2.default.createElement(
-          _IconButton2.default,
-          { style: iconButtonStyle, onClick: sortDialogOpen },
-          _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#fff" })
-        ),
-        role === "ao" && window.location.pathname === "/all-complaints" && _react2.default.createElement(
-          _IconButton2.default,
-          { style: iconButtonStyle, onClick: function onClick(e) {
-              return onSearchClick(history);
-            } },
-          _react2.default.createElement(_components.Icon, { action: "action", name: "search", color: "#fff" })
-        )
       )
     )
   );
 };
 
-var onSearchClick = function onSearchClick(history) {
-  history.push("search-complaint");
-};
 exports.default = EgovAppBar;

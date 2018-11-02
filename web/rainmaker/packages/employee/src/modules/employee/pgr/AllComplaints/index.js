@@ -195,14 +195,7 @@ class AllComplaints extends Component {
                     name="mobile-no"
                     type="number"
                     value={mobileNo}
-                    hintText={
-                      <Label
-                        label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER"
-                        color="rgba(0, 0, 0, 0.3799999952316284)"
-                        fontSize={16}
-                        labelStyle={hintTextStyle}
-                      />
-                    }
+                    hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
                     floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
@@ -215,14 +208,7 @@ class AllComplaints extends Component {
                     id="complaint-no"
                     name="complaint-no"
                     value={complaintNo}
-                    hintText={
-                      <Label
-                        label="ES_MYCOMPLAINTS_COMPLAINT_NO"
-                        color="rgba(0, 0, 0, 0.3799999952316284)"
-                        fontSize={16}
-                        labelStyle={hintTextStyle}
-                      />
-                    }
+                    hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
                     floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
@@ -276,77 +262,6 @@ class AllComplaints extends Component {
     ) : (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
-          <Card
-            id="complaint-search-card"
-            className="complaint-search-main-card"
-            textChildren={
-              <div className="complaint-search-cont clearfix">
-                <div className="col-xs-12" style={{ paddingLeft: 8 }}>
-                  <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
-                </div>
-                <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8, paddingRight: 40 }}>
-                  <TextField
-                    id="mobile-no"
-                    name="mobile-no"
-                    type="number"
-                    value={mobileNo}
-                    hintText={
-                      <Label
-                        label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER"
-                        color="rgba(0, 0, 0, 0.3799999952316284)"
-                        fontSize={16}
-                        labelStyle={hintTextStyle}
-                      />
-                    }
-                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
-                    onChange={(e, value) => this.onMobileChange(e)}
-                    underlineStyle={{ bottom: 7 }}
-                    underlineFocusStyle={{ bottom: 7 }}
-                    hintStyle={{ width: "100%" }}
-                  />
-                </div>
-                <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
-                  <TextField
-                    id="complaint-no"
-                    name="complaint-no"
-                    value={complaintNo}
-                    hintText={
-                      <Label
-                        label="ES_MYCOMPLAINTS_COMPLAINT_NO"
-                        color="rgba(0, 0, 0, 0.3799999952316284)"
-                        fontSize={16}
-                        labelStyle={hintTextStyle}
-                      />
-                    }
-                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
-                    onChange={(e, value) => this.onComplaintChange(e)}
-                    underlineStyle={{ bottom: 7 }}
-                    underlineFocusStyle={{ bottom: 7 }}
-                    hintStyle={{ width: "100%" }}
-                  />
-                </div>
-                <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
-                  <Button
-                    label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
-                    style={{ marginRight: 28, width: "36%" }}
-                    backgroundColor="#fe7a51"
-                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
-                    buttonStyle={{ border: 0 }}
-                    onClick={() => this.onSearch()}
-                  />
-                  <Button
-                    label={<Label buttonLabel={true} color="#fe7a51" label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON" />}
-                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
-                    buttonStyle={{ border: "1px solid #fe7a51" }}
-                    style={{ width: "36%" }}
-                    onClick={() => this.clearSearch()}
-                  />
-                </div>
-              </div>
-            }
-          />
-        </div>
-        <div className="form-without-button-cont-generic">
           <Complaints
             noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
             onComplaintClick={onComplaintClick}
@@ -382,7 +297,7 @@ const displayStatus = (status = "") => {
 
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
-  const { categoriesById, byId, order } = complaints;
+  const { categoriesById, byId } = complaints;
   const { fetchSuccess } = complaints;
   const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
   const { citizenById, employeeById } = common || {};
@@ -392,65 +307,23 @@ const mapStateToProps = (state) => {
   let assignedComplaints = [],
     unassignedComplaints = [],
     employeeComplaints = [];
-
   if (role === "ao") {
-    if (order === "Old to New") {
-      assignedComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-        ["latestCreationTime"],
-        ["asc"]
-      );
-      unassignedComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-        ["latestCreationTime"],
-        ["asc"]
-      );
-    } else if (order === "New to old") {
-      assignedComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-        ["latestCreationTime"],
-        ["desc"]
-      );
-      unassignedComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-        ["latestCreationTime"],
-        ["desc"]
-      );
-    } else {
-      assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["SLA"], ["asc"]);
-      unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["SLA"], ["asc"]);
-    }
-
-    // assignedComplaints = orderby(
-    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-    //   ["latestCreationTime"],
-    //   ["asc"]
-    // );
-    // unassignedComplaints = orderby(
-    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-    //   ["latestCreationTime"],
-    //   ["asc"]
-    // );
+    assignedComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+      ["latestCreationTime"],
+      ["asc"]
+    );
+    unassignedComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+      ["latestCreationTime"],
+      ["asc"]
+    );
   } else {
-    if (order === "Old to New") {
-      employeeComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
-        ["latestCreationTime"],
-        ["asc"]
-      );
-    } else if (order === "New to old") {
-      employeeComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
-        ["latestCreationTime"],
-        ["desc"]
-      );
-    } else {
-      employeeComplaints = orderby(
-        transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
-        ["SLA"],
-        ["asc"]
-      );
-    }
+    employeeComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
+      ["latestCreationTime"],
+      ["asc"]
+    );
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
   const numEmpComplaint = employeeComplaints.length;
