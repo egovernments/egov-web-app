@@ -147,8 +147,9 @@ function Menu(props) {
       square
       className={props.selectProps.classes.ac_paper}
       {...props.innerProps}
+      style={{ overflowX: "scroll" }}
     >
-      {props.children}
+      <div style={{ width: 800 }}>{props.children}</div>
     </Paper>
   );
 }

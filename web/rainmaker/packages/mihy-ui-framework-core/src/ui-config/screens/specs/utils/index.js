@@ -140,7 +140,8 @@ export const getCommonGrayCard = children => {
     style: {
       backgroundColor: "rgb(242, 242, 242)",
       boxShadow: "none",
-      borderRadius: 0
+      borderRadius: 0,
+      overflow: "visible"
     }
   });
 };
