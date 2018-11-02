@@ -1,6 +1,6 @@
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 
-const tenant = JSON.parse(localStorage.getItem("user-info")).tenantId;
+const tenantId = JSON.parse(localStorage.getItem("user-info")).permanentCity;
 
 const formConfig = {
   name: "complaint",
@@ -51,7 +51,7 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "pb.amritsar",
+      value: tenantId,
       errorText: "",
       type: "singleValueList",
       dataFetchConfig: {
@@ -62,28 +62,28 @@ const formConfig = {
         ],
       },
     },
-    mohalla: {
-      id: "mohalla",
-      required: true,
-      jsonPath: "services[0].addressId",
-      floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
-      hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
-      errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
-      boundary: true,
+    // mohalla: {
+    //   id: "mohalla",
+    //   required: true,
+    //   jsonPath: "services[0].addressId",
+    //   floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
+    //   hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
+    //   errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
+    //   boundary: true,
 
-      dropDownData: [],
-      dataFetchConfig: {
-        url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=ADMIN&boundaryType=Locality",
-        action: "",
-        queryParams: [],
-        requestBody: {},
-        isDependent: true,
-      },
+    //   dropDownData: [],
+    //   dataFetchConfig: {
+    //     url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=ADMIN&boundaryType=Locality",
+    //     action: "",
+    //     queryParams: [],
+    //     requestBody: {},
+    //     isDependent: true,
+    //   },
 
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
-      errorText: "",
-    },
+    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    //   value: "",
+    //   errorText: "",
+    // },
     houseNo: {
       id: "houseNo",
       jsonPath: "services[0].houseNo",
