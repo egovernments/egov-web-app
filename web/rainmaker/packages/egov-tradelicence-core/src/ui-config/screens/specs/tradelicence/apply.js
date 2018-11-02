@@ -222,6 +222,12 @@ const screenConfig = {
         tenantId
       )
     );
+    set(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+      "PERMANENT"
+    );
+    dispatch(prepareFinalObject("Licenses[0].licenseType", "PERMANENT"));
 
     //Call and set boundary dropdown data, since there is no handleField for city in employee app
     const queryObj = [{ key: "tenantId", value: tenantId }];

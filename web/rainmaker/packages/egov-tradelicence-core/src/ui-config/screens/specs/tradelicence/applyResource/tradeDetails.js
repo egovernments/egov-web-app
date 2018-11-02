@@ -443,7 +443,7 @@ export const tradeDetails = getCommonCard({
         jsonPath: "Licenses[0].licenseType",
         props: {
           disabled: true,
-          value: "PERMANENT",
+          // value: "PERMANENT",
           className: "tl-trade-type"
         },
         data: [
