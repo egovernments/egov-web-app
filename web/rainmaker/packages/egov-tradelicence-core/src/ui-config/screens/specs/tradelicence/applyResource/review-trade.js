@@ -48,7 +48,8 @@ const accessoriesCard = {
     hasAddItem: false,
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children"
+      "children.cardContent.children.accessoriesCardContainer.children",
+    afterPrefixJsonPath:"children.value.children.key"
   },
   type: "array"
 };

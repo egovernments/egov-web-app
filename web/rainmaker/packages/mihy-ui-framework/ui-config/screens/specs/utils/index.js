@@ -59,7 +59,10 @@ var getCommonHeader = exports.getCommonHeader = function getCommonHeader(header,
     props: (0, _extends3.default)({
       variant: "headline"
     }, props),
-    children: (0, _defineProperty3.default)({}, header, getLabel(header))
+    children: {
+      // [header]: getLabel(header)
+      key: getLabel(header)
+    }
   };
 };
 

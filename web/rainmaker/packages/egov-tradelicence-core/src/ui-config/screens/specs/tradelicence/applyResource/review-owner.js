@@ -185,7 +185,8 @@ export const getReviewOwner = (isEditable = true) => {
         items: [],
         hasAddItem: false,
         sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-        prefixSourceJsonPath: "children.cardContent.children.viewFive.children"
+        prefixSourceJsonPath: "children.cardContent.children.viewFive.children",
+        afterPrefixJsonPath:"children.value.children.key"
       },
       type: "array"
     },

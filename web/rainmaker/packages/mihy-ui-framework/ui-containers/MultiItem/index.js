@@ -115,12 +115,12 @@ var MultiItem = function (_React$Component) {
         } else {
           for (var i = 0; i < editItems.length; i++) {
             if (checkActiveItem(editItems[i])) {
-              // if (i) {
-              //   this.addItem();
-              // } else {
-              //   this.addItem(true);
-              // }
-              _this.addItem(true);
+              if (i) {
+                _this.addItem();
+              } else {
+                _this.addItem(true);
+              }
+              // this.addItem(true);
             }
           }
         }
@@ -133,6 +133,7 @@ var MultiItem = function (_React$Component) {
           scheama = _this$props2.scheama,
           sourceJsonPath = _this$props2.sourceJsonPath,
           prefixSourceJsonPath = _this$props2.prefixSourceJsonPath,
+          afterPrefixJsonPath = _this$props2.afterPrefixJsonPath,
           componentJsonpath = _this$props2.componentJsonpath,
           headerName = _this$props2.headerName,
           headerJsonPath = _this$props2.headerJsonPath,
@@ -154,11 +155,20 @@ var MultiItem = function (_React$Component) {
                 multiItemContent[variable].index = itemsLength;
               }
             }
+          } else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props") && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath")) {
+            var _splitedJsonPath = (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath").split(sourceJsonPath);
+            if (_splitedJsonPath.length > 1) {
+              var _propertyName = _splitedJsonPath[1].split("]");
+              if (_propertyName.length > 1) {
+                (0, _set2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath", sourceJsonPath + "[" + itemsLength + "]" + _propertyName[1]);
+              }
+            }
           }
         }
         (0, _set2.default)(scheama, prefixSourceJsonPath, multiItemContent);
       }
-      addItemToState(screenKey, componentJsonpath, "props.items[" + itemsLength + "]", (0, _cloneDeep2.default)((0, _uiUtils.addComponentJsonpath)((0, _defineProperty3.default)({}, "item" + itemsLength, scheama), componentJsonpath + ".props.items[" + itemsLength + "]")));
+      items[itemsLength] = (0, _cloneDeep2.default)((0, _uiUtils.addComponentJsonpath)((0, _defineProperty3.default)({}, "item" + itemsLength, scheama), componentJsonpath + ".props.items[" + itemsLength + "]"));
+      addItemToState(screenKey, componentJsonpath, "props.items", items);
     }, _this.removeItem = function (index) {
       var _this$props3 = _this.props,
           removeItem = _this$props3.onFieldChange,

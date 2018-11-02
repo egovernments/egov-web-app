@@ -35,12 +35,12 @@ class MultiItem extends React.Component {
       } else {
         for (var i = 0; i < editItems.length; i++) {
           if (checkActiveItem(editItems[i])) {
-            // if (i) {
-            //   this.addItem();
-            // } else {
-            //   this.addItem(true);
-            // }
-            this.addItem(true);
+            if (i) {
+              this.addItem();
+            } else {
+              this.addItem(true);
+            }
+            // this.addItem(true);
           }
         }
       }
@@ -54,6 +54,7 @@ class MultiItem extends React.Component {
       scheama,
       sourceJsonPath,
       prefixSourceJsonPath,
+      afterPrefixJsonPath,
       componentJsonpath,
       headerName,
       headerJsonPath,
@@ -92,19 +93,35 @@ class MultiItem extends React.Component {
             }
           }
         }
+        else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && get(multiItemContent[variable],`${afterPrefixJsonPath}.props`) && get(multiItemContent[variable],`${afterPrefixJsonPath}.props.jsonPath`)) {
+          let splitedJsonPath = get(multiItemContent[variable],`${afterPrefixJsonPath}.props.jsonPath`).split(
+            sourceJsonPath
+          );
+          if (splitedJsonPath.length > 1) {
+            let propertyName = splitedJsonPath[1].split("]");
+            if (propertyName.length > 1) {
+              set(multiItemContent[
+                variable
+              ],`${afterPrefixJsonPath}.props.jsonPath`,`${sourceJsonPath}[${itemsLength}]${
+                propertyName[1]
+              }`);
+            }
+          }
+        }
       }
       set(scheama, prefixSourceJsonPath, multiItemContent);
     }
+    items[itemsLength]=cloneDeep(
+      addComponentJsonpath(
+        { [`item${itemsLength}`]: scheama },
+        `${componentJsonpath}.props.items[${itemsLength}]`
+      )
+    );
     addItemToState(
       screenKey,
       componentJsonpath,
-      `props.items[${itemsLength}]`,
-      cloneDeep(
-        addComponentJsonpath(
-          { [`item${itemsLength}`]: scheama },
-          `${componentJsonpath}.props.items[${itemsLength}]`
-        )
-      )
+      `props.items`,
+      items
     );
   };
 

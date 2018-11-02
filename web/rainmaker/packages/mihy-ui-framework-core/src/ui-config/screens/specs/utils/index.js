@@ -43,7 +43,8 @@ export const getCommonHeader = (header, props) => {
       ...props
     },
     children: {
-      [header]: getLabel(header)
+      // [header]: getLabel(header)
+      key: getLabel(header)
     }
   };
 };
