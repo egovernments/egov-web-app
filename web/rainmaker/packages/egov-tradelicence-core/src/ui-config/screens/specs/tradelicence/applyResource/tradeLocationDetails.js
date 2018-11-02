@@ -61,6 +61,13 @@ export const tradeLocationDetails = getCommonCard({
             {}
           );
           dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.tenant.localities",
+              payload.TenantBoundary && payload.TenantBoundary[0].boundary
+            )
+          );
+          console.log(payload.TenantBoundary[0].boundary);
+          dispatch(
             handleField(
               "apply",
               "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
@@ -183,8 +190,6 @@ export const tradeLocationDetails = getCommonCard({
       jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
       required: true,
       props: {
-        suggestions: [],
-        label: "Mohalla",
         style: {
           width: "100%",
           cursor: "pointer"
@@ -199,6 +204,8 @@ export const tradeLocationDetails = getCommonCard({
         },
         jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
         sourceJsonPath: "applyScreenMdmsData.tenant.localities",
+        labelsFromLocalisation: false,
+        suggestions: [],
         fullwidth: true,
         required: true,
         inputLabelProps: {
@@ -206,12 +213,12 @@ export const tradeLocationDetails = getCommonCard({
         }
       },
       beforeFieldChange: async (action, state, dispatch) => {
-        dispatch(
-          prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.locality.name",
-            action.value && action.value.label
-          )
-        );
+        // dispatch(
+        //   prepareFinalObject(
+        //     "Licenses[0].tradeLicenseDetail.address.locality.name",
+        //     action.value && action.value.label
+        //   )
+        // );
       },
       gridDefination: {
         xs: 12,
