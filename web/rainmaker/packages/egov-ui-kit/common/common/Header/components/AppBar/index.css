@@ -5,10 +5,6 @@
 .citizen-header-logo-label {
   display: flex; }
 
-.icon-button {
-  display: flex;
-  align-items: center; }
-
 .appbar-right-logo {
   display: flex !important;
   align-items: center !important; }

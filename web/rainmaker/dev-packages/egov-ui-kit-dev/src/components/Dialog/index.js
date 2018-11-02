@@ -14,9 +14,7 @@ const defaultTitleStyle = {
 const defaultActionsContainerStyle = {
   padding: "14px",
 };
-const defaultContentStyle = {
-  width: "75%",
-};
+const defaultContentStyle = {};
 
 const defaultBodyStyle = {
   padding: "0 12px",
@@ -36,23 +34,19 @@ const DialogUI = ({
   actionsContainerStyle = {},
   bodyStyle = {},
   children,
-  className,
   actions,
-  contentStyle,
+  contentStyle = {},
   open,
   repositionOnUpdate = false,
   autoScrollBodyContent,
   handleClose,
-  contentClassName,
   style,
   isClose,
   onRequestClose,
 }) => {
   return (
     <Dialog
-      className={className}
       title={title}
-      contentClassName={contentClassName}
       actions={actions}
       titleStyle={{ ...defaultTitleStyle, ...titleStyle }}
       children={[

@@ -6,7 +6,7 @@ import filter from "lodash/filter";
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "rgba(0, 0, 0, 0.3799999952316284)sss",
+  color: "#b3b3b3",
 };
 const floatingLabelStyle = {
   color: "rgb(0, 188, 209)",
@@ -36,16 +36,18 @@ class AutoSuggestDropdown extends React.Component {
     return filteredArray.length > 0 ? filteredArray[0].label : id;
   };
 
-  componentWillReceiveProps(nextProps) {
-    let { getNameById } = this;
+  componentWillReceiveProps(nextProps)
+  {
+    let {getNameById}=this;
     if (nextProps.value) {
-      this.setState({ searchText: getNameById(nextProps.value) });
+      this.setState({searchText:getNameById(nextProps.value)});
     }
   }
 
-  onChangeText = (searchText, dataSource, params) => {
-    this.setState({ searchText });
-  };
+  onChangeText =(searchText,dataSource,params)=>{
+    this.setState({searchText});
+  }
+
 
   render() {
     let {
@@ -62,8 +64,8 @@ class AutoSuggestDropdown extends React.Component {
       ...restProps
     } = this.props;
 
-    const { filterAutoComplete, getNameById, onChangeText } = this;
-    const { searchText } = this.state;
+    const { filterAutoComplete,getNameById,onChangeText } = this;
+    const {searchText}=this.state;
 
     return (
       <AutoComplete

@@ -38,8 +38,7 @@ var intialState = {
   error: false,
   errorMessage: "",
   byId: {},
-  categoriesById: {},
-  order: ""
+  categoriesById: {}
 };
 
 var complaintsReducer = function complaintsReducer() {
@@ -79,11 +78,6 @@ var complaintsReducer = function complaintsReducer() {
       });
     default:
       return state;
-    case actionTypes.COMPLAINTS_SORT_ORDER:
-      return (0, _extends3.default)({}, state, {
-        loading: false,
-        order: action.order
-      });
   }
 };
 

@@ -4,7 +4,6 @@ import IconButton from "material-ui/IconButton";
 import { Icon } from "components";
 import AppBar from "./components/AppBar";
 import LogoutDialog from "./components/LogoutDialog";
-import SortDialog from "./components/SortDialog";
 import NavigationDrawer from "./components/NavigationDrawer";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
@@ -16,7 +15,6 @@ class Header extends Component {
   state = {
     toggleMenu: false,
     logoutPopupOpen: false,
-    sortPopOpen: false,
     right: false,
     left: false,
     ulbLogo: "",
@@ -57,18 +55,6 @@ class Header extends Component {
   _closeLogoutDialog = () => {
     this.setState({
       logoutPopupOpen: false,
-    });
-  };
-
-  closeSortDialog = () => {
-    this.setState({
-      sortPopOpen: false,
-    });
-  };
-
-  onSortClick = () => {
-    this.setState({
-      sortPopOpen: true,
     });
   };
 
@@ -119,23 +105,10 @@ class Header extends Component {
   };
 
   render() {
-    const { toggleMenu, logoutPopupOpen, sortPopOpen } = this.state;
-    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps, closeSortDialog, onSortClick } = this;
+    const { toggleMenu, logoutPopupOpen } = this.state;
+    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps } = this;
     const appBarProps = _appBarProps();
-    const {
-      className,
-      role,
-      cities,
-      history,
-      title,
-      titleAddon,
-      fetchLocalizationLabel,
-      userInfo,
-      isHomeScreen,
-      defaultTitle,
-      refreshButton,
-      sortButton,
-    } = this.props;
+    const { className, role, cities, history, title, titleAddon, fetchLocalizationLabel, userInfo, isHomeScreen, defaultTitle } = this.props;
     return (
       <div>
         <AppBar
@@ -148,10 +121,6 @@ class Header extends Component {
           {...appBarProps}
           fetchLocalizationLabel={fetchLocalizationLabel}
           userInfo={userInfo}
-          refreshButton={refreshButton}
-          sortButton={sortButton}
-          sortDialogOpen={onSortClick}
-          history={this.props.history}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -169,7 +138,6 @@ class Header extends Component {
           // containerStyle={{ top: "64px" }}
         />
         <LogoutDialog logoutPopupOpen={logoutPopupOpen} closeLogoutDialog={_closeLogoutDialog} logout={_logout} />
-        <SortDialog sortPopOpen={sortPopOpen} closeSortDialog={closeSortDialog} />
       </div>
     );
   }

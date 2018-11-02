@@ -13,7 +13,7 @@ var _components = require("components");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintStyle = {
-  color: "rgba(0, 0, 0, 0.3799999952316284)",
+  color: "#b3b3b3",
   fontFamily: "Roboto",
   fontSize: "16px",
   fontWeight: "400",

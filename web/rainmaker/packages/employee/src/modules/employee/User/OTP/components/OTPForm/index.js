@@ -22,7 +22,7 @@ const OTPForm = ({ handleFieldChange, toggleSnackbarAndSetText, form, resendOTP,
             <Label label="CORE_OTP_SENT_MESSAGE" />
             <Label label={phoneNumber} />
           </div>
-          <Label label="CORE_EMPLOYEE_OTP_CHECK_MESSAGE" color={"rgba(0, 0, 0, 0.3799999952316284)"} fontSize={"12px"} />
+          <Label label="CORE_EMPLOYEE_OTP_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
           <form>
             <TextField
               errorStyle={{ bottom: "0px" }}

@@ -78,11 +78,11 @@ var statusToLocalisationKeyMapping = exports.statusToLocalisationKeyMapping = {
 };
 
 var displayStatus = exports.displayStatus = function displayStatus(status) {
-  return status ? statusToMessageMapping[status && status.toLowerCase()] : "";
+  return status ? statusToMessageMapping[status.toLowerCase()] : "";
 };
 
 var displayLocalizedStatusMessage = exports.displayLocalizedStatusMessage = function displayLocalizedStatusMessage(status) {
-  return status ? statusToLocalisationKeyMapping[status && status.toLowerCase()] : "";
+  return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
 };
 var transformById = exports.transformById = function transformById(payload, id) {
   return payload && payload.reduce(function (result, item) {
@@ -357,7 +357,7 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
   var transformedStatus = "";
-  switch (status && status.toLowerCase()) {
+  switch (status.toLowerCase()) {
     case "open":
     case "new":
     case "reassignrequested":
@@ -399,17 +399,12 @@ var getPropertyFromObj = exports.getPropertyFromObj = function getPropertyFromOb
 var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHours, submittedTime) {
   var millsToAdd = slaHours * 60 * 60 * 1000;
   var toBeFinishedBy = millsToAdd + submittedTime;
-  var slaStatement = "";
   var daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    slaStatement = Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
+    return Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
   } else {
-    slaStatement = Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
+    return Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
   }
-  return {
-    slaStatement: slaStatement,
-    daysCount: daysCount
-  };
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
@@ -537,8 +532,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       employeePhoneNumber: employeeById && employeeById[findLatestAssignee(complaintDetail.actions)] ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber : defaultPhoneNumber,
       status: role === "citizen" ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter(function (complaint) {
         return complaint.status;
-      })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).slaStatement),
-      SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).daysCount
+      })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)))
     };
   });
   return transformedComplaints;

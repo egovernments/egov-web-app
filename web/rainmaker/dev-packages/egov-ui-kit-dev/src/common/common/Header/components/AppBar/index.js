@@ -5,18 +5,11 @@ import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
-import IconButton from "material-ui/IconButton";
-import { Icon } from "components";
+
 import "./index.css";
 
 const styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 },
-};
-
-const iconButtonStyle = {
-  paddingLeft: 0,
-  paddingRight: 0,
-  width: 35,
 };
 
 // handle listners
@@ -31,10 +24,6 @@ const EgovAppBar = ({
   fetchLocalizationLabel,
   userInfo = {},
   onToolBarIconClick,
-  refreshButton,
-  sortButton,
-  sortDialogOpen,
-  history,
   ...rest
 }) => {
   return (
@@ -80,30 +69,9 @@ const EgovAppBar = ({
         <div className="appbar-right-logo">
           <img src={digitLogo} />
         </div>
-        <div className="icon-button">
-          {refreshButton && (
-            <IconButton style={iconButtonStyle} onClick={(e) => location.reload()}>
-              <Icon action="navigation" name="refresh" color="#fff" />
-            </IconButton>
-          )}
-          {sortButton && (
-            <IconButton style={iconButtonStyle} onClick={sortDialogOpen}>
-              <Icon action="action" name="swap-vert" color="#fff" />
-            </IconButton>
-          )}
-          {role === "ao" &&
-            window.location.pathname === "/all-complaints" && (
-              <IconButton style={iconButtonStyle} onClick={(e) => onSearchClick(history)}>
-                <Icon action="action" name="search" color="#fff" />
-              </IconButton>
-            )}
-        </div>
       </AppBar>
     </div>
   );
 };
 
-const onSearchClick = (history) => {
-  history.push("search-complaint");
-};
 export default EgovAppBar;
