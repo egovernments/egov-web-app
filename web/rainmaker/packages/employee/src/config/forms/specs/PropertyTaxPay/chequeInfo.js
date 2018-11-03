@@ -7,7 +7,7 @@ const formConfig = {
       floatingLabelText: "Cheque No",
       hintText: "Enter cheque no.",
       jsonPath: "Receipt[0].instrument.transactionNumber",
-      pattern: /^([0-9]\d{5,15})(\.\d+)?$/,
+      pattern: /^([0-9]){6}$/i,
       errorMessage: "Check no. should be minimum 6 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
