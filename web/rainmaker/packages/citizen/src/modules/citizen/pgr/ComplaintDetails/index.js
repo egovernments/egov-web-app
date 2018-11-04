@@ -52,7 +52,7 @@ const mapStateToProps = (state, ownProps) => {
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
     let details = {
-      status: selectedComplaint.status,
+      status: selectedComplaint.status || "",
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
