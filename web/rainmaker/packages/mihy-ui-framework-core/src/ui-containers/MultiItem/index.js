@@ -12,6 +12,7 @@ import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import { addComponentJsonpath } from "../../ui-utils";
 import { prepareFinalObject as pFO } from "../../ui-redux/screen-configuration/actions";
+import isEqual from "lodash/isEqual";
 
 const checkActiveItems = items => {
   let count = 0;
@@ -27,7 +28,11 @@ const checkActiveItem = item => {
 
 class MultiItem extends React.Component {
   componentDidMount = () => {
-    const { items, sourceJsonPath, preparedFinalObject } = this.props;
+    this.initMultiItem(this.props);
+  };
+
+  initMultiItem=(props)=>{
+    const { items, sourceJsonPath, preparedFinalObject } = props;
     const editItems = get(preparedFinalObject, sourceJsonPath, []);
     if (editItems) {
       if (!items.length && !editItems.length) {
@@ -45,7 +50,13 @@ class MultiItem extends React.Component {
         }
       }
     }
-  };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps,this.props)) {
+      this.initMultiItem(nextProps);
+    }
+  }
 
   addItem = (isNew = false) => {
     const {
