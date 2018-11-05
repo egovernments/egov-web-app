@@ -315,6 +315,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
+      addressDetail: selectedComplaint.addressDetail,
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),

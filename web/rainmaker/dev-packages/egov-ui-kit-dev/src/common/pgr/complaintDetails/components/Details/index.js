@@ -38,6 +38,7 @@ class Details extends Component {
       description,
       submittedDate,
       address,
+      addressDetail,
       landMark,
       mapAction,
       images,
@@ -45,6 +46,8 @@ class Details extends Component {
       role,
       complaintLoc,
     } = this.props;
+    console.log("addresDetail is.....", addressDetail);
+    const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -140,24 +143,49 @@ class Details extends Component {
                       );
                     })}
                 </div>
-                {landMark && (
+                {houseNoAndStreetName && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-                    <div className="rainmaker-displayInline">
-                      <Label
+                    {/* <div className="rainmaker-displayInline"> */}
+                    {/* <Label
                         label={"CS_ADDCOMPLAINT_ADDRESSINFO"}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
-                      />
+                      /> */}
+                    <Label
+                      label={houseNoAndStreetName}
+                      className="status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                      containerStyle={{ marginLeft: 5 }}
+                    />
+                    {/* </div> */}
+                  </div>
+                )}
+                {mohalla &&
+                  city && (
+                    <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
+                      <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                       <Label
-                        label={landMark}
+                        label={`${mohalla} ,${city}`}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
                         containerStyle={{ marginLeft: 5 }}
                       />
                     </div>
+                  )}
+                {landmark && (
+                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
+                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                    <Label
+                      label={landmark}
+                      className="status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                      containerStyle={{ marginLeft: 5 }}
+                    />
                   </div>
                 )}
                 {address && (
