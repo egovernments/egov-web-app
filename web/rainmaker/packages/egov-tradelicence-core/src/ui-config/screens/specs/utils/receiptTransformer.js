@@ -247,7 +247,7 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
         tlAdhocPenalty = item.crAmountToBePaid;
       } else if (desc.startsWith("TL_ADHOC_REBATE")) {
-        tlAdhocRebate = item.crAmountToBePaid;
+        tlAdhocRebate = item.debitAmount;
       }
     });
     data.tlPenalty = "NA";
