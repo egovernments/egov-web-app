@@ -20,6 +20,30 @@ const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange
                 name="location-details"
               />
             </Link>
+            {/* <DropDown
+              className="fix-for-layout-break"
+              fullWidth={true}
+              onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+              {...city}
+            /> */}
+            <AutoSuggestDropdown
+              className="fix-for-layout-break"
+              fullWidth={true}
+              dataSource={city && city.dropDownData}
+              onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+              {...city}
+            />
+            <AutoSuggestDropdown
+              className="fix-for-layout-break"
+              fullWidth={true}
+              dataSource={mohalla && mohalla.dropDownData}
+              onChange={(chosenRequest, index) => {
+                handleFieldChange("mohalla", chosenRequest.value);
+              }}
+              floatingLabelText={mohalla && mohalla.floatingLabelText}
+              {...mohalla}
+            />
+            <TextField id="addComplaint-house-no" {...houseNo} onChange={(e, value) => handleFieldChange("houseNo", value)} name="house-no" />
             <TextField
               id="addComplaint-landmark-details"
               {...landmark}

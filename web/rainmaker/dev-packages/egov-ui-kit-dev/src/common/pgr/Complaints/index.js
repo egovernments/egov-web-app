@@ -175,6 +175,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     </div>
   ) : (
     complaints.map((complaint, complaintIndex) => {
+      const { houseNoAndStreetName, landmark, mohalla, city } = complaint.addressDetail;
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
@@ -222,7 +223,12 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                 {complaintLocation && (
                   <div className="complaint-address-cont">
                     <Icon action="maps" name="place" style={{ height: 18, width: 18, marginRight: 10 }} color={"#767676"} />
-                    <Label fontSize="12px" color="#484848" label={complaint.address} className="complaint-address" />
+                    <Label
+                      fontSize="12px"
+                      color="#484848"
+                      label={complaint.address ? complaint.address : complaint.addressDetail}
+                      className="complaint-address"
+                    />
                   </div>
                 )}
                 {role === "citizen" &&

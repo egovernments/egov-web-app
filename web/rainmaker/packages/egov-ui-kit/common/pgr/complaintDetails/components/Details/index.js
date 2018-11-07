@@ -93,11 +93,11 @@ var Details = function (_Component) {
           role = _props.role,
           complaintLoc = _props.complaintLoc;
 
-      console.log("addresDetail is.....", addressDetail);
-      var houseNoAndStreetName = addressDetail.houseNoAndStreetName,
-          landmark = addressDetail.landmark,
-          mohalla = addressDetail.mohalla,
-          city = addressDetail.city;
+      var _ref2 = addressDetail || "",
+          houseNoAndStreetName = _ref2.houseNoAndStreetName,
+          landmark = _ref2.landmark,
+          mohalla = _ref2.mohalla,
+          city = _ref2.city;
 
       var icon = {};
       icon.name = "location";
@@ -198,41 +198,74 @@ var Details = function (_Component) {
                   );
                 })
               ),
+              _react2.default.createElement(
+                "div",
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#767676" }),
+                _react2.default.createElement(_translationNode2.default, { label: "Address Details", containerStyle: { marginLeft: "13px" }, labelClassName: "dark-heading" })
+              ),
               houseNoAndStreetName && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
-                _react2.default.createElement(_translationNode2.default, {
-                  label: houseNoAndStreetName,
-                  className: "status-result-color",
-                  id: "complaint-details-complaint-location",
-                  labelStyle: { color: "inherit" },
-                  containerStyle: { marginLeft: 5 }
-                })
+                _react2.default.createElement(
+                  "div",
+                  { className: "rainmaker-displayInline" },
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: "House/Street No :",
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" }
+                  }),
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: houseNoAndStreetName,
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" },
+                    containerStyle: { marginLeft: 5 }
+                  })
+                )
               ),
               mohalla && city && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
-                _react2.default.createElement(_translationNode2.default, {
-                  label: mohalla + " ," + city,
-                  className: "status-result-color",
-                  id: "complaint-details-complaint-location",
-                  labelStyle: { color: "inherit" },
-                  containerStyle: { marginLeft: 5 }
-                })
+                _react2.default.createElement(
+                  "div",
+                  { className: "rainmaker-displayInline" },
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: "Mohalla/City : ",
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" }
+                  }),
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: mohalla + " ," + city,
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" },
+                    containerStyle: { marginLeft: 5 }
+                  })
+                )
               ),
               landmark && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
-                _react2.default.createElement(_translationNode2.default, {
-                  label: landmark,
-                  className: "status-result-color",
-                  id: "complaint-details-complaint-location",
-                  labelStyle: { color: "inherit" },
-                  containerStyle: { marginLeft: 5 }
-                })
+                _react2.default.createElement(
+                  "div",
+                  { className: "rainmaker-displayInline" },
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: "landmark : ",
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" }
+                  }),
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: landmark,
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" },
+                    containerStyle: { marginLeft: 5 }
+                  })
+                )
               ),
               address && _react2.default.createElement(
                 "div",

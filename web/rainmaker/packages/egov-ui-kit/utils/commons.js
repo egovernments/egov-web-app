@@ -507,6 +507,15 @@ var getLatestAction = function getLatestAction(actionArr) {
   }, 0);
 };
 
+var getAddressDetail = function getAddressDetail(addressDetail) {
+  var houseNoAndStreetName = addressDetail.houseNoAndStreetName,
+      landmark = addressDetail.landmark,
+      mohalla = addressDetail.mohalla,
+      city = addressDetail.city;
+
+  return houseNoAndStreetName && landmark ? houseNoAndStreetName + "," + mohalla + "," + landmark + "," + city : !houseNoAndStreetName && landmark ? mohalla + "," + landmark + "," + city : houseNoAndStreetName && !landmark ? houseNoAndStreetName + "," + mohalla + "," + city : mohalla + "," + city;
+};
+
 var transformComplaintForComponent = exports.transformComplaintForComponent = function transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus) {
   var defaultPhoneNumber = "";
   var transformedComplaints = Object.values(complaints.byId).map(function (complaintDetail, index) {
@@ -522,7 +531,8 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       }),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       rawStatus: complaintDetail.status && complaintDetail.status,
-      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+      address: complaintDetail.address ? complaintDetail.address : "",
+      addressDetail: complaintDetail.addressDetail ? getAddressDetail(complaintDetail.addressDetail) : "",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy: complaintDetail.status === "reassignrequested" ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA") : "NA",
       latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),

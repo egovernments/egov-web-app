@@ -215,6 +215,12 @@ var Complaints = function Complaints(_ref) {
     { className: "no-complaints-message-cont", style: heightOffset && { height: "calc(100vh - " + heightOffset + ")" } },
     _react2.default.createElement(_translationNode2.default, { label: noComplaintMessage, dark: true, fontSize: "16px", labelStyle: { letterSpacing: "0.7px" } })
   ) : complaints.map(function (complaint, complaintIndex) {
+    var _complaint$addressDet = complaint.addressDetail,
+        houseNoAndStreetName = _complaint$addressDet.houseNoAndStreetName,
+        landmark = _complaint$addressDet.landmark,
+        mohalla = _complaint$addressDet.mohalla,
+        city = _complaint$addressDet.city;
+
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
       "div",
@@ -275,7 +281,12 @@ var Complaints = function Complaints(_ref) {
             "div",
             { className: "complaint-address-cont" },
             _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: 18, width: 18, marginRight: 10 }, color: "#767676" }),
-            _react2.default.createElement(_translationNode2.default, { fontSize: "12px", color: "#484848", label: complaint.address, className: "complaint-address" })
+            _react2.default.createElement(_translationNode2.default, {
+              fontSize: "12px",
+              color: "#484848",
+              label: complaint.address ? complaint.address : complaint.addressDetail,
+              className: "complaint-address"
+            })
           ),
           role === "citizen" && complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(
             "div",

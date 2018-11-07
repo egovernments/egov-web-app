@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextField, DropDown, Button } from "components";
+import { Card, TextField, DropDown, AutoSuggestDropdown, Button } from "components";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
 import MohallaDropdown from "../MohallaDropdown";
@@ -59,9 +59,16 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                 />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <DropDown
+                {/* <DropDown
                   className="fix-for-layout-break"
                   fullWidth={true}
+                  onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+                  {...city}
+                /> */}
+                <AutoSuggestDropdown
+                  className="fix-for-layout-break"
+                  fullWidth={true}
+                  dataSource={city && city.dropDownData}
                   onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
                   {...city}
                 />

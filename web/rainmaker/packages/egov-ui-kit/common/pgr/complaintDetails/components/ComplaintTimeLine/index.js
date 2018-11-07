@@ -327,6 +327,12 @@ var StatusContent = function StatusContent(_ref2) {
       switch (role && role.toLowerCase()) {
         case "ao":
         case "citizen":
+        case "csr":
+          console.log(
+            "employeeDesignation is..........",
+            employeeDesignation,
+            employeeDepartment
+          );
           return _react2.default.createElement(
             "div",
             { className: "complaint-timeline-content-section" },
@@ -414,28 +420,6 @@ var StatusContent = function StatusContent(_ref2) {
                 containerStyle: nameContainerStyle,
                 label: "" + groName
               }),
-            assigneeStatusCount === 1 &&
-              groName &&
-              groMobileNumber &&
-              _react2.default.createElement(
-                "a",
-                {
-                  className: "pgr-call-icon",
-                  href: "tel:+91" + groMobileNumber,
-                  style: { textDecoration: "none", position: "relative" }
-                },
-                _react2.default.createElement(_components.Icon, {
-                  action: "communication",
-                  name: "call",
-                  style: callIconStyle,
-                  color: "#22b25f"
-                }),
-                _react2.default.createElement(
-                  "span",
-                  { style: { marginLeft: "43px" } },
-                  "+91 " + groMobileNumber
-                )
-              ),
             groName &&
               _react2.default.createElement(_translationNode2.default, {
                 labelClassName:
@@ -445,24 +429,17 @@ var StatusContent = function StatusContent(_ref2) {
               })
           );
           break;
-        default:
-          return _react2.default.createElement(
-            "div",
-            { className: "complaint-timeline-content-section" },
-            _react2.default.createElement(_translationNode2.default, {
-              labelClassName: "rainmaker-small-font complaint-timeline-date",
-              label: (0, _commons.getDateFromEpoch)(date)
-            }),
-            _react2.default.createElement(_translationNode2.default, {
-              labelClassName: "dark-color complaint-timeline-status",
-              containerStyle: statusContainerStyle,
-              label:
-                "" +
-                (action == "assign"
-                  ? "ES_COMPLAINT_ASSIGNED_HEADER"
-                  : "ES_COMPLAINT_REASSIGNED_HEADER")
-            })
-          );
+        // default:
+        //   return (
+        //     <div className="complaint-timeline-content-section">
+        //       <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+        //       <Label
+        //         labelClassName="dark-color complaint-timeline-status"
+        //         containerStyle={statusContainerStyle}
+        //         label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
+        //       />
+        //     </div>
+        //   );
       }
 
     case "reassignrequested":
@@ -573,30 +550,6 @@ var StatusContent = function StatusContent(_ref2) {
             })
           )
       );
-    // case "UNASSIGNED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
-    //       <Label labelClassName="rainmaker-small-font" label={name || "Amrinder Singh"} />
-    //       <div
-    //         className="complaint-details-timline-button"
-    //         onClick={(e) => {
-    //         }}
-    //       >
-    //         <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-    //         CALL
-    //       </div>
-    //     </div>
-    //   );
-    // case "REASSIGN-REQUESTED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label={"CS_COMPLAINT_DETAILS_REASSIGN_REQUESTED"} />
-    //       <Label labelClassName="rainmaker-small-font" label={`Reason - ${reason || "Not my responsibility"}`} />
-    //     </div>
-    //   );
     case "resolved":
       resolveStatusCount++;
       return _react2.default.createElement(

@@ -70,7 +70,8 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",
-      type: "singleValueList",
+      dropDownData: [],
+      // type: "singleValueList",
       dataFetchConfig: {
         // url: CITY.GET.URL,
         // action: CITY.GET.ACTION,

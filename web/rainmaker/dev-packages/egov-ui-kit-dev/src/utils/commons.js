@@ -407,6 +407,17 @@ const getLatestAction = (actionArr) => {
   }, 0);
 };
 
+const getAddressDetail = (addressDetail) => {
+  const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
+  return houseNoAndStreetName && landmark
+    ? `${houseNoAndStreetName},${mohalla},${landmark},${city}`
+    : !houseNoAndStreetName && landmark
+      ? `${mohalla},${landmark},${city}`
+      : houseNoAndStreetName && !landmark
+        ? `${houseNoAndStreetName},${mohalla},${city}`
+        : `${mohalla},${city}`;
+};
+
 export const transformComplaintForComponent = (complaints, role, employeeById, citizenById, categoriesById, displayStatus) => {
   const defaultPhoneNumber = "";
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
@@ -425,7 +436,8 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       rawStatus: complaintDetail.status && complaintDetail.status,
-      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+      address: complaintDetail.address ? complaintDetail.address : "",
+      addressDetail: complaintDetail.addressDetail ? getAddressDetail(complaintDetail.addressDetail) : "",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy:
         complaintDetail.status === "reassignrequested"

@@ -40,7 +40,8 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: tenantId,
       errorText: "",
-      type: "singleValueList",
+      // type: "singleValueList",
+      dropDownData: [],
       dataFetchConfig: {
         dependants: [
           {

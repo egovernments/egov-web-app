@@ -113,7 +113,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     groMobileNumber,
     groDesignation,
   } = stepData;
-
   switch (status) {
     case "open":
       openStatusCount++;
@@ -206,6 +205,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       switch (role && role.toLowerCase()) {
         case "ao":
         case "citizen":
+        case "csr":
           return (
             <div className="complaint-timeline-content-section">
               <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
@@ -260,12 +260,14 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 }`}
               />
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
-              {assigneeStatusCount === 1 && groName && groMobileNumber && (
-                <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
-                  <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                  <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
-                </a>
-              )}
+              {/* {assigneeStatusCount === 1 &&
+                groName &&
+                groMobileNumber && (
+                  <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
+                  </a>
+                )} */}
               {groName && (
                 <Label
                   labelClassName="rainmaker-small-font complaint-timeline-designation"
@@ -276,17 +278,17 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             </div>
           );
           break;
-        default:
-          return (
-            <div className="complaint-timeline-content-section">
-              <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
-              <Label
-                labelClassName="dark-color complaint-timeline-status"
-                containerStyle={statusContainerStyle}
-                label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
-              />
-            </div>
-          );
+        // default:
+        //   return (
+        //     <div className="complaint-timeline-content-section">
+        //       <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+        //       <Label
+        //         labelClassName="dark-color complaint-timeline-status"
+        //         containerStyle={statusContainerStyle}
+        //         label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
+        //       />
+        //     </div>
+        //   );
       }
 
     case "reassignrequested":
@@ -359,30 +361,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
         </div>
       );
-    // case "UNASSIGNED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
-    //       <Label labelClassName="rainmaker-small-font" label={name || "Amrinder Singh"} />
-    //       <div
-    //         className="complaint-details-timline-button"
-    //         onClick={(e) => {
-    //         }}
-    //       >
-    //         <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-    //         CALL
-    //       </div>
-    //     </div>
-    //   );
-    // case "REASSIGN-REQUESTED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label={"CS_COMPLAINT_DETAILS_REASSIGN_REQUESTED"} />
-    //       <Label labelClassName="rainmaker-small-font" label={`Reason - ${reason || "Not my responsibility"}`} />
-    //     </div>
-    //   );
     case "resolved":
       resolveStatusCount++;
       return (
