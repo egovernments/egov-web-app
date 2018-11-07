@@ -164,7 +164,7 @@ class ReviewForm extends Component {
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
+        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} optionSelected={valueSelected} />
         {!isPartialPaymentInValid && (
           <PaymentAmountDetails
             value={valueSelected === "Partial_Amount" ? totalAmountToBePaid : totalAmount}

@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get"
 import { Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
@@ -20,7 +21,7 @@ class PropertyTaxDetails extends React.Component {
   };
 
   render() {
-    const { estimationDetails, importantDates } = this.props;
+    const { estimationDetails, importantDates, optionSelected } = this.props;
     const { isExpanded } = this.state;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
     const { fireCess, intrest, penalty, rebate } = importantDates;
@@ -69,7 +70,7 @@ class PropertyTaxDetails extends React.Component {
                             className="pt-rf-price"
                             label={
                               (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
-                              `${item.estimateAmount}`
+                              `${!(optionSelected === "Partial_Amount" && item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1) ? item.estimateAmount : 0}`
                             }
                           />
                         </div>
@@ -86,7 +87,7 @@ class PropertyTaxDetails extends React.Component {
                   <Label
                     containerStyle={{ textAlign: "right" }}
                     labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
-                    label={totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}
+                    label={totalAmount ? `${!(optionSelected === "Partial_Amount") ? totalAmount : totalAmount + get(taxHeadEstimates[taxHeadEstimates.findIndex(item => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)], "estimateAmount", 0)}` : totalAmount === 0 ? "0" : "NA"}
                   />
                 </div>
               </div>
