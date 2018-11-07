@@ -148,6 +148,8 @@ var getFinancialYearFromQuery = exports.getFinancialYearFromQuery = function get
 };
 
 var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFromBill(bill) {
+  var taxHeads = ["PT_TAX", "PT_FIRE_CESS", "PT_CANCER_CESS", "PT_TIME_PENALTY", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD"]; //Hardcoding as backend is not sending in correct order
+
   var _ref = bill && bill[0],
       billDetails = _ref.billDetails,
       tenantId = _ref.tenantId;
@@ -157,23 +159,38 @@ var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFrom
       totalAmount = _ref2.totalAmount,
       billAccountDetails = _ref2.billAccountDetails;
 
+  var taxHeadsFromAPI = billAccountDetails.map(function (item) {
+    return item.accountDescription.split("-")[0];
+  });
+  var transformedTaxHeads = taxHeads.reduce(function (result, current) {
+    if (taxHeadsFromAPI.indexOf(current) > -1) {
+      result.push(current);
+    }
+    return result;
+  }, []);
+  console.log(transformedTaxHeads);
   var estimate = { totalAmount: 0 };
   estimate.totalAmount = totalAmount;
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
-  var taxHeadEstimates = billAccountDetails.reduce(function (taxHeadEstimates, item) {
-    taxHeadEstimates.push({
-      taxHeadCode: item.accountDescription.split("-")[0],
-      estimateAmount: item.crAmountToBePaid,
-      category: item.purpose
+  console.log(billAccountDetails);
+  var taxHeadEstimates = transformedTaxHeads.reduce(function (taxHeadEstimates, current) {
+    var taxHeadContent = billAccountDetails.filter(function (item) {
+      return item.accountDescription && item.accountDescription.split("-")[0] === current;
+    });
+    taxHeadContent && taxHeadContent[0] && taxHeadEstimates.push({
+      taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
+      estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+      category: taxHeadContent[0].purpose
     });
     return taxHeadEstimates;
   }, []);
-  collectedAmount > 0 && taxHeadEstimates.push({
-    taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
-    estimateAmount: collectedAmount,
-    category: "EXEMPTION"
-  });
+  // collectedAmount > 0 &&
+  //   taxHeadEstimates.push({
+  //     taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+  //     estimateAmount: collectedAmount,
+  //     category: "EXEMPTION",
+  //   });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [(0, _extends3.default)({}, estimate)];
 };

@@ -134,26 +134,51 @@ export const getFinancialYearFromQuery = () => {
 };
 
 export const getEstimateFromBill = (bill) => {
+  const taxHeads = [
+    "PT_TAX",
+    "PT_FIRE_CESS",
+    "PT_CANCER_CESS",
+    "PT_TIME_PENALTY",
+    "PT_TIME_REBATE",
+    "PT_TIME_INTEREST",
+    "PT_UNIT_USAGE_EXEMPTION",
+    "PT_OWNER_EXEMPTION",
+    "PT_ADHOC_PENALTY",
+    "PT_ADHOC_REBATE",
+    "PT_ADVANCE_CARRYFORWARD",
+  ]; //Hardcoding as backend is not sending in correct order
   const { billDetails, tenantId } = bill && bill[0];
   const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
+  const taxHeadsFromAPI = billAccountDetails.map((item) => {
+    return item.accountDescription.split("-")[0];
+  });
+  const transformedTaxHeads = taxHeads.reduce((result, current) => {
+    if (taxHeadsFromAPI.indexOf(current) > -1) {
+      result.push(current);
+    }
+    return result;
+  }, []);
   let estimate = { totalAmount: 0 };
   estimate.totalAmount = totalAmount;
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
-  const taxHeadEstimates = billAccountDetails.reduce((taxHeadEstimates, item) => {
-    taxHeadEstimates.push({
-      taxHeadCode: item.accountDescription.split("-")[0],
-      estimateAmount: item.crAmountToBePaid,
-      category: item.purpose,
-    });
+  const taxHeadEstimates = transformedTaxHeads.reduce((taxHeadEstimates, current) => {
+    const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+    taxHeadContent &&
+      taxHeadContent[0] &&
+      taxHeadEstimates.push({
+        taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
+        estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        category: taxHeadContent[0].purpose,
+      });
     return taxHeadEstimates;
   }, []);
-  collectedAmount > 0 &&
-    taxHeadEstimates.push({
-      taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
-      estimateAmount: collectedAmount,
-      category: "EXEMPTION",
-    });
+  // collectedAmount > 0 &&
+  //   taxHeadEstimates.push({
+  //     taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+  //     estimateAmount: collectedAmount,
+  //     category: "EXEMPTION",
+  //   });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [{ ...estimate }];
 };
