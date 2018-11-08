@@ -57,7 +57,7 @@ export const getAllOwnerDetails = (property, isSingleOwner = false) => {
   let ownerForms = {};
   ownerDataFromApi.forEach((ownerDetails, index) => {
     let singleownerDetails = addData(cloneDeep(ownerInfo), ownerDetails);
-    singleownerDetails.fields.ownerRelationship.value = "father";
+    // singleownerDetails.fields.ownerRelationship.value = "father"; // What is this?
     ownerForms = {
       ...ownerForms,
       [isSingleOwner ? "ownerInfo" : `ownerInfo_${index}`]: singleownerDetails,
@@ -100,8 +100,10 @@ export const getInstituteAuthority = (propertyResponse) => {
     }
   });
   set(instituteAuthorityForm, "institutionAuthority.fields.designation.value", get(propertyResponse.Properties[0], designationPath, ""));
-  if (get(instituteAuthorityForm, "institutionAuthority.fields.mobile.value", "") ===
-    get(instituteAuthorityForm, "institutionAuthority.fields.telephone.value", "")) {
+  if (
+    get(instituteAuthorityForm, "institutionAuthority.fields.mobile.value", "") ===
+    get(instituteAuthorityForm, "institutionAuthority.fields.telephone.value", "")
+  ) {
     set(instituteAuthorityForm, "institutionAuthority.fields.mobile.value", "");
   }
 

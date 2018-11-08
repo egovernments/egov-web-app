@@ -33,8 +33,10 @@ export const resetFormWizard = (form, removeForm) => {
 
 export const getLatestPropertyDetails = (propertyDetailsArray) => {
   if (propertyDetailsArray) {
+    const currentFinancialYear = getCurrentFinancialYear();
     if (propertyDetailsArray.length > 1) {
-      return propertyDetailsArray.reduce((acc, curr) => {
+      const assessmentsOfCurrentYear = propertyDetailsArray.filter((item) => item.financialYear === currentFinancialYear);
+      return assessmentsOfCurrentYear.reduce((acc, curr) => {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {
@@ -43,6 +45,20 @@ export const getLatestPropertyDetails = (propertyDetailsArray) => {
   } else {
     return;
   }
+};
+
+export const getCurrentFinancialYear = () => {
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var fiscalYr = "";
+  if (curMonth > 3) {
+    var nextYr1 = (today.getFullYear() + 1).toString();
+    fiscalYr = today.getFullYear().toString() + "-" + nextYr1.slice(2);
+  } else {
+    var nextYr2 = today.getFullYear().toString();
+    fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2.slice(2);
+  }
+  return fiscalYr;
 };
 
 export const getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);

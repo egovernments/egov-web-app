@@ -98,7 +98,7 @@ var getAllOwnerDetails = exports.getAllOwnerDetails = function getAllOwnerDetail
   var ownerForms = {};
   ownerDataFromApi.forEach(function (ownerDetails, index) {
     var singleownerDetails = addData((0, _cloneDeep2.default)(_ownerInfo2.default), ownerDetails);
-    singleownerDetails.fields.ownerRelationship.value = "father";
+    // singleownerDetails.fields.ownerRelationship.value = "father"; // What is this?
     ownerForms = (0, _extends4.default)({}, ownerForms, (0, _defineProperty3.default)({}, isSingleOwner ? "ownerInfo" : "ownerInfo_" + index, singleownerDetails));
   });
   return ownerForms;
