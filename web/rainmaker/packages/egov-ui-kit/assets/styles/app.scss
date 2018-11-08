@@ -1,5 +1,5 @@
 body {
-  background-color: #f2f2f2 !important;
+  background-color: #f4f7fb !important;
 }
 
 body,
@@ -20,7 +20,8 @@ body h1,
 body h2,
 body h3,
 body h4 {
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -266,6 +267,10 @@ body.employee-user-profile {
 
 @media only screen and (max-width: 768px) {
   .show-action-menu {
+    display: none;
+  }
+
+  .sort-button {
     display: none;
   }
 }

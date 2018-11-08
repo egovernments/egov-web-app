@@ -218,7 +218,7 @@ var withAuthorization = function withAuthorization() {
                     ),
                     sortButton && _react2.default.createElement(
                       "div",
-                      { className: "col-xs-4 text-right", style: { padding: "10px" } },
+                      { className: "sort-button col-xs-4 text-right", style: { padding: "10px" } },
                       _react2.default.createElement(
                         _IconButton2.default,
                         { onClick: this.onSortClick },

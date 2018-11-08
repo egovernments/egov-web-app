@@ -155,7 +155,7 @@ const withAuthorization = (options = {}) => (Component) => {
                         )}
                       </div>
                       {sortButton && (
-                        <div className="col-xs-4 text-right" style={{ padding: "10px" }}>
+                        <div className="sort-button col-xs-4 text-right" style={{ padding: "10px" }}>
                           <IconButton onClick={this.onSortClick}>
                             <Icon action="action" name="swap-vert" color="#767676" />
                           </IconButton>
