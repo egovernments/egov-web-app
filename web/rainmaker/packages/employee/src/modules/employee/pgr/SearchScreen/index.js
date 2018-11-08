@@ -188,7 +188,12 @@ const mapStateToProps = (state) => {
   const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
-  const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
+  const role =
+    roleFromUserInfo(userInfo.roles, "GRO") || roleFromUserInfo(userInfo.roles, "DGRO")
+      ? "ao"
+      : roleFromUserInfo(userInfo.roles, "CSR")
+      ? "csr"
+      : "employee";
   let transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
 
   return { role, loading, transformedComplaints };

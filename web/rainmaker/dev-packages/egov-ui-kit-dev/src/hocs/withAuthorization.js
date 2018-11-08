@@ -92,7 +92,7 @@ const withAuthorization = (options = {}) => (Component) => {
       const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
-        : this.roleFromUserInfo(userInfo, "GRO")
+        : this.roleFromUserInfo(userInfo, "GRO") || this.roleFromUserInfo(userInfo, "DGRO")
         ? "ao"
         : this.roleFromUserInfo(userInfo, "CSR")
         ? "csr"
