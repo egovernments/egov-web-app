@@ -31,6 +31,7 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
+import { SingleCheckbox } from "components";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -54,7 +55,14 @@ class FormWizard extends Component {
     isFullPayment: true,
     partialAmountError: "",
     propertyUUId: "",
+    termsAccepted: false,
+    termsError: "",
   };
+
+  toggleTerms = () => this.setState({
+    termsAccepted: !this.state.termsAccepted,
+    termsError: "",
+  })
 
   updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
@@ -672,9 +680,10 @@ class FormWizard extends Component {
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
-    const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
-    const { estimation, totalAmountToBePaid, financialYearFromQuery } = this.state;
+    const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount, toggleTerms } = this;
+    const { estimation, totalAmountToBePaid, financialYearFromQuery, termsAccepted, termsError } = this.state;
     const { form, currentTenantId, search } = this.props;
+
     switch (selected) {
       case 0:
         return (
@@ -714,6 +723,9 @@ class FormWizard extends Component {
                 get(this.state, "estimation[0].totalAmount", 1) < 100 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
               }
+              toggleTerms={toggleTerms}
+              termsAccepted={termsAccepted}
+              termsError={termsError}
             />
           </div>
         );
@@ -1250,13 +1262,24 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
-    const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
+    const { isFullPayment, partialAmountError, totalAmountToBePaid, termsAccepted, selected } = this.state;
+    if (!termsAccepted) {
+      this.setState({
+        termsError: "Please accept terms"
+      })
+      return
+    }
+    if (totalAmountToBePaid % 1 !== 0) {
+      alert("Amount cannot be a fraction!");
+      return
+    }
     if (!isFullPayment && partialAmountError) return;
-    if (totalAmountToBePaid % 1 === 0) {
+    this.updateIndex(selected + 1);
+    {/*if (totalAmountToBePaid % 1 === 0) {
       this.setState({ dialogueOpen: true });
     } else {
       alert("Amount cannot be a fraction!");
-    }
+    }*/}
   };
 
   render() {

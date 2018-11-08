@@ -10,7 +10,10 @@ import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import EditIcon from "./components/EditIcon";
 import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
+import Label from "egov-ui-kit/utils/translationNode";
 
+
+import { SingleCheckbox } from "components";
 import "./index.css";
 const defaultIconStyle = {
   fill: "#767676",
@@ -33,6 +36,7 @@ class ReviewForm extends Component {
     pattern: false,
     minLength: 1,
     maxLength: 11,
+    termsAccepted: false,
   };
 
   // componentWillReceiveProps(nextProps) {
@@ -157,7 +161,7 @@ class ReviewForm extends Component {
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
     let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
-    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid } = this.props;
+    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid, termsAccepted, termsError, toggleTerms } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
@@ -176,6 +180,17 @@ class ReviewForm extends Component {
             errorText={errorText}
           />
         )}
+        <SingleCheckbox
+          id="rcpt"
+          errorMessage={termsError}
+          errorText={termsError}
+          floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
+          value={termsAccepted}
+          onCheck={() => {
+            toggleTerms()
+          }}
+        />
+        {termsError && <div style={{"marginTop": "-22px","color": "#f44336", "margin-left": "4px"}}>{termsError}</div>}
       </div>
     );
   }
