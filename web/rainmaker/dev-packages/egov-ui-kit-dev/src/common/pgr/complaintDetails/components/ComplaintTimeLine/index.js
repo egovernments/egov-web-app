@@ -75,6 +75,7 @@ const connectorStyle = {
 const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
+    case "pending":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#fe7a51"} />;
     case "reassignrequested":
       return <Icon action="custom" name="reassign-request" style={statusCommonIconStyle} color={"#fe7a51"} />;
@@ -445,16 +446,43 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" label={comments ? `" ${comments} "` : ""} />
         </div>
       );
+    case "pending":
+      return (
+        <div className="complaint-timeline-content-section">
+          <Label
+            style={{ paddingTop: "6px" }}
+            labelClassName="dark-color complaint-timeline-status"
+            containerStyle={
+              filedBy && filedBy.includes("@CSR")
+                ? {
+                    display: "block",
+                    marginBottom: 5,
+                    paddingTop: "6px",
+                  }
+                : {
+                    display: "inline-block",
+                    marginRight: "3px",
+                    paddingTop: "6px",
+                  }
+            }
+            label={"Complaint pending at GRO"}
+          />
+        </div>
+      );
   }
 };
 
 const DueDate = ({ duedateText }) => {
+  console.log("duedateText is .......", duedateText);
   return (
-    <Label
-      labelStyle={duedateText.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
-      className="Complaint-details-duedate"
-      label={duedateText}
-    />
+    duedateText &&
+    duedateText.slaStatement && (
+      <Label
+        labelStyle={duedateText.slaStatement.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
+        className="Complaint-details-duedate"
+        label={duedateText.slaStatement}
+      />
+    )
   );
 };
 

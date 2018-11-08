@@ -34,7 +34,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var floatingLabelStyle = {
   fontSize: "12px",
-  color: "#00bcd1",
+  color: "rgba(0, 0, 0, 0.6000000238418579)",
   fontWeight: 500,
   transform: "scale(1) translate(0px, -16px)",
   top: 30
@@ -42,7 +42,7 @@ var floatingLabelStyle = {
 
 var floatingLabelBaseShrinkStyle = {
   fontSize: "12px",
-  color: "#00bcd1",
+  color: "rgba(0, 0, 0, 0.6000000238418579)",
   transform: "scale(1) translate(0px, -16px)",
   fontWeight: 500
 };
@@ -50,7 +50,7 @@ var floatingLabelBaseShrinkStyle = {
 var hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "#b3b3b3"
+  color: "rgba(0, 0, 0, 0.3799999952316284)"
 };
 
 var requiredStyle = {

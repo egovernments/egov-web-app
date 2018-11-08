@@ -160,6 +160,8 @@ class ComplaintDetails extends Component {
         } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
           btnOneLabel = "ES_REJECT_BUTTON";
           btnTwoLabel = "ES_COMMON_REASSIGN";
+        } else if (complaint.complaintStatus.toLowerCase() === "assigned") {
+          btnTwoLabel = "ES_COMMON_REASSIGN";
         }
       } else if (role === "employee") {
         if (complaint.complaintStatus.toLowerCase() === "assigned") {
@@ -202,9 +204,7 @@ class ComplaintDetails extends Component {
                   <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
                 </div>
                 <div>
-                  {(role === "ao" &&
-                    complaint.complaintStatus.toLowerCase() !== "assigned" &&
-                    complaint.complaintStatus.toLowerCase() !== "closed") ||
+                  {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
                   (role === "employee" &&
                     isAssignedToEmployee &&
                     complaint.complaintStatus.toLowerCase() === "assigned" &&

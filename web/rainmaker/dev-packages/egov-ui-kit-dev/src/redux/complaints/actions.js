@@ -102,6 +102,19 @@ const complaintFetchError = (error) => {
   };
 };
 
+const complaintSortOrder = (order) => {
+  return {
+    type: actionTypes.COMPLAINTS_SORT_ORDER,
+    order,
+  };
+};
+
+export const getComplaintDisplayOrder = (order) => {
+  return async (dispatch, getState) => {
+    dispatch(complaintSortOrder(order));
+  };
+};
+
 export const fetchComplaints = (queryObject, hasUsers = true, overWrite) => {
   return async (dispatch, getState) => {
     dispatch(complaintFetchPending());

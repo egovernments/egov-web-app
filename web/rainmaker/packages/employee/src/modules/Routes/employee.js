@@ -30,7 +30,7 @@ import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
 import EGFFinance from "modules/employee/Erp/EGF";
-
+import SearchScreen from "modules/employee/pgr/SearchScreen";
 //pt
 import ptRoutes from "./pt";
 import tlRoutes from "./tl";
@@ -66,6 +66,12 @@ const routes = [
     options: { hideFooter: true, title: "CORE_COMMON_CHANGE_PASSWORD" },
   },
   {
+    path: "search-complaint",
+    component: SearchScreen,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CORE_COMMON_SEARCH_COMPLAINT" },
+  },
+  {
     path: "user/profile",
     component: Profile,
     needsAuthentication: true,
@@ -84,6 +90,8 @@ const routes = [
       hideFor: "ao",
       customFor: "csr",
       customTitle: "ES_ALL_COMPLAINTS_HEADER",
+      refreshButton: true,
+      sortButton: true,
     },
   },
   {
@@ -92,9 +100,9 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-     // title: "ES_OPEN_COMPLAINTS_HEADER",
+      // title: "ES_OPEN_COMPLAINTS_HEADER",
       hideTitle: true,
-     // redirectionUrl,
+      // redirectionUrl,
       isHomeScreen: true,
       hideFor: "ao",
       customFor: "csr",
@@ -347,7 +355,7 @@ const routes = [
     },
   },
   ...ptRoutes,
-  ...tlRoutes
+  ...tlRoutes,
 ];
 
 export default routes;

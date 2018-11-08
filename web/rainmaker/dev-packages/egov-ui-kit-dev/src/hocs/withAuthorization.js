@@ -77,6 +77,8 @@ const withAuthorization = (options = {}) => (Component) => {
         hideTitle,
         titleBackground,
         hideActionMenu,
+        refreshButton,
+        sortButton,
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
@@ -115,6 +117,8 @@ const withAuthorization = (options = {}) => (Component) => {
               role={role}
               options={options}
               history={history}
+              refreshButton={refreshButton}
+              sortButton={sortButton}
               className="rainmaker-header"
             />
           ) : null}

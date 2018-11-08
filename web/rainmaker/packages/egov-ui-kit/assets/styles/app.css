@@ -59,7 +59,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .dark-color {
-  color: #484848;
+  color: "rgba(0, 0, 0, 0.8700000047683716)";
 }
 
 .rainmaker-custom-gap {
@@ -248,7 +248,6 @@ body.employee-user-profile {
   min-height: calc(100vh - 64px);
   position: fixed;
   z-index: 1001;
-  border-right: 1px solid #00000024;
 }
 
 .responsive-action-button-cont {

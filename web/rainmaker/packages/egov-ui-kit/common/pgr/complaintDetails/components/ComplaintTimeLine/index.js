@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -126,6 +130,7 @@ var StatusIcon = function StatusIcon(_ref) {
 
   switch (status) {
     case "open":
+    case "pending":
       return _react2.default.createElement(_components.Icon, {
         action: "custom",
         name: "file-plus",
@@ -680,6 +685,28 @@ var StatusContent = function StatusContent(_ref2) {
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "rainmaker-small-font complaint-timeline-comments",
           label: comments ? '" ' + comments + ' "' : ""
+        })
+      );
+    case "pending":
+      return _react2.default.createElement(
+        "div",
+        { className: "complaint-timeline-content-section" },
+        _react2.default.createElement(_translationNode2.default, {
+          style: { paddingTop: "6px" },
+          labelClassName: "dark-color complaint-timeline-status",
+          containerStyle:
+            filedBy && filedBy.includes("@CSR")
+              ? {
+                  display: "block",
+                  marginBottom: 5,
+                  paddingTop: "6px"
+                }
+              : {
+                  display: "inline-block",
+                  marginRight: "3px",
+                  paddingTop: "6px"
+                },
+          label: "Complaint pending at GRO"
         })
       );
   }

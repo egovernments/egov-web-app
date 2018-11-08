@@ -8,10 +8,10 @@ import sortBy from "lodash/sortBy";
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "#b3b3b3",
+  color: "rgba(0, 0, 0, 0.3799999952316284)",
 };
 const floatingLabelStyle = {
-  color: "rgb(0, 188, 209)",
+  color: "rgba(0, 0, 0, 0.6000000238418579)",
   fontSize: 16,
   letterSpacing: 0.6,
   fontWeight: 500,

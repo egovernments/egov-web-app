@@ -6,7 +6,7 @@ import MohallaDropdown from "../MohallaDropdown";
 
 const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories, history }) => {
   const fields = form.fields || {};
-  const { name, phone, mohalla, city, address, landmark } = fields;
+  const { name, phone, mohalla, city, address, landmark, houseNo } = fields;
   const submit = form.submit;
   return (
     <div className="create-complaint-main-cont">
@@ -48,7 +48,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   additionalDetails={fields.additionalDetails}
                 />
               </div>
-              <div className="col-sm-6 col-xs-12">
+              {/* <div className="col-sm-6 col-xs-12">
                 <TextField
                   className="fix-for-layout-break"
                   {...address}
@@ -57,7 +57,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   name="complainant-mobile-no"
                   onChange={(e, value) => handleFieldChange("address", value)}
                 />
-              </div>
+              </div> */}
               <div className="col-sm-6 col-xs-12">
                 {/* <DropDown
                   className="fix-for-layout-break"
@@ -77,6 +77,14 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
               </div>
               <div className="col-sm-6 col-xs-12">
                 <MohallaDropdown handleFieldChange={handleFieldChange} mohalla={mohalla} />
+              </div>
+              <div className="col-sm-6 col-xs-12">
+                <TextField
+                  className="fix-for-layout-break"
+                  {...houseNo}
+                  onChange={(e, value) => handleFieldChange("houseNo", value)}
+                  name="house-no"
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
                 <TextField

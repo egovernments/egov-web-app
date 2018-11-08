@@ -1,3 +1,7 @@
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+
+const tenantId = JSON.parse(localStorage.getItem("user-info")).permanentCity;
+
 const formConfig = {
   name: "complaint",
   idJsonPath: "services[0].serviceRequestId",
@@ -15,6 +19,14 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
+    },
+    additionalDetails: {
+      id: "additional details",
+      jsonPath: "services[0].description",
+      floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS",
+      hintText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS_PLACEHOLDER",
+      errorMessage: "Landmark should be less than 300 characters",
+      value: "",
     },
     latitude: {
       id: "latitude",
@@ -90,14 +102,6 @@ const formConfig = {
       errorMessage: "Landmark should be less than 100 characters",
       value: "",
     },
-    additionalDetails: {
-      id: "additional details",
-      jsonPath: "services[0].description",
-      floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS",
-      hintText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS_PLACEHOLDER",
-      errorMessage: "Landmark should be less than 300 characters",
-      value: "",
-    },
     tenantId: {
       id: "add-complaint-tenantid",
       jsonPath: "services[0].tenantId",
@@ -107,6 +111,27 @@ const formConfig = {
     type: "submit",
     label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_SUBMIT_COMPLAINT",
     id: "addComplaint-submit-complaint",
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      let state = store.getState();
+      const { cities, citiesByModule } = state.common;
+      const { PGR } = citiesByModule || {};
+      if (PGR) {
+        const tenants = PGR.tenants;
+        const dd = tenants.reduce((dd, tenant) => {
+          let selected = cities.find((city) => {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",

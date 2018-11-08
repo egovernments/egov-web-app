@@ -12,6 +12,12 @@ const styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 },
 };
 
+const iconButtonStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  width: 35,
+};
+
 // handle listners
 const EgovAppBar = ({
   className,
@@ -24,6 +30,10 @@ const EgovAppBar = ({
   fetchLocalizationLabel,
   userInfo = {},
   onToolBarIconClick,
+  refreshButton,
+  sortButton,
+  sortDialogOpen,
+  history,
   ...rest
 }) => {
   return (
@@ -91,4 +101,7 @@ const EgovAppBar = ({
   );
 };
 
+const onSearchClick = (history) => {
+  history.push("search-complaint");
+};
 export default EgovAppBar;

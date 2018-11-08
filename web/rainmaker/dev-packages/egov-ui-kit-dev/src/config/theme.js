@@ -3,7 +3,7 @@ const theme = {
   textColor: "rgba(0, 0, 0, 0.68)",
   backgroundColor: "#fff",
   palette: {
-    primary1Color: "#00bcd1",
+    primary1Color: "rgba(0, 0, 0, 0.6000000238418579)",
     primary2Color: "#fe7a51",
     textColor: "#5f5c62",
     canvasColor: "#F7F7F7",

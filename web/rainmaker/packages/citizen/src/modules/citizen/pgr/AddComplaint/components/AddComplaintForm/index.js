@@ -11,9 +11,23 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
   return (
     <div className="add-complaint-main-cont form-without-button-cont-generic">
       <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
-      <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
-      <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} landmark={fields.landmark} locationDetails={fields.address} />
-      <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} />
+      <ComplaintTypeCard
+        localizationLabels={localizationLabels}
+        categories={categories}
+        complaintType={fields.complaintType}
+        handleFieldChange={handleFieldChange}
+        additionalDetails={fields.additionalDetails}
+      />
+      <LocationDetailsCard
+        formKey={formKey}
+        handleFieldChange={handleFieldChange}
+        landmark={fields.landmark}
+        locationDetails={fields.address}
+        houseNo={fields.houseNo}
+        city={fields.city}
+        mohalla={fields.mohalla}
+      />
+      {/* <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} /> */}
       <div className="responsive-action-button-cont ">
         <Button
           primary={true}

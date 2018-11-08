@@ -1,5 +1,6 @@
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
-import { CITY } from "egov-ui-kit/utils/endPoints";
+
+const tenantId = localStorage.getItem("tenant-id");
 
 const formConfig = {
   name: "complaint",
@@ -50,16 +51,16 @@ const formConfig = {
       id: "longitude",
       jsonPath: "services[0].long",
     },
-    address: {
-      id: "address",
-      jsonPath: "services[0].address",
-      required: true,
-      floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
-      hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
-      errorText: "",
-    },
+    // address: {
+    //   id: "address",
+    //   jsonPath: "services[0].address",
+    //   required: true,
+    //   floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
+    //   hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
+    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    //   value: "",
+    //   errorText: "",
+    // },
     city: {
       id: "city",
       jsonPath: "services[0].city",
@@ -68,7 +69,7 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
+      value: tenantId,
       errorText: "",
       dropDownData: [],
       // type: "singleValueList",
@@ -103,8 +104,10 @@ const formConfig = {
       id: "mohalla",
       required: true,
       jsonPath: "services[0].addressId",
-      floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-      hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      // floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
+      // hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
+      hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       boundary: true,
       // dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
@@ -120,6 +123,14 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",
+    },
+    houseNo: {
+      id: "houseNo",
+      jsonPath: "services[0].houseNo",
+      floatingLabelText: "CS_ADDCOMPLAINT_HOUSE_NO",
+      hintText: "CS_ADDCOMPLAINT_HOUSE_NO_PLACEHOLDER",
+      errorMessage: "House no should be less than 100 characters",
+      value: "",
     },
     landmark: {
       id: "landmark",
