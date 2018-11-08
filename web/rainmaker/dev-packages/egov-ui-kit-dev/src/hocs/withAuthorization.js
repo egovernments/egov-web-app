@@ -22,6 +22,12 @@ const withAuthorization = (options = {}) => (Component) => {
       titleAddon: "",
       sortPopOpen: false,
     };
+    style = {
+      iconStyle: {
+        height: "30px",
+        width: "30px",
+      },
+    };
 
     componentWillMount() {
       const { authenticated } = this.props;
@@ -83,6 +89,7 @@ const withAuthorization = (options = {}) => (Component) => {
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
       const { titleAddon } = this.state;
+      const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
         : this.roleFromUserInfo(userInfo, "GRO")
@@ -159,10 +166,19 @@ const withAuthorization = (options = {}) => (Component) => {
                         )}
                       </div>
                       {sortButton && (
-                        <div className="sort-button col-xs-4 text-right" style={{ padding: "10px" }}>
-                          <IconButton onClick={this.onSortClick}>
+                        <div className="sort-button col-xs-4" style={{ paddingTop: "24px" }}>
+                          {/* <IconButton onClick={this.onSortClick}>
                             <Icon action="action" name="swap-vert" color="#767676" />
-                          </IconButton>
+                          </IconButton> */}
+
+                          <div
+                            className="rainmaker-displayInline"
+                            style={{ cursor: "pointer", justifyContent: "flex-end" }}
+                            onClick={this.onSortClick}
+                          >
+                            <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
+                            <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
+                          </div>
                           <SortDialog sortPopOpen={this.state.sortPopOpen} closeSortDialog={this.closeSortDialog} />
                         </div>
                       )}

@@ -71,6 +71,12 @@ var withAuthorization = function withAuthorization() {
           titleAddon: "",
           sortPopOpen: false
         };
+        _this.style = {
+          iconStyle: {
+            height: "30px",
+            width: "30px"
+          }
+        };
 
         _this.roleFromUserInfo = function (userInfo, role) {
           var roleCodes = userInfo && userInfo.roles ? userInfo.roles.map(function (role) {
@@ -144,6 +150,7 @@ var withAuthorization = function withAuthorization() {
               userInfo = _props.userInfo,
               complaints = _props.complaints;
           var titleAddon = this.state.titleAddon;
+          var style = this.style;
 
           var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : this.roleFromUserInfo(userInfo, "PGR-ADMIN") ? "pgr-admin" : "";
 
@@ -222,11 +229,16 @@ var withAuthorization = function withAuthorization() {
                     ),
                     sortButton && _react2.default.createElement(
                       "div",
-                      { className: "sort-button col-xs-4 text-right", style: { padding: "10px" } },
+                      { className: "sort-button col-xs-4", style: { paddingTop: "24px" } },
                       _react2.default.createElement(
-                        _IconButton2.default,
-                        { onClick: this.onSortClick },
-                        _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#767676" })
+                        "div",
+                        {
+                          className: "rainmaker-displayInline",
+                          style: { cursor: "pointer", justifyContent: "flex-end" },
+                          onClick: this.onSortClick
+                        },
+                        _react2.default.createElement(_translationNode2.default, { label: "Sort", color: "#484848", containerStyle: { marginRight: 5 } }),
+                        _react2.default.createElement(_components.Icon, { style: style.iconStyle, action: "action", name: "swap-vert", color: "#484848" })
                       ),
                       _react2.default.createElement(_SortDialog2.default, { sortPopOpen: this.state.sortPopOpen, closeSortDialog: this.closeSortDialog })
                     )

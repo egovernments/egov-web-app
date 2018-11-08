@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
-import { Complaints } from "modules/common";
+import IconButton from "material-ui/IconButton";
+import { Complaints, SortDialog } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
@@ -13,6 +14,11 @@ import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
+const iconButtonStyle = {
+  padding: 0,
+  width: 50,
+};
+
 class AllComplaints extends Component {
   state = {
     complaintNo: "",
@@ -20,6 +26,13 @@ class AllComplaints extends Component {
     complaints: [],
     search: false,
     value: 0,
+    sortPopOpen: false,
+  };
+  style = {
+    iconStyle: {
+      height: "30px",
+      width: "30px",
+    },
   };
 
   componentDidMount = async () => {
@@ -47,6 +60,18 @@ class AllComplaints extends Component {
   //     renderCustomTitle(numberOfComplaints);
   //   }
   // };
+
+  closeSortDialog = () => {
+    this.setState({
+      sortPopOpen: false,
+    });
+  };
+
+  onSortClick = () => {
+    this.setState({
+      sortPopOpen: true,
+    });
+  };
 
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/complaint-details/${complaintNo}`);
@@ -91,13 +116,13 @@ class AllComplaints extends Component {
 
   render() {
     const { loading, history } = this.props;
-    const { mobileNo, complaintNo, search } = this.state;
+    const { mobileNo, complaintNo, search, sortPopOpen } = this.state;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
 
-    const { onComplaintClick } = this;
-    const { assignedComplaints, unassignedComplaints, employeeComplaints, role, transformedComplaints } = this.props;
+    const { onComplaintClick, onSortClick, closeSortDialog, style } = this;
+    const { assignedComplaints, unassignedComplaints, csrComplaints, employeeComplaints, role, transformedComplaints } = this.props;
     const hintTextStyle = {
       letterSpacing: "0.7px",
       textOverflow: "ellipsis",
@@ -106,78 +131,91 @@ class AllComplaints extends Component {
       overflow: "hidden",
     };
     return role === "ao" ? (
-      <Tabs
-        className="employee-complaints-tab"
-        onChange={this.onChange}
-        tabs={[
-          {
-            label: (
-              <div className="inline-Localization-text">
-                <Label
-                  labelClassName="unassigned-label-text"
-                  color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
-                  bold={true}
-                  label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
-                  labelStyle={tabStyle}
-                />
-                <Label
-                  color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
-                  bold={true}
-                  label={`(${unassignedComplaints.length})`}
-                  labelStyle={tabStyle}
-                />
-              </div>
-            ),
-            children: (
-              <Screen loading={loading}>
-                <div className="tab1-content form-without-button-cont-generic">
-                  <Complaints
-                    noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}
-                    onComplaintClick={onComplaintClick}
-                    complaints={unassignedComplaints}
-                    complaintLocation={true}
-                    role={role}
-                    heightOffset="116px"
+      <div>
+        <div className="sort-button rainmaker-displayInline" style={{ padding: "10px", justifyContent: "flex-end" }}>
+          <div className="rainmaker-displayInline" style={{ cursor: "pointer" }} onClick={onSortClick}>
+            <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
+            <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
+          </div>
+          <div className="rainmaker-displayInline" style={{ cursor: "pointer" }} onClick={() => history.push("search-complaint")}>
+            <Label label="Search" color="#484848" containerStyle={{ marginRight: 5 }} />
+            <Icon style={style.iconStyle} action="action" name="search" color="#484848" />
+          </div>
+          <SortDialog sortPopOpen={sortPopOpen} closeSortDialog={closeSortDialog} />
+        </div>
+        <Tabs
+          className="employee-complaints-tab"
+          onChange={this.onChange}
+          tabs={[
+            {
+              label: (
+                <div className="inline-Localization-text">
+                  <Label
+                    labelClassName="unassigned-label-text"
+                    color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    bold={true}
+                    label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
+                    labelStyle={tabStyle}
+                  />
+                  <Label
+                    color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    bold={true}
+                    label={`(${unassignedComplaints.length})`}
+                    labelStyle={tabStyle}
                   />
                 </div>
-              </Screen>
-            ),
-          },
-          {
-            label: (
-              <div className="inline-Localization-text">
-                <Label
-                  labelClassName="assigned-label-text"
-                  color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
-                  bold={true}
-                  label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
-                  labelStyle={tabStyle}
-                />
-                <Label
-                  color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
-                  bold={true}
-                  label={`(${assignedComplaints.length})`}
-                  labelStyle={tabStyle}
-                />
-              </div>
-            ),
-            children: (
-              <Screen loading={loading}>
-                <div className="tab2-content form-without-button-cont-generic">
-                  <Complaints
-                    noComplaintMessage={"ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"}
-                    onComplaintClick={onComplaintClick}
-                    complaints={assignedComplaints}
-                    complaintLocation={true}
-                    role={role}
-                    heightOffset="116px"
+              ),
+              children: (
+                <Screen loading={loading}>
+                  <div className="tab1-content form-without-button-cont-generic">
+                    <Complaints
+                      noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}
+                      onComplaintClick={onComplaintClick}
+                      complaints={unassignedComplaints}
+                      complaintLocation={true}
+                      role={role}
+                      heightOffset="116px"
+                    />
+                  </div>
+                </Screen>
+              ),
+            },
+            {
+              label: (
+                <div className="inline-Localization-text">
+                  <Label
+                    labelClassName="assigned-label-text"
+                    color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    bold={true}
+                    label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
+                    labelStyle={tabStyle}
+                  />
+                  <Label
+                    color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    bold={true}
+                    label={`(${assignedComplaints.length})`}
+                    labelStyle={tabStyle}
                   />
                 </div>
-              </Screen>
-            ),
-          },
-        ]}
-      />
+              ),
+              children: (
+                <Screen loading={loading}>
+                  <div className="tab2-content form-without-button-cont-generic">
+                    <Complaints
+                      noComplaintMessage={"ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"}
+                      onComplaintClick={onComplaintClick}
+                      complaints={assignedComplaints}
+                      complaintLocation={true}
+                      role={role}
+                      heightOffset="116px"
+                    />
+                  </div>
+                </Screen>
+              ),
+            },
+          ]}
+        />
+      </div>
     ) : role === "csr" ? (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
@@ -255,7 +293,7 @@ class AllComplaints extends Component {
           <Complaints
             noComplaintMessage={search ? "ES_NO_SEARCH_RESULTS" : "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
             onComplaintClick={onComplaintClick}
-            complaints={transformedComplaints}
+            complaints={csrComplaints}
             role={role}
             complaintLocation={true}
           />
@@ -391,7 +429,8 @@ const mapStateToProps = (state) => {
   let transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   let assignedComplaints = [],
     unassignedComplaints = [],
-    employeeComplaints = [];
+    employeeComplaints = [],
+    csrComplaints = [];
 
   let filteredEmployeeComplaints = transformedComplaints.filter(
     (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"
@@ -424,11 +463,11 @@ const mapStateToProps = (state) => {
     // );
   } else if (role === "csr") {
     if (order === "Old to New") {
-      employeeComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["asc"]);
+      csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["asc"]);
     } else if (order === "New to old") {
-      employeeComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
+      csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
     } else {
-      employeeComplaints = orderby(transformedComplaints, ["SLA"], ["desc"]);
+      csrComplaints = orderby(transformedComplaints, ["SLA"], ["desc"]);
     }
   } else {
     if (order === "Old to New") {
@@ -442,7 +481,17 @@ const mapStateToProps = (state) => {
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
   const numEmpComplaint = employeeComplaints.length;
   const numCSRComplaint = transformedComplaints.length;
-  return { assignedComplaints, unassignedComplaints, numEmpComplaint, numCSRComplaint, employeeComplaints, role, loading, transformedComplaints };
+  return {
+    assignedComplaints,
+    unassignedComplaints,
+    csrComplaints,
+    numEmpComplaint,
+    numCSRComplaint,
+    employeeComplaints,
+    role,
+    loading,
+    transformedComplaints,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
