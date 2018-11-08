@@ -30,7 +30,10 @@ const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange
               className="fix-for-layout-break"
               fullWidth={true}
               dataSource={city && city.dropDownData}
-              onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+              onChange={(chosenCity, index) => {
+                handleFieldChange("city", chosenCity.value);
+              }}
+              //onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
               {...city}
             />
             <AutoSuggestDropdown

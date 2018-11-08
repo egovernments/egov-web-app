@@ -30,6 +30,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require("react-redux");
 
+var _components = require("components");
+
 var _redux = require("redux");
 
 var _withData = require("./withData");
@@ -38,11 +40,19 @@ var _withData2 = _interopRequireDefault(_withData);
 
 var _common = require("modules/common");
 
+var _IconButton = require("material-ui/IconButton");
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
 var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
 var _actions = require("egov-ui-kit/redux/auth/actions");
+
+var _SortDialog = require("../common/common/Header/components/SortDialog");
+
+var _SortDialog2 = _interopRequireDefault(_SortDialog);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58,7 +68,8 @@ var withAuthorization = function withAuthorization() {
         var _this = (0, _possibleConstructorReturn3.default)(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props));
 
         _this.state = {
-          titleAddon: ""
+          titleAddon: "",
+          sortPopOpen: false
         };
 
         _this.roleFromUserInfo = function (userInfo, role) {
@@ -71,6 +82,18 @@ var withAuthorization = function withAuthorization() {
         _this.renderCustomTitle = function (numberOfComplaints) {
           var titleAddon = numberOfComplaints ? "(" + numberOfComplaints + ")" : "(0)";
           _this.setState({ titleAddon: titleAddon });
+        };
+
+        _this.closeSortDialog = function () {
+          _this.setState({
+            sortPopOpen: false
+          });
+        };
+
+        _this.onSortClick = function () {
+          _this.setState({
+            sortPopOpen: true
+          });
         };
 
         _this.renderCustomTitleForPt = function (title) {
@@ -95,7 +118,6 @@ var withAuthorization = function withAuthorization() {
             this.props.history.replace(redirectionUrl || baseUrl);
           }
         }
-
         //Duplication due to lack of time for proper testing in PGR
 
       }, {
@@ -174,22 +196,36 @@ var withAuthorization = function withAuthorization() {
                   null,
                   !hideTitle && role !== hideFor && _react2.default.createElement(
                     "div",
-                    { className: "screen-title-label", style: { padding: "24px 0 8px 16px" } },
-                    _react2.default.createElement(_translationNode2.default, {
-                      className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
-                      label: role === customFor ? customTitle : title,
-                      containerStyle: { marginRight: 3 },
-                      dark: true,
-                      bold: true,
-                      fontSize: 20
-                    }),
-                    titleAddon && _react2.default.createElement(_translationNode2.default, {
-                      className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
-                      label: titleAddon,
-                      dark: true,
-                      bold: true,
-                      fontSize: 20
-                    })
+                    null,
+                    _react2.default.createElement(
+                      "div",
+                      { className: "screen-title-label col-xs-8", style: { padding: "24px 0 8px 16px" } },
+                      _react2.default.createElement(_translationNode2.default, {
+                        className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                        label: role === customFor ? customTitle : title,
+                        containerStyle: { marginRight: 3 },
+                        dark: true,
+                        bold: true,
+                        fontSize: 20
+                      }),
+                      titleAddon && _react2.default.createElement(_translationNode2.default, {
+                        className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                        label: titleAddon,
+                        dark: true,
+                        bold: true,
+                        fontSize: 20
+                      })
+                    ),
+                    sortButton && _react2.default.createElement(
+                      "div",
+                      { className: "col-xs-4 text-right", style: { padding: "10px" } },
+                      _react2.default.createElement(
+                        _IconButton2.default,
+                        { onClick: this.onSortClick },
+                        _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#767676" })
+                      ),
+                      _react2.default.createElement(_SortDialog2.default, { sortPopOpen: this.state.sortPopOpen, closeSortDialog: this.closeSortDialog })
+                    )
                   ),
                   _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, {
                     title: title,

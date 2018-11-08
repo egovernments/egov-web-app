@@ -1,11 +1,11 @@
 import React from "react";
-import { AppBar } from "components";
+import { AppBar, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
-
+import IconButton from "material-ui/IconButton";
 import "./index.css";
 
 const styles = {
@@ -54,8 +54,8 @@ const EgovAppBar = ({
                 role && role.toLowerCase() === "citizen"
                   ? "PUNJAB MUNICIPAL CORPORATION"
                   : defaultTitle
-                    ? defaultTitle
-                    : "PUNJAB MUNICIPAL CORPORATION"
+                  ? defaultTitle
+                  : "PUNJAB MUNICIPAL CORPORATION"
               }
             />
           </div>
@@ -68,6 +68,23 @@ const EgovAppBar = ({
         </Toolbar>
         <div className="appbar-right-logo">
           <img src={digitLogo} />
+        </div>
+        <div className="icon-button">
+          {refreshButton && (
+            <IconButton style={iconButtonStyle} onClick={(e) => location.reload()}>
+              <Icon action="navigation" name="refresh" color="#fff" />
+            </IconButton>
+          )}
+          {sortButton && (
+            <IconButton style={iconButtonStyle} onClick={sortDialogOpen}>
+              <Icon action="action" name="swap-vert" color="#fff" />
+            </IconButton>
+          )}
+          {role === "ao" && window.location.pathname === "/all-complaints" && (
+            <IconButton style={iconButtonStyle} onClick={(e) => onSearchClick(history)}>
+              <Icon action="action" name="search" color="#fff" />
+            </IconButton>
+          )}
         </div>
       </AppBar>
     </div>

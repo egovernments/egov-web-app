@@ -69,7 +69,9 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   className="fix-for-layout-break"
                   fullWidth={true}
                   dataSource={city && city.dropDownData}
-                  onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+                  onChange={(chosenCity, index) => {
+                    handleFieldChange("city", chosenCity.value);
+                  }}
                   {...city}
                 />
               </div>

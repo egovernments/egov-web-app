@@ -307,23 +307,52 @@ const mapStateToProps = (state) => {
   let assignedComplaints = [],
     unassignedComplaints = [],
     employeeComplaints = [];
+
+  let filteredEmployeeComplaints = transformedComplaints.filter(
+    (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"
+  );
+
+  let filteredAssignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
+  let filteredUnassignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED");
+
   if (role === "ao") {
-    assignedComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
-    unassignedComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
+    if (order === "Old to New") {
+      assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["asc"]);
+      unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["asc"]);
+    } else if (order === "New to old") {
+      assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["desc"]);
+      unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["desc"]);
+    } else {
+      assignedComplaints = orderby(filteredAssignedComplaints, ["SLA"], ["asc"]);
+      unassignedComplaints = orderby(filteredUnassignedComplaints, ["SLA"], ["asc"]);
+    }
+
+    // assignedComplaints = orderby(
+    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+    //   ["latestCreationTime"],
+    //   ["asc"]
+    // );
+    // unassignedComplaints = orderby(
+    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+    //   ["latestCreationTime"],
+    //   ["asc"]
+    // );
+  } else if (role === "csr") {
+    if (order === "Old to New") {
+      employeeComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["asc"]);
+    } else if (order === "New to old") {
+      employeeComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
+    } else {
+      employeeComplaints = orderby(transformedComplaints, ["SLA"], ["desc"]);
+    }
   } else {
-    employeeComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
-      ["latestCreationTime"],
-      ["asc"]
-    );
+    if (order === "Old to New") {
+      employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["asc"]);
+    } else if (order === "New to old") {
+      employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["desc"]);
+    } else {
+      employeeComplaints = orderby(filteredEmployeeComplaints, ["SLA"], ["desc"]);
+    }
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
   const numEmpComplaint = employeeComplaints.length;
