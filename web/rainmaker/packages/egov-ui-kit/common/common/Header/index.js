@@ -205,7 +205,8 @@ var Header = function (_Component) {
           isHomeScreen = _props.isHomeScreen,
           defaultTitle = _props.defaultTitle,
           refreshButton = _props.refreshButton,
-          sortButton = _props.sortButton;
+          sortButton = _props.sortButton,
+          searchButton = _props.searchButton;
 
       return _react2.default.createElement(
         "div",
@@ -222,6 +223,7 @@ var Header = function (_Component) {
           userInfo: userInfo,
           refreshButton: refreshButton,
           sortButton: sortButton,
+          searchButton: searchButton,
           sortDialogOpen: onSortClick,
           history: this.props.history
         })),

@@ -32,6 +32,7 @@ const EgovAppBar = ({
   onToolBarIconClick,
   refreshButton,
   sortButton,
+  searchButton,
   sortDialogOpen,
   history,
   ...rest
@@ -90,7 +91,7 @@ const EgovAppBar = ({
               <Icon action="action" name="swap-vert" color="#fff" />
             </IconButton>
           )}
-          {role === "ao" && window.location.pathname === "/all-complaints" && (
+          {searchButton && role === "ao" && (
             <IconButton style={iconButtonStyle} onClick={(e) => onSearchClick(history)}>
               <Icon action="action" name="search" color="#fff" />
             </IconButton>

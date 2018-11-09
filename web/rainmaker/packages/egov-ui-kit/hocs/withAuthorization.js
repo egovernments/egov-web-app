@@ -143,6 +143,7 @@ var withAuthorization = function withAuthorization() {
               hideActionMenu = options.hideActionMenu,
               refreshButton = options.refreshButton,
               sortButton = options.sortButton,
+              searchButton = options.searchButton,
               showNumberOfComplaints = options.showNumberOfComplaints;
           var _props = this.props,
               history = _props.history,
@@ -179,6 +180,7 @@ var withAuthorization = function withAuthorization() {
               history: history,
               refreshButton: refreshButton,
               sortButton: sortButton,
+              searchButton: searchButton,
               className: "rainmaker-header"
             }) : null,
             _react2.default.createElement(

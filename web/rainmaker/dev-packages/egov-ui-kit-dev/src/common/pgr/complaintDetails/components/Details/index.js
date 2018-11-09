@@ -178,7 +178,7 @@ class Details extends Component {
                         color="#767676"
                       />
                       <Label
-                        label={`${mohalla},${selectedCityName}`}
+                        label={`${mohalla}, ${selectedCityName}`}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
@@ -207,9 +207,9 @@ class Details extends Component {
                     </div>
                   </div>
                 )}
-                {address && (
+                {/* {address && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
+                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                     <Label
                       label={address}
                       className="status-result-color"
@@ -217,8 +217,8 @@ class Details extends Component {
                       labelStyle={{ color: "inherit" }}
                     />
                   </div>
-                )}
-                <div style={{ marginTop: 10 }}>
+                )} */}
+                {/* <div style={{ marginTop: 10 }}>
                   {mapAction && complaintLoc.lat && (
                     <Button
                       className="employee-complaint-summary-mapBtn"
@@ -242,8 +242,8 @@ class Details extends Component {
                       }}
                     />
                   )}
-                </div>
-                {description && (
+                </div> */}
+                {/* {description && (
                   <div className="rainmaker-displayInline">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     <Label
@@ -253,7 +253,7 @@ class Details extends Component {
                       labelStyle={{ color: "inherit" }}
                     />
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           }

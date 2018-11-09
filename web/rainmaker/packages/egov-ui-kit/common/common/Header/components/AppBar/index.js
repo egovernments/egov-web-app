@@ -71,9 +71,10 @@ var EgovAppBar = function EgovAppBar(_ref) {
       onToolBarIconClick = _ref.onToolBarIconClick,
       refreshButton = _ref.refreshButton,
       sortButton = _ref.sortButton,
+      searchButton = _ref.searchButton,
       sortDialogOpen = _ref.sortDialogOpen,
       history = _ref.history,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "sortDialogOpen", "history"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history"]);
 
   return _react2.default.createElement(
     "div",
@@ -135,7 +136,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
           { style: iconButtonStyle, onClick: sortDialogOpen },
           _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#fff" })
         ),
-        role === "ao" && window.location.pathname === "/all-complaints" && _react2.default.createElement(
+        searchButton && role === "ao" && _react2.default.createElement(
           _IconButton2.default,
           { style: iconButtonStyle, onClick: function onClick(e) {
               return onSearchClick(history);

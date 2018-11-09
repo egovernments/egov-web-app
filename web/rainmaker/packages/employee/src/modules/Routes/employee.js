@@ -92,6 +92,7 @@ const routes = [
       customTitle: "ES_ALL_COMPLAINTS_HEADER",
       refreshButton: true,
       sortButton: true,
+      searchButton: true,
     },
   },
   {

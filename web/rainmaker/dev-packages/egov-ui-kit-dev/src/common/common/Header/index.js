@@ -135,6 +135,7 @@ class Header extends Component {
       defaultTitle,
       refreshButton,
       sortButton,
+      searchButton,
     } = this.props;
     return (
       <div>
@@ -150,6 +151,7 @@ class Header extends Component {
           userInfo={userInfo}
           refreshButton={refreshButton}
           sortButton={sortButton}
+          searchButton={searchButton}
           sortDialogOpen={onSortClick}
           history={this.props.history}
         />
