@@ -48,9 +48,15 @@ class ComplaintDetails extends Component {
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common, form } = state;
-  const { employeeById, departmentById, designationsById } = common || {};
+  const { employeeById, departmentById, designationsById, cities } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
+    let { city } = selectedComplaint.addressDetail || "";
+    let selectedCityName =
+      cities &&
+      cities.find((item) => {
+        return item.code === city;
+      }).name;
     let details = {
       status: selectedComplaint.status || "",
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
@@ -59,7 +65,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
-      addressDetail: selectedComplaint.addressDetail,
+      addressDetail: { selectedCityName, ...selectedComplaint.addressDetail },
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,

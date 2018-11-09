@@ -97,7 +97,8 @@ var Details = function (_Component) {
           houseNoAndStreetName = _ref2.houseNoAndStreetName,
           landmark = _ref2.landmark,
           mohalla = _ref2.mohalla,
-          city = _ref2.city;
+          city = _ref2.city,
+          selectedCityName = _ref2.selectedCityName;
 
       var icon = {};
       icon.name = "location";
@@ -224,7 +225,7 @@ var Details = function (_Component) {
                   })
                 )
               ),
-              mohalla && city && _react2.default.createElement(
+              mohalla && selectedCityName && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
                 _react2.default.createElement(
@@ -237,7 +238,7 @@ var Details = function (_Component) {
                     color: "#767676"
                   }),
                   _react2.default.createElement(_translationNode2.default, {
-                    label: mohalla + " ," + city,
+                    label: mohalla + "," + selectedCityName,
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" },

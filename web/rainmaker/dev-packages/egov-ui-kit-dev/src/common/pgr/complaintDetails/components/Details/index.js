@@ -46,7 +46,7 @@ class Details extends Component {
       role,
       complaintLoc,
     } = this.props;
-    const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail || "";
+    const { houseNoAndStreetName, landmark, mohalla, city, selectedCityName } = addressDetail || "";
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -166,7 +166,7 @@ class Details extends Component {
                     </div>
                   </div>
                 )}
-                {mohalla && city && (
+                {mohalla && selectedCityName && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
 
@@ -178,7 +178,7 @@ class Details extends Component {
                         color="#767676"
                       />
                       <Label
-                        label={`${mohalla} ,${city}`}
+                        label={`${mohalla},${selectedCityName}`}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
