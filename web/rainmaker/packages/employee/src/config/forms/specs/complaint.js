@@ -1,4 +1,4 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 
 const tenantId = localStorage.getItem("tenant-id");
 
@@ -45,11 +45,11 @@ const formConfig = {
     },
     latitude: {
       id: "latitude",
-      jsonPath: "services[0].lat",
+      jsonPath: "services[0].addressDetail.latitude",
     },
     longitude: {
       id: "longitude",
-      jsonPath: "services[0].long",
+      jsonPath: "services[0].addressDetail.longitude",
     },
     // address: {
     //   id: "address",
@@ -63,13 +63,13 @@ const formConfig = {
     // },
     city: {
       id: "city",
-      jsonPath: "services[0].city",
+      jsonPath: "services[0].addressDetail.city",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: tenantId,
+      // value: tenantId,
       errorText: "",
       dropDownData: [],
       // type: "singleValueList",
@@ -103,7 +103,7 @@ const formConfig = {
     mohalla: {
       id: "mohalla",
       required: true,
-      jsonPath: "services[0].addressId",
+      jsonPath: "services[0].addressDetail.mohalla",
       // floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
       // hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
@@ -126,7 +126,7 @@ const formConfig = {
     },
     houseNo: {
       id: "houseNo",
-      jsonPath: "services[0].houseNo",
+      jsonPath: "services[0].addressDetail.houseNoAndStreetName",
       floatingLabelText: "CS_ADDCOMPLAINT_HOUSE_NO",
       hintText: "CS_ADDCOMPLAINT_HOUSE_NO_PLACEHOLDER",
       errorMessage: "House no should be less than 100 characters",
@@ -134,7 +134,7 @@ const formConfig = {
     },
     landmark: {
       id: "landmark",
-      jsonPath: "services[0].landmark",
+      jsonPath: "services[0].addressDetail.landmark",
       floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -177,6 +177,7 @@ const formConfig = {
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
       }
+      dispatch(handleFieldChange("complaint", "city", tenantId));
       return action;
     } catch (e) {
       console.log(e);

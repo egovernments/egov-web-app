@@ -193,8 +193,7 @@ var Details = function (_Component) {
                       onClick: function onClick() {
                         return _this2.onImageClick(image);
                       }
-                    }),
-                    " "
+                    })
                   );
                 })
               ),
@@ -202,7 +201,7 @@ var Details = function (_Component) {
                 "div",
                 { className: "rainmaker-displayInline" },
                 _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#767676" }),
-                _react2.default.createElement(_translationNode2.default, { label: "Address Details", containerStyle: { marginLeft: "13px" }, labelClassName: "dark-heading" })
+                _react2.default.createElement(_translationNode2.default, { label: "Address Details", labelClassName: "dark-heading" })
               ),
               houseNoAndStreetName && _react2.default.createElement(
                 "div",
@@ -211,10 +210,10 @@ var Details = function (_Component) {
                   "div",
                   { className: "rainmaker-displayInline" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: "House/Street No :",
+                    label: "CS_COMPLAINTDETAILS_HOUSE",
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
-                    labelStyle: { color: "inherit" }
+                    color: "#767676"
                   }),
                   _react2.default.createElement(_translationNode2.default, {
                     label: houseNoAndStreetName,
@@ -232,10 +231,10 @@ var Details = function (_Component) {
                   "div",
                   { className: "rainmaker-displayInline" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: "Mohalla/City : ",
+                    label: "CS_COMPLAINTDETAILS_MOHALLA",
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
-                    labelStyle: { color: "inherit" }
+                    color: "#767676"
                   }),
                   _react2.default.createElement(_translationNode2.default, {
                     label: mohalla + " ," + city,
@@ -253,10 +252,10 @@ var Details = function (_Component) {
                   "div",
                   { className: "rainmaker-displayInline" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: "landmark : ",
+                    label: "CS_COMPLAINTDETAILS_LANDMARK",
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
-                    labelStyle: { color: "inherit" }
+                    color: "#767676"
                   }),
                   _react2.default.createElement(_translationNode2.default, {
                     label: landmark,
@@ -270,7 +269,6 @@ var Details = function (_Component) {
               address && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
                 _react2.default.createElement(_translationNode2.default, {
                   label: address,
                   className: "status-result-color",
@@ -305,7 +303,7 @@ var Details = function (_Component) {
               ),
               description && _react2.default.createElement(
                 "div",
-                { style: { marginTop: "16px" }, className: "rainmaker-displayInline" },
+                { className: "rainmaker-displayInline" },
                 _react2.default.createElement(_components.Icon, { action: "editor", name: "format-quote", style: iconStyle, color: "#969696" }),
                 _react2.default.createElement(_translationNode2.default, {
                   label: description,

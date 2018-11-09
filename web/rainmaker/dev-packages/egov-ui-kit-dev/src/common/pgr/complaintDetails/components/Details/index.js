@@ -144,17 +144,17 @@ class Details extends Component {
                 </div>
                 <div className="rainmaker-displayInline">
                   <Icon action="maps" name="place" style={iconStyle} color={"#767676"} />
-                  <Label label="Address Details" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+                  <Label label="Address Details" labelClassName="dark-heading" />
                 </div>
                 {houseNoAndStreetName && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
                     <div className="rainmaker-displayInline">
                       <Label
-                        label={"House/Street No :"}
+                        label={"CS_COMPLAINTDETAILS_HOUSE"}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
-                        labelStyle={{ color: "inherit" }}
+                        color="#767676"
                       />
                       <Label
                         label={houseNoAndStreetName}
@@ -166,37 +166,36 @@ class Details extends Component {
                     </div>
                   </div>
                 )}
-                {mohalla &&
-                  city && (
-                    <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                      {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
+                {mohalla && city && (
+                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
+                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
 
-                      <div className="rainmaker-displayInline">
-                        <Label
-                          label={"Mohalla/City : "}
-                          className="status-result-color"
-                          id="complaint-details-complaint-location"
-                          labelStyle={{ color: "inherit" }}
-                        />
-                        <Label
-                          label={`${mohalla} ,${city}`}
-                          className="status-result-color"
-                          id="complaint-details-complaint-location"
-                          labelStyle={{ color: "inherit" }}
-                          containerStyle={{ marginLeft: 5 }}
-                        />
-                      </div>
+                    <div className="rainmaker-displayInline">
+                      <Label
+                        label={"CS_COMPLAINTDETAILS_MOHALLA"}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        color="#767676"
+                      />
+                      <Label
+                        label={`${mohalla} ,${city}`}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        containerStyle={{ marginLeft: 5 }}
+                      />
                     </div>
-                  )}
+                  </div>
+                )}
                 {landmark && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
                     <div className="rainmaker-displayInline">
                       <Label
-                        label={"landmark : "}
+                        label={"CS_COMPLAINTDETAILS_LANDMARK"}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
-                        labelStyle={{ color: "inherit" }}
+                        color="#767676"
                       />
                       <Label
                         label={landmark}
@@ -210,7 +209,7 @@ class Details extends Component {
                 )}
                 {address && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
                     <Label
                       label={address}
                       className="status-result-color"
@@ -220,33 +219,32 @@ class Details extends Component {
                   </div>
                 )}
                 <div style={{ marginTop: 10 }}>
-                  {mapAction &&
-                    complaintLoc.lat && (
-                      <Button
-                        className="employee-complaint-summary-mapBtn"
-                        primary={true}
-                        label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
-                        style={{
-                          height: "auto",
-                          lineHeight: "auto",
-                          minWidth: "inherit",
-                        }}
-                        labelStyle={{
-                          padding: "0 12px 0 0 ",
-                          letterSpacing: "0.6px",
-                          display: "inline-block",
-                          height: "22px",
-                          lineHeight: "22px",
-                        }}
-                        icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
-                        onClick={(e) => {
-                          this.props.redirectToMap(true);
-                        }}
-                      />
-                    )}
+                  {mapAction && complaintLoc.lat && (
+                    <Button
+                      className="employee-complaint-summary-mapBtn"
+                      primary={true}
+                      label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
+                      style={{
+                        height: "auto",
+                        lineHeight: "auto",
+                        minWidth: "inherit",
+                      }}
+                      labelStyle={{
+                        padding: "0 12px 0 0 ",
+                        letterSpacing: "0.6px",
+                        display: "inline-block",
+                        height: "22px",
+                        lineHeight: "22px",
+                      }}
+                      icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
+                      onClick={(e) => {
+                        this.props.redirectToMap(true);
+                      }}
+                    />
+                  )}
                 </div>
                 {description && (
-                  <div style={{ marginTop: "16px" }} className="rainmaker-displayInline">
+                  <div className="rainmaker-displayInline">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     <Label
                       label={description}

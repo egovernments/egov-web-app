@@ -1,4 +1,4 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 
 const tenantId = JSON.parse(localStorage.getItem("user-info")).permanentCity;
 
@@ -50,7 +50,7 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: tenantId,
+      // value: tenantId,
       errorText: "",
       // type: "singleValueList",
       dropDownData: [],
@@ -70,7 +70,6 @@ const formConfig = {
       hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       boundary: true,
-
       dropDownData: [],
       dataFetchConfig: {
         url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=ADMIN&boundaryType=Locality",
@@ -128,6 +127,7 @@ const formConfig = {
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
       }
+      dispatch(handleFieldChange("complaint", "city", tenantId));
       return action;
     } catch (e) {
       console.log(e);
