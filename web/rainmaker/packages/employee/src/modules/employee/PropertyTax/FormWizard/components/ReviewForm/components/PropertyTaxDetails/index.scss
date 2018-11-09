@@ -106,13 +106,13 @@
 }
 
 .additional-rebate-charges {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
   padding-right: 0px;
   margin-top: 15px;
   button {
     background-color: #fe7a51 !important;
     span {
-      padding-left: 9px !important;
       .label-text {
         font-size: 12px !important;
         font-weight: 500;

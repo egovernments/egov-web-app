@@ -1,10 +1,11 @@
 import React from "react";
-import get from "lodash/get"
-import { Divider } from "components";
+import get from "lodash/get";
+import { Divider, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import isUndefined from "lodash/isUndefined";
 import "./index.css";
+import FlatButton from "material-ui/FlatButton";
 
 class PropertyTaxDetails extends React.Component {
   state = {
@@ -21,7 +22,7 @@ class PropertyTaxDetails extends React.Component {
   };
 
   render() {
-    const { estimationDetails, importantDates, optionSelected } = this.props;
+    const { estimationDetails, importantDates, optionSelected, openCalculationDetails } = this.props;
     const { isExpanded } = this.state;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
     const { fireCess, intrest, penalty, rebate } = importantDates;
@@ -70,7 +71,11 @@ class PropertyTaxDetails extends React.Component {
                             className="pt-rf-price"
                             label={
                               (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
-                              `${!(optionSelected === "Partial_Amount" && item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1) ? item.estimateAmount : 0}`
+                              `${
+                                !(optionSelected === "Partial_Amount" && item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)
+                                  ? item.estimateAmount
+                                  : 0
+                              }`
                             }
                           />
                         </div>
@@ -87,7 +92,36 @@ class PropertyTaxDetails extends React.Component {
                   <Label
                     containerStyle={{ textAlign: "right" }}
                     labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
-                    label={totalAmount ? `${!(optionSelected === "Partial_Amount") ? totalAmount : totalAmount + get(taxHeadEstimates[taxHeadEstimates.findIndex(item => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)], "estimateAmount", 0)}` : totalAmount === 0 ? "0" : "NA"}
+                    label={
+                      totalAmount
+                        ? `${
+                            !(optionSelected === "Partial_Amount")
+                              ? totalAmount
+                              : totalAmount +
+                                get(
+                                  taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
+                                  "estimateAmount",
+                                  0
+                                )
+                          }`
+                        : totalAmount === 0
+                          ? "0"
+                          : "NA"
+                    }
+                  />
+                </div>
+                <div className="col-xs-12 calculation-button">
+                  <FlatButton
+                    label={<Label buttonLabel={true} label="PT_CALCULATION_DETAILS" bold={true} fontSize="12px" color="rgb(254, 122, 81)" />}
+                    primary={true}
+                    style={{
+                      height: 40,
+                      lineHeight: "auto",
+                      minWidth: "inherit",
+                    }}
+                    onClick={() => {
+                      openCalculationDetails();
+                    }}
                   />
                 </div>
               </div>
