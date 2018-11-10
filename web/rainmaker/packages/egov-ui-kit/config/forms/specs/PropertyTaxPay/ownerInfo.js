@@ -87,7 +87,6 @@ var formConfig = {
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
       dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
-      value: "father",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
     ownerCategory: {
@@ -274,6 +273,10 @@ var formConfig = {
     try {
       var formKey = (0, _get3.default)(action, "form.name", "");
       var state = store.getState();
+      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerRelationship.value", "NONE") === "NONE") {
+        dispatch((0, _actions.handleFieldChange)(formKey, "ownerRelationship", "father"));
+      }
+
       if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerCategory.value", "NONE") === "NONE") {
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", true));
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", true));

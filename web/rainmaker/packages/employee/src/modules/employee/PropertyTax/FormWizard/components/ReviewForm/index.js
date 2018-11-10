@@ -6,6 +6,7 @@ import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import AddRebateExemption from "./components/addRebateBox";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
+import CalculationDetails from "./components/CalculationDetails";
 import propertyAddressConfig from "./formConfigs/propertyAddress";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
@@ -31,6 +32,7 @@ class ReviewForm extends Component {
   state = {
     valueSelected: "",
     showRebateBox: false,
+    calculationDetails: false,
   };
 
   handleOptionsChange = (event, value) => {
@@ -54,6 +56,14 @@ class ReviewForm extends Component {
     updateEstimate();
   };
 
+  openCalculationDetails = () => {
+    this.setState({ calculationDetails: true });
+  };
+
+  closeCalculationDetails = () => {
+    this.setState({ calculationDetails: false });
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
 
   onEditButtonClick = (index) => {
@@ -70,7 +80,19 @@ class ReviewForm extends Component {
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} addRebateBox={addRebateBox} />
+        <PropertyTaxDetailsCard
+          estimationDetails={estimationDetails}
+          importantDates={importantDates}
+          addRebateBox={addRebateBox}
+          openCalculationDetails={this.openCalculationDetails}
+        />
+        {!this.props.isCompletePayment && (
+          <CalculationDetails
+            open={this.state.calculationDetails}
+            data={this.props.calculationScreenData}
+            closeDialogue={() => this.closeCalculationDetails()}
+          />
+        )}
         <div className="pt-rebate-exemption-box">
           <Dialog
             open={showRebateBox}

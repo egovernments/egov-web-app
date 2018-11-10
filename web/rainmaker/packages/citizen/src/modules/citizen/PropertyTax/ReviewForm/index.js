@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
 import PaymentAmountDetails from "./components/PaymentAmountDetails";
+import CalculationDetails from "./components/CalculationDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
@@ -37,6 +38,7 @@ class ReviewForm extends Component {
     minLength: 1,
     maxLength: 11,
     termsAccepted: false,
+    calculationDetails: false,
   };
 
   // componentWillReceiveProps(nextProps) {
@@ -157,6 +159,14 @@ class ReviewForm extends Component {
     onTabClick(index);
   };
 
+  openCalculationDetails = () => {
+    this.setState({ calculationDetails: true });
+  };
+
+  closeCalculationDetails = () => {
+    this.setState({ calculationDetails: false });
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
@@ -168,7 +178,19 @@ class ReviewForm extends Component {
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
+        <PropertyTaxDetailsCard
+          estimationDetails={estimationDetails}
+          importantDates={importantDates}
+          openCalculationDetails={this.openCalculationDetails}
+          optionSelected={valueSelected}
+        />
+        {!this.props.isCompletePayment && (
+          <CalculationDetails
+            open={this.state.calculationDetails}
+            data={this.props.calculationScreenData}
+            closeDialogue={() => this.closeCalculationDetails()}
+          />
+        )}
         {!isPartialPaymentInValid && (
           <PaymentAmountDetails
             value={valueSelected === "Partial_Amount" ? totalAmountToBePaid : totalAmount}

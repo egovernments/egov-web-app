@@ -64,6 +64,7 @@ class FormWizard extends Component {
     isFullPayment: true,
     valueSelected: "Full_Amount",
     nextButtonEnabled: true,
+    calculationScreenData: [],
   };
 
   updateDraftinLocalStorage = (draftInfo, assessmentNumber) => {
@@ -611,6 +612,9 @@ class FormWizard extends Component {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
     const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected, partialAmountError } = this.state;
     const { onRadioButtonChange, updateTotalAmount } = this;
+    const { location } = this.props;
+    const { search } = location;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     switch (selected) {
       case 0:
         return (
@@ -646,6 +650,8 @@ class FormWizard extends Component {
               updateEstimate={updateEstimate}
               importantDates={importantDates}
               totalAmount={totalAmountToBePaid}
+              isCompletePayment={isCompletePayment}
+              calculationScreenData={this.state.calculationScreenData}
             />
           </div>
         );
@@ -1046,6 +1052,61 @@ class FormWizard extends Component {
     }
   };
 
+  getFloorAndUnit = (floorNo, unitIndex) => {
+    const { common } = this.props;
+    const floorName = get(common, `generalMDMSDataById.Floor[${floorNo}].name`, "");
+    return `${floorName} Unit - ${unitIndex}`;
+  };
+
+  getBillingRate = (id, responseArr) => {
+    return `${responseArr.filter((item) => item.id === id)[0].unitRate}/sq yards`;
+  };
+
+  getCalculationScreenData = async (billingSlabs, tenantId) => {
+    const { prepareFormData } = this.props;
+    const unitsArray = get(prepareFormData, "Properties[0].propertyDetails[0].units");
+    const mapIdWithIndex = billingSlabs.reduce(
+      (res, curr) => {
+        const obj = {
+          id: curr.split("|")[0],
+          index: curr.split("|")[1],
+        };
+        res["mappedIds"].push(obj);
+        res["idsArray"].push(curr.split("|")[0]);
+        return res;
+      },
+      { mappedIds: [], idsArray: [] }
+    );
+    ("pt-calculator-v2/billingslab/_search");
+    try {
+      var billingSlabResponse = await httpRequest("pt-calculator-v2/billingslab/_search", "_search", [
+        { key: "id", value: mapIdWithIndex.idsArray.join(",") },
+        { key: "tenantId", value: tenantId },
+      ]);
+    } catch (e) {
+      alert(e.message);
+    }
+
+    const finalData = mapIdWithIndex.mappedIds.reduce(
+      (res, curr) => {
+        const { floorNo } = unitsArray[curr.index];
+        if (res.floorObj.hasOwnProperty(floorNo)) {
+          res.floorObj[floorNo]++;
+        } else {
+          res.floorObj[floorNo] = 1;
+        }
+        const obj = {
+          label: this.getFloorAndUnit(floorNo, res.floorObj[floorNo]),
+          value: this.getBillingRate(curr.id, billingSlabResponse.billingSlab),
+        };
+        res.data.push(obj);
+        return res;
+      },
+      { floorObj: {}, unitIndex: 1, data: [] }
+    );
+    return finalData;
+  };
+
   estimate = async () => {
     let { form, common, showSpinner, hideSpinner } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
@@ -1093,6 +1154,10 @@ class FormWizard extends Component {
           },
         ],
       });
+      //For calculation screen
+      const tenantId = prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId;
+      const calculationScreenData = await this.getCalculationScreenData(get(estimateResponse, "Calculation[0].billingSlabIds", []), tenantId);
+      this.setState({ calculationScreenData: calculationScreenData.data });
       return estimateResponse;
     } catch (e) {
       if (e.message) {

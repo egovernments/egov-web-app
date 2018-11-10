@@ -2,6 +2,7 @@ import React from "react";
 import { Divider, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
+import FlatButton from "material-ui/FlatButton";
 import isUndefined from "lodash/isUndefined";
 import "./index.css";
 
@@ -20,7 +21,7 @@ class PropertyTaxDetails extends React.Component {
   };
 
   render() {
-    const { estimationDetails, importantDates, addRebateBox } = this.props;
+    const { estimationDetails, importantDates, addRebateBox, openCalculationDetails } = this.props;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
     const { fireCess, intrest, penalty, rebate } = importantDates;
     const { isExpanded } = this.state;
@@ -86,11 +87,21 @@ class PropertyTaxDetails extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="additional-rebate-charges col-sm-10">
+              <div style={{ padding: 0 }} className="additional-rebate-charges col-sm-10">
+                <Button
+                  label={<Label label={"PT_CALCULATION_DETAILS"} buttonLabel={true} />}
+                  style={{
+                    height: 22,
+                    borderRadius: 2,
+                    color: "#fe7a51",
+                  }}
+                  onClick={() => {
+                    openCalculationDetails();
+                  }}
+                />
                 <Button
                   label={<Label label={"ADD REBATE/CHARGES"} buttonLabel={true} />}
                   style={{
-                    width: 152,
                     height: 22,
                     borderRadius: 2,
                     color: "#fe7a51",
