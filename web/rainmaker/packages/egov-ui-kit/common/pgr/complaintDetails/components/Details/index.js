@@ -30,6 +30,10 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
+var _isEmpty = require("lodash/isEmpty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -198,7 +202,7 @@ var Details = function (_Component) {
                   );
                 })
               ),
-              _react2.default.createElement(
+              addressDetail && !(0, _isEmpty2.default)(addressDetail) && _react2.default.createElement(
                 "div",
                 { className: "rainmaker-displayInline" },
                 _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#767676" }),
@@ -266,6 +270,18 @@ var Details = function (_Component) {
                     containerStyle: { marginLeft: 5 }
                   })
                 )
+              ),
+              address && (0, _isEmpty2.default)(addressDetail) && _react2.default.createElement(
+                "div",
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: "35px", marginRight: "13px", width: "35px" }, color: "#767676" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  label: address,
+                  className: "status-result-color",
+                  id: "complaint-details-complaint-location",
+                  labelStyle: { color: "inherit" },
+                  containerStyle: { marginTop: 7 }
+                })
               )
             )
           )

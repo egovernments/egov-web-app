@@ -24,33 +24,32 @@ const bottomInfoTemplate = (item, role) => {
       <div className="employee-bottom-info-cont">
         {(role === "ao" || role === "csr") && (
           <div className="submitted-by-text">
-            {item.complaintStatus === "ASSIGNED" &&
-              item.assignedTo !== "NA" && (
-                <div className="clearfix">
-                  <div className="inline-Localization-text">
-                    <Label containerStyle={{ display: "inline-block" }} fontSize={12} label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
-                    <Label
-                      containerStyle={{ display: "inline-block" }}
-                      fontSize={12}
-                      color="#464646"
-                      labelStyle={{ marginLeft: "3px" }}
-                      label={item.assignedTo}
-                    />
-                  </div>
-                  {item.employeePhoneNumber && (
-                    <a
-                      className="pgr-call-icon"
-                      href={`tel:+91${item.employeePhoneNumber}`}
-                      style={{ textDecoration: "none", position: "relative", display: "flex", alignItems: "flex-end" }}
-                    >
-                      <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                      <span style={{ marginLeft: "10px", color: "#767676", fontSize: 12, lineHeight: "12px" }}>{`+91 ${
-                        item.employeePhoneNumber
-                      }`}</span>
-                    </a>
-                  )}
+            {item.complaintStatus === "ASSIGNED" && item.assignedTo !== "NA" && (
+              <div className="clearfix">
+                <div className="inline-Localization-text">
+                  <Label containerStyle={{ display: "inline-block" }} fontSize={12} label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
+                  <Label
+                    containerStyle={{ display: "inline-block" }}
+                    fontSize={12}
+                    color="#464646"
+                    labelStyle={{ marginLeft: "3px" }}
+                    label={item.assignedTo}
+                  />
                 </div>
-              )}
+                {item.employeePhoneNumber && (
+                  <a
+                    className="pgr-call-icon"
+                    href={`tel:+91${item.employeePhoneNumber}`}
+                    style={{ textDecoration: "none", position: "relative", display: "flex", alignItems: "flex-end" }}
+                  >
+                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "10px", color: "#767676", fontSize: 12, lineHeight: "12px" }}>{`+91 ${
+                      item.employeePhoneNumber
+                    }`}</span>
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         )}
         {(role === "employee" || role === "csr") && (
@@ -82,19 +81,17 @@ const bottomInfoTemplate = (item, role) => {
           </div>
         )}
       </div>
-      {item.escalatedTo &&
-        role !== "csr" && (
-          <div className="submitted-by-text">
-            Escalated To: <span style={{ color: "#464646" }}>{item.escalatedTo}</span>
-          </div>
-        )}
-      {item.reassign &&
-        role !== "csr" && (
-          <div className="employee-bottom-msg rainmaker-displayInline">
-            <Label label={role === "ao" ? `${item.reassignRequestedBy}` : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2"} dark={true} fontSize={12} />
-            <Label label={"CS_MYCOMPLAINTS_REASSIGN_MESSAGE1"} dark={true} containerStyle={{ marginLeft: 4 }} fontSize={12} />
-          </div>
-        )}
+      {item.escalatedTo && role !== "csr" && (
+        <div className="submitted-by-text">
+          Escalated To: <span style={{ color: "#464646" }}>{item.escalatedTo}</span>
+        </div>
+      )}
+      {item.reassign && role !== "csr" && (
+        <div className="employee-bottom-msg rainmaker-displayInline">
+          <Label label={role === "ao" ? `${item.reassignRequestedBy}` : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2"} dark={true} fontSize={12} />
+          <Label label={"CS_MYCOMPLAINTS_REASSIGN_MESSAGE1"} dark={true} containerStyle={{ marginLeft: 4 }} fontSize={12} />
+        </div>
+      )}
     </div>
   ) : null;
 };
@@ -226,27 +223,24 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                     <Label
                       fontSize="12px"
                       color="#484848"
-                      label={complaint.address ? complaint.address : complaint.addressDetail}
+                      label={complaint.addressDetail ? complaint.addressDetail : complaint.address}
                       className="complaint-address"
                     />
                   </div>
                 )}
-                {role === "citizen" &&
-                  complaint &&
-                  complaint.images &&
-                  complaint.images.length > 0 && (
-                    <div className="complaint-image-cont">
-                      {complaint.images.map((image, index) => {
-                        return (
-                          image && (
-                            <div className="complaint-image-wrapper" key={index}>
-                              <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
-                            </div>
-                          )
-                        );
-                      })}
-                    </div>
-                  )}
+                {role === "citizen" && complaint && complaint.images && complaint.images.length > 0 && (
+                  <div className="complaint-image-cont">
+                    {complaint.images.map((image, index) => {
+                      return (
+                        image && (
+                          <div className="complaint-image-wrapper" key={index}>
+                            <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                )}
                 {role === "citizen" && (
                   <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
                 )}

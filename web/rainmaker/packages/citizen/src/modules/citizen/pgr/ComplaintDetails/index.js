@@ -52,11 +52,12 @@ const mapStateToProps = (state, ownProps) => {
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
     let { city } = selectedComplaint.addressDetail || "";
-    let selectedCityName =
-      cities &&
-      cities.find((item) => {
-        return item.code === city;
-      }).name;
+    let selectedCityName = city
+      ? cities &&
+        cities.find((item) => {
+          return item.code === city;
+        }).name
+      : "";
     let details = {
       status: selectedComplaint.status || "",
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
@@ -65,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
-      addressDetail: { selectedCityName, ...selectedComplaint.addressDetail },
+      addressDetail: selectedComplaint.addressDetail ? { selectedCityName, ...selectedComplaint.addressDetail } : {},
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,

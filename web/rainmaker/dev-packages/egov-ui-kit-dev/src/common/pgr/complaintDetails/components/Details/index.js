@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
 const iconStyle = {
@@ -142,10 +143,12 @@ class Details extends Component {
                       );
                     })}
                 </div>
-                <div className="rainmaker-displayInline">
-                  <Icon action="maps" name="place" style={iconStyle} color={"#767676"} />
-                  <Label label="Address Details" labelClassName="dark-heading" />
-                </div>
+                {addressDetail && !isEmpty(addressDetail) && (
+                  <div className="rainmaker-displayInline">
+                    <Icon action="maps" name="place" style={iconStyle} color={"#767676"} />
+                    <Label label="Address Details" labelClassName="dark-heading" />
+                  </div>
+                )}
                 {houseNoAndStreetName && (
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
@@ -207,17 +210,18 @@ class Details extends Component {
                     </div>
                   </div>
                 )}
-                {/* {address && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                {address && isEmpty(addressDetail) && (
+                  <div className="rainmaker-displayInline">
+                    <Icon action="maps" name="place" style={{ height: "35px", marginRight: "13px", width: "35px" }} color={"#767676"} />
                     <Label
                       label={address}
                       className="status-result-color"
                       id="complaint-details-complaint-location"
                       labelStyle={{ color: "inherit" }}
+                      containerStyle={{ marginTop: 7 }}
                     />
                   </div>
-                )} */}
+                )}
                 {/* <div style={{ marginTop: 10 }}>
                   {mapAction && complaintLoc.lat && (
                     <Button

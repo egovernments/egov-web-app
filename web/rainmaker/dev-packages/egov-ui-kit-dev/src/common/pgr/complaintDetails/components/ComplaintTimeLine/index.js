@@ -473,7 +473,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
 };
 
 const DueDate = ({ duedateText }) => {
-  console.log("duedateText is .......", duedateText);
   return (
     duedateText &&
     duedateText.slaStatement && (

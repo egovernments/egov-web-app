@@ -289,7 +289,7 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common, auth, form } = state;
   const { id } = auth.userInfo;
   const { citizenById } = common || {};
-  const { employeeById, departmentById, designationsById } = common || {};
+  const { employeeById, departmentById, designationsById, cities } = common || {};
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
@@ -309,6 +309,13 @@ const mapStateToProps = (state, ownProps) => {
       : "employee";
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
+    let { city } = selectedComplaint.addressDetail || "";
+    let selectedCityName = city
+      ? cities &&
+        cities.find((item) => {
+          return item.code === city;
+        }).name
+      : "";
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
       status: selectedComplaint.status || "",
@@ -318,7 +325,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
-      addressDetail: selectedComplaint.addressDetail,
+      addressDetail: selectedComplaint.addressDetail ? { selectedCityName, ...selectedComplaint.addressDetail } : {},
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),

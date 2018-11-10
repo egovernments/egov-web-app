@@ -284,7 +284,7 @@ var Complaints = function Complaints(_ref) {
             _react2.default.createElement(_translationNode2.default, {
               fontSize: "12px",
               color: "#484848",
-              label: complaint.address ? complaint.address : complaint.addressDetail,
+              label: complaint.addressDetail ? complaint.addressDetail : complaint.address,
               className: "complaint-address"
             })
           ),

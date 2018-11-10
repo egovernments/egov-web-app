@@ -485,7 +485,6 @@ var StatusContent = function StatusContent(_ref2) {
 var DueDate = function DueDate(_ref3) {
   var duedateText = _ref3.duedateText;
 
-  console.log("duedateText is .......", duedateText);
   return duedateText && duedateText.slaStatement && _react2.default.createElement(_translationNode2.default, {
     labelStyle: duedateText.slaStatement.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" },
     className: "Complaint-details-duedate",
