@@ -1328,7 +1328,7 @@ class FormWizard extends Component {
     const { isFullPayment, partialAmountError, totalAmountToBePaid, termsAccepted, selected } = this.state;
     if (!termsAccepted) {
       this.setState({
-        termsError: "Please accept terms"
+        termsError: "Please check the declaration box to proceed futher"
       })
       return
     }
