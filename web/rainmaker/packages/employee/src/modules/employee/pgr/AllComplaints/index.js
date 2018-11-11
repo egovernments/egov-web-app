@@ -448,12 +448,12 @@ const mapStateToProps = (state) => {
     if (order === "Old to New") {
       assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["asc"]);
       unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["asc"]);
-    } else if (order === "New to old") {
-      assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["desc"]);
-      unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["desc"]);
-    } else {
+    } else if (order === "SLA") {
       assignedComplaints = orderby(filteredAssignedComplaints, ["SLA"], ["asc"]);
       unassignedComplaints = orderby(filteredUnassignedComplaints, ["SLA"], ["asc"]);
+    } else {
+      assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["desc"]);
+      unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["desc"]);
     }
 
     // assignedComplaints = orderby(
@@ -469,18 +469,18 @@ const mapStateToProps = (state) => {
   } else if (role === "csr") {
     if (order === "Old to New") {
       csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["asc"]);
-    } else if (order === "New to old") {
-      csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
-    } else {
+    } else if (order === "SLA") {
       csrComplaints = orderby(transformedComplaints, ["SLA"], ["desc"]);
+    } else {
+      csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
     }
   } else {
     if (order === "Old to New") {
       employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["asc"]);
-    } else if (order === "New to old") {
-      employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["desc"]);
-    } else {
+    } else if (order === "SLA") {
       employeeComplaints = orderby(filteredEmployeeComplaints, ["SLA"], ["desc"]);
+    } else {
+      employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["desc"]);
     }
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);

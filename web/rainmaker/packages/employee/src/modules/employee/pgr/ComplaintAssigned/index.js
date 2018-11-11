@@ -22,16 +22,15 @@ class ComplaintAssigned extends Component {
     return (
       <Screen loading={!fetchSuccess} className="padding-0">
         <div className="success-message-main-screen">
-          {employeeDetails &&
-            employeeDetails.employeeName && (
-              <SuccessMessage
-                successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
-                secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
-                tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
-                icon={<Icon action="navigation" name="check" />}
-                backgroundColor={"#22b25f"}
-              />
-            )}
+          {employeeDetails && employeeDetails.employeeName && (
+            <SuccessMessage
+              successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
+              secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
+              tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
+              icon={<Icon action="navigation" name="check" />}
+              backgroundColor={"#22b25f"}
+            />
+          )}
           <div className="responsive-action-button-cont">
             <Button
               id="resolve-success-continue"
@@ -56,7 +55,7 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
   const { departmentById, designationsById, employeeById } = state.common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
-  const selectedEmployee = employeeById[selectedComplaint.actions[0].assignee];
+  const selectedEmployee = selectedComplaint && employeeById && employeeById[selectedComplaint.actions[0].assignee];
   const employeeDetails = {
     employeeName: selectedEmployee && selectedEmployee.name,
     employeeDesignation: selectedEmployee && getNameFromId(designationsById, selectedEmployee.assignments[0].designation, "Engineer"),
