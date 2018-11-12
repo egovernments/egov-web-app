@@ -5,6 +5,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import AssignComplaintForm from "./components/AssignComplaintForm";
 import { fetchEmployeeToAssign } from "egov-ui-kit/redux/common/actions";
 import filter from "lodash/filter";
+import isEmpty from "lodash/isEmpty";
 
 const AssignComplaintFormHOC = formHoc({ formKey: "assignComplaint" })(AssignComplaintForm);
 
@@ -49,7 +50,11 @@ const mapStateToProps = (state, ownProps) => {
   });
   const transformedComplaint = {
     header: selectedComplaint && selectedComplaint.serviceCode,
-    address: selectedComplaint && selectedComplaint.address,
+    address: selectedComplaint
+      ? selectedComplaint.addressDetail && !isEmpty(selectedComplaint.addressDetail)
+        ? selectedComplaint.addressDetail
+        : selectedComplaint.address
+      : "",
   };
   return { designationsById, departmentById, APIData, transformedComplaint, history, serviceRequestId, loading };
 };

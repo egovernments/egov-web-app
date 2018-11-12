@@ -512,14 +512,16 @@ var getLatestAction = function getLatestAction(actionArr) {
   }, 0);
 };
 
-var getAddressDetail = function getAddressDetail(addressDetail) {
-  var houseNoAndStreetName = addressDetail.houseNoAndStreetName,
-      landmark = addressDetail.landmark,
-      mohalla = addressDetail.mohalla,
-      city = addressDetail.city;
-
-  return houseNoAndStreetName && landmark ? houseNoAndStreetName + "," + mohalla + "," + landmark + "," + city : !houseNoAndStreetName && landmark ? mohalla + "," + landmark + "," + city : houseNoAndStreetName && !landmark ? houseNoAndStreetName + "," + mohalla + "," + city : mohalla + "," + city;
-};
+// export const getAddressDetail = (addressDetail) => {
+//   const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
+//   return houseNoAndStreetName && landmark
+//     ? `${houseNoAndStreetName},${mohalla},${landmark},${city}`
+//     : !houseNoAndStreetName && landmark
+//     ? `${mohalla},${landmark},${city}`
+//     : houseNoAndStreetName && !landmark
+//     ? `${houseNoAndStreetName},${mohalla},${city}`
+//     : `${mohalla},${city}`;
+// };
 
 var transformComplaintForComponent = exports.transformComplaintForComponent = function transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus) {
   var defaultPhoneNumber = "";
@@ -537,7 +539,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       rawStatus: complaintDetail.status && complaintDetail.status,
       address: complaintDetail.address ? complaintDetail.address : "",
-      addressDetail: complaintDetail.addressDetail ? getAddressDetail(complaintDetail.addressDetail) : "",
+      addressDetail: complaintDetail.addressDetail ? complaintDetail.addressDetail : {},
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy: complaintDetail.status === "reassignrequested" ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA") : "NA",
       latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
@@ -549,7 +551,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
         return complaint.status;
       })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).slaStatement),
       SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).daysCount
-    };
+         };
   });
   return transformedComplaints;
 };

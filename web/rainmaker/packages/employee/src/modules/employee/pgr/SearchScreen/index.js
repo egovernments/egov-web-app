@@ -6,6 +6,7 @@ import { Complaints, Screen } from "modules/common";
 import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import isEmpty from "lodash/isEmpty";
 import { connect } from "react-redux";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
 const roleFromUserInfo = (roles = [], role) => {
@@ -39,7 +40,7 @@ class SearchScreen extends Component {
 
   componentDidMount = async () => {
     let { fetchComplaints } = this.props;
-    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }], true, true);
+    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }], true, true);
   };
 
   onComplaintClick = (complaintNo) => {
@@ -58,7 +59,7 @@ class SearchScreen extends Component {
 
   onSearch = () => {
     const { complaintNo, mobileNo } = this.state;
-    const { fetchComplaints } = this.props;
+    const { fetchComplaints, toggleSnackbarAndSetText } = this.props;
     let queryObj = [];
     if (complaintNo) {
       queryObj.push({ key: "serviceRequestId", value: complaintNo });
@@ -66,16 +67,20 @@ class SearchScreen extends Component {
     if (mobileNo) {
       queryObj.push({ key: "phone", value: mobileNo });
     }
+    const payload = fetchComplaints(queryObj, true, true);
 
-    if (complaintNo || mobileNo) {
+    if ((complaintNo || mobileNo) && complaintNo.length >= 6) {
       fetchComplaints(queryObj, true, true);
+    } else {
+      toggleSnackbarAndSetText(true, `Entered value is less than 6 characters in length.`, true);
     }
+
     this.setState({ search: true });
   };
 
   clearSearch = () => {
     const { fetchComplaints } = this.props;
-    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
+    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }]);
     this.setState({ mobileNo: "", complaintNo: "", search: false });
   };
 
@@ -202,6 +207,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria, hasUsers, overWrite) => dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 

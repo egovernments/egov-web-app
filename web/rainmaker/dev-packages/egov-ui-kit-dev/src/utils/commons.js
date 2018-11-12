@@ -412,16 +412,16 @@ const getLatestAction = (actionArr) => {
   }, 0);
 };
 
-const getAddressDetail = (addressDetail) => {
-  const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
-  return houseNoAndStreetName && landmark
-    ? `${houseNoAndStreetName},${mohalla},${landmark},${city}`
-    : !houseNoAndStreetName && landmark
-      ? `${mohalla},${landmark},${city}`
-      : houseNoAndStreetName && !landmark
-        ? `${houseNoAndStreetName},${mohalla},${city}`
-        : `${mohalla},${city}`;
-};
+// export const getAddressDetail = (addressDetail) => {
+//   const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
+//   return houseNoAndStreetName && landmark
+//     ? `${houseNoAndStreetName},${mohalla},${landmark},${city}`
+//     : !houseNoAndStreetName && landmark
+//     ? `${mohalla},${landmark},${city}`
+//     : houseNoAndStreetName && !landmark
+//     ? `${houseNoAndStreetName},${mohalla},${city}`
+//     : `${mohalla},${city}`;
+// };
 
 export const transformComplaintForComponent = (complaints, role, employeeById, citizenById, categoriesById, displayStatus) => {
   const defaultPhoneNumber = "";
@@ -442,7 +442,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       rawStatus: complaintDetail.status && complaintDetail.status,
       address: complaintDetail.address ? complaintDetail.address : "",
-      addressDetail: complaintDetail.addressDetail ? getAddressDetail(complaintDetail.addressDetail) : "",
+      addressDetail: complaintDetail.addressDetail ? complaintDetail.addressDetail : {},
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy:
         complaintDetail.status === "reassignrequested"
@@ -460,15 +460,15 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
         role === "citizen"
           ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter((complaint) => complaint.status)[0].action)
           : getTransformedStatus(complaintDetail.status) === "CLOSED"
-            ? complaintDetail.rating
-              ? displayStatus(`${complaintDetail.rating}/5`)
-              : displayStatus(complaintDetail.actions[0].status)
-            : displayStatus(
-                returnSLAStatus(
-                  getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
-                  getLatestCreationTime(complaintDetail)
-                ).slaStatement
-              ),
+          ? complaintDetail.rating
+            ? displayStatus(`${complaintDetail.rating}/5`)
+            : displayStatus(complaintDetail.actions[0].status)
+          : displayStatus(
+              returnSLAStatus(
+                getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
+                getLatestCreationTime(complaintDetail)
+              ).slaStatement
+            ),
       SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail))
         .daysCount,
     };

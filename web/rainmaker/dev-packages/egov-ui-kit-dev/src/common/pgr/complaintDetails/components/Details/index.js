@@ -32,22 +32,8 @@ class Details extends Component {
   };
 
   render() {
-    const {
-      status,
-      complaint,
-      applicationNo,
-      description,
-      submittedDate,
-      address,
-      addressDetail,
-      landMark,
-      mapAction,
-      images,
-      action,
-      role,
-      complaintLoc,
-    } = this.props;
-    const { houseNoAndStreetName, landmark, mohalla, city, selectedCityName } = addressDetail || "";
+    const { status, complaint, applicationNo, description, submittedDate, address, addressDetail, mapAction, images, action, role } = this.props;
+    const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail || "";
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -145,80 +131,74 @@ class Details extends Component {
                 </div>
                 {addressDetail && !isEmpty(addressDetail) && (
                   <div className="rainmaker-displayInline">
-                    <Icon action="maps" name="place" style={iconStyle} color={"#767676"} />
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: 13 }} color={"#767676"} />
                     <Label label="Address Details" labelClassName="dark-heading" />
                   </div>
                 )}
                 {houseNoAndStreetName && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
-                    <div className="rainmaker-displayInline">
-                      <Label
-                        label={"CS_COMPLAINTDETAILS_HOUSE"}
-                        className="status-result-color"
-                        id="complaint-details-complaint-location"
-                        color="#767676"
-                      />
-                      <Label
-                        label={houseNoAndStreetName}
-                        className="status-result-color"
-                        id="complaint-details-complaint-location"
-                        labelStyle={{ color: "inherit" }}
-                        containerStyle={{ marginLeft: 5 }}
-                      />
-                    </div>
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label
+                      className="col-xs-6  col-sm-4 col-md-2 status-color"
+                      label={"CS_COMPLAINTDETAILS_HOUSE"}
+                      id="complaint-details-complaint-location"
+                    />
+                    <Label
+                      label={houseNoAndStreetName}
+                      className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                    />
                   </div>
                 )}
-                {mohalla && selectedCityName && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
-
-                    <div className="rainmaker-displayInline">
+                {mohalla && city && (
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label
+                      className="col-xs-6  col-sm-4 col-md-2 status-color"
+                      label={"CS_COMPLAINTDETAILS_MOHALLA"}
+                      id="complaint-details-complaint-location"
+                    />
+                    <div className="col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display">
                       <Label
-                        label={"CS_COMPLAINTDETAILS_MOHALLA"}
-                        className="status-result-color"
-                        id="complaint-details-complaint-location"
-                        color="#767676"
-                      />
-                      <Label
-                        label={`${mohalla}, ${selectedCityName}`}
+                        label={mohalla}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
-                        containerStyle={{ marginLeft: 5 }}
+                      />
+                      <Label
+                        label={","}
+                        className="comma-style"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="16px"
+                      />
+                      <Label
+                        label={city}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
                       />
                     </div>
                   </div>
                 )}
                 {landmark && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    {/* <Icon action="maps" name="place" style={iconStyle} color={"#969696"} /> */}
-                    <div className="rainmaker-displayInline">
-                      <Label
-                        label={"CS_COMPLAINTDETAILS_LANDMARK"}
-                        className="status-result-color"
-                        id="complaint-details-complaint-location"
-                        color="#767676"
-                      />
-                      <Label
-                        label={landmark}
-                        className="status-result-color"
-                        id="complaint-details-complaint-location"
-                        labelStyle={{ color: "inherit" }}
-                        containerStyle={{ marginLeft: 5 }}
-                      />
-                    </div>
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label={"CS_COMPLAINTDETAILS_LANDMARK"} />
+                    <Label
+                      className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
+                      label={landmark}
+                      id="complaint-details-submission-date"
+                      labelStyle={{ color: "inherit" }}
+                    />
                   </div>
                 )}
                 {address && isEmpty(addressDetail) && (
                   <div className="rainmaker-displayInline">
-                    <Icon action="maps" name="place" style={{ height: "35px", marginRight: "13px", width: "35px" }} color={"#767676"} />
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: "13px" }} color={"#767676"} />
                     <Label
                       label={address}
                       className="status-result-color"
                       id="complaint-details-complaint-location"
                       labelStyle={{ color: "inherit" }}
-                      containerStyle={{ marginTop: 7 }}
                     />
                   </div>
                 )}

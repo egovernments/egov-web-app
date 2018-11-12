@@ -43,7 +43,16 @@ class AllComplaints extends Component {
       this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
     } else {
       let { fetchComplaints } = this.props;
-      fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }], true, true);
+      fetchComplaints(
+        [
+          {
+            key: "status",
+            value: rawRole === "EMPLOYEE" ? "assigned,open,reassignrequested,closed,rejected,resolved" : "assigned,open,reassignrequested",
+          },
+        ],
+        true,
+        true
+      );
       const complaintCountRequest = [
         { key: "tenantId", value: fetchFromLocalStorage("tenant-id") },
         { key: "status", value: role === "csr" ? "assigned,open,reassignrequested" : "assigned,reassignrequested" },
@@ -436,9 +445,8 @@ const mapStateToProps = (state) => {
     unassignedComplaints = [],
     employeeComplaints = [],
     csrComplaints = [];
-
   let filteredEmployeeComplaints = transformedComplaints.filter(
-    (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"
+    (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested" || complaint.complaintStatus === "CLOSED"
   );
 
   let filteredAssignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");

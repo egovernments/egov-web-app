@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
 const imageStyles = {
@@ -172,7 +173,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     </div>
   ) : (
     complaints.map((complaint, complaintIndex) => {
-      const { houseNoAndStreetName, landmark, mohalla, city } = complaint.addressDetail;
+      const { houseNoAndStreetName, landmark, mohalla, city } = complaint.addressDetail || "";
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
@@ -217,15 +218,71 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                     <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
                   </div>
                 </div>
-                {complaintLocation && (
+                {complaintLocation && complaint.addressDetail && !isEmpty(complaint.addressDetail) && (
+                  <div className="rainmaker-displayInline" style={{ paddingBottom: "10px" }}>
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: 10 }} color={"#767676"} />
+                    <div className="complaint-address-display">
+                      <Label
+                        label={houseNoAndStreetName}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="12px"
+                      />
+                      {houseNoAndStreetName && (
+                        <Label
+                          label={","}
+                          className="comma-style"
+                          id="complaint-details-complaint-location"
+                          labelStyle={{ color: "inherit" }}
+                          fontSize="16px"
+                        />
+                      )}
+                      <Label
+                        label={mohalla}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="12px"
+                      />
+                      <Label
+                        label={","}
+                        className="comma-style"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="16px"
+                      />
+                      <Label
+                        label={city}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="12px"
+                      />
+                      {landmark && (
+                        <Label
+                          label={","}
+                          className="comma-style"
+                          id="complaint-details-complaint-location"
+                          labelStyle={{ color: "inherit" }}
+                          fontSize="16px"
+                        />
+                      )}
+                      <Label
+                        label={landmark}
+                        className="status-result-color"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="12px"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {complaintLocation && complaint.address && isEmpty(complaint.addressDetail) && (
                   <div className="complaint-address-cont">
-                    <Icon action="maps" name="place" style={{ height: 18, width: 18, marginRight: 10 }} color={"#767676"} />
-                    <Label
-                      fontSize="12px"
-                      color="#484848"
-                      label={complaint.addressDetail ? complaint.addressDetail : complaint.address}
-                      className="complaint-address"
-                    />
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: 10 }} color={"#767676"} />
+                    <Label fontSize="12px" color="#484848" label={complaint.address} className="complaint-address" />
                   </div>
                 )}
                 {role === "citizen" && complaint && complaint.images && complaint.images.length > 0 && (

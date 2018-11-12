@@ -316,7 +316,7 @@ var MapLocation = compose(withProps({
     GoogleMap,
     {
       ref: props.onMapMounted,
-      defaultZoom: 13,
+      defaultZoom: 18,
       center: props.currLoc ? props.currLoc : props.center,
       onBoundsChanged: props.onBoundsChanged,
       draggable: true,

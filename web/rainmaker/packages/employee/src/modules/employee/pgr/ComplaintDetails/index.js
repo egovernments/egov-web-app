@@ -24,7 +24,6 @@ class ComplaintDetails extends Component {
   state = {
     openMap: false,
   };
-
   componentDidMount() {
     let { fetchComplaints, match, resetFiles } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
@@ -307,15 +306,9 @@ const mapStateToProps = (state, ownProps) => {
       : roleFromUserInfo(userInfo.roles, "CSR")
       ? "csr"
       : "employee";
+
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
-    let { city } = selectedComplaint.addressDetail || "";
-    let selectedCityName = city
-      ? cities &&
-        cities.find((item) => {
-          return item.code === city;
-        }).name
-      : "";
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
       status: selectedComplaint.status || "",
@@ -325,7 +318,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
-      addressDetail: selectedComplaint.addressDetail ? { selectedCityName, ...selectedComplaint.addressDetail } : {},
+      addressDetail: selectedComplaint.addressDetail ? selectedComplaint.addressDetail : {},
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
