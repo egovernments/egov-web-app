@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getCurrentFinancialYear = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -45,8 +45,12 @@ var resetFormWizard = exports.resetFormWizard = function resetFormWizard(form, r
 
 var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLatestPropertyDetails(propertyDetailsArray) {
   if (propertyDetailsArray) {
+    var currentFinancialYear = getCurrentFinancialYear();
     if (propertyDetailsArray.length > 1) {
-      return propertyDetailsArray.reduce(function (acc, curr) {
+      var assessmentsOfCurrentYear = propertyDetailsArray.filter(function (item) {
+        return item.financialYear === currentFinancialYear;
+      });
+      return assessmentsOfCurrentYear.reduce(function (acc, curr) {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {
@@ -55,6 +59,20 @@ var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLa
   } else {
     return;
   }
+};
+
+var getCurrentFinancialYear = exports.getCurrentFinancialYear = function getCurrentFinancialYear() {
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var fiscalYr = "";
+  if (curMonth > 3) {
+    var nextYr1 = (today.getFullYear() + 1).toString();
+    fiscalYr = today.getFullYear().toString() + "-" + nextYr1.slice(2);
+  } else {
+    var nextYr2 = today.getFullYear().toString();
+    fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2.slice(2);
+  }
+  return fiscalYr;
 };
 
 var getQueryValue = exports.getQueryValue = function getQueryValue(query, key) {
@@ -168,12 +186,10 @@ var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFrom
     }
     return result;
   }, []);
-  console.log(transformedTaxHeads);
   var estimate = { totalAmount: 0 };
   estimate.totalAmount = totalAmount;
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
-  console.log(billAccountDetails);
   var taxHeadEstimates = transformedTaxHeads.reduce(function (taxHeadEstimates, current) {
     var taxHeadContent = billAccountDetails.filter(function (item) {
       return item.accountDescription && item.accountDescription.split("-")[0] === current;

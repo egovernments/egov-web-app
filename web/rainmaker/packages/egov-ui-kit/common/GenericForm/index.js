@@ -52,8 +52,8 @@ var GenericForm = function GenericForm(_ref) {
           fieldKey === "dummy" ? _react2.default.createElement("div", { className: "col-xs-6", style: { height: 72, marginTop: 14 } }) : _react2.default.createElement(
             "div",
             {
-              style: fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {},
-              className: fields[fieldKey].numcols ? fields[fieldKey].hideField ? "" : "col-xs-" + fields[fieldKey].numcols : "col-xs-6"
+              style: fields[fieldKey].hideField ? {} : fields[fieldKey].toolTip ? { display: "flex", alignItems: "center", height: 80 } : { height: 80 },
+              className: fields[fieldKey].numcols ? fields[fieldKey].hideField ? "hidden-field" : "col-xs-" + fields[fieldKey].numcols : "col-xs-6"
             },
             _react2.default.createElement(_field2.default, {
               fieldKey: fieldKey,

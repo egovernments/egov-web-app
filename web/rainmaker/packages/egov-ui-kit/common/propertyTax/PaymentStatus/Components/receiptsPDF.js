@@ -111,6 +111,13 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           }, {
             text: item.name || "",
             border: borderValue
+          }, {
+            text: "Father/Husband Name",
+            border: borderKey,
+            style: "receipt-table-key"
+          }, {
+            text: item.fatherOrHusbandName || "",
+            border: borderValue
           }];
         });
         var flatArray = transformedArray.reduce(function (acc, val) {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
 import PaymentAmountDetails from "./components/PaymentAmountDetails";
+import CalculationDetails from "./components/CalculationDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
@@ -10,7 +11,10 @@ import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import EditIcon from "./components/EditIcon";
 import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
+import Label from "egov-ui-kit/utils/translationNode";
 
+
+import { SingleCheckbox } from "components";
 import "./index.css";
 const defaultIconStyle = {
   fill: "#767676",
@@ -33,6 +37,8 @@ class ReviewForm extends Component {
     pattern: false,
     minLength: 1,
     maxLength: 11,
+    termsAccepted: false,
+    calculationDetails: false,
   };
 
   // componentWillReceiveProps(nextProps) {
@@ -153,18 +159,38 @@ class ReviewForm extends Component {
     onTabClick(index);
   };
 
+  openCalculationDetails = () => {
+    this.setState({ calculationDetails: true });
+  };
+
+  closeCalculationDetails = () => {
+    this.setState({ calculationDetails: false });
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
     let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
-    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid } = this.props;
+    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid, termsAccepted, termsError, toggleTerms } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
+        <PropertyTaxDetailsCard
+          estimationDetails={estimationDetails}
+          importantDates={importantDates}
+          openCalculationDetails={this.openCalculationDetails}
+          optionSelected={valueSelected}
+        />
+        {!this.props.isCompletePayment && (
+          <CalculationDetails
+            open={this.state.calculationDetails}
+            data={this.props.calculationScreenData}
+            closeDialogue={() => this.closeCalculationDetails()}
+          />
+        )}
         {!isPartialPaymentInValid && (
           <PaymentAmountDetails
             value={valueSelected === "Partial_Amount" ? totalAmountToBePaid : totalAmount}
@@ -176,6 +202,17 @@ class ReviewForm extends Component {
             errorText={errorText}
           />
         )}
+        <SingleCheckbox
+          id="rcpt"
+          errorMessage={termsError}
+          errorText={termsError}
+          floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
+          value={termsAccepted}
+          onCheck={() => {
+            toggleTerms()
+          }}
+        />
+        {termsError && <div style={{"marginTop": "-22px","color": "#f44336", "margin-left": "4px"}}>{termsError}</div>}
       </div>
     );
   }

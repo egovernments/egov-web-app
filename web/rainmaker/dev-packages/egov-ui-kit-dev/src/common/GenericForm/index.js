@@ -24,8 +24,16 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
                 <div className="col-xs-6" style={{ height: 72, marginTop: 14 }} />
               ) : (
                 <div
-                  style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
-                  className={fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`}
+                  style={
+                    fields[fieldKey].hideField
+                      ? {}
+                      : fields[fieldKey].toolTip
+                        ? { display: "flex", alignItems: "center", height: 80 }
+                        : { height: 80 }
+                  }
+                  className={
+                    fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "hidden-field" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`
+                  }
                 >
                   <Field
                     fieldKey={fieldKey}

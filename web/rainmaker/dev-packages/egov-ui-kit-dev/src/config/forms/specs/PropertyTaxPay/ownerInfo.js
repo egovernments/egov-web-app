@@ -2,7 +2,7 @@ import { getOwnerCategoryByYear } from "egov-ui-kit/utils/PTCommon";
 import { setDependentFields } from "./utils/enableDependentFields";
 import get from "lodash/get";
 import set from "lodash/set";
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 
 const formConfig = {
   name: "ownerInfo",
@@ -35,7 +35,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
-      pattern: /^[a-zA-Z\.\'\-\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       required: true,
       errorMessage: "Enter valid name (max length 64)",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -67,7 +67,6 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
       dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
-      value: "father",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerCategory: {
@@ -246,6 +245,10 @@ const formConfig = {
     try {
       const formKey = get(action, "form.name", "");
       const state = store.getState();
+      if (get(state, `form.${formKey}.fields.ownerRelationship.value`, "NONE") === "NONE") {
+        dispatch(handleFieldChange(formKey, "ownerRelationship", "father"));
+      }
+
       if (get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
         dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true));
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", true));

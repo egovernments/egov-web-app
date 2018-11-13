@@ -98,6 +98,15 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
               text: item.name || "",
               border: borderValue,
             },
+            {
+              text: `Father/Husband Name`,
+              border: borderKey,
+              style: "receipt-table-key",
+            },
+            {
+              text: item.fatherOrHusbandName || "",
+              border: borderValue,
+            },
           ];
         });
         const flatArray = transformedArray.reduce((acc, val) => acc.concat(val), []);
