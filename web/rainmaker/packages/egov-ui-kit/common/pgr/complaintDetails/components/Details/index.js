@@ -232,7 +232,7 @@ var Details = function (_Component) {
                   "div",
                   { className: "col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: mohalla,
+                    label: "admin.locality." + mohalla,
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" }

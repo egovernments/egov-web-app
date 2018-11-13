@@ -303,7 +303,7 @@ var Complaints = function Complaints(_ref) {
                 fontSize: "16px"
               }),
               _react2.default.createElement(_translationNode2.default, {
-                label: mohalla,
+                label: "admin.locality." + mohalla,
                 className: "status-result-color",
                 id: "complaint-details-complaint-location",
                 labelStyle: { color: "inherit" },

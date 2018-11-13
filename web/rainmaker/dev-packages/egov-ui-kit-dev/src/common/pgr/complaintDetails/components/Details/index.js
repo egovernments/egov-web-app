@@ -159,7 +159,7 @@ class Details extends Component {
                     />
                     <div className="col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display">
                       <Label
-                        label={mohalla}
+                        label={`admin.locality.${mohalla}`}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}

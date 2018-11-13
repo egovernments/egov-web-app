@@ -62,6 +62,12 @@ var _sortBy = require("lodash/sortBy");
 
 var _sortBy2 = _interopRequireDefault(_sortBy);
 
+var _arrowDropDown = require("material-ui/svg-icons/navigation/arrow-drop-down");
+
+var _arrowDropDown2 = _interopRequireDefault(_arrowDropDown);
+
+var _path = require("path");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintBaseStyle = {
@@ -145,31 +151,36 @@ var AutoSuggestDropdown = function (_React$Component) {
       var searchText = this.state.searchText;
 
       var items = (0, _sortBy2.default)(dataSource, ["label"]);
-      return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
-        className: "autosuggest " + className,
-        floatingLabelFixed: true,
-        floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
-        hintStyle: (0, _extends3.default)({}, hintBaseStyle),
-        underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
-        openOnFocus: true,
-        fullWidth: true,
-        searchText: searchText,
-        underlineDisabledStyle: underlineDisabledStyle,
-        dataSource: items && [].concat((0, _toConsumableArray3.default)(items)) || [],
-        menuStyle: { maxHeight: "150px", overflowY: "auto" },
-        dataSourceConfig: { text: "label", value: "value" },
-        onNewRequest: onChange,
-        onUpdateInput: onChangeText,
-        filter: function filter(searchText, key) {
-          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
-        },
-        floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
-          "span",
-          { key: "error-" + className, style: requiredStyle },
-          " ",
-          "*"
-        ) : null]
-      }, restProps));
+      return _react2.default.createElement(
+        "div",
+        { style: { display: "flex", position: "relative" } },
+        _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
+          className: "autosuggest " + className,
+          floatingLabelFixed: true,
+          floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
+          hintStyle: (0, _extends3.default)({}, hintBaseStyle),
+          underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
+          openOnFocus: true,
+          fullWidth: true,
+          searchText: searchText,
+          underlineDisabledStyle: underlineDisabledStyle,
+          dataSource: items && [].concat((0, _toConsumableArray3.default)(items)) || [],
+          menuStyle: { maxHeight: "150px", overflowY: "auto" },
+          dataSourceConfig: { text: "label", value: "value" },
+          onNewRequest: onChange,
+          onUpdateInput: onChangeText,
+          filter: function filter(searchText, key) {
+            return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+          },
+          floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
+            "span",
+            { key: "error-" + className, style: requiredStyle },
+            " ",
+            "*"
+          ) : null]
+        }, restProps)),
+        _react2.default.createElement(_arrowDropDown2.default, { style: { position: "absolute", top: "24px", right: 0, color: "#969696" } })
+      );
     }
   }]);
   return AutoSuggestDropdown;

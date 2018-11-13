@@ -65,7 +65,12 @@ const HeaderCard = ({ complaint }) => {
                   fontSize="16px"
                 />
               )}
-              <Label label={mohalla} className="status-result-color" id="complaint-details-complaint-location" labelStyle={{ color: "inherit" }} />
+              <Label
+                label={`admin.locality.${mohalla}`}
+                className="status-result-color"
+                id="complaint-details-complaint-location"
+                labelStyle={{ color: "inherit" }}
+              />
               <Label
                 label={","}
                 className="comma-style"

@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import filter from "lodash/filter";
 import isUndefined from "lodash/isUndefined";
 import sortBy from "lodash/sortBy";
+import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+import { relative } from "path";
 
 const hintBaseStyle = {
   fontSize: "16px",
@@ -71,35 +73,38 @@ class AutoSuggestDropdown extends React.Component {
     const { searchText } = this.state;
     const items = sortBy(dataSource, ["label"]);
     return (
-      <AutoComplete
-        className={`autosuggest ${className}`}
-        floatingLabelFixed={true}
-        floatingLabelStyle={{ ...floatingLabelStyle }}
-        hintStyle={{ ...hintBaseStyle }}
-        underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-        openOnFocus={true}
-        fullWidth={true}
-        searchText={searchText}
-        underlineDisabledStyle={underlineDisabledStyle}
-        dataSource={(items && [...items]) || []}
-        menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
-        dataSourceConfig={{ text: "label", value: "value" }}
-        onNewRequest={onChange}
-        onUpdateInput={onChangeText}
-        filter={(searchText, key) => {
-          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
-        }}
-        floatingLabelText={[
-          floatingLabelText,
-          required ? (
-            <span key={`error-${className}`} style={requiredStyle}>
-              {" "}
-              *
-            </span>
-          ) : null,
-        ]}
-        {...restProps}
-      />
+      <div style={{ display: "flex", position: "relative" }}>
+        <AutoComplete
+          className={`autosuggest ${className}`}
+          floatingLabelFixed={true}
+          floatingLabelStyle={{ ...floatingLabelStyle }}
+          hintStyle={{ ...hintBaseStyle }}
+          underlineFocusStyle={{ ...underlineFocusBaseStyle }}
+          openOnFocus={true}
+          fullWidth={true}
+          searchText={searchText}
+          underlineDisabledStyle={underlineDisabledStyle}
+          dataSource={(items && [...items]) || []}
+          menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
+          dataSourceConfig={{ text: "label", value: "value" }}
+          onNewRequest={onChange}
+          onUpdateInput={onChangeText}
+          filter={(searchText, key) => {
+            return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+          }}
+          floatingLabelText={[
+            floatingLabelText,
+            required ? (
+              <span key={`error-${className}`} style={requiredStyle}>
+                {" "}
+                *
+              </span>
+            ) : null,
+          ]}
+          {...restProps}
+        />
+        <DownArrow style={{ position: "absolute", top: "24px", right: 0, color: "#969696" }} />
+      </div>
     );
   }
 }
