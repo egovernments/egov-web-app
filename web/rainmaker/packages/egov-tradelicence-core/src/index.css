@@ -124,3 +124,26 @@ input[type="date"]:valid::before {
 /* div[class^="MuiGrid-item"]   {
     padding-right: 80px
 } */
+
+@media only screen and (max-width: 768px) {
+  #custom-atoms-applicationSuccessFooter {
+    display: block;
+    text-align: center;
+  }
+  #custom-atoms-applicationSuccessFooter button {
+    margin-top: 5px;
+  }
+  #material-ui-applicationSuccessContainer {
+    display: table !important;
+  }
+  #material-ui-applicationSuccessContainer div:first-child {
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
+  #material-ui-applicationSuccessContainer #custom-atoms-tail {
+    display: block;
+    text-align: left !important;
+    margin-left: 16px;
+    margin-top: 16px;
+  }
+}
