@@ -96,18 +96,6 @@ var ReceiptItems = function ReceiptItems(_ref) {
                 { className: "receipt-displayInline" },
                 _react2.default.createElement(_components.Icon, { action: item.iconAction, name: item.iconName, color: "#767676" }),
                 _react2.default.createElement(_translationNode2.default, { label: item.heading, containerStyle: { marginLeft: "13px" }, bold: true, dark: true, labelStyle: { letterSpacing: 0.6 } })
-              ),
-              process.env.REACT_APP_NAME === "Employee" && item.heading === "Property Address" && _react2.default.createElement(
-                "div",
-                {
-                  className: "receipt-displayInline text-right",
-                  onClick: function onClick(e) {
-                    history.push(tenantId + "/edit-property");
-                  },
-                  style: { cursor: "pointer", marginRight: 5 }
-                },
-                _react2.default.createElement(_components.Icon, { style: editIconStyle, action: "image", name: "edit" }),
-                _react2.default.createElement(_translationNode2.default, { label: "EDIT", color: "#fe7a51", fontSize: "16px" })
               )
             ),
             item.showTable ? _react2.default.createElement(_AssessmentInfoTable2.default, { items: item.items, tableHeaderItems: item.tableHeaderItems }) : item.nestedItems ? item.items.map(function (nestedItem, nestedIndex) {

@@ -96,7 +96,7 @@ var formConfig = {
       var state = store.getState();
       if (action.form.name === "customSelect_0") {
         if ((0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" && (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY") {
-          console.log("working");
+          //Do nothing
         } else {
           dispatch((0, _actions.handleFieldChange)("customSelect_0", "floorName", "0"));
           dispatch((0, _actions.setFieldProperty)("customSelect_0", "floorName", "disabled", true));

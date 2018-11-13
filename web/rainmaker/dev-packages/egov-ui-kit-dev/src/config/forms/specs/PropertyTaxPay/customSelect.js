@@ -74,7 +74,7 @@ const formConfig = {
           get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" &&
           get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY"
         ) {
-          console.log("working");
+          //Do nothing
         } else {
           dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
           dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
