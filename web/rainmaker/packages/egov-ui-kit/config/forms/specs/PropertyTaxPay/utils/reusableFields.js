@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.mergeMaster = exports.getAbsentMasterObj = exports.getPresentMasterObj = exports.prepareDropDownData = exports.pincode = exports.mohalla = exports.street = exports.colony = exports.houseNumber = exports.dummy = exports.city = exports.beforeInitFormForPlot = exports.beforeInitForm = exports.measuringUnit = exports.annualRent = exports.superArea = exports.builtArea = exports.occupancy = exports.subUsageType = exports.floorCount = exports.plotSize = undefined;
+exports.mergeMaster = exports.getAbsentMasterObj = exports.getPresentMasterObj = exports.prepareDropDownData = exports.pincode = exports.mohalla = exports.street = exports.colony = exports.houseNumber = exports.dummy = exports.city = exports.beforeInitFormForPlot = exports.beforeInitForm = exports.floorName = exports.measuringUnit = exports.annualRent = exports.superArea = exports.builtArea = exports.occupancy = exports.subUsageType = exports.floorCount = exports.plotSize = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -231,6 +231,56 @@ var annualRent = exports.annualRent = {
 
 var measuringUnit = exports.measuringUnit = {};
 
+var floorName = exports.floorName = {
+  floorName: {
+    id: "floorName",
+    type: "singleValueList",
+    floatingLabelText: "PT_FORM2_SELECT_FLOOR",
+    hintText: "PT_FORM2_SELECT_FLOOR",
+    numcols: 4,
+    errorMessage: "",
+    required: true,
+    jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
+    hideField: true
+    //   beforeFieldChange: ({ action, dispatch, state }) => {
+    //     const { value } = action;
+    //     const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
+    //       if (key.startsWith("customSelect_")) {
+    //         const form = state.form[key];
+    //         if (form && form.fields.floorName.value) {
+    //           floorValues.push(form.fields.floorName.value);
+    //         }
+    //       }
+    //       return floorValues;
+    //     }, []);
+    //     const valueExists = floorValues.find((floorvalue) => {
+    //       return floorvalue === value;
+    //     });
+    //     if (valueExists && get(state, `form[${action.formKey}].fields[${action.fieldKey}].value`) !== action.value) {
+    //       alert("This floor is already selected, please select another floor");
+    //       action.value = "";
+    //     }
+    //     return action;
+    //   },
+    //   updateDependentFields: ({ formKey, field, dispatch, state }) => {
+    //     var arr = formKey.split("_");
+    //     var floorIndex = parseInt(arr[1]);
+    //     const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
+    //     dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
+    //   },
+  }
+  // beforeInitForm: (action, store, dispatch) => {
+  //   try {
+  //     let state = store.getState();
+  //     const { Floor } = state.common && state.common.generalMDMSDataById;
+  //     set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+  //     return action;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
+};
+
 var beforeInitForm = exports.beforeInitForm = {
   beforeInitForm: function beforeInitForm(action, store) {
     var state = store.getState();
@@ -239,8 +289,16 @@ var beforeInitForm = exports.beforeInitForm = {
     var formKey = form.name,
         fields = form.fields;
 
-    //For adding multiple units to prepareFormData
+    var propertyType = (0, _get2.default)(state, "form.basicInformation.fields.typeOfBuilding.value");
+    if (propertyType === "SHAREDPROPERTY") {
+      var _ref6 = state.common && state.common.generalMDMSDataById,
+          Floor = _ref6.Floor;
 
+      (0, _set2.default)(action, "form.fields.floorName.hideField", false);
+      (0, _set2.default)(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+    }
+
+    //For adding multiple units to prepareFormData
     if (formKey.startsWith("floorDetails_")) {
       var arr = formKey.split("_");
       var floorIndex = parseInt(arr[1]);
@@ -255,7 +313,7 @@ var beforeInitForm = exports.beforeInitForm = {
       }
       if (floorIndex === 0 && unitIndex === 0) {
         form.unitsIndex = 0;
-        dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[0].floorNo", "0"));
+        propertyType !== "SHAREDPROPERTY" && dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[0].floorNo", "0"));
       } else {
         var updatedFields = Object.keys(fields).reduce(function (updatedFields, fieldKey) {
           var jsonPath = fields[fieldKey].jsonPath;
@@ -436,11 +494,11 @@ var city = exports.city = {
         fieldKey: "mohalla"
       }]
     },
-    updateDependentFields: function updateDependentFields(_ref6) {
-      var formKey = _ref6.formKey,
-          field = _ref6.field,
-          dispatch = _ref6.dispatch,
-          state = _ref6.state;
+    updateDependentFields: function updateDependentFields(_ref7) {
+      var formKey = _ref7.formKey,
+          field = _ref7.field,
+          dispatch = _ref7.dispatch,
+          state = _ref7.state;
 
       dispatch((0, _actions.prepareFormData)("Properties[0].tenantId", field.value));
       var requestBody = {
@@ -552,10 +610,10 @@ var mohalla = exports.mohalla = {
     },
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     required: true,
-    updateDependentFields: function updateDependentFields(_ref7) {
-      var formKey = _ref7.formKey,
-          field = _ref7.field,
-          dispatch = _ref7.dispatch;
+    updateDependentFields: function updateDependentFields(_ref8) {
+      var formKey = _ref8.formKey,
+          field = _ref8.field,
+          dispatch = _ref8.dispatch;
 
       if (field.value && field.value.length > 0) {
         var _mohalla = field.dropDownData.find(function (option) {

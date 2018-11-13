@@ -202,17 +202,20 @@ class ReviewForm extends Component {
             errorText={errorText}
           />
         )}
-        <SingleCheckbox
-          id="rcpt"
-          errorMessage={termsError}
-          errorText={termsError}
-          floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
-          value={termsAccepted}
-          onCheck={() => {
-            toggleTerms()
-          }}
-        />
-        {termsError && <div style={{"marginTop": "-22px","color": "#f44336", "margin-left": "4px"}}>{termsError}</div>}
+        <div>
+          <p className="declaration-main-header">DECLARATION</p>
+          <SingleCheckbox
+            id="rcpt"
+            errorMessage={termsError}
+            errorText={termsError}
+            floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
+            value={termsAccepted}
+            onCheck={() => {
+              toggleTerms()
+            }}
+          />
+          {termsError && <div style={{"marginTop": "-22px","color": "#f44336", "margin-left": "4px"}}>{termsError}</div>}
+        </div>
       </div>
     );
   }

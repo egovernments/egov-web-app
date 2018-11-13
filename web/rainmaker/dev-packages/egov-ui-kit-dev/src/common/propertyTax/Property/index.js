@@ -267,23 +267,25 @@ const getAddressInfo = (addressObj, extraItems) => {
   );
 };
 
-const transform = (floor, key, generalMDMSDataById, propertySubType) => {
+const transform = (floor, key, generalMDMSDataById, propertyDetails) => {
+  const { propertySubType, usageCategoryMajor } = propertyDetails;
   const { masterName, dataKey } = key;
   if (!masterName) {
-    return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${floor[dataKey]} sq yards`;
+    return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${Math.round(floor[dataKey] * 100) / 100} sq yards`;
   } else {
     if (floor[dataKey]) {
       if (dataKey === "usageCategoryDetail") {
         return generalMDMSDataById["UsageCategoryDetail"]
           ? generalMDMSDataById["UsageCategoryDetail"][floor[dataKey]].name
           : generalMDMSDataById["UsageCategorySubMinor"]
-            ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name
-            : "NA";
+          ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name
+          : "NA";
+      }
+      if (usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
+        return "NA";
       }
       if (floor[dataKey] === "NONRESIDENTIAL") {
         return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
-      } else if (propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
-        return "NA";
       } else {
         return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
       }
@@ -309,8 +311,8 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
               propertyDetails.propertySubType === "SHAREDPROPERTY"
                 ? "NA"
                 : propertyDetails.uom
-                  ? `${propertyDetails.landArea} ${propertyDetails.uom}`
-                  : `${propertyDetails.landArea} sq yards`,
+                ? `${propertyDetails.landArea} ${propertyDetails.uom}`
+                : `${Math.round(propertyDetails.landArea * 100) / 100} sq yards`,
           },
           {
             key: getTranslatedLabel("PT_ASSESMENT_INFO_TYPE_OF_BUILDING", localizationLabelsData),
@@ -320,8 +322,8 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
                   ? generalMDMSDataById["PropertySubType"][propertyDetails.propertySubType].name
                   : "NA"
                 : generalMDMSDataById["PropertyType"]
-                  ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
-                  : "NA"
+                ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+                : "NA"
               : "NA",
           },
         ],
@@ -339,7 +341,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
             ? units.map((floor) => {
                 return {
                   value: keys.map((key) => {
-                    return transform(floor, key, generalMDMSDataById, propertyDetails.propertySubType);
+                    return transform(floor, key, generalMDMSDataById, propertyDetails);
                   }),
                 };
               })

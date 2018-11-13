@@ -23,7 +23,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
-import { get, set, range, isEmpty, isEqual } from "lodash";
+import { get, set, range, isEmpty, isEqual, orderBy } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
@@ -1054,7 +1054,7 @@ class FormWizard extends Component {
       alert(e.message);
     }
 
-    const finalData = mapIdWithIndex.mappedIds.reduce(
+    let finalData = mapIdWithIndex.mappedIds.reduce(
       (res, curr) => {
         const { floorNo } = unitsArray[curr.index];
         if (res.floorObj.hasOwnProperty(floorNo)) {
@@ -1065,12 +1065,14 @@ class FormWizard extends Component {
         const obj = {
           label: this.getFloorAndUnit(floorNo, res.floorObj[floorNo]),
           value: this.getBillingRate(curr.id, billingSlabResponse.billingSlab),
+          floorNo,
         };
         res.data.push(obj);
         return res;
       },
       { floorObj: {}, unitIndex: 1, data: [] }
     );
+    finalData.data.sort((item1, item2) => item1.floorNo - item2.floorNo);
     return finalData;
   };
 

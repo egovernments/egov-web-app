@@ -52,7 +52,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                     <Icon action={item.iconAction} name={item.iconName} color="#767676" />
                     <Label label={item.heading} containerStyle={{ marginLeft: "13px" }} bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }} />
                   </div>
-                  {process.env.REACT_APP_NAME === "Employee" &&
+                  {/* {process.env.REACT_APP_NAME === "Employee" &&
                     item.heading === "Property Address" && (
                       <div
                         className="receipt-displayInline text-right"
@@ -64,7 +64,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                         <Icon style={editIconStyle} action="image" name="edit" />
                         <Label label="EDIT" color="#fe7a51" fontSize="16px" />
                       </div>
-                    )}
+                    )} */}
                 </div>
                 {item.showTable ? (
                   <AssessmentInfoTable items={item.items} tableHeaderItems={item.tableHeaderItems} />

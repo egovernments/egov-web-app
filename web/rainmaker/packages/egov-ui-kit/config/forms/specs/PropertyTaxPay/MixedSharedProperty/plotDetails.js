@@ -71,7 +71,7 @@ var formConfig = (0, _extends3.default)({
         }
       }
     }
-  }, _reusableFields.subUsageType, _reusableFields.occupancy, _reusableFields.superArea, _reusableFields.measuringUnit, _reusableFields.annualRent),
+  }, _reusableFields.subUsageType, _reusableFields.occupancy, _reusableFields.superArea, _reusableFields.measuringUnit, _reusableFields.annualRent, _reusableFields.floorName),
   isFormValid: false
 }, _reusableFields.beforeInitFormForPlot);
 

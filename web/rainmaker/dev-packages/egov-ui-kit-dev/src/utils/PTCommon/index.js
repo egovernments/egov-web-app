@@ -244,15 +244,18 @@ export const transformPropertyDataToAssessInfo = (data) => {
 
     //For assigning consecutive indexes in formkeys irrespective of floor no.
     const floorIndexObj = prepareUniqueFloorIndexObj(units);
-
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
       const floorNo = units[unitIndex]["floorNo"];
       const floorIndex = floorIndexObj[floorNo];
-      let formKey = `floorDetails_${floorIndex}_unit_${unitIndex}`;
+      let formKey =
+        propUsageType !== "RESIDENTIAL" && propType === "SHAREDPROPERTY"
+          ? `floorDetails_0_unit_${unitIndex}`
+          : `floorDetails_${floorIndex}_unit_${unitIndex}`;
       configFloor = cloneDeep(configFloor);
-      Object.keys(configFloor["fields"]).map((item) => {
+      Object.keys(configFloor["fields"]).forEach((item) => {
         let jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        configFloor["fields"][item].jsonPath = jsonPath;
         let valueInJSON = get(data, jsonPath);
         if (valueInJSON === null) {
           let categoryValue = jsonPath.split(".").pop();
