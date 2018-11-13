@@ -73,7 +73,7 @@ class AutoSuggestDropdown extends React.Component {
     const { searchText } = this.state;
     const items = sortBy(dataSource, ["label"]);
     return (
-      <div style={{ display: "flex", position: "relative" }}>
+      <div style={{ display: "flex", position: "relative", width: "100%" }}>
         <AutoComplete
           className={`autosuggest ${className}`}
           floatingLabelFixed={true}

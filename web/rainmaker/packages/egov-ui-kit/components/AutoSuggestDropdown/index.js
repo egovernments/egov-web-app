@@ -153,7 +153,7 @@ var AutoSuggestDropdown = function (_React$Component) {
       var items = (0, _sortBy2.default)(dataSource, ["label"]);
       return _react2.default.createElement(
         "div",
-        { style: { display: "flex", position: "relative" } },
+        { style: { display: "flex", position: "relative", width: "100%" } },
         _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
           className: "autosuggest " + className,
           floatingLabelFixed: true,

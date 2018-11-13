@@ -26,7 +26,6 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS",
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS_PLACEHOLDER",
       errorMessage: "Landmark should be less than 300 characters",
-      value: "",
     },
     latitude: {
       id: "latitude",
@@ -80,7 +79,6 @@ const formConfig = {
       },
 
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
       errorText: "",
     },
     houseNo: {
@@ -89,7 +87,6 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_HOUSE_NO",
       hintText: "CS_ADDCOMPLAINT_HOUSE_NO_PLACEHOLDER",
       errorMessage: "House no should be less than 100 characters",
-      value: "",
     },
     landmark: {
       id: "landmark",
@@ -99,7 +96,6 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorMessage: "Landmark should be less than 100 characters",
-      value: "",
     },
     tenantId: {
       id: "add-complaint-tenantid",

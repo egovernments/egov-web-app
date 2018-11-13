@@ -135,8 +135,8 @@ const formConfig = {
     landmark: {
       id: "landmark",
       jsonPath: "services[0].addressDetail.landmark",
-      floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
-      hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
+      hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",
@@ -144,8 +144,8 @@ const formConfig = {
     additionalDetails: {
       id: "additional details",
       jsonPath: "services[0].description",
-      floatingLabelText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS",
-      hintText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS",
+      hintText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",

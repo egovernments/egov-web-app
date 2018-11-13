@@ -4,7 +4,7 @@ import { Screen } from "modules/common";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
-import { resetFiles } from "egov-ui-kit/redux/form/actions";
+import { resetFiles, removeForm } from "egov-ui-kit/redux/form/actions";
 import { mapCompIDToName } from "egov-ui-kit/utils/commons";
 import { Image } from "components";
 import logo from "egov-ui-kit/assets/images/punjab-logo.png";
@@ -13,10 +13,11 @@ import "./index.css";
 
 class Home extends Component {
   componentDidMount = () => {
-    const { fetchComplaints, resetFiles } = this.props;
+    const { fetchComplaints, resetFiles, removeForm } = this.props;
     fetchComplaints([], false);
     if (this.props.form && this.props.form.complaint) {
-      resetFiles("complaint");
+      //resetFiles("complaint");
+      removeForm("complaint");
     }
   };
 
@@ -69,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria, hasUsers) => dispatch(fetchComplaints(criteria, hasUsers)),
     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
+    removeForm: (formKey) => dispatch(removeForm(formKey)),
   };
 };
 
