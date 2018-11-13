@@ -256,15 +256,15 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
 
     //For assigning consecutive indexes in formkeys irrespective of floor no.
     var floorIndexObj = prepareUniqueFloorIndexObj(units);
-
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
       var floorNo = units[unitIndex]["floorNo"];
       var floorIndex = floorIndexObj[floorNo];
-      var formKey = "floorDetails_" + floorIndex + "_unit_" + unitIndex;
+      var formKey = propUsageType !== "RESIDENTIAL" && propType === "SHAREDPROPERTY" ? "floorDetails_0_unit_" + unitIndex : "floorDetails_" + floorIndex + "_unit_" + unitIndex;
       configFloor = (0, _cloneDeep2.default)(configFloor);
-      Object.keys(configFloor["fields"]).map(function (item) {
+      Object.keys(configFloor["fields"]).forEach(function (item) {
         var jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        configFloor["fields"][item].jsonPath = jsonPath;
         var valueInJSON = (0, _get2.default)(data, jsonPath);
         if (valueInJSON === null) {
           var categoryValue = jsonPath.split(".").pop();

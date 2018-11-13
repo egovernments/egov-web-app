@@ -68,9 +68,17 @@ const formConfig = {
   },
   afterInitForm: (action, store, dispatch) => {
     try {
+      let state = store.getState();
       if (action.form.name === "customSelect_0") {
-        dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
-        dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+        if (
+          get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" &&
+          get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY"
+        ) {
+          console.log("working");
+        } else {
+          dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
+          dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+        }
       }
       return action;
     } catch (e) {

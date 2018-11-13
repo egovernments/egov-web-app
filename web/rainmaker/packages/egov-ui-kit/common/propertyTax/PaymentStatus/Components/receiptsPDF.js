@@ -70,18 +70,18 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
           dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
           dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
-          dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Built Area/Total Annual Rent(sq yards)", style: "receipt-assess-table-header" });
           bodyData.push(dataRow);
           units && units.map(function (unit) {
             dataRow = [];
-            dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
+            dataRow.push(unit.usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
             dataRow.push(transform(unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor, unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"));
             dataRow.push(transform(unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor, unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"));
             dataRow.push(transform(unit.occupancyType, "OccupancyType"));
             if (unit.occupancyType === "RENTED") {
               dataRow.push(unit.arv || "");
             } else {
-              dataRow.push(unit.unitArea + " sq yards" || "");
+              dataRow.push("" + Math.round(unit.unitArea * 100) / 100 || "");
             }
 
             bodyData.push(dataRow);
@@ -112,7 +112,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             text: item.name || "",
             border: borderValue
           }, {
-            text: "Father/Husband Name",
+            text: item.relationship === "FATHER" ? "Father's Name" : "Husband's Name",
             border: borderKey,
             style: "receipt-table-key"
           }, {
@@ -231,7 +231,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           style: "pt-reciept-citizen-table",
           table: {
             widths: receiptTableWidth,
-            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea ? propertyDetails[0].landArea + " sq yards" : "NA", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
+            body: [[{ text: "Plot Size(sq yards)", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea ? "" + Math.round(propertyDetails[0].landArea * 100) / 100 : "NA", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
               text: propertyDetails[0].propertySubType ? transform(propertyDetails[0].propertySubType, "PropertySubType") : transform(propertyDetails[0].propertyType, "PropertyType"),
               border: borderValue
             }]]

@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {subUsageType,occupancy,builtArea,annualRent,beforeInitForm} from "../utils/reusableFields";
+import { subUsageType, occupancy, builtArea, annualRent, floorName, beforeInitForm } from "../utils/reusableFields";
 
 const formConfig = {
   name: "floorDetails",
@@ -17,10 +17,11 @@ const formConfig = {
     ...subUsageType,
     ...occupancy,
     ...builtArea,
-    ...annualRent
+    ...floorName,
+    ...annualRent,
   },
   isFormValid: false,
-  ...beforeInitForm
+  ...beforeInitForm,
 };
 
 export default formConfig;
