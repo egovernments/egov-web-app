@@ -166,7 +166,7 @@ var getFinancialYearFromQuery = exports.getFinancialYearFromQuery = function get
 };
 
 var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFromBill(bill) {
-  var taxHeads = ["PT_TAX", "PT_FIRE_CESS", "PT_CANCER_CESS", "PT_TIME_PENALTY", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD"]; //Hardcoding as backend is not sending in correct order
+  var taxHeads = ["PT_TAX", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_FIRE_CESS", "PT_CANCER_CESS", "PT_TIME_PENALTY", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING_DEBIT"]; //Hardcoding as backend is not sending in correct order
 
   var _ref = bill && bill[0],
       billDetails = _ref.billDetails,

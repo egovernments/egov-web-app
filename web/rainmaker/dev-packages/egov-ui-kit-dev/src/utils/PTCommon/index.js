@@ -152,16 +152,17 @@ export const getFinancialYearFromQuery = () => {
 export const getEstimateFromBill = (bill) => {
   const taxHeads = [
     "PT_TAX",
+    "PT_UNIT_USAGE_EXEMPTION",
+    "PT_OWNER_EXEMPTION",
     "PT_FIRE_CESS",
     "PT_CANCER_CESS",
     "PT_TIME_PENALTY",
     "PT_TIME_REBATE",
     "PT_TIME_INTEREST",
-    "PT_UNIT_USAGE_EXEMPTION",
-    "PT_OWNER_EXEMPTION",
     "PT_ADHOC_PENALTY",
     "PT_ADHOC_REBATE",
     "PT_ADVANCE_CARRYFORWARD",
+    "PT_DECIMAL_CEILING_DEBIT",
   ]; //Hardcoding as backend is not sending in correct order
   const { billDetails, tenantId } = bill && bill[0];
   const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
