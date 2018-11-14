@@ -64,7 +64,7 @@ class PropertyTaxDetails extends React.Component {
                               containerStyle={{ textAlign: "right" }}
                               className="pt-rf-price"
                               label={
-                                (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
+                                (item.estimateAmount > 0 && (item.taxHeadCode === "PT_ADVANCE_CARRYFORWARD" || item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
                                 `${item.estimateAmount}`
                               }
                             />

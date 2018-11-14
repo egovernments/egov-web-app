@@ -70,7 +70,10 @@ class PropertyTaxDetails extends React.Component {
                             containerStyle={{ textAlign: "right" }}
                             className="pt-rf-price"
                             label={
-                              (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
+                              (item.estimateAmount > 0 &&
+                              (item.taxHeadCode === "PT_ADVANCE_CARRYFORWARD" || item.category === "EXEMPTION" || item.category === "REBATE")
+                                ? "- "
+                                : "") +
                               `${
                                 !(optionSelected === "Partial_Amount" && item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)
                                   ? item.estimateAmount
@@ -105,8 +108,8 @@ class PropertyTaxDetails extends React.Component {
                                 )
                           }`
                         : totalAmount === 0
-                          ? "0"
-                          : "NA"
+                        ? "0"
+                        : "NA"
                     }
                   />
                 </div>
@@ -130,33 +133,30 @@ class PropertyTaxDetails extends React.Component {
               <div className="date-details">
                 <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_IMPORTANT_DATES" bold={true} />
                 <ul>
-                  {rebate &&
-                    rebate.endingDay && (
-                      <li>
-                        <span>
-                          <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
-                        </span>
-                        <span>{`${rebate.endingDay}`}</span>
-                      </li>
-                    )}
-                  {penalty &&
-                    penalty.startingDay && (
-                      <li>
-                        <span>
-                          <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
-                        </span>
-                        <span>{`${penalty.startingDay}`}</span>
-                      </li>
-                    )}
-                  {intrest &&
-                    intrest.startingDay && (
-                      <li>
-                        <span>
-                          <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
-                        </span>
-                        <span>{`${intrest.startingDay}`}</span>
-                      </li>
-                    )}
+                  {rebate && rebate.endingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
+                      </span>
+                      <span>{`${rebate.endingDay}`}</span>
+                    </li>
+                  )}
+                  {penalty && penalty.startingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
+                      </span>
+                      <span>{`${penalty.startingDay}`}</span>
+                    </li>
+                  )}
+                  {intrest && intrest.startingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
+                      </span>
+                      <span>{`${intrest.startingDay}`}</span>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>

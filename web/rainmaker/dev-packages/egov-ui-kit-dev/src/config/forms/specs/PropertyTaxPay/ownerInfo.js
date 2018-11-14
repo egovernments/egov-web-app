@@ -66,7 +66,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
-      dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
+      dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerCategory: {
@@ -246,7 +246,7 @@ const formConfig = {
       const formKey = get(action, "form.name", "");
       const state = store.getState();
       if (get(state, `form.${formKey}.fields.ownerRelationship.value`, "NONE") === "NONE") {
-        dispatch(handleFieldChange(formKey, "ownerRelationship", "father"));
+        dispatch(handleFieldChange(formKey, "ownerRelationship", "FATHER"));
       }
 
       if (get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
