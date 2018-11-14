@@ -45,7 +45,16 @@ class PropertyTaxDetails extends React.Component {
               <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" />
               <Label
                 className="property-dues-total-amount"
-                label={`INR ${totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}`}
+                label={`INR ${totalAmount ? `${
+                    !(optionSelected === "Partial_Amount")
+                      ? totalAmount
+                      : totalAmount +
+                        get(
+                          taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
+                          "estimateAmount",
+                          0
+                        )
+                  }` : totalAmount === 0 ? "0" : "NA"}`}
                 fontSize="16px"
                 color="#484848"
               />

@@ -1332,6 +1332,7 @@ class FormWizard extends Component {
       this.setState({
         termsError: "Please check the declaration box to proceed futher"
       })
+      alert("Please check the declaration box to proceed futher")
       return
     }
     if (totalAmountToBePaid % 1 !== 0) {

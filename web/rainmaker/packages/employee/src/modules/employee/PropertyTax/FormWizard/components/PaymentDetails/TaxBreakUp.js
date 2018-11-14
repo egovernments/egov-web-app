@@ -1,10 +1,11 @@
 import React from "react";
 import { Divider, Icon } from "components";
 import { Card, CardHeader, CardText } from "material-ui/Card";
+import get from "lodash/get"
 import Label from "egov-ui-kit/utils/translationNode";
 import isUndefined from "lodash/isUndefined";
 
-const AdditionalDetails = ({ estimationDetails, importantDates }) => {
+const AdditionalDetails = ({ estimationDetails, importantDates, optionSelected }) => {
   const { taxHeadEstimates, totalAmount } = (estimationDetails && estimationDetails[0]) || {};
   const { fireCess, intrest, penalty, rebate } = importantDates;
 
@@ -26,7 +27,16 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
             <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" containerStyle={{ marginLeft: 5 }} />
             <Label
               className="property-dues-total-amount"
-              label={`INR ${totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}`}
+              label={`INR ${totalAmount ? `${
+                  !(optionSelected === "Partial_Amount")
+                    ? totalAmount
+                    : totalAmount +
+                      get(
+                        taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
+                        "estimateAmount",
+                        0
+                      )
+                }` : totalAmount === 0 ? "0" : "NA"}`}
               fontSize="16px"
               color="#484848"
             />
@@ -51,7 +61,11 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                           className="pt-rf-price"
                           label={
                             (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
-                            `${item.estimateAmount}`
+                            `${
+                              !(optionSelected === "Partial_Amount" && item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)
+                                ? item.estimateAmount
+                                : 0
+                            }`
                           }
                         />
                       </div>
@@ -68,7 +82,22 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                 <Label
                   containerStyle={{ textAlign: "right" }}
                   labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
-                  label={totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}
+                  label={
+                    totalAmount
+                      ? `${
+                          !(optionSelected === "Partial_Amount")
+                            ? totalAmount
+                            : totalAmount +
+                              get(
+                                taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
+                                "estimateAmount",
+                                0
+                              )
+                        }`
+                      : totalAmount === 0
+                        ? "0"
+                        : "NA"
+                  }
                 />
               </div>
             </div>

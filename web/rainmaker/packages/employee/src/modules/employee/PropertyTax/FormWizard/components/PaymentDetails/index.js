@@ -139,7 +139,7 @@ class PaymentDetails extends Component {
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
     return (
       <div className="payment-details">
-        <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
+        <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} optionSelected={this.props.optionSelected} />
         {!isPartialPaymentInValid && (
           <AdditionalDetails
             value={this.props.totalAmountToBePaid}
