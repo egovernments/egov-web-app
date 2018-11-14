@@ -126,7 +126,8 @@ input[type="date"]:valid::before {
 } */
 
 @media only screen and (max-width: 768px) {
-  #custom-atoms-applicationSuccessFooter {
+  #custom-atoms-applicationSuccessFooter,
+  #custom-atoms-paymentSuccessFooter {
     display: block;
     text-align: center;
   }
