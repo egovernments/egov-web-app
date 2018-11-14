@@ -36,7 +36,8 @@ export const getLatestPropertyDetails = (propertyDetailsArray) => {
     const currentFinancialYear = getCurrentFinancialYear();
     if (propertyDetailsArray.length > 1) {
       const assessmentsOfCurrentYear = propertyDetailsArray.filter((item) => item.financialYear === currentFinancialYear);
-      return assessmentsOfCurrentYear.reduce((acc, curr) => {
+      const propertyDetails = assessmentsOfCurrentYear.length > 0 ? assessmentsOfCurrentYear : propertyDetailsArray;
+      return propertyDetails.reduce((acc, curr) => {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {

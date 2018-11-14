@@ -50,7 +50,8 @@ var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLa
       var assessmentsOfCurrentYear = propertyDetailsArray.filter(function (item) {
         return item.financialYear === currentFinancialYear;
       });
-      return assessmentsOfCurrentYear.reduce(function (acc, curr) {
+      var propertyDetails = assessmentsOfCurrentYear.length > 0 ? assessmentsOfCurrentYear : propertyDetailsArray;
+      return propertyDetails.reduce(function (acc, curr) {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {
