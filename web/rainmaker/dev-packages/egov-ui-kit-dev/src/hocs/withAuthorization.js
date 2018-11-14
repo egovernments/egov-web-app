@@ -169,10 +169,6 @@ const withAuthorization = (options = {}) => (Component) => {
                       </div>
                       {sortButton && (
                         <div className="sort-button col-xs-4" style={{ paddingTop: "24px" }}>
-                          {/* <IconButton onClick={this.onSortClick}>
-                            <Icon action="action" name="swap-vert" color="#767676" />
-                          </IconButton> */}
-
                           <div
                             className="rainmaker-displayInline"
                             style={{ cursor: "pointer", justifyContent: "flex-end" }}

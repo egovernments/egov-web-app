@@ -36,11 +36,12 @@ class SearchScreen extends Component {
     complaints: [],
     search: false,
     value: 0,
+    errorText: "",
   };
 
   componentDidMount = async () => {
-    let { fetchComplaints } = this.props;
-    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }], true, true);
+    // let { fetchComplaints } = this.props;
+    // fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }], true, true);
   };
 
   onComplaintClick = (complaintNo) => {
@@ -48,8 +49,15 @@ class SearchScreen extends Component {
   };
 
   onComplaintChange = (e) => {
-    const inputValue = e.target.value;
-    this.setState({ complaintNo: inputValue });
+    // const inputValue = e.target.value;
+    // this.setState({ complaintNo: inputValue });
+    const complaintNo = e.target.value;
+    this.setState({ complaintNo });
+    if (complaintNo.length < 6) {
+      this.setState({ errorText: "Complaint No should be minimum 6 digits" });
+    } else {
+      this.setState({ errorText: "" });
+    }
   };
 
   onMobileChange = (e) => {
@@ -67,14 +75,20 @@ class SearchScreen extends Component {
     if (mobileNo) {
       queryObj.push({ key: "phone", value: mobileNo });
     }
-    const payload = fetchComplaints(queryObj, true, true);
+    // const payload = fetchComplaints(queryObj, true, true);
 
-    if ((complaintNo || mobileNo) && complaintNo.length >= 6) {
+    if (complaintNo) {
+      if (complaintNo.length >= 6) {
+        fetchComplaints(queryObj, true, true);
+      } else {
+        toggleSnackbarAndSetText(true, `Entered value is less than 6 characters in length.`, true);
+      }
+    } else if (mobileNo) {
       fetchComplaints(queryObj, true, true);
-    } else {
-      toggleSnackbarAndSetText(true, `Entered value is less than 6 characters in length.`, true);
     }
-
+    // if (complaintNo || mobileNo) {
+    //   fetchComplaints(queryObj, true, true);
+    // }
     this.setState({ search: true });
   };
 
@@ -97,7 +111,7 @@ class SearchScreen extends Component {
       overflow: "hidden",
     };
     const { loading, history, transformedComplaints, role } = this.props;
-    const { mobileNo, complaintNo, search } = this.state;
+    const { mobileNo, complaintNo, search, errorText } = this.state;
     const { onComplaintClick } = this;
     return (
       <Screen>
@@ -144,6 +158,7 @@ class SearchScreen extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
+                    errorText={errorText}
                     floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
@@ -172,13 +187,7 @@ class SearchScreen extends Component {
             }
           />
           <div>
-            <Complaints
-              noComplaintMessage={search ? "ES_NO_SEARCH_RESULTS" : "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
-              onComplaintClick={onComplaintClick}
-              complaints={transformedComplaints}
-              role={role}
-              complaintLocation={true}
-            />
+            <Complaints onComplaintClick={onComplaintClick} complaints={transformedComplaints} role={role} complaintLocation={true} />
           </div>
         </div>
       </Screen>

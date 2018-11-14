@@ -4,6 +4,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import AddComplaintForm from "./components/AddComplaintForm";
 import { Screen } from "modules/common";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import isEqual from "lodash/isEqual";
 import "./index.css";
 
 const ComplaintFormHOC = formHoc({ formKey: "complaint" })(AddComplaintForm);
@@ -22,6 +23,18 @@ class AddComplaints extends Component {
   //handleFieldChange("complaint", "city", tenantId);
   //}
   //};
+  componentWillReceiveProps = (nextprops) => {
+    if (!isEqual(nextprops, this.props)) {
+      let inputType = document.getElementsByTagName("input");
+      for (let input in inputType) {
+        if (inputType[input].type === "number") {
+          inputType[input].addEventListener("mousewheel", function() {
+            this.blur();
+          });
+        }
+      }
+    }
+  };
 
   render() {
     const { categories, localizationLabels } = this.props;

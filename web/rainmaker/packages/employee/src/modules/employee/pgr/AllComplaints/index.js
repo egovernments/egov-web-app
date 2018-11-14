@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
-import IconButton from "material-ui/IconButton";
 import { Complaints, SortDialog } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
@@ -10,7 +9,7 @@ import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-k
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
@@ -27,6 +26,7 @@ class AllComplaints extends Component {
     search: false,
     value: 0,
     sortPopOpen: false,
+    errorText: "",
   };
   style = {
     iconStyle: {
@@ -87,8 +87,13 @@ class AllComplaints extends Component {
   };
 
   onComplaintChange = (e) => {
-    const inputValue = e.target.value;
-    this.setState({ complaintNo: inputValue });
+    const complaintNo = e.target.value;
+    this.setState({ complaintNo });
+    if (complaintNo.length < 6) {
+      this.setState({ errorText: "Complaint No should be minimum 6 digits" });
+    } else {
+      this.setState({ errorText: "" });
+    }
   };
 
   onMobileChange = (e) => {
@@ -98,7 +103,7 @@ class AllComplaints extends Component {
 
   onSearch = () => {
     const { complaintNo, mobileNo } = this.state;
-    const { fetchComplaints } = this.props;
+    const { fetchComplaints, toggleSnackbarAndSetText } = this.props;
     let queryObj = [];
     if (complaintNo) {
       queryObj.push({ key: "serviceRequestId", value: complaintNo });
@@ -107,7 +112,17 @@ class AllComplaints extends Component {
       queryObj.push({ key: "phone", value: mobileNo });
     }
 
-    if (complaintNo || mobileNo) {
+    // if (complaintNo || mobileNo) {
+    //   fetchComplaints(queryObj, true, true);
+    // }
+
+    if (complaintNo) {
+      if (complaintNo.length >= 6) {
+        fetchComplaints(queryObj, true, true);
+      } else {
+        toggleSnackbarAndSetText(true, `Entered value is less than 6 characters in length.`, true);
+      }
+    } else if (mobileNo) {
       fetchComplaints(queryObj, true, true);
     }
     this.setState({ search: true });
@@ -125,7 +140,7 @@ class AllComplaints extends Component {
 
   render() {
     const { loading, history } = this.props;
-    const { mobileNo, complaintNo, search, sortPopOpen } = this.state;
+    const { mobileNo, complaintNo, search, sortPopOpen, errorText } = this.state;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
@@ -142,7 +157,7 @@ class AllComplaints extends Component {
     return role === "ao" ? (
       <div>
         <div className="sort-button rainmaker-displayInline" style={{ padding: "10px", justifyContent: "flex-end" }}>
-          <div className="rainmaker-displayInline" style={{ cursor: "pointer" }} onClick={onSortClick}>
+          <div className="rainmaker-displayInline" style={{ cursor: "pointer", marginRight: "20px" }} onClick={onSortClick}>
             <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
             <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
           </div>
@@ -365,6 +380,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
+                    errorText={errorText}
                     floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
@@ -463,22 +479,11 @@ const mapStateToProps = (state) => {
       assignedComplaints = orderby(filteredAssignedComplaints, ["latestCreationTime"], ["desc"]);
       unassignedComplaints = orderby(filteredUnassignedComplaints, ["latestCreationTime"], ["desc"]);
     }
-
-    // assignedComplaints = orderby(
-    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
-    //   ["latestCreationTime"],
-    //   ["asc"]
-    // );
-    // unassignedComplaints = orderby(
-    //   transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
-    //   ["latestCreationTime"],
-    //   ["asc"]
-    // );
   } else if (role === "csr") {
     if (order === "Old to New") {
       csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["asc"]);
     } else if (order === "SLA") {
-      csrComplaints = orderby(transformedComplaints, ["SLA"], ["desc"]);
+      csrComplaints = orderby(transformedComplaints, ["SLA"], ["asc"]);
     } else {
       csrComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
     }
@@ -486,7 +491,7 @@ const mapStateToProps = (state) => {
     if (order === "Old to New") {
       employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["asc"]);
     } else if (order === "SLA") {
-      employeeComplaints = orderby(filteredEmployeeComplaints, ["SLA"], ["desc"]);
+      employeeComplaints = orderby(filteredEmployeeComplaints, ["SLA"], ["asc"]);
     } else {
       employeeComplaints = orderby(filteredEmployeeComplaints, ["latestCreationTime"], ["desc"]);
     }
@@ -510,6 +515,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria, hasUsers, overWrite) => dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
