@@ -36,10 +36,7 @@ import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
-const applicationNumber = getQueryArg(
-  window.location.href,
-  "applicationNumber"
-);
+let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
 let headerSideText = { word1: "", word2: "" };
 
 const setDocuments = async (
@@ -106,10 +103,10 @@ const getTradeTypeSubtypeDetails = payload => {
   return tradeUnitDetails;
 };
 
-const searchResults = async (action, state, dispatch) => {
+const searchResults = async (action, state, dispatch, applicationNo) => {
   let queryObject = [
     { key: "tenantId", value: tenantId },
-    { key: "applicationNumber", value: applicationNumber }
+    { key: "applicationNumber", value: applicationNo }
   ];
   let payload = await getSearchResults(queryObject);
 
@@ -165,10 +162,9 @@ const searchResults = async (action, state, dispatch) => {
 };
 
 const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
-  //
   //Search details for given application Number
   if (applicationNumber) {
-    await searchResults(action, state, dispatch);
+    await searchResults(action, state, dispatch, applicationNumber);
 
     const status = getTransformedStatus(
       get(state, "screenConfiguration.preparedFinalObject.Licenses[0].status")
@@ -355,10 +351,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
+    applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     beforeInitFn(action, state, dispatch, applicationNumber);
 
     return action;
