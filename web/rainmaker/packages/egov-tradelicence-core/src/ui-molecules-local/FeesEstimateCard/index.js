@@ -62,6 +62,7 @@ function totalAmount(arr) {
 function FeesEstimateCard(props) {
   const { classes, estimate } = props;
   const total = totalAmount(estimate.fees);
+  const totalHeadClassName = "tl-total-amount-value " + classes.bigheader;
   return (
     <Grid container>
       <Grid xs={12} sm={7}>
@@ -143,11 +144,7 @@ function FeesEstimateCard(props) {
         >
           Total Amount
         </Typography>
-        <Typography
-          className={classes.bigheader}
-          align="right"
-          className="tl-total-amount-value"
-        >
+        <Typography className={totalHeadClassName} align="right">
           Rs {total}
         </Typography>
         {estimate.extra && estimate.extra.length !== 0 ? (
