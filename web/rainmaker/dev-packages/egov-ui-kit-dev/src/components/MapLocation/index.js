@@ -428,12 +428,38 @@ const MapLocation = compose(
         return <Marker key={index} position={props.center} draggable={false} icon={props.icon} />;
       })
     ) : (
-      <Marker
-        position={props.viewLocation ? props.currLoc : props.center}
-        icon={props.icon}
-        draggable={false}
-        animation={window.google.maps.Animation.DROP}
-      />
+      <div>
+        <div className="markerInfoBox">
+          <div
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+              textAlign: "center",
+              padding: "7px 10px",
+            }}
+          >
+            <div style={{ color: "#fff" }}>Move pin to adjust</div>
+            <div
+              style={{
+                width: "0px",
+                height: "0px",
+                left: 0,
+                right: 0,
+                margin: "auto",
+                borderLeft: "10px solid transparent",
+                borderRight: "10px solid transparent",
+                borderTop: "20px solid rgba(0, 0, 0, 0.87)",
+                position: "absolute",
+              }}
+            />
+          </div>
+        </div>
+        <Marker
+          position={props.viewLocation ? props.currLoc : props.center}
+          icon={props.icon}
+          draggable={false}
+          animation={window.google.maps.Animation.DROP}
+        />
+      </div>
     )}
     {props.setLocation && props.setLocation(props.lat, props.lng)}
   </GoogleMap>

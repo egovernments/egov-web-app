@@ -368,12 +368,48 @@ var MapLocation = compose(withProps({
     ),
     props.markers.length > 0 ? props.markers.map(function (marker, index) {
       return _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon });
-    }) : _react2.default.createElement(Marker, {
-      position: props.viewLocation ? props.currLoc : props.center,
-      icon: props.icon,
-      draggable: false,
-      animation: window.google.maps.Animation.DROP
-    }),
+    }) : _react2.default.createElement(
+      "div",
+      null,
+      _react2.default.createElement(
+        "div",
+        { className: "markerInfoBox" },
+        _react2.default.createElement(
+          "div",
+          {
+            style: {
+              backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+              textAlign: "center",
+              padding: "7px 10px"
+            }
+          },
+          _react2.default.createElement(
+            "div",
+            { style: { color: "#fff" } },
+            "Move pin to adjust"
+          ),
+          _react2.default.createElement("div", {
+            style: {
+              width: "0px",
+              height: "0px",
+              left: 0,
+              right: 0,
+              margin: "auto",
+              borderLeft: "10px solid transparent",
+              borderRight: "10px solid transparent",
+              borderTop: "20px solid rgba(0, 0, 0, 0.87)",
+              position: "absolute"
+            }
+          })
+        )
+      ),
+      _react2.default.createElement(Marker, {
+        position: props.viewLocation ? props.currLoc : props.center,
+        icon: props.icon,
+        draggable: false,
+        animation: window.google.maps.Animation.DROP
+      })
+    ),
     props.setLocation && props.setLocation(props.lat, props.lng)
   );
 });
