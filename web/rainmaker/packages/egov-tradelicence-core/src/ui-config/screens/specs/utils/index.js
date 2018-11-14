@@ -376,7 +376,7 @@ export const onClickPreviousButton = (
   }
 };
 export const getFeesEstimateCard = props => {
-  const { sourceJsonPath } = props;
+  const { sourceJsonPath, ...rest } = props;
   return {
     uiFramework: "custom-containers-local",
     componentPath: "EstimateCardContainer",
@@ -386,7 +386,8 @@ export const getFeesEstimateCard = props => {
       //   fees,
       //   extra
       // }
-      sourceJsonPath
+      sourceJsonPath,
+      ...rest
     }
   };
 };

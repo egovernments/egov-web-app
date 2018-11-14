@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { MultiDownloadCard } from "mihy-ui-framework/ui-molecules";
 import { connect } from "react-redux";
 import get from "lodash/get";
+import "./index.css";
 
 class DownloadFileContainer extends Component {
   render() {
-    return <MultiDownloadCard data={this.props.data} />;
+    const { data, ...rest } = this.props;
+    console.log(this.props.className);
+    return <MultiDownloadCard data={data} {...rest} />;
   }
 }
 

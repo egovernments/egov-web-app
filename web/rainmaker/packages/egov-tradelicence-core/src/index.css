@@ -147,4 +147,16 @@ input[type="date"]:valid::before {
     margin-left: 16px;
     margin-top: 16px;
   }
+  .citizen-payment-confirmation .apply-wizard-footer {
+    display: block;
+    text-align: center;
+  }
+  .tl-total-amount-text,
+  .tl-total-amount-value {
+    display: none !important;
+  }
+  .tl-application-table-total-value aside {
+    font-weight: 600;
+    font-size: 18px;
+  }
 }

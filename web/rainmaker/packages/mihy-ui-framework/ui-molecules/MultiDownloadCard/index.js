@@ -4,6 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -57,11 +65,12 @@ var documentTitle = {
 
 function MultiCardDownloadGrid(props) {
   var classes = props.classes,
-      data = props.data;
+      data = props.data,
+      rest = (0, _objectWithoutProperties3.default)(props, ["classes", "data"]);
 
   return _react2.default.createElement(
     _Grid2.default,
-    { container: true },
+    (0, _extends3.default)({ container: true }, rest),
     data.map(function (item, key) {
       return _react2.default.createElement(
         _Grid2.default,

@@ -123,17 +123,31 @@ function FeesEstimateCard(props) {
             <Grid item xs={6}>
               <Typography variant="body2">Total Amount</Typography>
             </Grid>
-            <Grid item xs={6} align="right" style={{ paddingRight: 0 }}>
+            <Grid
+              item
+              xs={6}
+              align="right"
+              style={{ paddingRight: 0 }}
+              className="tl-application-table-total-value"
+            >
               <Typography variant="body2">{total}</Typography>
             </Grid>
           </Grid>
         </div>
       </Grid>
       <Grid xs={12} sm={5}>
-        <Typography variant="body2" align="right">
+        <Typography
+          variant="body2"
+          align="right"
+          className="tl-total-amount-text"
+        >
           Total Amount
         </Typography>
-        <Typography className={classes.bigheader} align="right">
+        <Typography
+          className={classes.bigheader}
+          align="right"
+          className="tl-total-amount-value"
+        >
           Rs {total}
         </Typography>
         {estimate.extra && estimate.extra.length !== 0 ? (

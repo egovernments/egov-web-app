@@ -32,9 +32,9 @@ const documentTitle = {
 };
 
 function MultiCardDownloadGrid(props) {
-  const { classes, data } = props;
+  const { classes, data, ...rest } = props;
   return (
-    <Grid container>
+    <Grid container {...rest}>
       {data.map((item, key) => {
         return (
           <Grid item container xs={6} sm={4} className={classes.whiteCard}>
