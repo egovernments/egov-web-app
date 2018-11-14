@@ -33,7 +33,7 @@ class Details extends Component {
 
   render() {
     const { status, complaint, applicationNo, description, submittedDate, address, addressDetail, mapAction, images, action, role } = this.props;
-    const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail || "";
+    const { houseNoAndStreetName, landmark, mohalla, city, locality } = addressDetail || "";
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -159,7 +159,7 @@ class Details extends Component {
                     />
                     <div className="col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display">
                       <Label
-                        label={`admin.locality.${mohalla}`}
+                        label={locality}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}

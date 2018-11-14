@@ -173,7 +173,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     </div>
   ) : (
     complaints.map((complaint, complaintIndex) => {
-      const { houseNoAndStreetName, landmark, mohalla, city } = complaint.addressDetail || "";
+      const { houseNoAndStreetName, landmark, mohalla, city, locality } = complaint.addressDetail || "";
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
@@ -239,7 +239,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                         />
                       )}
                       <Label
-                        label={`admin.locality.${mohalla}`}
+                        label={locality}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}

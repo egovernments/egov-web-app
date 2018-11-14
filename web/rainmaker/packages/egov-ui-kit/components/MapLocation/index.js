@@ -387,21 +387,21 @@ var MapLocation = compose(withProps({
             "div",
             { style: { color: "#fff" } },
             "Move pin to adjust"
-          ),
-          _react2.default.createElement("div", {
-            style: {
-              width: "0px",
-              height: "0px",
-              left: 0,
-              right: 0,
-              margin: "auto",
-              borderLeft: "10px solid transparent",
-              borderRight: "10px solid transparent",
-              borderTop: "20px solid rgba(0, 0, 0, 0.87)",
-              position: "absolute"
-            }
-          })
-        )
+          )
+        ),
+        _react2.default.createElement("div", {
+          style: {
+            width: "0px",
+            height: "0px",
+            left: 0,
+            right: 0,
+            margin: "auto",
+            borderLeft: "8px solid transparent",
+            borderRight: "8px solid transparent",
+            borderTop: "15px solid rgba(0, 0, 0, 0.87)",
+            position: "absolute"
+          }
+        })
       ),
       _react2.default.createElement(Marker, {
         position: props.viewLocation ? props.currLoc : props.center,

@@ -34,16 +34,17 @@ class AutoSuggestDropdown extends React.Component {
     searchText: "",
   };
 
-  getNameById = (id) => {
-    const { dropDownData } = this.props;
+  getNameById = (id, dropDownData) => {
+    //const { dropDownData } = this.props;
     const filteredArray = filter(dropDownData, { value: id });
     return filteredArray.length > 0 ? filteredArray[0].label : id;
   };
 
   componentWillReceiveProps(nextProps) {
+    const { dropDownData } = nextProps;
     let { getNameById } = this;
     if (!isUndefined(nextProps.value)) {
-      this.setState({ searchText: getNameById(nextProps.value) });
+      this.setState({ searchText: getNameById(nextProps.value, dropDownData) });
     }
   }
 
@@ -68,7 +69,6 @@ class AutoSuggestDropdown extends React.Component {
       toolTipMessage,
       ...restProps
     } = this.props;
-
     const { filterAutoComplete, getNameById, onChangeText } = this;
     const { searchText } = this.state;
     const items = sortBy(dataSource, ["label"]);

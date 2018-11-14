@@ -37,11 +37,15 @@ class SearchScreen extends Component {
     search: false,
     value: 0,
     errorText: "",
+    noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED",
   };
 
   componentDidMount = async () => {
     // let { fetchComplaints } = this.props;
     // fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }], true, true);
+    this.setState({
+      noComplaintMessage: "",
+    });
   };
 
   onComplaintClick = (complaintNo) => {
@@ -75,7 +79,6 @@ class SearchScreen extends Component {
     if (mobileNo) {
       queryObj.push({ key: "phone", value: mobileNo });
     }
-    // const payload = fetchComplaints(queryObj, true, true);
 
     if (complaintNo) {
       if (complaintNo.length >= 6) {
@@ -89,13 +92,13 @@ class SearchScreen extends Component {
     // if (complaintNo || mobileNo) {
     //   fetchComplaints(queryObj, true, true);
     // }
-    this.setState({ search: true });
+    this.setState({ search: true, noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED" });
   };
 
   clearSearch = () => {
     const { fetchComplaints } = this.props;
-    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }]);
-    this.setState({ mobileNo: "", complaintNo: "", search: false });
+    fetchComplaints([{ key: "status", value: null }]);
+    this.setState({ mobileNo: "", complaintNo: "", search: false, noComplaintMessage: "" });
   };
 
   onChange = (value) => {
@@ -111,10 +114,10 @@ class SearchScreen extends Component {
       overflow: "hidden",
     };
     const { loading, history, transformedComplaints, role } = this.props;
-    const { mobileNo, complaintNo, search, errorText } = this.state;
+    const { mobileNo, complaintNo, search, errorText, noComplaintMessage } = this.state;
     const { onComplaintClick } = this;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
           <Card
             id="complaint-search-card"
@@ -187,7 +190,13 @@ class SearchScreen extends Component {
             }
           />
           <div>
-            <Complaints onComplaintClick={onComplaintClick} complaints={transformedComplaints} role={role} complaintLocation={true} />
+            <Complaints
+              noComplaintMessage={noComplaintMessage}
+              onComplaintClick={onComplaintClick}
+              complaints={noComplaintMessage ? transformedComplaints : []}
+              role={role}
+              complaintLocation={true}
+            />
           </div>
         </div>
       </Screen>
@@ -198,8 +207,8 @@ class SearchScreen extends Component {
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
   const { categoriesById, byId } = complaints;
-  const { fetchSuccess } = complaints;
-  const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
+  const { fetchSuccess, loading } = complaints;
+  //const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role =

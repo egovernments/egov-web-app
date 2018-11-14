@@ -108,9 +108,8 @@ var AutoSuggestDropdown = function (_React$Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = AutoSuggestDropdown.__proto__ || Object.getPrototypeOf(AutoSuggestDropdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       searchText: ""
-    }, _this.getNameById = function (id) {
-      var dropDownData = _this.props.dropDownData;
-
+    }, _this.getNameById = function (id, dropDownData) {
+      //const { dropDownData } = this.props;
       var filteredArray = (0, _filter2.default)(dropDownData, { value: id });
       return filteredArray.length > 0 ? filteredArray[0].label : id;
     }, _this.onChangeText = function (searchText, dataSource, params) {
@@ -121,10 +120,11 @@ var AutoSuggestDropdown = function (_React$Component) {
   (0, _createClass3.default)(AutoSuggestDropdown, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
+      var dropDownData = nextProps.dropDownData;
       var getNameById = this.getNameById;
 
       if (!(0, _isUndefined2.default)(nextProps.value)) {
-        this.setState({ searchText: getNameById(nextProps.value) });
+        this.setState({ searchText: getNameById(nextProps.value, dropDownData) });
       }
     }
   }, {

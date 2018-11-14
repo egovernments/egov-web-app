@@ -223,7 +223,8 @@ var Complaints = function Complaints(_ref) {
         houseNoAndStreetName = _ref2.houseNoAndStreetName,
         landmark = _ref2.landmark,
         mohalla = _ref2.mohalla,
-        city = _ref2.city;
+        city = _ref2.city,
+        locality = _ref2.locality;
 
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
@@ -303,7 +304,7 @@ var Complaints = function Complaints(_ref) {
                 fontSize: "16px"
               }),
               _react2.default.createElement(_translationNode2.default, {
-                label: "admin.locality." + mohalla,
+                label: locality,
                 className: "status-result-color",
                 id: "complaint-details-complaint-location",
                 labelStyle: { color: "inherit" },

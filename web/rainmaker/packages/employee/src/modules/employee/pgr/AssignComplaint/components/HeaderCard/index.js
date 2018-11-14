@@ -25,7 +25,7 @@ const HeaderCard = ({ complaint }) => {
     transformedcomplaint = "SERVICEDEFS." + complaint.header.toUpperCase();
   }
 
-  const { houseNoAndStreetName, landmark, mohalla, city } = complaint.address || "";
+  const { houseNoAndStreetName, landmark, mohalla, city, locality } = complaint.address || "";
   return (
     <Card
       textChildren={[
@@ -65,12 +65,7 @@ const HeaderCard = ({ complaint }) => {
                   fontSize="16px"
                 />
               )}
-              <Label
-                label={`admin.locality.${mohalla}`}
-                className="status-result-color"
-                id="complaint-details-complaint-location"
-                labelStyle={{ color: "inherit" }}
-              />
+              <Label label={locality} className="status-result-color" id="complaint-details-complaint-location" labelStyle={{ color: "inherit" }} />
               <Label
                 label={","}
                 className="comma-style"
