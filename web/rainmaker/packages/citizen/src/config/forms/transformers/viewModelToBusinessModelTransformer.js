@@ -151,7 +151,7 @@ const transformer = (formKey, form = {}, state = {}) => {
           tenantIdFromAddress = await getTenantForLatLng(latitude.value, longitude.value);
         }
         const tenantIdFromCity = get(formData, "services[0].addressDetail.city");
-        if (tenantIdFromAddress === tenantIdFromCity) {
+        if (tenantIdFromAddress === tenantIdFromCity || (!tenantIdFromAddress && tenantIdFromCity)) {
           formData.services[0].tenantId = tenantIdFromCity;
         } else {
           throw new Error("Complaint Location and City does not match!");
