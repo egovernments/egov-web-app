@@ -54,7 +54,7 @@ class SearchScreen extends Component {
     const complaintNo = e.target.value;
     this.setState({ complaintNo });
     if (complaintNo.length < 6) {
-      this.setState({ errorText: "Complaint No should be minimum 6 digits" });
+      this.setState({ errorText: "Enter at least last 6 digit of complaint No" });
     } else {
       this.setState({ errorText: "" });
     }

@@ -90,7 +90,7 @@ class AllComplaints extends Component {
     const complaintNo = e.target.value;
     this.setState({ complaintNo });
     if (complaintNo.length < 6) {
-      this.setState({ errorText: "Complaint No should be minimum 6 digits" });
+      this.setState({ errorText: "Enter at least last 6 digit of complaint No" });
     } else {
       this.setState({ errorText: "" });
     }
@@ -285,6 +285,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
+                    errorText={errorText}
                     floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
