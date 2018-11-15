@@ -45,6 +45,9 @@ var onButton2Click = function onButton2Click(item, history) {
     if (item.moduleTitle === "Complaints") {
       history && history.push("how-it-works");
     }
+    if (item.moduleTitle === "TradeLicense") {
+      history && history.push("trade-license/how-it-works");
+    }
   }
 };
 

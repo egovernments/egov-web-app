@@ -30,6 +30,8 @@ import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
 // const ptRoutes = [];
 
+import TLHowItWorks from "../../ui-views/HowItWorks";
+
 const routes = [
   {
     path: "user/register",
@@ -182,6 +184,16 @@ const routes = [
     component: Playground,
     needsAuthentication: true,
     options: { hideFooter: true },
+  },
+  {
+    path: "trade-license/how-it-works",
+    component: TLHowItWorks,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "TL_HOW_IT_WORKS",
+    },
   },
   ...ptRoutes,
   ...tlRoutes,
