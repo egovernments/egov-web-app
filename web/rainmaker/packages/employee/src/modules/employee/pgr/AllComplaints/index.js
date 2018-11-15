@@ -146,7 +146,7 @@ class AllComplaints extends Component {
     };
 
     const { onComplaintClick, onSortClick, closeSortDialog, style } = this;
-    const { assignedComplaints, unassignedComplaints, csrComplaints, employeeComplaints, role, transformedComplaints } = this.props;
+    const { assignedComplaints, unassignedComplaints, csrComplaints, employeeComplaints, role, searchFilterEmployeeComplaints } = this.props;
     const hintTextStyle = {
       letterSpacing: "0.7px",
       textOverflow: "ellipsis",
@@ -414,7 +414,7 @@ class AllComplaints extends Component {
           <Complaints
             noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
             onComplaintClick={onComplaintClick}
-            complaints={employeeComplaints}
+            complaints={search ? searchFilterEmployeeComplaints : employeeComplaints}
             role={role}
             complaintLocation={true}
           />
@@ -463,6 +463,10 @@ const mapStateToProps = (state) => {
     employeeComplaints = [],
     csrComplaints = [];
   let filteredEmployeeComplaints = transformedComplaints.filter(
+    (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"
+  );
+
+  let searchFilterEmployeeComplaints = transformedComplaints.filter(
     (complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested" || complaint.complaintStatus === "CLOSED"
   );
 
@@ -510,6 +514,7 @@ const mapStateToProps = (state) => {
     role,
     loading,
     transformedComplaints,
+    searchFilterEmployeeComplaints,
   };
 };
 

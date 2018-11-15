@@ -16,7 +16,7 @@ class Home extends Component {
     const { fetchComplaints, resetFiles, removeForm } = this.props;
     fetchComplaints([], false);
     if (this.props.form && this.props.form.complaint) {
-      //resetFiles("complaint");
+      resetFiles("reopenComplaint");
       removeForm("complaint");
     }
   };
