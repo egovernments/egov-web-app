@@ -5,13 +5,13 @@ const templateInterface=({ shareTemplate, shareContent }) => {
   switch (shareTemplate) {
     case "complaintDetails": {
       const topic = "egov.core.notification.sms";
-      const SMS = {
+      const SMSRequest = {
         mobileNumber: get(shareContent[0], "to"),
         message: "Dear Contractor, please find complaint details"
       };
       payloads.push({
         topic,
-        SMS
+        SMSRequest
       })
     }
   }
