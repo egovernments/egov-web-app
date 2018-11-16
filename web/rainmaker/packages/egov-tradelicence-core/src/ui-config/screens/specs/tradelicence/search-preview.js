@@ -352,8 +352,13 @@ const screenConfig = {
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    //To set the application no. at the  top
+    set(
+      action.screenConfig,
+      "components.div.children.headerDiv.children.header1.children.applicationNumber.props.number",
+      applicationNumber
+    );
     beforeInitFn(action, state, dispatch, applicationNumber);
-
     return action;
   },
 
@@ -402,7 +407,6 @@ const screenConfig = {
                     }
                   )
                 },
-
                 word2: {
                   ...getCommonTitle({
                     jsonPath: "Licenses[0].headerSideText.word2"
