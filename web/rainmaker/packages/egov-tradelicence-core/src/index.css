@@ -151,6 +151,9 @@ input[type="date"]:valid::before {
     display: block;
     text-align: center;
   }
+  .citizen-payment-confirmation {
+    padding-bottom: 166px;
+  }
   .tl-total-amount-text,
   .tl-total-amount-value {
     display: none !important;
@@ -158,5 +161,8 @@ input[type="date"]:valid::before {
   .tl-application-table-total-value aside {
     font-weight: 600;
     font-size: 18px;
+  }
+  #custom-atoms-paymentSuccessFooter #material-ui-printReceiptButton {
+    margin-right: 16px;
   }
 }
