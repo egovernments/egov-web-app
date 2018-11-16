@@ -201,7 +201,6 @@ Similarly if the formData needs to be transformed before making a server call, w
 ### PT
 #### Enhancements
 + Allow special characters and validations in the Property Tax form
-+ In the calculation detail card, put declaration as a tick box rather than a pop-up
 + While calculating Interest include the day of the payment
 + Property details will be the same as in the latest assessment for the current year
 + In receipt - Under the owner information section include father/husband's name
