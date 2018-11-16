@@ -70,10 +70,11 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      // value: tenantId,
       errorText: "",
       dropDownData: [],
-      // type: "singleValueList",
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
+      },
       dataFetchConfig: {
         // url: CITY.GET.URL,
         // action: CITY.GET.ACTION,

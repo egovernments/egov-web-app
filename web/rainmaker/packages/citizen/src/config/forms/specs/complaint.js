@@ -53,7 +53,6 @@ const formConfig = {
       errorText: "",
       dropDownData: [],
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        //dispatch(handleFieldChange("complaint", "mohalla", null));
         dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
       },
       dataFetchConfig: {
