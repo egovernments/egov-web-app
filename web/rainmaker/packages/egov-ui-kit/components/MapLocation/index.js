@@ -367,7 +367,44 @@ var MapLocation = compose(withProps({
       _react2.default.createElement("input", { type: "text", className: "searchBoxStyles", placeholder: "Search address", style: props.searchBoxStyles })
     ),
     props.markers.length > 0 ? props.markers.map(function (marker, index) {
-      return _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon });
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+          "div",
+          { className: "markerInfoBox" },
+          _react2.default.createElement(
+            "div",
+            {
+              style: {
+                backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+                textAlign: "center",
+                padding: "7px 10px"
+              }
+            },
+            _react2.default.createElement(
+              "div",
+              { style: { color: "#fff" } },
+              "Move pin to adjust"
+            )
+          ),
+          _react2.default.createElement("div", {
+            style: {
+              width: "0px",
+              height: "0px",
+              left: 0,
+              right: 0,
+              margin: "auto",
+              borderLeft: "8px solid transparent",
+              borderRight: "8px solid transparent",
+              borderTop: "15px solid rgba(0, 0, 0, 0.87)",
+              position: "absolute"
+            }
+          })
+        ),
+        _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon }),
+        ";"
+      );
     }) : _react2.default.createElement(
       "div",
       null,

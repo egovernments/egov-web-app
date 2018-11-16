@@ -425,7 +425,35 @@ const MapLocation = compose(
 
     {props.markers.length > 0 ? (
       props.markers.map((marker, index) => {
-        return <Marker key={index} position={props.center} draggable={false} icon={props.icon} />;
+        return (
+          <div>
+            <div className="markerInfoBox">
+              <div
+                style={{
+                  backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+                  textAlign: "center",
+                  padding: "7px 10px",
+                }}
+              >
+                <div style={{ color: "#fff" }}>Move pin to adjust</div>
+              </div>
+              <div
+                style={{
+                  width: "0px",
+                  height: "0px",
+                  left: 0,
+                  right: 0,
+                  margin: "auto",
+                  borderLeft: "8px solid transparent",
+                  borderRight: "8px solid transparent",
+                  borderTop: "15px solid rgba(0, 0, 0, 0.87)",
+                  position: "absolute",
+                }}
+              />
+            </div>
+            <Marker key={index} position={props.center} draggable={false} icon={props.icon} />;
+          </div>
+        );
       })
     ) : (
       <div>
