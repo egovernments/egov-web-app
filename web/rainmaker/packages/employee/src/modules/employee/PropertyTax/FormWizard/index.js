@@ -194,22 +194,27 @@ class FormWizard extends Component {
   getTargetPropertiesDetails = (propertyDetails) => {
     const { search } = this.props.location;
     const FY = getQueryValue(search, "FY");
-    let selectedPropertyDetails = [];
-    //filter property details by financial year
-    const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
+    const assessmentNumber = getQueryValue(search, "assessmentId");
+    // let selectedPropertyDetails = [];
+    // //filter property details by financial year
+    // const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
 
-    //if present sort the filtered property details else sort the original property details
-    if (filteredPropertyDetails && filteredPropertyDetails.length) {
-      filteredPropertyDetails.sort(
-        (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
-      );
-      selectedPropertyDetails.push(...filteredPropertyDetails);
-    } else {
-      propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-      selectedPropertyDetails.push(...propertyDetails);
-    }
-    const lastIndex = selectedPropertyDetails.length - 1;
+    // //if present sort the filtered property details else sort the original property details
+    // if (filteredPropertyDetails && filteredPropertyDetails.length) {
+    //   filteredPropertyDetails.sort(
+    //     (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
+    //   );
+    //   selectedPropertyDetails.push(...filteredPropertyDetails);
+    // } else {
+    //   propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    //   selectedPropertyDetails.push(...propertyDetails);
+    // }
+    // console.log("DDDDDDDDDDDDDDDDDDD");
+    // console.log(selectedPropertyDetails);
+    // const lastIndex = selectedPropertyDetails.length - 1;
+    const selectedPropertyDetails = propertyDetails.filter((item) => item.assessmentNumber === assessmentNumber);
     // return the latest proeprty details of the selected year
+    const lastIndex = 0;
     if (selectedPropertyDetails[lastIndex].propertySubType === "SHAREDPROPERTY") {
       selectedPropertyDetails[lastIndex].buildUpArea =
         selectedPropertyDetails[lastIndex] &&

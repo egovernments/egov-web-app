@@ -290,12 +290,17 @@ var beforeInitForm = exports.beforeInitForm = {
         fields = form.fields;
 
     var propertyType = (0, _get2.default)(state, "form.basicInformation.fields.typeOfBuilding.value");
-    if (propertyType === "SHAREDPROPERTY") {
-      var _ref6 = state.common && state.common.generalMDMSDataById,
-          Floor = _ref6.Floor;
 
-      (0, _set2.default)(action, "form.fields.floorName.hideField", false);
-      (0, _set2.default)(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+    var _ref6 = state.common && state.common.generalMDMSDataById,
+        Floor = _ref6.Floor;
+
+    if ((0, _get2.default)(_get2.default, "form.fields.floorName")) {
+      if (propertyType === "SHAREDPROPERTY") {
+        (0, _set2.default)(action, "form.fields.floorName.hideField", false);
+        (0, _set2.default)(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      } else {
+        (0, _set2.default)(action, "form.fields.floorName.hideField", true);
+      }
     }
 
     //For adding multiple units to prepareFormData

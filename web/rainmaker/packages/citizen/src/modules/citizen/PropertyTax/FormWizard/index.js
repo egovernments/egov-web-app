@@ -60,10 +60,11 @@ class FormWizard extends Component {
     calculationScreenData: [],
   };
 
-  toggleTerms = () => this.setState({
-    termsAccepted: !this.state.termsAccepted,
-    termsError: "",
-  })
+  toggleTerms = () =>
+    this.setState({
+      termsAccepted: !this.state.termsAccepted,
+      termsError: "",
+    });
 
   updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
@@ -240,22 +241,27 @@ class FormWizard extends Component {
   getTargetPropertiesDetails = (propertyDetails) => {
     const { search } = this.props.location;
     const FY = getQueryValue(search, "FY");
-    let selectedPropertyDetails = [];
-    //filter property details by financial year
-    const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
+    const assessmentNumber = getQueryValue(search, "assessmentId");
+    // let selectedPropertyDetails = [];
+    // //filter property details by financial year
+    // const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
 
-    //if present sort the filtered property details else sort the original property details
-    if (filteredPropertyDetails && filteredPropertyDetails.length) {
-      filteredPropertyDetails.sort(
-        (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
-      );
-      selectedPropertyDetails.push(...filteredPropertyDetails);
-    } else {
-      propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-      selectedPropertyDetails.push(...propertyDetails);
-    }
-    const lastIndex = selectedPropertyDetails.length - 1;
+    // //if present sort the filtered property details else sort the original property details
+    // if (filteredPropertyDetails && filteredPropertyDetails.length) {
+    //   filteredPropertyDetails.sort(
+    //     (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
+    //   );
+    //   selectedPropertyDetails.push(...filteredPropertyDetails);
+    // } else {
+    //   propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    //   selectedPropertyDetails.push(...propertyDetails);
+    // }
+    // console.log("DDDDDDDDDDDDDDDDDDD");
+    // console.log(selectedPropertyDetails);
+    // const lastIndex = selectedPropertyDetails.length - 1;
+    const selectedPropertyDetails = propertyDetails.filter((item) => item.assessmentNumber === assessmentNumber);
     // return the latest proeprty details of the selected year
+    const lastIndex = 0;
     if (selectedPropertyDetails[lastIndex].propertySubType === "SHAREDPROPERTY") {
       selectedPropertyDetails[lastIndex].buildUpArea =
         selectedPropertyDetails[lastIndex] &&
@@ -1330,22 +1336,24 @@ class FormWizard extends Component {
     const { isFullPayment, partialAmountError, totalAmountToBePaid, termsAccepted, selected } = this.state;
     if (!termsAccepted) {
       this.setState({
-        termsError: "Please check the declaration box to proceed futher"
-      })
-      alert("Please check the declaration box to proceed futher")
-      return
+        termsError: "Please check the declaration box to proceed futher",
+      });
+      alert("Please check the declaration box to proceed futher");
+      return;
     }
     if (totalAmountToBePaid % 1 !== 0) {
       alert("Amount cannot be a fraction!");
-      return
+      return;
     }
     if (!isFullPayment && partialAmountError) return;
     this.updateIndex(selected + 1);
-    {/*if (totalAmountToBePaid % 1 === 0) {
+    {
+      /*if (totalAmountToBePaid % 1 === 0) {
       this.setState({ dialogueOpen: true });
     } else {
       alert("Amount cannot be a fraction!");
-    }*/}
+    }*/
+    }
   };
 
   render() {

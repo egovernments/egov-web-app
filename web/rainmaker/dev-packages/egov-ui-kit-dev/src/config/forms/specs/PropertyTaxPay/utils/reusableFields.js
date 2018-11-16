@@ -246,10 +246,14 @@ export const beforeInitForm = {
     const { form } = action;
     const { name: formKey, fields } = form;
     const propertyType = get(state, "form.basicInformation.fields.typeOfBuilding.value");
-    if (propertyType === "SHAREDPROPERTY") {
-      const { Floor } = state.common && state.common.generalMDMSDataById;
-      set(action, "form.fields.floorName.hideField", false);
-      set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+    const { Floor } = state.common && state.common.generalMDMSDataById;
+    if (get(get, "form.fields.floorName")) {
+      if (propertyType === "SHAREDPROPERTY") {
+        set(action, "form.fields.floorName.hideField", false);
+        set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      } else {
+        set(action, "form.fields.floorName.hideField", true);
+      }
     }
 
     //For adding multiple units to prepareFormData
