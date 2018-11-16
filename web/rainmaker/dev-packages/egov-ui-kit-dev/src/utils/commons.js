@@ -526,7 +526,11 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     }
   } catch (error) {
     const { message } = error;
-    dispatch(toggleSnackbarAndSetText(true, message, true));
+    if (fieldKey === "mohalla") {
+      dispatch(toggleSnackbarAndSetText(true, "There is no admin boundary data available for this tenant", true));
+    } else {
+      dispatch(toggleSnackbarAndSetText(true, message, true));
+    }
     return;
   }
 };

@@ -625,7 +625,11 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
             _context3.t0 = _context3["catch"](1);
             message = _context3.t0.message;
 
-            dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
+            if (fieldKey === "mohalla") {
+              dispatch((0, _actions2.toggleSnackbarAndSetText)(true, "There is no admin boundary data available for this tenant", true));
+            } else {
+              dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
+            }
             return _context3.abrupt("return");
 
           case 16:
