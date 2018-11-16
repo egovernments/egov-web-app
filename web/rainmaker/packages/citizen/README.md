@@ -6,7 +6,7 @@ An high level overview of the UI Autogen Flow.
 
 **Specs => Specs Interpreter => Specs to View Adapter => View**
 
-The bulk of framework business logic resides in [Redux](https://redux.js.org/) . 
+The bulk of framework business logic resides in [Redux](https://redux.js.org/) .
 
 App is bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -25,7 +25,7 @@ The Specs can render the screens of following types
 
    + Create
    + Update - fields in the create screen + Search API Calls => FormData => Render
-   + View - fields in the create screen => View Adapters for each Create Field => Search Api Call => FormData => Render 
+   + View - fields in the create screen => View Adapters for each Create Field => Search Api Call => FormData => Render
    + Search
 
 A spec may look like this.
@@ -140,14 +140,14 @@ SET_ROUTE
 
 Every Component should be written with its accompanying HoC(Higher Order Component).
 All the API calls, logic, event binding, redux subscriptions should happen in the HoC.  
-The presentation components should be purely dumb. It should ideally be stateless, without implementing any lifecycle methods. 
+The presentation components should be purely dumb. It should ideally be stateless, without implementing any lifecycle methods.
 
 
 ### Extending the framework
  The extensibility to the framework is provided by [Redux middlewares](https://redux.js.org/docs/advanced/Middleware.html).
- 
+
  Certain modules might want to **transform** the formData before it is set to the redux store and might want to a **reverse transformation** before it sends the form data back to the server. Middlewares comes in handy in those cases.
- 
+
  If there is a need to transform the formData before setting it to the redux store, we could use a middleware which taps into `SET_FORM_DATA` action.
 
 ```
@@ -172,25 +172,39 @@ Similarly if the formData needs to be transformed before making a server call, w
     1) Resource Level
         The main bundle is split into module level bundles which loads the resource only when requrired.
         Ensures caching of smaller bundles by the browser.
-        Resource Level Code Splitting requires the create-react-app to be ejected. 
+        Resource Level Code Splitting requires the create-react-app to be ejected.
 
-    2) Dynamic imports 
+    2) Dynamic imports
         This is Promise based import of files.
 
 + Minimizing Wasteful Renders
-   The lifecycle method componentShouldUpdate hook can be used to prevent unecessary renders or PureComponents can be 
+   The lifecycle method componentShouldUpdate hook can be used to prevent unecessary renders or PureComponents can be
 
 
 ## Proposed Folder Structure
 
   + src
-    + actions - Framework Actions 
+    + actions - Framework Actions
     + components - Atomic Level Components such as TextField, TextLabel, SelectField
     + constants
     + containers - The components can be wrapped in a container component which implements the business logic.
     + hocs - Higer Order Components
     + middlewares - A middleware to redux actions
-    + reducers 
-    + specs - Contains all the Specs files. 
+    + reducers
+    + specs - Contains all the Specs files.
     + store - redux store
     + styles
+
+## Releases v1.1
+
+### PT
+#### Enhancements
++ Allow special characters and validations in the Property Tax form
++ In the calculation detail card, put declaration as a tick box rather than a pop-up
++ While calculating Interest include the day of the payment
++ Property details will be the same as in the latest assessment for the current year
++ In receipt - Under the owner information section include father/husband's name
+
+##### Features
++ In case of flats, floor no. should be captured. as part of property details at the unit level
++ Calculation screens with relevant charge slab and calculation logic details for users  
