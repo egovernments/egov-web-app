@@ -1,8 +1,8 @@
 var kafka = require("kafka-node");
 
 const Producer = kafka.Producer;
-// const client = new kafka.KafkaClient({ kafkaHost: "localhost:8082" });
-const client = new kafka.Client();
+const client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+// const client = new kafka.Client();
 const producer = new Producer(client);
 
 producer.on("ready", function() {

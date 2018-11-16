@@ -1,7 +1,7 @@
 const kafka = require("kafka-node");
 const Consumer = kafka.Consumer;
-// const client = new kafka.KafkaClient({ kafkaHost: "localhost:8082" });
-const client = new kafka.Client();
+const client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+// const client = new kafka.Client();
 const consumer = new Consumer(client, [{ topic: "Posts", offset: 0 }], {
   autoCommit: false
 });
