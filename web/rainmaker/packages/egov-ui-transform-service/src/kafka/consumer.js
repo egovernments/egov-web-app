@@ -1,9 +1,10 @@
-var kafka = require("kafka-node"),
-  Consumer = kafka.Consumer,
-  client = new kafka.Client(),
-  consumer = new Consumer(client, [{ topic: "Posts", offset: 0 }], {
-    autoCommit: false
-  });
+const kafka = require("kafka-node");
+const Consumer = kafka.Consumer;
+// const client = new kafka.KafkaClient({ kafkaHost: "localhost:8082" });
+const client = new kafka.Client();
+const consumer = new Consumer(client, [{ topic: "Posts", offset: 0 }], {
+  autoCommit: false
+});
 
 consumer.on("message", function(message) {
   console.log(message);
