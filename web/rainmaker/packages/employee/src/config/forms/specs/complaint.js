@@ -1,4 +1,5 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import get from "lodash/get";
 
 const tenantId = localStorage.getItem("tenant-id");
 
@@ -177,7 +178,19 @@ const formConfig = {
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
       }
-      dispatch(handleFieldChange("complaint", "city", tenantId));
+      let city = get(state, "form.complaint.fields.city.value");
+      let mohalla = get(state, "form.complaint.fields.mohalla.value");
+      console.log("city is....", city);
+      if (!city) {
+        dispatch(handleFieldChange("complaint", "city", tenantId));
+      } else {
+        if (city) {
+          dispatch(handleFieldChange("complaint", "city", city));
+        }
+        if (mohalla) {
+          dispatch(handleFieldChange("complaint", "mohalla", mohalla));
+        }
+      }
       return action;
     } catch (e) {
       console.log(e);

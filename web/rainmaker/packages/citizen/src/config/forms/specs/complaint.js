@@ -1,4 +1,5 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import get from "lodash/get";
 
 const tenantId = JSON.parse(localStorage.getItem("user-info")).permanentCity;
 
@@ -49,10 +50,12 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      // value: tenantId,
       errorText: "",
-      // type: "singleValueList",
       dropDownData: [],
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        //dispatch(handleFieldChange("complaint", "mohalla", null));
+        dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
+      },
       dataFetchConfig: {
         dependants: [
           {
@@ -123,7 +126,18 @@ const formConfig = {
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
       }
-      dispatch(handleFieldChange("complaint", "city", tenantId));
+      let city = get(state, "form.complaint.fields.city.value");
+      let mohalla = get(state, "form.complaint.fields.mohalla.value");
+      if (!city) {
+        dispatch(handleFieldChange("complaint", "city", tenantId));
+      } else {
+        if (city) {
+          dispatch(handleFieldChange("complaint", "city", city));
+        }
+        if (mohalla) {
+          dispatch(handleFieldChange("complaint", "mohalla", mohalla));
+        }
+      }
       return action;
     } catch (e) {
       console.log(e);
