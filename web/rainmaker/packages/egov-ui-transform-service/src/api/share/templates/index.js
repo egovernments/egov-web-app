@@ -11,8 +11,7 @@ const templateInterface=({ shareTemplate, shareContent }) => {
       };
       payloads.push({
         topic,
-        Request:{SMSRequest},
-        request:{SMSRequest}
+        message:{SMSRequest}
       })
     }
   }
