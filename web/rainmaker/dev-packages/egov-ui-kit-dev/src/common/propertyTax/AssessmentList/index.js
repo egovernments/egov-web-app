@@ -16,10 +16,11 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
   };
   switch (status) {
     case "Paid":
+    case "Paid-Disable":
       return (
         <div>
           <div className="assessment-displayInline" style={item.date ? { marginTop: "8px" } : { marginTop: "0px" }}>
-            <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Label label={"Paid"} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
 

@@ -75,6 +75,7 @@ const connectorStyle = {
 const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
+    case "pending":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#fe7a51"} />;
     case "reassignrequested":
       return <Icon action="custom" name="reassign-request" style={statusCommonIconStyle} color={"#fe7a51"} />;
@@ -113,7 +114,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     groMobileNumber,
     groDesignation,
   } = stepData;
-
   switch (status) {
     case "open":
       openStatusCount++;
@@ -127,41 +127,37 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               action === "reopen"
                 ? "CS_COMMON_COMPLAINT_REOPENED"
                 : role !== "citizen"
-                  ? filedBy
-                    ? filedBy.includes("@CSR")
-                      ? "ES_COMPLAINT_FILED_BY_CSR"
-                      : "ES_COMMON_FILED_BY"
-                    : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
+                ? filedBy
+                  ? filedBy.includes("@CSR")
+                    ? "ES_COMPLAINT_FILED_BY_CSR"
+                    : "ES_COMMON_FILED_BY"
                   : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
+                : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
             }`}
           />
-          {action !== "reopen" &&
-            role !== "citizen" &&
-            filedBy && (
-              <Label
-                label={filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy}
-                containerStyle={nameContainerStyle}
-                fontSize={filedBy.includes("@CSR") ? 12 : 14}
-                dark={filedBy.includes("@CSR") ? false : true}
-              />
-            )}
-          {role !== "citizen" &&
-            action !== "reopen" &&
-            filedUserMobileNumber && (
-              <a
-                className="citizen-mobileNumber-style"
-                href={`tel:+91${filedUserMobileNumber}`}
-                style={{ textDecoration: "none", position: "relative" }}
-              >
-                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                <span
-                  style={{
-                    fontSize: filedBy.includes("@CSR") ? 12 : 14,
-                    marginLeft: "43px",
-                  }}
-                >{`+91 ${filedUserMobileNumber}`}</span>
-              </a>
-            )}
+          {action !== "reopen" && role !== "citizen" && filedBy && (
+            <Label
+              label={filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy}
+              containerStyle={nameContainerStyle}
+              fontSize={filedBy.includes("@CSR") ? 12 : 14}
+              dark={filedBy.includes("@CSR") ? false : true}
+            />
+          )}
+          {role !== "citizen" && action !== "reopen" && filedUserMobileNumber && (
+            <a
+              className="citizen-mobileNumber-style"
+              href={`tel:+91${filedUserMobileNumber}`}
+              style={{ textDecoration: "none", position: "relative" }}
+            >
+              <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              <span
+                style={{
+                  fontSize: filedBy.includes("@CSR") ? 12 : 14,
+                  marginLeft: "43px",
+                }}
+              >{`+91 ${filedUserMobileNumber}`}</span>
+            </a>
+          )}
 
           {action === "reopen" && (
             <div>
@@ -210,6 +206,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       switch (role && role.toLowerCase()) {
         case "ao":
         case "citizen":
+        case "csr":
           return (
             <div className="complaint-timeline-content-section">
               <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
@@ -222,18 +219,17 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                       ? "CS_COMMON_ASSIGNED_TO"
                       : "ES_COMPLAINT_ASSIGNED_HEADER"
                     : employeeName
-                      ? "CS_COMMON_REASSIGNED_TO"
-                      : "ES_COMPLAINT_REASSIGNED_HEADER"
+                    ? "CS_COMMON_REASSIGNED_TO"
+                    : "ES_COMPLAINT_REASSIGNED_HEADER"
                 }`}
               />
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
-              {employeeMobileNumber &&
-                assigneeStatusCount === 1 && (
-                  <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
-                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                    <span style={{ marginLeft: "43px" }}>{`+91 ${employeeMobileNumber}`}</span>
-                  </a>
-                )}
+              {employeeMobileNumber && assigneeStatusCount === 1 && (
+                <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                  <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                  <span style={{ marginLeft: "43px" }}>{`+91 ${employeeMobileNumber}`}</span>
+                </a>
+              )}
               <Label
                 labelClassName="rainmaker-small-font complaint-timeline-department"
                 // containerStyle={{ width: "192px" }}
@@ -260,19 +256,19 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                       ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY"
                       : "ES_COMPLAINT_ASSIGNED_HEADER"
                     : groName
-                      ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY"
-                      : "ES_COMPLAINT_REASSIGNED_HEADER"
+                    ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY"
+                    : "ES_COMPLAINT_REASSIGNED_HEADER"
                 }`}
               />
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
-              {assigneeStatusCount === 1 &&
+              {/* {assigneeStatusCount === 1 &&
                 groName &&
                 groMobileNumber && (
                   <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                     <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
                   </a>
-                )}
+                )} */}
               {groName && (
                 <Label
                   labelClassName="rainmaker-small-font complaint-timeline-designation"
@@ -283,17 +279,17 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             </div>
           );
           break;
-        default:
-          return (
-            <div className="complaint-timeline-content-section">
-              <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
-              <Label
-                labelClassName="dark-color complaint-timeline-status"
-                containerStyle={statusContainerStyle}
-                label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
-              />
-            </div>
-          );
+        // default:
+        //   return (
+        //     <div className="complaint-timeline-content-section">
+        //       <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+        //       <Label
+        //         labelClassName="dark-color complaint-timeline-status"
+        //         containerStyle={statusContainerStyle}
+        //         label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
+        //       />
+        //     </div>
+        //   );
       }
 
     case "reassignrequested":
@@ -347,51 +343,25 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             containerStyle={{ width: "192px" }}
             label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
           />
-          {currentStatus === "rejected" &&
-            (role === "citizen" || role === "csr") &&
-            rejectStatusCount === 1 && (
-              <div
-                className="complaint-details-timline-button"
-                onClick={(e) => {
-                  role === "citizen"
-                    ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
-                    : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
-                }}
-              >
-                <Label
-                  label="CS_COMPLAINT_DETAILS_REOPEN"
-                  fontSize="12px"
-                  labelStyle={timelineButtonLabelStyle}
-                  containerStyle={timelineButtonContainerStyle}
-                />
-              </div>
-            )}
+          {currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && (
+            <div
+              className="complaint-details-timline-button"
+              onClick={(e) => {
+                role === "citizen"
+                  ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                  : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+              }}
+            >
+              <Label
+                label="CS_COMPLAINT_DETAILS_REOPEN"
+                fontSize="12px"
+                labelStyle={timelineButtonLabelStyle}
+                containerStyle={timelineButtonContainerStyle}
+              />
+            </div>
+          )}
         </div>
       );
-    // case "UNASSIGNED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
-    //       <Label labelClassName="rainmaker-small-font" label={name || "Amrinder Singh"} />
-    //       <div
-    //         className="complaint-details-timline-button"
-    //         onClick={(e) => {
-    //         }}
-    //       >
-    //         <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-    //         CALL
-    //       </div>
-    //     </div>
-    //   );
-    // case "REASSIGN-REQUESTED":
-    //   return (
-    //     <div className="complaint-timeline-content-section">
-    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-    //       <Label labelClassName="dark-color" label={"CS_COMPLAINT_DETAILS_REASSIGN_REQUESTED"} />
-    //       <Label labelClassName="rainmaker-small-font" label={`Reason - ${reason || "Not my responsibility"}`} />
-    //     </div>
-    //   );
     case "resolved":
       resolveStatusCount++;
       return (
@@ -426,42 +396,40 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
 
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" containerStyle={{ width: "192px" }} label={comments} />
-          {currentStatus === "resolved" &&
-            (role === "citizen" || role === "csr") &&
-            resolveStatusCount === 1 && (
-              <div className="rainmaker-displayInline">
-                {role !== "csr" && (
-                  <div
-                    className="complaint-details-timline-button"
-                    onClick={(e) => {
-                      changeRoute.push(`/feedback/${encodeURIComponent(complaintNo)}`);
-                    }}
-                  >
-                    <Label
-                      label="CS_COMPLAINT_DETAILS_RATE"
-                      fontSize="12px"
-                      labelStyle={timelineButtonLabelStyle}
-                      containerStyle={timelineButtonContainerStyle}
-                    />
-                  </div>
-                )}
+          {currentStatus === "resolved" && (role === "citizen" || role === "csr") && resolveStatusCount === 1 && (
+            <div className="rainmaker-displayInline">
+              {role !== "csr" && (
                 <div
                   className="complaint-details-timline-button"
                   onClick={(e) => {
-                    role === "citizen"
-                      ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
-                      : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                    changeRoute.push(`/feedback/${encodeURIComponent(complaintNo)}`);
                   }}
                 >
                   <Label
-                    label="CS_COMPLAINT_DETAILS_REOPEN"
+                    label="CS_COMPLAINT_DETAILS_RATE"
                     fontSize="12px"
                     labelStyle={timelineButtonLabelStyle}
                     containerStyle={timelineButtonContainerStyle}
                   />
                 </div>
+              )}
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  role === "citizen"
+                    ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                    : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                }}
+              >
+                <Label
+                  label="CS_COMPLAINT_DETAILS_REOPEN"
+                  fontSize="12px"
+                  labelStyle={timelineButtonLabelStyle}
+                  containerStyle={timelineButtonContainerStyle}
+                />
               </div>
-            )}
+            </div>
+          )}
         </div>
       );
 
@@ -478,16 +446,42 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" label={comments ? `" ${comments} "` : ""} />
         </div>
       );
+    case "pending":
+      return (
+        <div className="complaint-timeline-content-section">
+          <Label
+            style={{ paddingTop: "6px" }}
+            labelClassName="dark-color complaint-timeline-status"
+            containerStyle={
+              filedBy && filedBy.includes("@CSR")
+                ? {
+                    display: "block",
+                    marginBottom: 5,
+                    paddingTop: "6px",
+                  }
+                : {
+                    display: "inline-block",
+                    marginRight: "3px",
+                    paddingTop: "6px",
+                  }
+            }
+            label={"Complaint pending at GRO"}
+          />
+        </div>
+      );
   }
 };
 
 const DueDate = ({ duedateText }) => {
   return (
-    <Label
-      labelStyle={duedateText.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
-      className="Complaint-details-duedate"
-      label={duedateText}
-    />
+    duedateText &&
+    duedateText.slaStatement && (
+      <Label
+        labelStyle={duedateText.slaStatement.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
+        className="Complaint-details-duedate"
+        label={duedateText.slaStatement}
+      />
+    )
   );
 };
 
@@ -499,7 +493,9 @@ class ComplaintTimeLine extends Component {
     assigneeStatusCount = 0;
     reassignRequestedCount = 0;
     let { status, history, role, timeLine, feedback, rating, filedBy, filedUserMobileNumber, timelineSLAStatus } = this.props;
-
+    if (timeLine && timeLine.length === 1 && timeLine[0].status === "open") {
+      timeLine = [{ status: "pending" }, ...timeLine];
+    }
     let steps = timeLine.map((step, key) => {
       return {
         props: {

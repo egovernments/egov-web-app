@@ -14,16 +14,23 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _isEmpty = require("lodash/isEmpty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mergeServiceWithActions = function mergeServiceWithActions(payload) {
-  return payload && payload.actionHistory && payload.actionHistory.map(function (item, index) {
-    return (0, _extends3.default)({}, payload.services[index], {
-      actions: payload.actionHistory[index].actions
-    });
-  });
+  return payload && payload.actionHistory && payload.actionHistory.reduce(function (result, item, index) {
+    if (!(0, _isEmpty2.default)(item) && !(0, _isEmpty2.default)(item.actions)) {
+      result.push((0, _extends3.default)({}, payload.services[index], {
+        actions: item.actions
+      }));
+    }
+    return result;
+  }, []);
 };
 
 var intialState = {
@@ -31,7 +38,8 @@ var intialState = {
   error: false,
   errorMessage: "",
   byId: {},
-  categoriesById: {}
+  categoriesById: {},
+  order: ""
 };
 
 var complaintsReducer = function complaintsReducer() {
@@ -71,6 +79,11 @@ var complaintsReducer = function complaintsReducer() {
       });
     default:
       return state;
+    case actionTypes.COMPLAINTS_SORT_ORDER:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        order: action.order
+      });
   }
 };
 

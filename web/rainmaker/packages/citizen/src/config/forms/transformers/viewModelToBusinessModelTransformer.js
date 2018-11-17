@@ -1,4 +1,5 @@
 import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);
@@ -95,6 +96,10 @@ const transformer = (formKey, form = {}, state = {}) => {
             jsonPath: "User.tenantId",
             value: fields.city.value,
           },
+          permanentCity: {
+            jsonPath: "User.permanentCity",
+            value: fields.city.value,
+          },
         };
       } else if (previousRoute.endsWith("login")) {
         fields = state.form["login"].fields;
@@ -141,8 +146,16 @@ const transformer = (formKey, form = {}, state = {}) => {
 
       try {
         const { latitude, longitude } = form.fields;
-        const tenantId = await getTenantForLatLng(latitude.value, longitude.value);
-        formData.services[0].tenantId = tenantId;
+        let tenantIdFromAddress = "";
+        if (get(form, "fields.address.value")) {
+          tenantIdFromAddress = await getTenantForLatLng(latitude.value, longitude.value);
+        }
+        const tenantIdFromCity = get(formData, "services[0].addressDetail.city");
+        if (tenantIdFromAddress === tenantIdFromCity || (!tenantIdFromAddress && tenantIdFromCity)) {
+          formData.services[0].tenantId = tenantIdFromCity;
+        } else {
+          throw new Error("Complaint Location and City does not match!");
+        }
       } catch (error) {
         throw new Error(error.message);
       }

@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Icon } from "components";
 import { compose } from "redux";
 import withData from "./withData";
 import { Header } from "modules/common";
 import { ActionMenu } from "modules/common";
+import IconButton from "material-ui/IconButton";
 import Label from "egov-ui-kit/utils/translationNode";
 import { logout } from "egov-ui-kit/redux/auth/actions";
+import SortDialog from "../common/common/Header/components/SortDialog";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -17,6 +20,13 @@ const withAuthorization = (options = {}) => (Component) => {
     }
     state = {
       titleAddon: "",
+      sortPopOpen: false,
+    };
+    style = {
+      iconStyle: {
+        height: "30px",
+        width: "30px",
+      },
     };
 
     componentWillMount() {
@@ -43,6 +53,17 @@ const withAuthorization = (options = {}) => (Component) => {
       this.setState({ titleAddon });
     };
 
+    closeSortDialog = () => {
+      this.setState({
+        sortPopOpen: false,
+      });
+    };
+
+    onSortClick = () => {
+      this.setState({
+        sortPopOpen: true,
+      });
+    };
     //Duplication due to lack of time for proper testing in PGR
 
     renderCustomTitleForPt = (title) => {
@@ -62,21 +83,25 @@ const withAuthorization = (options = {}) => (Component) => {
         hideTitle,
         titleBackground,
         hideActionMenu,
+        refreshButton,
+        sortButton,
+        searchButton,
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
       const { titleAddon } = this.state;
+      const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
-        : this.roleFromUserInfo(userInfo, "GRO")
-          ? "ao"
-          : this.roleFromUserInfo(userInfo, "CSR")
-            ? "csr"
-            : this.roleFromUserInfo(userInfo, "EMPLOYEE")
-              ? "employee"
-              : this.roleFromUserInfo(userInfo, "PGR-ADMIN")
-                ? "pgr-admin"
-                : "";
+        : this.roleFromUserInfo(userInfo, "GRO") || this.roleFromUserInfo(userInfo, "DGRO")
+        ? "ao"
+        : this.roleFromUserInfo(userInfo, "CSR")
+        ? "csr"
+        : this.roleFromUserInfo(userInfo, "EMPLOYEE")
+        ? "employee"
+        : this.roleFromUserInfo(userInfo, "PGR-ADMIN")
+        ? "pgr-admin"
+        : "";
 
       //For restricting citizen to access employee url
 
@@ -100,28 +125,30 @@ const withAuthorization = (options = {}) => (Component) => {
               role={role}
               options={options}
               history={history}
+              refreshButton={refreshButton}
+              sortButton={sortButton}
+              searchButton={searchButton}
               className="rainmaker-header"
             />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
-            {!hideActionMenu &&
-              authenticated && (
-                <div>
-                  <div className="col-xs-2 action-menu-drawer show-action-menu">
-                    <div className="rainmaker-action-menu">
-                      <ActionMenu role={role} />
-                    </div>
+            {!hideActionMenu && authenticated && (
+              <div>
+                <div className="col-xs-2 action-menu-drawer show-action-menu" id="menu-container">
+                  <div className="rainmaker-action-menu">
+                    <ActionMenu role={role} />
                   </div>
-                  <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
                 </div>
-              )}
+                <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
+              </div>
+            )}
 
             <div className={"col-xs-12 col-sm-10"} style={{ padding: 0 }}>
               {authenticated ? (
                 <div>
-                  {!hideTitle &&
-                    role !== hideFor && (
-                      <div className={"screen-title-label"} style={{ padding: "24px 0 8px 16px" }}>
+                  {!hideTitle && role !== hideFor && (
+                    <div>
+                      <div className={"screen-title-label col-xs-8"} style={{ padding: "24px 0 8px 16px" }}>
                         <Label
                           className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
                           label={role === customFor ? customTitle : title}
@@ -140,7 +167,21 @@ const withAuthorization = (options = {}) => (Component) => {
                           />
                         )}
                       </div>
-                    )}
+                      {sortButton && (
+                        <div className="sort-button col-xs-4" style={{ paddingTop: "24px" }}>
+                          <div
+                            className="rainmaker-displayInline"
+                            style={{ cursor: "pointer", justifyContent: "flex-end" }}
+                            onClick={this.onSortClick}
+                          >
+                            <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
+                            <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
+                          </div>
+                          <SortDialog sortPopOpen={this.state.sortPopOpen} closeSortDialog={this.closeSortDialog} />
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <Component
                     {...this.props}
                     title={title}

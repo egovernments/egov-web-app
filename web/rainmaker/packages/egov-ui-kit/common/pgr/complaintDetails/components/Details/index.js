@@ -30,6 +30,10 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
+var _isEmpty = require("lodash/isEmpty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -85,12 +89,18 @@ var Details = function (_Component) {
           description = _props.description,
           submittedDate = _props.submittedDate,
           address = _props.address,
-          landMark = _props.landMark,
+          addressDetail = _props.addressDetail,
           mapAction = _props.mapAction,
           images = _props.images,
           action = _props.action,
-          role = _props.role,
-          complaintLoc = _props.complaintLoc;
+          role = _props.role;
+
+      var _ref2 = addressDetail || "",
+          houseNoAndStreetName = _ref2.houseNoAndStreetName,
+          landmark = _ref2.landmark,
+          mohalla = _ref2.mohalla,
+          city = _ref2.city,
+          locality = _ref2.locality;
 
       var icon = {};
       icon.name = "location";
@@ -186,77 +196,82 @@ var Details = function (_Component) {
                       onClick: function onClick() {
                         return _this2.onImageClick(image);
                       }
-                    }),
-                    " "
+                    })
                   );
                 })
               ),
-              landMark && _react2.default.createElement(
+              addressDetail && !(0, _isEmpty2.default)(addressDetail) && _react2.default.createElement(
                 "div",
-                { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { className: "map-icon", action: "maps", name: "place", style: { marginRight: 13 }, color: "#767676" }),
+                _react2.default.createElement(_translationNode2.default, { label: "Address Details", labelClassName: "dark-heading" })
+              ),
+              houseNoAndStreetName && _react2.default.createElement(
+                "div",
+                { className: "complaint-detail-detail-section-status row" },
+                _react2.default.createElement(_translationNode2.default, {
+                  className: "col-xs-6  col-sm-4 col-md-2 status-color",
+                  label: "CS_COMPLAINTDETAILS_HOUSE",
+                  id: "complaint-details-complaint-location"
+                }),
+                _react2.default.createElement(_translationNode2.default, {
+                  label: houseNoAndStreetName,
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
+                  id: "complaint-details-complaint-location",
+                  labelStyle: { color: "inherit" }
+                })
+              ),
+              mohalla && city && _react2.default.createElement(
+                "div",
+                { className: "complaint-detail-detail-section-status row" },
+                _react2.default.createElement(_translationNode2.default, {
+                  className: "col-xs-6  col-sm-4 col-md-2 status-color",
+                  label: "CS_COMPLAINTDETAILS_MOHALLA",
+                  id: "complaint-details-complaint-location"
+                }),
                 _react2.default.createElement(
                   "div",
-                  { className: "rainmaker-displayInline" },
+                  { className: "col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: "CS_ADDCOMPLAINT_ADDRESSINFO",
+                    label: locality,
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" }
                   }),
                   _react2.default.createElement(_translationNode2.default, {
-                    label: landMark,
-                    className: "status-result-color",
+                    label: ",",
+                    className: "comma-style",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" },
-                    containerStyle: { marginLeft: 5 }
+                    fontSize: "16px"
+                  }),
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: city,
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" }
                   })
                 )
               ),
-              address && _react2.default.createElement(
+              landmark && _react2.default.createElement(
                 "div",
-                { className: "rainmaker-displayInline", style: { marginTop: 10 } },
-                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
+                { className: "complaint-detail-detail-section-status row" },
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6  col-sm-4 col-md-2 status-color", label: "CS_COMPLAINTDETAILS_LANDMARK" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
+                  label: landmark,
+                  id: "complaint-details-submission-date",
+                  labelStyle: { color: "inherit" }
+                })
+              ),
+              address && (0, _isEmpty2.default)(addressDetail) && _react2.default.createElement(
+                "div",
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { className: "map-icon", action: "maps", name: "place", style: { marginRight: "13px" }, color: "#767676" }),
                 _react2.default.createElement(_translationNode2.default, {
                   label: address,
                   className: "status-result-color",
                   id: "complaint-details-complaint-location",
-                  labelStyle: { color: "inherit" }
-                })
-              ),
-              _react2.default.createElement(
-                "div",
-                { style: { marginTop: 10 } },
-                mapAction && complaintLoc.lat && _react2.default.createElement(_components.Button, {
-                  className: "employee-complaint-summary-mapBtn",
-                  primary: true,
-                  label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "ES_COMPLAINT_SUMMARY_MAP", color: "#ffffff" }),
-                  style: {
-                    height: "auto",
-                    lineHeight: "auto",
-                    minWidth: "inherit"
-                  },
-                  labelStyle: {
-                    padding: "0 12px 0 0 ",
-                    letterSpacing: "0.6px",
-                    display: "inline-block",
-                    height: "22px",
-                    lineHeight: "22px"
-                  },
-                  icon: _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: mapIconStyle, color: "#ffffff" }),
-                  onClick: function onClick(e) {
-                    _this2.props.redirectToMap(true);
-                  }
-                })
-              ),
-              description && _react2.default.createElement(
-                "div",
-                { style: { marginTop: "16px" }, className: "rainmaker-displayInline" },
-                _react2.default.createElement(_components.Icon, { action: "editor", name: "format-quote", style: iconStyle, color: "#969696" }),
-                _react2.default.createElement(_translationNode2.default, {
-                  label: description,
-                  id: "complaint-details-complaint-description",
-                  className: "status-result-color",
                   labelStyle: { color: "inherit" }
                 })
               )

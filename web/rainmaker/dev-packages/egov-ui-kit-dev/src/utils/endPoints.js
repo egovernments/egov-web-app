@@ -146,3 +146,10 @@ export const RECEIPT = {
     ACTION: "_get",
   },
 };
+
+export const BOUNDARY = {
+  GET: {
+    URL: "/egov-location/location/v11/boundarys/_search",
+    ACTION: "_get",
+  },
+};

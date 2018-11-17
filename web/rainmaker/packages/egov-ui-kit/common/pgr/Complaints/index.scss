@@ -64,6 +64,14 @@
   padding-bottom: 8px;
 }
 
+.complaint-address-display {
+  display: block;
+}
+
+.comma-style {
+  display: none;
+}
+
 .complaint-date-cont,
 .complaint-address-cont {
   display: flex;
@@ -150,5 +158,13 @@
   }
   .no-complaints-message-cont {
     height: calc(100vh - 124px);
+  }
+
+  .complaint-address-display {
+    display: flex;
+  }
+
+  .comma-style {
+    display: inherit;
   }
 }

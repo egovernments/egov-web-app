@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.trimObj = exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.hasTokenExpired = exports.trimObj = exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -78,15 +78,16 @@ var statusToLocalisationKeyMapping = exports.statusToLocalisationKeyMapping = {
 };
 
 var displayStatus = exports.displayStatus = function displayStatus(status) {
-  return status ? statusToMessageMapping[status.toLowerCase()] : "";
+  return status ? statusToMessageMapping[status && status.toLowerCase()] : "";
 };
 
 var displayLocalizedStatusMessage = exports.displayLocalizedStatusMessage = function displayLocalizedStatusMessage(status) {
-  return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
+  return status ? statusToLocalisationKeyMapping[status && status.toLowerCase()] : "";
 };
 var transformById = exports.transformById = function transformById(payload, id) {
   return payload && payload.reduce(function (result, item) {
     result[item[id]] = (0, _extends3.default)({}, item);
+
     return result;
   }, {});
 };
@@ -356,7 +357,7 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
   var transformedStatus = "";
-  switch (status.toLowerCase()) {
+  switch (status && status.toLowerCase()) {
     case "open":
     case "new":
     case "reassignrequested":
@@ -398,12 +399,17 @@ var getPropertyFromObj = exports.getPropertyFromObj = function getPropertyFromOb
 var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHours, submittedTime) {
   var millsToAdd = slaHours * 60 * 60 * 1000;
   var toBeFinishedBy = millsToAdd + submittedTime;
+  var slaStatement = "";
   var daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    return Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
+    slaStatement = Math.abs(daysCount) === 1 ? "Overdue by " + Math.abs(daysCount) + " day" : "Overdue by " + Math.abs(daysCount) + " days";
   } else {
-    return Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
+    slaStatement = Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
   }
+  return {
+    slaStatement: slaStatement,
+    daysCount: daysCount
+  };
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
@@ -506,35 +512,46 @@ var getLatestAction = function getLatestAction(actionArr) {
   }, 0);
 };
 
+// export const getAddressDetail = (addressDetail) => {
+//   const { houseNoAndStreetName, landmark, mohalla, city } = addressDetail;
+//   return houseNoAndStreetName && landmark
+//     ? `${houseNoAndStreetName},${mohalla},${landmark},${city}`
+//     : !houseNoAndStreetName && landmark
+//     ? `${mohalla},${landmark},${city}`
+//     : houseNoAndStreetName && !landmark
+//     ? `${houseNoAndStreetName},${mohalla},${city}`
+//     : `${mohalla},${city}`;
+// };
+
 var transformComplaintForComponent = exports.transformComplaintForComponent = function transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus) {
   var defaultPhoneNumber = "";
   var transformedComplaints = Object.values(complaints.byId).map(function (complaintDetail, index) {
     var filedUserName = complaintDetail && complaintDetail.citizen && complaintDetail.citizen.name;
     var isFiledByCSR = complaintDetail && complaintDetail.actions && complaintDetail.actions[complaintDetail.actions.length - 1].by && complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] && complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
-    if (complaintDetail.actions) {
-      return {
-        header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
-        date: complaintDetail.auditDetails.createdTime,
-        latestCreationTime: getLatestCreationTime(complaintDetail),
-        complaintNo: complaintDetail.serviceRequestId,
-        images: fetchImages(complaintDetail.actions).filter(function (imageSource) {
-          return isImage(imageSource);
-        }),
-        complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
-        rawStatus: complaintDetail.status && complaintDetail.status,
-        address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
-        reassign: complaintDetail.status === "reassignrequested" ? true : false,
-        reassignRequestedBy: complaintDetail.status === "reassignrequested" ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA") : "NA",
-        latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
-        submittedBy: filedUserName ? isFiledByCSR ? filedUserName + " (Citizen Service Desk)" : filedUserName : "NA",
-        citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
-        assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
-        employeePhoneNumber: employeeById && employeeById[findLatestAssignee(complaintDetail.actions)] ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber : defaultPhoneNumber,
-        status: role === "citizen" ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter(function (complaint) {
-          return complaint.status;
-        })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)))
-      };
-    }
+    return {
+      header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
+      date: complaintDetail.auditDetails.createdTime,
+      latestCreationTime: getLatestCreationTime(complaintDetail),
+      complaintNo: complaintDetail.serviceRequestId,
+      images: fetchImages(complaintDetail.actions).filter(function (imageSource) {
+        return isImage(imageSource);
+      }),
+      complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
+      rawStatus: complaintDetail.status && complaintDetail.status,
+      address: complaintDetail.address ? complaintDetail.address : "",
+      addressDetail: complaintDetail.addressDetail ? complaintDetail.addressDetail : {},
+      reassign: complaintDetail.status === "reassignrequested" ? true : false,
+      reassignRequestedBy: complaintDetail.status === "reassignrequested" ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA") : "NA",
+      latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
+      submittedBy: filedUserName ? isFiledByCSR ? filedUserName + " (Citizen Service Desk)" : filedUserName : "NA",
+      citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
+      assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
+      employeePhoneNumber: employeeById && employeeById[findLatestAssignee(complaintDetail.actions)] ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber : defaultPhoneNumber,
+      status: role === "citizen" ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter(function (complaint) {
+        return complaint.status;
+      })[0].action) : getTransformedStatus(complaintDetail.status) === "CLOSED" ? complaintDetail.rating ? displayStatus(complaintDetail.rating + "/5") : displayStatus(complaintDetail.actions[0].status) : displayStatus(returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).slaStatement),
+      SLA: returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail)).daysCount
+    };
   });
   return transformedComplaints;
 };
@@ -608,7 +625,11 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
             _context3.t0 = _context3["catch"](1);
             message = _context3.t0.message;
 
-            dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
+            if (fieldKey === "mohalla") {
+              dispatch((0, _actions2.toggleSnackbarAndSetText)(true, "There is no admin boundary data available for this tenant", true));
+            } else {
+              dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
+            }
             return _context3.abrupt("return");
 
           case 16:
@@ -631,4 +652,11 @@ var trimObj = exports.trimObj = function trimObj(obj) {
     if (key === "") delete obj[key];
   }
   return obj;
+};
+
+var hasTokenExpired = exports.hasTokenExpired = function hasTokenExpired(status, data) {
+  if (status === 401) {
+    if (data && data.Errors && Array.isArray(data.Errors) && data.Errors.length > 0 && data.Errors[0].code === "InvalidAccessTokenException") return true;
+  }
+  return false;
 };

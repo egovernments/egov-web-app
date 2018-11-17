@@ -6,6 +6,7 @@ import translateFieldText from "./translateFieldText";
 import initForm from "./initForm";
 import removeForm from "./removeForm";
 import onSetField from "./onSetField";
+import updateForm from "./updateForm";
 
-const composedMiddleware = [initForm, formHooks, initField, formSubmit, translateFieldText, validation, removeForm, onSetField];
+const composedMiddleware = [initForm, formHooks, initField, formSubmit, translateFieldText, validation, removeForm, onSetField, updateForm];
 export default composedMiddleware;

@@ -67,14 +67,31 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
 
 const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
-
+  const ulbGrade = get(propertyTenant[0], "city.ulbGrade");
+  const name = get(propertyTenant[0], "name");
   return {
-    header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
+    header: getReceiptHeaderLabel(name, ulbGrade),
     subheader: "Property Tax Payment Receipt",
     logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl,
   };
+};
+
+const getReceiptHeaderLabel = (name, ulbGrade) => {
+  if (ulbGrade) {
+    if (ulbGrade === "NP") {
+      return `${name.toUpperCase()} NAGAR PANCHAYAT`;
+    } else if (ulbGrade === "Municipal Corporation") {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    } else if (ulbGrade.includes("MC Class")) {
+      return `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+    } else {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    }
+  } else {
+    return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+  }
 };
 
 const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) => {
@@ -116,8 +133,8 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
 };
 
 const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
-  const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
+  const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution

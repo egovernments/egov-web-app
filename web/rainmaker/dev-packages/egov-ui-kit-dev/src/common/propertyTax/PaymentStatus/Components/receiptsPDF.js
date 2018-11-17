@@ -43,12 +43,14 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
           dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
           dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
-          dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Built Area/Total Annual Rent(sq yards)", style: "receipt-assess-table-header" });
           bodyData.push(dataRow);
           units &&
             units.map((unit) => {
               dataRow = [];
-              dataRow.push(propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
+              dataRow.push(
+                unit.usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor")
+              );
               dataRow.push(
                 transform(
                   unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor,
@@ -65,7 +67,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
               if (unit.occupancyType === "RENTED") {
                 dataRow.push(unit.arv || "");
               } else {
-                dataRow.push(`${unit.unitArea} sq yards` || "");
+                dataRow.push(`${Math.round(unit.unitArea * 100) / 100}` || "");
               }
 
               bodyData.push(dataRow);
@@ -96,6 +98,15 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
             },
             {
               text: item.name || "",
+              border: borderValue,
+            },
+            {
+              text: item.relationship === "FATHER" ? "Father's Name" : "Husband's Name",
+              border: borderKey,
+              style: "receipt-table-key",
+            },
+            {
+              text: item.fatherOrHusbandName || "",
               border: borderValue,
             },
           ];
@@ -205,7 +216,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                     text: "Contact Us: ",
                     bold: true,
                   },
-                  header.contact,
+                  header.contact || "NA",
                 ],
                 alignment: "right",
               },
@@ -230,7 +241,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                     text: "Website: ",
                     bold: true,
                   },
-                  header.website,
+                  header.website || "NA",
                 ],
                 alignment: "right",
               },
@@ -281,8 +292,8 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
               widths: receiptTableWidth,
               body: [
                 [
-                  { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
-                  { text: propertyDetails[0].landArea ? `${propertyDetails[0].landArea} sq yards` : "NA", border: borderValue },
+                  { text: "Plot Size(sq yards)", border: borderKey, style: "receipt-table-key" },
+                  { text: propertyDetails[0].landArea ? `${Math.round(propertyDetails[0].landArea * 100) / 100}` : "NA", border: borderValue },
                   { text: "Property Type:", border: borderKey, style: "receipt-table-key" },
                   {
                     text: propertyDetails[0].propertySubType

@@ -18,15 +18,17 @@ class LandingPage extends Component {
 
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
+    const modulesToShow = Object.keys(moduleData);
     return (
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
-        acc.push({
-          cities: citiesByModule[item].tenants.map((item) => {
-            return item.code;
-          }),
-          ...moduleData[item],
-        });
+        modulesToShow.indexOf(item) > -1 &&
+          acc.push({
+            cities: citiesByModule[item].tenants.map((item) => {
+              return item.code;
+            }),
+            ...moduleData[item],
+          });
         return acc;
       }, [])
     );
@@ -58,6 +60,18 @@ class LandingPage extends Component {
       iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
       className: "pt-landing-card",
       // cities :
+    },
+    TL: {
+      moduleTitle: "TradeLicense",
+      moduleDescription:
+        "A licensed trade will always enjoy a greater goodwill and attract more customers and investors than unregistered entities. Help your city to plan and support your business. Apply for your Trade License Now!",
+      button1: "Mseva TradeLicense",
+      button2: "How it works?",
+      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      iconAction: "places",
+      iconName: "business-center",
+      route: "tradelicense/home",
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
 

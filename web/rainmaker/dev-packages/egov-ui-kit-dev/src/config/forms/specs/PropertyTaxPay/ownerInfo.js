@@ -2,7 +2,7 @@ import { getOwnerCategoryByYear } from "egov-ui-kit/utils/PTCommon";
 import { setDependentFields } from "./utils/enableDependentFields";
 import get from "lodash/get";
 import set from "lodash/set";
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 
 const formConfig = {
   name: "ownerInfo",
@@ -15,7 +15,7 @@ const formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[a-zA-Z\.\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       errorMessage: "Enter valid name (max length 64)",
     },
     ownerMobile: {
@@ -25,7 +25,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
-      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[5-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
@@ -35,7 +35,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
-      pattern: /^[a-zA-Z\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       required: true,
       errorMessage: "Enter valid name (max length 64)",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -57,7 +57,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,500}$/,
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,256}$/,
       errorMessage: "Enter valid address",
     },
     ownerRelationship: {
@@ -66,8 +66,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
-      dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
-      value: "father",
+      dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerCategory: {
@@ -246,6 +245,10 @@ const formConfig = {
     try {
       const formKey = get(action, "form.name", "");
       const state = store.getState();
+      if (get(state, `form.${formKey}.fields.ownerRelationship.value`, "NONE") === "NONE") {
+        dispatch(handleFieldChange(formKey, "ownerRelationship", "FATHER"));
+      }
+
       if (get(state, `form.${formKey}.fields.ownerCategory.value`, "NONE") === "NONE") {
         dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true));
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "hideField", true));

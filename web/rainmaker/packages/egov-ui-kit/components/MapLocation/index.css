@@ -19,6 +19,15 @@
   padding: 0px !important;
   height: 100vh; }
 
+.markerInfoBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -99px;
+  /*set to a negative number 1/2 of your height*/
+  margin-left: -71px;
+  /*set to a negative number 1/2 of your width*/ }
+
 .myLoc {
   position: absolute;
   bottom: 70px;

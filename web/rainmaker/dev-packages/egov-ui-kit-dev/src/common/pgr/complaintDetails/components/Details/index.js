@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
 const iconStyle = {
@@ -31,20 +32,8 @@ class Details extends Component {
   };
 
   render() {
-    const {
-      status,
-      complaint,
-      applicationNo,
-      description,
-      submittedDate,
-      address,
-      landMark,
-      mapAction,
-      images,
-      action,
-      role,
-      complaintLoc,
-    } = this.props;
+    const { status, complaint, applicationNo, description, submittedDate, address, addressDetail, mapAction, images, action, role } = this.props;
+    const { houseNoAndStreetName, landmark, mohalla, city, locality } = addressDetail || "";
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -134,35 +123,77 @@ class Details extends Component {
                               height={46}
                               source={image}
                               onClick={() => this.onImageClick(image)}
-                            />{" "}
+                            />
                           </div>
                         )
                       );
                     })}
                 </div>
-                {landMark && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-                    <div className="rainmaker-displayInline">
+                {addressDetail && !isEmpty(addressDetail) && (
+                  <div className="rainmaker-displayInline">
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: 13 }} color={"#767676"} />
+                    <Label label="Address Details" labelClassName="dark-heading" />
+                  </div>
+                )}
+                {houseNoAndStreetName && (
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label
+                      className="col-xs-6  col-sm-4 col-md-2 status-color"
+                      label={"CS_COMPLAINTDETAILS_HOUSE"}
+                      id="complaint-details-complaint-location"
+                    />
+                    <Label
+                      label={houseNoAndStreetName}
+                      className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                    />
+                  </div>
+                )}
+                {mohalla && city && (
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label
+                      className="col-xs-6  col-sm-4 col-md-2 status-color"
+                      label={"CS_COMPLAINTDETAILS_MOHALLA"}
+                      id="complaint-details-complaint-location"
+                    />
+                    <div className="col-xs-6  col-sm-8 col-md-10 no-padding complaint-address-display">
                       <Label
-                        label={"CS_ADDCOMPLAINT_ADDRESSINFO"}
+                        label={locality}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
                       />
                       <Label
-                        label={landMark}
+                        label={","}
+                        className="comma-style"
+                        id="complaint-details-complaint-location"
+                        labelStyle={{ color: "inherit" }}
+                        fontSize="16px"
+                      />
+                      <Label
+                        label={city}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
-                        containerStyle={{ marginLeft: 5 }}
                       />
                     </div>
                   </div>
                 )}
-                {address && (
-                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
-                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                {landmark && (
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label={"CS_COMPLAINTDETAILS_LANDMARK"} />
+                    <Label
+                      className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
+                      label={landmark}
+                      id="complaint-details-submission-date"
+                      labelStyle={{ color: "inherit" }}
+                    />
+                  </div>
+                )}
+                {address && isEmpty(addressDetail) && (
+                  <div className="rainmaker-displayInline">
+                    <Icon className="map-icon" action="maps" name="place" style={{ marginRight: "13px" }} color={"#767676"} />
                     <Label
                       label={address}
                       className="status-result-color"
@@ -171,34 +202,33 @@ class Details extends Component {
                     />
                   </div>
                 )}
-                <div style={{ marginTop: 10 }}>
-                  {mapAction &&
-                    complaintLoc.lat && (
-                      <Button
-                        className="employee-complaint-summary-mapBtn"
-                        primary={true}
-                        label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
-                        style={{
-                          height: "auto",
-                          lineHeight: "auto",
-                          minWidth: "inherit",
-                        }}
-                        labelStyle={{
-                          padding: "0 12px 0 0 ",
-                          letterSpacing: "0.6px",
-                          display: "inline-block",
-                          height: "22px",
-                          lineHeight: "22px",
-                        }}
-                        icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
-                        onClick={(e) => {
-                          this.props.redirectToMap(true);
-                        }}
-                      />
-                    )}
-                </div>
-                {description && (
-                  <div style={{ marginTop: "16px" }} className="rainmaker-displayInline">
+                {/* <div style={{ marginTop: 10 }}>
+                  {mapAction && complaintLoc.lat && (
+                    <Button
+                      className="employee-complaint-summary-mapBtn"
+                      primary={true}
+                      label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
+                      style={{
+                        height: "auto",
+                        lineHeight: "auto",
+                        minWidth: "inherit",
+                      }}
+                      labelStyle={{
+                        padding: "0 12px 0 0 ",
+                        letterSpacing: "0.6px",
+                        display: "inline-block",
+                        height: "22px",
+                        lineHeight: "22px",
+                      }}
+                      icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
+                      onClick={(e) => {
+                        this.props.redirectToMap(true);
+                      }}
+                    />
+                  )}
+                </div> */}
+                {/* {description && (
+                  <div className="rainmaker-displayInline">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     <Label
                       label={description}
@@ -207,7 +237,7 @@ class Details extends Component {
                       labelStyle={{ color: "inherit" }}
                     />
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           }

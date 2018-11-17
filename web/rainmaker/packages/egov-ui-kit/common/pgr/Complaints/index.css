@@ -51,6 +51,12 @@
   justify-content: space-between;
   padding-bottom: 8px; }
 
+.complaint-address-display {
+  display: block; }
+
+.comma-style {
+  display: none; }
+
 .complaint-date-cont,
 .complaint-address-cont {
   display: flex; }
@@ -122,4 +128,8 @@
   .complaint-image-wrapper {
     max-width: 200px; }
   .no-complaints-message-cont {
-    height: calc(100vh - 124px); } }
+    height: calc(100vh - 124px); }
+  .complaint-address-display {
+    display: flex; }
+  .comma-style {
+    display: inherit; } }

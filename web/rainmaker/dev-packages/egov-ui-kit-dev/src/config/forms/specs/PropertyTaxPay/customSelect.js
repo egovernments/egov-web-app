@@ -1,5 +1,6 @@
 import { prepareDropDownData } from "./utils/reusableFields";
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -35,6 +36,12 @@ const formConfig = {
         }
         return action;
       },
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        var arr = formKey.split("_");
+        var floorIndex = parseInt(arr[1]);
+        const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
+      },
     },
   },
   action: "",
@@ -61,9 +68,17 @@ const formConfig = {
   },
   afterInitForm: (action, store, dispatch) => {
     try {
+      let state = store.getState();
       if (action.form.name === "customSelect_0") {
-        dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
-        dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+        if (
+          get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" &&
+          get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY"
+        ) {
+          //Do nothing
+        } else {
+          dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
+          dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+        }
       }
       return action;
     } catch (e) {

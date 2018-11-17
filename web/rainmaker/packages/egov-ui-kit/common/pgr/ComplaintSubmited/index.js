@@ -84,13 +84,13 @@ var ComplaintSubmitted = function (_Component) {
             _react2.default.createElement(
               "div",
               { className: "complaint-submitted-boldlabel" },
-              _react2.default.createElement(_translationNode2.default, { labelClassName: "complaint-submitted-label", label: "CS_COMPLAINT_SUBMITTED_LABEL1", fontSize: "16px" }),
               _react2.default.createElement(
                 _FloatingActionButton2.default,
                 { backgroundColor: "#22b25f", style: { marginBottom: "16px" } },
                 _react2.default.createElement(_components.Icon, { name: "check", action: "navigation" })
               ),
               !this.props.removeGreeting && _react2.default.createElement(_translationNode2.default, { labelClassName: "thank-you-label", id: "thank-you-text", label: "CS_COMPLAINT_SUBMITTED_THANKYOU", fontSize: "16px" }),
+              _react2.default.createElement(_translationNode2.default, { labelClassName: "complaint-submitted-label", label: "CS_COMPLAINT_SUBMITTED_LABEL1", fontSize: "16px" }),
               _react2.default.createElement(
                 "div",
                 { className: "complaint-submitted-complaintNo-cont" },

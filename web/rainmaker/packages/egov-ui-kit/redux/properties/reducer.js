@@ -110,6 +110,14 @@ var propertyReducer = function propertyReducer() {
         errorMessage: "",
         draftsById: draftsById
       });
+    case actionTypes.MOHALLA_FETCH_COMPLETE:
+      var mohallaById = (0, _commons.transformById)(action.payload, "code");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        mohallaById: mohallaById
+      });
     case actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE:
       var failedPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
       return (0, _extends3.default)({}, state, {

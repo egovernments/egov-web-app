@@ -1,19 +1,42 @@
 import React from "react";
-import { AppBar } from "components";
+import { AppBar, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
-
+import IconButton from "material-ui/IconButton";
 import "./index.css";
 
 const styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 },
 };
 
+const iconButtonStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  width: 35,
+};
+
 // handle listners
-const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLocalizationLabel, userInfo = {}, onToolBarIconClick, ...rest }) => {
+const EgovAppBar = ({
+  className,
+  defaultTitle,
+  ulbLogo,
+  title,
+  titleAddon,
+  isHomeScreen,
+  role,
+  fetchLocalizationLabel,
+  userInfo = {},
+  onToolBarIconClick,
+  refreshButton,
+  sortButton,
+  searchButton,
+  sortDialogOpen,
+  history,
+  ...rest
+}) => {
   return (
     <div>
       <AppBar
@@ -22,7 +45,10 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
         title={
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
-              <img src={pbLogo} />
+              <img
+                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
+                onError={(event) => event.target.setAttribute("src", pbLogo)}
+              />
             </div>
             <Label containerStyle={{ marginLeft: "0px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
             {titleAddon && (
@@ -35,7 +61,13 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
             <Label
               containerStyle={{ marginLeft: "10px" }}
               className="screenHeaderLabelStyle appbar-municipal-label"
-              label={"PUNJAB MUNICIPAL CORPORATION"}
+              label={
+                role && role.toLowerCase() === "citizen"
+                  ? "PUNJAB MUNICIPAL CORPORATION"
+                  : defaultTitle
+                  ? defaultTitle
+                  : "PUNJAB MUNICIPAL CORPORATION"
+              }
             />
           </div>
         }
@@ -48,9 +80,29 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
         <div className="appbar-right-logo">
           <img src={digitLogo} />
         </div>
+        <div className="icon-button">
+          {refreshButton && (
+            <IconButton style={iconButtonStyle} onClick={(e) => location.reload()}>
+              <Icon action="navigation" name="refresh" color="#fff" />
+            </IconButton>
+          )}
+          {sortButton && (
+            <IconButton style={iconButtonStyle} onClick={sortDialogOpen}>
+              <Icon action="action" name="swap-vert" color="#fff" />
+            </IconButton>
+          )}
+          {searchButton && role === "ao" && (
+            <IconButton style={iconButtonStyle} onClick={(e) => onSearchClick(history)}>
+              <Icon action="action" name="search" color="#fff" />
+            </IconButton>
+          )}
+        </div>
       </AppBar>
     </div>
   );
 };
 
+const onSearchClick = (history) => {
+  history.push("search-complaint");
+};
 export default EgovAppBar;

@@ -26,8 +26,11 @@ import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
 import ptRoutes from "./pt";
+import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
 // const ptRoutes = [];
+
+import TLHowItWorks from "../../ui-views/HowItWorks";
 
 const routes = [
   {
@@ -87,7 +90,7 @@ const routes = [
     path: "my-complaints",
     component: MyComplaints,
     needsAuthentication: true,
-    options: { title: "CS_HOME_MY_COMPLAINTS" },
+    options: { title: "CS_HOME_MY_COMPLAINTS", refreshButton: true },
   },
   {
     path: "contact-us",
@@ -182,7 +185,18 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true },
   },
+  {
+    path: "trade-license/how-it-works",
+    component: TLHowItWorks,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "TL_HOW_IT_WORKS",
+    },
+  },
   ...ptRoutes,
+  ...tlRoutes,
 ];
 
 export default routes;

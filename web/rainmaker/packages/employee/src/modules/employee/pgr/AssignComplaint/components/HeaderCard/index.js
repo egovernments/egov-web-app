@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import "./index.css";
 
 const addressStyle = {
   display: "inline-block",
@@ -8,8 +9,8 @@ const addressStyle = {
 
 const iconStyle = {
   display: "inline-block",
-  width: 24,
-  height: 24,
+  // width: 45,
+  // height: 28,
   marginRight: 7,
   marginTop: -3,
 };
@@ -23,6 +24,8 @@ const HeaderCard = ({ complaint }) => {
   if (complaint && complaint.header) {
     transformedcomplaint = "SERVICEDEFS." + complaint.header.toUpperCase();
   }
+
+  const { houseNoAndStreetName, landmark, mohalla, city, locality } = complaint.address || "";
   return (
     <Card
       textChildren={[
@@ -35,10 +38,55 @@ const HeaderCard = ({ complaint }) => {
           labelStyle={headerStyle}
           containerStyle={{ marginBottom: 10 }}
         />,
-        <div key={2} style={{ display: "flex", alignItems: "flex-start" }}>
-          <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-          <Label containerStyle={addressStyle} dark={true} label={complaint && complaint.address} />
-        </div>,
+        complaint && typeof complaint.address === "string" && (
+          <div key={2} style={{ display: "flex", alignItems: "flex-start" }}>
+            <Icon className="map-icon" action="maps" name="place" style={iconStyle} color={"#969696"} />
+            <Label containerStyle={addressStyle} dark={true} label={complaint.address} />
+          </div>
+        ),
+        complaint && typeof complaint.address === "object" && (
+          <div className="rainmaker-displayInline">
+            <div>
+              <Icon className="map-icon" action="maps" name="place" style={iconStyle} color={"#969696"} />
+            </div>
+            <div className="complaint-address-display">
+              <Label
+                label={houseNoAndStreetName}
+                className="status-result-color"
+                id="complaint-details-complaint-location"
+                labelStyle={{ color: "inherit" }}
+              />
+              {houseNoAndStreetName && (
+                <Label
+                  label={","}
+                  className="comma-style"
+                  id="complaint-details-complaint-location"
+                  labelStyle={{ color: "inherit" }}
+                  fontSize="16px"
+                />
+              )}
+              <Label label={locality} className="status-result-color" id="complaint-details-complaint-location" labelStyle={{ color: "inherit" }} />
+              <Label
+                label={","}
+                className="comma-style"
+                id="complaint-details-complaint-location"
+                labelStyle={{ color: "inherit" }}
+                fontSize="16px"
+              />
+              <Label label={city} className="status-result-color" id="complaint-details-complaint-location" labelStyle={{ color: "inherit" }} />
+              {landmark && (
+                <Label
+                  label={","}
+                  className="comma-style"
+                  id="complaint-details-complaint-location"
+                  labelStyle={{ color: "inherit" }}
+                  fontSize="16px"
+                />
+              )}
+              <Label label={landmark} className="status-result-color" id="complaint-details-complaint-location" labelStyle={{ color: "inherit" }} />
+            </div>
+          </div>
+        ),
       ]}
     />
   );

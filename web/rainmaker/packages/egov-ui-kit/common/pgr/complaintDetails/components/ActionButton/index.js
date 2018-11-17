@@ -68,7 +68,7 @@ var ActionButton = function (_Component) {
       return _react2.default.createElement(
         "div",
         { className: "complaint-details-action-buttons" },
-        _react2.default.createElement(_components.Button, {
+        btnOneLabel && _react2.default.createElement(_components.Button, {
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: btnOneLabel, color: "#fe7a51" }),
           onClick: btnOneOnClick,
           className: "action-button-one",

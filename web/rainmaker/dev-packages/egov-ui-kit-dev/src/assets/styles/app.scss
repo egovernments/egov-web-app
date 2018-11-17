@@ -1,5 +1,5 @@
 body {
-  background-color: #f2f2f2 !important;
+  background-color: #f4f7fb !important;
 }
 
 body,
@@ -58,7 +58,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .dark-color {
-  color: #484848;
+  color: "rgba(0, 0, 0, 0.8700000047683716)";
 }
 
 .rainmaker-custom-gap {
@@ -241,7 +241,7 @@ body.employee-user-profile {
 }
 
 .action-menu-drawer {
-  background-color: #3d4951;
+  background-color: #fff;
   min-height: calc(100vh - 64px);
   position: fixed;
   z-index: 1001;
@@ -266,6 +266,10 @@ body.employee-user-profile {
 
 @media only screen and (max-width: 768px) {
   .show-action-menu {
+    display: none;
+  }
+
+  .sort-button {
     display: none;
   }
 }

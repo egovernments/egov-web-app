@@ -124,7 +124,7 @@ var httpRequest = exports.httpRequest = function () {
             _context.t0 = _context["catch"](5);
             _error$response = _context.t0.response, data = _error$response.data, status = _error$response.status;
 
-            if (status == 400 && data == "") {
+            if ((0, _commons.hasTokenExpired)(status, data)) {
               apiError = "INVALID_TOKEN";
             } else {
               apiError = data.hasOwnProperty("Errors") && data.Errors && data.Errors.length && data.Errors[0].message || data.hasOwnProperty("error") && data.error.fields && data.error.fields.length && data.error.fields[0].message || data.hasOwnProperty("error_description") && data.error_description || apiError;

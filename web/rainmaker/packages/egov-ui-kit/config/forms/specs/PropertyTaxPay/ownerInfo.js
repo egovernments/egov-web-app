@@ -35,7 +35,7 @@ var formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[a-zA-Z\.\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       errorMessage: "Enter valid name (max length 64)"
     },
     ownerMobile: {
@@ -45,7 +45,7 @@ var formConfig = {
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
-      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[5-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
@@ -55,7 +55,7 @@ var formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
-      pattern: /^[a-zA-Z\s]{1,64}$/i,
+      pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       required: true,
       errorMessage: "Enter valid name (max length 64)",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
@@ -77,7 +77,7 @@ var formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,500}$/,
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,256}$/,
       errorMessage: "Enter valid address"
     },
     ownerRelationship: {
@@ -86,8 +86,7 @@ var formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
-      dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
-      value: "father",
+      dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
     ownerCategory: {
@@ -274,6 +273,10 @@ var formConfig = {
     try {
       var formKey = (0, _get3.default)(action, "form.name", "");
       var state = store.getState();
+      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerRelationship.value", "NONE") === "NONE") {
+        dispatch((0, _actions.handleFieldChange)(formKey, "ownerRelationship", "FATHER"));
+      }
+
       if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerCategory.value", "NONE") === "NONE") {
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", true));
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", true));

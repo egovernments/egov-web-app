@@ -112,28 +112,32 @@ const getTransformedItems = (propertiesById, cities) => {
   );
 };
 
+const getAddressFromProperty = (address, mohallaById) => {
+  return (
+    mohallaById && {
+      doorNo: get(address, "doorNo"),
+      buildingName: get(address, "buildingName"),
+      street: get(address, "street"),
+      pincode: get(address, "pincode"),
+      locality: {
+        name: mohallaById ? mohallaById[get(address, "locality.code")].name : "",
+      },
+      city: get(address, "city"),
+    }
+  );
+};
+
 const mapStateToProps = (state) => {
   const { properties, common } = state;
   const { urls } = state.app;
   const { cities } = common;
-  const { loading, draftsById, propertiesById, failedPayments } = properties || {};
+  const { loading, draftsById, propertiesById, failedPayments, mohallaById } = properties || {};
 
   let transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
-    if (
-      (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
-      get(draft, "draftRecord.financialYear.fields.button.value")
-    ) {
-      const address = {
-        doorNo: get(draft, "draftRecord.propertyAddress.fields.houseNumber.value"),
-        buildingName: get(draft, "draftRecord.propertyAddress.fields.colony.value"),
-        street: get(draft, "draftRecord.propertyAddress.fields.street.value"),
-        pincode: get(draft, "draftRecord.propertyAddress.fields.pincode.value"),
-        locality: {
-          name: get(draft, "draftRecord.propertyAddress.fields.mohalla.value"),
-        },
-        city: get(draft, "draftRecord.propertyAddress.fields.city.value"),
-      };
-      const financialYear = get(draft, "draftRecord.financialYear.fields.button.value");
+    const { prepareFormData, assessmentNumber } = draft.draftRecord || {};
+    if (!assessmentNumber && get(prepareFormData, "Properties[0].propertyDetails[0].financialYear")) {
+      const address = getAddressFromProperty(get(prepareFormData, "Properties[0].address"), mohallaById);
+      const financialYear = get(prepareFormData, "Properties[0].propertyDetails[0].financialYear");
       result.push({
         primaryText: <Label label={financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
         secondaryText: (

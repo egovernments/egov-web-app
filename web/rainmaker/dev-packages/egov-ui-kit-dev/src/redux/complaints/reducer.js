@@ -1,16 +1,20 @@
 import * as actionTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
+import isEmpty from "lodash/isEmpty";
 
 const mergeServiceWithActions = (payload) => {
   return (
     payload &&
     payload.actionHistory &&
-    payload.actionHistory.map((item, index) => {
-      return {
-        ...payload.services[index],
-        actions: payload.actionHistory[index].actions,
-      };
-    })
+    payload.actionHistory.reduce((result, item, index) => {
+      if (!isEmpty(item) && !isEmpty(item.actions)) {
+        result.push({
+          ...payload.services[index],
+          actions: item.actions,
+        });
+      }
+      return result;
+    }, [])
   );
 };
 
@@ -20,6 +24,7 @@ const intialState = {
   errorMessage: "",
   byId: {},
   categoriesById: {},
+  order: "",
 };
 
 const complaintsReducer = (state = intialState, action) => {
@@ -67,6 +72,12 @@ const complaintsReducer = (state = intialState, action) => {
       };
     default:
       return state;
+    case actionTypes.COMPLAINTS_SORT_ORDER:
+      return {
+        ...state,
+        loading: false,
+        order: action.order,
+      };
   }
 };
 

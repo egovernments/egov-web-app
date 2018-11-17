@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import set from "lodash/set";
+import isUndefined from "lodash/isUndefined";
 import cloneDeep from "lodash/cloneDeep";
 import queryString from "query-string";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
@@ -32,8 +33,11 @@ export const resetFormWizard = (form, removeForm) => {
 
 export const getLatestPropertyDetails = (propertyDetailsArray) => {
   if (propertyDetailsArray) {
+    const currentFinancialYear = getCurrentFinancialYear();
     if (propertyDetailsArray.length > 1) {
-      return propertyDetailsArray.reduce((acc, curr) => {
+      const assessmentsOfCurrentYear = propertyDetailsArray.filter((item) => item.financialYear === currentFinancialYear);
+      const propertyDetails = assessmentsOfCurrentYear.length > 0 ? assessmentsOfCurrentYear : propertyDetailsArray;
+      return propertyDetails.reduce((acc, curr) => {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {
@@ -42,6 +46,20 @@ export const getLatestPropertyDetails = (propertyDetailsArray) => {
   } else {
     return;
   }
+};
+
+export const getCurrentFinancialYear = () => {
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var fiscalYr = "";
+  if (curMonth > 3) {
+    var nextYr1 = (today.getFullYear() + 1).toString();
+    fiscalYr = today.getFullYear().toString() + "-" + nextYr1.slice(2);
+  } else {
+    var nextYr2 = today.getFullYear().toString();
+    fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2.slice(2);
+  }
+  return fiscalYr;
 };
 
 export const getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
@@ -133,26 +151,52 @@ export const getFinancialYearFromQuery = () => {
 };
 
 export const getEstimateFromBill = (bill) => {
+  const taxHeads = [
+    "PT_TAX",
+    "PT_UNIT_USAGE_EXEMPTION",
+    "PT_OWNER_EXEMPTION",
+    "PT_FIRE_CESS",
+    "PT_CANCER_CESS",
+    "PT_TIME_PENALTY",
+    "PT_TIME_REBATE",
+    "PT_TIME_INTEREST",
+    "PT_ADHOC_PENALTY",
+    "PT_ADHOC_REBATE",
+    "PT_ADVANCE_CARRYFORWARD",
+    "PT_DECIMAL_CEILING_DEBIT",
+  ]; //Hardcoding as backend is not sending in correct order
   const { billDetails, tenantId } = bill && bill[0];
   const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
+  const taxHeadsFromAPI = billAccountDetails.map((item) => {
+    return item.accountDescription.split("-")[0];
+  });
+  const transformedTaxHeads = taxHeads.reduce((result, current) => {
+    if (taxHeadsFromAPI.indexOf(current) > -1) {
+      result.push(current);
+    }
+    return result;
+  }, []);
   let estimate = { totalAmount: 0 };
   estimate.totalAmount = totalAmount;
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
-  const taxHeadEstimates = billAccountDetails.reduce((taxHeadEstimates, item) => {
-    taxHeadEstimates.push({
-      taxHeadCode: item.accountDescription.split("-")[0],
-      estimateAmount: item.crAmountToBePaid,
-      category: item.purpose,
-    });
+  const taxHeadEstimates = transformedTaxHeads.reduce((taxHeadEstimates, current) => {
+    const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+    taxHeadContent &&
+      taxHeadContent[0] &&
+      taxHeadEstimates.push({
+        taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
+        estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        category: taxHeadContent[0].purpose,
+      });
     return taxHeadEstimates;
   }, []);
-  collectedAmount > 0 &&
-    taxHeadEstimates.push({
-      taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
-      estimateAmount: collectedAmount,
-      category: "EXEMPTION",
-    });
+  // collectedAmount > 0 &&
+  //   taxHeadEstimates.push({
+  //     taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+  //     estimateAmount: collectedAmount,
+  //     category: "EXEMPTION",
+  //   });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [{ ...estimate }];
 };
@@ -200,13 +244,20 @@ export const transformPropertyDataToAssessInfo = (data) => {
     configFloor = require(`egov-ui-kit/config/forms/specs/${path}/floorDetails.js`).default;
     let units = data["Properties"][0]["propertyDetails"][0]["units"];
 
+    //For assigning consecutive indexes in formkeys irrespective of floor no.
+    const floorIndexObj = prepareUniqueFloorIndexObj(units);
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
-      var floorNo = units[unitIndex]["floorNo"];
-      let formKey = `floorDetails_${floorNo}_unit_${unitIndex}`;
+      const floorNo = units[unitIndex]["floorNo"];
+      const floorIndex = floorIndexObj[floorNo];
+      let formKey =
+        propUsageType !== "RESIDENTIAL" && propType === "SHAREDPROPERTY"
+          ? `floorDetails_0_unit_${unitIndex}`
+          : `floorDetails_${floorIndex}_unit_${unitIndex}`;
       configFloor = cloneDeep(configFloor);
-      Object.keys(configFloor["fields"]).map((item) => {
+      Object.keys(configFloor["fields"]).forEach((item) => {
         let jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        configFloor["fields"][item].jsonPath = jsonPath;
         let valueInJSON = get(data, jsonPath);
         if (valueInJSON === null) {
           let categoryValue = jsonPath.split(".").pop();
@@ -221,10 +272,10 @@ export const transformPropertyDataToAssessInfo = (data) => {
       configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
 
-      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+      if (!("customSelect_" + floorIndex in dictCustomSelect)) {
         customSelectconfig = cloneDeep(customSelectconfig);
         customSelectconfig["fields"]["floorName"]["value"] = floorNo;
-        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+        dictCustomSelect["customSelect_" + floorIndex] = customSelectconfig;
       }
     }
   }
@@ -237,6 +288,16 @@ export const transformPropertyDataToAssessInfo = (data) => {
   // });
   // console.log(basicInfoConfig);
   return { basicInformation: basicInfoConfig, plotDetails: configPlot, ...dictFloor, ...dictCustomSelect };
+};
+
+const prepareUniqueFloorIndexObj = (units) => {
+  let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
+    if (isUndefined(floorIndexObj[item.floorNo])) {
+      floorIndexObj[item.floorNo] = index;
+    }
+    return floorIndexObj;
+  }, {});
+  return floorIndexObj;
 };
 
 export const convertUnitsToSqFt = (unitArray) => {

@@ -1,4 +1,1251 @@
-174 error execute Error occured with 'rainmaker-employee' while running 'npm run postinstall'
-175 error npm run postinstall [rainmaker-employee] Output from stdout:
-176 error npm run postinstall [rainmaker-employee] Output from stderr:
-177 error execute Error occured with 'rainmaker-employee' while running 'npm run postinstall'
+0 silly input []
+1 silly flags { _: [ 'bootstrap' ],
+1 silly flags   'reject-cycles': false,
+1 silly flags   rejectCycles: false,
+1 silly flags   args: [] }
+2 verbose rootPath /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker
+3 info version 2.11.0
+4 silly existsSync /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/VERSION
+5 silly initialize attempt
+6 silly npmConfig { registry: undefined,
+6 silly npmConfig   npmClient: undefined,
+6 silly npmConfig   npmClientArgs: undefined,
+6 silly npmConfig   mutex: undefined }
+7 silly initialize success
+8 silly execute attempt
+9 info Bootstrapping 5 packages
+10 info lifecycle preinstall
+11 silly runScript preinstall egov-tradelicence-core
+12 silly egov-tradelicence-core
+13 silly runScript preinstall egov-tradelicence
+14 silly egov-tradelicence
+15 silly runScript preinstall egov-ui-kit
+16 silly egov-ui-kit
+17 silly runScript preinstall rainmaker-citizen
+18 silly rainmaker-citizen
+19 silly runScript preinstall rainmaker-employee
+20 silly rainmaker-employee
+21 silly hasMatchingDependency rainmaker-citizen egov-ui-kit
+22 silly hasMatchingDependency rainmaker-employee egov-ui-kit
+23 silly hasDependencyInstalled rainmaker-citizen @material-ui/icons
+24 silly dependencyIsSatisfied [ '@material-ui/icons',
+24 silly dependencyIsSatisfied   '^1.1.0',
+24 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+25 verbose dependencyIsSatisfied @material-ui/icons false
+26 silly hasDependencyInstalled rainmaker-employee @material-ui/icons
+27 silly dependencyIsSatisfied [ '@material-ui/icons',
+27 silly dependencyIsSatisfied   '^1.1.0',
+27 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+28 verbose dependencyIsSatisfied @material-ui/icons false
+29 silly hasDependencyInstalled egov-tradelicence-core @material-ui/icons
+30 silly dependencyIsSatisfied [ '@material-ui/icons',
+30 silly dependencyIsSatisfied   '^2.0.0',
+30 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+31 verbose dependencyIsSatisfied @material-ui/icons false
+32 silly hasDependencyInstalled rainmaker-citizen babel-cli
+33 silly dependencyIsSatisfied [ 'babel-cli',
+33 silly dependencyIsSatisfied   '^6.26.0',
+33 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+34 verbose dependencyIsSatisfied babel-cli false
+35 silly hasDependencyInstalled rainmaker-employee babel-cli
+36 silly dependencyIsSatisfied [ 'babel-cli',
+36 silly dependencyIsSatisfied   '^6.26.0',
+36 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+37 verbose dependencyIsSatisfied babel-cli false
+38 silly hasDependencyInstalled rainmaker-citizen babel-plugin-transform-runtime
+39 silly dependencyIsSatisfied [ 'babel-plugin-transform-runtime',
+39 silly dependencyIsSatisfied   '^6.23.0',
+39 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+40 verbose dependencyIsSatisfied babel-plugin-transform-runtime false
+41 silly hasDependencyInstalled rainmaker-employee babel-plugin-transform-runtime
+42 silly dependencyIsSatisfied [ 'babel-plugin-transform-runtime',
+42 silly dependencyIsSatisfied   '^6.23.0',
+42 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+43 verbose dependencyIsSatisfied babel-plugin-transform-runtime false
+44 silly hasDependencyInstalled rainmaker-citizen babel-preset-es2015
+45 silly dependencyIsSatisfied [ 'babel-preset-es2015',
+45 silly dependencyIsSatisfied   '^6.24.1',
+45 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+46 verbose dependencyIsSatisfied babel-preset-es2015 false
+47 silly hasDependencyInstalled rainmaker-employee babel-preset-es2015
+48 silly dependencyIsSatisfied [ 'babel-preset-es2015',
+48 silly dependencyIsSatisfied   '^6.24.1',
+48 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+49 verbose dependencyIsSatisfied babel-preset-es2015 false
+50 silly hasDependencyInstalled rainmaker-citizen babel-preset-react
+51 silly dependencyIsSatisfied [ 'babel-preset-react',
+51 silly dependencyIsSatisfied   '^6.24.1',
+51 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+52 verbose dependencyIsSatisfied babel-preset-react false
+53 silly hasDependencyInstalled rainmaker-employee babel-preset-react
+54 silly dependencyIsSatisfied [ 'babel-preset-react',
+54 silly dependencyIsSatisfied   '^6.24.1',
+54 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+55 verbose dependencyIsSatisfied babel-preset-react false
+56 silly hasDependencyInstalled rainmaker-citizen babel-preset-stage-0
+57 silly dependencyIsSatisfied [ 'babel-preset-stage-0',
+57 silly dependencyIsSatisfied   '^6.24.1',
+57 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+58 verbose dependencyIsSatisfied babel-preset-stage-0 false
+59 silly hasDependencyInstalled rainmaker-employee babel-preset-stage-0
+60 silly dependencyIsSatisfied [ 'babel-preset-stage-0',
+60 silly dependencyIsSatisfied   '^6.24.1',
+60 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+61 verbose dependencyIsSatisfied babel-preset-stage-0 false
+62 silly hasDependencyInstalled rainmaker-citizen jsonpath
+63 silly dependencyIsSatisfied [ 'jsonpath',
+63 silly dependencyIsSatisfied   '^1.0.0',
+63 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+64 verbose dependencyIsSatisfied jsonpath false
+65 silly hasDependencyInstalled rainmaker-employee jsonpath
+66 silly dependencyIsSatisfied [ 'jsonpath',
+66 silly dependencyIsSatisfied   '^1.0.0',
+66 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+67 verbose dependencyIsSatisfied jsonpath false
+68 silly hasDependencyInstalled rainmaker-citizen node-sass-chokidar
+69 silly dependencyIsSatisfied [ 'node-sass-chokidar',
+69 silly dependencyIsSatisfied   '^1.2.2',
+69 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+70 verbose dependencyIsSatisfied node-sass-chokidar false
+71 silly hasDependencyInstalled rainmaker-employee node-sass-chokidar
+72 silly dependencyIsSatisfied [ 'node-sass-chokidar',
+72 silly dependencyIsSatisfied   '^1.2.2',
+72 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+73 verbose dependencyIsSatisfied node-sass-chokidar false
+74 silly hasDependencyInstalled rainmaker-citizen npm-run-all
+75 silly dependencyIsSatisfied [ 'npm-run-all',
+75 silly dependencyIsSatisfied   '^4.1.2',
+75 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+76 verbose dependencyIsSatisfied npm-run-all false
+77 silly hasDependencyInstalled rainmaker-employee npm-run-all
+78 silly dependencyIsSatisfied [ 'npm-run-all',
+78 silly dependencyIsSatisfied   '^4.1.2',
+78 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+79 verbose dependencyIsSatisfied npm-run-all false
+80 silly hasDependencyInstalled rainmaker-citizen @storybook/addon-knobs
+81 silly dependencyIsSatisfied [ '@storybook/addon-knobs',
+81 silly dependencyIsSatisfied   '^3.3.13',
+81 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+82 verbose dependencyIsSatisfied @storybook/addon-knobs false
+83 silly hasDependencyInstalled rainmaker-employee @storybook/addon-knobs
+84 silly dependencyIsSatisfied [ '@storybook/addon-knobs',
+84 silly dependencyIsSatisfied   '^3.3.13',
+84 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+85 verbose dependencyIsSatisfied @storybook/addon-knobs false
+86 silly hasDependencyInstalled rainmaker-citizen @storybook/react
+87 silly dependencyIsSatisfied [ '@storybook/react',
+87 silly dependencyIsSatisfied   '^3.3.13',
+87 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+88 verbose dependencyIsSatisfied @storybook/react false
+89 silly hasDependencyInstalled rainmaker-employee @storybook/react
+90 silly dependencyIsSatisfied [ '@storybook/react',
+90 silly dependencyIsSatisfied   '^3.3.13',
+90 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+91 verbose dependencyIsSatisfied @storybook/react false
+92 silly hasDependencyInstalled rainmaker-citizen storybook-addon-material-ui
+93 silly dependencyIsSatisfied [ 'storybook-addon-material-ui',
+93 silly dependencyIsSatisfied   '^0.8.2',
+93 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+94 verbose dependencyIsSatisfied storybook-addon-material-ui false
+95 silly hasDependencyInstalled rainmaker-employee storybook-addon-material-ui
+96 silly dependencyIsSatisfied [ 'storybook-addon-material-ui',
+96 silly dependencyIsSatisfied   '^0.8.2',
+96 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+97 verbose dependencyIsSatisfied storybook-addon-material-ui false
+98 silly hasDependencyInstalled rainmaker-citizen @material-ui/core
+99 silly dependencyIsSatisfied [ '@material-ui/core',
+99 silly dependencyIsSatisfied   '^1.1.0',
+99 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+100 verbose dependencyIsSatisfied @material-ui/core false
+101 silly hasDependencyInstalled rainmaker-employee @material-ui/core
+102 silly dependencyIsSatisfied [ '@material-ui/core',
+102 silly dependencyIsSatisfied   '^1.1.0',
+102 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+103 verbose dependencyIsSatisfied @material-ui/core false
+104 silly hasDependencyInstalled egov-tradelicence-core @material-ui/core
+105 silly dependencyIsSatisfied [ '@material-ui/core',
+105 silly dependencyIsSatisfied   '^1.4.1',
+105 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+106 verbose dependencyIsSatisfied @material-ui/core false
+107 silly hasDependencyInstalled rainmaker-citizen axios
+108 silly dependencyIsSatisfied [ 'axios',
+108 silly dependencyIsSatisfied   '^0.17.1',
+108 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+109 verbose dependencyIsSatisfied axios false
+110 silly hasDependencyInstalled rainmaker-employee axios
+111 silly dependencyIsSatisfied [ 'axios',
+111 silly dependencyIsSatisfied   '^0.17.1',
+111 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+112 verbose dependencyIsSatisfied axios false
+113 silly hasDependencyInstalled egov-tradelicence-core axios
+114 silly dependencyIsSatisfied [ 'axios',
+114 silly dependencyIsSatisfied   '^0.18.0',
+114 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+115 verbose dependencyIsSatisfied axios false
+116 silly hasDependencyInstalled rainmaker-citizen babel-polyfill
+117 silly dependencyIsSatisfied [ 'babel-polyfill',
+117 silly dependencyIsSatisfied   '^6.26.0',
+117 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+118 verbose dependencyIsSatisfied babel-polyfill false
+119 silly hasDependencyInstalled rainmaker-employee babel-polyfill
+120 silly dependencyIsSatisfied [ 'babel-polyfill',
+120 silly dependencyIsSatisfied   '^6.26.0',
+120 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+121 verbose dependencyIsSatisfied babel-polyfill false
+122 silly hasDependencyInstalled rainmaker-citizen babel-runtime
+123 silly dependencyIsSatisfied [ 'babel-runtime',
+123 silly dependencyIsSatisfied   '^6.26.0',
+123 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+124 verbose dependencyIsSatisfied babel-runtime false
+125 silly hasDependencyInstalled rainmaker-employee babel-runtime
+126 silly dependencyIsSatisfied [ 'babel-runtime',
+126 silly dependencyIsSatisfied   '^6.26.0',
+126 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+127 verbose dependencyIsSatisfied babel-runtime false
+128 silly hasDependencyInstalled rainmaker-citizen jquery
+129 silly dependencyIsSatisfied [ 'jquery',
+129 silly dependencyIsSatisfied   '^3.3.1',
+129 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+130 verbose dependencyIsSatisfied jquery false
+131 silly hasDependencyInstalled egov-tradelicence-core jquery
+132 silly dependencyIsSatisfied [ 'jquery',
+132 silly dependencyIsSatisfied   '^3.3.1',
+132 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+133 verbose dependencyIsSatisfied jquery false
+134 silly hasDependencyInstalled rainmaker-citizen jsonpath-plus
+135 silly dependencyIsSatisfied [ 'jsonpath-plus',
+135 silly dependencyIsSatisfied   '^0.16.0',
+135 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+136 verbose dependencyIsSatisfied jsonpath-plus false
+137 silly hasDependencyInstalled rainmaker-employee jsonpath-plus
+138 silly dependencyIsSatisfied [ 'jsonpath-plus',
+138 silly dependencyIsSatisfied   '^0.16.0',
+138 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+139 verbose dependencyIsSatisfied jsonpath-plus false
+140 silly hasDependencyInstalled rainmaker-citizen lodash
+141 silly dependencyIsSatisfied [ 'lodash',
+141 silly dependencyIsSatisfied   '^4.17.5',
+141 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+142 verbose dependencyIsSatisfied lodash false
+143 silly hasDependencyInstalled rainmaker-employee lodash
+144 silly dependencyIsSatisfied [ 'lodash',
+144 silly dependencyIsSatisfied   '^4.17.5',
+144 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+145 verbose dependencyIsSatisfied lodash false
+146 silly hasDependencyInstalled egov-tradelicence-core lodash
+147 silly dependencyIsSatisfied [ 'lodash',
+147 silly dependencyIsSatisfied   '^4.17.10',
+147 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+148 verbose dependencyIsSatisfied lodash false
+149 silly hasDependencyInstalled rainmaker-citizen material-ui
+150 silly dependencyIsSatisfied [ 'material-ui',
+150 silly dependencyIsSatisfied   '^0.20.0',
+150 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+151 verbose dependencyIsSatisfied material-ui false
+152 silly hasDependencyInstalled rainmaker-employee material-ui
+153 silly dependencyIsSatisfied [ 'material-ui',
+153 silly dependencyIsSatisfied   '^0.20.0',
+153 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+154 verbose dependencyIsSatisfied material-ui false
+155 silly hasDependencyInstalled rainmaker-citizen pdfmake
+156 silly dependencyIsSatisfied [ 'pdfmake',
+156 silly dependencyIsSatisfied   '^0.1.36',
+156 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+157 verbose dependencyIsSatisfied pdfmake false
+158 silly hasDependencyInstalled rainmaker-employee pdfmake
+159 silly dependencyIsSatisfied [ 'pdfmake',
+159 silly dependencyIsSatisfied   '^0.1.36',
+159 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+160 verbose dependencyIsSatisfied pdfmake false
+161 silly hasDependencyInstalled rainmaker-citizen prop-types
+162 silly dependencyIsSatisfied [ 'prop-types',
+162 silly dependencyIsSatisfied   '^15.6.0',
+162 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+163 verbose dependencyIsSatisfied prop-types false
+164 silly hasDependencyInstalled rainmaker-employee prop-types
+165 silly dependencyIsSatisfied [ 'prop-types',
+165 silly dependencyIsSatisfied   '^15.6.0',
+165 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+166 verbose dependencyIsSatisfied prop-types false
+167 silly hasDependencyInstalled rainmaker-citizen react
+168 silly dependencyIsSatisfied [ 'react',
+168 silly dependencyIsSatisfied   '^16.2.0',
+168 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+169 verbose dependencyIsSatisfied react false
+170 silly hasDependencyInstalled rainmaker-employee react
+171 silly dependencyIsSatisfied [ 'react',
+171 silly dependencyIsSatisfied   '^16.2.0',
+171 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+172 verbose dependencyIsSatisfied react false
+173 silly hasDependencyInstalled egov-tradelicence-core react
+174 silly dependencyIsSatisfied [ 'react',
+174 silly dependencyIsSatisfied   '^16.4.1',
+174 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+175 verbose dependencyIsSatisfied react false
+176 silly hasDependencyInstalled rainmaker-citizen react-dom
+177 silly dependencyIsSatisfied [ 'react-dom',
+177 silly dependencyIsSatisfied   '^16.2.0',
+177 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+178 verbose dependencyIsSatisfied react-dom false
+179 silly hasDependencyInstalled rainmaker-employee react-dom
+180 silly dependencyIsSatisfied [ 'react-dom',
+180 silly dependencyIsSatisfied   '^16.2.0',
+180 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+181 verbose dependencyIsSatisfied react-dom false
+182 silly hasDependencyInstalled egov-tradelicence-core react-dom
+183 silly dependencyIsSatisfied [ 'react-dom',
+183 silly dependencyIsSatisfied   '^16.4.1',
+183 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+184 verbose dependencyIsSatisfied react-dom false
+185 silly hasDependencyInstalled rainmaker-citizen react-google-maps
+186 silly dependencyIsSatisfied [ 'react-google-maps',
+186 silly dependencyIsSatisfied   '^9.4.5',
+186 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+187 verbose dependencyIsSatisfied react-google-maps false
+188 silly hasDependencyInstalled egov-tradelicence-core react-google-maps
+189 silly dependencyIsSatisfied [ 'react-google-maps',
+189 silly dependencyIsSatisfied   '^9.4.5',
+189 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+190 verbose dependencyIsSatisfied react-google-maps false
+191 silly hasDependencyInstalled rainmaker-employee react-google-maps
+192 silly dependencyIsSatisfied [ 'react-google-maps',
+192 silly dependencyIsSatisfied   '^9.4.5',
+192 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+193 verbose dependencyIsSatisfied react-google-maps false
+194 silly hasDependencyInstalled rainmaker-citizen react-id-swiper
+195 silly dependencyIsSatisfied [ 'react-id-swiper',
+195 silly dependencyIsSatisfied   '^1.6.3',
+195 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+196 verbose dependencyIsSatisfied react-id-swiper false
+197 silly hasDependencyInstalled rainmaker-employee react-id-swiper
+198 silly dependencyIsSatisfied [ 'react-id-swiper',
+198 silly dependencyIsSatisfied   '^1.6.3',
+198 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+199 verbose dependencyIsSatisfied react-id-swiper false
+200 silly hasDependencyInstalled rainmaker-citizen react-load-image
+201 silly dependencyIsSatisfied [ 'react-load-image',
+201 silly dependencyIsSatisfied   '^0.1.6',
+201 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+202 verbose dependencyIsSatisfied react-load-image false
+203 silly hasDependencyInstalled rainmaker-employee react-load-image
+204 silly dependencyIsSatisfied [ 'react-load-image',
+204 silly dependencyIsSatisfied   '^0.1.6',
+204 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+205 verbose dependencyIsSatisfied react-load-image false
+206 silly hasDependencyInstalled rainmaker-citizen react-loadable
+207 silly dependencyIsSatisfied [ 'react-loadable',
+207 silly dependencyIsSatisfied   '^5.4.0',
+207 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+208 verbose dependencyIsSatisfied react-loadable false
+209 silly hasDependencyInstalled egov-tradelicence-core react-loadable
+210 silly dependencyIsSatisfied [ 'react-loadable',
+210 silly dependencyIsSatisfied   '^5.4.0',
+210 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+211 verbose dependencyIsSatisfied react-loadable false
+212 silly hasDependencyInstalled rainmaker-citizen react-redux
+213 silly dependencyIsSatisfied [ 'react-redux',
+213 silly dependencyIsSatisfied   '^5.0.6',
+213 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+214 verbose dependencyIsSatisfied react-redux false
+215 silly hasDependencyInstalled rainmaker-employee react-redux
+216 silly dependencyIsSatisfied [ 'react-redux',
+216 silly dependencyIsSatisfied   '^5.0.6',
+216 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+217 verbose dependencyIsSatisfied react-redux false
+218 silly hasDependencyInstalled egov-tradelicence-core react-redux
+219 silly dependencyIsSatisfied [ 'react-redux',
+219 silly dependencyIsSatisfied   '^5.0.7',
+219 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+220 verbose dependencyIsSatisfied react-redux false
+221 silly hasDependencyInstalled rainmaker-citizen react-router
+222 silly dependencyIsSatisfied [ 'react-router',
+222 silly dependencyIsSatisfied   '^4.2.0',
+222 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+223 verbose dependencyIsSatisfied react-router false
+224 silly hasDependencyInstalled rainmaker-employee react-router
+225 silly dependencyIsSatisfied [ 'react-router',
+225 silly dependencyIsSatisfied   '^4.2.0',
+225 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+226 verbose dependencyIsSatisfied react-router false
+227 silly hasDependencyInstalled rainmaker-citizen react-router-dom
+228 silly dependencyIsSatisfied [ 'react-router-dom',
+228 silly dependencyIsSatisfied   '^4.2.2',
+228 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+229 verbose dependencyIsSatisfied react-router-dom false
+230 silly hasDependencyInstalled rainmaker-employee react-router-dom
+231 silly dependencyIsSatisfied [ 'react-router-dom',
+231 silly dependencyIsSatisfied   '^4.2.2',
+231 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+232 verbose dependencyIsSatisfied react-router-dom false
+233 silly hasDependencyInstalled egov-tradelicence-core react-router-dom
+234 silly dependencyIsSatisfied [ 'react-router-dom',
+234 silly dependencyIsSatisfied   '^4.3.1',
+234 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+235 verbose dependencyIsSatisfied react-router-dom false
+236 silly hasDependencyInstalled rainmaker-citizen react-scripts
+237 silly dependencyIsSatisfied [ 'react-scripts',
+237 silly dependencyIsSatisfied   '1.1.1',
+237 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+238 verbose dependencyIsSatisfied react-scripts false
+239 silly hasDependencyInstalled rainmaker-employee react-scripts
+240 silly dependencyIsSatisfied [ 'react-scripts',
+240 silly dependencyIsSatisfied   '1.1.1',
+240 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+241 verbose dependencyIsSatisfied react-scripts false
+242 silly hasDependencyInstalled egov-tradelicence-core react-scripts
+243 silly dependencyIsSatisfied [ 'react-scripts',
+243 silly dependencyIsSatisfied   '^1.1.4',
+243 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+244 verbose dependencyIsSatisfied react-scripts false
+245 silly hasDependencyInstalled rainmaker-citizen react-table
+246 silly dependencyIsSatisfied [ 'react-table',
+246 silly dependencyIsSatisfied   '^6.8.6',
+246 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+247 verbose dependencyIsSatisfied react-table false
+248 silly hasDependencyInstalled rainmaker-employee react-table
+249 silly dependencyIsSatisfied [ 'react-table',
+249 silly dependencyIsSatisfied   '^6.8.6',
+249 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+250 verbose dependencyIsSatisfied react-table false
+251 silly hasDependencyInstalled rainmaker-citizen react-tap-event-plugin
+252 silly dependencyIsSatisfied [ 'react-tap-event-plugin',
+252 silly dependencyIsSatisfied   '^3.0.2',
+252 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+253 verbose dependencyIsSatisfied react-tap-event-plugin false
+254 silly hasDependencyInstalled rainmaker-employee react-tap-event-plugin
+255 silly dependencyIsSatisfied [ 'react-tap-event-plugin',
+255 silly dependencyIsSatisfied   '^3.0.2',
+255 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+256 verbose dependencyIsSatisfied react-tap-event-plugin false
+257 silly hasDependencyInstalled rainmaker-citizen redux
+258 silly dependencyIsSatisfied [ 'redux',
+258 silly dependencyIsSatisfied   '^3.7.2',
+258 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+259 verbose dependencyIsSatisfied redux false
+260 silly hasDependencyInstalled rainmaker-employee redux
+261 silly dependencyIsSatisfied [ 'redux',
+261 silly dependencyIsSatisfied   '^3.7.2',
+261 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+262 verbose dependencyIsSatisfied redux false
+263 silly hasDependencyInstalled egov-tradelicence-core redux
+264 silly dependencyIsSatisfied [ 'redux',
+264 silly dependencyIsSatisfied   '^4.0.0',
+264 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+265 verbose dependencyIsSatisfied redux false
+266 silly hasDependencyInstalled rainmaker-citizen redux-logger
+267 silly dependencyIsSatisfied [ 'redux-logger',
+267 silly dependencyIsSatisfied   '^3.0.6',
+267 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+268 verbose dependencyIsSatisfied redux-logger false
+269 silly hasDependencyInstalled egov-tradelicence-core redux-logger
+270 silly dependencyIsSatisfied [ 'redux-logger',
+270 silly dependencyIsSatisfied   '^3.0.6',
+270 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+271 verbose dependencyIsSatisfied redux-logger false
+272 silly hasDependencyInstalled rainmaker-employee redux-logger
+273 silly dependencyIsSatisfied [ 'redux-logger',
+273 silly dependencyIsSatisfied   '^3.0.6',
+273 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+274 verbose dependencyIsSatisfied redux-logger false
+275 silly hasDependencyInstalled rainmaker-citizen redux-thunk
+276 silly dependencyIsSatisfied [ 'redux-thunk',
+276 silly dependencyIsSatisfied   '^2.2.0',
+276 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+277 verbose dependencyIsSatisfied redux-thunk false
+278 silly hasDependencyInstalled rainmaker-employee redux-thunk
+279 silly dependencyIsSatisfied [ 'redux-thunk',
+279 silly dependencyIsSatisfied   '^2.2.0',
+279 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+280 verbose dependencyIsSatisfied redux-thunk false
+281 silly hasDependencyInstalled egov-tradelicence-core redux-thunk
+282 silly dependencyIsSatisfied [ 'redux-thunk',
+282 silly dependencyIsSatisfied   '^2.3.0',
+282 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+283 verbose dependencyIsSatisfied redux-thunk false
+284 silly hasDependencyInstalled rainmaker-citizen url-search-params-polyfill
+285 silly dependencyIsSatisfied [ 'url-search-params-polyfill',
+285 silly dependencyIsSatisfied   '^3.0.0',
+285 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+286 verbose dependencyIsSatisfied url-search-params-polyfill false
+287 silly hasDependencyInstalled rainmaker-employee url-search-params-polyfill
+288 silly dependencyIsSatisfied [ 'url-search-params-polyfill',
+288 silly dependencyIsSatisfied   '^3.0.0',
+288 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+289 verbose dependencyIsSatisfied url-search-params-polyfill false
+290 silly hasDependencyInstalled rainmaker-citizen webfontloader
+291 silly dependencyIsSatisfied [ 'webfontloader',
+291 silly dependencyIsSatisfied   '^1.6.28',
+291 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/node_modules' ]
+292 verbose dependencyIsSatisfied webfontloader false
+293 silly hasDependencyInstalled rainmaker-employee webfontloader
+294 silly dependencyIsSatisfied [ 'webfontloader',
+294 silly dependencyIsSatisfied   '^1.6.28',
+294 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+295 verbose dependencyIsSatisfied webfontloader false
+296 silly hasDependencyInstalled egov-tradelicence-core react-responsive-carousel
+297 silly dependencyIsSatisfied [ 'react-responsive-carousel',
+297 silly dependencyIsSatisfied   '^3.1.41',
+297 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+298 verbose dependencyIsSatisfied react-responsive-carousel false
+299 silly hasDependencyInstalled egov-tradelicence-core carbon-components
+300 silly dependencyIsSatisfied [ 'carbon-components',
+300 silly dependencyIsSatisfied   '^9.9.0',
+300 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+301 verbose dependencyIsSatisfied carbon-components false
+302 silly hasDependencyInstalled egov-tradelicence-core carbon-components-react
+303 silly dependencyIsSatisfied [ 'carbon-components-react',
+303 silly dependencyIsSatisfied   '^6.28.0',
+303 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+304 verbose dependencyIsSatisfied carbon-components-react false
+305 silly hasDependencyInstalled egov-tradelicence-core carbon-icons
+306 silly dependencyIsSatisfied [ 'carbon-icons',
+306 silly dependencyIsSatisfied   '^7.0.7',
+306 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+307 verbose dependencyIsSatisfied carbon-icons false
+308 silly hasDependencyInstalled egov-tradelicence-core marker-animate-unobtrusive
+309 silly dependencyIsSatisfied [ 'marker-animate-unobtrusive',
+309 silly dependencyIsSatisfied   '^0.2.8',
+309 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+310 verbose dependencyIsSatisfied marker-animate-unobtrusive false
+311 silly hasDependencyInstalled egov-tradelicence-core mihy-ui-framework
+312 silly dependencyIsSatisfied [ 'mihy-ui-framework',
+312 silly dependencyIsSatisfied   '^0.0.5',
+312 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+313 verbose dependencyIsSatisfied mihy-ui-framework false
+314 silly hasDependencyInstalled egov-tradelicence-core react-json-view
+315 silly dependencyIsSatisfied [ 'react-json-view',
+315 silly dependencyIsSatisfied   '^1.19.1',
+315 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+316 verbose dependencyIsSatisfied react-json-view false
+317 silly hasDependencyInstalled egov-tradelicence-core react-text-mask
+318 silly dependencyIsSatisfied [ 'react-text-mask',
+318 silly dependencyIsSatisfied   '^5.4.2',
+318 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+319 verbose dependencyIsSatisfied react-text-mask false
+320 silly hasDependencyInstalled egov-tradelicence-core recompose
+321 silly dependencyIsSatisfied [ 'recompose',
+321 silly dependencyIsSatisfied   '^0.27.1',
+321 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/node_modules' ]
+322 verbose dependencyIsSatisfied recompose false
+323 silly hasDependencyInstalled rainmaker-employee datatables
+324 silly dependencyIsSatisfied [ 'datatables',
+324 silly dependencyIsSatisfied   '^1.10.18',
+324 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+325 verbose dependencyIsSatisfied datatables false
+326 silly hasDependencyInstalled rainmaker-employee datatables-buttons
+327 silly dependencyIsSatisfied [ 'datatables-buttons',
+327 silly dependencyIsSatisfied   '^1.0.3',
+327 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+328 verbose dependencyIsSatisfied datatables-buttons false
+329 silly hasDependencyInstalled rainmaker-employee datatables.net-buttons
+330 silly dependencyIsSatisfied [ 'datatables.net-buttons',
+330 silly dependencyIsSatisfied   '^1.5.3',
+330 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+331 verbose dependencyIsSatisfied datatables.net-buttons false
+332 silly hasDependencyInstalled rainmaker-employee datatables.net-buttons-bs
+333 silly dependencyIsSatisfied [ 'datatables.net-buttons-bs',
+333 silly dependencyIsSatisfied   '^1.5.3',
+333 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+334 verbose dependencyIsSatisfied datatables.net-buttons-bs false
+335 silly hasDependencyInstalled rainmaker-employee jszip
+336 silly dependencyIsSatisfied [ 'jszip',
+336 silly dependencyIsSatisfied   '^3.1.5',
+336 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+337 verbose dependencyIsSatisfied jszip false
+338 silly hasDependencyInstalled rainmaker-employee react-bootstrap
+339 silly dependencyIsSatisfied [ 'react-bootstrap',
+339 silly dependencyIsSatisfied   '^0.32.1',
+339 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+340 verbose dependencyIsSatisfied react-bootstrap false
+341 silly hasDependencyInstalled rainmaker-employee react-jquery-datatables
+342 silly dependencyIsSatisfied [ 'react-jquery-datatables',
+342 silly dependencyIsSatisfied   '^1.0.0',
+342 silly dependencyIsSatisfied   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/node_modules' ]
+343 verbose dependencyIsSatisfied react-jquery-datatables false
+344 silly root dependencies []
+345 silly leaf dependencies {
+345 silly leaf dependencies   "rainmaker-citizen": [
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/icons@^1.1.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-cli@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-plugin-transform-runtime@^6.23.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-es2015@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-react@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-stage-0@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jsonpath@^1.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "node-sass-chokidar@^1.2.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "npm-run-all@^4.1.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@storybook/addon-knobs@^3.3.13",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@storybook/react@^3.3.13",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "storybook-addon-material-ui@^0.8.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/core@^1.1.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "axios@^0.17.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-polyfill@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-runtime@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jquery@^3.3.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jsonpath-plus@^0.16.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "lodash@^4.17.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "material-ui@^0.20.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "pdfmake@^0.1.36",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "prop-types@^15.6.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react@^16.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-dom@^16.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-google-maps@^9.4.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-id-swiper@^1.6.3",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-load-image@^0.1.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-loadable@^5.4.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-redux@^5.0.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-router@^4.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-router-dom@^4.2.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-scripts@1.1.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-table@^6.8.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-tap-event-plugin@^3.0.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux@^3.7.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-logger@^3.0.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-thunk@^2.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "url-search-params-polyfill@^3.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "webfontloader@^1.6.28",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     }
+345 silly leaf dependencies   ],
+345 silly leaf dependencies   "rainmaker-employee": [
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/icons@^1.1.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-cli@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-plugin-transform-runtime@^6.23.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-es2015@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-react@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-preset-stage-0@^6.24.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jsonpath@^1.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "node-sass-chokidar@^1.2.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "npm-run-all@^4.1.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@storybook/addon-knobs@^3.3.13",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@storybook/react@^3.3.13",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "storybook-addon-material-ui@^0.8.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/core@^1.1.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "axios@^0.17.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-polyfill@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "babel-runtime@^6.26.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jsonpath-plus@^0.16.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "lodash@^4.17.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "material-ui@^0.20.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "pdfmake@^0.1.36",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "prop-types@^15.6.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react@^16.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-dom@^16.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-google-maps@^9.4.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-id-swiper@^1.6.3",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-load-image@^0.1.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-redux@^5.0.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-router@^4.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-router-dom@^4.2.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-scripts@1.1.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-table@^6.8.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-tap-event-plugin@^3.0.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux@^3.7.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-logger@^3.0.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-thunk@^2.2.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "url-search-params-polyfill@^3.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "webfontloader@^1.6.28",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "datatables@^1.10.18",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "datatables-buttons@^1.0.3",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "datatables.net-buttons@^1.5.3",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "datatables.net-buttons-bs@^1.5.3",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jszip@^3.1.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-bootstrap@^0.32.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-jquery-datatables@^1.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     }
+345 silly leaf dependencies   ],
+345 silly leaf dependencies   "egov-tradelicence-core": [
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/icons@^2.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "@material-ui/core@^1.4.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "axios@^0.18.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "jquery@^3.3.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "lodash@^4.17.10",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react@^16.4.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-dom@^16.4.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-google-maps@^9.4.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-loadable@^5.4.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-redux@^5.0.7",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-router-dom@^4.3.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-scripts@^1.1.4",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux@^4.0.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-logger@^3.0.6",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "redux-thunk@^2.3.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-responsive-carousel@^3.1.41",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "carbon-components@^9.9.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "carbon-components-react@^6.28.0",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "carbon-icons@^7.0.7",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "marker-animate-unobtrusive@^0.2.8",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "mihy-ui-framework@^0.0.5",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-json-view@^1.19.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "react-text-mask@^5.4.2",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     },
+345 silly leaf dependencies     {
+345 silly leaf dependencies       "dependency": "recompose@^0.27.1",
+345 silly leaf dependencies       "isSatisfied": false
+345 silly leaf dependencies     }
+345 silly leaf dependencies   ]
+345 silly leaf dependencies }
+346 info Installing external dependencies
+347 verbose actions 3 actions, concurrency 4
+348 silly installInDir citizen [ '@material-ui/icons@^1.1.0',
+348 silly installInDir   'babel-cli@^6.26.0',
+348 silly installInDir   'babel-plugin-transform-runtime@^6.23.0',
+348 silly installInDir   'babel-preset-es2015@^6.24.1',
+348 silly installInDir   'babel-preset-react@^6.24.1',
+348 silly installInDir   'babel-preset-stage-0@^6.24.1',
+348 silly installInDir   'jsonpath@^1.0.0',
+348 silly installInDir   'node-sass-chokidar@^1.2.2',
+348 silly installInDir   'npm-run-all@^4.1.2',
+348 silly installInDir   '@storybook/addon-knobs@^3.3.13',
+348 silly installInDir   '@storybook/react@^3.3.13',
+348 silly installInDir   'storybook-addon-material-ui@^0.8.2',
+348 silly installInDir   '@material-ui/core@^1.1.0',
+348 silly installInDir   'axios@^0.17.1',
+348 silly installInDir   'babel-polyfill@^6.26.0',
+348 silly installInDir   'babel-runtime@^6.26.0',
+348 silly installInDir   'jquery@^3.3.1',
+348 silly installInDir   'jsonpath-plus@^0.16.0',
+348 silly installInDir   'lodash@^4.17.5',
+348 silly installInDir   'material-ui@^0.20.0',
+348 silly installInDir   'pdfmake@^0.1.36',
+348 silly installInDir   'prop-types@^15.6.0',
+348 silly installInDir   'react@^16.2.0',
+348 silly installInDir   'react-dom@^16.2.0',
+348 silly installInDir   'react-google-maps@^9.4.5',
+348 silly installInDir   'react-id-swiper@^1.6.3',
+348 silly installInDir   'react-load-image@^0.1.6',
+348 silly installInDir   'react-loadable@^5.4.0',
+348 silly installInDir   'react-redux@^5.0.6',
+348 silly installInDir   'react-router@^4.2.0',
+348 silly installInDir   'react-router-dom@^4.2.2',
+348 silly installInDir   'react-scripts@1.1.1',
+348 silly installInDir   'react-table@^6.8.6',
+348 silly installInDir   'react-tap-event-plugin@^3.0.2',
+348 silly installInDir   'redux@^3.7.2',
+348 silly installInDir   'redux-logger@^3.0.6',
+348 silly installInDir   'redux-thunk@^2.2.0',
+348 silly installInDir   'url-search-params-polyfill@^3.0.0',
+348 silly installInDir   'webfontloader@^1.6.28' ]
+349 silly installInDir backup /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/package.json
+350 silly rename [ '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/package.json',
+350 silly rename   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen/package.json.lerna_backup' ]
+351 silly installInDir employee [ '@material-ui/icons@^1.1.0',
+351 silly installInDir   'babel-cli@^6.26.0',
+351 silly installInDir   'babel-plugin-transform-runtime@^6.23.0',
+351 silly installInDir   'babel-preset-es2015@^6.24.1',
+351 silly installInDir   'babel-preset-react@^6.24.1',
+351 silly installInDir   'babel-preset-stage-0@^6.24.1',
+351 silly installInDir   'jsonpath@^1.0.0',
+351 silly installInDir   'node-sass-chokidar@^1.2.2',
+351 silly installInDir   'npm-run-all@^4.1.2',
+351 silly installInDir   '@storybook/addon-knobs@^3.3.13',
+351 silly installInDir   '@storybook/react@^3.3.13',
+351 silly installInDir   'storybook-addon-material-ui@^0.8.2',
+351 silly installInDir   '@material-ui/core@^1.1.0',
+351 silly installInDir   'axios@^0.17.1',
+351 silly installInDir   'babel-polyfill@^6.26.0',
+351 silly installInDir   'babel-runtime@^6.26.0',
+351 silly installInDir   'jsonpath-plus@^0.16.0',
+351 silly installInDir   'lodash@^4.17.5',
+351 silly installInDir   'material-ui@^0.20.0',
+351 silly installInDir   'pdfmake@^0.1.36',
+351 silly installInDir   'prop-types@^15.6.0',
+351 silly installInDir   'react@^16.2.0',
+351 silly installInDir   'react-dom@^16.2.0',
+351 silly installInDir   'react-google-maps@^9.4.5',
+351 silly installInDir   'react-id-swiper@^1.6.3',
+351 silly installInDir   'react-load-image@^0.1.6',
+351 silly installInDir   'react-redux@^5.0.6',
+351 silly installInDir   'react-router@^4.2.0',
+351 silly installInDir   'react-router-dom@^4.2.2',
+351 silly installInDir   'react-scripts@1.1.1',
+351 silly installInDir   'react-table@^6.8.6',
+351 silly installInDir   'react-tap-event-plugin@^3.0.2',
+351 silly installInDir   'redux@^3.7.2',
+351 silly installInDir   'redux-logger@^3.0.6',
+351 silly installInDir   'redux-thunk@^2.2.0',
+351 silly installInDir   'url-search-params-polyfill@^3.0.0',
+351 silly installInDir   'webfontloader@^1.6.28',
+351 silly installInDir   'datatables@^1.10.18',
+351 silly installInDir   'datatables-buttons@^1.0.3',
+351 silly installInDir   'datatables.net-buttons@^1.5.3',
+351 silly installInDir   'datatables.net-buttons-bs@^1.5.3',
+351 silly installInDir   'jszip@^3.1.5',
+351 silly installInDir   'react-bootstrap@^0.32.1',
+351 silly installInDir   'react-jquery-datatables@^1.0.0' ]
+352 silly installInDir backup /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/package.json
+353 silly rename [ '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/package.json',
+353 silly rename   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee/package.json.lerna_backup' ]
+354 silly installInDir egov-tradelicence-core [ '@material-ui/icons@^2.0.0',
+354 silly installInDir   '@material-ui/core@^1.4.1',
+354 silly installInDir   'axios@^0.18.0',
+354 silly installInDir   'jquery@^3.3.1',
+354 silly installInDir   'lodash@^4.17.10',
+354 silly installInDir   'react@^16.4.1',
+354 silly installInDir   'react-dom@^16.4.1',
+354 silly installInDir   'react-google-maps@^9.4.5',
+354 silly installInDir   'react-loadable@^5.4.0',
+354 silly installInDir   'react-redux@^5.0.7',
+354 silly installInDir   'react-router-dom@^4.3.1',
+354 silly installInDir   'react-scripts@^1.1.4',
+354 silly installInDir   'redux@^4.0.0',
+354 silly installInDir   'redux-logger@^3.0.6',
+354 silly installInDir   'redux-thunk@^2.3.0',
+354 silly installInDir   'react-responsive-carousel@^3.1.41',
+354 silly installInDir   'carbon-components@^9.9.0',
+354 silly installInDir   'carbon-components-react@^6.28.0',
+354 silly installInDir   'carbon-icons@^7.0.7',
+354 silly installInDir   'marker-animate-unobtrusive@^0.2.8',
+354 silly installInDir   'mihy-ui-framework@^0.0.5',
+354 silly installInDir   'react-json-view@^1.19.1',
+354 silly installInDir   'react-text-mask@^5.4.2',
+354 silly installInDir   'recompose@^0.27.1' ]
+355 silly installInDir backup /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json
+356 silly rename [ '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json',
+356 silly rename   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json.lerna_backup' ]
+357 silly installInDir writing tempJson { dependencies:
+357 silly installInDir    { '@material-ui/icons': '^1.1.0',
+357 silly installInDir      'babel-cli': '^6.26.0',
+357 silly installInDir      'babel-plugin-transform-runtime': '^6.23.0',
+357 silly installInDir      'babel-preset-es2015': '^6.24.1',
+357 silly installInDir      'babel-preset-react': '^6.24.1',
+357 silly installInDir      'babel-preset-stage-0': '^6.24.1',
+357 silly installInDir      jsonpath: '^1.0.0',
+357 silly installInDir      'node-sass-chokidar': '^1.2.2',
+357 silly installInDir      'npm-run-all': '^4.1.2',
+357 silly installInDir      '@storybook/addon-knobs': '^3.3.13',
+357 silly installInDir      '@storybook/react': '^3.3.13',
+357 silly installInDir      'storybook-addon-material-ui': '^0.8.2',
+357 silly installInDir      '@material-ui/core': '^1.1.0',
+357 silly installInDir      axios: '^0.17.1',
+357 silly installInDir      'babel-polyfill': '^6.26.0',
+357 silly installInDir      'babel-runtime': '^6.26.0',
+357 silly installInDir      jquery: '^3.3.1',
+357 silly installInDir      'jsonpath-plus': '^0.16.0',
+357 silly installInDir      lodash: '^4.17.5',
+357 silly installInDir      'material-ui': '^0.20.0',
+357 silly installInDir      pdfmake: '^0.1.36',
+357 silly installInDir      'prop-types': '^15.6.0',
+357 silly installInDir      react: '^16.2.0',
+357 silly installInDir      'react-dom': '^16.2.0',
+357 silly installInDir      'react-google-maps': '^9.4.5',
+357 silly installInDir      'react-id-swiper': '^1.6.3',
+357 silly installInDir      'react-load-image': '^0.1.6',
+357 silly installInDir      'react-loadable': '^5.4.0',
+357 silly installInDir      'react-redux': '^5.0.6',
+357 silly installInDir      'react-router': '^4.2.0',
+357 silly installInDir      'react-router-dom': '^4.2.2',
+357 silly installInDir      'react-scripts': '1.1.1',
+357 silly installInDir      'react-table': '^6.8.6',
+357 silly installInDir      'react-tap-event-plugin': '^3.0.2',
+357 silly installInDir      redux: '^3.7.2',
+357 silly installInDir      'redux-logger': '^3.0.6',
+357 silly installInDir      'redux-thunk': '^2.2.0',
+357 silly installInDir      'url-search-params-polyfill': '^3.0.0',
+357 silly installInDir      webfontloader: '^1.6.28' } }
+358 silly installInDir writing tempJson { dependencies:
+358 silly installInDir    { '@material-ui/icons': '^1.1.0',
+358 silly installInDir      'babel-cli': '^6.26.0',
+358 silly installInDir      'babel-plugin-transform-runtime': '^6.23.0',
+358 silly installInDir      'babel-preset-es2015': '^6.24.1',
+358 silly installInDir      'babel-preset-react': '^6.24.1',
+358 silly installInDir      'babel-preset-stage-0': '^6.24.1',
+358 silly installInDir      jsonpath: '^1.0.0',
+358 silly installInDir      'node-sass-chokidar': '^1.2.2',
+358 silly installInDir      'npm-run-all': '^4.1.2',
+358 silly installInDir      '@storybook/addon-knobs': '^3.3.13',
+358 silly installInDir      '@storybook/react': '^3.3.13',
+358 silly installInDir      'storybook-addon-material-ui': '^0.8.2',
+358 silly installInDir      '@material-ui/core': '^1.1.0',
+358 silly installInDir      axios: '^0.17.1',
+358 silly installInDir      'babel-polyfill': '^6.26.0',
+358 silly installInDir      'babel-runtime': '^6.26.0',
+358 silly installInDir      'jsonpath-plus': '^0.16.0',
+358 silly installInDir      lodash: '^4.17.5',
+358 silly installInDir      'material-ui': '^0.20.0',
+358 silly installInDir      pdfmake: '^0.1.36',
+358 silly installInDir      'prop-types': '^15.6.0',
+358 silly installInDir      react: '^16.2.0',
+358 silly installInDir      'react-dom': '^16.2.0',
+358 silly installInDir      'react-google-maps': '^9.4.5',
+358 silly installInDir      'react-id-swiper': '^1.6.3',
+358 silly installInDir      'react-load-image': '^0.1.6',
+358 silly installInDir      'react-redux': '^5.0.6',
+358 silly installInDir      'react-router': '^4.2.0',
+358 silly installInDir      'react-router-dom': '^4.2.2',
+358 silly installInDir      'react-scripts': '1.1.1',
+358 silly installInDir      'react-table': '^6.8.6',
+358 silly installInDir      'react-tap-event-plugin': '^3.0.2',
+358 silly installInDir      redux: '^3.7.2',
+358 silly installInDir      'redux-logger': '^3.0.6',
+358 silly installInDir      'redux-thunk': '^2.2.0',
+358 silly installInDir      'url-search-params-polyfill': '^3.0.0',
+358 silly installInDir      webfontloader: '^1.6.28',
+358 silly installInDir      datatables: '^1.10.18',
+358 silly installInDir      'datatables-buttons': '^1.0.3',
+358 silly installInDir      'datatables.net-buttons': '^1.5.3',
+358 silly installInDir      'datatables.net-buttons-bs': '^1.5.3',
+358 silly installInDir      jszip: '^3.1.5',
+358 silly installInDir      'react-bootstrap': '^0.32.1',
+358 silly installInDir      'react-jquery-datatables': '^1.0.0' } }
+359 silly installInDir writing tempJson { dependencies:
+359 silly installInDir    { '@material-ui/icons': '^2.0.0',
+359 silly installInDir      '@material-ui/core': '^1.4.1',
+359 silly installInDir      axios: '^0.18.0',
+359 silly installInDir      jquery: '^3.3.1',
+359 silly installInDir      lodash: '^4.17.10',
+359 silly installInDir      react: '^16.4.1',
+359 silly installInDir      'react-dom': '^16.4.1',
+359 silly installInDir      'react-google-maps': '^9.4.5',
+359 silly installInDir      'react-loadable': '^5.4.0',
+359 silly installInDir      'react-redux': '^5.0.7',
+359 silly installInDir      'react-router-dom': '^4.3.1',
+359 silly installInDir      'react-scripts': '^1.1.4',
+359 silly installInDir      redux: '^4.0.0',
+359 silly installInDir      'redux-logger': '^3.0.6',
+359 silly installInDir      'redux-thunk': '^2.3.0',
+359 silly installInDir      'react-responsive-carousel': '^3.1.41',
+359 silly installInDir      'carbon-components': '^9.9.0',
+359 silly installInDir      'carbon-components-react': '^6.28.0',
+359 silly installInDir      'carbon-icons': '^7.0.7',
+359 silly installInDir      'marker-animate-unobtrusive': '^0.2.8',
+359 silly installInDir      'mihy-ui-framework': '^0.0.5',
+359 silly installInDir      'react-json-view': '^1.19.1',
+359 silly installInDir      'react-text-mask': '^5.4.2',
+359 silly installInDir      recompose: '^0.27.1' } }
+360 silly getExecOpts { cwd: '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/citizen' }
+361 silly installInDir [ 'npm', [ 'install' ] ]
+362 silly getExecOpts { cwd: '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core' }
+363 silly installInDir [ 'npm', [ 'install' ] ]
+364 silly getExecOpts { cwd: '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/employee' }
+365 silly installInDir [ 'npm', [ 'install' ] ]
+366 silly installInDir cleanup /home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json
+367 silly renameSync [ '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json.lerna_backup',
+367 silly renameSync   '/home/shreya/Documents/egov v2/egov-web-app/web/rainmaker/packages/egov-tradelicence-core/package.json' ]
+368 verbose installed leaf egov-tradelicence-core
+369 error execute callback with error
+370 error Error: Command failed: npm install
+370 error npm ERR! code ETARGET
+370 error npm ERR! notarget No matching version found for mihy-ui-framework@^0.0.5
+370 error npm ERR! notarget In most cases you or one of your dependencies are requesting
+370 error npm ERR! notarget a package version that doesn't exist.
+370 error
+370 error npm ERR! A complete log of this run can be found in:
+370 error npm ERR!     /home/shreya/.npm/_logs/2018-09-20T06_32_38_522Z-debug.log
+370 error
+370 error     at Promise.all.then.arr (/usr/lib/node_modules/lerna/node_modules/execa/index.js:236:11)
+370 error     at <anonymous>

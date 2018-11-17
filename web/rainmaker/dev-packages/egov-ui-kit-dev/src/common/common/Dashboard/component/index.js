@@ -16,7 +16,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
       {items &&
         items.map((item, key) => {
           return (
-            <div className={`col-sm-6 ${item.className}`}>
+            <div key={key} className={`col-sm-6 ${item.className}`}>
               <Card
                 id="home-complaint-card"
                 className="clearfix landingPageCard"
@@ -47,7 +47,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                                 onButton1Click(item, history, onPGRClick);
                               }}
                               label={<Label label={item.button1} color="#fff" />}
-                              primary="true"
+                              primary={true}
                               style={{ align: "left" }}
                               style={moduleCardButtons}
                               buttonStyle={{ border: "1px solid #fe7a51" }}
@@ -74,7 +74,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                                 onButton1Click(item, history, onPGRClick);
                               }}
                               label={<Label label={item.button1} color="#fff" />}
-                              primary="true"
+                              primary={true}
                               style={{ align: "left" }}
                               style={moduleCardButtons}
                               buttonStyle={{ border: "1px solid #fe7a51" }}

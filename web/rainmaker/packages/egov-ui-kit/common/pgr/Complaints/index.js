@@ -20,6 +20,10 @@ var _translationNode2 = _interopRequireDefault(_translationNode);
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _isEmpty = require("lodash/isEmpty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -215,6 +219,13 @@ var Complaints = function Complaints(_ref) {
     { className: "no-complaints-message-cont", style: heightOffset && { height: "calc(100vh - " + heightOffset + ")" } },
     _react2.default.createElement(_translationNode2.default, { label: noComplaintMessage, dark: true, fontSize: "16px", labelStyle: { letterSpacing: "0.7px" } })
   ) : complaints.map(function (complaint, complaintIndex) {
+    var _ref2 = complaint.addressDetail || "",
+        houseNoAndStreetName = _ref2.houseNoAndStreetName,
+        landmark = _ref2.landmark,
+        mohalla = _ref2.mohalla,
+        city = _ref2.city,
+        locality = _ref2.locality;
+
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
       "div",
@@ -271,10 +282,68 @@ var Complaints = function Complaints(_ref) {
               _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: complaint.complaintNo, className: "complaint-complaint-number" })
             )
           ),
-          complaintLocation && _react2.default.createElement(
+          complaintLocation && complaint.addressDetail && !(0, _isEmpty2.default)(complaint.addressDetail) && _react2.default.createElement(
+            "div",
+            { className: "rainmaker-displayInline", style: { paddingBottom: "10px" } },
+            _react2.default.createElement(_components.Icon, { className: "map-icon", action: "maps", name: "place", style: { marginRight: 10 }, color: "#767676" }),
+            _react2.default.createElement(
+              "div",
+              { className: "complaint-address-display" },
+              _react2.default.createElement(_translationNode2.default, {
+                label: houseNoAndStreetName,
+                className: "status-result-color",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "12px"
+              }),
+              houseNoAndStreetName && _react2.default.createElement(_translationNode2.default, {
+                label: ",",
+                className: "comma-style",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "16px"
+              }),
+              _react2.default.createElement(_translationNode2.default, {
+                label: locality,
+                className: "status-result-color",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "12px"
+              }),
+              _react2.default.createElement(_translationNode2.default, {
+                label: ",",
+                className: "comma-style",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "16px"
+              }),
+              _react2.default.createElement(_translationNode2.default, {
+                label: city,
+                className: "status-result-color",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "12px"
+              }),
+              landmark && _react2.default.createElement(_translationNode2.default, {
+                label: ",",
+                className: "comma-style",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "16px"
+              }),
+              _react2.default.createElement(_translationNode2.default, {
+                label: landmark,
+                className: "status-result-color",
+                id: "complaint-details-complaint-location",
+                labelStyle: { color: "inherit" },
+                fontSize: "12px"
+              })
+            )
+          ),
+          complaintLocation && complaint.address && (0, _isEmpty2.default)(complaint.addressDetail) && _react2.default.createElement(
             "div",
             { className: "complaint-address-cont" },
-            _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: 18, width: 18, marginRight: 10 }, color: "#767676" }),
+            _react2.default.createElement(_components.Icon, { className: "map-icon", action: "maps", name: "place", style: { marginRight: 10 }, color: "#767676" }),
             _react2.default.createElement(_translationNode2.default, { fontSize: "12px", color: "#484848", label: complaint.address, className: "complaint-address" })
           ),
           role === "citizen" && complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(

@@ -194,7 +194,7 @@ var _initialiseProps = function _initialiseProps() {
     };
     transformedAssessments.push(viewAllAssessmentItem);
     return [{
-      primaryText: _react2.default.createElement(_translationNode2.default, { label: "Property Information", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
+      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_INFO_HEADER", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
       leftIcon: _react2.default.createElement(
         "div",
         { style: IconStyle },
@@ -209,7 +209,7 @@ var _initialiseProps = function _initialiseProps() {
         _react2.default.createElement(_Icon2.default, { action: "hardware", name: "keyboard-arrow-right", color: "#484848" })
       )
     }, {
-      primaryText: _react2.default.createElement(_translationNode2.default, { label: "Assessment History", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
+      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_ASSESMENT_HISTORY", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
       leftIcon: _react2.default.createElement(
         "div",
         { style: IconStyle },

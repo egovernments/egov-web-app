@@ -6,20 +6,23 @@ import { Screen } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
-import { displayLocalizedStatusMessage, transformComplaintForComponent } from "egov-ui-kit/utils/commons";
+import { displayLocalizedStatusMessage, transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import isEqual from "lodash/isEqual";
+import { httpRequest } from "egov-ui-kit/utils/api";
 import "./index.css";
 
 class MyComplaints extends Component {
-  componentDidMount = () => {
+  componentDidMount = async () => {
     let { fetchComplaints, resetFiles, transformedComplaints, renderCustomTitle } = this.props;
-    const numberOfComplaints = transformedComplaints && transformedComplaints.length;
+    //const numberOfComplaints = transformedComplaints && transformedComplaints.length;
     fetchComplaints([]);
     if (this.props.form && this.props.form.complaint) {
       resetFiles("complaint");
     }
-    renderCustomTitle(numberOfComplaints);
+    const complaintCountRequest = [{ key: "tenantId", value: fetchFromLocalStorage("tenant-id") }];
+    let payloadCount = await httpRequest("rainmaker-pgr/v1/requests/_count", "_search", complaintCountRequest);
+    payloadCount ? (payloadCount.count ? renderCustomTitle(payloadCount.count) : renderCustomTitle("0")) : renderCustomTitle("0");
   };
 
   onComplaintClick = (complaintNo) => {

@@ -4,9 +4,11 @@ import IconButton from "material-ui/IconButton";
 import { Icon } from "components";
 import AppBar from "./components/AppBar";
 import LogoutDialog from "./components/LogoutDialog";
+import SortDialog from "./components/SortDialog";
 import NavigationDrawer from "./components/NavigationDrawer";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import get from "lodash/get";
 import "./index.css";
 
 // get userInfo role
@@ -14,8 +16,19 @@ class Header extends Component {
   state = {
     toggleMenu: false,
     logoutPopupOpen: false,
+    sortPopOpen: false,
     right: false,
     left: false,
+    ulbLogo: "",
+  };
+
+  componentDidMount = () => {
+    const { role } = this.props;
+    if (role && role.toLowerCase() !== "citizen") {
+      const tenantId = localStorage.getItem("tenant-id");
+      const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
+      this.setState({ ulbLogo });
+    }
   };
 
   _handleToggleMenu = () => {
@@ -44,6 +57,18 @@ class Header extends Component {
   _closeLogoutDialog = () => {
     this.setState({
       logoutPopupOpen: false,
+    });
+  };
+
+  closeSortDialog = () => {
+    this.setState({
+      sortPopOpen: false,
+    });
+  };
+
+  onSortClick = () => {
+    this.setState({
+      sortPopOpen: true,
     });
   };
 
@@ -94,20 +119,41 @@ class Header extends Component {
   };
 
   render() {
-    const { toggleMenu, logoutPopupOpen } = this.state;
-    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps } = this;
+    const { toggleMenu, logoutPopupOpen, sortPopOpen } = this.state;
+    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps, closeSortDialog, onSortClick } = this;
     const appBarProps = _appBarProps();
-    const { className, role, cities, history, title, titleAddon, fetchLocalizationLabel, userInfo, isHomeScreen } = this.props;
+    const {
+      className,
+      role,
+      cities,
+      history,
+      title,
+      titleAddon,
+      fetchLocalizationLabel,
+      userInfo,
+      isHomeScreen,
+      defaultTitle,
+      refreshButton,
+      sortButton,
+      searchButton,
+    } = this.props;
     return (
       <div>
         <AppBar
           className={className}
           title={title}
+          defaultTitle={defaultTitle}
           titleAddon={titleAddon}
           role={role}
+          ulbLogo={this.state.ulbLogo}
           {...appBarProps}
           fetchLocalizationLabel={fetchLocalizationLabel}
           userInfo={userInfo}
+          refreshButton={refreshButton}
+          sortButton={sortButton}
+          searchButton={searchButton}
+          sortDialogOpen={onSortClick}
+          history={this.props.history}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -125,14 +171,36 @@ class Header extends Component {
           // containerStyle={{ top: "64px" }}
         />
         <LogoutDialog logoutPopupOpen={logoutPopupOpen} closeLogoutDialog={_closeLogoutDialog} logout={_logout} />
+        <SortDialog sortPopOpen={sortPopOpen} closeSortDialog={closeSortDialog} />
       </div>
     );
   }
 }
 
+const getReceiptHeaderLabel = (name, ulbGrade) => {
+  if (ulbGrade) {
+    if (ulbGrade === "NP") {
+      return `${name.toUpperCase()} NAGAR PANCHAYAT`;
+    } else if (ulbGrade === "Municipal Corporation") {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    } else if (ulbGrade.includes("MC Class")) {
+      return `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+    } else {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    }
+  } else {
+    return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+  }
+};
+
 const mapStateToProps = (state) => {
   const cities = state.common.cities || [];
-  return { cities };
+  const tenantId = localStorage.getItem("tenant-id");
+  const userTenant = cities.filter((item) => item.code === tenantId);
+  const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
+  const name = userTenant && get(userTenant[0], "name");
+  const defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
+  return { cities, defaultTitle };
 };
 
 const mapDispatchToProps = (dispatch) => {

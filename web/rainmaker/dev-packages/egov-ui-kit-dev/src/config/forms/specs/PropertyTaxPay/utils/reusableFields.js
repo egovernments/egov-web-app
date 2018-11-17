@@ -189,12 +189,72 @@ export const measuringUnit = {
   // },
 };
 
+export const floorName = {
+  floorName: {
+    id: "floorName",
+    type: "singleValueList",
+    floatingLabelText: "PT_FORM2_SELECT_FLOOR",
+    hintText: "PT_FORM2_SELECT_FLOOR",
+    numcols: 4,
+    errorMessage: "",
+    required: true,
+    jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
+    hideField: true,
+    //   beforeFieldChange: ({ action, dispatch, state }) => {
+    //     const { value } = action;
+    //     const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
+    //       if (key.startsWith("customSelect_")) {
+    //         const form = state.form[key];
+    //         if (form && form.fields.floorName.value) {
+    //           floorValues.push(form.fields.floorName.value);
+    //         }
+    //       }
+    //       return floorValues;
+    //     }, []);
+    //     const valueExists = floorValues.find((floorvalue) => {
+    //       return floorvalue === value;
+    //     });
+    //     if (valueExists && get(state, `form[${action.formKey}].fields[${action.fieldKey}].value`) !== action.value) {
+    //       alert("This floor is already selected, please select another floor");
+    //       action.value = "";
+    //     }
+    //     return action;
+    //   },
+    //   updateDependentFields: ({ formKey, field, dispatch, state }) => {
+    //     var arr = formKey.split("_");
+    //     var floorIndex = parseInt(arr[1]);
+    //     const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
+    //     dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
+    //   },
+  },
+  // beforeInitForm: (action, store, dispatch) => {
+  //   try {
+  //     let state = store.getState();
+  //     const { Floor } = state.common && state.common.generalMDMSDataById;
+  //     set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+  //     return action;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
+};
+
 export const beforeInitForm = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
     let { dispatch } = store;
     const { form } = action;
     const { name: formKey, fields } = form;
+    const propertyType = get(state, "form.basicInformation.fields.typeOfBuilding.value");
+    const { Floor } = state.common && state.common.generalMDMSDataById;
+    if (get(get, "form.fields.floorName")) {
+      if (propertyType === "SHAREDPROPERTY") {
+        set(action, "form.fields.floorName.hideField", false);
+        set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      } else {
+        set(action, "form.fields.floorName.hideField", true);
+      }
+    }
 
     //For adding multiple units to prepareFormData
     if (formKey.startsWith(`floorDetails_`)) {
@@ -211,7 +271,7 @@ export const beforeInitForm = {
       }
       if (floorIndex === 0 && unitIndex === 0) {
         form.unitsIndex = 0;
-        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, "0"));
+        propertyType !== "SHAREDPROPERTY" && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, "0"));
       } else {
         const updatedFields = Object.keys(fields).reduce((updatedFields, fieldKey) => {
           const jsonPath = fields[fieldKey].jsonPath;
@@ -224,8 +284,11 @@ export const beforeInitForm = {
           return updatedFields;
         }, {});
         set(action, "form.fields", { ...updatedFields });
-
-        !state.form[formKey] && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorIndex}`));
+        if (!state.form[formKey]) {
+          const customSelectObj = state.form[`customSelect_${floorIndex}`];
+          const floorNo = customSelectObj.fields && customSelectObj.fields.floorName && customSelectObj.fields.floorName.value;
+          dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorNo}`));
+        }
       }
     }
 
@@ -626,9 +689,7 @@ export const mergeMaster = (masterOne, masterTwo, parentName = "") => {
     }
   }
   let masterOneData = getAbsentMasterObj(prepareDropDownData(masterOne, true), prepareDropDownData(masterTwo, true), parentName);
-  // console.log(masterOneData);
   for (var i = 0; i < masterOneData.length; i++) {
-    // masterOneData[i][parentName]=masterOneData[i].code;
     dropDownData.push({ label: masterOneData[i].name, value: masterOneData[i].code });
   }
   return dropDownData;

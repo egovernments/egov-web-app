@@ -8,6 +8,8 @@ var _reusableFields = require("./utils/reusableFields");
 
 var _actions = require("egov-ui-kit/redux/form/actions");
 
+var _actions2 = require("egov-ui-kit/redux/common/actions");
+
 var _set = require("lodash/set");
 
 var _set2 = _interopRequireDefault(_set);
@@ -53,6 +55,17 @@ var formConfig = {
           action.value = "";
         }
         return action;
+      },
+      updateDependentFields: function updateDependentFields(_ref2) {
+        var formKey = _ref2.formKey,
+            field = _ref2.field,
+            dispatch = _ref2.dispatch,
+            state = _ref2.state;
+
+        var arr = formKey.split("_");
+        var floorIndex = parseInt(arr[1]);
+        var floorNo = (0, _get2.default)(state, "form." + formKey + ".fields.floorName.value");
+        dispatch((0, _actions2.prepareFormData)("Properties[0].propertyDetails[0].units[" + floorIndex + "].floorNo", floorNo));
       }
     }
   },
@@ -68,8 +81,8 @@ var formConfig = {
       } else {
         dispatch((0, _actions.setFieldProperty)(action.form.name, "floorName", "hideField", false));
 
-        var _ref2 = state.common && state.common.generalMDMSDataById,
-            Floor = _ref2.Floor;
+        var _ref3 = state.common && state.common.generalMDMSDataById,
+            Floor = _ref3.Floor;
 
         (0, _set2.default)(action, "form.fields.floorName.dropDownData", (0, _reusableFields.prepareDropDownData)(Floor));
       }
@@ -80,9 +93,14 @@ var formConfig = {
   },
   afterInitForm: function afterInitForm(action, store, dispatch) {
     try {
+      var state = store.getState();
       if (action.form.name === "customSelect_0") {
-        dispatch((0, _actions.handleFieldChange)("customSelect_0", "floorName", "0"));
-        dispatch((0, _actions.setFieldProperty)("customSelect_0", "floorName", "disabled", true));
+        if ((0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" && (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY") {
+          //Do nothing
+        } else {
+          dispatch((0, _actions.handleFieldChange)("customSelect_0", "floorName", "0"));
+          dispatch((0, _actions.setFieldProperty)("customSelect_0", "floorName", "disabled", true));
+        }
       }
       return action;
     } catch (e) {

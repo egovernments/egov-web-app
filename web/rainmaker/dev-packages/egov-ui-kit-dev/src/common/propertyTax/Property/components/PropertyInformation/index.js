@@ -3,6 +3,11 @@ import { Receipt, Icon, Divider, Button } from "egov-ui-kit/components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
+import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
+import { getTranslatedLabel } from "../../../../../utils/commons";
+
+const locale = window.localStorage.getItem("locale") || "en_IN";
+const localizationLabelsData = initLocalizationLabels(locale);
 
 const editIconStyle = {
   fill: "#767676",
@@ -20,7 +25,8 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
           <Icon action="action" name="assignment" color="#767676" />
           <Label
             bold={true}
-            label={`Property Tax Unique ID.: ${propertyTaxAssessmentID}`}
+            label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyTaxAssessmentID}`}
+            debugger
             containerStyle={{ marginLeft: "13px" }}
             labelStyle={{ letterSpacing: 0 }}
             color="#767676"
@@ -46,7 +52,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                     <Icon action={item.iconAction} name={item.iconName} color="#767676" />
                     <Label label={item.heading} containerStyle={{ marginLeft: "13px" }} bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }} />
                   </div>
-                  {process.env.REACT_APP_NAME === "Employee" &&
+                  {/* {process.env.REACT_APP_NAME === "Employee" &&
                     item.heading === "Property Address" && (
                       <div
                         className="receipt-displayInline text-right"
@@ -58,7 +64,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                         <Icon style={editIconStyle} action="image" name="edit" />
                         <Label label="EDIT" color="#fe7a51" fontSize="16px" />
                       </div>
-                    )}
+                    )} */}
                 </div>
                 {item.showTable ? (
                   <AssessmentInfoTable items={item.items} tableHeaderItems={item.tableHeaderItems} />

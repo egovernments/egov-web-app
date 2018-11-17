@@ -106,7 +106,7 @@ var CityPickerDialog = function (_Component) {
           {
             className: "citipicker-dialog",
             titleStyle: { textAlign: "left", padding: "24px 16px" },
-            handleClose: onClose,
+            handleClose: onDialogueClose,
             bodyStyle: { padding: "0px", overflowX: "hidden", maxHeight: "100%", minHeight: "100px" },
             title: "Choose City",
             modal: false,

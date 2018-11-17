@@ -7,10 +7,11 @@ const formConfig = {
       floatingLabelText: "Cheque No",
       hintText: "Enter cheque no.",
       jsonPath: "Receipt[0].instrument.transactionNumber",
-      pattern: /^([1-9]\d{5,15})(\.\d+)?$/,
+      pattern: /^([0-9]){6}$/i,
       errorMessage: "Check no. should be minimum 6 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
+      value: "",
     },
     chequeDate: {
       id: "chequeDate",
@@ -21,6 +22,7 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.transactionDateInput",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorMessage: "",
+      value: "",
     },
     ifscCode: {
       id: "ifscCode",
@@ -35,6 +37,7 @@ const formConfig = {
       errorMessage: "Please enter a valid IFSC",
       jsonPath: "Receipt[0].instrument.ifscCode",
       pattern: /^[a-zA-Z0-9]{1,11}$/i,
+      value: "",
     },
     BankName: {
       id: "BankName",
@@ -45,6 +48,7 @@ const formConfig = {
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
       jsonPath: "Receipt[0].instrument.bank.name",
+      value: "",
     },
     BankBranch: {
       id: "BankBranch",
@@ -54,6 +58,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Bank Branch",
       jsonPath: "Receipt[0].instrument.branchName",
+      value: "",
     },
   },
   action: "",

@@ -58,15 +58,25 @@ var _isUndefined = require("lodash/isUndefined");
 
 var _isUndefined2 = _interopRequireDefault(_isUndefined);
 
+var _sortBy = require("lodash/sortBy");
+
+var _sortBy2 = _interopRequireDefault(_sortBy);
+
+var _arrowDropDown = require("material-ui/svg-icons/navigation/arrow-drop-down");
+
+var _arrowDropDown2 = _interopRequireDefault(_arrowDropDown);
+
+var _path = require("path");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "#b3b3b3"
+  color: "rgba(0, 0, 0, 0.3799999952316284)"
 };
 var floatingLabelStyle = {
-  color: "rgb(0, 188, 209)",
+  color: "rgba(0, 0, 0, 0.6000000238418579)",
   fontSize: 16,
   letterSpacing: 0.6,
   fontWeight: 500,
@@ -98,9 +108,8 @@ var AutoSuggestDropdown = function (_React$Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = AutoSuggestDropdown.__proto__ || Object.getPrototypeOf(AutoSuggestDropdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       searchText: ""
-    }, _this.getNameById = function (id) {
-      var dropDownData = _this.props.dropDownData;
-
+    }, _this.getNameById = function (id, dropDownData) {
+      //const { dropDownData } = this.props;
       var filteredArray = (0, _filter2.default)(dropDownData, { value: id });
       return filteredArray.length > 0 ? filteredArray[0].label : id;
     }, _this.onChangeText = function (searchText, dataSource, params) {
@@ -111,10 +120,11 @@ var AutoSuggestDropdown = function (_React$Component) {
   (0, _createClass3.default)(AutoSuggestDropdown, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
+      var dropDownData = nextProps.dropDownData;
       var getNameById = this.getNameById;
 
       if (!(0, _isUndefined2.default)(nextProps.value)) {
-        this.setState({ searchText: getNameById(nextProps.value) });
+        this.setState({ searchText: getNameById(nextProps.value, dropDownData) });
       }
     }
   }, {
@@ -131,38 +141,46 @@ var AutoSuggestDropdown = function (_React$Component) {
           errorMessage = _props.errorMessage,
           boundary = _props.boundary,
           dropDownData = _props.dropDownData,
-          restProps = (0, _objectWithoutProperties3.default)(_props, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData"]);
+          toolTip = _props.toolTip,
+          updateDependentFields = _props.updateDependentFields,
+          toolTipMessage = _props.toolTipMessage,
+          restProps = (0, _objectWithoutProperties3.default)(_props, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData", "toolTip", "updateDependentFields", "toolTipMessage"]);
       var filterAutoComplete = this.filterAutoComplete,
           getNameById = this.getNameById,
           onChangeText = this.onChangeText;
       var searchText = this.state.searchText;
 
-
-      return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
-        className: "autosuggest " + className,
-        floatingLabelFixed: true,
-        floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
-        hintStyle: (0, _extends3.default)({}, hintBaseStyle),
-        underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
-        openOnFocus: false,
-        fullWidth: true,
-        searchText: searchText,
-        underlineDisabledStyle: underlineDisabledStyle,
-        dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
-        menuStyle: { maxHeight: "150px", overflowY: "auto" },
-        dataSourceConfig: { text: "label", value: "value" },
-        onNewRequest: onChange,
-        onUpdateInput: onChangeText,
-        filter: function filter(searchText, key) {
-          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
-        },
-        floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
-          "span",
-          { key: "error-" + className, style: requiredStyle },
-          " ",
-          "*"
-        ) : null]
-      }, restProps));
+      var items = (0, _sortBy2.default)(dataSource, ["label"]);
+      return _react2.default.createElement(
+        "div",
+        { style: { display: "flex", position: "relative", width: "100%" } },
+        _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
+          className: "autosuggest " + className,
+          floatingLabelFixed: true,
+          floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
+          hintStyle: (0, _extends3.default)({}, hintBaseStyle),
+          underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
+          openOnFocus: true,
+          fullWidth: true,
+          searchText: searchText,
+          underlineDisabledStyle: underlineDisabledStyle,
+          dataSource: items && [].concat((0, _toConsumableArray3.default)(items)) || [],
+          menuStyle: { maxHeight: "150px", overflowY: "auto" },
+          dataSourceConfig: { text: "label", value: "value" },
+          onNewRequest: onChange,
+          onUpdateInput: onChangeText,
+          filter: function filter(searchText, key) {
+            return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+          },
+          floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
+            "span",
+            { key: "error-" + className, style: requiredStyle },
+            " ",
+            "*"
+          ) : null]
+        }, restProps)),
+        _react2.default.createElement(_arrowDropDown2.default, { style: { position: "absolute", top: "24px", right: 0, color: "#969696" } })
+      );
     }
   }]);
   return AutoSuggestDropdown;

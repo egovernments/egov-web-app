@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getCurrentFinancialYear = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -16,6 +16,10 @@ var _get2 = _interopRequireDefault(_get);
 var _set = require("lodash/set");
 
 var _set2 = _interopRequireDefault(_set);
+
+var _isUndefined = require("lodash/isUndefined");
+
+var _isUndefined2 = _interopRequireDefault(_isUndefined);
 
 var _cloneDeep = require("lodash/cloneDeep");
 
@@ -41,8 +45,13 @@ var resetFormWizard = exports.resetFormWizard = function resetFormWizard(form, r
 
 var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLatestPropertyDetails(propertyDetailsArray) {
   if (propertyDetailsArray) {
+    var currentFinancialYear = getCurrentFinancialYear();
     if (propertyDetailsArray.length > 1) {
-      return propertyDetailsArray.reduce(function (acc, curr) {
+      var assessmentsOfCurrentYear = propertyDetailsArray.filter(function (item) {
+        return item.financialYear === currentFinancialYear;
+      });
+      var propertyDetails = assessmentsOfCurrentYear.length > 0 ? assessmentsOfCurrentYear : propertyDetailsArray;
+      return propertyDetails.reduce(function (acc, curr) {
         return acc.assessmentDate > curr.assessmentDate ? acc : curr;
       });
     } else {
@@ -51,6 +60,20 @@ var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLa
   } else {
     return;
   }
+};
+
+var getCurrentFinancialYear = exports.getCurrentFinancialYear = function getCurrentFinancialYear() {
+  var today = new Date();
+  var curMonth = today.getMonth();
+  var fiscalYr = "";
+  if (curMonth > 3) {
+    var nextYr1 = (today.getFullYear() + 1).toString();
+    fiscalYr = today.getFullYear().toString() + "-" + nextYr1.slice(2);
+  } else {
+    var nextYr2 = today.getFullYear().toString();
+    fiscalYr = (today.getFullYear() - 1).toString() + "-" + nextYr2.slice(2);
+  }
+  return fiscalYr;
 };
 
 var getQueryValue = exports.getQueryValue = function getQueryValue(query, key) {
@@ -144,6 +167,8 @@ var getFinancialYearFromQuery = exports.getFinancialYearFromQuery = function get
 };
 
 var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFromBill(bill) {
+  var taxHeads = ["PT_TAX", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_FIRE_CESS", "PT_CANCER_CESS", "PT_TIME_PENALTY", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING_DEBIT"]; //Hardcoding as backend is not sending in correct order
+
   var _ref = bill && bill[0],
       billDetails = _ref.billDetails,
       tenantId = _ref.tenantId;
@@ -153,23 +178,36 @@ var getEstimateFromBill = exports.getEstimateFromBill = function getEstimateFrom
       totalAmount = _ref2.totalAmount,
       billAccountDetails = _ref2.billAccountDetails;
 
+  var taxHeadsFromAPI = billAccountDetails.map(function (item) {
+    return item.accountDescription.split("-")[0];
+  });
+  var transformedTaxHeads = taxHeads.reduce(function (result, current) {
+    if (taxHeadsFromAPI.indexOf(current) > -1) {
+      result.push(current);
+    }
+    return result;
+  }, []);
   var estimate = { totalAmount: 0 };
   estimate.totalAmount = totalAmount;
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
-  var taxHeadEstimates = billAccountDetails.reduce(function (taxHeadEstimates, item) {
-    taxHeadEstimates.push({
-      taxHeadCode: item.accountDescription.split("-")[0],
-      estimateAmount: item.crAmountToBePaid,
-      category: item.purpose
+  var taxHeadEstimates = transformedTaxHeads.reduce(function (taxHeadEstimates, current) {
+    var taxHeadContent = billAccountDetails.filter(function (item) {
+      return item.accountDescription && item.accountDescription.split("-")[0] === current;
+    });
+    taxHeadContent && taxHeadContent[0] && taxHeadEstimates.push({
+      taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
+      estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+      category: taxHeadContent[0].purpose
     });
     return taxHeadEstimates;
   }, []);
-  collectedAmount > 0 && taxHeadEstimates.push({
-    taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
-    estimateAmount: collectedAmount,
-    category: "EXEMPTION"
-  });
+  // collectedAmount > 0 &&
+  //   taxHeadEstimates.push({
+  //     taxHeadCode: "PT_ADVANCE_CARRYFORWARD",
+  //     estimateAmount: collectedAmount,
+  //     category: "EXEMPTION",
+  //   });
   estimate.taxHeadEstimates = taxHeadEstimates;
   return [(0, _extends3.default)({}, estimate)];
 };
@@ -217,13 +255,17 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
     configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
     var units = data["Properties"][0]["propertyDetails"][0]["units"];
 
+    //For assigning consecutive indexes in formkeys irrespective of floor no.
+    var floorIndexObj = prepareUniqueFloorIndexObj(units);
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
       var floorNo = units[unitIndex]["floorNo"];
-      var formKey = "floorDetails_" + floorNo + "_unit_" + unitIndex;
+      var floorIndex = floorIndexObj[floorNo];
+      var formKey = propUsageType !== "RESIDENTIAL" && propType === "SHAREDPROPERTY" ? "floorDetails_0_unit_" + unitIndex : "floorDetails_" + floorIndex + "_unit_" + unitIndex;
       configFloor = (0, _cloneDeep2.default)(configFloor);
-      Object.keys(configFloor["fields"]).map(function (item) {
+      Object.keys(configFloor["fields"]).forEach(function (item) {
         var jsonPath = configFloor["fields"][item]["jsonPath"];
         jsonPath = jsonPath.replace(/units\[[0-9]\]/g, "units[" + unitIndex + "]");
+        configFloor["fields"][item].jsonPath = jsonPath;
         var valueInJSON = (0, _get2.default)(data, jsonPath);
         if (valueInJSON === null) {
           var categoryValue = jsonPath.split(".").pop();
@@ -238,10 +280,10 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
       configFloor.unitsIndex = unitIndex;
       dictFloor[formKey] = configFloor;
 
-      if (!("customSelect_" + floorNo in dictCustomSelect)) {
+      if (!("customSelect_" + floorIndex in dictCustomSelect)) {
         customSelectconfig = (0, _cloneDeep2.default)(customSelectconfig);
         customSelectconfig["fields"]["floorName"]["value"] = floorNo;
-        dictCustomSelect["customSelect_" + floorNo] = customSelectconfig;
+        dictCustomSelect["customSelect_" + floorIndex] = customSelectconfig;
       }
     }
   }
@@ -254,6 +296,16 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
   // });
   // console.log(basicInfoConfig);
   return (0, _extends3.default)({ basicInformation: basicInfoConfig, plotDetails: configPlot }, dictFloor, dictCustomSelect);
+};
+
+var prepareUniqueFloorIndexObj = function prepareUniqueFloorIndexObj(units) {
+  var floorIndexObj = units.reduce(function (floorIndexObj, item, index) {
+    if ((0, _isUndefined2.default)(floorIndexObj[item.floorNo])) {
+      floorIndexObj[item.floorNo] = index;
+    }
+    return floorIndexObj;
+  }, {});
+  return floorIndexObj;
 };
 
 var convertUnitsToSqFt = exports.convertUnitsToSqFt = function convertUnitsToSqFt(unitArray) {

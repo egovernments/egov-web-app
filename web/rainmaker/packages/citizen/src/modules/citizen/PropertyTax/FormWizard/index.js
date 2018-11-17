@@ -23,7 +23,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
-import { get, set, range, isEmpty, isEqual } from "lodash";
+import { get, set, range, isEmpty, isEqual, orderBy } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
@@ -31,6 +31,7 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
+import { SingleCheckbox } from "components";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -53,7 +54,17 @@ class FormWizard extends Component {
     draftByIDResponse: {},
     isFullPayment: true,
     partialAmountError: "",
+    propertyUUId: "",
+    termsAccepted: false,
+    termsError: "",
+    calculationScreenData: [],
   };
+
+  toggleTerms = () =>
+    this.setState({
+      termsAccepted: !this.state.termsAccepted,
+      termsError: "",
+    });
 
   updateDraftinLocalStorage = async (draftInfo, assessmentNumber) => {
     localStorage.setItem("draftId", draftInfo.id);
@@ -96,7 +107,9 @@ class FormWizard extends Component {
     const { form, location, common } = this.props;
     const { search } = location;
 
-    let prepareFormData = { ...this.props.prepareFormData };
+    let prepareFormData = {
+      Properties: [...this.props.prepareFormData.Properties],
+    };
     //toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -130,7 +143,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       }
     } catch (e) {
-      alert(e)
+      alert(e);
     }
 
     if (!draftRequest.draft.id) {
@@ -220,13 +233,44 @@ class FormWizard extends Component {
     };
   };
 
+  convertBuiltUpAreaToSqFt = (builtUpArea) => {
+    const builtUpAreaTransform = builtUpArea * 9;
+    return Math.round(builtUpAreaTransform * 100) / 100;
+  };
+
   getTargetPropertiesDetails = (propertyDetails) => {
-    propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-    propertyDetails[propertyDetails.length - 1].units =
-      propertyDetails[propertyDetails.length - 1] &&
-      propertyDetails[propertyDetails.length - 1].units &&
-      convertUnitsToSqFt(propertyDetails[propertyDetails.length - 1].units);
-    return [propertyDetails[propertyDetails.length - 1]];
+    const { search } = this.props.location;
+    const FY = getQueryValue(search, "FY");
+    const assessmentNumber = getQueryValue(search, "assessmentId");
+    // let selectedPropertyDetails = [];
+    // //filter property details by financial year
+    // const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
+
+    // //if present sort the filtered property details else sort the original property details
+    // if (filteredPropertyDetails && filteredPropertyDetails.length) {
+    //   filteredPropertyDetails.sort(
+    //     (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
+    //   );
+    //   selectedPropertyDetails.push(...filteredPropertyDetails);
+    // } else {
+    //   propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
+    //   selectedPropertyDetails.push(...propertyDetails);
+    // }
+    // console.log("DDDDDDDDDDDDDDDDDDD");
+    // console.log(selectedPropertyDetails);
+    // const lastIndex = selectedPropertyDetails.length - 1;
+    const selectedPropertyDetails = propertyDetails.filter((item) => item.assessmentNumber === assessmentNumber);
+    // return the latest proeprty details of the selected year
+    const lastIndex = 0;
+    if (selectedPropertyDetails[lastIndex].propertySubType === "SHAREDPROPERTY") {
+      selectedPropertyDetails[lastIndex].buildUpArea =
+        selectedPropertyDetails[lastIndex] &&
+        selectedPropertyDetails[lastIndex].buildUpArea &&
+        this.convertBuiltUpAreaToSqFt(selectedPropertyDetails[lastIndex].buildUpArea);
+    }
+    selectedPropertyDetails[lastIndex].units =
+      selectedPropertyDetails[lastIndex] && selectedPropertyDetails[lastIndex].units && convertUnitsToSqFt(selectedPropertyDetails[lastIndex].units);
+    return [selectedPropertyDetails[lastIndex]];
   };
 
   fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
@@ -266,7 +310,7 @@ class FormWizard extends Component {
           draftRequest
         );
         currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
-        const prepareFormDataFromApi = get(currentDraft, "draftRecord.prepareFormData", {})
+        const prepareFormDataFromApi = get(currentDraft, "draftRecord.prepareFormData", {});
         const preparedForm = convertRawDataToFormConfig(prepareFormDataFromApi); //convertRawDataToFormConfig(responseee)
         currentDraft = {
           draftRecord: {
@@ -303,6 +347,9 @@ class FormWizard extends Component {
             prepareFormData: { Properties: propertyResponse["Properties"] }, //prepareFormData2,
           },
         };
+        this.setState({
+          propertyUUID: get(searchPropertyResponse, "Properties[0].propertyDetails[0].citizenInfo.uuid"),
+        });
       }
 
       if (!currentDraft) {
@@ -405,7 +452,7 @@ class FormWizard extends Component {
           selected: activeTab,
           draftRequest: {
             draft: {
-              id: null,
+              id: !isReassesment ? draftId : null,
               ...currentDraft,
               // assessmentNumber: currentDraft.assessmentNumber,
               // draftRecord: currentDraft.draftRecord,
@@ -640,9 +687,10 @@ class FormWizard extends Component {
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
-    const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
-    const { estimation, totalAmountToBePaid, financialYearFromQuery } = this.state;
+    const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount, toggleTerms } = this;
+    const { estimation, totalAmountToBePaid, financialYearFromQuery, termsAccepted, termsError } = this.state;
     const { form, currentTenantId, search } = this.props;
+    const isCompletePayment = getQueryValue(search, "isCompletePayment");
     switch (selected) {
       case 0:
         return (
@@ -678,10 +726,15 @@ class FormWizard extends Component {
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
               currentTenantId={currentTenantId}
+              isCompletePayment={isCompletePayment}
               isPartialPaymentInValid={
                 get(this.state, "estimation[0].totalAmount", 1) < 100 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
               }
+              toggleTerms={toggleTerms}
+              termsAccepted={termsAccepted}
+              termsError={termsError}
+              calculationScreenData={this.state.calculationScreenData}
             />
           </div>
         );
@@ -697,6 +750,11 @@ class FormWizard extends Component {
     switch (selected) {
       //validating property address is validated
       case 0:
+        if (window.appOverrides && !window.appOverrides.validateForm("propertyAddress", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
+
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
           callDraft();
@@ -707,6 +765,11 @@ class FormWizard extends Component {
         break;
       //validating basic information,plotdetails and if plot details having floors
       case 1:
+        if (window.appOverrides && !window.appOverrides.validateForm("assessmentInformation", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
+
         const { basicInformation, plotDetails } = form;
         if (basicInformation) {
           const isBasicInformationFormValid = validateForm(basicInformation);
@@ -746,6 +809,11 @@ class FormWizard extends Component {
         }
         break;
       case 2:
+        if (window.appOverrides && !window.appOverrides.validateForm("ownerInfo", form)) {
+          this.props.toggleSnackbarAndSetText(true, "ULB validations failed!", true);
+          break;
+        }
+
         const { ownershipType } = form;
         const estimateCall = () => {
           estimate().then((estimateResponse) => {
@@ -957,6 +1025,63 @@ class FormWizard extends Component {
     return { instiObj, ownerArray };
   };
 
+  getFloorAndUnit = (floorNo, unitIndex) => {
+    const { common } = this.props;
+    const floorName = get(common, `generalMDMSDataById.Floor[${floorNo}].name`, "");
+    return `${floorName} Unit - ${unitIndex}`;
+  };
+
+  getBillingRate = (id, responseArr) => {
+    return `${responseArr.filter((item) => item.id === id)[0].unitRate}/sq yards`;
+  };
+
+  getCalculationScreenData = async (billingSlabs, tenantId) => {
+    const { prepareFormData } = this.props;
+    const unitsArray = get(prepareFormData, "Properties[0].propertyDetails[0].units");
+    const mapIdWithIndex = billingSlabs.reduce(
+      (res, curr) => {
+        const obj = {
+          id: curr.split("|")[0],
+          index: curr.split("|")[1],
+        };
+        res["mappedIds"].push(obj);
+        res["idsArray"].push(curr.split("|")[0]);
+        return res;
+      },
+      { mappedIds: [], idsArray: [] }
+    );
+    ("pt-calculator-v2/billingslab/_search");
+    try {
+      var billingSlabResponse = await httpRequest("pt-calculator-v2/billingslab/_search", "_search", [
+        { key: "id", value: mapIdWithIndex.idsArray.join(",") },
+        { key: "tenantId", value: tenantId },
+      ]);
+    } catch (e) {
+      alert(e.message);
+    }
+
+    let finalData = mapIdWithIndex.mappedIds.reduce(
+      (res, curr) => {
+        const { floorNo } = unitsArray[curr.index];
+        if (res.floorObj.hasOwnProperty(floorNo)) {
+          res.floorObj[floorNo]++;
+        } else {
+          res.floorObj[floorNo] = 1;
+        }
+        const obj = {
+          label: this.getFloorAndUnit(floorNo, res.floorObj[floorNo]),
+          value: this.getBillingRate(curr.id, billingSlabResponse.billingSlab),
+          floorNo,
+        };
+        res.data.push(obj);
+        return res;
+      },
+      { floorObj: {}, unitIndex: 1, data: [] }
+    );
+    finalData.data.sort((item1, item2) => item1.floorNo - item2.floorNo);
+    return finalData;
+  };
+
   estimate = async () => {
     let { toggleSpinner, form, common, location } = this.props;
     let { search } = location;
@@ -1005,6 +1130,11 @@ class FormWizard extends Component {
           },
         ],
       });
+      //For calculation screen
+      const tenantId = prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId;
+      const calculationScreenData = await this.getCalculationScreenData(get(estimateResponse, "Calculation[0].billingSlabIds", []), tenantId);
+      this.setState({ calculationScreenData: calculationScreenData.data });
+
       toggleSpinner();
       return estimateResponse;
     } catch (e) {
@@ -1074,7 +1204,7 @@ class FormWizard extends Component {
         let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
           Properties: properties,
         });
-        callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+        //callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
         callPGService(
           get(createPropertyResponse, "Properties[0].propertyId"),
           get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
@@ -1089,18 +1219,15 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    const { formValidIndexArray, selected, draftByIDResponse } = this.state;
+    const { formValidIndexArray, selected, propertyUUID } = this.state;
     const { location } = this.props;
     let { search } = location;
-    let draftUuidId = draftByIDResponse.userId;
-    let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    let currentUUID = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
-    // form validation checks needs to be written here
-    // fetchDraftDetails();
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      false
-        ? isCompletePayment || draftUuidId !== currentUuidId
+      isReassesment
+        ? isCompletePayment || propertyUUID !== currentUUID
           ? alert("Not authorized to edit this property details")
           : this.setState({
               selected: index,
@@ -1194,6 +1321,10 @@ class FormWizard extends Component {
     }
     propertyDetails[0].units = units;
 
+    if (window.appOverrides) {
+      window.appOverrides.submitForm(propertyInfo);
+    }
+
     return propertyInfo;
   };
 
@@ -1202,12 +1333,26 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
-    const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
+    const { isFullPayment, partialAmountError, totalAmountToBePaid, termsAccepted, selected } = this.state;
+    if (!termsAccepted) {
+      this.setState({
+        termsError: "Please check the declaration box to proceed futher",
+      });
+      alert("Please check the declaration box to proceed futher");
+      return;
+    }
+    if (totalAmountToBePaid % 1 !== 0) {
+      alert("Amount cannot be a fraction!");
+      return;
+    }
     if (!isFullPayment && partialAmountError) return;
-    if (totalAmountToBePaid % 1 === 0) {
+    this.updateIndex(selected + 1);
+    {
+      /*if (totalAmountToBePaid % 1 === 0) {
       this.setState({ dialogueOpen: true });
     } else {
       alert("Amount cannot be a fraction!");
+    }*/
     }
   };
 

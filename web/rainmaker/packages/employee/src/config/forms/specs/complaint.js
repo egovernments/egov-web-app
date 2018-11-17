@@ -1,5 +1,7 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
-import { CITY } from "egov-ui-kit/utils/endPoints";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import get from "lodash/get";
+
+const tenantId = localStorage.getItem("tenant-id");
 
 const formConfig = {
   name: "complaint",
@@ -44,33 +46,35 @@ const formConfig = {
     },
     latitude: {
       id: "latitude",
-      jsonPath: "services[0].lat",
+      jsonPath: "services[0].addressDetail.latitude",
     },
     longitude: {
       id: "longitude",
-      jsonPath: "services[0].long",
+      jsonPath: "services[0].addressDetail.longitude",
     },
-    address: {
-      id: "address",
-      jsonPath: "services[0].address",
-      required: true,
-      floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
-      hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
-      errorText: "",
-    },
+    // address: {
+    //   id: "address",
+    //   jsonPath: "services[0].address",
+    //   required: true,
+    //   floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
+    //   hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
+    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    //   value: "",
+    //   errorText: "",
+    // },
     city: {
       id: "city",
-      jsonPath: "services[0].city",
+      jsonPath: "services[0].addressDetail.city",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      value: "",
       errorText: "",
-      type: "singleValueList",
+      dropDownData: [],
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
+      },
       dataFetchConfig: {
         // url: CITY.GET.URL,
         // action: CITY.GET.ACTION,
@@ -101,9 +105,11 @@ const formConfig = {
     mohalla: {
       id: "mohalla",
       required: true,
-      jsonPath: "services[0].addressId",
-      floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-      hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      jsonPath: "services[0].addressDetail.mohalla",
+      // floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
+      // hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
+      hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       boundary: true,
       // dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
@@ -120,11 +126,19 @@ const formConfig = {
       value: "",
       errorText: "",
     },
+    houseNo: {
+      id: "houseNo",
+      jsonPath: "services[0].addressDetail.houseNoAndStreetName",
+      floatingLabelText: "CS_ADDCOMPLAINT_HOUSE_NO",
+      hintText: "CS_ADDCOMPLAINT_HOUSE_NO_PLACEHOLDER",
+      errorMessage: "House no should be less than 100 characters",
+      value: "",
+    },
     landmark: {
       id: "landmark",
-      jsonPath: "services[0].landmark",
-      floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
-      hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      jsonPath: "services[0].addressDetail.landmark",
+      floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
+      hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",
@@ -132,8 +146,8 @@ const formConfig = {
     additionalDetails: {
       id: "additional details",
       jsonPath: "services[0].description",
-      floatingLabelText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS",
-      hintText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      floatingLabelText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS",
+      hintText: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",
@@ -153,7 +167,7 @@ const formConfig = {
     try {
       let state = store.getState();
       const { cities, citiesByModule } = state.common;
-      const { PGR } = citiesByModule;
+      const { PGR } = citiesByModule || {};
       if (PGR) {
         const tenants = PGR.tenants;
         const dd = tenants.reduce((dd, tenant) => {
@@ -164,6 +178,19 @@ const formConfig = {
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
+      }
+      let city = get(state, "form.complaint.fields.city.value");
+      let mohalla = get(state, "form.complaint.fields.mohalla.value");
+      console.log("city is....", city);
+      if (!city) {
+        dispatch(handleFieldChange("complaint", "city", tenantId));
+      } else {
+        if (city) {
+          dispatch(handleFieldChange("complaint", "city", city));
+        }
+        if (mohalla) {
+          dispatch(handleFieldChange("complaint", "mohalla", mohalla));
+        }
       }
       return action;
     } catch (e) {

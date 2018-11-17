@@ -98,6 +98,7 @@ var ActionMenu = function (_Component) {
       var actionListArr = this.props.actionListArr;
 
       var transformedRole = "";
+      // actionListArr.push({url:"https://www.google.com",navigationURL:"newTab",path:"test.new tab"});
       return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole, actionListArr: actionListArr }) : null;
     }
   }]);

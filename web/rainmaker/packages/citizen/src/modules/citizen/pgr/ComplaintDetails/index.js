@@ -7,11 +7,13 @@ import { Screen } from "modules/common";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "egov-ui-kit/utils/commons";
+
 import "./index.css";
 
 class ComplaintDetails extends Component {
   componentDidMount() {
     let { fetchComplaints, match, resetFiles } = this.props;
+
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     if (this.props.form && this.props.form.complaint) {
       resetFiles("complaint");
@@ -48,17 +50,19 @@ class ComplaintDetails extends Component {
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common, form } = state;
-  const { employeeById, departmentById, designationsById } = common || {};
+
+  const { employeeById, departmentById, designationsById, cities } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
     let details = {
-      status: selectedComplaint.status,
+      status: selectedComplaint.status || "",
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
+      addressDetail: selectedComplaint.addressDetail ? selectedComplaint.addressDetail : {},
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,

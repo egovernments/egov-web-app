@@ -28,6 +28,202 @@ var _common2 = _interopRequireDefault(_common);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var styles = [{
+  featureType: "administrative",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#d6e2e6"
+  }]
+}, {
+  featureType: "administrative",
+  elementType: "geometry.stroke",
+  stylers: [{
+    color: "#cfd4d5"
+  }]
+}, {
+  featureType: "administrative",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#7492a8"
+  }]
+}, {
+  featureType: "administrative.neighborhood",
+  elementType: "labels.text.fill",
+  stylers: [{
+    lightness: 25
+  }]
+}, {
+  featureType: "landscape.man_made",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#dde2e3"
+  }]
+}, {
+  featureType: "landscape.man_made",
+  elementType: "geometry.stroke",
+  stylers: [{
+    color: "#cfd4d5"
+  }]
+}, {
+  featureType: "landscape.natural",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#dde2e3"
+  }]
+}, {
+  featureType: "landscape.natural",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#7492a8"
+  }]
+}, {
+  featureType: "landscape.natural.terrain",
+  elementType: "all",
+  stylers: [{
+    visibility: "off"
+  }]
+}, {
+  featureType: "poi",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#dde2e3"
+  }]
+}, {
+  featureType: "poi",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#588ca4"
+  }]
+}, {
+  featureType: "poi",
+  elementType: "labels.icon",
+  stylers: [{
+    saturation: -100
+  }]
+}, {
+  featureType: "poi.park",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#a9de83"
+  }]
+}, {
+  featureType: "poi.park",
+  elementType: "geometry.stroke",
+  stylers: [{
+    color: "#bae6a1"
+  }]
+}, {
+  featureType: "poi.sports_complex",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#c6e8b3"
+  }]
+}, {
+  featureType: "poi.sports_complex",
+  elementType: "geometry.stroke",
+  stylers: [{
+    color: "#bae6a1"
+  }]
+}, {
+  featureType: "road",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#41626b"
+  }]
+}, {
+  featureType: "road",
+  elementType: "labels.icon",
+  stylers: [{
+    saturation: -45
+  }, {
+    lightness: 10
+  }, {
+    visibility: "on"
+  }]
+}, {
+  featureType: "road.highway",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#c1d1d6"
+  }]
+}, {
+  featureType: "road.highway",
+  elementType: "geometry.stroke",
+  stylers: [{
+    color: "#a6b5bb"
+  }]
+}, {
+  featureType: "road.highway",
+  elementType: "labels.icon",
+  stylers: [{
+    visibility: "on"
+  }]
+}, {
+  featureType: "road.highway.controlled_access",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#9fb6bd"
+  }]
+}, {
+  featureType: "road.arterial",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#ffffff"
+  }]
+}, {
+  featureType: "road.local",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#ffffff"
+  }]
+}, {
+  featureType: "transit",
+  elementType: "labels.icon",
+  stylers: [{
+    saturation: -70
+  }]
+}, {
+  featureType: "transit.line",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#b4cbd4"
+  }]
+}, {
+  featureType: "transit.line",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#588ca4"
+  }]
+}, {
+  featureType: "transit.station",
+  elementType: "all",
+  stylers: [{
+    visibility: "off"
+  }]
+}, {
+  featureType: "transit.station",
+  elementType: "labels.text.fill",
+  stylers: [{
+    color: "#008cb5"
+  }, {
+    visibility: "on"
+  }]
+}, {
+  featureType: "transit.station.airport",
+  elementType: "geometry.fill",
+  stylers: [{
+    saturation: -100
+  }, {
+    lightness: -5
+  }]
+}, {
+  featureType: "water",
+  elementType: "geometry.fill",
+  stylers: [{
+    color: "#a6cbe3"
+  }]
+}];
+
 var _require = require("recompose"),
     compose = _require.compose,
     withProps = _require.withProps,
@@ -120,10 +316,13 @@ var MapLocation = compose(withProps({
     GoogleMap,
     {
       ref: props.onMapMounted,
-      defaultZoom: 13,
+      defaultZoom: 18,
       center: props.currLoc ? props.currLoc : props.center,
       onBoundsChanged: props.onBoundsChanged,
-      draggable: true
+      draggable: true,
+      defaultOptions: {
+        styles: styles
+      }
     },
     _react2.default.createElement(
       "div",
@@ -168,13 +367,86 @@ var MapLocation = compose(withProps({
       _react2.default.createElement("input", { type: "text", className: "searchBoxStyles", placeholder: "Search address", style: props.searchBoxStyles })
     ),
     props.markers.length > 0 ? props.markers.map(function (marker, index) {
-      return _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon });
-    }) : _react2.default.createElement(Marker, {
-      position: props.viewLocation ? props.currLoc : props.center,
-      icon: props.icon,
-      draggable: false,
-      animation: window.google.maps.Animation.DROP
-    }),
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+          "div",
+          { className: "markerInfoBox" },
+          _react2.default.createElement(
+            "div",
+            {
+              style: {
+                backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+                textAlign: "center",
+                padding: "7px 10px"
+              }
+            },
+            _react2.default.createElement(
+              "div",
+              { style: { color: "#fff" } },
+              "Move pin to adjust"
+            )
+          ),
+          _react2.default.createElement("div", {
+            style: {
+              width: "0px",
+              height: "0px",
+              left: 0,
+              right: 0,
+              margin: "auto",
+              borderLeft: "8px solid transparent",
+              borderRight: "8px solid transparent",
+              borderTop: "15px solid rgba(0, 0, 0, 0.87)",
+              position: "absolute"
+            }
+          })
+        ),
+        _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon }),
+        ";"
+      );
+    }) : _react2.default.createElement(
+      "div",
+      null,
+      _react2.default.createElement(
+        "div",
+        { className: "markerInfoBox" },
+        _react2.default.createElement(
+          "div",
+          {
+            style: {
+              backgroundColor: "rgba(0, 0, 0, 0.8700000047683716)",
+              textAlign: "center",
+              padding: "7px 10px"
+            }
+          },
+          _react2.default.createElement(
+            "div",
+            { style: { color: "#fff" } },
+            "Move pin to adjust"
+          )
+        ),
+        _react2.default.createElement("div", {
+          style: {
+            width: "0px",
+            height: "0px",
+            left: 0,
+            right: 0,
+            margin: "auto",
+            borderLeft: "8px solid transparent",
+            borderRight: "8px solid transparent",
+            borderTop: "15px solid rgba(0, 0, 0, 0.87)",
+            position: "absolute"
+          }
+        })
+      ),
+      _react2.default.createElement(Marker, {
+        position: props.viewLocation ? props.currLoc : props.center,
+        icon: props.icon,
+        draggable: false,
+        animation: window.google.maps.Animation.DROP
+      })
+    ),
     props.setLocation && props.setLocation(props.lat, props.lng)
   );
 });

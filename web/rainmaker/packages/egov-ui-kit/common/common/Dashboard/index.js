@@ -29,9 +29,12 @@ var onButton1Click = function onButton1Click(item, history, onPGRClick) {
 
   if (item.moduleTitle === "Property Tax") {
     history && history.push(route);
-  }
-  if (item.moduleTitle === "Complaints") {
+  } else if (item.moduleTitle === "Complaints") {
     onPGRClick();
+  } else if (item.moduleTitle === "Finance") {
+    history && history.push(route);
+  } else if (item.moduleTitle === "TradeLicense") {
+    history && history.push(route);
   }
 };
 var onButton2Click = function onButton2Click(item, history) {
@@ -41,6 +44,9 @@ var onButton2Click = function onButton2Click(item, history) {
     }
     if (item.moduleTitle === "Complaints") {
       history && history.push("how-it-works");
+    }
+    if (item.moduleTitle === "TradeLicense") {
+      history && history.push("trade-license/how-it-works");
     }
   }
 };
@@ -56,7 +62,7 @@ var Dashboard = function Dashboard(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { "class": "col-sm-12 " },
+    { className: "col-sm-12 " },
     _react2.default.createElement(_translationNode2.default, { className: "landingPageUser", label: " Welcome " + userName + ", " }),
     _react2.default.createElement(_component2.default, { onPGRClick: onPGRClick, items: moduleItems, onButton2Click: onButton2Click, onButton1Click: onButton1Click, history: history }),
     renderCityPicker && _react2.default.createElement(_CityPicker2.default, { history: history, moduleItems: moduleItems, onDialogueClose: onDialogueClose, dialogueOpen: dialogueOpen })

@@ -17,6 +17,11 @@ const removeFormMiddleware = (store) => (next) => async (action) => {
         const unitIndex = jsonPath.split("units[")[1].split("].")[0];
         dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitIndex}]`, null));
       }
+      
+    if (window.appOverrides) {
+      window.appOverrides.resetForm(formKey);
+    }
+
     } catch (error) {
       const { message } = error;
       dispatch(toggleSnackbarAndSetText(true, message, true));

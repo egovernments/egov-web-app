@@ -6,9 +6,7 @@ class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
 
   onPGRClick = () => {
-    this.setState({
-      dialogueOpen: true,
-    });
+    this.props.history.push("all-complaints");
   };
   onDialogueClose = () => {
     this.setState({
@@ -19,6 +17,8 @@ class LandingPage extends Component {
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
     const tenantId = localStorage.getItem("tenant-id");
+    const modulesToShow = Object.keys(moduleData);
+
     return (
       citiesByModule &&
       Object.keys(citiesByModule).reduce((acc, item) => {
@@ -26,17 +26,21 @@ class LandingPage extends Component {
           return tenant.code === tenantId;
         });
         if (index > -1) {
-          acc.push({
-            cities: citiesByModule[item].tenants.map((item, key) => {
-              return item.code;
-            }),
-            ...moduleData[item],
-          });
+          modulesToShow.indexOf(item) > -1 &&
+            acc.push({
+              cities: citiesByModule[item].tenants.map((item, key) => {
+                return item.code;
+              }),
+              ...moduleData[item],
+            });
         }
         return acc;
       }, [])
     );
+    // transformedData && transformedData.push(moduleData["Finance"]);
+    // return transformedData;
   };
+
   moduleData = {
     PGR: {
       moduleTitle: "Complaints",
@@ -44,7 +48,7 @@ class LandingPage extends Component {
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
       iconName: "dashboard-propertytax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     PT: {
       moduleTitle: "Property Tax",
@@ -53,7 +57,25 @@ class LandingPage extends Component {
       iconAction: "custom",
       iconName: "dashboard-complaint",
       route: "property-tax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
+      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+    },
+    Finance: {
+      moduleTitle: "Finance",
+      button1: "Inbox",
+      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      iconAction: "custom",
+      iconName: "rupee",
+      route: "services/EGF/inbox",
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+    },
+    TL: {
+      moduleTitle: "TradeLicense",
+      button1: "Mseva TradeLicense",
+      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      iconAction: "places",
+      iconName: "business-center",
+      route: "tradelicense/search",
+      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
   render() {
@@ -69,7 +91,7 @@ class LandingPage extends Component {
         onPGRClick={onPGRClick}
         onDialogueClose={onDialogueClose}
         dialogueOpen={this.state.dialogueOpen}
-        renderCityPicker={renderCityPicker}
+        renderCityPicker={false}
       />
     );
   }

@@ -38,6 +38,10 @@ var _pblogo = require("egov-ui-kit/assets/images/pblogo.png");
 
 var _pblogo2 = _interopRequireDefault(_pblogo);
 
+var _IconButton = require("material-ui/IconButton");
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -46,9 +50,17 @@ var styles = {
   titleStyle: { fontSize: "20px", fontWeight: 500 }
 };
 
+var iconButtonStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  width: 35
+};
+
 // handle listners
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
+      defaultTitle = _ref.defaultTitle,
+      ulbLogo = _ref.ulbLogo,
       title = _ref.title,
       titleAddon = _ref.titleAddon,
       isHomeScreen = _ref.isHomeScreen,
@@ -57,7 +69,12 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
       onToolBarIconClick = _ref.onToolBarIconClick,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
+      refreshButton = _ref.refreshButton,
+      sortButton = _ref.sortButton,
+      searchButton = _ref.searchButton,
+      sortDialogOpen = _ref.sortDialogOpen,
+      history = _ref.history,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history"]);
 
   return _react2.default.createElement(
     "div",
@@ -73,7 +90,12 @@ var EgovAppBar = function EgovAppBar(_ref) {
           _react2.default.createElement(
             "div",
             { className: "citizen-header-logo" },
-            _react2.default.createElement("img", { src: _pblogo2.default })
+            _react2.default.createElement("img", {
+              src: role && role.toLowerCase() === "citizen" ? _pblogo2.default : ulbLogo ? ulbLogo : _pblogo2.default,
+              onError: function onError(event) {
+                return event.target.setAttribute("src", _pblogo2.default);
+              }
+            })
           ),
           _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "0px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
           titleAddon && _react2.default.createElement(_translationNode2.default, {
@@ -84,7 +106,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
           _react2.default.createElement(_translationNode2.default, {
             containerStyle: { marginLeft: "10px" },
             className: "screenHeaderLabelStyle appbar-municipal-label",
-            label: "PUNJAB MUNICIPAL CORPORATION"
+            label: role && role.toLowerCase() === "citizen" ? "PUNJAB MUNICIPAL CORPORATION" : defaultTitle ? defaultTitle : "PUNJAB MUNICIPAL CORPORATION"
           })
         ),
         titleStyle: styles.titleStyle
@@ -98,9 +120,35 @@ var EgovAppBar = function EgovAppBar(_ref) {
         "div",
         { className: "appbar-right-logo" },
         _react2.default.createElement("img", { src: _Digit_logo2.default })
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "icon-button" },
+        refreshButton && _react2.default.createElement(
+          _IconButton2.default,
+          { style: iconButtonStyle, onClick: function onClick(e) {
+              return location.reload();
+            } },
+          _react2.default.createElement(_components.Icon, { action: "navigation", name: "refresh", color: "#fff" })
+        ),
+        sortButton && _react2.default.createElement(
+          _IconButton2.default,
+          { style: iconButtonStyle, onClick: sortDialogOpen },
+          _react2.default.createElement(_components.Icon, { action: "action", name: "swap-vert", color: "#fff" })
+        ),
+        searchButton && role === "ao" && _react2.default.createElement(
+          _IconButton2.default,
+          { style: iconButtonStyle, onClick: function onClick(e) {
+              return onSearchClick(history);
+            } },
+          _react2.default.createElement(_components.Icon, { action: "action", name: "search", color: "#fff" })
+        )
       )
     )
   );
 };
 
+var onSearchClick = function onSearchClick(history) {
+  history.push("search-complaint");
+};
 exports.default = EgovAppBar;

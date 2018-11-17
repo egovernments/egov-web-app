@@ -31,7 +31,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "#b3b3b3"
+  color: "rgba(0, 0, 0, 0.3799999952316284)"
 };
 
 var floatingLabelBaseStyle = {

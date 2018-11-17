@@ -57,14 +57,31 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   var propertyTenant = cities.filter(function (item) {
     return item.code === property.tenantId;
   });
-
+  var ulbGrade = (0, _get2.default)(propertyTenant[0], "city.ulbGrade");
+  var name = (0, _get2.default)(propertyTenant[0], "name");
   return {
-    header: propertyTenant[0].name + " MUNICIPAL CORPORATION",
+    header: getReceiptHeaderLabel(name, ulbGrade),
     subheader: "Property Tax Payment Receipt",
     logo: _pblogo2.default,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl
   };
+};
+
+var getReceiptHeaderLabel = function getReceiptHeaderLabel(name, ulbGrade) {
+  if (ulbGrade) {
+    if (ulbGrade === "NP") {
+      return name.toUpperCase() + " NAGAR PANCHAYAT";
+    } else if (ulbGrade === "Municipal Corporation") {
+      return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    } else if (ulbGrade.includes("MC Class")) {
+      return name.toUpperCase() + " MUNICIPAL COUNCIL";
+    } else {
+      return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    }
+  } else {
+    return name.toUpperCase() + " MUNICIPAL CORPORATION";
+  }
 };
 
 var createReceiptDetails = function createReceiptDetails(property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) {
@@ -101,8 +118,8 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
 };
 
 var createReceiptUIInfo = function createReceiptUIInfo(property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) {
-  var amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   var amountToPay = receiptDetails && (0, _get2.default)(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
+  var amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
   var _property$propertyDet = property.propertyDetails[0],
       ownerDetails = _property$propertyDet.owners,
       financialYear = _property$propertyDet.financialYear,
