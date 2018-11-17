@@ -1,8 +1,12 @@
 const kafka = require("kafka-node");
 const Consumer = kafka.Consumer;
-const client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
-// const client = new kafka.Client();
-const consumer = new Consumer(client, [{ topic: "Posts", offset: 0 }], {
+let client= new kafka.Client();
+// if (process.env.NODE_ENV !== "development") {
+//   client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+// }
+
+
+const consumer = new Consumer(client, [{ topic: "SMS", offset: 0 }], {
   autoCommit: false
 });
 

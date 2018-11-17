@@ -8,6 +8,9 @@ import middleware from "./middleware";
 import api from "./api";
 import config from "./config.json";
 
+//loading env property
+require("dotenv").config();
+
 let app = express();
 app.server = http.createServer(app);
 
@@ -27,7 +30,7 @@ app.use(
   })
 );
 
-
+// console.log(process.env.Test);
 
 // connect to db
 initializeDb(db => {

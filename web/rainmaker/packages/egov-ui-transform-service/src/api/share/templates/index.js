@@ -5,7 +5,8 @@ const templateInterface=({ shareTemplate, shareContent }) => {
   let payloads=[];
   switch (shareTemplate) {
     case "complaintDetails": {
-      const topic = "egov.core.notification.sms";
+      // const topic = "egov.core.notification.sms";
+      const topic = "SMS";
       const SMSRequest = {
         mobileNumber: get(shareContent[0], "to"),
         message: "Dear Contractor, please find complaint details"
