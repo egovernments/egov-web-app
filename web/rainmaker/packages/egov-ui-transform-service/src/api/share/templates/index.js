@@ -1,4 +1,5 @@
 import get from "lodash/get";
+var kafka = require("kafka-node");
 
 const templateInterface=({ shareTemplate, shareContent }) => {
   let payloads=[];
@@ -9,9 +10,11 @@ const templateInterface=({ shareTemplate, shareContent }) => {
         mobileNumber: get(shareContent[0], "to"),
         message: "Dear Contractor, please find complaint details"
       };
+      const KeyedMessage = kafka.KeyedMessage;
+      const data = new KeyedMessage("SMSRequest", SMSRequest);
       payloads.push({
         topic,
-        message:{SMSRequest}
+        messages:data
       })
     }
   }
