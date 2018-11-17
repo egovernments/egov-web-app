@@ -11,7 +11,7 @@ const templateInterface=({ shareTemplate, shareContent }) => {
         message: "Dear Contractor, please find complaint details"
       };
       const KeyedMessage = kafka.KeyedMessage;
-      const data = new KeyedMessage("SMSRequest", SMSRequest);
+      const data = new KeyedMessage("SMSRequest", JSON.stringify(SMSRequest));
       payloads.push({
         topic,
         messages:data
