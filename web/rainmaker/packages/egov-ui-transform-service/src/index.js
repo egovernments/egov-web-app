@@ -30,7 +30,10 @@ app.use(
   })
 );
 
-// console.log(process.env.Test);
+console.log(process.env.NODE_ENV);
+
+console.log(process.env.Test);
+
 
 // connect to db
 initializeDb(db => {

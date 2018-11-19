@@ -1,12 +1,14 @@
 var kafka = require("kafka-node");
 
 const Producer = kafka.Producer;
-// let client= new kafka.Client();
-let client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+let client;
 
-// if (process.env.NODE_ENV !== "development") {
-//   client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
-// }
+if (process.env.NODE_ENV === "development") {
+  client= new kafka.Client();
+}
+else {
+  client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+}
 
 const producer = new Producer(client);
 
