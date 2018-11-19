@@ -137,6 +137,8 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
+var reopenValidChecker = 5 * 24 * 60 * 60 * 1000;
+
 var StatusContent = function StatusContent(_ref2) {
   var stepData = _ref2.stepData,
       currentStatus = _ref2.currentStatus,
@@ -376,6 +378,9 @@ var StatusContent = function StatusContent(_ref2) {
       );
     case "resolved":
       resolveStatusCount++;
+      var currDate = new Date().getTime();
+      var resolvedDate = new Date(date).getTime();
+      var isReopenValid = currDate - resolvedDate <= reopenValidChecker;
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
@@ -426,7 +431,7 @@ var StatusContent = function StatusContent(_ref2) {
               containerStyle: timelineButtonContainerStyle
             })
           ),
-          _react2.default.createElement(
+          isReopenValid && _react2.default.createElement(
             "div",
             {
               className: "complaint-details-timline-button",
