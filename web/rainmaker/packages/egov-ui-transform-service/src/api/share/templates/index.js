@@ -5,8 +5,8 @@ const templateInterface=({ shareTemplate, shareContent }) => {
   let payloads=[];
   switch (shareTemplate) {
     case "complaintDetails": {
-      const topic = "egov.core.notification.sms";
-      // const topic = "SMS";
+      // const topic = "egov.core.notification.sms";
+      const topic = "SMS";
       const SMSRequest = {
         mobileNumber: get(shareContent[0], "to"),
         message: "Dear Contractor, please find complaint details"
@@ -14,7 +14,7 @@ const templateInterface=({ shareTemplate, shareContent }) => {
       // const KeyedMessage = kafka.KeyedMessage;
       // new KeyedMessage("SMSRequest", SMSRequest);
 
-      const data ={SMSRequest}
+      const data =SMSRequest
       payloads.push({
         topic,
         messages:JSON.stringify(data)
