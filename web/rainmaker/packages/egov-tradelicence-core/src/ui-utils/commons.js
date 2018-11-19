@@ -85,10 +85,14 @@ export const updatePFOforSearchResults = async (
   state,
   dispatch,
   queryValue,
-  queryValuePurpose
+  queryValuePurpose,
+  tenantId
 ) => {
   let queryObject = [
-    { key: "tenantId", value: localStorage.getItem("tenant-id") },
+    {
+      key: "tenantId",
+      value: tenantId ? tenantId : localStorage.getItem("tenant-id")
+    },
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
