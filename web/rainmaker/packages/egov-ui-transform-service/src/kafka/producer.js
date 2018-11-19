@@ -5,9 +5,11 @@ let client;
 
 if (process.env.NODE_ENV === "development") {
   client= new kafka.Client();
+  console.log("local - ");
 }
 else {
   client = new kafka.KafkaClient({ kafkaHost: "kafka-0.kafka.backbone:9092" });
+  console.log("cloud - ");
 }
 
 const producer = new Producer(client);
