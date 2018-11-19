@@ -247,7 +247,7 @@ export const beforeInitForm = {
     const { name: formKey, fields } = form;
     const propertyType = get(state, "form.basicInformation.fields.typeOfBuilding.value");
     const { Floor } = state.common && state.common.generalMDMSDataById;
-    if (get(get, "form.fields.floorName")) {
+    if (get(action, "form.fields.floorName")) {
       if (propertyType === "SHAREDPROPERTY") {
         set(action, "form.fields.floorName.hideField", false);
         set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
