@@ -70,14 +70,44 @@ const complaintsReducer = (state = intialState, action) => {
           ...categoriesById,
         },
       };
-    default:
-      return state;
     case actionTypes.COMPLAINTS_SORT_ORDER:
       return {
         ...state,
         loading: false,
         order: action.order,
       };
+
+    case actionTypes.COMPLAINTS_SEND_MESSAGE:
+      return {
+        ...state,
+        loading: false,
+        ShareMetaData: action.message,
+      };
+    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHAREMEDIA:
+      return {
+        ...state,
+        loading: false,
+        ShareMetaData: {
+          ...state.ShareMetaData,
+          shareMedia: action.message,
+        },
+      };
+    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHARECONTENT_TO:
+      const shareCont = state.ShareMetaData.shareContent;
+      shareCont.map((elem) => {
+        elem.to = action.message;
+      });
+      return {
+        ...state,
+        loading: false,
+        ShareMetaData: {
+          ...state.ShareMetaData,
+          shareContent: shareCont,
+        },
+      };
+
+    default:
+      return state;
   }
 };
 

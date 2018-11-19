@@ -3,7 +3,7 @@ import { Details } from "modules/common";
 import { ComplaintTimeLine } from "modules/common";
 import { Comments } from "modules/common";
 import { ActionButton } from "modules/common";
-import { Icon, MapLocation } from "components";
+import { Icon, MapLocation, ShareButton } from "components";
 import { Screen } from "modules/common";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
@@ -15,9 +15,11 @@ import {
   returnSLAStatus,
   getPropertyFromObj,
   findLatestAssignee,
+  getTranslatedLabel,
 } from "egov-ui-kit/utils/commons";
-import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { fetchComplaints, sendMessage, sendMessageMedia } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
+
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -140,10 +142,34 @@ class ComplaintDetails extends Component {
     }
   };
 
+  ShareButtonOnClick = () => {
+    console.log("Sudhanshu");
+    const complaintData = this.props.transformedComplaint.complaint;
+    const name = complaintData.filedBy ? complaintData.filedBy : "NA";
+    const moblileNo = complaintData.filedUserMobileNumber ? complaintData.filedUserMobileNumber : "NA";
+    const complaintNo = complaintData.applicationNo ? complaintData.applicationNo : "NA";
+    const complaintType = this.props.complaintTypeLocalised ? this.props.complaintTypeLocalised : "NA";
+    const address = complaintData.address ? complaintData.address : "NA";
+    const { sendMessage } = this.props;
+
+    const shareMetaData = {
+      tenantId: localStorage.getItem("tenant-id"),
+      shareSource: "WEB",
+      shareMedia: "SMS",
+      shareContent: [{ to: "", content: { name, moblileNo, complaintNo, complaintType, address }, expiredIn: "", documents: [] }],
+      shareTemplate: "complaintDetails",
+    };
+    console.log(shareMetaData);
+    sendMessage(shareMetaData);
+
+    // const messageStr =
+    //   "Name: " + name + "\nMobile: " + moblileNo + "\nComplaint No: " + complaintNo + "\nComplaint Type: " + complaintType + "\nAddress: " + address;
+  };
+
   render() {
     let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId, history, isAssignedToEmployee } = this.props;
+    let { role, serviceRequestId, history, isAssignedToEmployee, xyz } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -177,6 +203,9 @@ class ComplaintDetails extends Component {
         <Screen>
           {complaint && !openMap && (
             <div>
+              <div>
+                <ShareButton onLoadFn={this.ShareButtonOnClick} />
+              </div>
               <div className="form-without-button-cont-generic">
                 <Details
                   {...complaint}
@@ -364,7 +393,10 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee };
+    const { localizationLabels } = state.app;
+    const complaintTypeLocalised = getTranslatedLabel(`SERVICEDEFS.${transformedComplaint.complaint.complaint}`.toUpperCase(), localizationLabels);
+
+    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee, complaintTypeLocalised };
   } else {
     return { form, transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
   }
@@ -374,6 +406,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
+    sendMessage: (message) => dispatch(sendMessage(message)),
+    sendMessageMedia: (message) => dispatch(sendMessageMedia(message)),
   };
 };
 
