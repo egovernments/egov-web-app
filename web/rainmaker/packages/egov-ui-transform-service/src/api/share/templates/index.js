@@ -8,7 +8,7 @@ const templateInterface=({ shareTemplate, shareContent }) => {
       // const topic = "SMS";
       const SMSRequest = {
         mobileNumber: get(shareContent[0], "to"),
-        message: `Dear Contractor, please find complaint details : Name - ${get(shareContent[0],"name")}, Mobile Number - ${get(shareContent[0],"moblileNo")}, Complaint Number - ${get(shareContent[0],"complaintNo")}, Complaint Type - ${get(shareContent[0],"complaintType")}, Address - ${get(shareContent[0],"address")}`
+        message: `Dear Contractor, please find complaint details : Name - ${get(shareContent[0].content,"name")}, Mobile Number - ${get(shareContent[0].content,"moblileNo")}, Complaint Number - ${get(shareContent[0].content,"complaintNo")}, Complaint Type - ${get(shareContent[0].content,"complaintType")}, Address - ${get(shareContent[0].content,"address")}`
       };
       const data =SMSRequest
       payloads.push({
