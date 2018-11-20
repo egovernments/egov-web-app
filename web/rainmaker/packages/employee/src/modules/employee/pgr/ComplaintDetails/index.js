@@ -225,7 +225,7 @@ class ComplaintDetails extends Component {
                       <ShareIcon />
                     </Button>
                   )*/}
-                  <ShareButton onLoadFn={this.ShareButtonOnClick} />
+                  {/*<ShareButton onLoadFn={this.ShareButtonOnClick} />*/}
                 </div>
                 <div className="form-without-button-cont-generic">
                   <Details
