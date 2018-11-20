@@ -1,11 +1,17 @@
 import get from "lodash/get";
+let env;
+if (process.env.NODE_ENV === "development") {
+  env="development";
+}
+else {
+  env="production";
+}
 
 const templateInterface=({ shareTemplate, shareContent }) => {
   let payloads=[];
   switch (shareTemplate) {
     case "complaintDetails": {
-      const topic = "egov.core.notification.sms";
-      // const topic = "SMS";
+      const topic = env==="development"?"SMS":"egov.core.notification.sms";
       const SMSRequest = {
         mobileNumber: get(shareContent[0], "to"),
         message: `Dear Contractor, please find complaint details : Name - ${get(shareContent[0].content,"name")}, Mobile Number - ${get(shareContent[0].content,"moblileNo")}, Complaint Number - ${get(shareContent[0].content,"complaintNo")}, Complaint Type - ${get(shareContent[0].content,"complaintType")}, Address - ${get(shareContent[0].content,"address")}`
@@ -18,11 +24,10 @@ const templateInterface=({ shareTemplate, shareContent }) => {
     }
     break;
     case "complaintDetailsEmail": {
-      const topic = "egov.core.notification.email";
-      // const topic = "SMS";
+      const topic = env==="development"?"SMS":"egov.core.notification.sms";
       const SMSRequest = {
         email:get(shareContent[0], "to"),
-        subject:"Shared data",
+        subject:get(shareContent[0].content,"subject"),
         body: `Dear Contractor, please find complaint details : Name - ${get(shareContent[0].content,"name")}, Mobile Number - ${get(shareContent[0].content,"moblileNo")}, Complaint Number - ${get(shareContent[0].content,"complaintNo")}, Complaint Type - ${get(shareContent[0].content,"complaintType")}, Address - ${get(shareContent[0].content,"address")}`
       };
       const data =SMSRequest
