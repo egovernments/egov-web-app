@@ -98,6 +98,12 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
+
+
+
+const reopenValidChecker = 5*24*60*60*1000
+
+
 const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy, filedUserMobileNumber }) => {
   var {
     action,
@@ -364,6 +370,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       );
     case "resolved":
       resolveStatusCount++;
+      const currDate = new Date().getTime()
+      const resolvedDate = new Date(date).getTime()
+      const isReopenValid = (currDate - resolvedDate) <= reopenValidChecker
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
@@ -413,7 +422,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   />
                 </div>
               )}
-              <div
+              {isReopenValid && <div
                 className="complaint-details-timline-button"
                 onClick={(e) => {
                   role === "citizen"
@@ -427,7 +436,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   labelStyle={timelineButtonLabelStyle}
                   containerStyle={timelineButtonContainerStyle}
                 />
-              </div>
+              </div>}
             </div>
           )}
         </div>
