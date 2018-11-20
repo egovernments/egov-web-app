@@ -79,27 +79,26 @@ export default class ListCard extends Component {
                   style={{ letterSpacing: 0 }}
                 />
               ),
-              rightIcon: depItem &&
-                depItem.mobileNumber && (
-                  <a
-                    className="pgr-call-icon emp-directory-call-icon-link"
-                    href={`tel:+91${depItem.mobileNumber}`}
-                    style={{
-                      textDecoration: "none",
-                      height: "inherit",
-                      width: "inherit",
-                      top: 0,
-                      margin: 0,
-                      right: 16,
-                      bottom: 0,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Icon className="emp-directory-call-icon" action="communication" name="call" style={this.callIconStyle} color="#22b25f" />
-                    <span style={{ color: "#484848" }}>{`+91${depItem.mobileNumber}`}</span>
-                  </a>
-                ),
+              rightIcon: depItem && depItem.mobileNumber && (
+                <a
+                  className="pgr-call-icon emp-directory-call-icon-link"
+                  href={`tel:+91${depItem.mobileNumber}`}
+                  style={{
+                    textDecoration: "none",
+                    height: "inherit",
+                    width: "inherit",
+                    top: 0,
+                    margin: 0,
+                    right: 16,
+                    bottom: 0,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Icon className="emp-directory-call-icon" action="communication" name="call" style={this.callIconStyle} color="#22b25f" />
+                  <span style={{ color: "#484848" }}>{`+91${depItem.mobileNumber}`}</span>
+                </a>
+              ),
             };
           }),
         };
@@ -308,14 +307,14 @@ export default class ListCard extends Component {
                 {displayInitialList
                   ? renderList(prepareResultsForDisplay(dataSource), false)
                   : isEmployeeDirectory
-                    ? renderList(prepareResultsForDisplay(results), false)
-                    : renderList(prepareResultsForDisplay(results), true)}
+                  ? renderList(prepareResultsForDisplay(results), false)
+                  : renderList(prepareResultsForDisplay(results), true)}
               </div>
             </div>
           }
         />
         {!isEmployeeDirectory && (
-          <div className="responsive-action-button-cont">
+          <div className="responsive-action-button-cont assign-button">
             <Button
               className="responsive-action-button"
               primary={true}

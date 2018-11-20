@@ -175,14 +175,16 @@ class AllComplaints extends Component {
               label: (
                 <div className="inline-Localization-text">
                   <Label
-                    labelClassName="unassigned-label-text"
-                    color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    //labelClassName = "unassigned-label-text"
+                    labelClassName={this.state.value === 0 ? "selected-tab-label-text" : "unselected-tab-label-text"}
+                    //color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                     bold={true}
                     label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
                   <Label
-                    color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    labelClassName={this.state.value === 0 ? "selected-tab-label-text" : "unselected-tab-label-text"}
+                    //color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                     bold={true}
                     label={`(${unassignedComplaints.length})`}
                     labelStyle={tabStyle}
@@ -208,14 +210,16 @@ class AllComplaints extends Component {
               label: (
                 <div className="inline-Localization-text">
                   <Label
-                    labelClassName="assigned-label-text"
-                    color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    // labelClassName="assigned-label-text"
+                    labelClassName={this.state.value === 1 ? "selected-tab-label-text" : "unselected-tab-label-text"}
+                    //color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                     bold={true}
                     label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
                   <Label
-                    color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                    labelClassName={this.state.value === 1 ? "selected-tab-label-text" : "unselected-tab-label-text"}
+                    //color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                     bold={true}
                     label={`(${assignedComplaints.length})`}
                     labelStyle={tabStyle}

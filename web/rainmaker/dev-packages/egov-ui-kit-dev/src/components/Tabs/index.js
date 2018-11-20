@@ -15,7 +15,7 @@ const inkBarStyle = {
   height: 4,
 };
 
-const Tabs = ({ tabs = [], onChange }) => {
+const Tabs = ({ tabs = [], onChange, className }) => {
   const renderTabs = () => {
     return tabs.map((tab, index) => {
       const { route, label, children } = tab;
@@ -28,7 +28,7 @@ const Tabs = ({ tabs = [], onChange }) => {
   };
 
   return (
-    <MaterialUiTabs onChange={onChange} tabItemContainerStyle={tabItemContainerStyle} inkBarStyle={inkBarStyle}>
+    <MaterialUiTabs className={className} onChange={onChange} tabItemContainerStyle={tabItemContainerStyle} inkBarStyle={inkBarStyle}>
       {renderTabs()}
     </MaterialUiTabs>
   );

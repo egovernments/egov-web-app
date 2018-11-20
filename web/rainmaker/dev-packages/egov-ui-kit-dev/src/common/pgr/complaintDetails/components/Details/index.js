@@ -109,6 +109,17 @@ class Details extends Component {
                     labelStyle={{ color: "inherit" }}
                   />
                 </div>
+                {description && (
+                  <div className="complaint-detail-detail-section-status row">
+                    <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label="CS_ADDCOMPLAINT_COMPLAINT_DETAILS" />
+                    <Label
+                      className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
+                      label={description}
+                      id="complaint-details-submission-date"
+                      labelStyle={{ color: "inherit" }}
+                    />
+                  </div>
+                )}
                 <div style={{ marginTop: "16px" }} className="complaint-image-cont">
                   {images &&
                     images.map((image, index) => {

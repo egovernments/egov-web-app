@@ -32,7 +32,8 @@ var inkBarStyle = {
 var Tabs = function Tabs(_ref) {
   var _ref$tabs = _ref.tabs,
       tabs = _ref$tabs === undefined ? [] : _ref$tabs,
-      onChange = _ref.onChange;
+      onChange = _ref.onChange,
+      className = _ref.className;
 
   var renderTabs = function renderTabs() {
     return tabs.map(function (tab, index) {
@@ -50,7 +51,7 @@ var Tabs = function Tabs(_ref) {
 
   return _react2.default.createElement(
     _Tabs.Tabs,
-    { onChange: onChange, tabItemContainerStyle: tabItemContainerStyle, inkBarStyle: inkBarStyle },
+    { className: className, onChange: onChange, tabItemContainerStyle: tabItemContainerStyle, inkBarStyle: inkBarStyle },
     renderTabs()
   );
 };
