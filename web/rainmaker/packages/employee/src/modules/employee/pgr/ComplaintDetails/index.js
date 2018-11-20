@@ -7,6 +7,9 @@ import { Icon, MapLocation, ShareButton } from "components";
 import { Screen } from "modules/common";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
+import Button from "@material-ui/core/Button";
+import ShareIcon from "@material-ui/icons/Share";
+
 import {
   getDateFromEpoch,
   mapCompIDToName,
@@ -201,74 +204,93 @@ class ComplaintDetails extends Component {
     return (
       <div>
         <Screen>
-          {complaint && !openMap && (
-            <div>
+          {complaint &&
+            !openMap && (
               <div>
-                <ShareButton onLoadFn={this.ShareButtonOnClick} />
-              </div>
-              <div className="form-without-button-cont-generic">
-                <Details
-                  {...complaint}
-                  role={role}
-                  history={history}
-                  mapAction={true}
-                  redirectToMap={this.redirectToMap}
-                  action={action}
-                  complaintLoc={complaintLoc}
-                />
-                <ComplaintTimeLine
-                  status={complaint.status}
-                  timelineSLAStatus={complaint.timelineSLAStatus}
-                  timeLine={timeLine}
-                  history={history}
-                  handleFeedbackOpen={this.handleFeedbackOpen}
-                  role={role}
-                  feedback={complaint ? complaint.feedback : ""}
-                  rating={complaint ? complaint.rating : ""}
-                  filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
-                  filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
-                />
-                <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
-              </div>
-              <div>
-                {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
-                (role === "employee" &&
-                  isAssignedToEmployee &&
-                  complaint.complaintStatus.toLowerCase() === "assigned" &&
-                  complaint.complaintStatus.toLowerCase() !== "closed") ? (
-                  <ActionButton
-                    btnOneLabel={btnOneLabel}
-                    btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
-                    btnTwoLabel={btnTwoLabel}
-                    btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                <div>
+                  {/*navigator.share && (
+                    <Button
+                      variant="fab"
+                      onClick={() => {
+                        navigator
+                          .share({
+                            title: "Web Fundamentals",
+                            text: "Check out Web Fundamentals — it rocks!",
+                            url: "https://developers.google.com/web",
+                          })
+                          .then(() => console.log("Successful share"))
+                          .catch((error) => console.log("Error sharing", error));
+                      }}
+                    >
+                      <ShareIcon />
+                    </Button>
+                  )*/}
+                  <ShareButton onLoadFn={this.ShareButtonOnClick} />
+                </div>
+                <div className="form-without-button-cont-generic">
+                  <Details
+                    {...complaint}
+                    role={role}
+                    history={history}
+                    mapAction={true}
+                    redirectToMap={this.redirectToMap}
+                    action={action}
+                    complaintLoc={complaintLoc}
                   />
-                ) : (
-                  ""
-                )}
+                  <ComplaintTimeLine
+                    status={complaint.status}
+                    timelineSLAStatus={complaint.timelineSLAStatus}
+                    timeLine={timeLine}
+                    history={history}
+                    handleFeedbackOpen={this.handleFeedbackOpen}
+                    role={role}
+                    feedback={complaint ? complaint.feedback : ""}
+                    rating={complaint ? complaint.rating : ""}
+                    filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
+                    filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
+                  />
+                  <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
+                </div>
+                <div>
+                  {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
+                  (role === "employee" &&
+                    isAssignedToEmployee &&
+                    complaint.complaintStatus.toLowerCase() === "assigned" &&
+                    complaint.complaintStatus.toLowerCase() !== "closed") ? (
+                    <ActionButton
+                      btnOneLabel={btnOneLabel}
+                      btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                      btnTwoLabel={btnTwoLabel}
+                      btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
+            )}
+        </Screen>
+        {complaintLoc.lat &&
+          openMap && (
+            <div>
+              <div className="back-btn" style={{ top: 32 }}>
+                <Icon
+                  className="mapBackBtn"
+                  onClick={() => {
+                    this.redirectToMap(false);
+                  }}
+                  style={{
+                    height: 24,
+                    width: 24,
+                    color: "#484848",
+                  }}
+                  action="navigation"
+                  name={"arrow-back"}
+                />
+              </div>
+              <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
             </div>
           )}
-        </Screen>
-        {complaintLoc.lat && openMap && (
-          <div>
-            <div className="back-btn" style={{ top: 32 }}>
-              <Icon
-                className="mapBackBtn"
-                onClick={() => {
-                  this.redirectToMap(false);
-                }}
-                style={{
-                  height: 24,
-                  width: 24,
-                  color: "#484848",
-                }}
-                action="navigation"
-                name={"arrow-back"}
-              />
-            </div>
-            <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
-          </div>
-        )}
       </div>
     );
   }
@@ -332,9 +354,7 @@ const mapStateToProps = (state, ownProps) => {
   const role =
     roleFromUserInfo(userInfo.roles, "GRO") || roleFromUserInfo(userInfo.roles, "DGRO")
       ? "ao"
-      : roleFromUserInfo(userInfo.roles, "CSR")
-      ? "csr"
-      : "employee";
+      : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
 
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
@@ -411,7 +431,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ComplaintDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
