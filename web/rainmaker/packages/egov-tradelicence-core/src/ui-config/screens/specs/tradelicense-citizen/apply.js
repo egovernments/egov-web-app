@@ -1,6 +1,7 @@
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 import {
   header,
@@ -11,7 +12,7 @@ import {
   formwizardThirdStep,
   formwizardFourthStep,
   stepper,
-  queryValue,
+  // queryValue,
   getMdmsData
 } from "../tradelicence/apply";
 
@@ -19,8 +20,17 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
+    const queryValue = getQueryArg(window.location.href, "applicationNumber");
+    const tenantId = getQueryArg(window.location.href, "tenantId");
     if (queryValue) {
-      updatePFOforSearchResults(action, state, dispatch, queryValue);
+      updatePFOforSearchResults(
+        action,
+        state,
+        dispatch,
+        queryValue,
+        "",
+        tenantId
+      );
     }
     getMdmsData(action, state, dispatch);
     return action;

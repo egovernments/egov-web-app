@@ -201,6 +201,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
+    const queryValue = getQueryArg(window.location.href, "applicationNumber");
     getData(action, state, dispatch, queryValue);
 
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
