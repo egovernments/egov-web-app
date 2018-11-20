@@ -21,7 +21,9 @@
 @media only screen and (min-width: 768px) {
   .complaint-details-action-buttons {
     justify-content: flex-end;
-    position: absolute; }
+    position: fixed;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24);
+    padding: 8px; }
   .complaint-details-action-buttons button {
     width: 230px !important; }
   .action-button-one,

@@ -293,8 +293,9 @@ body.employee-user-profile {
     background: #fff;
     display: flex;
     justify-content: flex-end;
-    padding: 6px 8px;
+    padding: 8px;
     left: 0;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24);
   }
 
   .custom-padding-for-screens {
