@@ -199,6 +199,7 @@ class Login extends Component {
     params.append('password', props.credential.password);
     params.append('grant_type', 'password');
     params.append('scope', 'read');
+    params.append('userType', 'EMPLOYEE');
     params.append('tenantId', typeof props.match.params.tenantId != 'undefined' ? props.match.params.tenantId : 'default');
 
     instance

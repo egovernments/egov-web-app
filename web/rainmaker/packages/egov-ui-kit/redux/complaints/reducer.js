@@ -77,13 +77,38 @@ var complaintsReducer = function complaintsReducer() {
         loading: false,
         categoriesById: (0, _extends3.default)({}, state.categoriesById, categoriesById)
       });
-    default:
-      return state;
     case actionTypes.COMPLAINTS_SORT_ORDER:
       return (0, _extends3.default)({}, state, {
         loading: false,
         order: action.order
       });
+
+    case actionTypes.COMPLAINTS_SEND_MESSAGE:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        ShareMetaData: action.message
+      });
+    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHAREMEDIA:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
+          shareMedia: action.message
+        })
+      });
+    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHARECONTENT_TO:
+      var shareCont = state.ShareMetaData.shareContent;
+      shareCont.map(function (elem) {
+        elem.to = action.message;
+      });
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
+          shareContent: shareCont
+        })
+      });
+
+    default:
+      return state;
   }
 };
 
