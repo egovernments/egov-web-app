@@ -95,23 +95,31 @@ const complaintFetchComplete = (payload, overWrite) => {
   };
 };
 
+const complaintSendSMS = (message) => {
+  return {
+    type: actionTypes.COMPLAINTS_SEND_MESSAGE,
+    message,
+  };
+};
+
+const complaintSendSMSTo = (message) => {
+  return {
+    type: actionTypes.COMPLAINTS_SEND_MESSAGE_SHARECONTENT_TO,
+    message,
+  };
+};
+
+const complaintSendSMSMedia = (message) => {
+  return {
+    type: actionTypes.COMPLAINTS_SEND_MESSAGE_SHAREMEDIA,
+    message,
+  };
+};
+
 const complaintFetchError = (error) => {
   return {
     type: actionTypes.COMPLAINTS_FETCH_ERROR,
     error,
-  };
-};
-
-const complaintSortOrder = (order) => {
-  return {
-    type: actionTypes.COMPLAINTS_SORT_ORDER,
-    order,
-  };
-};
-
-export const getComplaintDisplayOrder = (order) => {
-  return async (dispatch, getState) => {
-    dispatch(complaintSortOrder(order));
   };
 };
 
@@ -129,6 +137,24 @@ export const fetchComplaints = (queryObject, hasUsers = true, overWrite) => {
     } catch (error) {
       dispatch(complaintFetchError(error.message));
     }
+  };
+};
+
+export const sendMessage = (message) => {
+  return async (dispatch, getState) => {
+    dispatch(complaintSendSMS(message));
+  };
+};
+
+export const sendMessageTo = (message) => {
+  return async (dispatch, getState) => {
+    dispatch(complaintSendSMSTo(message));
+  };
+};
+
+export const sendMessageMedia = (message) => {
+  return async (dispatch, getState) => {
+    dispatch(complaintSendSMSMedia(message));
   };
 };
 

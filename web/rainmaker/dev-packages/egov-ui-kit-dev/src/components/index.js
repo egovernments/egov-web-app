@@ -37,6 +37,7 @@ import SingleCheckbox from "egov-ui-kit/components/SingleCheckbox";
 import Tooltip from "./Tooltip";
 import BreadCrumbs from "./BreadCrumbs";
 import Receipt from "./Receipt";
+import ShareButton from "./ShareButton";
 
 export {
   Label,
@@ -78,4 +79,5 @@ export {
   Tooltip,
   BreadCrumbs,
   Receipt,
+  ShareButton,
 };
