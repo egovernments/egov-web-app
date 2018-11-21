@@ -462,9 +462,8 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
       dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].noOfFloors", 1));
     }
     if (propertyType == "SHAREDPROPERTY") {
-      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
+      dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].noOfFloors", 2));
       // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
-      // Do nothing
     }
     if ((0, _get2.default)(state, "common.prepareFormData." + (0, _get2.default)(action, "form.fields.occupancy.jsonPath")) === "RENTED") {
       (0, _set2.default)(action, "form.fields.annualRent.hideField", false);
