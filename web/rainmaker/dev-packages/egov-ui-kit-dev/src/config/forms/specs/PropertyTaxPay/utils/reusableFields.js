@@ -366,6 +366,15 @@ export const beforeInitFormForPlot = {
     let state = store.getState();
     let { dispatch } = store;
     const propertyType = get(state, "form.basicInformation.fields.typeOfBuilding.value");
+    const { Floor } = state.common && state.common.generalMDMSDataById;
+    if (get(action, "form.fields.floorName")) {
+      if (propertyType === "SHAREDPROPERTY") {
+        set(action, "form.fields.floorName.hideField", false);
+        set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      } else {
+        set(action, "form.fields.floorName.hideField", true);
+      }
+    }
     if (propertyType != "VACANT") {
       var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
       var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
@@ -430,8 +439,9 @@ export const beforeInitFormForPlot = {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 1));
     }
     if (propertyType == "SHAREDPROPERTY") {
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
+      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
+      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
+      // Do nothing
     }
     if (get(state, `common.prepareFormData.${get(action, "form.fields.occupancy.jsonPath")}`) === "RENTED") {
       set(action, "form.fields.annualRent.hideField", false);

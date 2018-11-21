@@ -5,13 +5,11 @@ const updateFormMiddleware = (store) => (next) => async (action) => {
   const state = store.getState();
 
   if (type === UPDATE_FORM) {
-
-      next(action);
-      console.log(state);
-      if (window.appOverrides) {
-        window.appOverrides.updateForms(state.common.prepareFormData);
-      }
-      return;
+    next(action);
+    if (window.appOverrides) {
+      window.appOverrides.updateForms(state.common.prepareFormData);
+    }
+    return;
   }
 
   next(action);

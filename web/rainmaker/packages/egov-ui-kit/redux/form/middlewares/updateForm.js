@@ -29,22 +29,21 @@ var updateFormMiddleware = function updateFormMiddleware(store) {
                 state = store.getState();
 
                 if (!(type === _actionTypes.UPDATE_FORM)) {
-                  _context.next = 7;
+                  _context.next = 6;
                   break;
                 }
 
                 next(action);
-                console.log(state);
                 if (window.appOverrides) {
                   window.appOverrides.updateForms(state.common.prepareFormData);
                 }
                 return _context.abrupt("return");
 
-              case 7:
+              case 6:
 
                 next(action);
 
-              case 8:
+              case 7:
               case "end":
                 return _context.stop();
             }
