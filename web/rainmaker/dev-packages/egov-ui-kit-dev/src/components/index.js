@@ -38,6 +38,8 @@ import Tooltip from "./Tooltip";
 import BreadCrumbs from "./BreadCrumbs";
 import Receipt from "./Receipt";
 import ShareButton from "./ShareButton";
+import CommonShare from "./CommonShare";
+
 
 export {
   Label,
@@ -80,4 +82,5 @@ export {
   BreadCrumbs,
   Receipt,
   ShareButton,
+  CommonShare
 };

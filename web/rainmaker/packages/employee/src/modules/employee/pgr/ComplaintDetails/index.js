@@ -4,11 +4,13 @@ import { ComplaintTimeLine } from "modules/common";
 import { Comments } from "modules/common";
 import { ActionButton } from "modules/common";
 import { Icon, MapLocation, ShareButton } from "components";
+import CommonShare from "egov-ui-kit/components/CommonShare";
 import { Screen } from "modules/common";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import Button from "@material-ui/core/Button";
 import ShareIcon from "@material-ui/icons/Share";
+import get from "lodash/get";
 
 import {
   getDateFromEpoch,
@@ -169,10 +171,37 @@ class ComplaintDetails extends Component {
     //   "Name: " + name + "\nMobile: " + moblileNo + "\nComplaint No: " + complaintNo + "\nComplaint Type: " + complaintType + "\nAddress: " + address;
   };
 
+  shareCallback = () => {
+    let { complaint } = this.props.transformedComplaint;
+
+    navigator
+      .share({
+        title: "Complaint Summary",
+        text: `Dear Sir/Madam,\nPlease find complaint detail given below :\n${get(complaint, "filedBy", "")}, ${get(
+          complaint,
+          "filedUserMobileNumber",
+          ""
+        )},\n${get(complaint, "complaint", "")}, ${get(complaint, "description", "")}\nAddress: ${get(
+          complaint,
+          "addressDetail.houseNoAndStreetName",
+          ""
+        )},\n${get(complaint, "addressDetail.locality", "")},\n${get(complaint, "addressDetail.landMark", "")}\nSLA: ${get(
+          complaint,
+          "timelineSLAStatus.slaStatement",
+          ""
+        )}\nThanks`,
+        url: "",
+      })
+      .then(() => console.log("Successful share"))
+      .catch((error) => console.log("Error sharing", error));
+  };
+
   render() {
+    let { shareCallback } = this;
     let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { role, serviceRequestId, history, isAssignedToEmployee, xyz } = this.props;
+    console.log(complaint);
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -208,23 +237,7 @@ class ComplaintDetails extends Component {
             !openMap && (
               <div>
                 <div>
-                  {/*navigator.share && (
-                    <Button
-                      variant="fab"
-                      onClick={() => {
-                        navigator
-                          .share({
-                            title: "Web Fundamentals",
-                            text: "Check out Web Fundamentals — it rocks!",
-                            url: "https://developers.google.com/web",
-                          })
-                          .then(() => console.log("Successful share"))
-                          .catch((error) => console.log("Error sharing", error));
-                      }}
-                    >
-                      <ShareIcon />
-                    </Button>
-                  )*/}
+                  {/*navigator.share && <CommonShare variant="fab" shareCallback={shareCallback} />*/}
                   {/*<ShareButton onLoadFn={this.ShareButtonOnClick} />*/}
                 </div>
                 <div className="form-without-button-cont-generic">
