@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Details } from "modules/common";
 import { ComplaintTimeLine } from "modules/common";
+import get from "lodash/get"
 import { Comments } from "modules/common";
 import { Screen } from "modules/common";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
@@ -22,7 +23,7 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { history } = this.props;
+    let { history, reopenValidChecker } = this.props;
     let action;
     if (timeLine && timeLine[0]) {
       action = timeLine[0].action;
@@ -39,6 +40,7 @@ class ComplaintDetails extends Component {
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
               role={"citizen"}
+              reopenValidChecker={reopenValidChecker}
             />
             <Comments role={"citizen"} />
           </div>
@@ -53,6 +55,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const { employeeById, departmentById, designationsById, cities } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
+  const reopenValidChecker = get(state, "common.pgrContants.RAINMAKER-PGR.UIConstants[0].REOPENSLA", 4232000000)
   if (selectedComplaint) {
     let details = {
       status: selectedComplaint.status || "",
@@ -90,9 +93,9 @@ const mapStateToProps = (state, ownProps) => {
       timeLine,
     };
 
-    return { form, transformedComplaint };
+    return { form, transformedComplaint, reopenValidChecker };
   } else {
-    return { form, transformedComplaint: {} };
+    return { form, transformedComplaint: {}, reopenValidChecker };
   }
 };
 

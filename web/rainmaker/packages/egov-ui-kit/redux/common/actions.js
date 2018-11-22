@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updatePrepareFormDataFromDraft = exports.hideSpinner = exports.showSpinner = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.fetchpgrConstants = exports.updatePrepareFormDataFromDraft = exports.hideSpinner = exports.showSpinner = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -346,4 +346,61 @@ var updatePrepareFormDataFromDraft = exports.updatePrepareFormDataFromDraft = fu
     type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
     prepareFormData: prepareFormData
   };
+};
+
+var fetchpgrConstantSuccess = function fetchpgrConstantSuccess(data) {
+  return {
+    type: actionTypes.FETCH_PGR_CONSTANTS,
+    data: data
+  };
+};
+
+var fetchpgrConstants = exports.fetchpgrConstants = function fetchpgrConstants() {
+  return function () {
+    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(dispatch) {
+      var requestBody, payload;
+      return _regenerator2.default.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              requestBody = {
+                MdmsCriteria: {
+                  tenantId: "pb",
+                  moduleDetails: [{
+                    moduleName: "RAINMAKER-PGR",
+                    masterDetails: [{
+                      name: "UIConstants"
+                    }]
+                  }]
+                }
+              };
+              _context6.prev = 1;
+              _context6.next = 4;
+              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody);
+
+            case 4:
+              payload = _context6.sent;
+
+              dispatch(fetchpgrConstantSuccess(payload.MdmsRes));
+              _context6.next = 11;
+              break;
+
+            case 8:
+              _context6.prev = 8;
+              _context6.t0 = _context6["catch"](1);
+
+              dispatch(generalMDMSFetchError(_context6.t0));
+
+            case 11:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6, undefined, [[1, 8]]);
+    }));
+
+    return function (_x8) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
 };

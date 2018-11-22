@@ -178,6 +178,11 @@ const commonReducer = (state = intialState, action) => {
         ...state,
         prepareFormData: action.prepareFormData,
       };
+    case commonTypes.FETCH_PGR_CONSTANTS:
+      return {
+        ...state,
+        pgrContants: action.data,
+      }
     default:
       return state;
   }

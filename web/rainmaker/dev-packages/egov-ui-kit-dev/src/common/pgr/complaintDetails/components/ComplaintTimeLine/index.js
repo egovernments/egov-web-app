@@ -101,10 +101,10 @@ var reassignRequestedCount = 0;
 
 
 
-const reopenValidChecker = 5*24*60*60*1000
 
 
-const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy, filedUserMobileNumber }) => {
+
+const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy, filedUserMobileNumber, reopenValidChecker }) => {
   var {
     action,
     when: date,
@@ -120,6 +120,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     groMobileNumber,
     groDesignation,
   } = stepData;
+  const currDate = new Date().getTime()
+  const resolvedDate = new Date(date).getTime()
+  const isReopenValid = (currDate - resolvedDate) <= reopenValidChecker
   switch (status) {
     case "open":
       openStatusCount++;
@@ -349,7 +352,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             containerStyle={{ width: "192px" }}
             label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
           />
-          {currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && (
+          {isReopenValid && currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && (
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
@@ -370,9 +373,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       );
     case "resolved":
       resolveStatusCount++;
-      const currDate = new Date().getTime()
-      const resolvedDate = new Date(date).getTime()
-      const isReopenValid = (currDate - resolvedDate) <= reopenValidChecker
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
@@ -501,7 +501,7 @@ class ComplaintTimeLine extends Component {
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
     reassignRequestedCount = 0;
-    let { status, history, role, timeLine, feedback, rating, filedBy, filedUserMobileNumber, timelineSLAStatus } = this.props;
+    let { status, history, role, timeLine, feedback, rating, filedBy, filedUserMobileNumber, timelineSLAStatus, reopenValidChecker } = this.props;
     if (timeLine && timeLine.length === 1 && timeLine[0].status === "open") {
       timeLine = [{ status: "pending" }, ...timeLine];
     }
@@ -529,6 +529,7 @@ class ComplaintTimeLine extends Component {
             role={role}
             filedBy={filedBy}
             filedUserMobileNumber={filedUserMobileNumber}
+            reopenValidChecker={reopenValidChecker}
           />
         ),
       };
