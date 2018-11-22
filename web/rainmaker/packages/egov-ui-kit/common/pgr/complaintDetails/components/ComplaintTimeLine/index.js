@@ -137,8 +137,6 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
-var reopenValidChecker = 5 * 24 * 60 * 60 * 1000;
-
 var StatusContent = function StatusContent(_ref2) {
   var stepData = _ref2.stepData,
       currentStatus = _ref2.currentStatus,
@@ -147,7 +145,8 @@ var StatusContent = function StatusContent(_ref2) {
       rating = _ref2.rating,
       role = _ref2.role,
       filedBy = _ref2.filedBy,
-      filedUserMobileNumber = _ref2.filedUserMobileNumber;
+      filedUserMobileNumber = _ref2.filedUserMobileNumber,
+      reopenValidChecker = _ref2.reopenValidChecker;
   var action = stepData.action,
       date = stepData.when,
       media = stepData.media,
@@ -162,6 +161,9 @@ var StatusContent = function StatusContent(_ref2) {
       groMobileNumber = stepData.groMobileNumber,
       groDesignation = stepData.groDesignation;
 
+  var currDate = new Date().getTime();
+  var resolvedDate = new Date(date).getTime();
+  var isReopenValid = currDate - resolvedDate <= reopenValidChecker;
   switch (status) {
     case "open":
       openStatusCount++;
@@ -360,7 +362,7 @@ var StatusContent = function StatusContent(_ref2) {
           containerStyle: { width: "192px" },
           label: comments && comments.split(";")[1] ? "\" " + comments.split(";")[1] + " \"" : ""
         }),
-        currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && _react2.default.createElement(
+        isReopenValid && currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && _react2.default.createElement(
           "div",
           {
             className: "complaint-details-timline-button",
@@ -378,9 +380,6 @@ var StatusContent = function StatusContent(_ref2) {
       );
     case "resolved":
       resolveStatusCount++;
-      var currDate = new Date().getTime();
-      var resolvedDate = new Date(date).getTime();
-      var isReopenValid = currDate - resolvedDate <= reopenValidChecker;
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
@@ -522,7 +521,8 @@ var ComplaintTimeLine = function (_Component) {
           rating = _props.rating,
           filedBy = _props.filedBy,
           filedUserMobileNumber = _props.filedUserMobileNumber,
-          timelineSLAStatus = _props.timelineSLAStatus;
+          timelineSLAStatus = _props.timelineSLAStatus,
+          reopenValidChecker = _props.reopenValidChecker;
 
       if (timeLine && timeLine.length === 1 && timeLine[0].status === "open") {
         timeLine = [{ status: "pending" }].concat((0, _toConsumableArray3.default)(timeLine));
@@ -549,7 +549,8 @@ var ComplaintTimeLine = function (_Component) {
             rating: rating,
             role: role,
             filedBy: filedBy,
-            filedUserMobileNumber: filedUserMobileNumber
+            filedUserMobileNumber: filedUserMobileNumber,
+            reopenValidChecker: reopenValidChecker
           })
         };
       });

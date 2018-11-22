@@ -34,6 +34,8 @@ var _actions = require("egov-ui-kit/redux/auth/actions");
 
 var _actions2 = require("egov-ui-kit/redux/complaints/actions");
 
+var _actions3 = require("egov-ui-kit/redux/common/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withData = function withData(Component) {
@@ -51,11 +53,13 @@ var withData = function withData(Component) {
         var _props = this.props,
             searchUser = _props.searchUser,
             fetchComplaintCategories = _props.fetchComplaintCategories,
-            authenticated = _props.authenticated;
+            authenticated = _props.authenticated,
+            fetchpgrConstants = _props.fetchpgrConstants;
 
         if (localStorage.getItem("token")) {
           fetchComplaintCategories();
           searchUser();
+          fetchpgrConstants();
         }
       }
     }, {
@@ -87,6 +91,9 @@ var withData = function withData(Component) {
       },
       searchUser: function searchUser() {
         return dispatch((0, _actions.searchUser)());
+      },
+      fetchpgrConstants: function fetchpgrConstants() {
+        return dispatch((0, _actions3.fetchpgrConstants)());
       }
     };
   };

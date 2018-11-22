@@ -166,6 +166,10 @@ var commonReducer = function commonReducer() {
       return (0, _extends4.default)({}, state, {
         prepareFormData: action.prepareFormData
       });
+    case commonTypes.FETCH_PGR_CONSTANTS:
+      return (0, _extends4.default)({}, state, {
+        pgrContants: action.data
+      });
     default:
       return state;
   }
