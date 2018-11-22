@@ -124,31 +124,61 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       licenseIssueDate
     );
     /** Trade settings */
-    let tradeCategory = "NA";
-    let tradeType = "NA";
-    let tradeSubType = "NA";
-    let tradeCode = get(
+    const tradeUnitsFromResponse = get(
       response,
-      "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+      "Licenses[0].tradeLicenseDetail.tradeUnits",
       null
     );
-    if (tradeCode) {
-      let tradeCodeArray = tradeCode.split(".");
-      if (tradeCodeArray.length == 1) {
-        tradeCategory = nullToNa(tradeCode);
-      } else if (tradeCodeArray.length == 2) {
-        tradeCategory = nullToNa(tradeCodeArray[0]);
-        tradeType = nullToNa(tradeCode);
-      } else if (tradeCodeArray.length > 2) {
-        tradeCategory = nullToNa(tradeCodeArray[0]);
-        tradeType = nullToNa(tradeCodeArray[1]);
-        tradeSubType = nullToNa(tradeCode);
+
+    const transformedTradeData = tradeUnitsFromResponse.reduce(
+      (res, curr) => {
+        let tradeCategory = "NA";
+        let tradeType = "NA";
+        let tradeSubType = "NA";
+        let tradeCode = curr.tradeType;
+        if (tradeCode) {
+          let tradeCodeArray = tradeCode.split(".");
+          if (tradeCodeArray.length == 1) {
+            tradeCategory = nullToNa(tradeCode);
+          } else if (tradeCodeArray.length == 2) {
+            tradeCategory = nullToNa(tradeCodeArray[0]);
+            tradeType = nullToNa(tradeCode);
+          } else if (tradeCodeArray.length > 2) {
+            tradeCategory = nullToNa(tradeCodeArray[0]);
+            tradeType = nullToNa(tradeCodeArray[1]);
+            tradeSubType = nullToNa(tradeCode);
+          }
+        }
+        /** End */
+
+        res.tradeCategory.push(getMessageFromLocalization(tradeCategory));
+
+        res.tradeTypeReceipt.push(
+          getMessageFromLocalization(tradeType) +
+            " / " +
+            getMessageFromLocalization(tradeSubType)
+        );
+        res.tradeTypeCertificate.push(
+          getMessageFromLocalization(tradeCategory) +
+            " / " +
+            getMessageFromLocalization(tradeType) +
+            " / " +
+            getMessageFromLocalization(tradeSubType)
+        );
+        return res;
+      },
+      {
+        tradeCategory: [],
+        tradeTypeReceipt: [],
+        tradeTypeCertificate: []
       }
-    }
-    /** End */
-    data.tradeCategory = getMessageFromLocalization(tradeCategory);
-    data.tradeType = getMessageFromLocalization(tradeType);
-    data.tradeSubType = getMessageFromLocalization(tradeSubType);
+    );
+
+    data.tradeCategory = transformedTradeData.tradeCategory.join(", ");
+    data.tradeTypeReceipt = transformedTradeData.tradeTypeReceipt.join(", ");
+    data.tradeTypeCertificate = transformedTradeData.tradeTypeCertificate.join(
+      ", "
+    );
     data.address = nullToNa(
       createAddress(
         data.doorNo,
