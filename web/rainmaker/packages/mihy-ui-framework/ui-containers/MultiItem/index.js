@@ -151,12 +151,13 @@ var MultiItem = function (_React$Component) {
         var multiItemContent = (0, _get2.default)(scheama, prefixSourceJsonPath, {});
         for (var variable in multiItemContent) {
           if (multiItemContent.hasOwnProperty(variable) && multiItemContent[variable].props && multiItemContent[variable].props.jsonPath) {
-            var splitedJsonPath = multiItemContent[variable].props.jsonPath.split(sourceJsonPath);
+            var prefixJP = multiItemContent[variable].props.jsonPathUpdatePrefix ? multiItemContent[variable].props.jsonPathUpdatePrefix : sourceJsonPath;
+            var splitedJsonPath = multiItemContent[variable].props.jsonPath.split(prefixJP);
             if (splitedJsonPath.length > 1) {
               var propertyName = splitedJsonPath[1].split("]");
               if (propertyName.length > 1) {
-                multiItemContent[variable].jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
-                multiItemContent[variable].props.jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
+                multiItemContent[variable].jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
+                multiItemContent[variable].props.jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
                 multiItemContent[variable].index = itemsLength;
               }
             }

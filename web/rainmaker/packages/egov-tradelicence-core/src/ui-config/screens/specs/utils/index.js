@@ -857,8 +857,8 @@ const getTaxValue = item => {
     ? item.debitAmount
       ? -Math.abs(item.debitAmount)
       : item.crAmountToBePaid
-        ? item.crAmountToBePaid
-        : 0
+      ? item.crAmountToBePaid
+      : 0
     : 0;
 };
 
@@ -967,7 +967,8 @@ export const createEstimateData = async (
   const estimateData = payload
     ? getFromReceipt
       ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt, LicenseData)
-      : getEstimateData(payload.Bill, false, LicenseData)
+      : payload.billResponse &&
+        getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
 
@@ -1136,23 +1137,28 @@ export const fetchBill = async (action, state, dispatch) => {
 
   //initiate receipt object
   payload &&
-    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.Bill[0]));
+    payload.billResponse &&
+    dispatch(
+      prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
+    );
 
   //set amount paid as total amount from bill
   payload &&
+    payload.billResponse &&
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        payload.Bill[0].billDetails[0].totalAmount
+        payload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
   //set total amount in instrument
   payload &&
+    payload.billResponse &&
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].instrument.amount",
-        payload.Bill[0].billDetails[0].totalAmount
+        payload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
@@ -1346,57 +1352,76 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
     }
   }
 
-  const tradeSubType = get(
+  const tradeSubTypes = get(
     payload,
-    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+    "Licenses[0].tradeLicenseDetail.tradeUnits"
   );
 
-  if (tradeSubType) {
-    const tradeCat = tradeSubType.split(".")[0];
-    const tradeType = tradeSubType.split(".")[1];
-    set(payload, "LicensesTemp[0].tradeType", tradeCat);
-    set(payload, "LicensesTemp[0].tradeSubType", tradeType);
-
+  if (tradeSubTypes.length > 0) {
     try {
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
-          objectToDropdown(
+      tradeSubTypes.forEach((tradeSubType, i) => {
+        const tradeCat = tradeSubType.tradeType.split(".")[0];
+        const tradeType = tradeSubType.tradeType.split(".")[1];
+        set(payload, `LicensesTemp.tradeUnits[${i}].tradeType`, tradeCat);
+        set(payload, `LicensesTemp.tradeUnits[${i}].tradeSubType`, tradeType);
+
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+            objectToDropdown(
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+                []
+              )
+            )
+          )
+        );
+
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
             get(
               state.screenConfiguration.preparedFinalObject,
-              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
               []
             )
           )
-        )
-      );
-
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
-          get(
-            state.screenConfiguration.preparedFinalObject,
-            `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
-            []
-          )
-        )
-      );
-
-      payload &&
-        dispatch(
-          prepareFinalObject(
-            "LicensesTemp[0].tradeType",
-            payload.LicensesTemp[0].tradeType
-          )
         );
+        // const componentPath = `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`;
+        // console.log(
+        //   i,
+        //   componentPath,
+        //   get(
+        //     action.screenConfig,
+        //     `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}`
+        //   )
+        // );
+        // set(
+        //   action.screenConfig,
+        //   componentPath,
+        //   get(
+        //     state.screenConfiguration.preparedFinalObject,
+        //     `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+        //     []
+        //   )
+        // );
+        payload &&
+          dispatch(
+            prepareFinalObject(
+              `LicensesTemp.tradeUnits[${i}].tradeType`,
+              tradeCat
+            )
+          );
 
-      payload &&
-        dispatch(
-          prepareFinalObject(
-            "LicensesTemp[0].tradeSubType",
-            payload.LicensesTemp[0].tradeSubType
-          )
-        );
+        payload &&
+          dispatch(
+            prepareFinalObject(
+              `LicensesTemp.tradeUnits[${i}].tradeSubType`,
+              tradeType
+            )
+          );
+      });
     } catch (e) {
       console.log(e);
     }
@@ -1405,23 +1430,40 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
 };
 
 export const getDocList = (state, dispatch) => {
-  const tradeSubType = get(
+  const tradeSubTypes = get(
     state.screenConfiguration.preparedFinalObject,
-    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+    "Licenses[0].tradeLicenseDetail.tradeUnits"
   );
 
   const tradeSubCategories = get(
     state.screenConfiguration.preparedFinalObject,
-    "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed"
+    "applyScreenMdmsData.TradeLicense.RawTradeType"
   );
-
-  let currentObject = filter(tradeSubCategories, {
-    code: tradeSubType
+  let selectedTypes = [];
+  tradeSubTypes.forEach(tradeSubType => {
+    selectedTypes.push(
+      filter(tradeSubCategories, {
+        code: tradeSubType.tradeType
+      })
+    );
+    console.log(selectedTypes);
   });
-  const applicationDocument =
-    currentObject[0] &&
-    prepareDocumentTypeObj(currentObject[0].applicationDocument);
 
+  // selectedTypes[0] &&
+  //
+  let applicationDocArray = [];
+
+  selectedTypes.forEach(tradeSubTypeDoc => {
+    applicationDocArray = [
+      ...applicationDocArray,
+      ...tradeSubTypeDoc[0].applicationDocument
+    ];
+  });
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+  applicationDocArray = applicationDocArray.filter(onlyUnique);
+  let applicationDocument = prepareDocumentTypeObj(applicationDocArray);
   dispatch(
     prepareFinalObject(
       "LicensesTemp[0].applicationDocuments",

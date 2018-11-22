@@ -31,7 +31,7 @@ class MultiItem extends React.Component {
     this.initMultiItem(this.props);
   };
 
-  initMultiItem=(props)=>{
+  initMultiItem = props => {
     const { items, sourceJsonPath, preparedFinalObject } = props;
     const editItems = get(preparedFinalObject, sourceJsonPath, []);
     if (editItems) {
@@ -50,10 +50,10 @@ class MultiItem extends React.Component {
         }
       }
     }
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps,this.props)) {
+    if (!isEqual(nextProps, this.props)) {
       this.initMultiItem(nextProps);
     }
   }
@@ -84,56 +84,60 @@ class MultiItem extends React.Component {
           multiItemContent[variable].props &&
           multiItemContent[variable].props.jsonPath
         ) {
+          let prefixJP = multiItemContent[variable].props.jsonPathUpdatePrefix
+            ? multiItemContent[variable].props.jsonPathUpdatePrefix
+            : sourceJsonPath;
           let splitedJsonPath = multiItemContent[variable].props.jsonPath.split(
-            sourceJsonPath
+            prefixJP
           );
           if (splitedJsonPath.length > 1) {
             let propertyName = splitedJsonPath[1].split("]");
             if (propertyName.length > 1) {
               multiItemContent[
                 variable
-              ].jsonPath = `${sourceJsonPath}[${itemsLength}]${
-                propertyName[1]
-              }`;
+              ].jsonPath = `${prefixJP}[${itemsLength}]${propertyName[1]}`;
               multiItemContent[
                 variable
-              ].props.jsonPath = `${sourceJsonPath}[${itemsLength}]${
+              ].props.jsonPath = `${prefixJP}[${itemsLength}]${
                 propertyName[1]
               }`;
               multiItemContent[variable].index = itemsLength;
             }
           }
-        }
-        else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && get(multiItemContent[variable],`${afterPrefixJsonPath}.props`) && get(multiItemContent[variable],`${afterPrefixJsonPath}.props.jsonPath`)) {
-          let splitedJsonPath = get(multiItemContent[variable],`${afterPrefixJsonPath}.props.jsonPath`).split(
-            sourceJsonPath
-          );
+        } else if (
+          afterPrefixJsonPath &&
+          multiItemContent.hasOwnProperty(variable) &&
+          get(multiItemContent[variable], `${afterPrefixJsonPath}.props`) &&
+          get(
+            multiItemContent[variable],
+            `${afterPrefixJsonPath}.props.jsonPath`
+          )
+        ) {
+          let splitedJsonPath = get(
+            multiItemContent[variable],
+            `${afterPrefixJsonPath}.props.jsonPath`
+          ).split(sourceJsonPath);
           if (splitedJsonPath.length > 1) {
             let propertyName = splitedJsonPath[1].split("]");
             if (propertyName.length > 1) {
-              set(multiItemContent[
-                variable
-              ],`${afterPrefixJsonPath}.props.jsonPath`,`${sourceJsonPath}[${itemsLength}]${
-                propertyName[1]
-              }`);
+              set(
+                multiItemContent[variable],
+                `${afterPrefixJsonPath}.props.jsonPath`,
+                `${sourceJsonPath}[${itemsLength}]${propertyName[1]}`
+              );
             }
           }
         }
       }
       set(scheama, prefixSourceJsonPath, multiItemContent);
     }
-    items[itemsLength]=cloneDeep(
+    items[itemsLength] = cloneDeep(
       addComponentJsonpath(
         { [`item${itemsLength}`]: scheama },
         `${componentJsonpath}.props.items[${itemsLength}]`
       )
     );
-    addItemToState(
-      screenKey,
-      componentJsonpath,
-      `props.items`,
-      items
-    );
+    addItemToState(screenKey, componentJsonpath, `props.items`, items);
   };
 
   removeItem = index => {

@@ -121,6 +121,11 @@ export const getMdmsData = async (action, state, dispatch) => {
       [],
       mdmsBody
     );
+    set(
+      payload,
+      "MdmsRes.TradeLicense.RawTradeType",
+      get(payload, "MdmsRes.TradeLicense.TradeType", [])
+    );
     payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
     payload = commonTransform(
       payload,

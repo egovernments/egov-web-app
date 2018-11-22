@@ -66,7 +66,7 @@ export const tradeLocationDetails = getCommonCard({
               payload.TenantBoundary && payload.TenantBoundary[0].boundary
             )
           );
-          console.log(payload.TenantBoundary[0].boundary);
+          // console.log(payload.TenantBoundary[0].boundary);
           dispatch(
             handleField(
               "apply",

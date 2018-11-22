@@ -49,11 +49,75 @@ const accessoriesCard = {
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
-    afterPrefixJsonPath:"children.value.children.key"
+    afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"
 };
 
+const tradeTypeCard = {
+  uiFramework: "custom-containers",
+  componentPath: "MultiItem",
+  props: {
+    className: "review-trade-search-preview",
+    scheama: getCommonGrayCard({
+      tradeTypeCardContainer: getCommonContainer({
+        reviewTradeCategory: getLabelWithValue(
+          {
+            labelName: "Trade Category",
+            labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
+          },
+          {
+            jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+            callBack: value => {
+              return value.split(".")[0];
+            }
+          }
+        ),
+        reviewTradeType: getLabelWithValue(
+          {
+            labelName: "Trade Type",
+            labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
+          },
+          {
+            jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+            callBack: value => {
+              return value.split(".")[1];
+            }
+          }
+        ),
+        reviewTradeSubtype: getLabelWithValue(
+          {
+            labelName: "Trade Sub-Type",
+            labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType" }
+        ),
+
+        reviewTradeUOM: getLabelWithValue(
+          {
+            labelName: "UOM (Unit of Measurement)",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom" }
+        ),
+        reviewTradeUOMValue: getLabelWithValue(
+          {
+            labelName: "UOM Value",
+            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue" }
+        )
+      })
+    }),
+    items: [],
+    hasAddItem: false,
+    sourceJsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits",
+    prefixSourceJsonPath:
+      "children.cardContent.children.tradeTypeCardContainer.children",
+    afterPrefixJsonPath: "children.value.children.key"
+  },
+  type: "array"
+};
 export const getReviewTrade = (isEditable = true) => {
   return getCommonGrayCard({
     headerDiv: {
@@ -185,54 +249,7 @@ export const getReviewTrade = (isEditable = true) => {
       )
     }),
     div1: getDivider(),
-    viewTwo: getCommonContainer({
-      reviewTradeCategory: getLabelWithValue(
-        {
-          labelName: "Trade Category",
-          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
-        },
-        {
-          jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-          callBack: value => {
-            return value.split(".")[0];
-          }
-        }
-      ),
-      reviewTradeType: getLabelWithValue(
-        {
-          labelName: "Trade Type",
-          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
-        },
-        {
-          jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
-          callBack: value => {
-            return value.split(".")[1];
-          }
-        }
-      ),
-      reviewTradeSubtype: getLabelWithValue(
-        {
-          labelName: "Trade Sub-Type",
-          labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType" }
-      ),
-
-      reviewTradeUOM: getLabelWithValue(
-        {
-          labelName: "UOM (Unit of Measurement)",
-          labelKey: "TL_NEW_TRADE_DETAILS_UOM_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom" }
-      ),
-      reviewTradeUOMValue: getLabelWithValue(
-        {
-          labelName: "UOM Value",
-          labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
-        },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue" }
-      )
-    }),
+    viewTwo: tradeTypeCard,
     div2: getDivider(),
     viewThree: accessoriesCard,
 
