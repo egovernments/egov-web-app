@@ -2,11 +2,8 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph,
   getCommonGrayCard,
   getCommonContainer,
-  getCommonValue,
-  getCommonCaption,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
@@ -18,10 +15,10 @@ import { getSearchResults } from "../../../../ui-utils/commons";
 import {
   createEstimateData,
   setMultiOwnerForSV,
-  setValidToFromVisibilityForSV
+  setValidToFromVisibilityForSV,
+  getDialogButton
 } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
-
 import { convertEpochToDate } from "../utils";
 import {
   getFeesEstimateCard,
@@ -341,6 +338,7 @@ const setActionItems = (action, object) => {
 export const tradeReviewDetails = getCommonCard({
   title,
   estimate,
+  viewBreakup: getDialogButton("VIEW BREAKUP", "TL_PAYMENT_VIEW_BREAKUP"),
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails
@@ -427,6 +425,14 @@ const screenConfig = {
         },
         tradeReviewDetails
         //footer
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md"
       }
     }
   }

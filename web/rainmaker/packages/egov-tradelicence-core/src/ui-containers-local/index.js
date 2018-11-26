@@ -41,6 +41,11 @@ const PaymentRedirectPage = Loadable({
   loading: () => <Loading />
 });
 
+const ViewBreakupContainer = Loadable({
+  loader: () => import("./ViewbreakupDialogContainer"),
+  loading: () => <Loading />
+});
+
 export {
   CustomTabContainer,
   LabelContainer,
@@ -50,5 +55,6 @@ export {
   EstimateCardContainer,
   AutosuggestContainer,
   DocumentListContainer,
-  PaymentRedirectPage
+  PaymentRedirectPage,
+  ViewBreakupContainer
 };

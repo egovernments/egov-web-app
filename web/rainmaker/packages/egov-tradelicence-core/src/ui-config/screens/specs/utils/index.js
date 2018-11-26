@@ -417,6 +417,22 @@ export const showHideAdhocPopup = (state, dispatch) => {
   dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
 };
 
+export const showHideBreakupPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["search-preview"],
+    "components.breakUpDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField(
+      "search-preview",
+      "components.breakUpDialog",
+      "props.open",
+      !toggle
+    )
+  );
+};
+
 export const getButtonVisibility = (status, button) => {
   if (status === "pending_payment" && button === "PROCEED TO PAYMENT")
     return true;
@@ -865,7 +881,6 @@ const getTaxValue = item => {
 const getToolTipInfo = (taxHead, LicenseData) => {
   switch (taxHead) {
     case "TL_ADHOC_PENALTY":
-      console.log(LicenseData);
       return get(LicenseData, "tradeLicenseDetail.adhocPenaltyReason");
     case "TL_ADHOC_REBATE":
       return get(LicenseData, "tradeLicenseDetail.adhocExemptionReason");
@@ -937,6 +952,79 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   }
 };
 
+const getBillingSlabData = async (dispatch, billingSlabIds) => {
+  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } = billingSlabIds;
+  const accessoryUnit = accesssoryBillingSlabIds.reduce((result, item) => {
+    result.push(item.split("|")[0]);
+    return result;
+  }, []);
+
+  const tradeUnit = tradeTypeBillingSlabIds.reduce((result, item) => {
+    result.push(item.split("|")[0]);
+    return result;
+  }, []);
+
+  const billingData = [...accessoryUnit, ...tradeUnit];
+  const queryObject = [
+    { key: "tenantId", value: localStorage.getItem("tenant-id") },
+    { key: "ids", value: billingData && billingData.join(",") }
+  ];
+  const response = await httpRequest(
+    "post",
+    "/tl-calculator/billingslab/_search",
+    "",
+    queryObject
+  );
+
+  let tradeTotal = 0;
+  let accessoriesTotal = 0;
+  const finalData =
+    response &&
+    response.billingSlab.reduce(
+      (result, item) => {
+        if (item.tradeType) {
+          tradeTotal = tradeTotal + item.rate;
+          result.tradeUnitData.push({
+            rate: item.rate,
+            category: item.tradeType,
+            type: "trade"
+          });
+        } else {
+          accessoriesTotal = accessoriesTotal + item.rate;
+          result.accessoryData.push({
+            rate: item.rate,
+            category: item.accessoryCategory,
+            type: "accessories"
+          });
+        }
+        return result;
+      },
+      { tradeUnitData: [], accessoryData: [] }
+    );
+  const { accessoryData, tradeUnitData } = finalData;
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].billingSlabData.tradeUnitData",
+      tradeUnitData
+    )
+  );
+  dispatch(
+    prepareFinalObject("LicensesTemp[0].billingSlabData.tradeTotal", tradeTotal)
+  );
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].billingSlabData.accessoriesUnitData",
+      accessoryData
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "LicensesTemp[0].billingSlabData.accessoriesTotal",
+      accessoriesTotal
+    )
+  );
+};
+
 export const createEstimateData = async (
   LicenseData,
   jsonPath,
@@ -971,6 +1059,7 @@ export const createEstimateData = async (
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
+  getBillingSlabData(dispatch, payload.billingSlabIds);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });
@@ -1005,7 +1094,6 @@ export const validateFields = (
     objectJsonPath,
     {}
   );
-  // console.log("fields is.....", fields);
   let isFormValid = true;
   for (var variable in fields) {
     if (fields.hasOwnProperty(variable)) {
@@ -1388,24 +1476,6 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
             )
           )
         );
-        // const componentPath = `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`;
-        // console.log(
-        //   i,
-        //   componentPath,
-        //   get(
-        //     action.screenConfig,
-        //     `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}`
-        //   )
-        // );
-        // set(
-        //   action.screenConfig,
-        //   componentPath,
-        //   get(
-        //     state.screenConfiguration.preparedFinalObject,
-        //     `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
-        //     []
-        //   )
-        // );
         payload &&
           dispatch(
             prepareFinalObject(
@@ -1618,4 +1688,24 @@ export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const getDialogButton = (name, key) => {
+  return {
+    componentPath: "Button",
+    props: {
+      color: "primary",
+      style: {}
+    },
+    children: {
+      previousButtonLabel: getLabel({
+        labelName: name,
+        labelKey: key
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: showHideBreakupPopup
+    }
+  };
 };

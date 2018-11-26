@@ -59,48 +59,6 @@ const getApproveCard = queryValuePurpose => {
               }
             }
           ),
-    // headerTwo: getContainerWithElement({
-    //   children: {
-    //     subHeader: getSubHeaderLabel(queryValuePurpose)
-    //   },
-    //   props: {
-    //     style: {
-    //       marginTop: "33px"
-    //     }
-    //   }
-    // }),
-    // safetyNorms:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Are Safety Norms Satisfactory?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
-    //         radioButtonLabels,
-    //         getSafetyNormsJson(queryValuePurpose),
-    //         "Yes"
-    //       ),
-
-    // hygieneMeasure:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Are Hygiene Levels Satisfactory?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
-    //         radioButtonLabels,
-    //         getHygeneLevelJson(queryValuePurpose),
-    //         "Yes"
-    //       ),
-
-    // localityMeasure:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Is Locality harmed/disturbed by this trade?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
-    //         radioButtonLabels,
-    //         getLocalityHarmedJson(queryValuePurpose),
-    //         "No"
-    //       ),
 
     commentSection: getContainerWithElement({
       children: {
