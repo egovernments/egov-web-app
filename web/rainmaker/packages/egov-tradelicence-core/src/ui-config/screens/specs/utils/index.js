@@ -953,80 +953,87 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
 };
 
 const getBillingSlabData = async (dispatch, billingSlabIds) => {
-  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } = billingSlabIds;
-  const accessoryUnit =
-    accesssoryBillingSlabIds &&
-    accesssoryBillingSlabIds.reduce((result, item) => {
-      result.push(item.split("|")[0]);
-      return result;
-    }, []);
-
-  const tradeUnit =
-    tradeTypeBillingSlabIds &&
-    tradeTypeBillingSlabIds.reduce((result, item) => {
-      result.push(item.split("|")[0]);
-      return result;
-    }, []);
-
-  const billingData = [...accessoryUnit, ...tradeUnit];
-  const queryObject = [
-    { key: "tenantId", value: localStorage.getItem("tenant-id") },
-    { key: "ids", value: billingData && billingData.join(",") }
-  ];
-  const response = await httpRequest(
-    "post",
-    "/tl-calculator/billingslab/_search",
-    "",
-    queryObject
-  );
-
-  let tradeTotal = 0;
-  let accessoriesTotal = 0;
-  const finalData =
-    response &&
-    response.billingSlab.reduce(
-      (result, item) => {
-        if (item.tradeType) {
-          tradeTotal = tradeTotal + item.rate;
-          result.tradeUnitData.push({
-            rate: item.rate,
-            category: item.tradeType,
-            type: "trade"
-          });
-        } else {
-          accessoriesTotal = accessoriesTotal + item.rate;
-          result.accessoryData.push({
-            rate: item.rate,
-            category: item.accessoryCategory,
-            type: "accessories"
-          });
-        }
+  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
+    billingSlabIds || {};
+  if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
+    const accessoryUnit =
+      accesssoryBillingSlabIds &&
+      accesssoryBillingSlabIds.reduce((result, item) => {
+        result.push(item.split("|")[0]);
         return result;
-      },
-      { tradeUnitData: [], accessoryData: [] }
+      }, []);
+
+    const tradeUnit =
+      tradeTypeBillingSlabIds &&
+      tradeTypeBillingSlabIds.reduce((result, item) => {
+        result.push(item.split("|")[0]);
+        return result;
+      }, []);
+
+    let billingData = tradeUnit && [...tradeUnit];
+    accessoryUnit && (billingData = [...billingData, ...accessoryUnit]);
+    const queryObject = [
+      { key: "tenantId", value: localStorage.getItem("tenant-id") },
+      { key: "ids", value: billingData && billingData.join(",") }
+    ];
+    const response = await httpRequest(
+      "post",
+      "/tl-calculator/billingslab/_search",
+      "",
+      queryObject
     );
-  const { accessoryData, tradeUnitData } = finalData;
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].billingSlabData.tradeUnitData",
-      tradeUnitData
-    )
-  );
-  dispatch(
-    prepareFinalObject("LicensesTemp[0].billingSlabData.tradeTotal", tradeTotal)
-  );
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].billingSlabData.accessoriesUnitData",
-      accessoryData
-    )
-  );
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].billingSlabData.accessoriesTotal",
-      accessoriesTotal
-    )
-  );
+
+    let tradeTotal = 0;
+    let accessoriesTotal = 0;
+    const finalData =
+      response &&
+      response.billingSlab.reduce(
+        (result, item) => {
+          if (item.tradeType) {
+            tradeTotal = tradeTotal + item.rate;
+            result.tradeUnitData.push({
+              rate: item.rate,
+              category: item.tradeType,
+              type: "trade"
+            });
+          } else {
+            accessoriesTotal = accessoriesTotal + item.rate;
+            result.accessoryData.push({
+              rate: item.rate,
+              category: item.accessoryCategory,
+              type: "accessories"
+            });
+          }
+          return result;
+        },
+        { tradeUnitData: [], accessoryData: [] }
+      );
+    const { accessoryData, tradeUnitData } = finalData;
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.tradeUnitData",
+        tradeUnitData
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.tradeTotal",
+        tradeTotal
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.accessoriesUnitData",
+        accessoryData
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.accessoriesTotal",
+        accessoriesTotal
+      )
+    );
+  }
 };
 
 export const createEstimateData = async (
