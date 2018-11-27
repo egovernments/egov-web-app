@@ -203,6 +203,58 @@ export const formwizardFourthStep = {
   visible: false
 };
 
+const setTradeDropdowns = (state, action, dispatch) => {
+  const tradeSubTypes = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.tradeUnits",
+    []
+  );
+  if (tradeSubTypes.length > 0) {
+    try {
+      tradeSubTypes.forEach((tradeSubType, i) => {
+        const tradeCat = tradeSubType.tradeType.split(".")[0];
+        const tradeType = tradeSubType.tradeType.split(".")[1];
+        // console.log(
+        //   get(
+        //     action,
+        //     `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`
+        //   ),
+        //   objectToDropdown(
+        //     get(
+        //       state.screenConfiguration.preparedFinalObject,
+        //       `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+        //       []
+        //     )
+        //   )
+        // );
+        set(
+          action,
+          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`,
+          objectToDropdown(
+            get(
+              state.screenConfiguration.preparedFinalObject,
+              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+              []
+            )
+          )
+        );
+        set(
+          action,
+          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`,
+          get(
+            state.screenConfiguration.preparedFinalObject,
+            `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+            []
+          )
+        );
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  return action;
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -236,10 +288,10 @@ const screenConfig = {
       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
       "PERMANENT"
     );
-
     //Call and set boundary dropdown data, since there is no handleField for city in employee app
     const queryObj = [{ key: "tenantId", value: tenantId }];
     getBoundaryData(action, state, dispatch, queryObj);
+
     return action;
   },
   components: {

@@ -1447,12 +1447,6 @@ export const updateDropDowns = async (
     "Licenses[0].tradeLicenseDetail.tradeUnits"
   );
 
-  set(
-    action.screenConfig,
-    "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[0].item0.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.value",
-    tradeSubTypes[0].tradeType
-  );
-
   if (tradeSubTypes.length > 0) {
     try {
       tradeSubTypes.forEach((tradeSubType, i) => {

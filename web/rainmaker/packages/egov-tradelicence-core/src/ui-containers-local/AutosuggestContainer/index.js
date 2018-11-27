@@ -83,6 +83,9 @@ const mapStateToProps = (state, ownprops) => {
     data && data.length > 0
       ? data
       : get(state.screenConfiguration.preparedFinalObject, sourceJsonPath, []);
+  value = value
+    ? value
+    : get(state.screenConfiguration.preparedFinalObject, jsonPath);
   //To fetch corresponding labels from localisation for the suggestions, if needed.
   if (labelsFromLocalisation) {
     suggestions = getLocalisedSuggestions(
