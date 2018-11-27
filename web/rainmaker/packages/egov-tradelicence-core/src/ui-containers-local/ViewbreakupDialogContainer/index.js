@@ -15,14 +15,14 @@ const styles = theme => ({
     marginBottom: 8
   },
   container: {
-    paddingBottom: 8
+    paddingBottom: 10
   }
 });
 
 const closebuttonStyle = {
   width: "25px",
   height: "25px",
-  padding: "3px"
+  color: "#767676"
 };
 
 const closeIcon = "close";
@@ -44,7 +44,7 @@ const getMultiItem = (billingslabData, classes, style) => {
         </Grid>
         <Grid sm={2}>
           <Label
-            label={item.rate}
+            label={`Rs ${item.rate}`}
             style={{
               color: "rgba(0, 0, 0, 0.8700000047683716)",
               fontSize: "14px",
@@ -89,7 +89,7 @@ class ViewBreakupContainer extends React.Component {
         </Grid>
         <Grid sm={2}>
           <Label
-            label={total}
+            label={`Rs ${total}`}
             style={
               style
                 ? style
@@ -132,22 +132,18 @@ class ViewBreakupContainer extends React.Component {
     return (
       <Dialog
         open={open}
-        onClose={this.handleClose}
-        onEscapeKeyDown={this.handleClose}
-        onBackdropClick={this.handleClose}
+        onClose={handleClose}
         fullWidth={true}
         children={[
-          <div className="dialog-close-button" key={"dialog-close-button"}>
-            <div
-              onClick={handleClose}
-              style={{ float: "right", cursor: "pointer" }}
-            >
-              <Icon style={closebuttonStyle}>{closeIcon}</Icon>
-            </div>
-          </div>,
           accessoriesTotal > 0 || tradeTotal > 0 ? (
             <div style={{ padding: "16px" }}>
-              <div style={{ paddingBottom: "16px" }}>
+              <div
+                onClick={handleClose}
+                style={{ float: "right", cursor: "pointer" }}
+              >
+                <Icon style={closebuttonStyle}>{closeIcon}</Icon>
+              </div>
+              <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
                 <Label
                   label="Calculation Breakup"
                   style={{
@@ -175,7 +171,9 @@ class ViewBreakupContainer extends React.Component {
                 tradeUnitData.length > 0 &&
                 getMultiItem(tradeUnitData, classes)}
               <Divider className={classes.root} />
-              {tradeUnitData &&
+              {accessoriesUnitData &&
+                accessoriesUnitData.length > 0 &&
+                tradeUnitData &&
                 tradeUnitData.length > 0 &&
                 getGridItem(tradeTotal, classes)}
               {accessoriesUnitData && accessoriesUnitData.length > 0 && (
@@ -198,7 +196,7 @@ class ViewBreakupContainer extends React.Component {
               {accessoriesUnitData &&
                 accessoriesUnitData.length > 0 &&
                 getGridItem(accessoriesTotal, classes)}
-              {getGridItem(totalBill, classes, style)}
+              {/* {getGridItem(totalBill, classes, style)} */}
             </div>
           ) : (
             <div style={{ padding: "16px", width: "500px" }}>

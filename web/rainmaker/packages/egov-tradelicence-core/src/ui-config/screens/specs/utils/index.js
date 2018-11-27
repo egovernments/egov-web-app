@@ -1727,6 +1727,7 @@ export const getDialogButton = (name, key, screenKey) => {
         showHideBreakupPopup(state, dispatch, screenKey);
       }
     }
+    //visible: false
   };
 };
 

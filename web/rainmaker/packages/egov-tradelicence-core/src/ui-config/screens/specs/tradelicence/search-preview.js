@@ -33,7 +33,6 @@ import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
-const status = getQueryArg(window.location.href, "status");
 let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
 let headerSideText = { word1: "", word2: "" };
 
@@ -339,12 +338,11 @@ const setActionItems = (action, object) => {
 export const tradeReviewDetails = getCommonCard({
   title,
   estimate,
-  viewBreakup: getDialogButton(
+  viewBreakupButton: getDialogButton(
     "VIEW BREAKUP",
     "TL_PAYMENT_VIEW_BREAKUP",
     "search-preview"
   ),
-
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails
@@ -355,6 +353,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
+    const status = getQueryArg(window.location.href, "status");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     //To set the application no. at the  top
     set(
@@ -362,6 +361,14 @@ const screenConfig = {
       "components.div.children.headerDiv.children.header1.children.applicationNumber.props.number",
       applicationNumber
     );
+    if (status !== "pending_payment") {
+      set(
+        action.screenConfig,
+        "components.div.children.tradeReviewDetails.children.cardContent.children.viewBreakupButton.visible",
+        false
+      );
+    }
+
     beforeInitFn(action, state, dispatch, applicationNumber);
     return action;
   },

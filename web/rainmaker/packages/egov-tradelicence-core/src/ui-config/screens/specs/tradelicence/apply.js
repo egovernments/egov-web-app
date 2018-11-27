@@ -270,6 +270,15 @@ const screenConfig = {
         formwizardFourthStep,
         footer
       }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "apply"
+      }
     }
   }
 };

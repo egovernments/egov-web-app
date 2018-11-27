@@ -103,23 +103,6 @@ const screenConfig = {
                 "TL_PAYMENT_VIEW_BREAKUP",
                 "pay"
               ),
-              // {
-              //   componentPath: "Button",
-              //   props: {
-              //     color: "primary",
-              //     style: {}
-              //   },
-              //   children: {
-              //     previousButtonLabel: getLabel({
-              //       labelName: "VIEW BREAKUP",
-              //       labelKey: "TL_PAYMENT_VIEW_BREAKUP"
-              //     })
-              //   },
-              //   onClickDefination: {
-              //     action: "condition",
-              //     callBack: showHideBreakupPopup
-              //   }
-              // },
               capturePaymentDetails,
               g8Details
             })
