@@ -13,7 +13,8 @@ import set from "lodash/set";
 import {
   commonTransform,
   objectToDropdown,
-  getCurrentFinancialYear
+  getCurrentFinancialYear,
+  getAllDataFromBillingSlab
 } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -123,7 +124,7 @@ export const getMdmsData = async (action, state, dispatch) => {
     );
     set(
       payload,
-      "MdmsRes.TradeLicense.RawTradeType",
+      "MdmsRes.TradeLicense.MdmsTradeType",
       get(payload, "MdmsRes.TradeLicense.TradeType", [])
     );
     payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
@@ -131,17 +132,17 @@ export const getMdmsData = async (action, state, dispatch) => {
       payload,
       "MdmsRes.common-masters.OwnerShipCategory"
     );
-    payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
+    // payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
     set(
       payload,
       "MdmsRes.TradeLicense.TradeTypeTransformed",
       objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
     );
-    set(
-      payload,
-      "MdmsRes.common-masters.StructureTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
-    );
+    // set(
+    //   payload,
+    //   "MdmsRes.common-masters.StructureTypeTransformed",
+    //   objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
+    // );
     set(
       payload,
       "MdmsRes.common-masters.OwnerShipCategoryTransformed",
@@ -208,7 +209,7 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
     getData(action, state, dispatch, queryValue);
-
+    getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
     let props = get(

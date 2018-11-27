@@ -7,9 +7,11 @@ import {
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 // import tradeLicenseSearchAndResult from "../tradelicence/search";
-
+import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
+import { cityPicker } from "./citypicker";
+import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const header = getCommonHeader({
   labelName: "Trade License",
@@ -20,6 +22,26 @@ const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
+    dispatch(
+      pFO("citiesByModule", {
+        TL: {
+          module: "TL",
+          code: "TL",
+          tenants: [
+            {
+              code: "pb.jalandhar"
+            },
+            {
+              code: "pb.nawanshahr"
+            },
+            {
+              code: "pb.amritsar"
+            }
+          ]
+        }
+      })
+    );
+
     fetchData(action, state, dispatch);
     return action;
   },
@@ -83,9 +105,13 @@ const tradeLicenseSearchAndResult = {
                           labelKey: "TL_APPLY"
                         })
                       },
+                      // onClickDefination: {
+                      //   action: "page_change",
+                      //   path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                      // },
                       onClickDefination: {
-                        action: "page_change",
-                        path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                        action: "condition",
+                        callBack: showCityPicker
                       },
                       roleDefination: {
                         rolePath: "user-info.roles",
@@ -98,6 +124,24 @@ const tradeLicenseSearchAndResult = {
             }),
             break: getBreak(),
             searchResults: searchResults
+          }
+        }
+      }
+    },
+    cityPickerDialog: {
+      componentPath: "Dialog",
+      props: {
+        open: false,
+        maxWidth: "md"
+      },
+      children: {
+        dialogContent: {
+          componentPath: "DialogContent",
+          props: {
+            style: { minHeight: "320px", minWidth: "365px" }
+          },
+          children: {
+            popup: cityPicker
           }
         }
       }

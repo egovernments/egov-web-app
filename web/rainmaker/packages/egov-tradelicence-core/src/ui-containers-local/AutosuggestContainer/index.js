@@ -17,6 +17,7 @@ const transfomedKeys = transformById(localizationLabels, "code");
 class AutoSuggestor extends Component {
   onSelect = value => {
     const { onChange } = this.props;
+    //Storing multiSelect values not handled yet
     onChange({ target: { value: value.value } });
   };
 
@@ -39,7 +40,7 @@ class AutoSuggestor extends Component {
       placeholder.labelKey,
       transfomedKeys
     );
-
+    //For multiSelect to be enabled, pass isMultiSelect=true in props.
     return (
       <div>
         <AutoSuggest
@@ -71,12 +72,17 @@ const getLocalisedSuggestions = suggestions => {
 };
 
 const mapStateToProps = (state, ownprops) => {
-  let { jsonPath, value, sourceJsonPath, labelsFromLocalisation } = ownprops;
-  let suggestions = get(
-    state.screenConfiguration.preparedFinalObject,
+  let {
+    jsonPath,
+    value,
     sourceJsonPath,
-    []
-  );
+    labelsFromLocalisation,
+    data
+  } = ownprops;
+  let suggestions =
+    data && data.length > 0
+      ? data
+      : get(state.screenConfiguration.preparedFinalObject, sourceJsonPath, []);
   //To fetch corresponding labels from localisation for the suggestions, if needed.
   if (labelsFromLocalisation) {
     suggestions = getLocalisedSuggestions(
@@ -93,6 +99,7 @@ const mapStateToProps = (state, ownprops) => {
   if (selectedItem && selectedItem.name) {
     value = { label: selectedItem.name, value: selectedItem.code };
   }
+  // console.log(value, suggestions);
   return { value, jsonPath, suggestions };
 };
 

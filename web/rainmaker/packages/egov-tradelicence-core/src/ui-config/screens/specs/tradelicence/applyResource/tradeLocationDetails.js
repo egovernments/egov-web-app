@@ -41,7 +41,8 @@ export const tradeLocationDetails = getCommonCard({
         jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
         required: true,
         props: {
-          required: true
+          required: true,
+          disabled: true
         }
       }),
       beforeFieldChange: async (action, state, dispatch) => {

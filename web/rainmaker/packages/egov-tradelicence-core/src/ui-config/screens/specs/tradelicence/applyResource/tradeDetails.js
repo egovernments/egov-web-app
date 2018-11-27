@@ -16,7 +16,8 @@ import {
   prepareDocumentTypeObj,
   getTodaysDateInYMD,
   getFinancialYearDates,
-  getNextMonthDateInYMD
+  getNextMonthDateInYMD,
+  setFilteredTradeTypes
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -509,14 +510,7 @@ export const tradeDetails = getCommonCard({
           value: "PERMANENT",
           className: "tl-trade-type"
         },
-        data: [
-          {
-            code: "TEMPORARY"
-          },
-          {
-            code: "PERMANENT"
-          }
-        ]
+        sourceJsonPath: "applyScreenMdmsData.TradeLicense.licenseType"
       }),
       beforeFieldChange: (action, state, dispatch) => {
         if (action.value === "TEMPORARY") {
@@ -630,14 +624,28 @@ export const tradeDetails = getCommonCard({
         }
       }
     },
-    tradeStructureSubType: getSelectField({
-      label: { labelName: "Structure Sub Type" },
-      placeholder: { labelName: "Select Structure Sub Type" },
-      required: true,
-      jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
-      sourceJsonPath:
-        "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
-    }),
+    tradeStructureSubType: {
+      ...getSelectField({
+        label: { labelName: "Structure Sub Type" },
+        placeholder: { labelName: "Select Structure Sub Type" },
+        required: true,
+        jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
+        sourceJsonPath:
+          "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        const tradeTypes = setFilteredTradeTypes(
+          state,
+          dispatch,
+          get(
+            state.screenConfiguration.preparedFinalObject,
+            "Licenses[0].licenseType",
+            "PERMANENT"
+          ),
+          action.value
+        );
+      }
+    },
     tradeCommencementDate: getDateField({
       label: {
         labelName: "Trade Commencement Date",

@@ -1402,12 +1402,18 @@ export const getTransformedStatus = status => {
   }
 };
 
-export const updateDropDowns = async (payload, action, state, dispatch) => {
+export const updateDropDowns = async (
+  payload,
+  action,
+  state,
+  dispatch,
+  queryValue
+) => {
   const structType = get(
     payload,
     "Licenses[0].tradeLicenseDetail.structureType"
   );
-
+  console.log(payload);
   if (structType) {
     set(
       payload,
@@ -1443,6 +1449,12 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
   const tradeSubTypes = get(
     payload,
     "Licenses[0].tradeLicenseDetail.tradeUnits"
+  );
+
+  set(
+    action.screenConfig,
+    "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[0].item0.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.value",
+    tradeSubTypes[0].tradeType
   );
 
   if (tradeSubTypes.length > 0) {
@@ -1507,7 +1519,7 @@ export const getDocList = (state, dispatch) => {
 
   const tradeSubCategories = get(
     state.screenConfiguration.preparedFinalObject,
-    "applyScreenMdmsData.TradeLicense.RawTradeType"
+    "applyScreenMdmsData.TradeLicense.MdmsTradeType"
   );
   let selectedTypes = [];
   tradeSubTypes.forEach(tradeSubType => {
@@ -1708,4 +1720,187 @@ export const getDialogButton = (name, key) => {
       callBack: showHideBreakupPopup
     }
   };
+};
+
+const getAllBillingSlabs = async tenantId => {
+  let payload = await httpRequest(
+    "post",
+    `/tl-calculator/billingslab/_search?tenantId=${tenantId}`,
+    "_search",
+    [],
+    {}
+  );
+  return payload;
+};
+
+export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
+  const payload = await getAllBillingSlabs(tenantId);
+  const processedData =
+    payload.billingSlab &&
+    payload.billingSlab.reduce(
+      (acc, item) => {
+        let accessory = { active: true };
+        let tradeType = { active: true };
+        if (item.accessoryCategory && item.tradeType === null) {
+          accessory.code = item.accessoryCategory;
+          accessory.uom = item.uom;
+          accessory.rate = item.rate;
+          acc.accessories.push(accessory);
+        } else if (item.accessoryCategory === null && item.tradeType) {
+          tradeType.code = item.tradeType;
+          tradeType.uom = item.uom;
+          tradeType.structureType = item.structureType;
+          tradeType.licenseType = item.licenseType;
+          tradeType.rate = item.rate;
+          acc.tradeTypeData.push(tradeType);
+        }
+        return acc;
+      },
+      { accessories: [], tradeTypeData: [] }
+    );
+
+  const accessories = getUniqueItemsFromArray(
+    processedData.accessories,
+    "code"
+  );
+  let structureTypes = getUniqueItemsFromArray(
+    processedData.tradeTypeData,
+    "structureType"
+  );
+  structureTypes = commonTransform(
+    {
+      StructureType: structureTypes.map(item => {
+        return { code: item.structureType, active: true };
+      })
+    },
+    "StructureType"
+  );
+  let licenseTypes = getUniqueItemsFromArray(
+    processedData.tradeTypeData,
+    "licenseType"
+  );
+  licenseTypes = licenseTypes.map(item => {
+    return { code: item.licenseType, active: true };
+  });
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.common-masters.StructureType",
+      structureTypes.StructureType
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
+      accessories
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.licenseType",
+      licenseTypes
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.common-masters.StructureTypeTransformed",
+      objectToDropdown(structureTypes.StructureType)
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.TradeType",
+      processedData.tradeTypeData
+    )
+  );
+};
+
+const getUniqueItemsFromArray = (data, identifier) => {
+  const uniqueArray = [];
+  const map = new Map();
+  for (const item of data) {
+    if (!map.has(item[identifier])) {
+      map.set(item[identifier], true); // set any value to Map
+      uniqueArray.push(item);
+    }
+  }
+  return uniqueArray;
+};
+
+export const setFilteredTradeTypes = (
+  state,
+  dispatch,
+  licenseType,
+  structureSubtype
+) => {
+  const tradeTypes = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.TradeLicense.TradeType",
+    []
+  );
+  const mdmsTradeTypes = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.TradeLicense.MdmsTradeType",
+    []
+  );
+  try {
+    if (tradeTypes.length > 0 && mdmsTradeTypes.length > 0) {
+      const mdmsTTTransformed = mdmsTradeTypes.reduce((acc, item) => {
+        acc[item.code] = item;
+        return acc;
+      }, {});
+      const tradeTypeList = tradeTypes.map(item => {
+        item.applicationDocument =
+          mdmsTTTransformed[item.code].applicationDocument;
+        return item;
+      });
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.TradeLicense.TradeType",
+          tradeTypeList
+        )
+      );
+      let filteredList = tradeTypeList.filter(item => {
+        if (
+          item.licenseType === licenseType &&
+          item.structureType === structureSubtype
+        )
+          return true;
+      });
+      let tradeTypeTransformed = commonTransform(
+        { TradeType: [...filteredList] },
+        "TradeType"
+      );
+      console.log(tradeTypeTransformed);
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.TradeLicense.TradeType",
+          tradeTypeTransformed.TradeType
+        )
+      );
+      return tradeTypeTransformed;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const showCityPicker = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["home"],
+    "components.cityPickerDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField("home", "components.cityPickerDialog", "props.open", !toggle)
+  );
+};
+
+export const applyForm = (state, dispatch) => {
+  console.log(state);
+  const tenantId = get(
+    state.screenConfiguration.preparedFinalObject,
+    "undefined"
+  );
+  console.log(tenantId);
+  window.location.href = `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
 };

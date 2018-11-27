@@ -96,7 +96,9 @@ export const updatePFOforSearchResults = async (
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
-  await updateDropDowns(payload, action, state, dispatch);
+  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+
+  await updateDropDowns(payload, action, state, dispatch, queryValue);
 
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");
@@ -105,7 +107,6 @@ export const updatePFOforSearchResults = async (
   }
   set(payload, getCheckBoxJsonpath(queryValuePurpose), true);
 
-  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   setApplicationNumberBox(state, dispatch);
 };
 
