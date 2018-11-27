@@ -954,15 +954,19 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
 
 const getBillingSlabData = async (dispatch, billingSlabIds) => {
   const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } = billingSlabIds;
-  const accessoryUnit = accesssoryBillingSlabIds.reduce((result, item) => {
-    result.push(item.split("|")[0]);
-    return result;
-  }, []);
+  const accessoryUnit =
+    accesssoryBillingSlabIds &&
+    accesssoryBillingSlabIds.reduce((result, item) => {
+      result.push(item.split("|")[0]);
+      return result;
+    }, []);
 
-  const tradeUnit = tradeTypeBillingSlabIds.reduce((result, item) => {
-    result.push(item.split("|")[0]);
-    return result;
-  }, []);
+  const tradeUnit =
+    tradeTypeBillingSlabIds &&
+    tradeTypeBillingSlabIds.reduce((result, item) => {
+      result.push(item.split("|")[0]);
+      return result;
+    }, []);
 
   const billingData = [...accessoryUnit, ...tradeUnit];
   const queryObject = [
