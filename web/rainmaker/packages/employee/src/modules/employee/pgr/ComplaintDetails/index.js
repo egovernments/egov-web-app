@@ -236,7 +236,9 @@ class ComplaintDetails extends Component {
           {complaint && !openMap && (
             <div>
               <div>
-                {navigator.share && <CommonShare variant="fab" shareCallback={shareCallback} />}
+                {navigator.share && (
+                  <CommonShare variant="fab" shareCallback={shareCallback} roleDefination={{ rolePath: "user-info.roles", roles: ["EMPLOYEE"] }} />
+                )}
                 {/*<ShareButton onLoadFn={this.ShareButtonOnClick} />*/}
               </div>
               <div className="form-without-button-cont-generic">

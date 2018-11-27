@@ -38,6 +38,14 @@ var _Share = require("@material-ui/icons/Share");
 
 var _Share2 = _interopRequireDefault(_Share);
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
+var _isEmpty = require("lodash/isEmpty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = function styles(theme) {
@@ -73,7 +81,28 @@ var CommonShare = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           shareCallback = _props.shareCallback,
-          classes = _props.classes;
+          classes = _props.classes,
+          _props$visible = _props.visible,
+          visible = _props$visible === undefined ? true : _props$visible,
+          _props$roleDefination = _props.roleDefination,
+          roleDefination = _props$roleDefination === undefined ? {} : _props$roleDefination;
+
+      console.log("sudhanshu", this.props);
+      if (visible && !(0, _isEmpty2.default)(roleDefination)) {
+        var splitList = (0, _get2.default)(roleDefination, "rolePath").split(".");
+        var localdata = JSON.parse(localStorage.getItem(splitList[0]));
+        var localRoles = (0, _get2.default)(localdata, splitList.slice(1).join("."), localdata);
+
+        var roleCodes = localRoles.map(function (elem) {
+          return (0, _get2.default)(elem, "code");
+        });
+        var roles = (0, _get2.default)(roleDefination, "roles");
+        var found = roles.some(function (elem) {
+          return roleCodes.includes(elem);
+        });
+        visible = found;
+      }
+      console.log("sudhanshu123", visible);
 
       return _react2.default.createElement(
         "div",
@@ -81,11 +110,12 @@ var CommonShare = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: classes.menuItem },
-          _react2.default.createElement(
+          visible && _react2.default.createElement(
             _Button2.default,
             {
               variant: "fab",
               className: classes.fab,
+              visible: "false",
               onClick: function onClick() {
                 shareCallback();
               }
