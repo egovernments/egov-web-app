@@ -432,7 +432,8 @@ const screenConfig = {
       componentPath: "ViewBreakupContainer",
       props: {
         open: false,
-        maxWidth: "md"
+        maxWidth: "md",
+        screenKey: "search-preview"
       }
     }
   }
