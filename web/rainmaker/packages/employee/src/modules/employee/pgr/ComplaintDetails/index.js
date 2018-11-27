@@ -236,7 +236,7 @@ class ComplaintDetails extends Component {
           {complaint && !openMap && (
             <div>
               <div>
-                {navigator.share && <CommonShare variant="fab" shareCallback={shareCallback} />}
+                <CommonShare variant="fab" shareCallback={shareCallback} />
                 {/*<ShareButton onLoadFn={this.ShareButtonOnClick} />*/}
               </div>
               <div className="form-without-button-cont-generic">
