@@ -1910,5 +1910,5 @@ export const applyForm = (state, dispatch) => {
     "undefined"
   );
   console.log(tenantId);
-  window.location.href = `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+  window.location.href = `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
 };
