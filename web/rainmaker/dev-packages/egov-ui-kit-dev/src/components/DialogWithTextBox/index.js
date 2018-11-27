@@ -5,6 +5,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { RadioButton } from "components";
 import { getComplaintDisplayOrder } from "egov-ui-kit/redux/complaints/actions";
 import { TextField } from "..";
+import { AutoContact } from "..";
 
 const styles = {
   logoutContentStyle: { textAlign: "center", padding: "24px 20px" },
@@ -35,17 +36,40 @@ const styles = {
 
 class DialogWithTextField extends Component {
   state = {
-    valueTyped: "",
+    valueSend: "",
+    valueName: "",
+    valueSecondary: "",
   };
 
-  textFieldHandleChange = (event, value) => {
-    this.setState({ valueTyped: value });
+  textFieldSendHandleChange = (value) => {
+    this.setState({ valueSend: value });
+    console.log(value);
   };
+
+  // textFieldNameHandleChange = (event, value) => {
+  //   this.setState({ valueName: value });
+  // };
+
+  // textFieldSecondaryHandleChange = (event, value) => {
+  //   this.setState({ valueSecondary: value });
+  // };
 
   render() {
-    const { lableText, closeDialog, popOpen, onSend } = this.props;
-    const { textFieldHandleChange, onConfirmClick } = this;
-
+    const {
+      lableText,
+      closeDialog,
+      popOpen,
+      onSend,
+      errorText,
+      onAutoCompletTextChangeCallBack,
+      dataSource,
+      popupLablesPlaceHolders,
+      onNameHandleChange,
+      onSecondValueHandleChange,
+      nameVal,
+      secondaryVal,
+    } = this.props;
+    const { textFieldSendHandleChange, onConfirmClick } = this;
     return (
       <Dialog
         open={popOpen}
@@ -59,7 +83,30 @@ class DialogWithTextField extends Component {
               fontSize="20px"
               labelStyle={{ padding: "16px 0px 0px 24px" }}
             />
-            <TextField id="asda" value={this.state.valueTyped} onChange={textFieldHandleChange} />
+            {/* <TextField id="asda" errorText={errorText} value={this.state.valueSend} onChange={textFieldSendHandleChange} /> */}
+            <AutoContact
+              floatingLabelText={popupLablesPlaceHolders["sendLabel"]}
+              id="asdd1"
+              hintText={popupLablesPlaceHolders["sendPalceHolder"]}
+              onChangeText={textFieldSendHandleChange}
+              dataSource={dataSource}
+              onAutoCompletTextChangeCallBack={onAutoCompletTextChangeCallBack}
+              dataConfigval={popupLablesPlaceHolders["dataConfigval"]}
+            />
+            <div>
+              <TextField
+                floatingLabelText={popupLablesPlaceHolders["nameLabel"]}
+                hintText={popupLablesPlaceHolders["namePlaceHolder"]}
+                onChange={onNameHandleChange}
+                value={nameVal}
+              />
+              <TextField
+                floatingLabelText={popupLablesPlaceHolders["secondaryLabel"]}
+                hintText={popupLablesPlaceHolders["secondaryPlaceHolder"]}
+                onChange={onSecondValueHandleChange}
+                value={secondaryVal}
+              />
+            </div>
           </div>,
         ]}
         handleClose={closeDialog}
@@ -78,8 +125,8 @@ class DialogWithTextField extends Component {
             label={<Label buttonLabel={true} label={"SEND"} color="#FE7A51" />}
             backgroundColor={"#fff"}
             onClick={() => {
-              onSend(this.state.valueTyped);
-              closeDialog();
+              onSend(this.state.valueSend);
+              // closeDialog();
             }}
             style={{ boxShadow: "none" }}
           />,

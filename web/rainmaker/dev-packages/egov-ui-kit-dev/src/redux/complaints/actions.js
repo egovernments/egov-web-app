@@ -95,10 +95,19 @@ const complaintFetchComplete = (payload, overWrite) => {
   };
 };
 
-const complaintSendSMS = (message) => {
+const complaintSendSMS = (message, jsonPath) => {
   return {
     type: actionTypes.COMPLAINTS_SEND_MESSAGE,
     message,
+    jsonPath,
+  };
+};
+
+const shareContactAction = (data, jsonPath) => {
+  return {
+    type: actionTypes.SHARE_CONTACT,
+    data,
+    jsonPath,
   };
 };
 
@@ -140,21 +149,15 @@ export const fetchComplaints = (queryObject, hasUsers = true, overWrite) => {
   };
 };
 
-export const sendMessage = (message) => {
+export const sendMessage = (message, jsonPath) => {
   return async (dispatch, getState) => {
-    dispatch(complaintSendSMS(message));
+    dispatch(complaintSendSMS(message, jsonPath));
   };
 };
 
-export const sendMessageTo = (message) => {
+export const shareContact = (data, jsonPath) => {
   return async (dispatch, getState) => {
-    dispatch(complaintSendSMSTo(message));
-  };
-};
-
-export const sendMessageMedia = (message) => {
-  return async (dispatch, getState) => {
-    dispatch(complaintSendSMSMedia(message));
+    dispatch(shareContactAction(data, jsonPath));
   };
 };
 

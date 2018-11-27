@@ -20,7 +20,7 @@ import {
   findLatestAssignee,
   getTranslatedLabel,
 } from "egov-ui-kit/utils/commons";
-import { fetchComplaints, sendMessage, sendMessageMedia } from "egov-ui-kit/redux/complaints/actions";
+import { fetchComplaints, sendMessage, shareContact } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
 
 import "./index.css";
@@ -146,14 +146,13 @@ class ComplaintDetails extends Component {
   };
 
   ShareButtonOnClick = () => {
-    console.log("Sudhanshu");
     const complaintData = this.props.transformedComplaint.complaint;
     const name = complaintData.filedBy ? complaintData.filedBy : "NA";
     const moblileNo = complaintData.filedUserMobileNumber ? complaintData.filedUserMobileNumber : "NA";
     const complaintNo = complaintData.applicationNo ? complaintData.applicationNo : "NA";
     const complaintType = this.props.complaintTypeLocalised ? this.props.complaintTypeLocalised : "NA";
     const address = complaintData.address ? complaintData.address : "NA";
-    const { sendMessage } = this.props;
+    const { sendMessage, shareContact } = this.props;
 
     const shareMetaData = {
       tenantId: localStorage.getItem("tenant-id"),
@@ -162,9 +161,19 @@ class ComplaintDetails extends Component {
       shareContent: [{ to: "", content: { name, moblileNo, complaintNo, complaintType, address }, expiredIn: "", documents: [] }],
       shareTemplate: "complaintDetails",
     };
-    console.log(shareMetaData);
-    sendMessage(shareMetaData);
 
+    const tempShareData = {
+      id: "1234",
+      tenantId: localStorage.getItem("tenant-id"),
+      userId: JSON.parse(localStorage.getItem("user-info")).userName,
+      name: "",
+      phone: "",
+      email: "",
+    };
+
+    console.log("raaaa123", tempShareData);
+    sendMessage(shareMetaData, "");
+    shareContact(tempShareData, "");
     // const messageStr =
     //   "Name: " + name + "\nMobile: " + moblileNo + "\nComplaint No: " + complaintNo + "\nComplaint Type: " + complaintType + "\nAddress: " + address;
   };
@@ -204,11 +213,10 @@ class ComplaintDetails extends Component {
     return (
       <div>
         <Screen>
-          {complaint &&
-            !openMap && (
+          {complaint && !openMap && (
+            <div>
               <div>
-                <div>
-                  {/*navigator.share && (
+                {/*navigator.share && (
                     <Button
                       variant="fab"
                       onClick={() => {
@@ -225,72 +233,71 @@ class ComplaintDetails extends Component {
                       <ShareIcon />
                     </Button>
                   )*/}
-                  <ShareButton onLoadFn={this.ShareButtonOnClick} />
-                </div>
-                <div className="form-without-button-cont-generic">
-                  <Details
-                    {...complaint}
-                    role={role}
-                    history={history}
-                    mapAction={true}
-                    redirectToMap={this.redirectToMap}
-                    action={action}
-                    complaintLoc={complaintLoc}
-                  />
-                  <ComplaintTimeLine
-                    status={complaint.status}
-                    timelineSLAStatus={complaint.timelineSLAStatus}
-                    timeLine={timeLine}
-                    history={history}
-                    handleFeedbackOpen={this.handleFeedbackOpen}
-                    role={role}
-                    feedback={complaint ? complaint.feedback : ""}
-                    rating={complaint ? complaint.rating : ""}
-                    filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
-                    filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
-                  />
-                  <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
-                </div>
-                <div>
-                  {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
-                  (role === "employee" &&
-                    isAssignedToEmployee &&
-                    complaint.complaintStatus.toLowerCase() === "assigned" &&
-                    complaint.complaintStatus.toLowerCase() !== "closed") ? (
-                    <ActionButton
-                      btnOneLabel={btnOneLabel}
-                      btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
-                      btnTwoLabel={btnTwoLabel}
-                      btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <ShareButton onLoadFn={this.ShareButtonOnClick} />
               </div>
-            )}
-        </Screen>
-        {complaintLoc.lat &&
-          openMap && (
-            <div>
-              <div className="back-btn" style={{ top: 32 }}>
-                <Icon
-                  className="mapBackBtn"
-                  onClick={() => {
-                    this.redirectToMap(false);
-                  }}
-                  style={{
-                    height: 24,
-                    width: 24,
-                    color: "#484848",
-                  }}
-                  action="navigation"
-                  name={"arrow-back"}
+              <div className="form-without-button-cont-generic">
+                <Details
+                  {...complaint}
+                  role={role}
+                  history={history}
+                  mapAction={true}
+                  redirectToMap={this.redirectToMap}
+                  action={action}
+                  complaintLoc={complaintLoc}
                 />
+                <ComplaintTimeLine
+                  status={complaint.status}
+                  timelineSLAStatus={complaint.timelineSLAStatus}
+                  timeLine={timeLine}
+                  history={history}
+                  handleFeedbackOpen={this.handleFeedbackOpen}
+                  role={role}
+                  feedback={complaint ? complaint.feedback : ""}
+                  rating={complaint ? complaint.rating : ""}
+                  filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
+                  filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
+                />
+                <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
               </div>
-              <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
+              <div>
+                {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
+                (role === "employee" &&
+                  isAssignedToEmployee &&
+                  complaint.complaintStatus.toLowerCase() === "assigned" &&
+                  complaint.complaintStatus.toLowerCase() !== "closed") ? (
+                  <ActionButton
+                    btnOneLabel={btnOneLabel}
+                    btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                    btnTwoLabel={btnTwoLabel}
+                    btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           )}
+        </Screen>
+        {complaintLoc.lat && openMap && (
+          <div>
+            <div className="back-btn" style={{ top: 32 }}>
+              <Icon
+                className="mapBackBtn"
+                onClick={() => {
+                  this.redirectToMap(false);
+                }}
+                style={{
+                  height: 24,
+                  width: 24,
+                  color: "#484848",
+                }}
+                action="navigation"
+                name={"arrow-back"}
+              />
+            </div>
+            <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
+          </div>
+        )}
       </div>
     );
   }
@@ -354,7 +361,9 @@ const mapStateToProps = (state, ownProps) => {
   const role =
     roleFromUserInfo(userInfo.roles, "GRO") || roleFromUserInfo(userInfo.roles, "DGRO")
       ? "ao"
-      : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
+      : roleFromUserInfo(userInfo.roles, "CSR")
+      ? "csr"
+      : "employee";
 
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
@@ -426,9 +435,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
-    sendMessage: (message) => dispatch(sendMessage(message)),
-    sendMessageMedia: (message) => dispatch(sendMessageMedia(message)),
+    sendMessage: (message, jsonPath) => dispatch(sendMessage(message, jsonPath)),
+    shareContact: (data, jsonPath) => dispatch(shareContact(data, jsonPath)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComplaintDetails);

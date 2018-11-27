@@ -38,7 +38,7 @@ import Tooltip from "./Tooltip";
 import BreadCrumbs from "./BreadCrumbs";
 import Receipt from "./Receipt";
 import ShareButton from "./ShareButton";
-
+import AutoContact from "./AutoSuggestContact";
 export {
   Label,
   Image,
@@ -80,4 +80,5 @@ export {
   BreadCrumbs,
   Receipt,
   ShareButton,
+  AutoContact,
 };

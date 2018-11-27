@@ -88,6 +88,8 @@ var _reactRedux = require("react-redux");
 
 var _api = require("egov-ui-kit/utils/api");
 
+var _commons = require("egov-ui-kit/utils/commons");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = function styles(theme) {
@@ -110,6 +112,24 @@ var styles = function styles(theme) {
   };
 };
 
+// const suggestions = ["Red", "Orange", "Yellow", "Green", "Blue", "Pur=ple", "Black", "White"];
+
+var suggestions = [{
+  id: "1234",
+  tenantId: "pb.amrtisar",
+  userId: "abcd",
+  name: "abcd",
+  phone: "9987654322",
+  email: "asd1@gmail.com"
+}, {
+  id: "123",
+  tenantId: "pb.amrtisar",
+  userId: "abc",
+  name: "abc",
+  phone: "9987654321",
+  email: "asd@gmail.com "
+}];
+
 var MenuListComposition = function (_React$Component) {
   (0, _inherits3.default)(MenuListComposition, _React$Component);
 
@@ -128,7 +148,44 @@ var MenuListComposition = function (_React$Component) {
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = MenuListComposition.__proto__ || Object.getPrototypeOf(MenuListComposition)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       open: false,
       popOpen: false,
-      lableText: ""
+      lableText: "",
+      errorText: "",
+      dataSource: suggestions,
+      popupLablesPlaceHolders: {
+        sendLabel: "",
+        nameLabel: "",
+        secondaryLabel: "",
+        sendPalceHolder: "",
+        namePlaceHolder: "",
+        secondaryPlaceHolder: "",
+        sendDataType: "",
+        secondaryDataType: "",
+        dataConfigval: "",
+        dataSecondaryConfig: ""
+      },
+      nameVal: "",
+      secondaryVal: ""
+    }, _this.onNameHandleChange = function (event, val) {
+      _this.setState({ nameVal: val });
+    }, _this.onSecondValueHandleChange = function (event, val) {
+      _this.setState({ secondaryVal: val });
+    }, _this.onAutoCompletTextChangeCallBack = function (val) {
+      console.log("sudhan", _this.state.popupLablesPlaceHolders["sendDataType"]);
+      var type = _this.state.popupLablesPlaceHolders["sendDataType"];
+      var matched = (0, _commons.checkPattern)(val, type);
+      if (matched) {
+        _this.state.dataSource.map(function (elem) {
+          var _this$state$popupLabl = _this.state.popupLablesPlaceHolders,
+              dataConfigval = _this$state$popupLabl.dataConfigval,
+              dataSecondaryConfig = _this$state$popupLabl.dataSecondaryConfig;
+
+
+          if (elem[dataConfigval] === val) {
+            debugger;
+            _this.setState({ nameVal: elem["name"], secondaryVal: elem[dataSecondaryConfig] });
+          }
+        });
+      }
     }, _this.handleToggle = function () {
       _this.setState(function (state) {
         return { open: !state.open };
@@ -140,30 +197,40 @@ var MenuListComposition = function (_React$Component) {
 
       _this.setState({ open: false });
     }, _this.popUp = function (elem) {
-      _this.setState({ lableText: elem });
       _this.setState({ popOpen: true });
-      _this.props.sendMessageMedia(elem.toUpperCase());
+      _this.setState({ lableText: elem });
+      _this.setState({ popupLablesPlaceHolders: (0, _commons.sharePopupLabels)(elem) });
+
+      _this.props.sendMessage(elem.toUpperCase(), "ShareMetaData.shareMedia");
     }, _this.closeDialog = function () {
       _this.setState({ popOpen: false });
     }, _this.onSend = function () {
       var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(val) {
-        var ShareMetaData, payload;
+        var shareMedia, matched, ShareMetaData, payload;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.props.sendMessageTo(val);
+                shareMedia = _this.props.ShareMetaData.shareMedia;
+                matched = shareMedia === "SMS" || shareMedia === "WHATSAPP" ? (0, _commons.checkPattern)(val, "Mobile") : (0, _commons.checkPattern)(val, "Email");
+
+                matched ? _this.setState({ errorText: "" }) : _this.setState({ errorText: "Enter Correct Details" });
+
+                if (!matched) {
+                  _context.next = 10;
+                  break;
+                }
+
+                _this.props.sendMessage(val, "ShareMetaData.shareContent.to");
                 _this.setState({ popOpen: false });
-                ShareMetaData = _this.props;
-                _context.next = 5;
+                ShareMetaData = _this.props.ShareMetaData;
+                _context.next = 9;
                 return (0, _api.httpRequest)("/egov-ui-transform-service/share/v1/_create", "", [], ShareMetaData);
 
-              case 5:
+              case 9:
                 payload = _context.sent;
 
-                console.log("sudhanshu123", payload);
-
-              case 7:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -249,11 +316,19 @@ var MenuListComposition = function (_React$Component) {
           ),
           _react2.default.createElement(_DialogWithTextBox2.default, {
             lableText: this.state.lableText,
+            errorText: this.state.errorText,
             popOpen: this.state.popOpen,
             closeDialog: this.closeDialog,
             onSend: function onSend(a) {
               return _this3.onSend(a);
-            }
+            },
+            onAutoCompletTextChangeCallBack: this.onAutoCompletTextChangeCallBack,
+            dataSource: this.state.dataSource,
+            popupLablesPlaceHolders: this.state.popupLablesPlaceHolders,
+            onNameHandleChange: this.onNameHandleChange,
+            onSecondValueHandleChange: this.onSecondValueHandleChange,
+            nameVal: this.state.nameVal,
+            secondaryVal: this.state.secondaryVal
           })
         )
       );
@@ -268,11 +343,8 @@ MenuListComposition.propTypes = {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    sendMessageTo: function sendMessageTo(message) {
-      return dispatch((0, _actions.sendMessageTo)(message));
-    },
-    sendMessageMedia: function sendMessageMedia(message) {
-      return dispatch((0, _actions.sendMessageMedia)(message));
+    sendMessage: function sendMessage(message, jsonPath) {
+      return dispatch((0, _actions.sendMessage)(message, jsonPath));
     }
   };
 };

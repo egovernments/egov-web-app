@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
 import isEmpty from "lodash/isEmpty";
+import set from "lodash/set";
 
 const mergeServiceWithActions = (payload) => {
   return (
@@ -78,34 +79,49 @@ const complaintsReducer = (state = intialState, action) => {
       };
 
     case actionTypes.COMPLAINTS_SEND_MESSAGE:
-      return {
-        ...state,
-        loading: false,
-        ShareMetaData: action.message,
-      };
-    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHAREMEDIA:
-      return {
-        ...state,
-        loading: false,
-        ShareMetaData: {
-          ...state.ShareMetaData,
-          shareMedia: action.message,
-        },
-      };
-    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHARECONTENT_TO:
-      const shareCont = state.ShareMetaData.shareContent;
-      shareCont.map((elem) => {
-        elem.to = action.message;
-      });
-      return {
-        ...state,
-        loading: false,
-        ShareMetaData: {
-          ...state.ShareMetaData,
-          shareContent: shareCont,
-        },
-      };
+      if (action.jsonPath === "") {
+        return {
+          ...state,
+          loading: false,
+          ShareMetaData: action.message,
+        };
+      }
+      if (action.jsonPath === "ShareMetaData.shareMedia") {
+        return {
+          ...state,
+          loading: false,
+          ShareMetaData: {
+            ...state.ShareMetaData,
+            shareMedia: action.message,
+          },
+        };
+      }
+      if (action.jsonPath === "ShareMetaData.shareContent.to") {
+        const shareCont = state.ShareMetaData.shareContent;
+        shareCont.map((elem) => {
+          elem.to = action.message;
+        });
+        return {
+          ...state,
+          loading: false,
+          ShareMetaData: {
+            ...state.ShareMetaData,
+            shareContent: shareCont,
+          },
+        };
+      }
 
+    case actionTypes.SHARE_CONTACT:
+      if (action.jsonPath === "") {
+        return {
+          ...state,
+          loading: false,
+          Contact: action.data,
+        };
+      } else {
+        set(state, action.jsonPath, action.data);
+        return state;
+      }
     default:
       return state;
   }

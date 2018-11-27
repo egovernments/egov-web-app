@@ -551,3 +551,46 @@ export const hasTokenExpired = (status, data) => {
   }
   return false;
 };
+
+export const checkPattern = (val, type) => {
+  switch (type) {
+    case "Mobile":
+      return val.match(/^[6789][0-9]{9}$/i);
+    case "Email":
+      return val.match(
+        /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/i
+      );
+  }
+};
+
+export const sharePopupLabels = (shareMedia) => {
+  switch (shareMedia) {
+    case "SMS":
+    case "Whatsapp":
+      return {
+        sendLabel: "Mobile No",
+        nameLabel: "Name",
+        secondaryLabel: "Email",
+        sendPalceHolder: "Enter Mobile No.",
+        namePlaceHolder: "Enter Name",
+        secondaryPlaceHolder: "Enter Email ID",
+        sendDataType: "Mobile",
+        secondaryDataType: "Email",
+        dataConfigval: "phone",
+        dataSecondaryConfig: "email",
+      };
+    case "Email":
+      return {
+        sendLabel: "Email",
+        nameLabel: "Name",
+        secondaryLabel: "Mobile No",
+        sendPalceHolder: "Enter Email ID",
+        namePlaceHolder: "Enter Name",
+        secondaryPlaceHolder: "Enter Mobile No",
+        sendDataType: "Email",
+        secondaryDataType: "Mobile",
+        dataConfigval: "email",
+        dataSecondaryConfig: "phone",
+      };
+  }
+};

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ShareButton = exports.Receipt = exports.BreadCrumbs = exports.Tooltip = exports.SingleCheckbox = exports.Divider = exports.Carousel = exports.Toast = exports.RadioButton = exports.UploadDrawer = exports.ImageModal = exports.InfoTable = exports.Icon = exports.DropDown = exports.ButtonGroup = exports.Ratings = exports.ProfileSection = exports.AutoSuggest = exports.List = exports.MapLocation = exports.Tabs = exports.BottomNavigation = exports.LoadingIndicator = exports.Drawer = exports.AppBar = exports.Dialog = exports.FilePicker = exports.TimeLine = exports.TimePicker = exports.DatePicker = exports.Card = exports.Button = exports.TextArea = exports.Checkbox = exports.SelectField = exports.TextFieldIcon = exports.MobileNumberField = exports.TextField = exports.Image = exports.Label = undefined;
+exports.AutoContact = exports.ShareButton = exports.Receipt = exports.BreadCrumbs = exports.Tooltip = exports.SingleCheckbox = exports.Divider = exports.Carousel = exports.Toast = exports.RadioButton = exports.UploadDrawer = exports.ImageModal = exports.InfoTable = exports.Icon = exports.DropDown = exports.ButtonGroup = exports.Ratings = exports.ProfileSection = exports.AutoSuggest = exports.List = exports.MapLocation = exports.Tabs = exports.BottomNavigation = exports.LoadingIndicator = exports.Drawer = exports.AppBar = exports.Dialog = exports.FilePicker = exports.TimeLine = exports.TimePicker = exports.DatePicker = exports.Card = exports.Button = exports.TextArea = exports.Checkbox = exports.SelectField = exports.TextFieldIcon = exports.MobileNumberField = exports.TextField = exports.Image = exports.Label = undefined;
 
 var _TextField = require("egov-ui-kit/components/TextField");
 
@@ -161,6 +161,10 @@ var _ShareButton = require("./ShareButton");
 
 var _ShareButton2 = _interopRequireDefault(_ShareButton);
 
+var _AutoSuggestContact = require("./AutoSuggestContact");
+
+var _AutoSuggestContact2 = _interopRequireDefault(_AutoSuggestContact);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Label = _Label2.default;
@@ -203,3 +207,4 @@ exports.Tooltip = _Tooltip2.default;
 exports.BreadCrumbs = _BreadCrumbs2.default;
 exports.Receipt = _Receipt2.default;
 exports.ShareButton = _ShareButton2.default;
+exports.AutoContact = _AutoSuggestContact2.default;

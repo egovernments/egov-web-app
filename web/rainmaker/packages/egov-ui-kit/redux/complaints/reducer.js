@@ -18,6 +18,10 @@ var _isEmpty = require("lodash/isEmpty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _set = require("lodash/set");
+
+var _set2 = _interopRequireDefault(_set);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -84,29 +88,43 @@ var complaintsReducer = function complaintsReducer() {
       });
 
     case actionTypes.COMPLAINTS_SEND_MESSAGE:
-      return (0, _extends3.default)({}, state, {
-        loading: false,
-        ShareMetaData: action.message
-      });
-    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHAREMEDIA:
-      return (0, _extends3.default)({}, state, {
-        loading: false,
-        ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
-          shareMedia: action.message
-        })
-      });
-    case actionTypes.COMPLAINTS_SEND_MESSAGE_SHARECONTENT_TO:
-      var shareCont = state.ShareMetaData.shareContent;
-      shareCont.map(function (elem) {
-        elem.to = action.message;
-      });
-      return (0, _extends3.default)({}, state, {
-        loading: false,
-        ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
-          shareContent: shareCont
-        })
-      });
+      if (action.jsonPath === "") {
+        return (0, _extends3.default)({}, state, {
+          loading: false,
+          ShareMetaData: action.message
+        });
+      }
+      if (action.jsonPath === "ShareMetaData.shareMedia") {
+        return (0, _extends3.default)({}, state, {
+          loading: false,
+          ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
+            shareMedia: action.message
+          })
+        });
+      }
+      if (action.jsonPath === "ShareMetaData.shareContent.to") {
+        var shareCont = state.ShareMetaData.shareContent;
+        shareCont.map(function (elem) {
+          elem.to = action.message;
+        });
+        return (0, _extends3.default)({}, state, {
+          loading: false,
+          ShareMetaData: (0, _extends3.default)({}, state.ShareMetaData, {
+            shareContent: shareCont
+          })
+        });
+      }
 
+    case actionTypes.SHARE_CONTACT:
+      if (action.jsonPath === "") {
+        return (0, _extends3.default)({}, state, {
+          loading: false,
+          Contact: action.data
+        });
+      } else {
+        (0, _set2.default)(state, action.jsonPath, action.data);
+        return state;
+      }
     default:
       return state;
   }

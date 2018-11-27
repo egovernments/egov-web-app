@@ -10,9 +10,10 @@ import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
 import ShareIcon from "@material-ui/icons/Share";
 import DialogWithTextBox from "../DialogWithTextBox";
-import { sendMessageTo, sendMessageMedia } from "egov-ui-kit/redux/complaints/actions";
+import { sendMessage } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import { checkPattern, sharePopupLabels } from "egov-ui-kit/utils/commons";
 
 const styles = (theme) => ({
   root: {
@@ -32,11 +33,70 @@ const styles = (theme) => ({
   },
 });
 
+// const suggestions = ["Red", "Orange", "Yellow", "Green", "Blue", "Pur=ple", "Black", "White"];
+
+const suggestions = [
+  {
+    id: "1234",
+    tenantId: "pb.amrtisar",
+    userId: "abcd",
+    name: "abcd",
+    phone: "9987654322",
+    email: "asd1@gmail.com",
+  },
+  {
+    id: "123",
+    tenantId: "pb.amrtisar",
+    userId: "abc",
+    name: "abc",
+    phone: "9987654321",
+    email: "asd@gmail.com ",
+  },
+];
+
 class MenuListComposition extends React.Component {
   state = {
     open: false,
     popOpen: false,
     lableText: "",
+    errorText: "",
+    dataSource: suggestions,
+    popupLablesPlaceHolders: {
+      sendLabel: "",
+      nameLabel: "",
+      secondaryLabel: "",
+      sendPalceHolder: "",
+      namePlaceHolder: "",
+      secondaryPlaceHolder: "",
+      sendDataType: "",
+      secondaryDataType: "",
+      dataConfigval: "",
+      dataSecondaryConfig: "",
+    },
+    nameVal: "",
+    secondaryVal: "",
+  };
+
+  onNameHandleChange = (event, val) => {
+    this.setState({ nameVal: val });
+  };
+  onSecondValueHandleChange = (event, val) => {
+    this.setState({ secondaryVal: val });
+  };
+
+  onAutoCompletTextChangeCallBack = (val) => {
+    console.log("sudhan", this.state.popupLablesPlaceHolders["sendDataType"]);
+    const type = this.state.popupLablesPlaceHolders["sendDataType"];
+    const matched = checkPattern(val, type);
+    if (matched) {
+      this.state.dataSource.map((elem) => {
+        const { dataConfigval, dataSecondaryConfig } = this.state.popupLablesPlaceHolders;
+
+        if (elem[dataConfigval] === val) {
+          this.setState({ nameVal: elem["name"], secondaryVal: elem[dataSecondaryConfig] });
+        }
+      });
+    }
   };
 
   handleToggle = () => {
@@ -55,9 +115,11 @@ class MenuListComposition extends React.Component {
     this.props.onLoadFn();
   }
   popUp = (elem) => {
-    this.setState({ lableText: elem });
     this.setState({ popOpen: true });
-    this.props.sendMessageMedia(elem.toUpperCase());
+    this.setState({ lableText: elem });
+    this.setState({ popupLablesPlaceHolders: sharePopupLabels(elem) });
+
+    this.props.sendMessage(elem.toUpperCase(), "ShareMetaData.shareMedia");
   };
 
   closeDialog = () => {
@@ -65,11 +127,15 @@ class MenuListComposition extends React.Component {
   };
 
   onSend = async (val) => {
-    this.props.sendMessageTo(val);
-    this.setState({ popOpen: false });
-    const ShareMetaData = this.props;
-    const payload = await httpRequest("/egov-ui-transform-service/share/v1/_create", "", [], ShareMetaData);
-    console.log("sudhanshu123", payload);
+    const { shareMedia } = this.props.ShareMetaData;
+    const matched = shareMedia === "SMS" || shareMedia === "WHATSAPP" ? checkPattern(val, "Mobile") : checkPattern(val, "Email");
+    matched ? this.setState({ errorText: "" }) : this.setState({ errorText: "Enter Correct Details" });
+    if (matched) {
+      this.props.sendMessage(val, "ShareMetaData.shareContent.to");
+      this.setState({ popOpen: false });
+      const { ShareMetaData } = this.props;
+      const payload = await httpRequest("/egov-ui-transform-service/share/v1/_create", "", [], ShareMetaData);
+    }
   };
   render() {
     const { classes } = this.props;
@@ -111,9 +177,17 @@ class MenuListComposition extends React.Component {
           </Popper>
           <DialogWithTextBox
             lableText={this.state.lableText}
+            errorText={this.state.errorText}
             popOpen={this.state.popOpen}
             closeDialog={this.closeDialog}
             onSend={(a) => this.onSend(a)}
+            onAutoCompletTextChangeCallBack={this.onAutoCompletTextChangeCallBack}
+            dataSource={this.state.dataSource}
+            popupLablesPlaceHolders={this.state.popupLablesPlaceHolders}
+            onNameHandleChange={this.onNameHandleChange}
+            onSecondValueHandleChange={this.onSecondValueHandleChange}
+            nameVal={this.state.nameVal}
+            secondaryVal={this.state.secondaryVal}
           />
         </div>
       </div>
@@ -127,8 +201,7 @@ MenuListComposition.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendMessageTo: (message) => dispatch(sendMessageTo(message)),
-    sendMessageMedia: (message) => dispatch(sendMessageMedia(message)),
+    sendMessage: (message, jsonPath) => dispatch(sendMessage(message, jsonPath)),
   };
 };
 

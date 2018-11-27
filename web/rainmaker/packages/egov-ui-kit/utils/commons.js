@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hasTokenExpired = exports.trimObj = exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.sharePopupLabels = exports.checkPattern = exports.hasTokenExpired = exports.trimObj = exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -659,4 +659,45 @@ var hasTokenExpired = exports.hasTokenExpired = function hasTokenExpired(status,
     if (data && data.Errors && Array.isArray(data.Errors) && data.Errors.length > 0 && data.Errors[0].code === "InvalidAccessTokenException") return true;
   }
   return false;
+};
+
+var checkPattern = exports.checkPattern = function checkPattern(val, type) {
+  switch (type) {
+    case "Mobile":
+      return val.match(/^[6789][0-9]{9}$/i);
+    case "Email":
+      return val.match(/^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/i);
+  }
+};
+
+var sharePopupLabels = exports.sharePopupLabels = function sharePopupLabels(shareMedia) {
+  switch (shareMedia) {
+    case "SMS":
+    case "Whatsapp":
+      return {
+        sendLabel: "Mobile No",
+        nameLabel: "Name",
+        secondaryLabel: "Email",
+        sendPalceHolder: "Enter Mobile No.",
+        namePlaceHolder: "Enter Name",
+        secondaryPlaceHolder: "Enter Email ID",
+        sendDataType: "Mobile",
+        secondaryDataType: "Email",
+        dataConfigval: "phone",
+        dataSecondaryConfig: "email"
+      };
+    case "Email":
+      return {
+        sendLabel: "Email",
+        nameLabel: "Name",
+        secondaryLabel: "Mobile No",
+        sendPalceHolder: "Enter Email ID",
+        namePlaceHolder: "Enter Name",
+        secondaryPlaceHolder: "Enter Mobile No",
+        sendDataType: "Email",
+        secondaryDataType: "Mobile",
+        dataConfigval: "email",
+        dataSecondaryConfig: "phone"
+      };
+  }
 };

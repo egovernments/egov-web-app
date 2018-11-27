@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchComplaintCategories = exports.sendMessageMedia = exports.sendMessageTo = exports.sendMessage = exports.fetchComplaints = undefined;
+exports.fetchComplaintCategories = exports.shareContact = exports.sendMessage = exports.fetchComplaints = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -135,10 +135,19 @@ var complaintFetchComplete = function complaintFetchComplete(payload, overWrite)
   };
 };
 
-var complaintSendSMS = function complaintSendSMS(message) {
+var complaintSendSMS = function complaintSendSMS(message, jsonPath) {
   return {
     type: actionTypes.COMPLAINTS_SEND_MESSAGE,
-    message: message
+    message: message,
+    jsonPath: jsonPath
+  };
+};
+
+var shareContactAction = function shareContactAction(data, jsonPath) {
+  return {
+    type: actionTypes.SHARE_CONTACT,
+    data: data,
+    jsonPath: jsonPath
   };
 };
 
@@ -211,14 +220,14 @@ var fetchComplaints = exports.fetchComplaints = function fetchComplaints(queryOb
   }();
 };
 
-var sendMessage = exports.sendMessage = function sendMessage(message) {
+var sendMessage = exports.sendMessage = function sendMessage(message, jsonPath) {
   return function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch, getState) {
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              dispatch(complaintSendSMS(message));
+              dispatch(complaintSendSMS(message, jsonPath));
 
             case 1:
             case "end":
@@ -234,14 +243,14 @@ var sendMessage = exports.sendMessage = function sendMessage(message) {
   }();
 };
 
-var sendMessageTo = exports.sendMessageTo = function sendMessageTo(message) {
+var shareContact = exports.shareContact = function shareContact(data, jsonPath) {
   return function () {
     var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch, getState) {
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              dispatch(complaintSendSMSTo(message));
+              dispatch(shareContactAction(data, jsonPath));
 
             case 1:
             case "end":
@@ -253,29 +262,6 @@ var sendMessageTo = exports.sendMessageTo = function sendMessageTo(message) {
 
     return function (_x6, _x7) {
       return _ref3.apply(this, arguments);
-    };
-  }();
-};
-
-var sendMessageMedia = exports.sendMessageMedia = function sendMessageMedia(message) {
-  return function () {
-    var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch, getState) {
-      return _regenerator2.default.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              dispatch(complaintSendSMSMedia(message));
-
-            case 1:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, undefined);
-    }));
-
-    return function (_x8, _x9) {
-      return _ref4.apply(this, arguments);
     };
   }();
 };
@@ -295,39 +281,39 @@ var fetchComplaintCategories = exports.fetchComplaintCategories = function fetch
   };
 
   return function () {
-    var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
+    var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
       var payload;
-      return _regenerator2.default.wrap(function _callee5$(_context5) {
+      return _regenerator2.default.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context5.prev = 0;
-              _context5.next = 3;
+              _context4.prev = 0;
+              _context4.next = 3;
               return (0, _api.httpRequest)(_endPoints.CATEGORY.GET.URL, _endPoints.CATEGORY.GET.ACTION, [], requestBody);
 
             case 3:
-              payload = _context5.sent;
+              payload = _context4.sent;
 
               dispatch(complaintCategoriesFetchSucess(payload));
-              _context5.next = 10;
+              _context4.next = 10;
               break;
 
             case 7:
-              _context5.prev = 7;
-              _context5.t0 = _context5["catch"](0);
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
 
-              dispatch(complaintCategoriesFetchError(_context5.t0.message));
+              dispatch(complaintCategoriesFetchError(_context4.t0.message));
 
             case 10:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
         }
-      }, _callee5, undefined, [[0, 7]]);
+      }, _callee4, undefined, [[0, 7]]);
     }));
 
-    return function (_x10) {
-      return _ref5.apply(this, arguments);
+    return function (_x8) {
+      return _ref4.apply(this, arguments);
     };
   }();
 };

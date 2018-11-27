@@ -80,14 +80,27 @@ var DialogWithTextField = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = DialogWithTextField.__proto__ || Object.getPrototypeOf(DialogWithTextField)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      valueTyped: ""
-    }, _this.textFieldHandleChange = function (event, value) {
-      _this.setState({ valueTyped: value });
+      valueSend: "",
+      valueName: "",
+      valueSecondary: ""
+    }, _this.textFieldSendHandleChange = function (value) {
+      _this.setState({ valueSend: value });
+      console.log(value);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(DialogWithTextField, [{
     key: "render",
+
+
+    // textFieldNameHandleChange = (event, value) => {
+    //   this.setState({ valueName: value });
+    // };
+
+    // textFieldSecondaryHandleChange = (event, value) => {
+    //   this.setState({ valueSecondary: value });
+    // };
+
     value: function render() {
       var _this2 = this;
 
@@ -95,10 +108,17 @@ var DialogWithTextField = function (_Component) {
           lableText = _props.lableText,
           closeDialog = _props.closeDialog,
           popOpen = _props.popOpen,
-          onSend = _props.onSend;
-      var textFieldHandleChange = this.textFieldHandleChange,
+          onSend = _props.onSend,
+          errorText = _props.errorText,
+          onAutoCompletTextChangeCallBack = _props.onAutoCompletTextChangeCallBack,
+          dataSource = _props.dataSource,
+          popupLablesPlaceHolders = _props.popupLablesPlaceHolders,
+          onNameHandleChange = _props.onNameHandleChange,
+          onSecondValueHandleChange = _props.onSecondValueHandleChange,
+          nameVal = _props.nameVal,
+          secondaryVal = _props.secondaryVal;
+      var textFieldSendHandleChange = this.textFieldSendHandleChange,
           onConfirmClick = this.onConfirmClick;
-
 
       return _react2.default.createElement(_components.Dialog, {
         open: popOpen,
@@ -113,7 +133,31 @@ var DialogWithTextField = function (_Component) {
             fontSize: "20px",
             labelStyle: { padding: "16px 0px 0px 24px" }
           }),
-          _react2.default.createElement(_.TextField, { id: "asda", value: this.state.valueTyped, onChange: textFieldHandleChange })
+          _react2.default.createElement(_.AutoContact, {
+            floatingLabelText: popupLablesPlaceHolders["sendLabel"],
+            id: "asdd1",
+            hintText: popupLablesPlaceHolders["sendPalceHolder"],
+            onChangeText: textFieldSendHandleChange,
+            dataSource: dataSource,
+            onAutoCompletTextChangeCallBack: onAutoCompletTextChangeCallBack,
+            dataConfigval: popupLablesPlaceHolders["dataConfigval"]
+          }),
+          _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(_.TextField, {
+              floatingLabelText: popupLablesPlaceHolders["nameLabel"],
+              hintText: popupLablesPlaceHolders["namePlaceHolder"],
+              onChange: onNameHandleChange,
+              value: nameVal
+            }),
+            _react2.default.createElement(_.TextField, {
+              floatingLabelText: popupLablesPlaceHolders["secondaryLabel"],
+              hintText: popupLablesPlaceHolders["secondaryPlaceHolder"],
+              onChange: onSecondValueHandleChange,
+              value: secondaryVal
+            })
+          )
         )],
         handleClose: closeDialog,
         actions: [_react2.default.createElement(_components.Button, {
@@ -129,8 +173,8 @@ var DialogWithTextField = function (_Component) {
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "SEND", color: "#FE7A51" }),
           backgroundColor: "#fff",
           onClick: function onClick() {
-            onSend(_this2.state.valueTyped);
-            closeDialog();
+            onSend(_this2.state.valueSend);
+            // closeDialog();
           },
           style: { boxShadow: "none" }
         })],
