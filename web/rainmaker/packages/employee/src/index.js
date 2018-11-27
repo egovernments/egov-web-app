@@ -1,4 +1,5 @@
 // support for older browsers
+// import "assets/web-share-shim/web-share-shim.bundle.min";
 import "babel-polyfill";
 import "url-search-params-polyfill";
 import React from "react";
