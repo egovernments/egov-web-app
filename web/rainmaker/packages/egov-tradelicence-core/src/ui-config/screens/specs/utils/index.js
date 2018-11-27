@@ -953,7 +953,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
 };
 
 const getBillingSlabData = async (dispatch, billingSlabIds) => {
-  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } = billingSlabIds;
+  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
+    billingSlabIds || {};
   if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
     const accessoryUnit =
       accesssoryBillingSlabIds &&
