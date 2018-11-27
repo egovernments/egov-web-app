@@ -12,7 +12,11 @@ import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
-import { showHideAdhocPopup, showHideBreakupPopup } from "../utils";
+import {
+  showHideAdhocPopup,
+  showHideBreakupPopup,
+  getDialogButton
+} from "../utils";
 import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
@@ -94,23 +98,28 @@ const screenConfig = {
                   callBack: showHideAdhocPopup
                 }
               },
-              viewBreakupButton: {
-                componentPath: "Button",
-                props: {
-                  color: "primary",
-                  style: {}
-                },
-                children: {
-                  previousButtonLabel: getLabel({
-                    labelName: "VIEW BREAKUP",
-                    labelKey: "TL_PAYMENT_VIEW_BREAKUP"
-                  })
-                },
-                onClickDefination: {
-                  action: "condition",
-                  callBack: showHideBreakupPopup
-                }
-              },
+              viewBreakupButton: getDialogButton(
+                "VIEW BREAKUP",
+                "TL_PAYMENT_VIEW_BREAKUP",
+                "pay"
+              ),
+              // {
+              //   componentPath: "Button",
+              //   props: {
+              //     color: "primary",
+              //     style: {}
+              //   },
+              //   children: {
+              //     previousButtonLabel: getLabel({
+              //       labelName: "VIEW BREAKUP",
+              //       labelKey: "TL_PAYMENT_VIEW_BREAKUP"
+              //     })
+              //   },
+              //   onClickDefination: {
+              //     action: "condition",
+              //     callBack: showHideBreakupPopup
+              //   }
+              // },
               capturePaymentDetails,
               g8Details
             })

@@ -1054,7 +1054,8 @@ export const createEstimateData = async (
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
-  getBillingSlabData(dispatch, payload.billingSlabIds);
+  payload.billingSlabIds &&
+    getBillingSlabData(dispatch, payload.billingSlabIds);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });
@@ -1697,22 +1698,17 @@ export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
   }
 };
 
-export const showHideBreakupPopup = (state, dispatch) => {
+export const showHideBreakupPopup = (state, dispatch, screenKey) => {
   let toggle = get(
-    state.screenConfiguration.screenConfig["search-preview"],
+    state.screenConfiguration.screenConfig[screenKey],
     "components.breakUpDialog.props.open",
     false
   );
   dispatch(
-    handleField(
-      "search-preview",
-      "components.breakUpDialog",
-      "props.open",
-      !toggle
-    )
+    handleField(screenKey, "components.breakUpDialog", "props.open", !toggle)
   );
 };
-export const getDialogButton = (name, key) => {
+export const getDialogButton = (name, key, screenKey) => {
   return {
     componentPath: "Button",
     props: {
@@ -1727,7 +1723,9 @@ export const getDialogButton = (name, key) => {
     },
     onClickDefination: {
       action: "condition",
-      callBack: showHideBreakupPopup
+      callBack: (state, dispatch) => {
+        showHideBreakupPopup(state, dispatch, screenKey);
+      }
     }
   };
 };

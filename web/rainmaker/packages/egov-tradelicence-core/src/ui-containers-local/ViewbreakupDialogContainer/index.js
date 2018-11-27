@@ -138,7 +138,10 @@ class ViewBreakupContainer extends React.Component {
         fullWidth={true}
         children={[
           <div className="dialog-close-button" key={"dialog-close-button"}>
-            <div onClick={handleClose} style={{ float: "right" }}>
+            <div
+              onClick={handleClose}
+              style={{ float: "right", cursor: "pointer" }}
+            >
               <Icon style={closebuttonStyle}>{closeIcon}</Icon>
             </div>
           </div>,
@@ -242,7 +245,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const open = get(
     screenConfig,
-    "search-preview.components.breakUpDialog.props.open"
+    `${screenKey}.components.breakUpDialog.props.open`
   );
 
   return {

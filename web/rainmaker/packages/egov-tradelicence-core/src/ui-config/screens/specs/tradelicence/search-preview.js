@@ -33,6 +33,7 @@ import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
+const status = getQueryArg(window.location.href, "status");
 let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
 let headerSideText = { word1: "", word2: "" };
 
@@ -338,7 +339,12 @@ const setActionItems = (action, object) => {
 export const tradeReviewDetails = getCommonCard({
   title,
   estimate,
-  viewBreakup: getDialogButton("VIEW BREAKUP", "TL_PAYMENT_VIEW_BREAKUP"),
+  viewBreakup: getDialogButton(
+    "VIEW BREAKUP",
+    "TL_PAYMENT_VIEW_BREAKUP",
+    "search-preview"
+  ),
+
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails
