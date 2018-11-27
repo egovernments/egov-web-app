@@ -7,6 +7,8 @@ import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import Divider from "@material-ui/core/Divider";
+import Icon from "@material-ui/core/Icon";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const styles = theme => ({
   root: {
@@ -16,6 +18,14 @@ const styles = theme => ({
     paddingBottom: 8
   }
 });
+
+const closebuttonStyle = {
+  width: "25px",
+  height: "25px",
+  padding: "3px"
+};
+
+const closeIcon = "close";
 
 const getMultiItem = (billingslabData, classes, style) => {
   return billingslabData.map((item, index) => {
@@ -59,10 +69,6 @@ class ViewBreakupContainer extends React.Component {
     }
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
   getGridItem = (total, classes, style) => {
     return (
       <Grid sm={12} className={classes.container} container={true}>
@@ -100,6 +106,17 @@ class ViewBreakupContainer extends React.Component {
     );
   };
 
+  handleClose = () => {
+    const { screenKey } = this.props;
+    console.log(get(this.props.screenConfig, `${screenKey}`));
+    this.props.handleField(
+      screenKey,
+      `components.breakUpDialog`,
+      "props.open",
+      false
+    );
+  };
+
   render() {
     const {
       open,
@@ -110,7 +127,7 @@ class ViewBreakupContainer extends React.Component {
       classes
     } = this.props;
     const { style } = this.state;
-    const { getGridItem } = this;
+    const { getGridItem, handleClose } = this;
     const totalBill = tradeTotal + accessoriesTotal;
     return (
       <Dialog
@@ -119,7 +136,12 @@ class ViewBreakupContainer extends React.Component {
         onEscapeKeyDown={this.handleClose}
         onBackdropClick={this.handleClose}
         fullWidth={true}
-        children={
+        children={[
+          <div className="dialog-close-button" key={"dialog-close-button"}>
+            <div onClick={handleClose} style={{ float: "right" }}>
+              <Icon style={closebuttonStyle}>{closeIcon}</Icon>
+            </div>
+          </div>,
           accessoriesTotal > 0 || tradeTotal > 0 ? (
             <div style={{ padding: "16px" }}>
               <div style={{ paddingBottom: "16px" }}>
@@ -191,14 +213,15 @@ class ViewBreakupContainer extends React.Component {
               {getGridItem(totalBill, classes, style)}
             </div>
           )
-        }
+        ]}
       />
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
+  const { screenKey } = ownProps;
   const { screenConfig, preparedFinalObject } = screenConfiguration;
   const accessoriesUnitData = get(
     preparedFinalObject,
@@ -227,10 +250,19 @@ const mapStateToProps = state => {
     tradeUnitData,
     accessoriesUnitData,
     tradeTotal,
-    accessoriesTotal
+    accessoriesTotal,
+    screenKey,
+    screenConfig
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return { handleField: (a, b, c, d) => dispatch(handleField(a, b, c, d)) };
+};
+
 export default withStyles(styles)(
-  connect(mapStateToProps)(ViewBreakupContainer)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ViewBreakupContainer)
 );

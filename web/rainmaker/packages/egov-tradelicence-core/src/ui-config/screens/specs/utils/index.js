@@ -417,22 +417,6 @@ export const showHideAdhocPopup = (state, dispatch) => {
   dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
 };
 
-export const showHideBreakupPopup = (state, dispatch) => {
-  let toggle = get(
-    state.screenConfiguration.screenConfig["search-preview"],
-    "components.breakUpDialog.props.open",
-    false
-  );
-  dispatch(
-    handleField(
-      "search-preview",
-      "components.breakUpDialog",
-      "props.open",
-      !toggle
-    )
-  );
-};
-
 export const getButtonVisibility = (status, button) => {
   if (status === "pending_payment" && button === "PROCEED TO PAYMENT")
     return true;
@@ -1713,6 +1697,21 @@ export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
   }
 };
 
+export const showHideBreakupPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["search-preview"],
+    "components.breakUpDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField(
+      "search-preview",
+      "components.breakUpDialog",
+      "props.open",
+      !toggle
+    )
+  );
+};
 export const getDialogButton = (name, key) => {
   return {
     componentPath: "Button",
