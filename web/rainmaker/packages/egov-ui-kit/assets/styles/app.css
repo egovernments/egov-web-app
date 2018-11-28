@@ -26,7 +26,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0; }
 
 .screen {
-  padding: 0 8px 60px 8px; }
+  padding: 60px 8px 60px 8px; }
 
 .rainmaker-displayInline {
   display: flex; }
