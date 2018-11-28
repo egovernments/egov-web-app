@@ -34,7 +34,8 @@ export const cityPicker = getCommonContainer({
         label: { labelName: "City" },
         placeholder: { labelName: "Select City" },
         jsonPath: "citiesByModule.citizenTenantId",
-        sourceJsonPath: "citiesByModule.TL.tenants",
+        sourceJsonPath:
+          "applyScreenMdmsData.common-masters.citiesByModule.TL.tenants",
         labelsFromLocalisation: true,
         fullwidth: true,
         required: true,

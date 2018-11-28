@@ -1,16 +1,57 @@
 import get from "lodash/get";
 import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate } from "../../utils/index";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { httpRequest } from "../../../../../ui-utils";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
+} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(
     item => item.code == localCode
   );
 };
-
+const getMdmsData = async () => {
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: "pb",
+      moduleDetails: [
+        {
+          moduleName: "tenant",
+          masterDetails: [{ name: "citymodule" }]
+        }
+      ]
+    }
+  };
+  try {
+    let payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    return payload;
+  } catch (e) {
+    console.log(e);
+  }
+};
 export const fetchData = async (action, state, dispatch) => {
   const response = await getSearchResults();
+  const mdmsRes = await getMdmsData(dispatch);
+  let tenants =
+    mdmsRes &&
+    mdmsRes.MdmsRes &&
+    mdmsRes.MdmsRes.tenant.citymodule.find(item => {
+      if (item.code === "TL") return true;
+    });
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.common-masters.citiesByModule.TL",
+      tenants
+    )
+  );
   try {
     let data =
       response &&

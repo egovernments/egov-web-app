@@ -12,6 +12,7 @@ import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
 import { cityPicker } from "./citypicker";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { get } from "https";
 
 const header = getCommonHeader({
   labelName: "Trade License",
@@ -22,28 +23,6 @@ const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
-    process.env.NODE_ENV === "development"
-      ? dispatch(
-          pFO("citiesByModule", {
-            TL: {
-              module: "TL",
-              code: "TL",
-              tenants: [
-                {
-                  code: "pb.jalandhar"
-                },
-                {
-                  code: "pb.nawanshahr"
-                },
-                {
-                  code: "pb.amritsar"
-                }
-              ]
-            }
-          })
-        )
-      : null;
-
     fetchData(action, state, dispatch);
     return action;
   },
