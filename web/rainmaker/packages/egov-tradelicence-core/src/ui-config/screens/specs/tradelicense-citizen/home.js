@@ -22,25 +22,27 @@ const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
-    dispatch(
-      pFO("citiesByModule", {
-        TL: {
-          module: "TL",
-          code: "TL",
-          tenants: [
-            {
-              code: "pb.jalandhar"
-            },
-            {
-              code: "pb.nawanshahr"
-            },
-            {
-              code: "pb.amritsar"
+    process.env.NODE_ENV === "development"
+      ? dispatch(
+          pFO("citiesByModule", {
+            TL: {
+              module: "TL",
+              code: "TL",
+              tenants: [
+                {
+                  code: "pb.jalandhar"
+                },
+                {
+                  code: "pb.nawanshahr"
+                },
+                {
+                  code: "pb.amritsar"
+                }
+              ]
             }
-          ]
-        }
-      })
-    );
+          })
+        )
+      : null;
 
     fetchData(action, state, dispatch);
     return action;
