@@ -1898,10 +1898,10 @@ export const showCityPicker = (state, dispatch) => {
 };
 
 export const applyForm = (state, dispatch) => {
-  const tenantId =
-    process.env.NODE_ENV === "development"
-      ? get(state.screenConfiguration.preparedFinalObject, "undefined")
-      : get(state.common, "citiesByModule.TL.tenants", {});
+  const tenantId = get(
+    state.screenConfiguration.preparedFinalObject,
+    "undefined"
+  );
   window.location.href =
     process.env.NODE_ENV === "development"
       ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`

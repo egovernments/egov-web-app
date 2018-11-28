@@ -101,8 +101,8 @@ export const updatePFOforSearchResults = async (
   const licenseType = payload && get(payload, "Licenses[0].licenseType");
   const structureSubtype =
     payload && get(payload, "Licenses[0].tradeLicenseDetail.structureType");
-  await setFilteredTradeTypes(state, dispatch, licenseType, structureSubtype);
-  await updateDropDowns(payload, action, state, dispatch, queryValue);
+  setFilteredTradeTypes(state, dispatch, licenseType, structureSubtype);
+  updateDropDowns(payload, action, state, dispatch, queryValue);
 
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");

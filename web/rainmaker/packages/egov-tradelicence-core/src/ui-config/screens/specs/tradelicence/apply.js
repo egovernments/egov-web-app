@@ -167,7 +167,6 @@ export const getData = async (action, state, dispatch, queryValue) => {
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     dispatch(prepareFinalObject("LicensesTemp", []));
   }
-  return action;
 };
 
 export const formwizardFirstStep = {
@@ -254,13 +253,12 @@ const setTradeDropdowns = (state, action, dispatch, searchRes, mdmsRes) => {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
-  hasBeforeInitAsync:true,
-  beforeInitScreen:async (action, state, dispatch) =>
-  {
+  hasBeforeInitAsync: true,
+  beforeInitScreen: async (action, state, dispatch) => {
     //this logic should move to getData
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
-    action=await getData(action, state, dispatch, queryValue);
-    await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
+    await getData(action, state, dispatch, queryValue);
+
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
     let props = get(
@@ -294,7 +292,7 @@ const screenConfig = {
     return action;
   },
   afterInitScreen: (action, state, dispatch) => {
-    // console.log(action, state);
+    console.log(action, state);
     // action = setTradeDropdowns(state, action, dispatch);
     return action;
   },
