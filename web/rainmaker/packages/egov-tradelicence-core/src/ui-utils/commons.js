@@ -108,6 +108,7 @@ export const updatePFOforSearchResults = async (
   set(payload, getCheckBoxJsonpath(queryValuePurpose), true);
 
   setApplicationNumberBox(state, dispatch);
+  // return action;
 };
 
 export const getBoundaryData = async (

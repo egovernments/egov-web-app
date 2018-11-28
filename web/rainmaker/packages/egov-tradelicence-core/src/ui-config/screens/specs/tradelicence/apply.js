@@ -40,10 +40,10 @@ export const stepper = getStepperObject(
   { props: { activeStep: 0 } },
   stepsData
 );
-export const queryValue = getQueryArg(
-  window.location.href,
-  "applicationNumber"
-);
+// export const queryValue = getQueryArg(
+//   window.location.href,
+//   "applicationNumber"
+// );
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -165,6 +165,7 @@ export const getData = async (action, state, dispatch, queryValue) => {
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     dispatch(prepareFinalObject("LicensesTemp", []));
   }
+  return action;
 };
 
 export const formwizardFirstStep = {
@@ -258,10 +259,13 @@ const setTradeDropdowns = (state, action, dispatch) => {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
-  beforeInitScreen: (action, state, dispatch) => {
+  hasBeforeInitAsync:true,
+  beforeInitScreen:async (action, state, dispatch) =>
+  {
+    //this logic should move to getData
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
-    getData(action, state, dispatch, queryValue);
-    getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
+    action=await getData(action, state, dispatch, queryValue);
+    await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
     let props = get(
@@ -290,7 +294,7 @@ const screenConfig = {
     );
     //Call and set boundary dropdown data, since there is no handleField for city in employee app
     const queryObj = [{ key: "tenantId", value: tenantId }];
-    getBoundaryData(action, state, dispatch, queryObj);
+    await getBoundaryData(action, state, dispatch, queryObj);
 
     return action;
   },
