@@ -17,7 +17,8 @@ import {
   getTodaysDateInYMD,
   getFinancialYearDates,
   getNextMonthDateInYMD,
-  setFilteredTradeTypes
+  setFilteredTradeTypes,
+  getUniqueItemsFromArray
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -203,6 +204,11 @@ const tradeUnitCard = {
                   state.screenConfiguration.preparedFinalObject,
                   `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
                   []
+                );
+
+                tradeSubCategories = getUniqueItemsFromArray(
+                  tradeSubCategories,
+                  "code"
                 );
                 let currentObject = filter(tradeSubCategories, {
                   code: action.value
