@@ -46,6 +46,7 @@ const accessoriesCard = {
 
     items: [],
     hasAddItem: false,
+    isReviewPage: true,
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
@@ -111,6 +112,7 @@ const tradeTypeCard = {
     }),
     items: [],
     hasAddItem: false,
+    isReviewPage: true,
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits",
     prefixSourceJsonPath:
       "children.cardContent.children.tradeTypeCardContainer.children",

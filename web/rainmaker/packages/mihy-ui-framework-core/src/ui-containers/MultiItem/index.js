@@ -169,7 +169,8 @@ class MultiItem extends React.Component {
       onFieldChange,
       onComponentClick,
       hasAddItem,
-      screenKey
+      screenKey,
+      isReviewPage
     } = this.props;
     const { addItem, removeItem } = this;
     return (
@@ -179,7 +180,7 @@ class MultiItem extends React.Component {
             if (checkActiveItem(item)) {
               return (
                 <Div key={key}>
-                  {checkActiveItems(items) > 1 && (
+                  {checkActiveItems(items) > 1 && !isReviewPage && (
                     <Container>
                       <Item xs={12} align="right">
                         <IconButton

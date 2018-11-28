@@ -117,11 +117,34 @@ export const callBackForNext = async (state, dispatch) => {
       )
         isAccessoriesValid = false;
     }
-    const isTradeUnitValid = validateFields(
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
-      state,
-      dispatch
+
+    let tradeUnitJsonPath =
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items";
+    let tradeUnits = get(
+      state.screenConfiguration.screenConfig.apply,
+      tradeUnitJsonPath,
+      []
     );
+    console.log(tradeUnits);
+    let isTradeUnitValid = true;
+
+    for (var i = 0; i < tradeUnits.length; i++) {
+      if (
+        (tradeUnits[i].isDeleted === undefined ||
+          tradeUnits[i].isDeleted !== false) &&
+        !validateFields(
+          `${tradeUnitJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
+          state,
+          dispatch
+        )
+      )
+        isTradeUnitValid = false;
+    }
+    // const isTradeUnitValid = validateFields(
+    //   "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
+    //   state,
+    //   dispatch
+    // );
     if (
       !isTradeDetailsValid ||
       !isTradeLocationValid ||
@@ -296,8 +319,7 @@ export const callBackForNext = async (state, dispatch) => {
             "Please fill all mandatory fields for Owner Details, then do next !";
           break;
         case 2:
-          errorMessage =
-            "Please upload all the required documents !";
+          errorMessage = "Please upload all the required documents !";
           break;
       }
       dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));

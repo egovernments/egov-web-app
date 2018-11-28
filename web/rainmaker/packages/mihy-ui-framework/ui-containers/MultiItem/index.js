@@ -211,7 +211,8 @@ var MultiItem = function (_React$Component) {
           onFieldChange = _props.onFieldChange,
           onComponentClick = _props.onComponentClick,
           hasAddItem = _props.hasAddItem,
-          screenKey = _props.screenKey;
+          screenKey = _props.screenKey,
+          isReviewPage = _props.isReviewPage;
       var addItem = this.addItem,
           removeItem = this.removeItem;
 
@@ -223,7 +224,7 @@ var MultiItem = function (_React$Component) {
             return _react2.default.createElement(
               _Div2.default,
               { key: key },
-              checkActiveItems(items) > 1 && _react2.default.createElement(
+              checkActiveItems(items) > 1 && !isReviewPage && _react2.default.createElement(
                 _Container2.default,
                 null,
                 _react2.default.createElement(
