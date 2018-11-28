@@ -1,6 +1,5 @@
 import handleScreenConfigurationFieldChange from "./handleScreenConfigurationFieldChange";
 import beforeInitScreen from "./beforeInitScreen";
-import afterInitScreen from "./afterInitScreen";
 import beforeFieldChange from "./beforeFieldChange";
 import afterFieldChange from "./afterFieldChange";
 import addJsonPath from "./addJsonPath";
@@ -10,7 +9,6 @@ const composedMiddleware = [
   addJsonPath,
   beforeFieldChange,
   handleScreenConfigurationFieldChange,
-  afterFieldChange,
-  afterInitScreen
+  afterFieldChange
 ];
 export default composedMiddleware;

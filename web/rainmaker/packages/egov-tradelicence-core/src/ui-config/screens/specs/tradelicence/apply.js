@@ -132,17 +132,11 @@ export const getMdmsData = async (action, state, dispatch) => {
       payload,
       "MdmsRes.common-masters.OwnerShipCategory"
     );
-    // payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
     set(
       payload,
       "MdmsRes.TradeLicense.TradeTypeTransformed",
       objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
     );
-    // set(
-    //   payload,
-    //   "MdmsRes.common-masters.StructureTypeTransformed",
-    //   objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
-    // );
     set(
       payload,
       "MdmsRes.common-masters.OwnerShipCategoryTransformed",
@@ -150,6 +144,14 @@ export const getMdmsData = async (action, state, dispatch) => {
         get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
       )
     );
+    //dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+    const localities = get(
+      state.screenConfiguration.preparedFinalObject,
+      "applyScreenMdmsData.tenant.localities"
+    );
+    if (localities && localities.length > 0) {
+      payload.MdmsRes.tenant.localities = localities;
+    }
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
@@ -291,11 +293,11 @@ const screenConfig = {
 
     return action;
   },
-  afterInitScreen: (action, state, dispatch) => {
-    console.log(action, state);
-    // action = setTradeDropdowns(state, action, dispatch);
-    return action;
-  },
+  // afterInitScreen: (action, state, dispatch) => {
+  //   console.log(action, state);
+  //   // action = setTradeDropdowns(state, action, dispatch);
+  //   return action;
+  // },
   components: {
     div: {
       uiFramework: "custom-atoms",

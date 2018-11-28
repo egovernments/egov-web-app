@@ -40,17 +40,17 @@ const screenConfig = {
     getAllDataFromBillingSlab(tenantId, dispatch);
     return action;
   },
-  afterInitScreen: (action, state, dispatch) => {
-    const tenantId = getQueryArg(window.location.href, "tenantId");
-    dispatch(
-      handleScreenConfigurationFieldChange(
-        "apply",
-        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
-        "props.value",
-        tenantId
-      )
-    );
-  },
+  // afterInitScreen: (action, state, dispatch) => {
+  //   const tenantId = getQueryArg(window.location.href, "tenantId");
+  //   dispatch(
+  //     handleScreenConfigurationFieldChange(
+  //       "apply",
+  //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
+  //       "props.value",
+  //       tenantId
+  //     )
+  //   );
+  // },
   components: {
     div: {
       uiFramework: "custom-atoms",
