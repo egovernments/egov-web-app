@@ -6,7 +6,8 @@ import {
   getCheckBoxJsonpath,
   getSafetyNormsJson,
   getHygeneLevelJson,
-  getLocalityHarmedJson
+  getLocalityHarmedJson,
+  setFilteredTradeTypes
 } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
@@ -97,7 +98,10 @@ export const updatePFOforSearchResults = async (
   ];
   const payload = await getSearchResults(queryObject);
   payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-
+  const licenseType = payload && get(payload, "Licenses[0].licenseType");
+  const structureSubtype =
+    payload && get(payload, "Licenses[0].tradeLicenseDetail.structureType");
+  await setFilteredTradeTypes(state, dispatch, licenseType, structureSubtype);
   await updateDropDowns(payload, action, state, dispatch, queryValue);
 
   if (queryValuePurpose !== "cancel") {

@@ -1409,7 +1409,6 @@ export const updateDropDowns = async (
     payload,
     "Licenses[0].tradeLicenseDetail.structureType"
   );
-  console.log(payload);
   if (structType) {
     set(
       payload,

@@ -158,6 +158,8 @@ export const getMdmsData = async (action, state, dispatch) => {
 
 export const getData = async (action, state, dispatch, queryValue) => {
   await getMdmsData(action, state, dispatch);
+  await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
+
   if (queryValue) {
     await updatePFOforSearchResults(action, state, dispatch, queryValue);
   } else {
@@ -203,9 +205,10 @@ export const formwizardFourthStep = {
   visible: false
 };
 
-const setTradeDropdowns = (state, action, dispatch) => {
+const setTradeDropdowns = (state, action, dispatch, searchRes, mdmsRes) => {
+  console.log(searchRes, mdmsRes);
   const tradeSubTypes = get(
-    state.screenConfiguration.preparedFinalObject,
+    searchRes,
     "Licenses[0].tradeLicenseDetail.tradeUnits",
     []
   );
@@ -214,36 +217,28 @@ const setTradeDropdowns = (state, action, dispatch) => {
       tradeSubTypes.forEach((tradeSubType, i) => {
         const tradeCat = tradeSubType.tradeType.split(".")[0];
         const tradeType = tradeSubType.tradeType.split(".")[1];
-        // console.log(
-        //   get(
-        //     action,
-        //     `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`
-        //   ),
-        //   objectToDropdown(
-        //     get(
-        //       state.screenConfiguration.preparedFinalObject,
-        //       `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
-        //       []
-        //     )
-        //   )
-        // );
-        set(
-          action,
-          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`,
+        console.log(
+          get(
+            action.screenConfig,
+            `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`
+          ),
           objectToDropdown(
-            get(
-              state.screenConfiguration.preparedFinalObject,
-              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
-              []
-            )
+            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
           )
         );
         set(
-          action,
+          action.screenConfig,
+          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`,
+          objectToDropdown(
+            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
+          )
+        );
+        set(
+          action.screenConfig,
           `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`,
           get(
-            state.screenConfiguration.preparedFinalObject,
-            `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+            mdmsRes,
+            `MdmsRes.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
             []
           )
         );
@@ -261,7 +256,6 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
     getData(action, state, dispatch, queryValue);
-    getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
     //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
     let props = get(
@@ -292,6 +286,11 @@ const screenConfig = {
     const queryObj = [{ key: "tenantId", value: tenantId }];
     getBoundaryData(action, state, dispatch, queryObj);
 
+    return action;
+  },
+  afterInitScreen: (action, state, dispatch) => {
+    // console.log(action, state);
+    // action = setTradeDropdowns(state, action, dispatch);
     return action;
   },
   components: {
