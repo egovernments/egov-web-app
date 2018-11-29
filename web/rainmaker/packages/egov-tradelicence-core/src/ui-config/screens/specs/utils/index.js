@@ -1816,7 +1816,7 @@ export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
   );
 };
 
-const getUniqueItemsFromArray = (data, identifier) => {
+export const getUniqueItemsFromArray = (data, identifier) => {
   const uniqueArray = [];
   const map = new Map();
   for (const item of data) {
