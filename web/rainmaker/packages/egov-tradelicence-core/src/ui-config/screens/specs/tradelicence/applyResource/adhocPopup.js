@@ -39,7 +39,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
   const billInRedux = cloneDeep(
     get(state.screenConfiguration.preparedFinalObject, "ReceiptTemp[0].Bill[0]")
   );
-  const mergedBillObj = { ...billInRedux, ...billPayload.Bill[0] };
+  const mergedBillObj = { ...billInRedux, ...billPayload.billResponse.Bill[0] };
 
   //merge bill in Receipt obj
   billPayload &&
@@ -50,7 +50,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        billPayload.Bill[0].billDetails[0].totalAmount
+        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
@@ -59,7 +59,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].instrument.amount",
-        billPayload.Bill[0].billDetails[0].totalAmount
+        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 

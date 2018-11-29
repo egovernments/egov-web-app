@@ -158,7 +158,8 @@ export const getMdmsData = async (action, state, dispatch) => {
   }
 };
 
-export const getData = async (action, state, dispatch, queryValue) => {
+export const getData = async (action, state, dispatch) => {
+  const queryValue = getQueryArg(window.location.href, "applicationNumber");
   await getMdmsData(action, state, dispatch);
   await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
 
@@ -255,42 +256,55 @@ const setTradeDropdowns = (state, action, dispatch, searchRes, mdmsRes) => {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
-  hasBeforeInitAsync: true,
-  beforeInitScreen: async (action, state, dispatch) => {
+  // hasBeforeInitAsync: true,
+  beforeInitScreen: (action, state, dispatch) => {
+    // async (action, state, dispatch) => {
     //this logic should move to getData
-    const queryValue = getQueryArg(window.location.href, "applicationNumber");
-    await getData(action, state, dispatch, queryValue);
 
-    //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
-    const tenantId = localStorage.getItem("tenant-id");
-    let props = get(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      {}
+    getData(action, state, dispatch).then(
+      responseAction => {
+        //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
+        const tenantId = localStorage.getItem("tenant-id");
+        let props = get(
+          action.screenConfig,
+          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+          {}
+        );
+        props.value = tenantId;
+        props.disabled = true;
+        set(
+          action.screenConfig,
+          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+          props
+        );
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.address.city",
+            tenantId
+          )
+        );
+        //hardcoding license type to permanent
+        set(
+          action.screenConfig,
+          "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+          "PERMANENT"
+        );
+        //Call and set boundary dropdown data, since there is no handleField for city in employee app
+        const queryObj = [{ key: "tenantId", value: tenantId }];
+        getBoundaryData(action, state, dispatch, queryObj).then(
+          res => {
+            console.log(res);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      },
+      err => {
+        console.log(err);
+      }
     );
-    props.value = tenantId;
-    props.disabled = true;
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      props
-    );
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address.city",
-        tenantId
-      )
-    );
-    //hardcoding license type to permanent
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
-      "PERMANENT"
-    );
-    //Call and set boundary dropdown data, since there is no handleField for city in employee app
-    const queryObj = [{ key: "tenantId", value: tenantId }];
-    await getBoundaryData(action, state, dispatch, queryObj);
-
+    console.log(action);
     return action;
   },
   // afterInitScreen: (action, state, dispatch) => {
