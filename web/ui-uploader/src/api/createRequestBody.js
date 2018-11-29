@@ -2,7 +2,7 @@ import { fetchFromLocalStorage } from "../utils";
 
 const authToken = fetchFromLocalStorage("token");
 const tenantId = fetchFromLocalStorage("tenantId");
-const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
+const userInfo = JSON.parse(fetchFromLocalStorage("user-info"));
 
 export const requestInfo = () => {
   const RequestInfo = {
@@ -37,7 +37,7 @@ export const jobCreateRequest = (
       status: "new"
     }
   ];
-  
+
   return { UploadJobs, RequestInfo };
 };
 
