@@ -168,13 +168,18 @@ const withAuthorization = (options = {}) => (Component) => {
                         )}
                       </div>
                       {sortButton && (
-                        <div className="sort-button col-xs-4" style={{ paddingTop: "24px" }}>
+                        <div className="sort-button col-xs-4" style={{ padding: "20px 20px 0px 0px" }}>
                           <div
                             className="rainmaker-displayInline"
                             style={{ cursor: "pointer", justifyContent: "flex-end" }}
                             onClick={this.onSortClick}
                           >
-                            <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
+                            <Label
+                              label="ES_SORT_BOTTON"
+                              color="rgba(0, 0, 0, 0.8700000047683716)"
+                              containerStyle={{ marginRight: 5 }}
+                              labelStyle={{ fontWeight: 500 }}
+                            />
                             <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
                           </div>
                           <SortDialog sortPopOpen={this.state.sortPopOpen} closeSortDialog={this.closeSortDialog} />
