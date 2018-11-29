@@ -11,7 +11,7 @@ export const userLoginSuccess = response => {
   const token = response.access_token;
   const userInfo = response.UserRequest;
   responseObj["token"] = token;
-  responseObj["userRequest"] = JSON.stringify(userInfo);
+  responseObj["user-info"] = JSON.stringify(userInfo);
   responseObj["type"] = response.UserRequest.type;
   responseObj["id"] = response.UserRequest.id;
   responseObj["tenantId"] = response.UserRequest.tenantId;

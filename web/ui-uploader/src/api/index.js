@@ -93,9 +93,9 @@ export const Api = () => {
     for (var i = 0; i < requestBody.UploadJobs.length; i++) {
       requestBody.UploadJobs[i].tenantId = tenantId;
     }
-    console.log(JSON.parse(fetchFromLocalStorage("userRequest")));
+    console.log(JSON.parse(fetchFromLocalStorage("user-info")));
     requestBody.RequestInfo.userInfo = JSON.parse(
-      fetchFromLocalStorage("userRequest")
+      fetchFromLocalStorage("user-info")
     );
     const endPoint = apiEndpoints.CREATE_JOB_ENDPOINT;
 
