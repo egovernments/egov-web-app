@@ -26,7 +26,13 @@ var tabItemContainerStyle = {
 var inkBarStyle = {
   zIndex: 1101,
   backgroundColor: "#fe7a51",
-  height: 4
+  height: 4,
+  position: "fixed",
+  bottom: "inherit"
+};
+
+var inkBarContainerStyle = {
+  paddingTop: "48px"
 };
 
 var Tabs = function Tabs(_ref) {
@@ -51,7 +57,13 @@ var Tabs = function Tabs(_ref) {
 
   return _react2.default.createElement(
     _Tabs.Tabs,
-    { className: className, onChange: onChange, tabItemContainerStyle: tabItemContainerStyle, inkBarStyle: inkBarStyle },
+    {
+      className: className,
+      onChange: onChange,
+      inkBarContainerStyle: inkBarContainerStyle,
+      tabItemContainerStyle: tabItemContainerStyle,
+      inkBarStyle: inkBarStyle
+    },
     renderTabs()
   );
 };
