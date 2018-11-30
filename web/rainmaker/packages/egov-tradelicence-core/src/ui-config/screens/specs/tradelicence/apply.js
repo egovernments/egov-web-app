@@ -174,7 +174,10 @@ export const getData = async (action, state, dispatch) => {
 
 export const formwizardFirstStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form1"
+  },
   children: {
     tradeDetails,
     tradeLocationDetails
@@ -183,7 +186,10 @@ export const formwizardFirstStep = {
 
 export const formwizardSecondStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form2"
+  },
   children: {
     tradeOwnerDetails
   },
@@ -192,7 +198,10 @@ export const formwizardSecondStep = {
 
 export const formwizardThirdStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form3"
+  },
   children: {
     tradeDocumentDetails
   },
@@ -201,7 +210,10 @@ export const formwizardThirdStep = {
 
 export const formwizardFourthStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form4"
+  },
   children: {
     tradeReviewDetails
   },

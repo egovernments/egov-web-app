@@ -148,7 +148,6 @@ class ComplaintDetails extends Component {
   };
 
   ShareButtonOnClick = () => {
-    console.log("Sudhanshu");
     const complaintData = this.props.transformedComplaint.complaint;
     const name = complaintData.filedBy ? complaintData.filedBy : "NA";
     const moblileNo = complaintData.filedUserMobileNumber ? complaintData.filedUserMobileNumber : "NA";

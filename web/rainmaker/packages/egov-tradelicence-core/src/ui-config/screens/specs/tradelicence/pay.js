@@ -50,9 +50,10 @@ const screenConfig = {
   components: {
     div: {
       uiFramework: "custom-atoms",
-      componentPath: "Div",
+      componentPath: "Form",
       props: {
-        className: "common-div-css"
+        className: "common-div-css",
+        id: "pay"
       },
       children: {
         headerDiv: {

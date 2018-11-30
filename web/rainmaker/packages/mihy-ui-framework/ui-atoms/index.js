@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Snackbar = exports.Iframe = exports.LinearProgress = exports.Label = exports.ListItemText = exports.ListItemIcon = exports.ListItem = exports.List = exports.Toolbar = exports.Drawer = exports.InputAdornment = exports.Icon = exports.Break = exports.Button = exports.Text = exports.Phonenumber = exports.CardMedia = exports.CardContent = exports.Card = exports.Item = exports.Container = exports.Typegraphy = exports.AppBar = exports.Main = exports.Div = undefined;
+exports.Snackbar = exports.Iframe = exports.LinearProgress = exports.Label = exports.ListItemText = exports.ListItemIcon = exports.ListItem = exports.List = exports.Toolbar = exports.Drawer = exports.InputAdornment = exports.Icon = exports.Break = exports.Button = exports.Text = exports.Phonenumber = exports.CardMedia = exports.CardContent = exports.Card = exports.Item = exports.Container = exports.Typegraphy = exports.AppBar = exports.Main = exports.Form = exports.Div = undefined;
 
 var _react = require("react");
 
@@ -35,6 +35,15 @@ var Div = (0, _reactLoadable2.default)({
     return _react2.default.createElement(Loading, null);
   }
 });
+var Form = (0, _reactLoadable2.default)({
+  loader: function loader() {
+    return import("./HtmlElements/Form");
+  },
+  loading: function loading() {
+    return _react2.default.createElement(Loading, null);
+  }
+});
+
 var Main = (0, _reactLoadable2.default)({
   loader: function loader() {
     return import("./HtmlElements/Main");
@@ -215,6 +224,7 @@ var Snackbar = (0, _reactLoadable2.default)({
 });
 
 exports.Div = Div;
+exports.Form = Form;
 exports.Main = Main;
 exports.AppBar = _Appbar2.default;
 exports.Typegraphy = Typegraphy;

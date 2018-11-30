@@ -28,9 +28,10 @@ const tradeLicenseSearchAndResult = {
   components: {
     div: {
       uiFramework: "custom-atoms",
-      componentPath: "Div",
+      componentPath: "Form",
       props: {
-        className: "common-div-css"
+        className: "common-div-css",
+        id: "search"
       },
       children: {
         headerDiv: {

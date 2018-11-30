@@ -142,7 +142,7 @@ const screenConfig = {
   components: {
     div: {
       uiFramework: "custom-atoms",
-      componentPath: "Div",
+      componentPath: "Form",
       props: {
         className: "common-div-css"
       }
@@ -168,6 +168,11 @@ const screenConfig = {
       queryValuePurpose
     );
     set(action, "screenConfig.components.div.children", data);
+    set(
+      action,
+      "screenConfig.components.div.props.id",
+      `action_${queryValuePurpose}`
+    );
     return action;
   }
 };

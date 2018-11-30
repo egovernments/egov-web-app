@@ -87,7 +87,6 @@ var CommonShare = function (_React$Component) {
           _props$roleDefination = _props.roleDefination,
           roleDefination = _props$roleDefination === undefined ? {} : _props$roleDefination;
 
-      console.log("sudhanshu", this.props);
       if (visible && !(0, _isEmpty2.default)(roleDefination)) {
         var splitList = (0, _get2.default)(roleDefination, "rolePath").split(".");
         var localdata = JSON.parse(localStorage.getItem(splitList[0]));
@@ -102,7 +101,6 @@ var CommonShare = function (_React$Component) {
         });
         visible = found;
       }
-      console.log("sudhanshu123", visible);
 
       return _react2.default.createElement(
         "div",
