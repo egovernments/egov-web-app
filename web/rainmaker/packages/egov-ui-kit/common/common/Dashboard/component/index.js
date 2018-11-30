@@ -22,14 +22,25 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var moduleCardButtons = {
+var moduleCardButtonStyle1 = {
   width: "93%"
 };
-var moduleCardButtonsContainer = {
+
+var moduleCardButtonStyle2 = {
+  width: "100%"
+};
+var buttonsContainerStyle1 = {
   padding: "0px",
   margin: "0px",
   width: "50%"
 };
+
+var buttonsContainerStyle2 = {
+  padding: "0px",
+  margin: "0px",
+  width: "100%"
+};
+
 var ModuleCard = function ModuleCard(_ref) {
   var items = _ref.items,
       onButton1Click = _ref.onButton1Click,
@@ -71,7 +82,7 @@ var ModuleCard = function ModuleCard(_ref) {
               },
               _react2.default.createElement(
                 "div",
-                { className: "col-sm-6", style: moduleCardButtonsContainer },
+                { className: "col-sm-6", style: item.button2 ? buttonsContainerStyle1 : buttonsContainerStyle2 },
                 _react2.default.createElement(_components.Button, (_React$createElement = {
                   onClick: function onClick() {
                     onButton1Click(item, history, onPGRClick);
@@ -79,7 +90,7 @@ var ModuleCard = function ModuleCard(_ref) {
                   label: _react2.default.createElement(_translationNode2.default, { label: item.button1, color: "#fff" }),
                   primary: true,
                   style: { align: "left" }
-                }, (0, _defineProperty3.default)(_React$createElement, "style", moduleCardButtons), (0, _defineProperty3.default)(_React$createElement, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement, "labelStyle", {
+                }, (0, _defineProperty3.default)(_React$createElement, "style", item.button2 ? moduleCardButtonStyle1 : moduleCardButtonStyle2), (0, _defineProperty3.default)(_React$createElement, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement, "labelStyle", {
                   padding: "0 12px 0 12px ",
                   letterSpacing: "0.6px",
                   display: "inline-block",
@@ -90,14 +101,14 @@ var ModuleCard = function ModuleCard(_ref) {
               ),
               item.button2 && _react2.default.createElement(
                 "div",
-                { className: "col-sm-6", style: moduleCardButtonsContainer },
+                { className: "col-sm-6", style: buttonsContainerStyle1 },
                 _react2.default.createElement(_components.Button, (_React$createElement2 = {
                   onClick: function onClick() {
                     onButton2Click(item, history);
                   },
                   label: _react2.default.createElement(_translationNode2.default, { label: item.button2, color: "#fe7a51" }),
                   style: { align: "right" }
-                }, (0, _defineProperty3.default)(_React$createElement2, "style", moduleCardButtons), (0, _defineProperty3.default)(_React$createElement2, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement2, "className", "moduleSecondButton"), (0, _defineProperty3.default)(_React$createElement2, "labelStyle", {
+                }, (0, _defineProperty3.default)(_React$createElement2, "style", moduleCardButtonStyle1), (0, _defineProperty3.default)(_React$createElement2, "buttonStyle", { border: "1px solid #fe7a51" }), (0, _defineProperty3.default)(_React$createElement2, "className", "moduleSecondButton"), (0, _defineProperty3.default)(_React$createElement2, "labelStyle", {
                   padding: "0 12px 0 12px ",
                   letterSpacing: "0.6px",
                   display: "inline-block",

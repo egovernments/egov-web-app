@@ -41,6 +41,7 @@ class LandingPage extends Component {
         "mSeva Complaints offers an easy to use interface which enables you to lodge civic works related complaints. It also lets you track the status of your complaint and facilitates direct interaction with your municipality till its resolution.",
       button1: "Complaints",
       button2: "How it works?",
+      route: "pgr-home",
       //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "action",
       iconName: "announcement",

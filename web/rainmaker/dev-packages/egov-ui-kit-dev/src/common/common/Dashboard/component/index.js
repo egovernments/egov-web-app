@@ -3,14 +3,25 @@ import { Card, Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const moduleCardButtons = {
+const moduleCardButtonStyle1 = {
   width: "93%",
 };
-const moduleCardButtonsContainer = {
+
+const moduleCardButtonStyle2 = {
+  width: "100%",
+};
+const buttonsContainerStyle1 = {
   padding: "0px",
   margin: "0px",
   width: "50%",
 };
+
+const buttonsContainerStyle2 = {
+  padding: "0px",
+  margin: "0px",
+  width: "100%",
+};
+
 const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history }) => {
   return (
     <div>
@@ -36,7 +47,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                         item.moduleDescription ? "col-sm-12 landing-page-button landing-page-button-container" : "col-sm-12 landing-page-button"
                       }
                     >
-                      <div className="col-sm-6" style={moduleCardButtonsContainer}>
+                      <div className="col-sm-6" style={item.button2 ? buttonsContainerStyle1 : buttonsContainerStyle2}>
                         <Button
                           onClick={() => {
                             onButton1Click(item, history, onPGRClick);
@@ -44,7 +55,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                           label={<Label label={item.button1} color="#fff" />}
                           primary={true}
                           style={{ align: "left" }}
-                          style={moduleCardButtons}
+                          style={item.button2 ? moduleCardButtonStyle1 : moduleCardButtonStyle2}
                           buttonStyle={{ border: "1px solid #fe7a51" }}
                           labelStyle={{
                             padding: "0 12px 0 12px ",
@@ -57,14 +68,14 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                         />
                       </div>
                       {item.button2 && (
-                        <div className="col-sm-6" style={moduleCardButtonsContainer}>
+                        <div className="col-sm-6" style={buttonsContainerStyle1}>
                           <Button
                             onClick={() => {
                               onButton2Click(item, history);
                             }}
                             label={<Label label={item.button2} color="#fe7a51" />}
                             style={{ align: "right" }}
-                            style={moduleCardButtons}
+                            style={moduleCardButtonStyle1}
                             buttonStyle={{ border: "1px solid #fe7a51" }}
                             className="moduleSecondButton"
                             labelStyle={{

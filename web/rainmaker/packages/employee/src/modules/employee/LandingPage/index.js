@@ -45,6 +45,7 @@ class LandingPage extends Component {
       button1: "mSeva Complaints",
       //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "action",
+      route: "all-complaints",
       iconName: "announcement",
       iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
     },
