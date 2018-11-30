@@ -78,7 +78,7 @@ var items = {
       one: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HOMEHEADER" }),
-          route: "/all-complaints",
+          route: "",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
           style: {
             paddingBottom: "1px",

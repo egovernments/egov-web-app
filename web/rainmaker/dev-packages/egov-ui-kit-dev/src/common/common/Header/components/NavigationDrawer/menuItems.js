@@ -81,7 +81,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HOMEHEADER" />,
-            route: "/all-complaints",
+            route: "",
             leftIcon: <Icon action="action" name="home" />,
             style: {
               paddingBottom: "1px",
