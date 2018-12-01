@@ -2,10 +2,13 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange
 } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
+import {
+  updatePFOforSearchResults,
+  getBoundaryData
+} from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import get from "lodash/get";
+import set from "lodash/set";
 import {
   header,
   tradeDocumentDetails,
@@ -38,19 +41,35 @@ const screenConfig = {
     }
     getMdmsData(action, state, dispatch);
     getAllDataFromBillingSlab(tenantId, dispatch);
+    getBoundaryData(action, state, dispatch, [
+      { key: "tenantId", value: tenantId }
+    ]);
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address.tenantId",
+        tenantId
+      )
+    );
+    // set(
+    //   action.screenConfig,
+    //   "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
+    //   "props.value",
+    //   tenantId
+    // );
     return action;
   },
-  // afterInitScreen: (action, state, dispatch) => {
-  //   const tenantId = getQueryArg(window.location.href, "tenantId");
-  //   dispatch(
-  //     handleScreenConfigurationFieldChange(
-  //       "apply",
-  //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
-  //       "props.value",
-  //       tenantId
-  //     )
-  //   );
-  // },
+  afterInitScreen: (action, state, dispatch) => {
+    const tenantId = getQueryArg(window.location.href, "tenantId");
+
+    // dispatch(
+    //   handleScreenConfigurationFieldChange(
+    //     "apply",
+    //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
+    //     "props.value",
+    //     tenantId
+    //   )
+    // );
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",
