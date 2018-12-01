@@ -227,6 +227,8 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     // async (action, state, dispatch) => {
     //this logic should move to getData
+    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    dispatch(prepareFinalObject("LicensesTemp", []));
 
     getData(action, state, dispatch).then(
       responseAction => {
