@@ -223,7 +223,7 @@ const tradeUnitCard = {
                   dispatch(
                     handleField(
                       "apply",
-                      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children.tradeUOMValue",
+                      action.componentJsonpath.replace("tradeSubType", "tradeUOMValue"),
                       "props.disabled",
                       false
                     )
