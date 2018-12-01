@@ -50,25 +50,7 @@ const screenConfig = {
         tenantId
       )
     );
-    // set(
-    //   action.screenConfig,
-    //   "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
-    //   "props.value",
-    //   tenantId
-    // );
     return action;
-  },
-  afterInitScreen: (action, state, dispatch) => {
-    const tenantId = getQueryArg(window.location.href, "tenantId");
-
-    // dispatch(
-    //   handleScreenConfigurationFieldChange(
-    //     "apply",
-    //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
-    //     "props.value",
-    //     tenantId
-    //   )
-    // );
   },
   components: {
     div: {
