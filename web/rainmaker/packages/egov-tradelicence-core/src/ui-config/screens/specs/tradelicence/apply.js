@@ -220,51 +220,6 @@ export const formwizardFourthStep = {
   visible: false
 };
 
-const setTradeDropdowns = (state, action, dispatch, searchRes, mdmsRes) => {
-  console.log(searchRes, mdmsRes);
-  const tradeSubTypes = get(
-    searchRes,
-    "Licenses[0].tradeLicenseDetail.tradeUnits",
-    []
-  );
-  if (tradeSubTypes.length > 0) {
-    try {
-      tradeSubTypes.forEach((tradeSubType, i) => {
-        const tradeCat = tradeSubType.tradeType.split(".")[0];
-        const tradeType = tradeSubType.tradeType.split(".")[1];
-        console.log(
-          get(
-            action.screenConfig,
-            `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`
-          ),
-          objectToDropdown(
-            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
-          )
-        );
-        set(
-          action.screenConfig,
-          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`,
-          objectToDropdown(
-            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
-          )
-        );
-        set(
-          action.screenConfig,
-          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`,
-          get(
-            mdmsRes,
-            `MdmsRes.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
-            []
-          )
-        );
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  return action;
-};
-
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -316,14 +271,9 @@ const screenConfig = {
         console.log(err);
       }
     );
-    console.log(action);
     return action;
   },
-  // afterInitScreen: (action, state, dispatch) => {
-  //   console.log(action, state);
-  //   // action = setTradeDropdowns(state, action, dispatch);
-  //   return action;
-  // },
+
   components: {
     div: {
       uiFramework: "custom-atoms",

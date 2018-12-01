@@ -50,7 +50,8 @@ const tradeUnitCard = {
               required: true,
               jsonPath: "LicensesTemp.tradeUnits[0].tradeType",
               props: {
-                jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
+                jsonPathUpdatePrefix: "LicensesTemp.tradeUnits",
+                setDataInField: true
               },
               sourceJsonPath:
                 "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
@@ -181,6 +182,7 @@ const tradeUnitCard = {
                 "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
               sourceJsonPath:
                 "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+              setDataInField: true,
               labelsFromLocalisation: true,
               fullwidth: true,
               required: true,
