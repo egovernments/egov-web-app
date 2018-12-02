@@ -55,23 +55,28 @@ const generatePdfFromDiv = (action, applicationNumber) => {
     }
   }).then(canvas => {
     var data = canvas.toDataURL("image/jpeg", 1);
-    var imgWidth = 200; 
-    var pageHeight = 295;  
-    var imgHeight = canvas.height * imgWidth / canvas.width;
+    var imgWidth = 200;
+    var pageHeight = 295;
+    var imgHeight = (canvas.height * imgWidth) / canvas.width;
     var heightLeft = imgHeight;
-    var doc = new jsPDF('p', 'mm');
+    var doc = new jsPDF("p", "mm");
     var position = 0;
-    
-    doc.addImage(data, 'PNG', 5, 5 + position, imgWidth, imgHeight);
+
+    doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
-    
+
     while (heightLeft >= 0) {
       position = heightLeft - imgHeight;
       doc.addPage();
-      doc.addImage(data, 'PNG', 5, 5 + position, imgWidth, imgHeight);
+      doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
     }
-    doc.save( 'file.pdf');
+    if (action === "download") {
+      doc.save(`preview-${applicationNumber}.pdf`);
+    } else if (action === "print") {
+      doc.autoPrint();
+      window.open(doc.output("bloburl"), "_blank");
+    }
   });
 };
 
