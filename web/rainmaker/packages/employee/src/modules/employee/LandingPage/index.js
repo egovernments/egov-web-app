@@ -69,7 +69,7 @@ class LandingPage extends Component {
     },
     TL: {
       moduleTitle: "TradeLicense",
-      button1: "Mseva TradeLicense",
+      button1: "TradeLicense",
       // borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
       iconName: "business-center",
