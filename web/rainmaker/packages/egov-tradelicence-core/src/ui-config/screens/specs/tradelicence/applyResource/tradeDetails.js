@@ -192,14 +192,17 @@ const tradeUnitCard = {
             },
             beforeFieldChange: (action, state, dispatch) => {
               try {
+                let cardIndex = action.componentJsonpath
+                .split("items[")[1]
+                .split("]")[0];
                 let tradeType = get(
                   state.screenConfiguration.preparedFinalObject,
-                  "LicensesTemp.tradeUnits[0].tradeType",
+                  `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
                   ""
                 );
                 let tradeCategory = get(
                   state.screenConfiguration.preparedFinalObject,
-                  "LicensesTemp.tradeUnits[0].tradeSubType",
+                  `LicensesTemp.tradeUnits[${cardIndex}].tradeSubType`,
                   ""
                 );
                 let tradeSubCategories = get(
@@ -218,7 +221,7 @@ const tradeUnitCard = {
                 if (currentObject[0].uom !== null) {
                   dispatch(
                     pFO(
-                      "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom",
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
                       currentObject[0].uom
                     )
                   );
