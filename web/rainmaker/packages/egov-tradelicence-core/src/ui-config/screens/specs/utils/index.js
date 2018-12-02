@@ -936,7 +936,7 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   }
 };
 
-const getBillingSlabData = async (dispatch, billingSlabIds) => {
+const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
   const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
     billingSlabIds || {};
   if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
@@ -957,7 +957,7 @@ const getBillingSlabData = async (dispatch, billingSlabIds) => {
     let billingData = tradeUnit && [...tradeUnit];
     accessoryUnit && (billingData = [...billingData, ...accessoryUnit]);
     const queryObject = [
-      { key: "tenantId", value: localStorage.getItem("tenant-id") },
+      { key: "tenantId", value: tenantId },
       { key: "ids", value: billingData && billingData.join(",") }
     ];
     const response = await httpRequest(
@@ -1055,7 +1055,7 @@ export const createEstimateData = async (
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
   payload.billingSlabIds &&
-    getBillingSlabData(dispatch, payload.billingSlabIds);
+    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });
@@ -1872,7 +1872,6 @@ export const setFilteredTradeTypes = (
         { TradeType: [...filteredList] },
         "TradeType"
       );
-      console.log(tradeTypeTransformed);
       dispatch(
         prepareFinalObject(
           "applyScreenMdmsData.TradeLicense.TradeType",
