@@ -30,7 +30,7 @@ import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
 
 import html2canvas from "html2canvas";
-import pdfMake from "pdfmake/build/pdfmake";
+import jsPDF from "jspdf";
 
 const moveToSuccess = (LicenseData, dispatch) => {
   const applicationNo = get(LicenseData, "applicationNumber");
@@ -54,22 +54,24 @@ const generatePdfFromDiv = (action, applicationNumber) => {
       ] = "true";
     }
   }).then(canvas => {
-    var data = canvas.toDataURL();
-    var docDefinition = {
-      content: [
-        {
-          image: data,
-          width: 500
-        }
-      ]
-    };
-    if (action === "download") {
-      pdfMake
-        .createPdf(docDefinition)
-        .download(`preview-${applicationNumber}.pdf`);
-    } else if (action === "print") {
-      pdfMake.createPdf(docDefinition).print();
+    var data = canvas.toDataURL("image/jpeg", 1);
+    var imgWidth = 200; 
+    var pageHeight = 295;  
+    var imgHeight = canvas.height * imgWidth / canvas.width;
+    var heightLeft = imgHeight;
+    var doc = new jsPDF('p', 'mm');
+    var position = 0;
+    
+    doc.addImage(data, 'PNG', 5, 5 + position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      doc.addPage();
+      doc.addImage(data, 'PNG', 5, 5 + position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
     }
+    doc.save( 'file.pdf');
   });
 };
 
