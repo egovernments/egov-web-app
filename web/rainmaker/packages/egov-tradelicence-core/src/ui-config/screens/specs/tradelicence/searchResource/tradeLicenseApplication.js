@@ -35,7 +35,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9\-]*$/i,
+      pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "Invalid Application No.",
       jsonPath: "searchScreen.applicationNumber"
     }),
@@ -54,7 +54,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9\-]*$/i,
+      pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "Invalid Trade License No.",
       jsonPath: "searchScreen.licenseNumber"
     }),
