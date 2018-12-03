@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { spinner, authenticated } = this.props;
+    const { authenticated } = this.props;
     const childProps = {
       isAuthenticated: authenticated
     };

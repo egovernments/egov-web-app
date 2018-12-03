@@ -3,7 +3,6 @@ import {
   getLabel,
   getBreak
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import React from "react";
 import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -12,10 +11,9 @@ import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchResults } from "./searchResource/searchResults";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
-const hasApproval = getQueryArg(window.location.href, "hasApproval");
-let enableInbox,
-  enableButton = true;
-enableInbox = hasApproval && hasApproval === "false" ? false : true;
+//const hasApproval = getQueryArg(window.location.href, "hasApproval");
+let enableButton = true;
+//enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const header = getCommonHeader({

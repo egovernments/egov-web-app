@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { MapLocation } from "../../ui-atoms-local";
-// import { Button, Icon } from "components";
-// import pinIcon from "https://image.flaticon.com/icons/svg/1161/1161263.svg";
+
 import { defaultLocation } from "../../ui-config/tl-app-config";
 import { Button, Icon } from "mihy-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
@@ -11,16 +10,7 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import "./index.css";
 
 const pickBtn = {
-  // lineHeight: "38px",
   display: "block"
-  // margin: 0,
-  // backgroundColor: "#f5a623",
-  // color: "#ffffff",
-  // fontFamily: "Roboto",
-  // fontSize: "7px",
-  // height: 38,
-  // fontWeight: 500,
-  // fontStyle: "normal"
 };
 
 var add = {};
@@ -152,8 +142,8 @@ class MapLocator extends Component {
     var _currloc = !isEmpty(currLoc)
       ? currLoc
       : isEmpty(location)
-        ? defaultLocation
-        : location;
+      ? defaultLocation
+      : location;
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
         <div className="back-btn">
@@ -215,19 +205,19 @@ class MapLocator extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  // const formKey = window.location.href.split("?")[1];
-  // const form = state.form[formKey];
-  // const fields = (form && form.fields) || {};
-  // const currentLocation = state.app.currentLocation || {};
-  // var location = {};
-  // if (fields.latitude && fields.latitude.value)
-  //   location = {
-  //     lat: parseFloat(fields.latitude.value),
-  //     lng: parseFloat(fields.longitude.value)
-  //   };
-  // return { location, formKey, currentLocation };
-};
+//const mapStateToProps = state => {
+// const formKey = window.location.href.split("?")[1];
+// const form = state.form[formKey];
+// const fields = (form && form.fields) || {};
+// const currentLocation = state.app.currentLocation || {};
+// var location = {};
+// if (fields.latitude && fields.latitude.value)
+//   location = {
+//     lat: parseFloat(fields.latitude.value),
+//     lng: parseFloat(fields.longitude.value)
+//   };
+// return { location, formKey, currentLocation };
+//};
 
 const mapDispatchToProps = dispatch => {
   return {

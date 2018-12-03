@@ -3,16 +3,12 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonHeader,
-  getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-// import tradeLicenseSearchAndResult from "../tradelicence/search";
 import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
 import { cityPicker } from "./citypicker";
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { get } from "https";
 
 const header = getCommonHeader({
   labelName: "Trade License",

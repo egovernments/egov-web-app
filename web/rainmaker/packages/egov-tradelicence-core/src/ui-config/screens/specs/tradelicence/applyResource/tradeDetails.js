@@ -3,7 +3,6 @@ import {
   getCommonGrayCard,
   getCommonTitle,
   getCommonSubHeader,
-  getCommonParagraph,
   getTextField,
   getDateField,
   getSelectField,
@@ -13,7 +12,6 @@ import {
 import {
   getIconStyle,
   objectToDropdown,
-  prepareDocumentTypeObj,
   getTodaysDateInYMD,
   getFinancialYearDates,
   getNextMonthDateInYMD,
@@ -193,8 +191,8 @@ const tradeUnitCard = {
             beforeFieldChange: (action, state, dispatch) => {
               try {
                 let cardIndex = action.componentJsonpath
-                .split("items[")[1]
-                .split("]")[0];
+                  .split("items[")[1]
+                  .split("]")[0];
                 let tradeType = get(
                   state.screenConfiguration.preparedFinalObject,
                   `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
@@ -228,7 +226,10 @@ const tradeUnitCard = {
                   dispatch(
                     handleField(
                       "apply",
-                      action.componentJsonpath.replace("tradeSubType", "tradeUOMValue"),
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
                       "props.disabled",
                       false
                     )

@@ -1,7 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { getBaseURL } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const getCommonApplyFooter = children => {
@@ -61,7 +60,7 @@ const generatePdfAndDownload = (
             doc.addPage();
             doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
-              }
+          }
           if (action === "download") {
             doc.save(`application_summary_${applicationNumber}.pdf`);
           } else if (action === "print") {
@@ -111,7 +110,7 @@ export const applicationSuccessFooter = (
   applicationNumber,
   tenant
 ) => {
-  const baseURL = getBaseURL();
+  //const baseURL = getBaseURL();
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",

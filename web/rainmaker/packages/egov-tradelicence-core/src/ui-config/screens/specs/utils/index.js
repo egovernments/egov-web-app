@@ -564,7 +564,6 @@ export const getReceiptData = async queryObject => {
 };
 
 export const getAutoSelector = textScheama => {
-  const { textLabel = {}, jsonPath, props = {} } = textScheama;
   return {
     uiFramework: "custom-molecules-local",
     componentPath: "AutoSelector",
@@ -619,35 +618,35 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   }
 };
 
-const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
+//const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
 //applyScreenMdmsData.MdmsRes.TradeLicense.TradeType
-const reTrasnformerForNestedDropDown = (
-  originaJsonPath,
-  value,
-  state,
-  dispatch
-) => {
-  let nestedValues = value.split(".");
-  while (nestedValues.length > 1) {
-    const originalNestedValues = value.split(".");
-    const originalObject = get(state, `${originaJsonPath}`);
-    nestedValues = value.split(".");
-    const targetLevel = nestedValues.pop();
-    const targetpath = nestedValues.join(".");
-    let targetValues = get(originalObject, `${targetpath}`, []);
-    targetValues =
-      targetValues.length && targetValues.length >= 0
-        ? targetValues
-        : objectToDropdown(targetValues);
+// const reTrasnformerForNestedDropDown = (
+//   originaJsonPath,
+//   value,
+//   state,
+//   dispatch
+// ) => {
+//   let nestedValues = value.split(".");
+//   while (nestedValues.length > 1) {
+//     const originalNestedValues = value.split(".");
+//     const originalObject = get(state, `${originaJsonPath}`);
+//     nestedValues = value.split(".");
+//     const targetLevel = nestedValues.pop();
+//     const targetpath = nestedValues.join(".");
+//     let targetValues = get(originalObject, `${targetpath}`, []);
+//     targetValues =
+//       targetValues.length && targetValues.length >= 0
+//         ? targetValues
+//         : objectToDropdown(targetValues);
 
-    dispatch(
-      prepareFinalObject(
-        `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
-        targetValues
-      )
-    );
-  }
-};
+//     dispatch(
+//       prepareFinalObject(
+//         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
+//         targetValues
+//       )
+//     );
+//   }
+// };
 
 export const getMdmsData = async queryObject => {
   try {

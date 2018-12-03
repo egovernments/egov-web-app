@@ -7,15 +7,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import {
-  getSafetyNormsJson,
-  getHygeneLevelJson,
-  getLocalityHarmedJson
-} from "../../ui-config/screens/specs/utils";
-import "./index.css";
 
-const queryValue = getQueryArg(window.location.href, "purpose");
+import "./index.css";
 
 const styles = theme => ({
   root: {
@@ -39,13 +32,10 @@ class RadioButtonsGroup extends React.Component {
     value: ""
   };
   componentDidMount = () => {
-    const { defaultValue, approveCheck } = this.props;
+    const { defaultValue } = this.props;
     this.setState({
       value: defaultValue
     });
-    // approveCheck(getSafetyNormsJson(queryValue), "Yes");
-    // approveCheck(getHygeneLevelJson(queryValue), "Yes");
-    // approveCheck(getLocalityHarmedJson(queryValue), "No");
   };
 
   handleChange = event => {

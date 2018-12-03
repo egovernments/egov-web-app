@@ -3,7 +3,6 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -12,18 +11,8 @@ import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
-import {
-  showHideAdhocPopup,
-  showHideBreakupPopup,
-  getDialogButton
-} from "../utils";
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { showHideAdhocPopup, getDialogButton } from "../utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import set from "lodash/set";
-import { getSearchResults } from "ui-utils/commons";
 import { fetchBill } from "../utils";
 
 const header = getCommonContainer({
