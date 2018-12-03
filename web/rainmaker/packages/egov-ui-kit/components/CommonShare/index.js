@@ -111,8 +111,7 @@ var CommonShare = function (_React$Component) {
           visible && _react2.default.createElement(
             _Button2.default,
             {
-              variant: "fab",
-              className: classes.fab,
+              className: "share-btn-main",
               visible: "false",
               onClick: function onClick() {
                 shareCallback();
