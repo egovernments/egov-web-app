@@ -45,8 +45,7 @@ class CommonShare extends React.Component {
         <div className={classes.menuItem}>
           {visible && (
             <Button
-              variant="fab"
-              className={classes.fab}
+              className={`share-btn-main`}
               visible="false"
               onClick={() => {
                 shareCallback();

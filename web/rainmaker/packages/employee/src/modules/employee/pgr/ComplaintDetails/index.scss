@@ -34,3 +34,16 @@
   margin-bottom: -25px;
   display: inline-flex;
 }
+
+@media only screen and (max-width: 768px) {
+  .share-btn {
+    position: fixed;
+    top: 11px;
+    right: 0;
+    z-index: 9999;
+    color: #ffffff;
+    button {
+      color: #ffffff;
+    }
+  }
+}
