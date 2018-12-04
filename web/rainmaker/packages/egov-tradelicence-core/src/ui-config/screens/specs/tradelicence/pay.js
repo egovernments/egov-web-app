@@ -14,6 +14,7 @@ import { adhocPopup } from "./applyResource/adhocPopup";
 import { showHideAdhocPopup, getDialogButton } from "../utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { fetchBill } from "../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -33,6 +34,8 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
+    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", []));
+    dispatch(prepareFinalObject("ReceiptTemp[0].instrument", {}));
     fetchBill(action, state, dispatch);
     return action;
   },
