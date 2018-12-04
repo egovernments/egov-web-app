@@ -81,7 +81,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HOMEHEADER" />,
-            route: "/all-complaints",
+            route: "",
             leftIcon: <Icon action="action" name="home" />,
             style: {
               paddingBottom: "1px",
@@ -91,6 +91,7 @@ const items = {
             id: "header-home",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforTLEmp: 1,
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
@@ -99,6 +100,7 @@ const items = {
             id: "header-closed-complaint",
             renderforcsr: 0,
             renderforadmin: 0,
+            renderforTLEmp: 0,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
@@ -111,6 +113,7 @@ const items = {
             id: "header-contact-us",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforTLEmp: 1,
           },
 
           {
@@ -124,6 +127,7 @@ const items = {
             id: "header-profile",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforTLEmp: 1,
           },
           // {
           //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -150,6 +154,7 @@ const items = {
             id: "header-logout",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforTLEmp: 1,
           },
         ],
       },
@@ -170,8 +175,26 @@ const renderMenuForADMIN = (role, section) => {
   return menuForADMIN;
 };
 
+const renderMenuForTLEmp = (role, section) => {
+  const menuForTLEmp = items[role].sections[section].items.filter((item) => {
+    return item.renderforTLEmp === 1;
+  });
+  return menuForTLEmp;
+};
+
+// const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
+//   return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+// };
+
 const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+  let isTL = window.location.pathname.includes("tradelicense");
+  return isCSR
+    ? renderMenuForCSR(role, section)
+    : isADMIN
+    ? renderMenuForADMIN(role, section)
+    : isTL
+    ? renderMenuForTLEmp(role, section)
+    : items[role].sections[section].items;
 };
 
 export default menuItems;

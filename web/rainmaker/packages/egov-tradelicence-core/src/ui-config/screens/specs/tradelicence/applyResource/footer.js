@@ -8,21 +8,16 @@ import some from "lodash/some";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
-  epochToYmdDate,
   setMultiOwnerForApply,
   setValidToFromVisibilityForApply,
   getDocList,
   setOwnerShipDropDownFieldChange
 } from "../../utils";
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import {
   createEstimateData,
   validateFields,
-  getBaseURL,
   ifUserRoleExists
 } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
@@ -30,7 +25,7 @@ import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
 
 import html2canvas from "html2canvas";
-import pdfMake from "pdfmake/build/pdfmake";
+import jsPDF from "jspdf";
 
 const moveToSuccess = (LicenseData, dispatch) => {
   const applicationNo = get(LicenseData, "applicationNumber");
@@ -48,33 +43,39 @@ const generatePdfFromDiv = (action, applicationNumber) => {
   let target = document.querySelector("#custom-atoms-div");
   html2canvas(target, {
     onclone: function(clonedDoc) {
-      // clonedDoc.getElementById("custom-atoms-footer").style = "width: 900px"; //Not Working
-      clonedDoc.getElementById("custom-atoms-footer")[
-        "data-html2canvas-ignore"
-      ] = "true";
+      // clonedDoc.getElementById("custom-atoms-footer")[
+      //   "data-html2canvas-ignore"
+      // ] = "true";
+      clonedDoc.getElementById("custom-atoms-footer").style.display = "none";
     }
   }).then(canvas => {
-    var data = canvas.toDataURL();
-    var docDefinition = {
-      content: [
-        {
-          image: data,
-          width: 500
-        }
-      ]
-    };
+    var data = canvas.toDataURL("image/jpeg", 1);
+    var imgWidth = 200;
+    var pageHeight = 295;
+    var imgHeight = (canvas.height * imgWidth) / canvas.width;
+    var heightLeft = imgHeight;
+    var doc = new jsPDF("p", "mm");
+    var position = 0;
+
+    doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      doc.addPage();
+      doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
     if (action === "download") {
-      pdfMake
-        .createPdf(docDefinition)
-        .download(`preview-${applicationNumber}.pdf`);
+      doc.save(`preview-${applicationNumber}.pdf`);
     } else if (action === "print") {
-      pdfMake.createPdf(docDefinition).print();
+      doc.autoPrint();
+      window.open(doc.output("bloburl"), "_blank");
     }
   });
 };
 
 export const callBackForNext = async (state, dispatch) => {
-  let applicationSuccess = true;
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -125,26 +126,20 @@ export const callBackForNext = async (state, dispatch) => {
       tradeUnitJsonPath,
       []
     );
-    console.log(tradeUnits);
     let isTradeUnitValid = true;
 
-    for (var i = 0; i < tradeUnits.length; i++) {
+    for (var j = 0; j < tradeUnits.length; j++) {
       if (
-        (tradeUnits[i].isDeleted === undefined ||
-          tradeUnits[i].isDeleted !== false) &&
+        (tradeUnits[j].isDeleted === undefined ||
+          tradeUnits[j].isDeleted !== false) &&
         !validateFields(
-          `${tradeUnitJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
+          `${tradeUnitJsonPath}[${j}].item${j}.children.cardContent.children.tradeUnitCardContainer.children`,
           state,
           dispatch
         )
       )
         isTradeUnitValid = false;
     }
-    // const isTradeUnitValid = validateFields(
-    //   "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
-    //   state,
-    //   dispatch
-    // );
     if (
       !isTradeDetailsValid ||
       !isTradeLocationValid ||
@@ -176,12 +171,12 @@ export const callBackForNext = async (state, dispatch) => {
         ownersJsonPath,
         []
       );
-      for (var i = 0; i < owners.length; i++) {
+      for (var k = 0; k < owners.length; k++) {
         if (
-          (owners[i].isDeleted === undefined ||
-            owners[i].isDeleted !== false) &&
+          (owners[k].isDeleted === undefined ||
+            owners[k].isDeleted !== false) &&
           !validateFields(
-            `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
+            `${ownersJsonPath}[${k}].item${k}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
             dispatch
           )
@@ -196,12 +191,12 @@ export const callBackForNext = async (state, dispatch) => {
         ownersJsonPath,
         []
       );
-      for (var i = 0; i < owners.length; i++) {
+      for (var x = 0; x < owners.length; x++) {
         if (
-          (owners[i].isDeleted === undefined ||
-            owners[i].isDeleted !== false) &&
+          (owners[x].isDeleted === undefined ||
+            owners[x].isDeleted !== false) &&
           !validateFields(
-            `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
+            `${ownersJsonPath}[${x}].item${x}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
             dispatch
           )
@@ -264,10 +259,10 @@ export const callBackForNext = async (state, dispatch) => {
       []
     );
 
-    for (var i = 0; i < uploadedTempDocData.length; i++) {
+    for (var y = 0; y < uploadedTempDocData.length; y++) {
       if (
-        uploadedTempDocData[i].required &&
-        !some(uploadedDocData, { documentType: uploadedTempDocData[i].name })
+        uploadedTempDocData[y].required &&
+        !some(uploadedDocData, { documentType: uploadedTempDocData[y].name })
       ) {
         isFormValid = false;
       }

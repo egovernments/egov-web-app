@@ -108,7 +108,6 @@ class ViewBreakupContainer extends React.Component {
 
   handleClose = () => {
     const { screenKey } = this.props;
-    console.log(get(this.props.screenConfig, `${screenKey}`));
     this.props.handleField(
       screenKey,
       `components.breakUpDialog`,
@@ -171,9 +170,7 @@ class ViewBreakupContainer extends React.Component {
                 tradeUnitData.length > 0 &&
                 getMultiItem(tradeUnitData, classes)}
               <Divider className={classes.root} />
-              {accessoriesUnitData &&
-                accessoriesUnitData.length > 0 &&
-                tradeUnitData &&
+              {tradeUnitData &&
                 tradeUnitData.length > 0 &&
                 getGridItem(tradeTotal, classes)}
               {accessoriesUnitData && accessoriesUnitData.length > 0 && (
@@ -196,7 +193,9 @@ class ViewBreakupContainer extends React.Component {
               {accessoriesUnitData &&
                 accessoriesUnitData.length > 0 &&
                 getGridItem(accessoriesTotal, classes)}
-              {/* {getGridItem(totalBill, classes, style)} */}
+              {accessoriesUnitData &&
+                accessoriesUnitData.length > 0 &&
+                getGridItem(totalBill, classes, style)}
             </div>
           ) : (
             <div style={{ padding: "16px", width: "500px" }}>

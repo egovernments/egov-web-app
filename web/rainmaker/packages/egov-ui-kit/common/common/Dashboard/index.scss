@@ -4,3 +4,9 @@
   padding-top: 20px;
   padding-left: 15px;
 }
+
+@media only screen and (max-width: 768px) {
+  .landing-page-main-container {
+    padding-top: 60px !important;
+  }
+}

@@ -156,14 +156,24 @@ class AllComplaints extends Component {
     };
     return role === "ao" ? (
       <div>
-        <div className="sort-button rainmaker-displayInline" style={{ padding: "10px", justifyContent: "flex-end" }}>
+        <div className="sort-button rainmaker-displayInline" style={{ padding: "20px 20px 0px 0px", justifyContent: "flex-end" }}>
           <div className="rainmaker-displayInline" style={{ cursor: "pointer", marginRight: "20px" }} onClick={onSortClick}>
-            <Label label="Sort" color="#484848" containerStyle={{ marginRight: 5 }} />
-            <Icon style={style.iconStyle} action="action" name="swap-vert" color="#484848" />
+            <Label
+              label="ES_SORT_BOTTON"
+              color="rgba(0, 0, 0, 0.8700000047683716)"
+              containerStyle={{ marginRight: 5 }}
+              labelStyle={{ fontWeight: 500 }}
+            />
+            <Icon style={style.iconStyle} action="action" name="swap-vert" color="rgba(0, 0, 0, 0.8700000047683716)" />
           </div>
           <div className="rainmaker-displayInline" style={{ cursor: "pointer" }} onClick={() => history.push("search-complaint")}>
-            <Label label="Search" color="#484848" containerStyle={{ marginRight: 5 }} />
-            <Icon style={style.iconStyle} action="action" name="search" color="#484848" />
+            <Label
+              label="ES_SEARCH_BOTTON"
+              color="rgba(0, 0, 0, 0.8700000047683716)"
+              containerStyle={{ marginRight: 5 }}
+              labelStyle={{ fontWeight: 500 }}
+            />
+            <Icon style={style.iconStyle} action="action" name="search" color="rgba(0, 0, 0, 0.8700000047683716)" />
           </div>
           <SortDialog sortPopOpen={sortPopOpen} closeSortDialog={closeSortDialog} />
         </div>
@@ -192,7 +202,7 @@ class AllComplaints extends Component {
                 </div>
               ),
               children: (
-                <Screen loading={loading}>
+                <Screen className="gro-screen" loading={loading}>
                   <div className="tab1-content form-without-button-cont-generic">
                     <Complaints
                       noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}

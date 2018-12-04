@@ -144,10 +144,10 @@ export const getMdmsData = async (action, state, dispatch) => {
         get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
       )
     );
-    //dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
     const localities = get(
-      state.screenConfiguration.preparedFinalObject,
-      "applyScreenMdmsData.tenant.localities"
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.tenant.localities",
+      []
     );
     if (localities && localities.length > 0) {
       payload.MdmsRes.tenant.localities = localities;
@@ -158,7 +158,8 @@ export const getMdmsData = async (action, state, dispatch) => {
   }
 };
 
-export const getData = async (action, state, dispatch, queryValue) => {
+export const getData = async (action, state, dispatch) => {
+  const queryValue = getQueryArg(window.location.href, "applicationNumber");
   await getMdmsData(action, state, dispatch);
   await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
 
@@ -173,7 +174,10 @@ export const getData = async (action, state, dispatch, queryValue) => {
 
 export const formwizardFirstStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form1"
+  },
   children: {
     tradeDetails,
     tradeLocationDetails
@@ -182,7 +186,10 @@ export const formwizardFirstStep = {
 
 export const formwizardSecondStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form2"
+  },
   children: {
     tradeOwnerDetails
   },
@@ -191,7 +198,10 @@ export const formwizardSecondStep = {
 
 export const formwizardThirdStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form3"
+  },
   children: {
     tradeDocumentDetails
   },
@@ -200,69 +210,26 @@ export const formwizardThirdStep = {
 
 export const formwizardFourthStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form4"
+  },
   children: {
     tradeReviewDetails
   },
   visible: false
 };
 
-const setTradeDropdowns = (state, action, dispatch, searchRes, mdmsRes) => {
-  console.log(searchRes, mdmsRes);
-  const tradeSubTypes = get(
-    searchRes,
-    "Licenses[0].tradeLicenseDetail.tradeUnits",
-    []
-  );
-  if (tradeSubTypes.length > 0) {
-    try {
-      tradeSubTypes.forEach((tradeSubType, i) => {
-        const tradeCat = tradeSubType.tradeType.split(".")[0];
-        const tradeType = tradeSubType.tradeType.split(".")[1];
-        console.log(
-          get(
-            action.screenConfig,
-            `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`
-          ),
-          objectToDropdown(
-            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
-          )
-        );
-        set(
-          action.screenConfig,
-          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeCategory.props.data`,
-          objectToDropdown(
-            get(mdmsRes, `MdmsRes.TradeLicense.TradeType.${tradeCat}`, [])
-          )
-        );
-        set(
-          action.screenConfig,
-          `components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children.tradeSubType.props.data`,
-          get(
-            mdmsRes,
-            `MdmsRes.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
-            []
-          )
-        );
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  return action;
-};
-
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
-  hasBeforeInitAsync: true,
-  beforeInitScreen: async (action, state, dispatch) => {
-    //this logic should move to getData
-    const queryValue = getQueryArg(window.location.href, "applicationNumber");
-    await getData(action, state, dispatch, queryValue);
+  beforeInitScreen: (action, state, dispatch) => {
+    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    dispatch(prepareFinalObject("LicensesTemp", []));
 
-    //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
     const tenantId = localStorage.getItem("tenant-id");
+    const queryObj = [{ key: "tenantId", value: tenantId }];
+    getBoundaryData(action, state, dispatch, queryObj);
     let props = get(
       action.screenConfig,
       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
@@ -287,17 +254,10 @@ const screenConfig = {
       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
       "PERMANENT"
     );
-    //Call and set boundary dropdown data, since there is no handleField for city in employee app
-    const queryObj = [{ key: "tenantId", value: tenantId }];
-    await getBoundaryData(action, state, dispatch, queryObj);
-
+    getData(action, state, dispatch);
     return action;
   },
-  // afterInitScreen: (action, state, dispatch) => {
-  //   console.log(action, state);
-  //   // action = setTradeDropdowns(state, action, dispatch);
-  //   return action;
-  // },
+
   components: {
     div: {
       uiFramework: "custom-atoms",

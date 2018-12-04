@@ -58,6 +58,16 @@ class MultiItem extends React.Component {
     }
   }
 
+  objectToDropdown = object => {
+    let dropDown = [];
+    for (var variable in object) {
+      if (object.hasOwnProperty(variable)) {
+        dropDown.push({ code: variable });
+      }
+    }
+    return dropDown;
+  };
+
   addItem = (isNew = false) => {
     const {
       onFieldChange: addItemToState,
@@ -69,7 +79,8 @@ class MultiItem extends React.Component {
       componentJsonpath,
       headerName,
       headerJsonPath,
-      screenConfig
+      screenConfig,
+      preparedFinalObject
     } = this.props;
     const items = isNew
       ? []
@@ -102,6 +113,43 @@ class MultiItem extends React.Component {
                 propertyName[1]
               }`;
               multiItemContent[variable].index = itemsLength;
+            }
+          }
+          //Temporary fix - For setting trade type - should be generalised
+          const value = get(
+            preparedFinalObject,
+            multiItemContent[variable].props.jsonPath
+          );
+          if (multiItemContent[variable].props.setDataInField && value) {
+            if (
+              multiItemContent[variable].props.jsonPath.split(".")[0] ===
+                "LicensesTemp" &&
+              multiItemContent[variable].props.jsonPath.split(".").pop() ===
+                "tradeType"
+            ) {
+              const data = get(
+                preparedFinalObject,
+                `applyScreenMdmsData.TradeLicense.TradeType.${value}`,
+                []
+              );
+              if (data) {
+                multiItemContent[
+                  "tradeType"
+                ].props.data = this.objectToDropdown(data);
+              }
+            } else if (
+              multiItemContent[variable].props.jsonPath.split(".").pop() ===
+              "tradeType"
+            ) {
+              const data = get(
+                preparedFinalObject,
+                `applyScreenMdmsData.TradeLicense.TradeType.${
+                  value.split(".")[0]
+                }.${value.split(".")[1]}`
+              );
+              if (data) {
+                multiItemContent[variable].props.data = data;
+              }
             }
           }
         } else if (

@@ -130,6 +130,14 @@ var MultiItem = function (_React$Component) {
           }
         }
       }
+    }, _this.objectToDropdown = function (object) {
+      var dropDown = [];
+      for (var variable in object) {
+        if (object.hasOwnProperty(variable)) {
+          dropDown.push({ code: variable });
+        }
+      }
+      return dropDown;
     }, _this.addItem = function () {
       var isNew = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var _this$props = _this.props,
@@ -142,7 +150,8 @@ var MultiItem = function (_React$Component) {
           componentJsonpath = _this$props.componentJsonpath,
           headerName = _this$props.headerName,
           headerJsonPath = _this$props.headerJsonPath,
-          screenConfig = _this$props.screenConfig;
+          screenConfig = _this$props.screenConfig,
+          preparedFinalObject = _this$props.preparedFinalObject;
 
       var items = isNew ? [] : (0, _get2.default)(screenConfig, screenKey + "." + componentJsonpath + ".props.items", []);
       var itemsLength = items.length;
@@ -159,6 +168,21 @@ var MultiItem = function (_React$Component) {
                 multiItemContent[variable].jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
                 multiItemContent[variable].props.jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
                 multiItemContent[variable].index = itemsLength;
+              }
+            }
+            //Temporary fix - For setting trade type - should be generalised
+            var value = (0, _get2.default)(preparedFinalObject, multiItemContent[variable].props.jsonPath);
+            if (multiItemContent[variable].props.setDataInField && value) {
+              if (multiItemContent[variable].props.jsonPath.split(".")[0] === "LicensesTemp" && multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
+                var data = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType." + value, []);
+                if (data) {
+                  multiItemContent["tradeType"].props.data = _this.objectToDropdown(data);
+                }
+              } else if (multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
+                var _data = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType." + value.split(".")[0] + "." + value.split(".")[1]);
+                if (_data) {
+                  multiItemContent[variable].props.data = _data;
+                }
               }
             }
           } else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props") && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath")) {

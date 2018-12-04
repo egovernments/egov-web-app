@@ -1,4 +1,3 @@
-import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import {
   convertDateToEpoch,
@@ -167,17 +166,21 @@ export const getBoundaryData = async (
   }
 };
 
-const getMultipleAccessories = licenses => {
-  let accessories = get(licenses, "tradeLicenseDetail.accessories");
-  let mergedAccessories =
-    accessories &&
-    accessories.reduce((result, item) => {
-      if (item && item !== null && item.hasOwnProperty("accessoryCategory")) {
+const getMultiUnits = multiUnits => {
+  let hasTradeType = false;
+  let hasAccessoryType = false;
+
+  let mergedUnits =
+    multiUnits &&
+    multiUnits.reduce((result, item) => {
+      hasTradeType = item.hasOwnProperty("tradeType");
+      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
+      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
         if (item.hasOwnProperty("id")) {
           if (item.hasOwnProperty("active") && item.active) {
             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
               set(item, "active", false);
-              result.push(item);
+              //result.push(item);
             } else {
               result.push(item);
             }
@@ -191,8 +194,35 @@ const getMultipleAccessories = licenses => {
       return result;
     }, []);
 
-  return mergedAccessories;
+  return mergedUnits;
 };
+
+// const getMultipleAccessories = licenses => {
+//   let accessories = get(licenses, "tradeLicenseDetail.accessories");
+//   let mergedAccessories =
+//     accessories &&
+//     accessories.reduce((result, item) => {
+//       if (item && item !== null && item.hasOwnProperty("accessoryCategory")) {
+//         if (item.hasOwnProperty("id")) {
+//           if (item.hasOwnProperty("active") && item.active) {
+//             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+//               set(item, "active", false);
+//               result.push(item);
+//             } else {
+//               result.push(item);
+//             }
+//           }
+//         } else {
+//           if (!item.hasOwnProperty("isDeleted")) {
+//             result.push(item);
+//           }
+//         }
+//       }
+//       return result;
+//     }, []);
+
+//   return mergedAccessories;
+// };
 
 const getMultipleOwners = owners => {
   let mergedOwners =
@@ -264,11 +294,18 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
 
     if (queryObject[0].applicationNumber) {
       //call update
-
+      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
+      let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      set(
+        queryObject[0],
+        "tradeLicenseDetail.tradeUnits",
+        getMultiUnits(tradeUnits)
+      );
       set(
         queryObject[0],
         "tradeLicenseDetail.accessories",
-        getMultipleAccessories(queryObject[0])
+        //getMultipleAccessories(queryObject[0]
+        getMultiUnits(accessories)
       );
       set(
         queryObject[0],
@@ -300,13 +337,18 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       dispatch(prepareFinalObject("Licenses", response.Licenses));
     } else {
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
       // let owners = get(queryObject[0], "tradeLicenseDetail.owners");
+      let mergedTradeUnits =
+        tradeUnits &&
+        tradeUnits.filter(item => !item.hasOwnProperty("isDeleted"));
       let mergedAccessories =
         accessories &&
         accessories.filter(item => !item.hasOwnProperty("isDeleted"));
       let mergedOwners =
         owners && owners.filter(item => !item.hasOwnProperty("isDeleted"));
 
+      set(queryObject[0], "tradeLicenseDetail.tradeUnits", mergedTradeUnits);
       set(queryObject[0], "tradeLicenseDetail.accessories", mergedAccessories);
       set(queryObject[0], "tradeLicenseDetail.owners", mergedOwners);
       set(queryObject[0], "action", "INITIATE");
@@ -420,7 +462,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
       if (uploadDocument) {
         if (file.type.match(/^image\//)) {
-          const imageUri = await getImageUrlByFile(file);
+          //const imageUri = await getImageUrlByFile(file);
           const fileStoreId = await uploadFile(
             S3_BUCKET.endPoint,
             "TL",

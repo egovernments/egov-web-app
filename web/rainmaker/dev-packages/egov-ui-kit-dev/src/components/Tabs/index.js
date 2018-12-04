@@ -13,6 +13,12 @@ const inkBarStyle = {
   zIndex: 1101,
   backgroundColor: "#fe7a51",
   height: 4,
+  position: "fixed",
+  bottom: "inherit",
+};
+
+const inkBarContainerStyle = {
+  paddingTop: "48px",
 };
 
 const Tabs = ({ tabs = [], onChange, className }) => {
@@ -28,7 +34,13 @@ const Tabs = ({ tabs = [], onChange, className }) => {
   };
 
   return (
-    <MaterialUiTabs className={className} onChange={onChange} tabItemContainerStyle={tabItemContainerStyle} inkBarStyle={inkBarStyle}>
+    <MaterialUiTabs
+      className={className}
+      onChange={onChange}
+      inkBarContainerStyle={inkBarContainerStyle}
+      tabItemContainerStyle={tabItemContainerStyle}
+      inkBarStyle={inkBarStyle}
+    >
       {renderTabs()}
     </MaterialUiTabs>
   );

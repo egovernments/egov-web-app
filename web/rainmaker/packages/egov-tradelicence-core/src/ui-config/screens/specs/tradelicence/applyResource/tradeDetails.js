@@ -3,7 +3,6 @@ import {
   getCommonGrayCard,
   getCommonTitle,
   getCommonSubHeader,
-  getCommonParagraph,
   getTextField,
   getDateField,
   getSelectField,
@@ -13,7 +12,6 @@ import {
 import {
   getIconStyle,
   objectToDropdown,
-  prepareDocumentTypeObj,
   getTodaysDateInYMD,
   getFinancialYearDates,
   getNextMonthDateInYMD,
@@ -50,7 +48,8 @@ const tradeUnitCard = {
               required: true,
               jsonPath: "LicensesTemp.tradeUnits[0].tradeType",
               props: {
-                jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
+                jsonPathUpdatePrefix: "LicensesTemp.tradeUnits",
+                setDataInField: true
               },
               sourceJsonPath:
                 "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
@@ -181,6 +180,7 @@ const tradeUnitCard = {
                 "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
               sourceJsonPath:
                 "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
+              setDataInField: true,
               labelsFromLocalisation: true,
               fullwidth: true,
               required: true,
@@ -190,14 +190,17 @@ const tradeUnitCard = {
             },
             beforeFieldChange: (action, state, dispatch) => {
               try {
+                let cardIndex = action.componentJsonpath
+                  .split("items[")[1]
+                  .split("]")[0];
                 let tradeType = get(
                   state.screenConfiguration.preparedFinalObject,
-                  "LicensesTemp.tradeUnits[0].tradeType",
+                  `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
                   ""
                 );
                 let tradeCategory = get(
                   state.screenConfiguration.preparedFinalObject,
-                  "LicensesTemp.tradeUnits[0].tradeSubType",
+                  `LicensesTemp.tradeUnits[${cardIndex}].tradeSubType`,
                   ""
                 );
                 let tradeSubCategories = get(
@@ -216,14 +219,17 @@ const tradeUnitCard = {
                 if (currentObject[0].uom !== null) {
                   dispatch(
                     pFO(
-                      "Licenses[0].tradeLicenseDetail.tradeUnits[0].uom",
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
                       currentObject[0].uom
                     )
                   );
                   dispatch(
                     handleField(
                       "apply",
-                      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children.tradeUOMValue",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
                       "props.disabled",
                       false
                     )

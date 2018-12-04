@@ -1,7 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
-import pdfMake from "pdfmake/build/pdfmake";
-import { getBaseURL } from "../../utils";
+import jsPDF from "jspdf";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 
 const getCommonApplyFooter = children => {
@@ -45,21 +44,28 @@ const generatePdfAndDownload = (
           document
             .querySelector("#custom-atoms-iframeForPdf")
             .removeChild(iframe);
-          var data = canvas.toDataURL();
-          var docDefinition = {
-            content: [
-              {
-                image: data,
-                width: 500
-              }
-            ]
-          };
+          var data = canvas.toDataURL("image/jpeg", 1);
+          var imgWidth = 200;
+          var pageHeight = 295;
+          var imgHeight = (canvas.height * imgWidth) / canvas.width;
+          var heightLeft = imgHeight;
+          var doc = new jsPDF("p", "mm");
+          var position = 0;
+
+          doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
           if (action === "download") {
-            pdfMake
-              .createPdf(docDefinition)
-              .download(`application_summary_${applicationNumber}.pdf`);
+            doc.save(`application_summary_${applicationNumber}.pdf`);
           } else if (action === "print") {
-            pdfMake.createPdf(docDefinition).print();
+            doc.autoPrint();
+            window.open(doc.output("bloburl"), "_blank");
           }
         });
       }
@@ -104,7 +110,7 @@ export const applicationSuccessFooter = (
   applicationNumber,
   tenant
 ) => {
-  const baseURL = getBaseURL();
+  //const baseURL = getBaseURL();
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",

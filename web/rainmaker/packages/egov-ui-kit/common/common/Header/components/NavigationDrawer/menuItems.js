@@ -78,7 +78,7 @@ var items = {
       one: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HOMEHEADER" }),
-          route: "/all-complaints",
+          route: "",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
           style: {
             paddingBottom: "1px",
@@ -87,14 +87,16 @@ var items = {
           },
           id: "header-home",
           renderforcsr: 1,
-          renderforadmin: 1
+          renderforadmin: 1,
+          renderforTLEmp: 1
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_CLOSED_COMPLAINTS_HEADER" }),
           route: "/closed-complaints",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "file-check" }),
           id: "header-closed-complaint",
           renderforcsr: 0,
-          renderforadmin: 0
+          renderforadmin: 0,
+          renderforTLEmp: 0
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_EMPLOYEE_DIRECTORY_HEADER" }),
           route: "/employee-directory",
@@ -105,7 +107,8 @@ var items = {
           },
           id: "header-contact-us",
           renderforcsr: 1,
-          renderforadmin: 1
+          renderforadmin: 1,
+          renderforTLEmp: 1
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_PROFILE" }),
           route: "/user/profile",
@@ -116,7 +119,8 @@ var items = {
           },
           id: "header-profile",
           renderforcsr: 1,
-          renderforadmin: 1
+          renderforadmin: 1,
+          renderforTLEmp: 1
         }]
       },
       two: {
@@ -130,7 +134,8 @@ var items = {
           },
           id: "header-logout",
           renderforcsr: 1,
-          renderforadmin: 1
+          renderforadmin: 1,
+          renderforTLEmp: 1
         }]
       }
     }
@@ -150,13 +155,25 @@ var renderMenuForADMIN = function renderMenuForADMIN(role, section) {
   return menuForADMIN;
 };
 
+var renderMenuForTLEmp = function renderMenuForTLEmp(role, section) {
+  var menuForTLEmp = items[role].sections[section].items.filter(function (item) {
+    return item.renderforTLEmp === 1;
+  });
+  return menuForTLEmp;
+};
+
+// const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
+//   return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+// };
+
 var menuItems = function menuItems() {
   var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "citizen";
   var section = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "one";
   var isCSR = arguments[2];
   var isADMIN = arguments[3];
 
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+  var isTL = window.location.pathname.includes("tradelicense");
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : isTL ? renderMenuForTLEmp(role, section) : items[role].sections[section].items;
 };
 
 exports.default = menuItems;

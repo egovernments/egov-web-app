@@ -1,15 +1,12 @@
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
+  updatePFOforSearchResults,
+  getBoundaryData
+} from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import get from "lodash/get";
 import {
   header,
-  tradeDocumentDetails,
-  stepsData,
   formwizardFirstStep,
   formwizardSecondStep,
   formwizardThirdStep,
@@ -38,19 +35,17 @@ const screenConfig = {
     }
     getMdmsData(action, state, dispatch);
     getAllDataFromBillingSlab(tenantId, dispatch);
+    getBoundaryData(action, state, dispatch, [
+      { key: "tenantId", value: tenantId }
+    ]);
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address.tenantId",
+        tenantId
+      )
+    );
     return action;
   },
-  // afterInitScreen: (action, state, dispatch) => {
-  //   const tenantId = getQueryArg(window.location.href, "tenantId");
-  //   dispatch(
-  //     handleScreenConfigurationFieldChange(
-  //       "apply",
-  //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity",
-  //       "props.value",
-  //       tenantId
-  //     )
-  //   );
-  // },
   components: {
     div: {
       uiFramework: "custom-atoms",
@@ -78,6 +73,15 @@ const screenConfig = {
         formwizardThirdStep,
         formwizardFourthStep,
         footer
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "apply"
       }
     }
   }

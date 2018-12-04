@@ -27,15 +27,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var onButton1Click = function onButton1Click(item, history, onPGRClick) {
   var route = item.route;
 
-  if (item.moduleTitle === "Property Tax") {
-    history && history.push(route);
-  } else if (item.moduleTitle === "Complaints") {
-    onPGRClick();
-  } else if (item.moduleTitle === "Finance") {
-    history && history.push(route);
-  } else if (item.moduleTitle === "TradeLicense") {
-    history && history.push(route);
-  }
+  history && history.push(route);
+  // if (item.moduleTitle === "Property Tax") {
+  //   history && history.push(route);
+  // } else if (item.moduleTitle === "Complaints") {
+  //   //onPGRClick();
+  //   history && history.push(route);
+  // } else if (item.moduleTitle === "Finance") {
+  //   history && history.push(route);
+  // } else if (item.moduleTitle === "TradeLicense") {
+  //   history && history.push(route);
+  // }
 };
 var onButton2Click = function onButton2Click(item, history) {
   if (process.env.REACT_APP_NAME === "Citizen") {
@@ -62,10 +64,9 @@ var Dashboard = function Dashboard(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { className: "col-sm-12 " },
+    { className: "col-sm-12 landing-page-main-container" },
     _react2.default.createElement(_translationNode2.default, { className: "landingPageUser", label: " Welcome " + userName + ", " }),
-    _react2.default.createElement(_component2.default, { onPGRClick: onPGRClick, items: moduleItems, onButton2Click: onButton2Click, onButton1Click: onButton1Click, history: history }),
-    renderCityPicker && _react2.default.createElement(_CityPicker2.default, { history: history, moduleItems: moduleItems, onDialogueClose: onDialogueClose, dialogueOpen: dialogueOpen })
+    _react2.default.createElement(_component2.default, { onPGRClick: onPGRClick, items: moduleItems, onButton2Click: onButton2Click, onButton1Click: onButton1Click, history: history })
   );
 };
 exports.default = Dashboard;

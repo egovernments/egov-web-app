@@ -6,10 +6,8 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer,
-  getContainerWithElement,
   getDateField,
-  getPattern,
-  getLabel
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getDetailsForOwner, getTodaysDateInYMD } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
