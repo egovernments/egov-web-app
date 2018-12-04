@@ -262,18 +262,7 @@ const tradeUnitCard = {
                       false
                     )
                   );
-                  dispatch(
-                    pFO(
-                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
-                      null
-                    )
-                  );
-                  dispatch(
-                    pFO(
-                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uomValue`,
-                      null
-                    )
-                  );
+
                   dispatch(
                     handleField(
                       "apply",
@@ -305,6 +294,18 @@ const tradeUnitCard = {
                       ),
                       "props.value",
                       ""
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
+                      null
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uomValue`,
+                      null
                     )
                   );
                 }

@@ -32,29 +32,29 @@
 
 .employee-complaints-tab > div:first-child {
   background-color: #00bcd1;
-  position: fixed !important;
+  // position: fixed !important;
 }
-.gro-screen {
-  padding-top: 60px;
-}
+// .gro-screen {
+//   padding-top: 60px;
+// }
 
 @media only screen and (min-width: 768px) {
   .employee-complaints-tab > div:first-child {
-    position: relative !important;
+    // position: relative !important;
     background-color: transparent !important;
   }
 
-  .employee-complaints-tab > div:nth-child(2) {
-    padding-top: 0px !important;
-  }
+  // .employee-complaints-tab > div:nth-child(2) {
+  //   padding-top: 0px !important;
+  // }
 
-  .employee-complaints-tab > div:nth-child(2) > div:first-child {
-    position: relative !important;
-  }
+  // .employee-complaints-tab > div:nth-child(2) > div:first-child {
+  //   position: relative !important;
+  // }
 
-  .gro-screen {
-    padding-top: 0px !important;
-  }
+  // .gro-screen {
+  //   padding-top: 0px !important;
+  // }
 
   .selected-tab-label-text {
     color: #fe7a51;
@@ -71,11 +71,11 @@
     padding: 0 !important;
   }
 
-  .employee-complaints-tab {
-    padding-top: 60px;
-  }
+  // .employee-complaints-tab {
+  //   padding-top: 60px;
+  // }
 
-  .gro-screen {
-    padding-top: 0px !important;
-  }
+  // .gro-screen {
+  //   padding-top: 0px !important;
+  // }
 }
