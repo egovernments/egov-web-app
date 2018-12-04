@@ -53,7 +53,13 @@ export const searchResults = {
       responsive: "stacked",
       selectableRows: false,
       hover: true,
-      rowsPerPageOptions: [10, 20, 40]
+      rowsPerPageOptions: [10, 15, 20],
+      sort: true
+      // customSort: (data, colIndex, order) => {
+      //   console.log(data, colIndex, order);
+      //   debugger;
+      //   return data;
+      // }
     }
   }
 };

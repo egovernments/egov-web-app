@@ -218,9 +218,25 @@ const tradeUnitCard = {
                 });
                 if (currentObject[0].uom !== null) {
                   dispatch(
-                    pFO(
-                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOM"
+                      ),
+                      "props.value",
                       currentObject[0].uom
+                    )
+                  );
+                  dispatch(
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
+                      "props.required",
+                      true
                     )
                   );
                   dispatch(
@@ -232,6 +248,63 @@ const tradeUnitCard = {
                       ),
                       "props.disabled",
                       false
+                    )
+                  );
+                } else {
+                  dispatch(
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
+                      "props.required",
+                      false
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
+                      null
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uomValue`,
+                      null
+                    )
+                  );
+                  dispatch(
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
+                      "props.disabled",
+                      true
+                    )
+                  );
+                  dispatch(
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOM"
+                      ),
+                      "props.value",
+                      ""
+                    )
+                  );
+                  dispatch(
+                    handleField(
+                      "apply",
+                      action.componentJsonpath.replace(
+                        "tradeSubType",
+                        "tradeUOMValue"
+                      ),
+                      "props.value",
+                      ""
                     )
                   );
                 }
@@ -249,7 +322,7 @@ const tradeUnitCard = {
               labelName: "UOM",
               labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
             },
-            required: true,
+            // required: true,
             props: {
               disabled: true
             },
@@ -268,9 +341,10 @@ const tradeUnitCard = {
               labelName: "Enter UOM Value",
               labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
             },
-            required: true,
+            // required: true,
             props: {
-              disabled: true
+              disabled: true,
+              setDataInField: true
             },
             pattern: getPattern("UOMValue"),
             jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue",
@@ -463,26 +537,29 @@ const accessoriesCard = {
             sm: 4
           }
         }),
-        accessoriesUOMValue: getTextField({
-          label: {
-            labelName: "UOM Value",
-            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter UOM Value",
-            labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
-          },
-          pattern: getPattern("UOMValue"),
-          props: {
-            disabled: true
-          },
-          required: true,
-          jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
-          gridDefination: {
-            xs: 12,
-            sm: 4
-          }
-        })
+        accessoriesUOMValue: {
+          ...getTextField({
+            label: {
+              labelName: "UOM Value",
+              labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
+            },
+            placeholder: {
+              labelName: "Enter UOM Value",
+              labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
+            },
+            pattern: getPattern("UOMValue"),
+            props: {
+              disabled: true,
+              setDataInField: true
+            },
+            required: true,
+            jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
+            gridDefination: {
+              xs: 12,
+              sm: 4
+            }
+          })
+        }
       })
     }),
 

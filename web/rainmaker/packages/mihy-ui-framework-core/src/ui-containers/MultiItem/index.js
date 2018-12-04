@@ -120,6 +120,12 @@ class MultiItem extends React.Component {
             preparedFinalObject,
             multiItemContent[variable].props.jsonPath
           );
+
+          // console.log(
+          //   multiItemContent[variable].props.jsonPath,
+          //   value,
+          //   "yhi hai"
+          // );
           if (multiItemContent[variable].props.setDataInField && value) {
             if (
               multiItemContent[variable].props.jsonPath.split(".")[0] ===
@@ -150,6 +156,13 @@ class MultiItem extends React.Component {
               if (data) {
                 multiItemContent[variable].props.data = data;
               }
+            } else if (
+              multiItemContent[variable].props.jsonPath.split(".").pop() ===
+                "uomValue" &&
+              value > 0
+            ) {
+              multiItemContent[variable].props.disabled = false;
+              multiItemContent[variable].props.required = true;
             }
           }
         } else if (
