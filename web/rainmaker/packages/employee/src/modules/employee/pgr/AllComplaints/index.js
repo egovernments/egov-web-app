@@ -202,7 +202,7 @@ class AllComplaints extends Component {
                 </div>
               ),
               children: (
-                <Screen className="gro-screen" loading={loading}>
+                <Screen loading={loading}>
                   <div className="tab1-content form-without-button-cont-generic">
                     <Complaints
                       noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}
