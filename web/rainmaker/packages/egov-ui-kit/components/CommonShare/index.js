@@ -58,7 +58,7 @@ var styles = function styles(theme) {
     },
     fab: {
       position: "fixed",
-      bottom: theme.spacing.unit * 2,
+      top: theme.spacing.unit * 9,
       right: theme.spacing.unit * 2,
       zIndex: 999
     },
@@ -111,7 +111,8 @@ var CommonShare = function (_React$Component) {
           visible && _react2.default.createElement(
             _Button2.default,
             {
-              className: "share-btn-main",
+              variant: "fab",
+              className: classes.fab + " share-btn-main",
               visible: "false",
               onClick: function onClick() {
                 shareCallback();
