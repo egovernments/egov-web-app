@@ -52,11 +52,11 @@ class MultiItem extends React.Component {
     }
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps, this.props)) {
-      this.initMultiItem(nextProps);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (!isEqual(nextProps.items.length, this.props.length)) {
+  //     this.initMultiItem(nextProps);
+  //   }
+  // }
 
   objectToDropdown = object => {
     let dropDown = [];

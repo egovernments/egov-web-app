@@ -216,14 +216,13 @@ var MultiItem = function (_React$Component) {
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if (!isEqual(nextProps.items.length, this.props.length)) {
+  //     this.initMultiItem(nextProps);
+  //   }
+  // }
+
   (0, _createClass3.default)(MultiItem, [{
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      if (!(0, _isEqual2.default)(nextProps, this.props)) {
-        this.initMultiItem(nextProps);
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       var _props = this.props,

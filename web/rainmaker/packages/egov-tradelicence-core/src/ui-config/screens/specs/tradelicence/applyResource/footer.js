@@ -132,7 +132,7 @@ export const callBackForNext = async (state, dispatch) => {
       tradeUnitJsonPath,
       []
     );
-    console.log(tradeUnits);
+    // console.log(tradeUnits);
     let isTradeUnitValid = true;
 
     for (var i = 0; i < tradeUnits.length; i++) {

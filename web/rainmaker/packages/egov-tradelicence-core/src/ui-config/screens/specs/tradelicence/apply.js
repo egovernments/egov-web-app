@@ -146,8 +146,9 @@ export const getMdmsData = async (action, state, dispatch) => {
     );
     //dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
     const localities = get(
-      state.screenConfiguration.preparedFinalObject,
-      "applyScreenMdmsData.tenant.localities"
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.tenant.localities",
+      []
     );
     if (localities && localities.length > 0) {
       payload.MdmsRes.tenant.localities = localities;
@@ -260,14 +261,7 @@ const screenConfig = {
         );
         //Call and set boundary dropdown data, since there is no handleField for city in employee app
         const queryObj = [{ key: "tenantId", value: tenantId }];
-        getBoundaryData(action, state, dispatch, queryObj).then(
-          res => {
-            console.log(res);
-          },
-          err => {
-            console.log(err);
-          }
-        );
+        getBoundaryData(action, state, dispatch, queryObj);
       },
       err => {
         console.log(err);
