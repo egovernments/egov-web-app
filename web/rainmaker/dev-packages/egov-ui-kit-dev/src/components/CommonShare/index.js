@@ -15,7 +15,7 @@ const styles = (theme) => ({
   },
   fab: {
     position: "fixed",
-    bottom: theme.spacing.unit * 2,
+    top: theme.spacing.unit * 9,
     right: theme.spacing.unit * 2,
     zIndex: 999,
   },
@@ -45,7 +45,8 @@ class CommonShare extends React.Component {
         <div className={classes.menuItem}>
           {visible && (
             <Button
-              className={`share-btn-main`}
+              variant="fab"
+              className={`${classes.fab} share-btn-main`}
               visible="false"
               onClick={() => {
                 shareCallback();
