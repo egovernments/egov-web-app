@@ -223,10 +223,11 @@ export const formwizardFourthStep = {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
+  // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     dispatch(prepareFinalObject("LicensesTemp", []));
-
+    getData(action, state, dispatch); 
     const tenantId = localStorage.getItem("tenant-id");
     const queryObj = [{ key: "tenantId", value: tenantId }];
     getBoundaryData(action, state, dispatch, queryObj);
@@ -254,7 +255,6 @@ const screenConfig = {
       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
       "PERMANENT"
     );
-    getData(action, state, dispatch);
     return action;
   },
 

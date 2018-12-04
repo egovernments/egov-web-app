@@ -66,7 +66,7 @@ export const getFileUrlFromAPI = async fileStoreId => {
   }
 };
 
-export const getSearchResults = async queryObject => {
+export const getSearchResults = async (queryObject) => {
   try {
     const response = await httpRequest(
       "post",
@@ -96,7 +96,9 @@ export const updatePFOforSearchResults = async (
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
-  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  if (payload) {
+    dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  }
   const licenseType = payload && get(payload, "Licenses[0].licenseType");
   const structureSubtype =
     payload && get(payload, "Licenses[0].tradeLicenseDetail.structureType");
