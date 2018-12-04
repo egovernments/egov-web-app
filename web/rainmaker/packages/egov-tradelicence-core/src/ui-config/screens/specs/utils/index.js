@@ -1901,10 +1901,19 @@ export const showCityPicker = (state, dispatch) => {
 export const applyForm = (state, dispatch) => {
   const tenantId = get(
     state.screenConfiguration.preparedFinalObject,
-    "undefined"
+    "citiesByModule.citizenTenantId"
   );
-  window.location.href =
-    process.env.NODE_ENV === "development"
-      ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-      : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+
+  const isTradeDetailsValid = validateFields(
+    "components.cityPickerDialog.children.dialogContent.children.popup.children.cityPicker.children",
+    state,
+    dispatch,
+    "home"
+  );
+  if (isTradeDetailsValid) {
+    window.location.href =
+      process.env.NODE_ENV === "development"
+        ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+  }
 };

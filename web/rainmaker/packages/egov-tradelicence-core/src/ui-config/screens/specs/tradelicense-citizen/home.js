@@ -17,7 +17,7 @@ const header = getCommonHeader({
 
 const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
-  name: "search",
+  name: "home",
   beforeInitScreen: (action, state, dispatch) => {
     fetchData(action, state, dispatch);
     return action;
@@ -115,7 +115,7 @@ const tradeLicenseSearchAndResult = {
         dialogContent: {
           componentPath: "DialogContent",
           props: {
-            style: { minHeight: "320px", minWidth: "365px" }
+            style: { minHeight: "180px", minWidth: "365px" }
           },
           children: {
             popup: cityPicker
