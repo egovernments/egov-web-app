@@ -1,18 +1,12 @@
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
   updatePFOforSearchResults,
   getBoundaryData
 } from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import set from "lodash/set";
 import {
   header,
-  tradeDocumentDetails,
-  stepsData,
   formwizardFirstStep,
   formwizardSecondStep,
   formwizardThirdStep,

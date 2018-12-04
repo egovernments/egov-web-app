@@ -7,23 +7,17 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import {
-  getRadioGroupWithLabel,
   getApprovalTextField,
-  getSubHeaderLabel,
   getCheckbox,
   getContainerWithElement,
   getUploadFilesMultiple,
   getCheckBoxJsonpath,
-  getSafetyNormsJson,
-  getHygeneLevelJson,
-  getLocalityHarmedJson,
   getCurrentFinancialYear
 } from "../utils";
 import { footerApprove } from "./approveResource/footer";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 import set from "lodash/set";
 
-const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({

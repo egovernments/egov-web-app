@@ -144,7 +144,6 @@ export const getMdmsData = async (action, state, dispatch) => {
         get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
       )
     );
-    //dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
     const localities = get(
       state.screenConfiguration,
       "preparedFinalObject.applyScreenMdmsData.tenant.localities",
@@ -224,49 +223,38 @@ export const formwizardFourthStep = {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
-  // hasBeforeInitAsync: true,
   beforeInitScreen: (action, state, dispatch) => {
-    // async (action, state, dispatch) => {
-    //this logic should move to getData
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     dispatch(prepareFinalObject("LicensesTemp", []));
 
-    getData(action, state, dispatch).then(
-      responseAction => {
-        //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
-        const tenantId = localStorage.getItem("tenant-id");
-        let props = get(
-          action.screenConfig,
-          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-          {}
-        );
-        props.value = tenantId;
-        props.disabled = true;
-        set(
-          action.screenConfig,
-          "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-          props
-        );
-        dispatch(
-          prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.city",
-            tenantId
-          )
-        );
-        //hardcoding license type to permanent
-        set(
-          action.screenConfig,
-          "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
-          "PERMANENT"
-        );
-        //Call and set boundary dropdown data, since there is no handleField for city in employee app
-        const queryObj = [{ key: "tenantId", value: tenantId }];
-        getBoundaryData(action, state, dispatch, queryObj);
-      },
-      err => {
-        console.log(err);
-      }
+    const tenantId = localStorage.getItem("tenant-id");
+    const queryObj = [{ key: "tenantId", value: tenantId }];
+    getBoundaryData(action, state, dispatch, queryObj);
+    let props = get(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+      {}
     );
+    props.value = tenantId;
+    props.disabled = true;
+    set(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+      props
+    );
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address.city",
+        tenantId
+      )
+    );
+    //hardcoding license type to permanent
+    set(
+      action.screenConfig,
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+      "PERMANENT"
+    );
+    getData(action, state, dispatch);
     return action;
   },
 

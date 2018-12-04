@@ -1,15 +1,10 @@
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getCommonHeader,
-  getCommonCard,
-  getSelectField,
   getCommonContainer,
-  getCommonSubHeader,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { showCityPicker, applyForm } from "../utils";
-import get from "lodash/get";
 
 export const cityPicker = getCommonContainer({
   header: getCommonHeader({

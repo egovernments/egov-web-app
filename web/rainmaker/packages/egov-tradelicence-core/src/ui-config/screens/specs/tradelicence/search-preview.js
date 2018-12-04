@@ -3,8 +3,7 @@ import {
   getCommonCard,
   getCommonTitle,
   getCommonGrayCard,
-  getCommonContainer,
-  getLabel
+  getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -19,7 +18,6 @@ import {
   getDialogButton
 } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
-import { convertEpochToDate } from "../utils";
 import {
   getFeesEstimateCard,
   getHeaderSideText,

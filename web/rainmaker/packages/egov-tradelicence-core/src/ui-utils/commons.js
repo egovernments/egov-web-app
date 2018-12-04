@@ -1,4 +1,3 @@
-import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import {
   convertDateToEpoch,
@@ -181,7 +180,7 @@ const getMultiUnits = multiUnits => {
           if (item.hasOwnProperty("active") && item.active) {
             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
               set(item, "active", false);
-              result.push(item);
+              //result.push(item);
             } else {
               result.push(item);
             }
@@ -463,7 +462,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
       if (uploadDocument) {
         if (file.type.match(/^image\//)) {
-          const imageUri = await getImageUrlByFile(file);
+          //const imageUri = await getImageUrlByFile(file);
           const fileStoreId = await uploadFile(
             S3_BUCKET.endPoint,
             "TL",

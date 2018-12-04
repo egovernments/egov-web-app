@@ -7,9 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { handleFileUpload, getFileUrlFromAPI } from "ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { uploadFile } from "ui-utils/api";
 import { UploadSingleFile } from "ui-molecules-local";
-import get from "lodash/get";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
 
 const styles = theme => ({
@@ -59,9 +57,9 @@ const documentTitle = {
   letterSpacing: "0.67px",
   lineHeight: "19px"
 };
-const S3_BUCKET = {
-  endPoint: "filestore/v1/files"
-};
+// const S3_BUCKET = {
+//   endPoint: "filestore/v1/files"
+// };
 
 class DocumentList extends Component {
   state = {

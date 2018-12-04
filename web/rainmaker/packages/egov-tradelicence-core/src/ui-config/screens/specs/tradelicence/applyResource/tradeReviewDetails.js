@@ -1,8 +1,7 @@
 import {
   getCommonCard,
   getCommonGrayCard,
-  getCommonTitle,
-  getCommonParagraph
+  getCommonTitle
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { getFeesEstimateCard, getDialogButton } from "../../utils";

@@ -539,8 +539,11 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
 export const convertDateTimeToEpoch = dateTimeString => {
   //example input format : "26-07-2018 17:43:21"
   try {
+    // const parts = dateTimeString.match(
+    //   /(\d{2})\-(\d{2})\-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+    // );
     const parts = dateTimeString.match(
-      /(\d{2})\-(\d{2})\-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+      /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
     );
     return Date.UTC(+parts[3], parts[2] - 1, +parts[1], +parts[4], +parts[5]);
   } catch (e) {
@@ -564,7 +567,6 @@ export const getReceiptData = async queryObject => {
 };
 
 export const getAutoSelector = textScheama => {
-  const { textLabel = {}, jsonPath, props = {} } = textScheama;
   return {
     uiFramework: "custom-molecules-local",
     componentPath: "AutoSelector",
@@ -619,35 +621,35 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   }
 };
 
-const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
+//const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
 //applyScreenMdmsData.MdmsRes.TradeLicense.TradeType
-const reTrasnformerForNestedDropDown = (
-  originaJsonPath,
-  value,
-  state,
-  dispatch
-) => {
-  let nestedValues = value.split(".");
-  while (nestedValues.length > 1) {
-    const originalNestedValues = value.split(".");
-    const originalObject = get(state, `${originaJsonPath}`);
-    nestedValues = value.split(".");
-    const targetLevel = nestedValues.pop();
-    const targetpath = nestedValues.join(".");
-    let targetValues = get(originalObject, `${targetpath}`, []);
-    targetValues =
-      targetValues.length && targetValues.length >= 0
-        ? targetValues
-        : objectToDropdown(targetValues);
+// const reTrasnformerForNestedDropDown = (
+//   originaJsonPath,
+//   value,
+//   state,
+//   dispatch
+// ) => {
+//   let nestedValues = value.split(".");
+//   while (nestedValues.length > 1) {
+//     const originalNestedValues = value.split(".");
+//     const originalObject = get(state, `${originaJsonPath}`);
+//     nestedValues = value.split(".");
+//     const targetLevel = nestedValues.pop();
+//     const targetpath = nestedValues.join(".");
+//     let targetValues = get(originalObject, `${targetpath}`, []);
+//     targetValues =
+//       targetValues.length && targetValues.length >= 0
+//         ? targetValues
+//         : objectToDropdown(targetValues);
 
-    dispatch(
-      prepareFinalObject(
-        `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
-        targetValues
-      )
-    );
-  }
-};
+//     dispatch(
+//       prepareFinalObject(
+//         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
+//         targetValues
+//       )
+//     );
+//   }
+// };
 
 export const getMdmsData = async queryObject => {
   try {

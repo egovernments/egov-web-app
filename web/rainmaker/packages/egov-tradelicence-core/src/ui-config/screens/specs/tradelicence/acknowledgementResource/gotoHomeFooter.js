@@ -1,5 +1,5 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getBaseURL, ifUserRoleExists } from "../../utils";
+import { ifUserRoleExists } from "../../utils";
 
 const getCommonApplyFooter = children => {
   return {

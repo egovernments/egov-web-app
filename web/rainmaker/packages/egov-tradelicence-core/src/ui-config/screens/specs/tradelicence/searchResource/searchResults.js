@@ -63,14 +63,13 @@ export const searchResults = {
         format: rowData => {
           return (
             <Link to={onRowClick(rowData)}>
-             <span
-              style={{
-                color:"#FE7A51"
-              }}
-            >
-              {rowData[get(textToLocalMapping, "Application No")]}
-            </span>
-              
+              <span
+                style={{
+                  color: "#FE7A51"
+                }}
+              >
+                {rowData[get(textToLocalMapping, "Application No")]}
+              </span>
             </Link>
           );
         }
@@ -78,7 +77,11 @@ export const searchResults = {
       [get(textToLocalMapping, "License No")]: {},
       [get(textToLocalMapping, "Trade Name")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
-      [get(textToLocalMapping, "Application Date")]: {},
+      [get(textToLocalMapping, "Application Date")]: {
+        options: {
+          sort: true
+        }
+      },
       [get(textToLocalMapping, "Status")]: {}
     },
     title: get(
@@ -91,7 +94,7 @@ export const searchResults = {
       responsive: "stacked",
       selectableRows: false,
       hover: true,
-      rowsPerPageOptions: [10, 20, 40]
+      rowsPerPageOptions: [10, 15, 20]
     }
   }
 };
