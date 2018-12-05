@@ -34,6 +34,7 @@ import SearchScreen from "modules/employee/pgr/SearchScreen";
 //pt
 import ptRoutes from "./pt";
 import tlRoutes from "./tl";
+import externalRoutes from "./exterenalURL";
 
 // import PTHome from "modules/employee/PropertyTax/PTHome";
 
@@ -357,6 +358,7 @@ const routes = [
   },
   ...ptRoutes,
   ...tlRoutes,
+  ...externalRoutes,
 ];
 
 export default routes;
