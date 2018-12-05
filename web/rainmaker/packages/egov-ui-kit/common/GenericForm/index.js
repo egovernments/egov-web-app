@@ -34,7 +34,7 @@ var GenericForm = function GenericForm(_ref) {
     style: containerStyle,
     textChildren: _react2.default.createElement(
       "div",
-      { className: formKey + " col-xs-12" },
+      { className: formKey + " col-sm-12" },
       handleRemoveItem && _react2.default.createElement(
         "div",
         { className: "remove-unit-assessment", style: { cursor: "pointer" }, onClick: handleRemoveItem },
@@ -53,7 +53,7 @@ var GenericForm = function GenericForm(_ref) {
             "div",
             {
               style: fields[fieldKey].hideField ? {} : fields[fieldKey].toolTip ? { display: "flex", alignItems: "center", height: 80 } : { height: 80 },
-              className: fields[fieldKey].numcols ? fields[fieldKey].hideField ? "hidden-field" : "col-xs-" + fields[fieldKey].numcols : "col-xs-6"
+              className: fields[fieldKey].numcols ? fields[fieldKey].hideField ? "hidden-field" : "col-sm-" + fields[fieldKey].numcols : "col-sm-6"
             },
             _react2.default.createElement(_field2.default, {
               fieldKey: fieldKey,

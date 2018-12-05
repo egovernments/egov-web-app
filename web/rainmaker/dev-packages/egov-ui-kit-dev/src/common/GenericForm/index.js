@@ -9,7 +9,7 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
     <Card
       style={containerStyle}
       textChildren={
-        <div className={`${formKey} col-xs-12`}>
+        <div className={`${formKey} col-sm-12`}>
           {handleRemoveItem && (
             <div className="remove-unit-assessment" style={{ cursor: "pointer" }} onClick={handleRemoveItem}>
               <Icon action="navigation" name="close" />
@@ -32,7 +32,7 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
                         : { height: 80 }
                   }
                   className={
-                    fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "hidden-field" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`
+                    fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "hidden-field" : `col-sm-${fields[fieldKey].numcols}`) : `col-sm-6`
                   }
                 >
                   <Field
