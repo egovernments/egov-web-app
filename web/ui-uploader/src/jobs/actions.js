@@ -6,8 +6,24 @@ export const updateUserJobFilters = filter => {
   return { type: actionTypes.UPDATE_FILTERS, filter };
 };
 
-export const applyUserJobFilters = () => {
-  return { type: actionTypes.APPLY_FILTERS };
+export const applyUserJobFilters = filter => {
+  console.log("filter", filter);
+  const startDate = filter.startDate && filter.startDate.getTime();
+  const endDate = filter.endDate && filter.endDate.getTime();
+  console.log("dates", startDate, endDate);
+  return async (dispatch, getState) => {
+    dispatch(
+      fetchUserJobs(
+        filter.codes,
+        filter.statuses,
+        filter.requesterNames,
+        filter.fileNames,
+        startDate,
+        endDate
+      )
+    );
+  };
+  // return { type: actionTypes.APPLY_FILTERS };
 };
 
 export const resetUserJobFilters = () => {
@@ -27,13 +43,23 @@ export const fetchUserJobsFailure = error => {
   return { type: actionTypes.FETCH_USER_JOBS_FAILURE, error };
 };
 
-export const fetchUserJobs = (codes, statuses, startDate, endDate) => {
+export const fetchUserJobs = (
+  codes,
+  statuses,
+  requesterNames,
+  fileNames,
+  startDate,
+  endDate
+) => {
   return async (dispatch, getState) => {
+    console.log("in fetch", codes, statuses, startDate, endDate);
     dispatch(initiateUserJobsFetch());
     try {
       const userJobs = await Api().fetchUserJobs(
         codes,
         statuses,
+        requesterNames,
+        fileNames,
         startDate,
         endDate
       );

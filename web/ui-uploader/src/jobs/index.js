@@ -89,7 +89,7 @@ class UserJobsContainer extends Component {
   ];
 
   componentDidMount() {
-    this.props.fetchUserJobs();
+    // this.props.fetchUserJobs();
   }
 
   render() {
@@ -111,4 +111,7 @@ const mapStateToProps = (state, ownProps) => ({
   userJobs: filterUserJobs(state.userJobs.items)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserJobsContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserJobsContainer);
