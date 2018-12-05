@@ -227,34 +227,37 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     dispatch(prepareFinalObject("LicensesTemp", []));
-    getData(action, state, dispatch); 
-    const tenantId = localStorage.getItem("tenant-id");
-    const queryObj = [{ key: "tenantId", value: tenantId }];
-    getBoundaryData(action, state, dispatch, queryObj);
-    let props = get(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      {}
-    );
-    props.value = tenantId;
-    props.disabled = true;
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      props
-    );
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address.city",
-        tenantId
-      )
-    );
-    //hardcoding license type to permanent
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
-      "PERMANENT"
-    );
+    // getData(action, state, dispatch);
+    getData(action, state, dispatch).then(responseAction => {
+      const tenantId = localStorage.getItem("tenant-id");
+      const queryObj = [{ key: "tenantId", value: tenantId }];
+      getBoundaryData(action, state, dispatch, queryObj);
+      let props = get(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+        {}
+      );
+      props.value = tenantId;
+      props.disabled = true;
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+        props
+      );
+      dispatch(
+        prepareFinalObject(
+          "Licenses[0].tradeLicenseDetail.address.city",
+          tenantId
+        )
+      );
+      //hardcoding license type to permanent
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+        "PERMANENT"
+      );
+    });
+
     return action;
   },
 
