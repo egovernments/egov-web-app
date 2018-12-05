@@ -296,8 +296,8 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
 
     if (queryObject[0].applicationNumber) {
       //call update
-      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
       set(
         queryObject[0],
         "tradeLicenseDetail.tradeUnits",
@@ -306,7 +306,6 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       set(
         queryObject[0],
         "tradeLicenseDetail.accessories",
-        //getMultipleAccessories(queryObject[0]
         getMultiUnits(accessories)
       );
       set(
@@ -329,14 +328,30 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         action = "APPLY";
       }
       set(queryObject[0], "action", action);
-      const response = await httpRequest(
+      const updateResponse = await httpRequest(
         "post",
         "/tl-services/v1/_update",
         "",
         [],
         { Licenses: queryObject }
       );
-      dispatch(prepareFinalObject("Licenses", response.Licenses));
+      let searchQueryObject = [
+        { key: "tenantId", value: queryObject[0].tenantId },
+        { key: "applicationNumber", value: queryObject[0].applicationNumber }
+      ];
+      let searchResponse = await getSearchResults(searchQueryObject);
+      dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      const updatedtradeUnits = get(
+        searchResponse,
+        "Licenses[0].tradeLicenseDetail.tradeUnits"
+      );
+      const tradeTemp = updatedtradeUnits.map((item, index) => {
+        return {
+          tradeSubType: item.tradeType.split(".")[1],
+          tradeType: item.tradeType.split(".")[0]
+        };
+      });
+      dispatch(prepareFinalObject("LicensesTemp.tradeUnits", tradeTemp));
     } else {
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
       let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
