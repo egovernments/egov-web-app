@@ -187,7 +187,7 @@ const renderMenuForTLEmp = (role, section) => {
 // };
 
 const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-  let isTL = window.location.pathname.includes("tradelicense");
+  let isTL = role === "employee" && window.location.pathname.includes("tradelicense");
   return isCSR
     ? renderMenuForCSR(role, section)
     : isADMIN

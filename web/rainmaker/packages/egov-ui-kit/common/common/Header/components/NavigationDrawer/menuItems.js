@@ -172,7 +172,7 @@ var menuItems = function menuItems() {
   var isCSR = arguments[2];
   var isADMIN = arguments[3];
 
-  var isTL = window.location.pathname.includes("tradelicense");
+  var isTL = role === "employee" && window.location.pathname.includes("tradelicense");
   return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : isTL ? renderMenuForTLEmp(role, section) : items[role].sections[section].items;
 };
 

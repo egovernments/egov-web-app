@@ -66,7 +66,7 @@ export const getFileUrlFromAPI = async fileStoreId => {
   }
 };
 
-export const getSearchResults = async (queryObject) => {
+export const getSearchResults = async queryObject => {
   try {
     const response = await httpRequest(
       "post",
@@ -182,7 +182,7 @@ const getMultiUnits = multiUnits => {
           if (item.hasOwnProperty("active") && item.active) {
             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
               set(item, "active", false);
-              //result.push(item);
+              result.push(item);
             } else {
               result.push(item);
             }
