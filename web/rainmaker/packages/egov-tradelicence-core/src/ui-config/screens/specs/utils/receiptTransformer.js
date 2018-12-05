@@ -31,11 +31,7 @@ const epochToDate = et => {
   if (!et) return null;
   var date = new Date(Math.round(Number(et)));
   var formattedDate =
-    date.getUTCDate() +
-    "/" +
-    (date.getUTCMonth() + 1) +
-    "/" +
-    date.getUTCFullYear();
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   return formattedDate;
 };
 
