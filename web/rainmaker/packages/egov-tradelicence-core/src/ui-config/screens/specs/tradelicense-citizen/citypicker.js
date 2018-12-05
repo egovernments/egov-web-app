@@ -9,7 +9,7 @@ import { showCityPicker, applyForm } from "../utils";
 export const cityPicker = getCommonContainer({
   header: getCommonHeader({
     labelName: "Pick your city.",
-    labelKey: "TL_"
+    labelKey: "TL_PICK_YOUR_CITY_CITIZEN"
   }),
   cityPicker: getCommonContainer({
     cityDropdown: {
@@ -57,7 +57,7 @@ export const cityPicker = getCommonContainer({
           children: {
             previousButtonLabel: getLabel({
               labelName: "SELECT",
-              labelKey: "TL_"
+              labelKey: "TL_CITIZEN_SELECT"
             })
           },
           onClickDefination: {
