@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextFieldIcon, TextField, DropDown, AutoSuggestDropdown } from "components";
+import { Card, TextFieldIcon, TextField, AutoSuggestDropdown } from "components";
 import { Link } from "react-router-dom";
 import TrackIcon from "material-ui/svg-icons/maps/my-location";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TimeLine, Icon } from "components";
+import { TimeLine, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 

@@ -13,7 +13,6 @@ import EditIcon from "./components/EditIcon";
 import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
 import Label from "egov-ui-kit/utils/translationNode";
 
-
 import { SingleCheckbox } from "components";
 import "./index.css";
 const defaultIconStyle = {
@@ -170,8 +169,18 @@ class ReviewForm extends Component {
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
-    let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
-    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid, termsAccepted, termsError, toggleTerms } = this.props;
+    let { valueSelected, importantDates, errorText } = this.state;
+    let {
+      stepZero,
+      stepTwo,
+      stepOne,
+      estimationDetails,
+      totalAmountToBePaid,
+      isPartialPaymentInValid,
+      termsAccepted,
+      termsError,
+      toggleTerms,
+    } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
@@ -211,10 +220,10 @@ class ReviewForm extends Component {
             floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
             value={termsAccepted}
             onCheck={() => {
-              toggleTerms()
+              toggleTerms();
             }}
           />
-          {termsError && <div style={{"marginTop": "-22px","color": "#f44336", "margin-left": "4px"}}>{termsError}</div>}
+          {termsError && <div style={{ marginTop: "-22px", color: "#f44336", "margin-left": "4px" }}>{termsError}</div>}
         </div>
       </div>
     );

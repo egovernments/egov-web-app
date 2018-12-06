@@ -30,7 +30,7 @@ class FloorDetails extends React.Component {
   }
 
   configureFloors = (props) => {
-    const { noFloors, componentDetails, disabled, form, toggleSpinner } = props;
+    const { noFloors, componentDetails, disabled, form } = props;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
 

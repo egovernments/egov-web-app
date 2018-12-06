@@ -1,6 +1,6 @@
 import React from "react";
 import get from "lodash/get";
-import { Divider, Button } from "components";
+import { Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import isUndefined from "lodash/isUndefined";
@@ -25,7 +25,7 @@ class PropertyTaxDetails extends React.Component {
     const { estimationDetails, importantDates, optionSelected, openCalculationDetails } = this.props;
     const { isExpanded } = this.state;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
-    const { fireCess, intrest, penalty, rebate } = importantDates;
+    const { intrest, penalty, rebate } = importantDates;
     return (
       <Card style={{ marginBottom: 20, "background-color": "white" }} expanded={isExpanded}>
         <CardHeader
@@ -45,16 +45,22 @@ class PropertyTaxDetails extends React.Component {
               <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" />
               <Label
                 className="property-dues-total-amount"
-                label={`INR ${totalAmount ? `${
-                    !(optionSelected === "Partial_Amount")
-                      ? totalAmount
-                      : totalAmount +
-                        get(
-                          taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
-                          "estimateAmount",
-                          0
-                        )
-                  }` : totalAmount === 0 ? "0" : "NA"}`}
+                label={`INR ${
+                  totalAmount
+                    ? `${
+                        !(optionSelected === "Partial_Amount")
+                          ? totalAmount
+                          : totalAmount +
+                            get(
+                              taxHeadEstimates[taxHeadEstimates.findIndex((item) => item.taxHeadCode.toLowerCase().indexOf("rebate") !== -1)],
+                              "estimateAmount",
+                              0
+                            )
+                      }`
+                    : totalAmount === 0
+                    ? "0"
+                    : "NA"
+                }`}
                 fontSize="16px"
                 color="#484848"
               />

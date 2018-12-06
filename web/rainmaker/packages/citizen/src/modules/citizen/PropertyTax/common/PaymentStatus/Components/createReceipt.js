@@ -29,26 +29,26 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   return taxArray;
 };
 
-const getBase64FromImageUrl = async (url) => {
-  var img = new Image();
-  var dataURL;
-  img.setAttribute("crossOrigin", "anonymous");
+// const getBase64FromImageUrl = async (url) => {
+//   var img = new Image();
+//   var dataURL;
+//   img.setAttribute("crossOrigin", "anonymous");
 
-  img.onload = await function() {
-    var canvas = document.createElement("canvas");
-    canvas.width = this.width;
-    canvas.height = this.height;
+//   img.onload = await function() {
+//     var canvas = document.createElement("canvas");
+//     canvas.width = this.width;
+//     canvas.height = this.height;
 
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(this, 0, 0);
+//     var ctx = canvas.getContext("2d");
+//     ctx.drawImage(this, 0, 0);
 
-    dataURL = canvas.toDataURL("image/png");
+//     dataURL = canvas.toDataURL("image/png");
 
-    dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-  };
+//     dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+//   };
 
-  return dataURL;
-};
+//   return dataURL;
+// };
 // const url = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${property.tenantId}/logo.png`;
 const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
