@@ -39,6 +39,7 @@ const FiltersView = ({ handleApplyFilter, handleResetFilter }) => {
           >
             <ButtonUi
               onClick={handleApplyFilter}
+              className={"uploader-primary-button"}
               style={{ marginRight: "15px" }}
               type="button"
               primary={true}

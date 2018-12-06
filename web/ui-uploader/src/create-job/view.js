@@ -29,6 +29,7 @@ const CreateJobView = ({
       <div style={{ textAlign: "center", width: "100%" }} className="col-lg-12">
         <ButtonUi
           style={{ marginRight: "15px" }}
+          className={"uploader-primary-button"}
           icon={{ style: { color: "white" }, name: "add" }}
           onClick={handleSubmit}
           label="Create"
@@ -36,6 +37,7 @@ const CreateJobView = ({
         />
         <ButtonUi
           style={{ marginRight: "15px" }}
+          className={"uploader-primary-button"}
           icon={{ style: { color: "white" }, name: "list" }}
           onClick={showJobs}
           label="View Jobs"

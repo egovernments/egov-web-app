@@ -26,13 +26,15 @@ class UserJobsDateFilterContainer extends Component {
             maxDate={maxDate}
           />
         </div>
-        <DatePickerUi
-          value={endDate}
-          onChange={(event, date) => {
-            updateUserJobFilters({ endDate: date });
-          }}
-          label="To Date"
-        />
+        <div className="col-lg-4 col-md-4">
+          <DatePickerUi
+            value={endDate}
+            onChange={(event, date) => {
+              updateUserJobFilters({ endDate: date });
+            }}
+            label="To Date"
+          />
+        </div>
       </div>
     );
   }
@@ -47,6 +49,7 @@ const mapDispatchToProps = dispatch => ({
   updateUserJobFilters: filter => dispatch(updateUserJobFilters(filter))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UserJobsDateFilterContainer
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserJobsDateFilterContainer);
