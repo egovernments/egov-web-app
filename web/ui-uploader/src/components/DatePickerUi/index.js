@@ -9,6 +9,7 @@ const DatePickerUi = ({ value, startDate, onChange, label, maxDate }) => {
       className="custom-form-control-for-datepicker"
       onChange={onChange}
       floatingLabelText={label}
+      fullWidth={true}
       maxDate={maxDate}
     />
   );

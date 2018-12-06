@@ -55,7 +55,8 @@ class UserJobsStatusFilterContainer extends Component {
         <CheckboxUi
           style={{
             display: "inline-block",
-            width: "20%"
+            width: "20%",
+            paddingLeft: "20px"
           }}
           checkedValues={checkedValues}
           options={options}
@@ -75,6 +76,7 @@ const mapDispatchToProps = dispatch => ({
   updateUserJobFilters: filter => dispatch(updateUserJobFilters(filter))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UserJobsStatusFilterContainer
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserJobsStatusFilterContainer);

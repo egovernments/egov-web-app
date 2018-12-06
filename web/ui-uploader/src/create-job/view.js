@@ -7,7 +7,13 @@ import Snackbar from "material-ui/Snackbar";
 import LoadingIndicator from "../components/LoadingIndicator";
 import "./style.css";
 
-const CreateJobView = ({ handleOnChange, handleSubmit, showJobs, message, history }) => {
+const CreateJobView = ({
+  handleOnChange,
+  handleSubmit,
+  showJobs,
+  message,
+  history
+}) => {
   return (
     <div>
       <CardUi cardTitle="Upload Definitions">
@@ -55,7 +61,7 @@ const View = ({
   errorMessage
 }) => {
   return (
-    <div className="container">
+    <div className="common-div-css">
       <div className="row">
         <div className="col-lg-12 col-md-12">
           <Snackbar

@@ -10,6 +10,7 @@ import {
 } from "material-ui/Table";
 import { getDateFromEpoch } from "../../utils";
 import FlatButton from "material-ui/FlatButton";
+import MUIDataTable from "mui-datatables";
 
 const TableUi = ({ tableSchema, tableBody, styles = {} }) => {
   const renderTableCell = (fieldType, row, fieldKey) => {
@@ -74,11 +75,23 @@ const TableUi = ({ tableSchema, tableBody, styles = {} }) => {
     );
   };
 
+  const columns = ["Name", "Company", "City", "State"];
+
+  const data = [
+    ["Joe James", "Test Corp", "Yonkers", "NY"],
+    ["John Walsh", "Test Corp", "Hartford", "CT"],
+    ["Bob Herm", "Test Corp", "Tampa", "FL"],
+    ["James Houston", "Test Corp", "Dallas", "TX"]
+  ];
+
   return (
-    <Table>
-      {renderTableHeader()}
-      {renderTableBody()}
-    </Table>
+    <div>
+      <Table>
+        {renderTableHeader()}
+        {renderTableBody()}
+      </Table>
+      {/* <MUIDataTable title={"Employee List"} data={data} columns={columns} /> */}
+    </div>
   );
 };
 

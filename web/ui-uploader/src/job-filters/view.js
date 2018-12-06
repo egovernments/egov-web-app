@@ -11,47 +11,49 @@ import RequesterFileNamesFilter from "./RequesterFileNamesFilter";
 const FiltersView = ({ handleApplyFilter, handleResetFilter }) => {
   return (
     <div>
-      <div className="row">
-        <CardUi>
-          <div className="col-lg-4 col-md-4">
+      <CardUi cardTitle="Uploader- Search Jobs">
+        <div className="row">
+          <div className="col-sm-4">
             <UserJobsCodeFilter />
           </div>
-          <div className="col-lg-4 col-md-4">
+          <div className="col-sm-4">
             <RequesterFileNamesFilter />
           </div>
-          <div>
+          <div className="col-sm-4">
             <RequesterNamesFilter />
           </div>
-        </CardUi>
-
-        <CardUi cardTitle="By Date">
-          <div>
-            <DateFilter />
-          </div>
-        </CardUi>
-
-        <CardUi cardTitle="By Job Completion Status">
-          <JobStatusFilter />
-        </CardUi>
-      </div>
-      <div className="row">
-        <div style={{ textAlign: "center", width: "100%", margin: "15px 0px" }}>
-          <ButtonUi
-            onClick={handleApplyFilter}
-            style={{ marginRight: "15px" }}
-            type="button"
-            primary={true}
-            label="Filter"
-            icon={{ style: { color: "white" }, name: "search" }}
-          />
-          <ButtonUi
-            onClick={handleResetFilter}
-            type="button"
-            label="Reset"
-            icon={{ style: { color: "black" }, name: "backspace" }}
-          />
         </div>
-      </div>
+        <div className="row">
+          <DateFilter />
+        </div>
+      </CardUi>
+      <CardUi cardTitle="By Job Status">
+        <div className="row">
+          <JobStatusFilter />
+        </div>
+      </CardUi>
+      <CardUi>
+        <div className="row">
+          <div
+            style={{ textAlign: "center", width: "100%", margin: "15px 0px" }}
+          >
+            <ButtonUi
+              onClick={handleApplyFilter}
+              style={{ marginRight: "15px" }}
+              type="button"
+              primary={true}
+              label="Filter"
+              icon={{ style: { color: "white" }, name: "search" }}
+            />
+            <ButtonUi
+              onClick={handleResetFilter}
+              type="button"
+              label="Reset"
+              icon={{ style: { color: "black" }, name: "backspace" }}
+            />
+          </div>
+        </div>
+      </CardUi>
     </div>
   );
 };

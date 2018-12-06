@@ -27,3 +27,7 @@
 .custom-form-control-for-select hr {
   border-bottom: 0px !important;
 }
+
+.common-div-css {
+  margin: 16px 16px 88px 16px;
+}
