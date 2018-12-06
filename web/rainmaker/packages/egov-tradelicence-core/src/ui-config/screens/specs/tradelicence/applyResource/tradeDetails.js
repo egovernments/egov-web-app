@@ -190,124 +190,138 @@ const tradeUnitCard = {
             },
             beforeFieldChange: (action, state, dispatch) => {
               try {
-                let cardIndex = action.componentJsonpath
-                  .split("items[")[1]
-                  .split("]")[0];
-                let tradeType = get(
-                  state.screenConfiguration.preparedFinalObject,
-                  `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
-                  ""
-                );
-                let tradeCategory = get(
-                  state.screenConfiguration.preparedFinalObject,
-                  `LicensesTemp.tradeUnits[${cardIndex}].tradeSubType`,
-                  ""
-                );
-                let tradeSubCategories = get(
-                  state.screenConfiguration.preparedFinalObject,
-                  `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
+                const tradeSubTypes = get(
+                  state.screenConfiguration,
+                  "preparedFinalObject.Licenses[0].tradeLicenseDetail.tradeUnits",
                   []
                 );
-
-                tradeSubCategories = getUniqueItemsFromArray(
-                  tradeSubCategories,
-                  "code"
-                );
-                let currentObject = filter(tradeSubCategories, {
-                  code: action.value
-                });
-                if (currentObject[0].uom !== null) {
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOM"
-                      ),
-                      "props.value",
-                      currentObject[0].uom
-                    )
-                  );
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOMValue"
-                      ),
-                      "props.required",
-                      true
-                    )
-                  );
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOMValue"
-                      ),
-                      "props.disabled",
-                      false
-                    )
-                  );
+                const alreadySelected =
+                  tradeSubTypes &&
+                  tradeSubTypes.find(item => {
+                    if (item.tradeType === action.value) return true;
+                  });
+                if (alreadySelected) {
+                  alert(`This trade type is already selected !`);
+                  action.value = null;
                 } else {
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOMValue"
-                      ),
-                      "props.required",
-                      false
-                    )
+                  let cardIndex = action.componentJsonpath
+                    .split("items[")[1]
+                    .split("]")[0];
+                  let tradeType = get(
+                    state.screenConfiguration.preparedFinalObject,
+                    `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
+                    ""
                   );
+                  let tradeCategory = get(
+                    state.screenConfiguration.preparedFinalObject,
+                    `LicensesTemp.tradeUnits[${cardIndex}].tradeSubType`,
+                    ""
+                  );
+                  let tradeSubCategories = get(
+                    state.screenConfiguration.preparedFinalObject,
+                    `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
+                    []
+                  );
+                  tradeSubCategories = getUniqueItemsFromArray(
+                    tradeSubCategories,
+                    "code"
+                  );
+                  let currentObject = filter(tradeSubCategories, {
+                    code: action.value
+                  });
+                  if (currentObject[0].uom !== null) {
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOM"
+                        ),
+                        "props.value",
+                        currentObject[0].uom
+                      )
+                    );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.required",
+                        true
+                      )
+                    );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.disabled",
+                        false
+                      )
+                    );
+                  } else {
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.required",
+                        false
+                      )
+                    );
 
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOMValue"
-                      ),
-                      "props.disabled",
-                      true
-                    )
-                  );
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOM"
-                      ),
-                      "props.value",
-                      ""
-                    )
-                  );
-                  dispatch(
-                    handleField(
-                      "apply",
-                      action.componentJsonpath.replace(
-                        "tradeSubType",
-                        "tradeUOMValue"
-                      ),
-                      "props.value",
-                      ""
-                    )
-                  );
-                  dispatch(
-                    pFO(
-                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
-                      null
-                    )
-                  );
-                  dispatch(
-                    pFO(
-                      `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uomValue`,
-                      null
-                    )
-                  );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.disabled",
+                        true
+                      )
+                    );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOM"
+                        ),
+                        "props.value",
+                        ""
+                      )
+                    );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.value",
+                        ""
+                      )
+                    );
+                    dispatch(
+                      pFO(
+                        `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
+                        null
+                      )
+                    );
+                    dispatch(
+                      pFO(
+                        `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uomValue`,
+                        null
+                      )
+                    );
+                  }
                 }
               } catch (e) {
                 console.log(e);
@@ -345,7 +359,8 @@ const tradeUnitCard = {
             // required: true,
             props: {
               disabled: true,
-              setDataInField: true
+              setDataInField: true,
+              jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue"
             },
             pattern: getPattern("UOMValue"),
             jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].uomValue",
@@ -551,7 +566,8 @@ const accessoriesCard = {
             pattern: getPattern("UOMValue"),
             props: {
               disabled: true,
-              setDataInField: true
+              setDataInField: true,
+              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue"
             },
             required: true,
             jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
