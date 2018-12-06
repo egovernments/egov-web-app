@@ -261,7 +261,7 @@ class ActionMenuComp extends Component {
                       onClick={() => {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
-                        if (window.location.pathname === `/${item.navigationURL}`) {
+                        if (window.location.pathname === `/${item.navigationURL}` && window.location.pathname.startsWith("/integration")) {
                           window.location.reload();
                         }
                       }}

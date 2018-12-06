@@ -12,7 +12,7 @@ const IFrameInterface = Loadable({
 const routes = [
   // property tax routes
   {
-    path: "externalURL/:moduleName/:pageName",
+    path: "integration/:moduleName/:pageName",
     component: IFrameInterface,
     needsAuthentication: true,
     options: {
