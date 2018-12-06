@@ -80,7 +80,8 @@ var floatingLabelStyle = {
   fontSize: 16,
   letterSpacing: 0.6,
   fontWeight: 500,
-  marginBottom: 5
+  marginBottom: 5,
+  zIndex: 0
 };
 var underlineFocusBaseStyle = {
   borderColor: "#e0e0e0"
