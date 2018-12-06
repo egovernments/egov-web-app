@@ -220,7 +220,10 @@ export const getReviewOwner = (isEditable = true) => {
                 labelName: "Designation",
                 labelKey: "TL_NEW_OWNER_DESIG_LABEL"
               },
-              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
+              {
+                jsonPath:
+                  "Licenses[0].tradeLicenseDetail.institution.designation"
+              }
             ),
             reviewOwnerFatherName,
             reviewOwnerGender,

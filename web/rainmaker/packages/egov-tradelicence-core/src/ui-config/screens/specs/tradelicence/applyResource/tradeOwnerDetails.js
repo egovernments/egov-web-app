@@ -106,11 +106,6 @@ export const getFatherNameField = getTextField({
 });
 
 export const ownerInfoInstitutional = {
-  // {
-  //   uiFramework: "custom-containers",
-  //   componentPath: "MultiItem",
-  //   props: {
-  //     scheama:
   ...getCommonGrayCard({
     header: getCommonSubHeader(
       {
@@ -168,7 +163,28 @@ export const ownerInfoInstitutional = {
       }),
       getFatherNameField,
       getOwnerGenderField,
-      getOwnerDOBField,
+      //getOwnerDOBField,
+      ownerDOB: {
+        ...getDateField({
+          label: { labelName: "Date of Birth" },
+          placeholder: { labelName: "Enter Date of Birth" },
+          required: true,
+          pattern: getPattern("Date"),
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+          props: {
+            inputProps: {
+              max: getTodaysDateInYMD()
+            }
+          }
+        }),
+        beforeFieldChange: (action, state, dispatch) => {
+          let currentDate = new Date().getTime();
+          let ownerDOB = new Date(action.value).getTime();
+          if (ownerDOB > currentDate) {
+            action.value = null;
+          }
+        }
+      },
       getOwnerEmailField,
       ownerAddress: getTextField({
         label: {
@@ -187,22 +203,6 @@ export const ownerInfoInstitutional = {
   }),
   visible: false
 };
-//   ,
-//   items: [],
-//   addItemLabel: "ADD OWNER",
-//   headerName: "Owner Information",
-//   hasAddItem: false,
-//   headerJsonPath:
-//     "children.cardContent.children.header.children.Owner Information.props.label",
-//   sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-//   prefixSourceJsonPath:
-//     "children.cardContent.children.tradeUnitCardContainer.children"
-// }
-
-//   ,
-//   visible: false,
-//   type: "array"
-// };
 
 const OwnerInfoCard = {
   uiFramework: "custom-containers",
@@ -237,7 +237,27 @@ const OwnerInfoCard = {
         }),
         getFatherNameField,
         getOwnerGenderField,
-        getOwnerDOBField,
+        ownerDOB: {
+          ...getDateField({
+            label: { labelName: "Date of Birth" },
+            placeholder: { labelName: "Enter Date of Birth" },
+            required: true,
+            pattern: getPattern("Date"),
+            jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+            props: {
+              inputProps: {
+                max: getTodaysDateInYMD()
+              }
+            }
+          }),
+          beforeFieldChange: (action, state, dispatch) => {
+            let currentDate = new Date().getTime();
+            let ownerDOB = new Date(action.value).getTime();
+            if (ownerDOB > currentDate) {
+              action.value = null;
+            }
+          }
+        },
         getOwnerEmailField,
         ownerPAN: getTextField({
           label: {
