@@ -44,8 +44,6 @@ class IFrameInterface extends React.Component {
     const contextPath = get(routesData, `${moduleName}.routes.${pageName}.routePath`, "");
     let url = `${domain}${contextPath}`;
     this.setState({ url });
-    let num = this.state.num;
-    this.setState({ num: num });
   };
 
   componentWillReceiveProps(nextProps) {
