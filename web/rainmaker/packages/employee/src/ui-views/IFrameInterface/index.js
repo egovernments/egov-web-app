@@ -41,11 +41,8 @@ class IFrameInterface extends React.Component {
         : window.origin
       : get(routesData, `${moduleName}.routes.${pageName}.domain`, "");
 
-    console.log("sudhanshu", process.env.NODE_ENV, moduleName, pageName, routesData);
-
     const contextPath = get(routesData, `${moduleName}.routes.${pageName}.routePath`, "");
     let url = `${domain}${contextPath}`;
-    console.log("sudhanshu123", url);
     this.setState({ url });
   };
 
@@ -58,10 +55,10 @@ class IFrameInterface extends React.Component {
     const { moduleName: currentmoduleName, pageName: currentpageName } = currentParams;
     const { routesData: nextRoutesData } = nextProps;
     const { routesData: currentRoutesData } = this.props;
+    this.buildURL(nextProps);
 
-    if (nextmoduleName !== currentmoduleName || nextpageName !== currentpageName || nextRoutesData !== currentRoutesData) {
-      this.buildURL(nextProps);
-    }
+    // if (nextmoduleName !== currentmoduleName || nextpageName !== currentpageName || nextRoutesData !== currentRoutesData) {
+    // }
   }
 
   render() {

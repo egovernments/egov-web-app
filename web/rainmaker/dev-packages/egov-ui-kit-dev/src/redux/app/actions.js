@@ -107,7 +107,6 @@ export const fetchExternalUrls = () => {
       const { MdmsRes } = payload;
       const commonMasters = MdmsRes["common-masters"];
       const UiCommonConfig = commonMasters["Ui-Common-Config"];
-      console.log("sudhanshu", UiCommonConfig);
       // const payload = {
       //   tradelicense: {
       //     routes: {

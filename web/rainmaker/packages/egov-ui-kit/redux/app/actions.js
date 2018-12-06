@@ -212,8 +212,6 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
               MdmsRes = payload.MdmsRes;
               commonMasters = MdmsRes["common-masters"];
               UiCommonConfig = commonMasters["Ui-Common-Config"];
-
-              console.log("sudhanshu", UiCommonConfig);
               // const payload = {
               //   tradelicense: {
               //     routes: {
@@ -234,22 +232,23 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
               //     },
               //   },
               // };
+
               dispatch(setExternalUrls(UiCommonConfig[0]));
-              _context4.next = 15;
+              _context4.next = 14;
               break;
 
-            case 12:
-              _context4.prev = 12;
+            case 11:
+              _context4.prev = 11;
               _context4.t0 = _context4["catch"](1);
 
               console.log(_context4.t0);
 
-            case 15:
+            case 14:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[1, 12]]);
+      }, _callee4, undefined, [[1, 11]]);
     }));
 
     return function (_x5) {
