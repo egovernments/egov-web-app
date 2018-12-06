@@ -42,7 +42,10 @@ const TableUi = ({ tableSchema, tableBody, styles = {} }) => {
         <TableRow>
           {tableSchema.map((row, index) => {
             return (
-              <TableHeaderColumn style={row.style} key={index}>
+              <TableHeaderColumn
+                style={{ ...row.style, color: "#484848", fontWeight: 900 }}
+                key={index}
+              >
                 {row.label}
               </TableHeaderColumn>
             );
