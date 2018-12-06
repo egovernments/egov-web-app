@@ -234,7 +234,6 @@ var ActionMenuComp = function (_Component) {
             parentMenu: false
           };
         }
-        console.log("Inside commins", menupathArray, pathParam, url);
       }
       var actionListArr = this.props.actionListArr;
 
@@ -333,6 +332,7 @@ var ActionMenuComp = function (_Component) {
                       onClick: function onClick() {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
+                        console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
                         if (window.location.pathname === "/" + item.navigationURL && window.location.pathname.startsWith("/integration")) {
                           window.location.reload();
                         }

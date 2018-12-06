@@ -76,7 +76,6 @@ class ActionMenuComp extends Component {
           parentMenu: false,
         };
       }
-      console.log("Inside commins", menupathArray, pathParam, url);
     }
     let { actionListArr } = this.props;
 
@@ -261,6 +260,12 @@ class ActionMenuComp extends Component {
                       onClick={() => {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
+                        console.log(
+                          "menu change",
+                          window.location.pathname,
+                          `/${item.navigationURL}`,
+                          window.location.pathname.startsWith("/integration")
+                        );
                         if (window.location.pathname === `/${item.navigationURL}` && window.location.pathname.startsWith("/integration")) {
                           window.location.reload();
                         }
