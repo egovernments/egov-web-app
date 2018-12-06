@@ -266,7 +266,7 @@ class ActionMenuComp extends Component {
                           `/${item.navigationURL}`,
                           window.location.pathname.startsWith("/integration")
                         );
-                        if (window.location.pathname === `/${item.navigationURL}` && window.location.pathname.startsWith("/integration")) {
+                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
                       }}

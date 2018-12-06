@@ -333,7 +333,7 @@ var ActionMenuComp = function (_Component) {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
                         console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
-                        if (window.location.pathname === "/" + item.navigationURL && window.location.pathname.startsWith("/integration")) {
+                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
                       },
