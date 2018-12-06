@@ -11,7 +11,7 @@ const theme = createMuiTheme(themeObject);
 class IFrameInterface extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { view: null };
+    this.state = { num: 0 };
   }
   componentDidMount() {
     this.buildURL(this.props);
@@ -44,6 +44,8 @@ class IFrameInterface extends React.Component {
     const contextPath = get(routesData, `${moduleName}.routes.${pageName}.routePath`, "");
     let url = `${domain}${contextPath}`;
     this.setState({ url });
+    let num = this.state.num;
+    this.setState({ num: num });
   };
 
   componentWillReceiveProps(nextProps) {
