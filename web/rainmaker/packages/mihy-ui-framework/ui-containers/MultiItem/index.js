@@ -172,12 +172,6 @@ var MultiItem = function (_React$Component) {
             }
             //Temporary fix - For setting trade type - should be generalised
             var value = (0, _get2.default)(preparedFinalObject, multiItemContent[variable].props.jsonPath);
-
-            // console.log(
-            //   multiItemContent[variable].props.jsonPath,
-            //   value,
-            //   "yhi hai"
-            // );
             if (multiItemContent[variable].props.setDataInField && value) {
               if (multiItemContent[variable].props.jsonPath.split(".")[0] === "LicensesTemp" && multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
                 var data = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType." + value, []);
@@ -192,6 +186,12 @@ var MultiItem = function (_React$Component) {
               } else if (multiItemContent[variable].props.jsonPath.split(".").pop() === "uomValue" && value > 0) {
                 multiItemContent[variable].props.disabled = false;
                 multiItemContent[variable].props.required = true;
+              }
+            }
+            if (multiItemContent[variable].props.setDataInField && multiItemContent[variable].props.disabled) {
+              if (multiItemContent[variable].props.jsonPath.split(".").pop() === "uomValue") {
+                var disabledValue = (0, _get2.default)(screenConfig[screenKey], multiItemContent[variable].componentJsonpath + ".props.disabled", false);
+                multiItemContent[variable].props.disabled = disabledValue;
               }
             }
           } else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props") && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath")) {

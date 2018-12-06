@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getLocaleLabels = exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
+exports.replaceStrInPath = exports.getLocaleLabels = exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -163,4 +163,12 @@ var getLocaleLabels = exports.getLocaleLabels = function getLocaleLabels(label, 
   } else {
     return label;
   }
+};
+
+var replaceStrInPath = exports.replaceStrInPath = function replaceStrInPath(inputString, search, replacement) {
+  String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, "g"), replacement);
+  };
+  return inputString.replaceAll(search, replacement);
 };

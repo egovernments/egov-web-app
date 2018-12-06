@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import { addComponentJsonpath } from "../../ui-utils";
+import { addComponentJsonpath, replaceStrInPath } from "../../ui-utils";
 import { prepareFinalObject as pFO } from "../../ui-redux/screen-configuration/actions";
 import isEqual from "lodash/isEqual";
 
@@ -120,12 +120,6 @@ class MultiItem extends React.Component {
             preparedFinalObject,
             multiItemContent[variable].props.jsonPath
           );
-
-          // console.log(
-          //   multiItemContent[variable].props.jsonPath,
-          //   value,
-          //   "yhi hai"
-          // );
           if (multiItemContent[variable].props.setDataInField && value) {
             if (
               multiItemContent[variable].props.jsonPath.split(".")[0] ===
@@ -163,6 +157,24 @@ class MultiItem extends React.Component {
             ) {
               multiItemContent[variable].props.disabled = false;
               multiItemContent[variable].props.required = true;
+            }
+          }
+          if (
+            multiItemContent[variable].props.setDataInField &&
+            multiItemContent[variable].props.disabled
+          ) {
+            if (
+              multiItemContent[variable].props.jsonPath.split(".").pop() ===
+              "uomValue"
+            ) {
+              const disabledValue = get(
+                screenConfig[screenKey],
+                `${
+                  multiItemContent[variable].componentJsonpath
+                }.props.disabled`,
+                false
+              );
+              multiItemContent[variable].props.disabled = disabledValue;
             }
           }
         } else if (

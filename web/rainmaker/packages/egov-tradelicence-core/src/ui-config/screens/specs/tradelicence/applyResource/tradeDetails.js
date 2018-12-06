@@ -488,18 +488,18 @@ const accessoriesCard = {
                   )
                 );
               } else {
+                // dispatch(
+                //   handleField(
+                //     "apply",
+                //     `${currentUOMValueFieldPath}.accessoriesUOM`,
+                //     "required",
+                //     false
+                //   )
+                // );
                 dispatch(
                   handleField(
                     "apply",
                     `${currentUOMValueFieldPath}.accessoriesUOMValue`,
-                    "required",
-                    false
-                  )
-                );
-                dispatch(
-                  handleField(
-                    "apply",
-                    `${currentUOMValueFieldPath}.accessoriesUOM`,
                     "required",
                     false
                   )
@@ -545,7 +545,7 @@ const accessoriesCard = {
             labelName: "UOM",
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"
           },
-          required: true,
+          // required: true,
           props: {
             disabled: true
           },

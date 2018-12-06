@@ -161,3 +161,11 @@ export const getLocaleLabels = (label, labelKey, localizationLabels) => {
     return label;
   }
 };
+
+export const replaceStrInPath = (inputString, search, replacement) => {
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, "g"), replacement);
+  };
+  return inputString.replaceAll(search, replacement);
+};
