@@ -201,7 +201,9 @@ const tradeUnitCard = {
                     if (item.tradeType === action.value) return true;
                   });
                 if (alreadySelected) {
-                  alert(`This trade type is already selected !`);
+                  alert(
+                    "This trade type is already selected, Please select another"
+                  );
                   action.value = null;
                 } else {
                   let cardIndex = action.componentJsonpath
