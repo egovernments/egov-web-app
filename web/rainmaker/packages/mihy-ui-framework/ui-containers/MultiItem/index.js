@@ -176,7 +176,12 @@ var MultiItem = function (_React$Component) {
             var value = (0, _get2.default)(preparedFinalObject, multiItemContent[variable].props.jsonPath);
             if (multiItemContent[variable].props.setDataInField && value) {
               if (multiItemContent[variable].props.jsonPath.split(".")[0] === "LicensesTemp" && multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
-                var data = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType." + value, []);
+                var tradeTypeData = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType", []);
+                var tradeTypeDropdownData = tradeTypeData && tradeTypeData.TradeType && Object.keys(tradeTypeData.TradeType).map(function (item) {
+                  return { code: item, active: true };
+                });
+                multiItemContent[variable].props.data = tradeTypeDropdownData;
+                var data = tradeTypeData[value];
                 if (data) {
                   multiItemContent["tradeType"].props.data = _this.objectToDropdown(data);
                 }

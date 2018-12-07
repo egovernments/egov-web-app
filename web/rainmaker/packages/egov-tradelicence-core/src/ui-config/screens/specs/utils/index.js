@@ -1464,6 +1464,24 @@ export const updateDropDowns = async (
     }
   }
 
+  const tradeTypes = get(
+    state.screenConfiguration.preparedFinalObject,
+    "applyScreenMdmsData.TradeLicense.TradeType",
+    []
+  );
+  // debugger;
+  const tradeTypeDropdownData =
+    tradeTypes &&
+    Object.keys(tradeTypes).map(item => {
+      return { code: item, active: true };
+    });
+  tradeTypeDropdownData &&
+    dispatch(
+      prepareFinalObject(
+        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+        tradeTypeDropdownData
+      )
+    );
   const tradeSubTypes = get(
     payload,
     "Licenses[0].tradeLicenseDetail.tradeUnits"
@@ -1777,7 +1795,6 @@ export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
           tradeType.structureType = item.structureType;
           tradeType.licenseType = item.licenseType;
           tradeType.rate = item.rate;
-          console.log(item.tradeType, item.rate);
           item.rate && item.rate > 0 && acc.tradeTypeData.push(tradeType);
         }
         return acc;

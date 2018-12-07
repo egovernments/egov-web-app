@@ -273,10 +273,23 @@ const tradeUnitCard = {
                           "tradeSubType",
                           "tradeUOMValue"
                         ),
+                        "props.required",
+                        false
+                      )
+                    );
+
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
                         "props.disabled",
                         true
                       )
                     );
+
                     dispatch(
                       handleField(
                         "apply",
@@ -299,6 +312,7 @@ const tradeUnitCard = {
                         ""
                       )
                     );
+
                     dispatch(
                       pFO(
                         `Licenses[0].tradeLicenseDetail.tradeUnits[${cardIndex}].uom`,
@@ -318,7 +332,7 @@ const tradeUnitCard = {
                           "tradeSubType",
                           "tradeUOMValue"
                         ),
-                        "props.required",
+                        "props.error",
                         false
                       )
                     );
@@ -461,7 +475,6 @@ const accessoriesCard = {
               currentUOMValueFieldPath.pop();
               currentUOMValueFieldPath = currentUOMValueFieldPath.join(".");
               if (currentObject[0].uom) {
-                // dispatch(pFO(`${jsonArr.join(".")}.uom`, currentObject[0].uom));
                 dispatch(
                   handleField(
                     "apply",
@@ -751,6 +764,19 @@ export const tradeDetails = getCommonCard({
           ),
           action.value
         );
+        const tradeTypeDropdownData =
+          tradeTypes &&
+          tradeTypes.TradeType &&
+          Object.keys(tradeTypes.TradeType).map(item => {
+            return { code: item, active: true };
+          });
+        tradeTypeDropdownData &&
+          dispatch(
+            pFO(
+              "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+              tradeTypeDropdownData
+            )
+          );
       }
     },
     tradeCommencementDate: getDateField({

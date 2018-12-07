@@ -134,11 +134,6 @@ export const getMdmsData = async (action, state, dispatch) => {
     );
     set(
       payload,
-      "MdmsRes.TradeLicense.TradeTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
-    );
-    set(
-      payload,
       "MdmsRes.common-masters.OwnerShipCategoryTransformed",
       objectToDropdown(
         get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])

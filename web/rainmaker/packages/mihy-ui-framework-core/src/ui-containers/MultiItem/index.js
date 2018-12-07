@@ -129,11 +129,19 @@ class MultiItem extends React.Component {
               multiItemContent[variable].props.jsonPath.split(".").pop() ===
                 "tradeType"
             ) {
-              const data = get(
+              const tradeTypeData = get(
                 preparedFinalObject,
-                `applyScreenMdmsData.TradeLicense.TradeType.${value}`,
+                `applyScreenMdmsData.TradeLicense.TradeType`,
                 []
               );
+              const tradeTypeDropdownData =
+                tradeTypeData &&
+                tradeTypeData.TradeType &&
+                Object.keys(tradeTypeData.TradeType).map(item => {
+                  return { code: item, active: true };
+                });
+              multiItemContent[variable].props.data = tradeTypeDropdownData;
+              const data = tradeTypeData[value];
               if (data) {
                 multiItemContent[
                   "tradeType"
