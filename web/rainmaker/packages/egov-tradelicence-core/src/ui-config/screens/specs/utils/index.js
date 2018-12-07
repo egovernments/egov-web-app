@@ -1892,9 +1892,11 @@ export const setFilteredTradeTypes = (
         return acc;
       }, {});
       const tradeTypeList = tradeTypes.map(item => {
-        item.applicationDocument =
-          mdmsTTTransformed[item.code].applicationDocument;
-        return item;
+        if (mdmsTTTransformed[item.code].applicationDocument) {
+          item.applicationDocument =
+            mdmsTTTransformed[item.code].applicationDocument;
+          return item;
+        }
       });
       dispatch(
         prepareFinalObject(
