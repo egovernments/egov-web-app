@@ -1888,7 +1888,9 @@ export const setFilteredTradeTypes = (
   try {
     if (tradeTypes.length > 0 && mdmsTradeTypes.length > 0) {
       const mdmsTTTransformed = mdmsTradeTypes.reduce((acc, item) => {
-        item.code && (acc[item.code] = item);
+        if (acc[item.code]) {
+          item.code && (acc[item.code] = item);
+        }
         return acc;
       }, {});
       const tradeTypeList = tradeTypes.map(item => {
