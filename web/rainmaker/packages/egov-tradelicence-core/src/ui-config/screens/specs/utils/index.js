@@ -1752,14 +1752,15 @@ export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
           accessory.code = item.accessoryCategory;
           accessory.uom = item.uom;
           accessory.rate = item.rate;
-          acc.accessories.push(accessory);
+          item.rate && item.rate > 0 && acc.accessories.push(accessory);
         } else if (item.accessoryCategory === null && item.tradeType) {
           tradeType.code = item.tradeType;
           tradeType.uom = item.uom;
           tradeType.structureType = item.structureType;
           tradeType.licenseType = item.licenseType;
           tradeType.rate = item.rate;
-          acc.tradeTypeData.push(tradeType);
+          console.log(item.tradeType, item.rate);
+          item.rate && item.rate > 0 && acc.tradeTypeData.push(tradeType);
         }
         return acc;
       },
