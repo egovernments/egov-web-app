@@ -170,20 +170,22 @@ export const ownerInfoInstitutional = {
           placeholder: { labelName: "Enter Date of Birth" },
           required: true,
           pattern: getPattern("Date"),
+          isDOB: true,
+          errorMessage: "Please enter valid Date of Birth!",
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
           props: {
             inputProps: {
               max: getTodaysDateInYMD()
             }
           }
-        }),
-        beforeFieldChange: (action, state, dispatch) => {
-          let currentDate = new Date().getTime();
-          let ownerDOB = new Date(action.value).getTime();
-          if (ownerDOB > currentDate) {
-            action.value = null;
-          }
-        }
+        })
+        // beforeFieldChange: (action, state, dispatch) => {
+        //   let currentDate = new Date().getTime();
+        //   let ownerDOB = new Date(action.value).getTime();
+        //   if (ownerDOB > currentDate) {
+        //     action.value = null;
+        //   }
+        // }
       },
       getOwnerEmailField,
       ownerAddress: getTextField({
@@ -243,20 +245,22 @@ const OwnerInfoCard = {
             placeholder: { labelName: "Enter Date of Birth" },
             required: true,
             pattern: getPattern("Date"),
+            isDOB: true,
+            errorMessage: "Please enter valid Date of Birth!",
             jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
             props: {
               inputProps: {
                 max: getTodaysDateInYMD()
               }
             }
-          }),
-          beforeFieldChange: (action, state, dispatch) => {
-            let currentDate = new Date().getTime();
-            let ownerDOB = new Date(action.value).getTime();
-            if (ownerDOB > currentDate) {
-              action.value = null;
-            }
-          }
+          })
+          // beforeFieldChange: (action, state, dispatch) => {
+          //   let currentDate = new Date().getTime();
+          //   let ownerDOB = new Date(action.value).getTime();
+          //   if (ownerDOB > currentDate) {
+          //     action.value = null;
+          //   }
+          // }
         },
         getOwnerEmailField,
         ownerPAN: getTextField({

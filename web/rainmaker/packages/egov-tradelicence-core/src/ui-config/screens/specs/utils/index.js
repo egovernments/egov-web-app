@@ -762,6 +762,24 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       `Licenses[0].tradeLicenseDetail.owners[${cardIndex}].mobileNumber`,
       ""
     );
+    const owners = get(
+      state.screenConfiguration.preparedFinalObject,
+      `Licenses[0].tradeLicenseDetail.owners`,
+      []
+    );
+
+    if (owners && owners.length > 1) {
+      const currentNumber = owners[cardIndex].mobileNumber;
+      const numbers = owners.filter(
+        item => currentNumber === item.mobileNumber
+      );
+      if (numbers.length > 1) {
+        dispatch(
+          toggleSnackbarAndSetText(true, "Owner already added !", "error")
+        );
+        return;
+      }
+    }
     let payload = await httpRequest(
       "post",
       "/user/_search?tenantId=pb",

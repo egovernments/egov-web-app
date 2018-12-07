@@ -148,7 +148,10 @@ var epochToYmd = exports.epochToYmd = function epochToYmd(et) {
   if (!et) return null;
   // Return the same format if et is already a string (boundary case)
   if (typeof et === "string") return et;
-  var formatted_date = new Date(et).toISOString().substr(0, 10);
+  var date = new Date(et);
+  var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+  // date = `${date.getFullYear()}-${month}-${day}`;
+  var formatted_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
   return formatted_date;
 };
 

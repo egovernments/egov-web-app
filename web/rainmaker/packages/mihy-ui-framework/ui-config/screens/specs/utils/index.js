@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getPattern = exports.getTab = exports.getTabs = exports.getLabelWithValue = exports.dispatchMultipleFieldChangeAction = exports.getDivider = exports.getCommonContainer = exports.getRadiobuttonGroup = exports.getRadiobuttonwithLabel = exports.getCheckBoxwithLabel = exports.getLocaleLabelsforTL = exports.getTextField = exports.getDateTimeField = exports.getTimeField = exports.getDateField = exports.getSelectField = exports.getLabel = exports.getBreak = exports.getCommonGrayCard = exports.getCommonCardWithHeader = exports.getCommonCard = exports.getCommonValue = exports.getCommonCaption = exports.getCommonParagraph = exports.getCommonSubHeader = exports.getCommonTitle = exports.getCommonHeader = exports.getStepperObject = undefined;
 
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -231,7 +235,7 @@ var getDateTimeField = exports.getDateTimeField = function getDateTimeField(date
   }));
 };
 
-var getTextField = exports.getTextField = function getTextField(textScheama) {
+var getTextField = function getTextField(textScheama) {
   var _textScheama$label = textScheama.label,
       label = _textScheama$label === undefined ? {} : _textScheama$label,
       _textScheama$placehol = textScheama.placeholder,
@@ -268,9 +272,10 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
       _textScheama$errorMes = textScheama.errorMessage,
       errorMessage = _textScheama$errorMes === undefined ? "" : _textScheama$errorMes,
       _textScheama$required2 = textScheama.requiredMessage,
-      requiredMessage = _textScheama$required2 === undefined ? "" : _textScheama$required2;
+      requiredMessage = _textScheama$required2 === undefined ? "" : _textScheama$required2,
+      rest = (0, _objectWithoutProperties3.default)(textScheama, ["label", "placeholder", "required", "pattern", "jsonPath", "sourceJsonPath", "data", "optionValue", "optionLabel", "iconObj", "gridDefination", "props", "minLength", "maxLength", "minValue", "maxValue", "infoIcon", "title", "errorMessage", "requiredMessage"]);
 
-  return {
+  return (0, _extends3.default)({
     uiFramework: "custom-containers",
     componentPath: "TextFieldContainer",
     props: (0, _extends3.default)({
@@ -300,9 +305,10 @@ var getTextField = exports.getTextField = function getTextField(textScheama) {
     maxValue: maxValue,
     errorMessage: errorMessage,
     requiredMessage: requiredMessage
-  };
+  }, rest);
 };
 
+exports.getTextField = getTextField;
 var getLocaleLabelsforTL = exports.getLocaleLabelsforTL = function getLocaleLabelsforTL(label, labelKey, localizationLabels) {
   if (labelKey) {
     var translatedLabel = (0, _commons.getTranslatedLabel)(labelKey, localizationLabels);

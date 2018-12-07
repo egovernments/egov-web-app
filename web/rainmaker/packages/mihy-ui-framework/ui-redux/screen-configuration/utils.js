@@ -36,7 +36,8 @@ var validateField = exports.validateField = function validateField(field) {
       maxLength = field.maxLength,
       minValue = field.minValue,
       maxValue = field.maxValue,
-      visible = field.visible;
+      visible = field.visible,
+      isDOB = field.isDOB;
 
 
   if (visible !== undefined && !visible) {
@@ -65,6 +66,16 @@ var validateField = exports.validateField = function validateField(field) {
   }
   if (isFieldValid && minValue && maxValue && !(value >= minValue && value <= maxValue)) {
     isFieldValid = false;
+  }
+
+  if (isDOB) {
+    if (value) {
+      var currentDate = new Date().getTime();
+      var ownerDOB = new Date(value).getTime();
+      if (ownerDOB > currentDate) {
+        isFieldValid = false;
+      }
+    }
   }
 
   errorText = !isFieldValid ? errorText.length ? errorText : field.errorMessage || "Invalid field" : "";
