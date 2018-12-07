@@ -35,10 +35,16 @@
   display: inline-flex;
 }
 
+.share-btn {
+  button {
+    background-color: #00bbd3;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .share-btn {
     position: fixed;
-    top: 11px;
+    top: 14px;
     right: 11px;
     z-index: 9999;
     color: #ffffff;
@@ -53,7 +59,7 @@
       box-shadow: none;
       border-radius: 50%;
       border-radius: initial;
-      background-color: rgb(0, 188, 209);
+      background-color: #00bbd3;
     }
   }
 }
