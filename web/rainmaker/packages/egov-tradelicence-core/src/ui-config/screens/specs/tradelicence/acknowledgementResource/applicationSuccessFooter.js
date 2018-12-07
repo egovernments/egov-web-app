@@ -32,45 +32,55 @@ const generatePdfAndDownload = (
   iframe.src =
     window.origin +
     `/employee-tradelicence/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+  var hasIframeLoaded = false,
+    hasEstimateLoaded = false;
   iframe.onload = function(e) {
-    // note: this assumes html2canvas v5+
-    window.document.addEventListener("estimateLoaded", handleEvent, false);
-    function handleEvent(e) {
-      if (e.detail && iframe.contentDocument) {
-        let target = iframe.contentDocument.querySelector(
-          "#material-ui-tradeReviewDetails"
-        );
-        html2canvas(target).then(function(canvas) {
-          document
-            .querySelector("#custom-atoms-iframeForPdf")
-            .removeChild(iframe);
-          var data = canvas.toDataURL("image/jpeg", 1);
-          var imgWidth = 200;
-          var pageHeight = 295;
-          var imgHeight = (canvas.height * imgWidth) / canvas.width;
-          var heightLeft = imgHeight;
-          var doc = new jsPDF("p", "mm");
-          var position = 0;
-
-          doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-
-          while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
-            doc.addPage();
-            doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-          }
-          if (action === "download") {
-            doc.save(`application_summary_${applicationNumber}.pdf`);
-          } else if (action === "print") {
-            doc.autoPrint();
-            window.open(doc.output("bloburl"), "_blank");
-          }
-        });
-      }
+    hasIframeLoaded = true;
+    if (hasEstimateLoaded) {
+      downloadConfirmationForm();
     }
   };
+  window.document.addEventListener("estimateLoaded", handleEvent, false);
+  function handleEvent(e) {
+    if (e.detail && iframe.contentDocument) {
+      hasEstimateLoaded = true;
+      if (hasIframeLoaded) {
+        downloadConfirmationForm();
+      }
+    }
+  }
+  function downloadConfirmationForm() {
+    let target = iframe.contentDocument.querySelector(
+      "#material-ui-tradeReviewDetails"
+    );
+    html2canvas(target).then(function(canvas) {
+      document.querySelector("#custom-atoms-iframeForPdf").removeChild(iframe);
+      var data = canvas.toDataURL("image/jpeg", 1);
+      var imgWidth = 200;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+      var doc = new jsPDF("p", "mm");
+      var position = 0;
+
+      doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      if (action === "download") {
+        doc.save(`application_summary_${applicationNumber}.pdf`);
+      } else if (action === "print") {
+        doc.autoPrint();
+        window.open(doc.output("bloburl"), "_blank");
+      }
+    });
+  }
+
   // To hide the iframe
   iframe.style.cssText =
     "position: absolute; opacity:0; z-index: -9999; width: 900px; height: 100%";
