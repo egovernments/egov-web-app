@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateUserJobFilters } from "../jobs/actions";
 import CheckboxUi from "../components/CheckboxUi";
-
+import MultiDropDown from "../components/MultiDropDown";
 class UserJobsStatusFilterContainer extends Component {
   static propTypes = {
     updateUserJobFilters: PropTypes.func.isRequired
@@ -45,24 +45,23 @@ class UserJobsStatusFilterContainer extends Component {
     this.setState({ checkedValues: jobStatuses });
   };
 
+  onChange = e => {
+    this.props.updateUserJobFilters({ statuses: e.target.value });
+  };
+
   // the view can be passed as a parameter
   render() {
-    const { options, onChecked } = this;
+    const { options, onChange, onChecked } = this;
     const { checkedValues } = this.state;
+    const { statuses } = this.props;
 
     return (
-      <div>
-        <CheckboxUi
-          style={{
-            display: "inline-block",
-            width: "20%",
-            paddingLeft: "20px"
-          }}
-          checkedValues={checkedValues}
-          options={options}
-          onCheck={onChecked}
-        />
-      </div>
+      <MultiDropDown
+        options={options}
+        value={statuses}
+        onChange={onChange}
+        placeholder="Select Job Status"
+      />
     );
   }
 }

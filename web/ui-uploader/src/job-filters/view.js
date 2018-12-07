@@ -12,7 +12,13 @@ const FiltersView = ({ handleApplyFilter, handleResetFilter }) => {
   return (
     <div>
       <CardUi cardTitle="Uploader- Search Jobs">
-        <div className="row">
+        <div
+          className="row"
+          style={{
+            marginTop: "16px",
+            paddingBottom: "8px"
+          }}
+        >
           <div className="col-sm-4">
             <UserJobsCodeFilter />
           </div>
@@ -23,17 +29,25 @@ const FiltersView = ({ handleApplyFilter, handleResetFilter }) => {
             <RequesterNamesFilter />
           </div>
         </div>
-        <div className="row">
+        <div
+          className="row"
+          style={{
+            marginTop: "16px",
+            paddingBottom: "8px"
+          }}
+        >
           <DateFilter />
+          <div className="col-sm-4">
+            <JobStatusFilter />
+          </div>
         </div>
-      </CardUi>
-      <CardUi cardTitle="By Job Status">
-        <div className="row">
-          <JobStatusFilter />
-        </div>
-      </CardUi>
-      <CardUi>
-        <div className="row">
+        <div
+          className="row"
+          style={{
+            marginTop: "16px",
+            paddingBottom: "8px"
+          }}
+        >
           <div
             style={{ textAlign: "center", width: "100%", margin: "15px 0px" }}
           >

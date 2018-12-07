@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateUserJobFilters } from "../jobs/actions";
-import DatePickerUi from "../components/DatePickerUi";
+import DatePickerUi from "../components/DatePickerUINew";
 
 class UserJobsDateFilterContainer extends Component {
   static propTypes = {
@@ -20,7 +20,7 @@ class UserJobsDateFilterContainer extends Component {
           <DatePickerUi
             value={startDate}
             onChange={(event, date) => {
-              updateUserJobFilters({ startDate: date });
+              updateUserJobFilters({ startDate: event.target.value });
             }}
             label="From Date"
             maxDate={maxDate}
@@ -30,7 +30,7 @@ class UserJobsDateFilterContainer extends Component {
           <DatePickerUi
             value={endDate}
             onChange={(event, date) => {
-              updateUserJobFilters({ endDate: date });
+              updateUserJobFilters({ endDate: event.target.value });
             }}
             label="To Date"
           />

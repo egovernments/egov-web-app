@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import TextField from "material-ui/TextField";
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ({
   container: {
@@ -14,7 +13,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+    width: 200,
     fontSize: "14px"
+  },
+  inputStyles: {
+    fontSize: "14px !important"
   },
   dense: {
     marginTop: 16
@@ -30,7 +33,7 @@ const styles = theme => ({
   }
 });
 
-class TextFieldUi extends React.Component {
+class DatePickerUi extends React.Component {
   render() {
     const {
       classes,
@@ -40,25 +43,23 @@ class TextFieldUi extends React.Component {
       placeholder,
       ...rest
     } = this.props;
-
     return (
       <TextField
         label={label}
-        placeholder={placeholder}
+        type="date"
         InputProps={{ classes: { input: classes.inputStyles } }}
         InputLabelProps={{
           shrink: true,
           style: { color: "#FE7A51" },
           classes: { root: classes.inputStyles }
         }}
-        underlineShow={false}
+        // defaultValue="2017-05-24"
         value={value}
         onChange={onChange}
         fullWidth={true}
-        {...rest}
       />
     );
   }
 }
 
-export default withStyles(styles)(TextFieldUi);
+export default withStyles(styles)(DatePickerUi);

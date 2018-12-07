@@ -1,15 +1,17 @@
 import * as actionTypes from "../constants/actionTypes";
 import { Api } from "../api";
+import { convertDateToEpoch } from "../utils";
 
 // filters related actions
 export const updateUserJobFilters = filter => {
+  console.log("filter", filter);
   return { type: actionTypes.UPDATE_FILTERS, filter };
 };
 
 export const applyUserJobFilters = filter => {
   console.log("filter", filter);
-  const startDate = filter.startDate && filter.startDate.getTime();
-  const endDate = filter.endDate && filter.endDate.getTime();
+  const startDate = filter.startDate && convertDateToEpoch(filter.startDate);
+  const endDate = filter.endDate && convertDateToEpoch(filter.endDate);
   console.log("dates", startDate, endDate);
   return async (dispatch, getState) => {
     dispatch(
