@@ -51,16 +51,16 @@ const items = {
             },
             id: "header-contact-us",
           },
-          {
-            primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
-            route: "/how-it-works",
-            leftIcon: <Icon action="custom" name="help-circle" />,
-            style: {
-              paddingBottom: "2px",
-              paddingTop: "2px",
-            },
-            id: "header-how-it-works",
-          },
+          // {
+          //   primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
+          //   route: "/how-it-works",
+          //   leftIcon: <Icon action="custom" name="help-circle" />,
+          //   style: {
+          //     paddingBottom: "2px",
+          //     paddingTop: "2px",
+          //   },
+          //   id: "header-how-it-works",
+          // },
           {
             primaryText: <Label label="CORE_COMMON_LOGOUT" />,
             route: "/logout",
@@ -93,15 +93,15 @@ const items = {
             renderforadmin: 1,
             renderforTLEmp: 1,
           },
-          {
-            primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
-            route: "/closed-complaints",
-            leftIcon: <Icon action="custom" name="file-check" />,
-            id: "header-closed-complaint",
-            renderforcsr: 0,
-            renderforadmin: 0,
-            renderforTLEmp: 0,
-          },
+          // {
+          //   primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
+          //   route: "/closed-complaints",
+          //   leftIcon: <Icon action="custom" name="file-check" />,
+          //   id: "header-closed-complaint",
+          //   renderforcsr: 0,
+          //   renderforadmin: 0,
+          //   renderforTLEmp: 0,
+          // },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
             route: "/employee-directory",
@@ -175,26 +175,15 @@ const renderMenuForADMIN = (role, section) => {
   return menuForADMIN;
 };
 
-const renderMenuForTLEmp = (role, section) => {
-  const menuForTLEmp = items[role].sections[section].items.filter((item) => {
-    return item.renderforTLEmp === 1;
-  });
-  return menuForTLEmp;
-};
-
-// const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-//   return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+// const renderMenuForTLEmp = (role, section) => {
+//   const menuForTLEmp = items[role].sections[section].items.filter((item) => {
+//     return item.renderforTLEmp === 1;
+//   });
+//   return menuForTLEmp;
 // };
 
 const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-  let isTL = role === "employee" && window.location.pathname.includes("tradelicense");
-  return isCSR
-    ? renderMenuForCSR(role, section)
-    : isADMIN
-    ? renderMenuForADMIN(role, section)
-    : isTL
-    ? renderMenuForTLEmp(role, section)
-    : items[role].sections[section].items;
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
 };
 
 export default menuItems;

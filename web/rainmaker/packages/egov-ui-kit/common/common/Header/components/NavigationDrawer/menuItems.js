@@ -51,16 +51,18 @@ var items = {
             paddingTop: "8px"
           },
           id: "header-contact-us"
-        }, {
-          primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_HOW_IT_WORKS" }),
-          route: "/how-it-works",
-          leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "help-circle" }),
-          style: {
-            paddingBottom: "2px",
-            paddingTop: "2px"
-          },
-          id: "header-how-it-works"
-        }, {
+        },
+        // {
+        //   primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
+        //   route: "/how-it-works",
+        //   leftIcon: <Icon action="custom" name="help-circle" />,
+        //   style: {
+        //     paddingBottom: "2px",
+        //     paddingTop: "2px",
+        //   },
+        //   id: "header-how-it-works",
+        // },
+        {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CORE_COMMON_LOGOUT" }),
           route: "/logout",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "power-settings-new" }),
@@ -89,15 +91,17 @@ var items = {
           renderforcsr: 1,
           renderforadmin: 1,
           renderforTLEmp: 1
-        }, {
-          primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_CLOSED_COMPLAINTS_HEADER" }),
-          route: "/closed-complaints",
-          leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "file-check" }),
-          id: "header-closed-complaint",
-          renderforcsr: 0,
-          renderforadmin: 0,
-          renderforTLEmp: 0
-        }, {
+        },
+        // {
+        //   primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
+        //   route: "/closed-complaints",
+        //   leftIcon: <Icon action="custom" name="file-check" />,
+        //   id: "header-closed-complaint",
+        //   renderforcsr: 0,
+        //   renderforadmin: 0,
+        //   renderforTLEmp: 0,
+        // },
+        {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_EMPLOYEE_DIRECTORY_HEADER" }),
           route: "/employee-directory",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "communication", name: "call" }),
@@ -155,15 +159,11 @@ var renderMenuForADMIN = function renderMenuForADMIN(role, section) {
   return menuForADMIN;
 };
 
-var renderMenuForTLEmp = function renderMenuForTLEmp(role, section) {
-  var menuForTLEmp = items[role].sections[section].items.filter(function (item) {
-    return item.renderforTLEmp === 1;
-  });
-  return menuForTLEmp;
-};
-
-// const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-//   return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+// const renderMenuForTLEmp = (role, section) => {
+//   const menuForTLEmp = items[role].sections[section].items.filter((item) => {
+//     return item.renderforTLEmp === 1;
+//   });
+//   return menuForTLEmp;
 // };
 
 var menuItems = function menuItems() {
@@ -172,8 +172,7 @@ var menuItems = function menuItems() {
   var isCSR = arguments[2];
   var isADMIN = arguments[3];
 
-  var isTL = role === "employee" && window.location.pathname.includes("tradelicense");
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : isTL ? renderMenuForTLEmp(role, section) : items[role].sections[section].items;
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
 };
 
 exports.default = menuItems;
