@@ -1888,7 +1888,7 @@ export const setFilteredTradeTypes = (
   try {
     if (tradeTypes.length > 0 && mdmsTradeTypes.length > 0) {
       const mdmsTTTransformed = mdmsTradeTypes.reduce((acc, item) => {
-        acc[item.code] = item;
+        item.code && (acc[item.code] = item);
         return acc;
       }, {});
       const tradeTypeList = tradeTypes.map(item => {
@@ -1907,23 +1907,27 @@ export const setFilteredTradeTypes = (
           tradeTypeList
         )
       );
-      let filteredList = tradeTypeList.filter(item => {
-        if (
-          item.licenseType === licenseType &&
-          item.structureType === structureSubtype
-        )
-          return true;
-      });
+      let filteredList =
+        tradeTypeList &&
+        tradeTypeList.length > 0 &&
+        tradeTypeList.filter(item => {
+          if (
+            item.licenseType === licenseType &&
+            item.structureType === structureSubtype
+          )
+            return true;
+        });
       let tradeTypeTransformed = commonTransform(
         { TradeType: [...filteredList] },
         "TradeType"
       );
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.TradeLicense.TradeType",
-          tradeTypeTransformed.TradeType
-        )
-      );
+      tradeTypeTransformed.TradeType &&
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeType",
+            tradeTypeTransformed.TradeType
+          )
+        );
       return tradeTypeTransformed;
     }
   } catch (e) {

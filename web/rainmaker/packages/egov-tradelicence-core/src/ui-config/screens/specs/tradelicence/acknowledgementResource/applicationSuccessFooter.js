@@ -2,7 +2,7 @@ import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
-
+import { ifUserRoleExists } from "../../utils";
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -121,6 +121,10 @@ export const applicationSuccessFooter = (
   tenant
 ) => {
   //const baseURL = getBaseURL();
+  const roleExists = ifUserRoleExists("CITIZEN");
+  const redirectionURL = roleExists
+    ? "/mihy-ui-framework/tradelicense-citizen/home"
+    : "/mihy-ui-framework/tradelicence/search";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -141,7 +145,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicence/search`
+        path: redirectionURL
       }
     },
     downloadFormButton: {
