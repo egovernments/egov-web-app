@@ -273,18 +273,6 @@ const tradeUnitCard = {
                           "tradeSubType",
                           "tradeUOMValue"
                         ),
-                        "props.required",
-                        false
-                      )
-                    );
-
-                    dispatch(
-                      handleField(
-                        "apply",
-                        action.componentJsonpath.replace(
-                          "tradeSubType",
-                          "tradeUOMValue"
-                        ),
                         "props.disabled",
                         true
                       )
@@ -323,6 +311,17 @@ const tradeUnitCard = {
                         null
                       )
                     );
+                    dispatch(
+                      handleField(
+                        "apply",
+                        action.componentJsonpath.replace(
+                          "tradeSubType",
+                          "tradeUOMValue"
+                        ),
+                        "props.required",
+                        false
+                      )
+                    );
                   }
                 }
               } catch (e) {
@@ -358,7 +357,7 @@ const tradeUnitCard = {
               labelName: "Enter UOM Value",
               labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_PLACEHOLDER"
             },
-            // required: true,
+            required: true,
             props: {
               disabled: true,
               setDataInField: true,
