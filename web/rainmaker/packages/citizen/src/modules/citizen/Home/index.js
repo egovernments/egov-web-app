@@ -25,14 +25,14 @@ class Home extends Component {
     const { updates, history } = this.props;
     return (
       <Screen className="homepage-screen">
-        <div className="home-page-top-banner-cont">
+        {/* <div className="home-page-top-banner-cont">
           <div className="banner-image">
             <div className="banner-overlay" />
             <div className="logo-wrapper user-logo-wrapper">
               <Image className="mseva-logo" source={`${logo}`} />
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="home-page-cont">
           <div>
             <NewAndOldComplaints history={history} />

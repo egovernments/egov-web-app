@@ -64,7 +64,7 @@ var Dashboard = function Dashboard(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { className: "col-sm-12 " },
+    { className: "col-sm-12 landing-page-main-container" },
     _react2.default.createElement(_translationNode2.default, { className: "landingPageUser", label: " Welcome " + userName + ", " }),
     _react2.default.createElement(_component2.default, { onPGRClick: onPGRClick, items: moduleItems, onButton2Click: onButton2Click, onButton1Click: onButton1Click, history: history })
   );

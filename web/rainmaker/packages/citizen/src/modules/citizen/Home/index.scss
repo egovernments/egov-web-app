@@ -1,6 +1,6 @@
 .home-page-cont {
   position: absolute !important;
-  top: calc(30vh - 50px);
+  top: calc(30vh - 125px);
   left: 8px;
   right: 8px;
   margin-bottom: 70px;
@@ -43,5 +43,8 @@
 @media only screen and (min-width: 768px) {
   .home-page-top-banner-cont .logo-wrapper {
     display: block;
+  }
+  .home-page-cont {
+    top: calc(30vh - 106px);
   }
 }

@@ -26,14 +26,14 @@ var tabItemContainerStyle = {
 var inkBarStyle = {
   zIndex: 1101,
   backgroundColor: "#fe7a51",
-  height: 4
-  // position: "fixed",
-  // bottom: "inherit",
+  height: 4,
+  position: "fixed",
+  bottom: "inherit"
 };
 
-// const inkBarContainerStyle = {
-//   paddingTop: "48px",
-// };
+var inkBarContainerStyle = {
+  paddingTop: "48px"
+};
 
 var Tabs = function Tabs(_ref) {
   var _ref$tabs = _ref.tabs,
@@ -59,9 +59,9 @@ var Tabs = function Tabs(_ref) {
     _Tabs.Tabs,
     {
       className: className,
-      onChange: onChange
-      // inkBarContainerStyle={inkBarContainerStyle}
-      , tabItemContainerStyle: tabItemContainerStyle,
+      onChange: onChange,
+      inkBarContainerStyle: inkBarContainerStyle,
+      tabItemContainerStyle: tabItemContainerStyle,
       inkBarStyle: inkBarStyle
     },
     renderTabs()
