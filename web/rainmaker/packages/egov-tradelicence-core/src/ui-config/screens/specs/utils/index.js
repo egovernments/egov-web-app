@@ -1892,7 +1892,10 @@ export const setFilteredTradeTypes = (
         return acc;
       }, {});
       const tradeTypeList = tradeTypes.map(item => {
-        if (mdmsTTTransformed[item.code].applicationDocument) {
+        if (
+          mdmsTTTransformed[item.code] &&
+          mdmsTTTransformed[item.code].applicationDocument
+        ) {
           item.applicationDocument =
             mdmsTTTransformed[item.code].applicationDocument;
           return item;
