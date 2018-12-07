@@ -29,3 +29,10 @@
       color: #FE7A51 !important; }
   .sideMenuItem:hover .iconClassHover {
     fill: #FE7A51 !important; }
+  .sideMenuItem:hover .menuStyle {
+    overflow: visible;
+    text-overflow: initial !important;
+    white-space: initial !important; }
+
+.sideMenuItem > div > span > div > div {
+  padding: initial !important; }

@@ -221,7 +221,7 @@ class ActionMenuComp extends Component {
                     )
                   }
                   primaryText={
-                    <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                    <div className="menuStyle" style={styles.menuStyle}>
                       <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
                     </div>
                   }
@@ -288,7 +288,7 @@ class ActionMenuComp extends Component {
                         )
                       }
                       primaryText={
-                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                        <div className="menuStyle" style={styles.menuStyle}>
                           <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
                         </div>
                       }
@@ -326,7 +326,7 @@ class ActionMenuComp extends Component {
                         )
                       }
                       primaryText={
-                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                        <div className="menuStyle" style={styles.menuStyle}>
                           <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
                         </div>
                       }
@@ -379,7 +379,7 @@ class ActionMenuComp extends Component {
                           )
                         }
                         primaryText={
-                          <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                          <div className="menuStyle" style={styles.menuStyle}>
                             <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.displayName || ""}</span>
                           </div>
                         }

@@ -290,7 +290,7 @@ var ActionMenuComp = function (_Component) {
                   }),
                   primaryText: _react2.default.createElement(
                     "div",
-                    { className: "menuStyle whiteColor", style: styles.menuStyle },
+                    { className: "menuStyle", style: styles.menuStyle },
                     _react2.default.createElement(
                       "span",
                       { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
@@ -347,7 +347,7 @@ var ActionMenuComp = function (_Component) {
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
+                        { className: "menuStyle", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
                           { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
@@ -382,7 +382,7 @@ var ActionMenuComp = function (_Component) {
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
+                        { className: "menuStyle", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
                           { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
@@ -427,7 +427,7 @@ var ActionMenuComp = function (_Component) {
                       }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
+                        { className: "menuStyle", style: styles.menuStyle },
                         _react2.default.createElement(
                           "span",
                           { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
