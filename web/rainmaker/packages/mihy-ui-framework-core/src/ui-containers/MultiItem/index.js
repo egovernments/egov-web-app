@@ -38,14 +38,16 @@ class MultiItem extends React.Component {
       if (!items.length && !editItems.length) {
         this.addItem();
       } else {
-        for (var i = 0; i < editItems.length; i++) {
-          if (checkActiveItem(editItems[i])) {
-            if (i) {
-              this.addItem();
-            } else {
-              this.addItem(true);
+        if (items.length<editItems.length) {
+          for (var i = 0; i < editItems.length; i++) {
+            if (checkActiveItem(editItems[i])) {
+              if (i) {
+                this.addItem();
+              } else {
+                this.addItem(true);
+              }
+              // this.addItem(true);
             }
-            // this.addItem(true);
           }
         }
       }

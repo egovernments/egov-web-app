@@ -118,14 +118,16 @@ var MultiItem = function (_React$Component) {
         if (!items.length && !editItems.length) {
           _this.addItem();
         } else {
-          for (var i = 0; i < editItems.length; i++) {
-            if (checkActiveItem(editItems[i])) {
-              if (i) {
-                _this.addItem();
-              } else {
-                _this.addItem(true);
+          if (items.length < editItems.length) {
+            for (var i = 0; i < editItems.length; i++) {
+              if (checkActiveItem(editItems[i])) {
+                if (i) {
+                  _this.addItem();
+                } else {
+                  _this.addItem(true);
+                }
+                // this.addItem(true);
               }
-              // this.addItem(true);
             }
           }
         }
