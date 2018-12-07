@@ -739,6 +739,7 @@ export const tradeDetails = getCommonCard({
               )
             )
           );
+          // dispatch(pFO("Licenses[0].tradeLicenseDetail.structureType", null));
         } catch (e) {
           console.log(e);
         }
@@ -777,6 +778,8 @@ export const tradeDetails = getCommonCard({
               tradeTypeDropdownData
             )
           );
+        // dispatch(pFO("Licenses[0].tradeLicenseDetail.tradeUnits", []));
+        // dispatch(pFO("LicensesTemp.tradeUnits", []));
       }
     },
     tradeCommencementDate: getDateField({
