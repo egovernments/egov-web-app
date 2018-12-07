@@ -190,7 +190,7 @@ var MultiItem = function (_React$Component) {
             }
             if (multiItemContent[variable].props.setDataInField && multiItemContent[variable].props.disabled) {
               if (multiItemContent[variable].props.jsonPath.split(".").pop() === "uomValue") {
-                var disabledValue = (0, _get2.default)(screenConfig[screenKey], multiItemContent[variable].componentJsonpath + ".props.disabled", false);
+                var disabledValue = (0, _get2.default)(screenConfig[screenKey], multiItemContent[variable].componentJsonpath + ".props.disabled", true);
                 multiItemContent[variable].props.disabled = disabledValue;
               }
             }

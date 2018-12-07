@@ -172,7 +172,7 @@ class MultiItem extends React.Component {
                 `${
                   multiItemContent[variable].componentJsonpath
                 }.props.disabled`,
-                false
+                true
               );
               multiItemContent[variable].props.disabled = disabledValue;
             }
