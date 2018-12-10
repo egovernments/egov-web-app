@@ -14,9 +14,11 @@ const View = ({ userJobs, isFetching, tableSchema }) => {
           {isFetching ? (
             <LoadingIndicator />
           ) : (
-            <div style={{ padding: "14px" }}>
-              <TableUi tableSchema={tableSchema} tableBody={userJobs} />
-            </div>
+            userJobs.length > 0 && (
+              <div style={{ padding: "14px" }}>
+                <TableUi tableSchema={tableSchema} tableBody={userJobs} />
+              </div>
+            )
           )}
         </div>
       </div>

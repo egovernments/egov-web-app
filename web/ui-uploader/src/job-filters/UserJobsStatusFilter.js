@@ -61,6 +61,7 @@ class UserJobsStatusFilterContainer extends Component {
         value={statuses}
         onChange={onChange}
         placeholder="Select Job Status"
+        label="Job Status"
       />
     );
   }

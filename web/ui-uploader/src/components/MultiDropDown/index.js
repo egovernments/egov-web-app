@@ -58,8 +58,15 @@ class MultipleSelect extends React.Component {
   };
 
   render() {
-    const { classes, options, placeholder, onChange, value } = this.props;
-
+    const {
+      classes,
+      options,
+      placeholder,
+      onChange,
+      value,
+      label
+    } = this.props;
+    //options =[{value:"valueText",label:"labelText}]
     return (
       <div className={classes.root}>
         <FormControl
@@ -68,7 +75,7 @@ class MultipleSelect extends React.Component {
           style={{ marginTop: "8px !important" }}
         >
           <InputLabel shrink style={{ color: "#FE7A51", fontSize: 14 }}>
-            Job Status
+            {label}
           </InputLabel>
           <Select
             multiple
@@ -82,7 +89,13 @@ class MultipleSelect extends React.Component {
               if (selected.length === 0) {
                 return <em>{placeholder}</em>;
               }
-              return selected.join(", ");
+              return selected
+                .map(
+                  item =>
+                    options[options.findIndex(elem => elem.value === item)]
+                      .label
+                )
+                .join(", ");
             }}
             MenuProps={MenuProps}
           >
