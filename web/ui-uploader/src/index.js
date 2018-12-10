@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/bootstrap-grid.css";
+// import "./styles/bootstrap-grid.css";
 import "./styles/app.css";
+import "./index.css";
 import App from "./app";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { grey300 } from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
+import MuiThemeProvider0 from "material-ui/styles/MuiThemeProvider";
 import themeObject from "./themes";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme(themeObject);
+
 // let themeObject = {
 //   fontFamily: "Lato, sans",
 //   textColor: "rgba(0, 0, 0, 0.68)",
@@ -109,15 +113,18 @@ import themeObject from "./themes";
 // };
 
 const muiTheme = getMuiTheme(themeObject);
+
 window.basename =
   process.env.NODE_ENV === "production" ? "/app/v2/uploader" : "";
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <Router basename={window.basename}>
-        <App />
-      </Router>
+    <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider0 muiTheme={muiTheme}>
+        <Router basename={window.basename}>
+          <App />
+        </Router>
+      </MuiThemeProvider0>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")

@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+// import TextField from "material-ui/TextField";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import MenuItem from "@material-ui/core/MenuItem";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   container: {
@@ -14,11 +15,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
-    width: 200,
     fontSize: "14px"
-  },
-  inputStyles: {
-    fontSize: "14px !important"
   },
   dense: {
     marginTop: 16
@@ -26,15 +23,12 @@ const styles = theme => ({
   menu: {
     width: 200
   },
-  inputLabelStyles: {
-    color: "blue"
-  },
   inputStyles: {
     fontSize: 14
   }
 });
 
-class DatePickerUi extends React.Component {
+class DropDownUi extends React.Component {
   render() {
     const {
       classes,
@@ -42,25 +36,39 @@ class DatePickerUi extends React.Component {
       value,
       label,
       placeholder,
+      options = [],
       ...rest
     } = this.props;
+
+    const renderSelectMenuItems = () => {
+      return options.map((value, index) => {
+        return (
+          <MenuItem key={index} value={value} primaryText={value}>
+            {value}
+          </MenuItem>
+        );
+      });
+    };
+
     return (
       <TextField
         label={label}
-        type="date"
+        select="true"
+        placeholder={placeholder}
         InputProps={{ classes: { input: classes.inputStyles } }}
         InputLabelProps={{
           shrink: true
-          // style: { color: "#FE7A51" },
-          // classes: { root: classes.inputStyles }
         }}
-        // defaultValue="2017-05-24"
+        underlineShow={false}
         value={value}
         onChange={onChange}
         fullWidth={true}
-      />
+        {...rest}
+      >
+        {renderSelectMenuItems()}
+      </TextField>
     );
   }
 }
 
-export default withStyles(styles)(DatePickerUi);
+export default withStyles(styles)(DropDownUi);

@@ -74,9 +74,7 @@ class MultipleSelect extends React.Component {
           //   className={classNames(classes.formControl)}
           style={{ marginTop: "8px !important" }}
         >
-          <InputLabel shrink style={{ color: "#FE7A51", fontSize: 14 }}>
-            {label}
-          </InputLabel>
+          <InputLabel shrink="true">{label}</InputLabel>
           <Select
             multiple
             displayEmpty

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateUserJobFilters } from "../jobs/actions";
 import DatePickerUi from "../components/DatePickerUINew";
+import Grid from "@material-ui/core/Grid";
 
 class UserJobsDateFilterContainer extends Component {
   static propTypes = {
@@ -15,8 +16,8 @@ class UserJobsDateFilterContainer extends Component {
     const { maxDate } = this;
 
     return (
-      <div>
-        <div className="col-lg-4 col-md-4">
+      <React.Fragment>
+        <Grid item sm="4">
           <DatePickerUi
             value={startDate}
             onChange={(event, date) => {
@@ -25,8 +26,8 @@ class UserJobsDateFilterContainer extends Component {
             label="From Date"
             maxDate={maxDate}
           />
-        </div>
-        <div className="col-lg-4 col-md-4">
+        </Grid>
+        <Grid item sm="4">
           <DatePickerUi
             value={endDate}
             onChange={(event, date) => {
@@ -34,8 +35,8 @@ class UserJobsDateFilterContainer extends Component {
             }}
             label="To Date"
           />
-        </div>
-      </div>
+        </Grid>
+      </React.Fragment>
     );
   }
 }

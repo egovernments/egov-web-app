@@ -24,11 +24,11 @@ class UploadDefinitionsContainer extends Component {
   }
 
   handleModuleDropDownChange = (event, index, value) => {
-    this.props.moduleSelected(value);
+    this.props.moduleSelected(event.target.value);
   };
 
   handleFileTypeDropDownChange = (event, index, value) => {
-    this.props.moduleDefinitionSelected(value);
+    this.props.moduleDefinitionSelected(event.target.value);
   };
 
   render() {
@@ -95,6 +95,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UploadDefinitionsContainer
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UploadDefinitionsContainer);
