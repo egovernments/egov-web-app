@@ -520,7 +520,7 @@ export const convertEpochToDate = dateEpoch => {
   return `${day}/${month}/${year}`;
 };
 
-export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
+export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
   //example input format : "2018-10-02"
   try {
     const parts = dateString.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
@@ -1971,4 +1971,21 @@ export const applyForm = (state, dispatch) => {
         ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
         : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
+};
+
+export const sortByEpoch = (data, order) => {
+  if (order) {
+    return data.sort((a, b) => {
+      return a[a.length - 1] - b[b.length - 1];
+    });
+  } else {
+    return data.sort((a, b) => {
+      return b[b.length - 1] - a[a.length - 1];
+    });
+  }
+};
+
+export const getEpochForDate = date => {
+  const dateSplit = date.split("/");
+  return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
 };

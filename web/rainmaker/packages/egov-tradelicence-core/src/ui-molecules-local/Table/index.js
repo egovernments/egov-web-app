@@ -2,12 +2,14 @@ import React from "react";
 import MUIDataTable from "mui-datatables";
 import get from "lodash/get";
 import PropTypes from "prop-types";
+import cloneDeep from "lodash/cloneDeep";
 import "./index.css";
 
 class Table extends React.Component {
   state = {
     data: [],
-    columns: []
+    columns: [],
+    customSortOrder: "asc"
   };
 
   formatData = (data, columns) => {
@@ -47,6 +49,19 @@ class Table extends React.Component {
     });
   };
 
+  onColumnSortChange = (columnName, i) => {
+    let { customSortOrder, data } = this.state;
+    const { customSortColumn } = this.props;
+    const { column, sortingFn } = customSortColumn;
+    if (columnName === column) {
+      const updatedData = sortingFn(cloneDeep(data), "", customSortOrder);
+      this.setState({
+        data: updatedData.data,
+        customSortOrder: updatedData.currentOrder
+      });
+    }
+  };
+
   render() {
     const { data, columns } = this.state;
     const { options, title } = this.props;
@@ -55,7 +70,11 @@ class Table extends React.Component {
         title={title}
         data={data}
         columns={columns}
-        options={options}
+        options={{
+          ...options,
+          onColumnSortChange: (columnName, order) =>
+            this.onColumnSortChange(columnName, order)
+        }}
       />
     );
   }
