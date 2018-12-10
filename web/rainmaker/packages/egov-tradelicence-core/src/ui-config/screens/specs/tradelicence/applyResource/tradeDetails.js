@@ -190,6 +190,9 @@ const tradeUnitCard = {
             },
             beforeFieldChange: (action, state, dispatch) => {
               try {
+                let cardIndex = action.componentJsonpath
+                  .split("items[")[1]
+                  .split("]")[0];
                 const tradeSubTypes = get(
                   state.screenConfiguration,
                   "preparedFinalObject.Licenses[0].tradeLicenseDetail.tradeUnits",
@@ -197,8 +200,9 @@ const tradeUnitCard = {
                 );
                 const alreadySelected =
                   tradeSubTypes &&
-                  tradeSubTypes.find(item => {
-                    if (item.tradeType === action.value) return true;
+                  tradeSubTypes.find((item, i) => {
+                    if (item.tradeType === action.value && cardIndex != i)
+                      return true;
                   });
                 if (alreadySelected) {
                   alert(
@@ -206,9 +210,6 @@ const tradeUnitCard = {
                   );
                   action.value = null;
                 } else {
-                  let cardIndex = action.componentJsonpath
-                    .split("items[")[1]
-                    .split("]")[0];
                   let tradeType = get(
                     state.screenConfiguration.preparedFinalObject,
                     `LicensesTemp.tradeUnits[${cardIndex}].tradeType`,
