@@ -6,9 +6,11 @@ import { Card, CardHeader, CardText } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
 import { commonApiPost } from "egov-ui-kit/utils/api";
 import { translate, epochToDate } from "./commons/common";
+import $ from "jquery";
 import _ from "lodash";
 import { customizePdfPrint } from "./customizePDF.js";
 import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
+import "../../../assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
 import "datatables.net";
@@ -16,8 +18,11 @@ import "datatables.net-buttons";
 import "datatables.net-dt";
 import "react-jquery-datatables";
 import "datatables.net-buttons-bs";
+import "datatables.net-responsive";
+import "datatables.net-responsive-dt";
+// import "../../../assets/styles/jquery-3.3.1.js";
+// import "../../../assets/styles/dataTables.responsive.min.js";
 import { Icon } from "components";
-import $ from "jquery";
 import JSZip from "jszip/dist/jszip";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
@@ -28,6 +33,7 @@ import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
 import commonConfig from "config/common.js";
 import "./index.css";
+
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.JSZip = JSZip;
@@ -195,7 +201,7 @@ class ShowField extends Component {
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
     let reportTitle = this.getReportTitle();
-    let orientation = reportHeader.length > 6 ? 'landscape' : 'portrait';
+    let orientation = reportHeader.length > 6 ? "landscape" : "portrait";
 
     const buttons = [
       {
@@ -287,8 +293,8 @@ class ShowField extends Component {
 
               var intVal = function(i) {
                 if (typeof i === "string") {
-                  let a = i.replace(/,/g, "")
-                  a = a.replace(/[^-+0-9. ]/g," ").split(" ")[0]
+                  let a = i.replace(/,/g, "");
+                  a = a.replace(/[^-+0-9. ]/g, " ").split(" ")[0];
                   let inta = a && Number(a);
                   return inta;
                 } else if (typeof i === "number") {
@@ -754,7 +760,7 @@ class ShowField extends Component {
           {/* <CardHeader title={self.state.reportSubTitle} /> */}
           {/* <CardText> */}
 
-          <Table
+          <table
             id="reportTable"
             style={{
               color: "#484848",
@@ -762,13 +768,17 @@ class ShowField extends Component {
               padding: "0 !important",
               backgroundColor: "#ffffff",
               overflowY: "auto",
+              width: "100%"
             }}
+            // className="mdl-data-table"
+            className="display responsive nowrap"
+            // style={{ width: "100%" }}
             responsive
           >
             {self.renderHeader()}
             {self.renderBody()}
             {self.renderFooter()}
-          </Table>
+          </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
               <RaisedButton
@@ -925,7 +935,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowField);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowField);
