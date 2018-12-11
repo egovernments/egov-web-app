@@ -2,7 +2,6 @@ import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
 // import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
-// import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
 import { ReOpenComplaint } from "modules/common";
@@ -102,13 +101,10 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      // title: "ES_OPEN_COMPLAINTS_HEADER",
       hideTitle: true,
-      // redirectionUrl,
       isHomeScreen: true,
       hideFor: "ao",
       customFor: "csr",
-      //customTitle: "ES_ALL_COMPLAINTS_HEADER",
     },
   },
   {
@@ -118,7 +114,7 @@ const routes = [
     options: {
       hideFooter: true,
       redirectionUrl,
-      hideTitle: true,
+      title: "Home",
       isHomeScreen: true,
     },
   },

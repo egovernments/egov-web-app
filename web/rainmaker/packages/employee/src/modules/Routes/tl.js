@@ -1,14 +1,13 @@
 import React from "react";
-import Loadable from 'react-loadable';
-import LoadingIndicator from 'mihy-ui-framework/ui-molecules/LoadingIndicator';
+import Loadable from "react-loadable";
+import LoadingIndicator from "mihy-ui-framework/ui-molecules/LoadingIndicator";
 
-const Loading = () => <LoadingIndicator/>;
+const Loading = () => <LoadingIndicator />;
 
-
-const ScreenInterface=Loadable({
-  loader:()=>import ('../../ui-views/ScreenInterface'),
-  loading:Loading
-})
+const ScreenInterface = Loadable({
+  loader: () => import("../../ui-views/ScreenInterface"),
+  loading: Loading,
+});
 
 const routes = [
   // property tax routes
@@ -17,12 +16,12 @@ const routes = [
     component: ScreenInterface,
     needsAuthentication: true,
     options: {
-      title: "",
+      title: "Trade License",
       hideFooter: true,
       hideBackButton: true,
       isHomeScreen: true,
-    }
-  }
-]
+    },
+  },
+];
 
 export default routes;

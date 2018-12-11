@@ -28,7 +28,6 @@ import { ReopenAcknowledgement } from "modules/common";
 import ptRoutes from "./pt";
 import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
-// const ptRoutes = [];
 
 import TLHowItWorks from "../../ui-views/HowItWorks";
 
@@ -74,7 +73,7 @@ const routes = [
     path: "/",
     component: LandingPage,
     needsAuthentication: true,
-    options: { isHomeScreen: true, hideTitle: true, redirectionUrl: "/user/register" },
+    options: { isHomeScreen: true, title: "Home", redirectionUrl: "/user/register" },
   },
   {
     path: "image",
