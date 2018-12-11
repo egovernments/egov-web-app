@@ -111,7 +111,7 @@ const screenConfig = {
       componentPath: "DialogContainer",
       props: {
         open: false,
-        maxWidth: "md",
+        maxWidth: "sm",
         screenKey: "pay"
       },
       children: {
