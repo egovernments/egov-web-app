@@ -3,13 +3,12 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonHeader,
-  getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-// import tradeLicenseSearchAndResult from "../tradelicence/search";
-
+import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
+import { cityPicker } from "./citypicker";
 
 const header = getCommonHeader({
   labelName: "Trade License",
@@ -18,7 +17,7 @@ const header = getCommonHeader({
 
 const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
-  name: "search",
+  name: "home",
   beforeInitScreen: (action, state, dispatch) => {
     fetchData(action, state, dispatch);
     return action;
@@ -83,9 +82,13 @@ const tradeLicenseSearchAndResult = {
                           labelKey: "TL_APPLY"
                         })
                       },
+                      // onClickDefination: {
+                      //   action: "page_change",
+                      //   path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                      // },
                       onClickDefination: {
-                        action: "page_change",
-                        path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                        action: "condition",
+                        callBack: showCityPicker
                       },
                       roleDefination: {
                         rolePath: "user-info.roles",
@@ -98,6 +101,24 @@ const tradeLicenseSearchAndResult = {
             }),
             break: getBreak(),
             searchResults: searchResults
+          }
+        }
+      }
+    },
+    cityPickerDialog: {
+      componentPath: "Dialog",
+      props: {
+        open: false,
+        maxWidth: "md"
+      },
+      children: {
+        dialogContent: {
+          componentPath: "DialogContent",
+          props: {
+            style: { minHeight: "180px", minWidth: "365px" }
+          },
+          children: {
+            popup: cityPicker
           }
         }
       }

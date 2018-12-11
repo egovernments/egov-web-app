@@ -7,7 +7,13 @@ import Snackbar from "material-ui/Snackbar";
 import LoadingIndicator from "../components/LoadingIndicator";
 import "./style.css";
 
-const CreateJobView = ({ handleOnChange, handleSubmit, showJobs, message, history }) => {
+const CreateJobView = ({
+  handleOnChange,
+  handleSubmit,
+  showJobs,
+  message,
+  history
+}) => {
   return (
     <div>
       <CardUi cardTitle="Upload Definitions">
@@ -23,6 +29,7 @@ const CreateJobView = ({ handleOnChange, handleSubmit, showJobs, message, histor
       <div style={{ textAlign: "center", width: "100%" }} className="col-lg-12">
         <ButtonUi
           style={{ marginRight: "15px" }}
+          className={"uploader-primary-button"}
           icon={{ style: { color: "white" }, name: "add" }}
           onClick={handleSubmit}
           label="Create"
@@ -30,6 +37,7 @@ const CreateJobView = ({ handleOnChange, handleSubmit, showJobs, message, histor
         />
         <ButtonUi
           style={{ marginRight: "15px" }}
+          className={"uploader-primary-button"}
           icon={{ style: { color: "white" }, name: "list" }}
           onClick={showJobs}
           label="View Jobs"
@@ -55,7 +63,7 @@ const View = ({
   errorMessage
 }) => {
   return (
-    <div className="container">
+    <div className="common-div-css">
       <div className="row">
         <div className="col-lg-12 col-md-12">
           <Snackbar

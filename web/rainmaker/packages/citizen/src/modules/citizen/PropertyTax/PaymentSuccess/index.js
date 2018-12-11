@@ -10,10 +10,6 @@ import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import get from "lodash/get";
 
 class PaymentSuccess extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     imageUrl: "",
   };
@@ -126,7 +122,7 @@ class PaymentSuccess extends Component {
   };
 
   render() {
-    const { generalMDMSDataById, match } = this.props;
+    const { generalMDMSDataById } = this.props;
     const { imageUrl } = this.state;
     return (
       <Screen>

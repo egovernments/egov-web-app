@@ -26,7 +26,9 @@ const style = {
   },
   bodySub: {
     marginTop: "8px",
-    marginBottom: "0px"
+    marginBottom: "0px",
+    color: "rgba(0, 0, 0, 0.60)",
+    fontFamily: "Roboto"
   },
   container: {
     display: "flex",

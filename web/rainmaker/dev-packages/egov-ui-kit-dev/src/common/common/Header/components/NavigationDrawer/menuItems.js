@@ -51,16 +51,16 @@ const items = {
             },
             id: "header-contact-us",
           },
-          {
-            primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
-            route: "/how-it-works",
-            leftIcon: <Icon action="custom" name="help-circle" />,
-            style: {
-              paddingBottom: "2px",
-              paddingTop: "2px",
-            },
-            id: "header-how-it-works",
-          },
+          // {
+          //   primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
+          //   route: "/how-it-works",
+          //   leftIcon: <Icon action="custom" name="help-circle" />,
+          //   style: {
+          //     paddingBottom: "2px",
+          //     paddingTop: "2px",
+          //   },
+          //   id: "header-how-it-works",
+          // },
           {
             primaryText: <Label label="CORE_COMMON_LOGOUT" />,
             route: "/logout",
@@ -81,7 +81,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HOMEHEADER" />,
-            route: "/all-complaints",
+            route: "",
             leftIcon: <Icon action="action" name="home" />,
             style: {
               paddingBottom: "1px",
@@ -91,6 +91,7 @@ const items = {
             id: "header-home",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforPGREmp: 1,
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
@@ -99,6 +100,7 @@ const items = {
             id: "header-closed-complaint",
             renderforcsr: 0,
             renderforadmin: 0,
+            renderforPGREmp: 0,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
@@ -111,6 +113,7 @@ const items = {
             id: "header-contact-us",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforPGREmp: 1,
           },
 
           {
@@ -124,6 +127,7 @@ const items = {
             id: "header-profile",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforPGREmp: 1,
           },
           // {
           //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -150,6 +154,7 @@ const items = {
             id: "header-logout",
             renderforcsr: 1,
             renderforadmin: 1,
+            renderforPGREmp: 1,
           },
         ],
       },
@@ -170,8 +175,22 @@ const renderMenuForADMIN = (role, section) => {
   return menuForADMIN;
 };
 
+const renderMenuForPGREmp = (role, section) => {
+  const menuForPGREmp = items[role].sections[section].items.filter((item) => {
+    return item.renderforPGREmp === 1;
+  });
+  return menuForPGREmp;
+};
+
 const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+  const isPGR = role === "employee" && !window.location.pathname.includes("complaint");
+  return isCSR
+    ? renderMenuForCSR(role, section)
+    : isADMIN
+    ? renderMenuForADMIN(role, section)
+    : isPGR
+    ? renderMenuForPGREmp(role, section)
+    : items[role].sections[section].items;
 };
 
 export default menuItems;

@@ -48,9 +48,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           units &&
             units.map((unit) => {
               dataRow = [];
-              dataRow.push(
-                unit.usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor")
-              );
+              dataRow.push(transform(unit.floorNo, "Floor"));
               dataRow.push(
                 transform(
                   unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor,
@@ -77,6 +75,8 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           return null;
         }
       };
+
+      const floorData = getFloorDetails();
 
       let borderKey = [true, true, false, true];
       let borderValue = [false, true, true, true];
@@ -306,12 +306,12 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
             },
             layout: tableborder,
           },
-          getFloorDetails() && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" },
-          getFloorDetails() && {
+          floorData && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" },
+          floorData && {
             style: "receipt-assess-table",
             table: {
               widths: ["*", "*", "*", "*", "*"],
-              body: getFloorDetails(),
+              body: floorData,
             },
             layout: tableborder,
           },

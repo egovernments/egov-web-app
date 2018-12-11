@@ -7,11 +7,12 @@ import View from "./view";
 class Filters extends Component {
   static propTypes = {
     applyUserJobFilters: PropTypes.func.isRequired,
-    resetUserJobFilters: PropTypes.func.isRequired
+    resetUserJobFilters: PropTypes.func.isRequired,
+    filter: PropTypes.object.isRequired
   };
 
   handleApplyFilter = e => {
-    this.props.applyUserJobFilters();
+    this.props.applyUserJobFilters(this.props.filter);
   };
 
   handleResetFilter = e => {
@@ -30,8 +31,17 @@ class Filters extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  applyUserJobFilters: () => dispatch(applyUserJobFilters()),
+  applyUserJobFilters: filter => dispatch(applyUserJobFilters(filter)),
   resetUserJobFilters: () => dispatch(resetUserJobFilters())
 });
 
-export default connect(null, mapDispatchToProps)(Filters);
+const mapStateToProps = state => {
+  const { userJobs } = state;
+  const { filter } = userJobs;
+  return { filter };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Filters);

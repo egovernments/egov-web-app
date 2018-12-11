@@ -2,12 +2,8 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph,
   getCommonGrayCard,
-  getCommonContainer,
-  getCommonValue,
-  getCommonCaption,
-  getLabel
+  getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -18,11 +14,10 @@ import { getSearchResults } from "../../../../ui-utils/commons";
 import {
   createEstimateData,
   setMultiOwnerForSV,
-  setValidToFromVisibilityForSV
+  setValidToFromVisibilityForSV,
+  getDialogButton
 } from "../utils";
 import { getFileUrlFromAPI } from "ui-utils/commons";
-
-import { convertEpochToDate } from "../utils";
 import {
   getFeesEstimateCard,
   getHeaderSideText,
@@ -341,6 +336,11 @@ const setActionItems = (action, object) => {
 export const tradeReviewDetails = getCommonCard({
   title,
   estimate,
+  viewBreakupButton: getDialogButton(
+    "VIEW BREAKUP",
+    "TL_PAYMENT_VIEW_BREAKUP",
+    "search-preview"
+  ),
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails
@@ -351,6 +351,7 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
+    const status = getQueryArg(window.location.href, "status");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     //To set the application no. at the  top
     set(
@@ -358,6 +359,14 @@ const screenConfig = {
       "components.div.children.headerDiv.children.header1.children.applicationNumber.props.number",
       applicationNumber
     );
+    if (status !== "pending_payment") {
+      set(
+        action.screenConfig,
+        "components.div.children.tradeReviewDetails.children.cardContent.children.viewBreakupButton.visible",
+        false
+      );
+    }
+
     beforeInitFn(action, state, dispatch, applicationNumber);
     return action;
   },
@@ -427,6 +436,15 @@ const screenConfig = {
         },
         tradeReviewDetails
         //footer
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "search-preview"
       }
     }
   }

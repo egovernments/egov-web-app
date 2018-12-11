@@ -23,7 +23,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getQueryValue, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
-import { get, set, range, isEmpty, isEqual, orderBy } from "lodash";
+import { get, set, range, isEmpty, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
@@ -31,7 +31,6 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
-import { SingleCheckbox } from "components";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -240,25 +239,7 @@ class FormWizard extends Component {
 
   getTargetPropertiesDetails = (propertyDetails) => {
     const { search } = this.props.location;
-    const FY = getQueryValue(search, "FY");
     const assessmentNumber = getQueryValue(search, "assessmentId");
-    // let selectedPropertyDetails = [];
-    // //filter property details by financial year
-    // const filteredPropertyDetails = propertyDetails.filter((item) => item.financialYear === FY);
-
-    // //if present sort the filtered property details else sort the original property details
-    // if (filteredPropertyDetails && filteredPropertyDetails.length) {
-    //   filteredPropertyDetails.sort(
-    //     (property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1)
-    //   );
-    //   selectedPropertyDetails.push(...filteredPropertyDetails);
-    // } else {
-    //   propertyDetails.sort((property1, property2) => get(property1, "auditDetails.createdTime", 2) - get(property2, "auditDetails.createdTime", 1));
-    //   selectedPropertyDetails.push(...propertyDetails);
-    // }
-    // console.log("DDDDDDDDDDDDDDDDDDD");
-    // console.log(selectedPropertyDetails);
-    // const lastIndex = selectedPropertyDetails.length - 1;
     const selectedPropertyDetails = propertyDetails.filter((item) => item.assessmentNumber === assessmentNumber);
     // return the latest proeprty details of the selected year
     const lastIndex = 0;
@@ -273,10 +254,9 @@ class FormWizard extends Component {
     return [selectedPropertyDetails[lastIndex]];
   };
 
-  fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
+  fetchDraftDetails = async (draftId, isReassesment) => {
     const { draftRequest } = this.state;
-    const { updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess, location } = this.props;
-    // const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    const { updatePrepareFormDataFromDraft, fetchMDMDDocumentTypeSuccess, location } = this.props;
     const { search } = location;
     const financialYearFromQuery = getFinancialYearFromQuery();
     const propertyId = getQueryValue(search, "propertyId");
@@ -285,19 +265,12 @@ class FormWizard extends Component {
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
 
     try {
-      // toggleSpinner();
-      //const ownerFromResponseIn = convertRawDataToFormConfig(responseee)
-
       let currentDraft;
       if (!isReassesment) {
         let draftsResponse = await httpRequest(
           "pt-services-v2/drafts/_search",
           "_search",
           [
-            // {
-            //   key: "userId",
-            //   value: uuid,
-            // },
             {
               key: isReassesment ? "assessmentNumber" : "id",
               value: draftId,
@@ -499,7 +472,6 @@ class FormWizard extends Component {
       let { search } = this.props.location;
       const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
       const isReassesment = !!getQueryValue(search, "isReassesment");
-      const isFreshAssesment = getQueryValue(search, "type");
       const tenantId = getQueryValue(search, "tenantId");
       const propertyId = getQueryValue(search, "propertyId");
       const draftUuid = getQueryValue(search, "uuid");
@@ -746,7 +718,7 @@ class FormWizard extends Component {
   updateIndex = (index) => {
     const { callDraft, pay, estimate, validateUnitandPlotSize } = this;
     const { selected, formValidIndexArray } = this.state;
-    const { setRoute, displayFormErrorsAction, form } = this.props;
+    const { displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
       case 0:
@@ -1146,7 +1118,7 @@ class FormWizard extends Component {
   };
 
   pay = async () => {
-    const { callPGService, callDraft } = this;
+    const { callPGService } = this;
     const { financialYearFromQuery } = this.state;
     let { toggleSpinner, location, form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
@@ -1357,7 +1329,7 @@ class FormWizard extends Component {
   };
 
   render() {
-    const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
+    const { renderStepperContent, getHeaderLabel, onPayButtonClick, closeDeclarationDialogue } = this;
     const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
     const { history } = this.props;

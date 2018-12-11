@@ -238,7 +238,8 @@ export const getTextField = textScheama => {
     infoIcon,
     title = {},
     errorMessage = "",
-    requiredMessage = ""
+    requiredMessage = "",
+    ...rest
   } = textScheama;
   return {
     uiFramework: "custom-containers",
@@ -270,7 +271,8 @@ export const getTextField = textScheama => {
     minValue,
     maxValue,
     errorMessage,
-    requiredMessage
+    requiredMessage,
+    ...rest
   };
 };
 

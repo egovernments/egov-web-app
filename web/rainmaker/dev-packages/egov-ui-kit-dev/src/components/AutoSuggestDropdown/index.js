@@ -18,6 +18,7 @@ const floatingLabelStyle = {
   letterSpacing: 0.6,
   fontWeight: 500,
   marginBottom: 5,
+  zIndex: 0,
 };
 const underlineFocusBaseStyle = {
   borderColor: "#e0e0e0",

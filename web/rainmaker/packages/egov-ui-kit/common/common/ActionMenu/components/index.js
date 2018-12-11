@@ -317,7 +317,11 @@ var ActionMenuComp = function (_Component) {
               if (item.navigationURL && item.navigationURL !== "newTab") {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { style: { textDecoration: 'none' }, key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
+                  {
+                    style: { textDecoration: "none" },
+                    key: index,
+                    to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL
+                  },
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },
@@ -328,6 +332,10 @@ var ActionMenuComp = function (_Component) {
                       onClick: function onClick() {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
+                        console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
+                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
+                          window.location.reload();
+                        }
                       },
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
                         name: iconLeft[1],
@@ -399,7 +407,11 @@ var ActionMenuComp = function (_Component) {
 
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { style: { textDecoration: 'none' }, key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
+                  {
+                    style: { textDecoration: "none" },
+                    key: index,
+                    to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL
+                  },
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },

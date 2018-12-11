@@ -37,45 +37,44 @@ class LandingPage extends Component {
         return acc;
       }, [])
     );
-    // transformedData && transformedData.push(moduleData["Finance"]);
-    // return transformedData;
   };
 
   moduleData = {
     PGR: {
       moduleTitle: "Complaints",
       button1: "mSeva Complaints",
-      borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
-      iconAction: "custom",
-      iconName: "dashboard-propertytax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+      //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
+      iconAction: "action",
+      route: "all-complaints",
+      iconName: "announcement",
+      iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     PT: {
       moduleTitle: "Property Tax",
       button1: "mSeva Property Tax",
-      borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
+      //borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       iconName: "dashboard-complaint",
       route: "property-tax",
-      iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+      iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     Finance: {
       moduleTitle: "Finance",
       button1: "Inbox",
-      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      //borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "custom",
       iconName: "rupee",
       route: "services/EGF/inbox",
-      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     TL: {
       moduleTitle: "TradeLicense",
       button1: "Mseva TradeLicense",
-      borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      // borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
       iconName: "business-center",
       route: "tradelicense/search",
-      iconStyle: { width: "90px", height: "120px", marginBottom: "15px", fill: "rgba(0, 0, 0, 0.60)" },
+      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
   render() {

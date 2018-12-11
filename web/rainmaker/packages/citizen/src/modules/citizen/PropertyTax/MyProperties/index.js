@@ -7,7 +7,6 @@ import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
-import get from "lodash/get";
 import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
@@ -53,8 +52,6 @@ class MyProperties extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, fetchProperties, userInfo } = this.props;
     fetchProperties([{ key: "accountId", value: userInfo.uuid }]); //Unnecessary API call to prevent page break on reload
-    // const { pathname } = location;
-    // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
@@ -64,19 +61,11 @@ class MyProperties extends Component {
     });
   };
 
-  encodeURI
+  encodeURI;
   onListItemClick = (item) => {
     const { route: propertyId, tenantId } = item;
     this.props.history.push(`/property-tax/my-properties/property/${encodeURIComponent(propertyId)}/${tenantId}`);
   };
-
-  // onBreadcrumbsClick = (index, path) => {
-  //   const { history } = this.props;
-  //   this.setState({
-  //     selected: index,
-  //   });
-  //   history.push(path);
-  // };
 
   render() {
     const { urls, history, transformedProperties, loading } = this.props;
@@ -107,8 +96,6 @@ const mapStateToProps = (state) => {
   const { loading, propertiesById } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const transformedProperties = Object.values(propertiesById).map((property, index) => {
-    // const cityValue = get(property, "address.city");
-    // const mohalla = get(property, "address.locality.code");
     return {
       primaryText: (
         <Label

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { textToLocalMapping } from "./citizenFunctions";
+import { sortByEpoch, getEpochForDate } from "../../utils";
 
 export const searchResults = {
   uiFramework: "custom-molecules-local",
@@ -53,7 +54,22 @@ export const searchResults = {
       responsive: "stacked",
       selectableRows: false,
       hover: true,
-      rowsPerPageOptions: [10, 20, 40]
+      rowsPerPageOptions: [10, 15, 20]
+    },
+    customSortColumn: {
+      column: "Application Date",
+      sortingFn: (data, i, sortDateOrder) => {
+        const epochDates = data.reduce((acc, curr) => {
+          acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
+          return acc;
+        }, []);
+        const order = sortDateOrder === "asc" ? true : false;
+        const finalData = sortByEpoch(epochDates, !order).map(item => {
+          item.pop();
+          return item;
+        });
+        return { data: finalData, currentOrder: !order ? "asc" : "desc" };
+      }
     }
   }
 };

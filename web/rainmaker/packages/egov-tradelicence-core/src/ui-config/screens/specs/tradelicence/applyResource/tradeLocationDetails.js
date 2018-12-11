@@ -1,23 +1,16 @@
 import {
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph,
   getTextField,
   getSelectField,
   getCommonContainer,
-  getPattern,
-  getLabel
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { httpRequest } from "../../../../../ui-utils/api";
-import {
-  getIconStyle,
-  getContainerWithElement,
-  getMapLocator
-} from "../../utils";
+import { getMapLocator } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { showHideMapPopup, getDetailsFromProperty } from "../../utils";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import get from "lodash/get";
 
 export const tradeLocationDetails = getCommonCard({
   header: getCommonTitle(
@@ -41,7 +34,8 @@ export const tradeLocationDetails = getCommonCard({
         jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
         required: true,
         props: {
-          required: true
+          required: true,
+          disabled: true
         }
       }),
       beforeFieldChange: async (action, state, dispatch) => {
@@ -66,7 +60,7 @@ export const tradeLocationDetails = getCommonCard({
               payload.TenantBoundary && payload.TenantBoundary[0].boundary
             )
           );
-          console.log(payload.TenantBoundary[0].boundary);
+          // console.log(payload.TenantBoundary[0].boundary);
           dispatch(
             handleField(
               "apply",

@@ -10,7 +10,7 @@ import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
@@ -60,7 +60,7 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, userInfo, fetchProperties, fetchGeneralMDMSData, getAssesmentsandStatus, form, removeForm } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchGeneralMDMSData, getAssesmentsandStatus, form, removeForm } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
     //getFetchGeneralMDMSData(fetchGeneralMDMSData);
     const requestBody = {

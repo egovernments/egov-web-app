@@ -3,7 +3,6 @@ import { Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
 const defaultIconStyle = {
-  fill: "#767676",
   width: 19,
   height: 20,
   marginRight: 8,

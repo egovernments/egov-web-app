@@ -145,7 +145,11 @@ export const epochToYmd = et => {
   if (!et) return null;
   // Return the same format if et is already a string (boundary case)
   if (typeof et === "string") return et;
-  var formatted_date = new Date(et).toISOString().substr(0, 10);
+  let date = new Date(et);
+  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  // date = `${date.getFullYear()}-${month}-${day}`;
+  var formatted_date =
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
   return formatted_date;
 };
 
@@ -160,4 +164,12 @@ export const getLocaleLabels = (label, labelKey, localizationLabels) => {
   } else {
     return label;
   }
+};
+
+export const replaceStrInPath = (inputString, search, replacement) => {
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, "g"), replacement);
+  };
+  return inputString.replaceAll(search, replacement);
 };

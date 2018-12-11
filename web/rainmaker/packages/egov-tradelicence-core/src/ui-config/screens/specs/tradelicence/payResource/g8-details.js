@@ -25,7 +25,7 @@ const g8Details = getCommonGrayCard({
     }),
     receiptIssueDate: getDateField({
       label: { labelName: "GEN/G8 Receipt Issue Date" },
-      placeholder: { labelName: "Enter GEN/G8 Receipt Issue Date" },
+      placeholder: { labelName: "dd/mm/yy" },
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
     })
   })

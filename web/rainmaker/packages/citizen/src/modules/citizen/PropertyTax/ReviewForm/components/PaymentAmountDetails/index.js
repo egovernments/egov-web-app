@@ -1,5 +1,5 @@
 import React from "react";
-import { RadioButton, Card, Icon } from "components";
+import { Card, Icon } from "components";
 import TextField from "material-ui/TextField";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
@@ -89,22 +89,21 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
               />
             </div>
           </div>
-          {optionSelected &&
-            optionSelected === "Partial_Amount" && (
-              <div
-                className="rainmaker-displayInline"
-                style={{
-                  padding: "12px 0px 12px 12px",
-                  backgroundColor: "#f2f2f2",
-                  marginTop: 10,
-                  border: "1px solid #5aaafa",
-                  borderLeft: "5px solid #5aaafa",
-                }}
-              >
-                <Icon action="action" name="info" color="#30588c" />
-                <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="No rebate is applicable for partial payments." />
-              </div>
-            )}
+          {optionSelected && optionSelected === "Partial_Amount" && (
+            <div
+              className="rainmaker-displayInline"
+              style={{
+                padding: "12px 0px 12px 12px",
+                backgroundColor: "#f2f2f2",
+                marginTop: 10,
+                border: "1px solid #5aaafa",
+                borderLeft: "5px solid #5aaafa",
+              }}
+            >
+              <Icon action="action" name="info" color="#30588c" />
+              <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="No rebate is applicable for partial payments." />
+            </div>
+          )}
         </div>
       }
     />

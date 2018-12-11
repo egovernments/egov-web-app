@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateUserJobFilters } from "../jobs/actions";
-import TextFieldUi from "../components/TextFieldUi";
+import TextFieldUi from "../components/TextFieldUINew";
 
-const userFilters = (filterKey, label) => {
+const userFilters = (filterKey, label, placeholder = "placeholder") => {
   class UserFilters extends Component {
     onChange = e => {
       this.props.updateUserJobFilters({
@@ -18,7 +18,14 @@ const userFilters = (filterKey, label) => {
     render() {
       const { onChange } = this;
       const { codes } = this.props;
-      return <TextFieldUi value={codes} onChange={onChange} label={label} />;
+      return (
+        <TextFieldUi
+          value={codes}
+          onChange={onChange}
+          label={label}
+          placeholder={placeholder}
+        />
+      );
     }
   }
 
@@ -32,7 +39,10 @@ const userFilters = (filterKey, label) => {
     updateUserJobFilters: filter => dispatch(updateUserJobFilters(filter))
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(UserFilters);
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(UserFilters);
 };
 
 export default userFilters;

@@ -1,16 +1,32 @@
-import { prepareFinalObject as prepareFO,handleScreenConfigurationFieldChange as handleField} from "./actions";
+import {
+  prepareFinalObject as prepareFO,
+  handleScreenConfigurationFieldChange as handleField
+} from "./actions";
 import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 
-export const validateField = (field) => {
-  const { required, pattern, minLength, maxLength, minValue, maxValue,visible } = field;
+export const validateField = field => {
+  const {
+    required,
+    pattern,
+    minLength,
+    maxLength,
+    minValue,
+    maxValue,
+    visible,
+    isDOB
+  } = field;
 
-  if (visible!==undefined && !visible) {
-    return { isFieldValid:true, errorText:"" };
+  if (visible !== undefined && !visible) {
+    return { isFieldValid: true, errorText: "" };
   }
 
-  const value = field.value ? (typeof field.value === "string" ? field.value.trim() : field.value) : null;
+  const value = field.value
+    ? typeof field.value === "string"
+      ? field.value.trim()
+      : field.value
+    : null;
   let errorText = "",
     isFieldValid = true,
     fieldLength = 0;
@@ -24,67 +40,143 @@ export const validateField = (field) => {
     fieldLength = value.length;
   }
 
-  if (isFieldValid && fieldLength && pattern && !new RegExp(pattern).test(value)) {
+  if (
+    isFieldValid &&
+    fieldLength &&
+    pattern &&
+    !new RegExp(pattern).test(value)
+  ) {
     isFieldValid = false;
   }
-  if (isFieldValid && minLength && maxLength && !(fieldLength >= minLength && fieldLength <= maxLength)) {
+  if (
+    isFieldValid &&
+    minLength &&
+    maxLength &&
+    !(fieldLength >= minLength && fieldLength <= maxLength)
+  ) {
     isFieldValid = false;
   }
-  if (isFieldValid && minValue && maxValue && !(value >= minValue && value <= maxValue)) {
+  if (
+    isFieldValid &&
+    minValue &&
+    maxValue &&
+    !(value >= minValue && value <= maxValue)
+  ) {
     isFieldValid = false;
   }
 
-  errorText = !isFieldValid ? (errorText.length ? errorText : field.errorMessage || "Invalid field") : "";
+  if (isDOB) {
+    if (value) {
+      let currentDate = new Date().getTime();
+      let ownerDOB = new Date(value).getTime();
+      if (ownerDOB > currentDate) {
+        isFieldValid = false;
+      }
+    }
+  }
+
+  errorText = !isFieldValid
+    ? errorText.length
+      ? errorText
+      : field.errorMessage || "Invalid field"
+    : "";
 
   return { isFieldValid, errorText };
 };
 
-export const validateForm = (screenKey,components,dispatch) => {
-  let isFormValid=true;
-  const travelComponents=(components)=>
-  {
+export const validateForm = (screenKey, components, dispatch) => {
+  let isFormValid = true;
+  const travelComponents = components => {
     for (var variable in components) {
       if (components.hasOwnProperty(variable)) {
-        if (components[variable].children && !isEmpty(components[variable].children)) {
+        if (
+          components[variable].children &&
+          !isEmpty(components[variable].children)
+        ) {
           travelComponents(components[variable].children);
         } else {
-          if (components[variable].jsonPath && !validate(screenKey,components[variable],dispatch)) {
-            isFormValid=false;
+          if (
+            components[variable].jsonPath &&
+            !validate(screenKey, components[variable], dispatch)
+          ) {
+            isFormValid = false;
           }
         }
       }
     }
-  }
+  };
   travelComponents(components);
   return isFormValid;
 };
 
-
-export const validate=(screenKey,componentObject,dispatch,skipPrepareFormData=false)=>{
-  const validatedObject=validateField(componentObject);
-  let isFormValid=true;
+export const validate = (
+  screenKey,
+  componentObject,
+  dispatch,
+  skipPrepareFormData = false
+) => {
+  const validatedObject = validateField(componentObject);
+  let isFormValid = true;
   if (!skipPrepareFormData) {
-    dispatch(prepareFO(componentObject.jsonPath,componentObject.value));
+    dispatch(prepareFO(componentObject.jsonPath, componentObject.value));
   }
   if (componentObject.jsonPath && validatedObject.isFieldValid) {
     if (!componentObject.isFieldValid) {
-      isFormValid=true;
-      dispatch(handleField(screenKey,`${componentObject.componentJsonpath}.props`, "error", false));
-      dispatch(handleField(screenKey,`${componentObject.componentJsonpath}.props`, "helperText", validatedObject.errorText));
-      dispatch(handleField(screenKey,`${componentObject.componentJsonpath}`, "isFieldValid", true));
+      isFormValid = true;
+      dispatch(
+        handleField(
+          screenKey,
+          `${componentObject.componentJsonpath}.props`,
+          "error",
+          false
+        )
+      );
+      dispatch(
+        handleField(
+          screenKey,
+          `${componentObject.componentJsonpath}.props`,
+          "helperText",
+          validatedObject.errorText
+        )
+      );
+      dispatch(
+        handleField(
+          screenKey,
+          `${componentObject.componentJsonpath}`,
+          "isFieldValid",
+          true
+        )
+      );
     }
-  }
-  else {
-    isFormValid=false;
-    dispatch(handleField(screenKey,`${componentObject.componentJsonpath}.props`, "error", true));
-    dispatch(handleField(screenKey,`${componentObject.componentJsonpath}.props`, "helperText", validatedObject.errorText));
-    dispatch(handleField(screenKey,`${componentObject.componentJsonpath}`, "isFieldValid", false));
+  } else {
+    isFormValid = false;
+    dispatch(
+      handleField(
+        screenKey,
+        `${componentObject.componentJsonpath}.props`,
+        "error",
+        true
+      )
+    );
+    dispatch(
+      handleField(
+        screenKey,
+        `${componentObject.componentJsonpath}.props`,
+        "helperText",
+        validatedObject.errorText
+      )
+    );
+    dispatch(
+      handleField(
+        screenKey,
+        `${componentObject.componentJsonpath}`,
+        "isFieldValid",
+        false
+      )
+    );
   }
   return isFormValid;
-}
-
-
-
+};
 
 export const updateObjectWithComponentJsonPath = (
   screenConfig,
@@ -96,45 +188,40 @@ export const updateObjectWithComponentJsonPath = (
   return screenConfig;
 };
 
-export const prepareFinalObject = (preparedFinalOject,jsonPath, value) => {
+export const prepareFinalObject = (preparedFinalOject, jsonPath, value) => {
   set(preparedFinalOject, jsonPath, value);
   return preparedFinalOject;
 };
 
-export const prepareFinalBodyData=(body,bodyObjectsJsonPaths)=>
-{
-  let screenConfigBodyData={};
-  if (bodyObjectsJsonPaths.length>0) {
+export const prepareFinalBodyData = (body, bodyObjectsJsonPaths) => {
+  let screenConfigBodyData = {};
+  if (bodyObjectsJsonPaths.length > 0) {
     for (var i = 0; i < bodyObjectsJsonPaths.length; i++) {
-      let object=get(body,bodyObjectsJsonPaths[i]);
-      screenConfigBodyData={
+      let object = get(body, bodyObjectsJsonPaths[i]);
+      screenConfigBodyData = {
         ...screenConfigBodyData,
         object
-      }
+      };
     }
   } else {
-    screenConfigBodyData={
+    screenConfigBodyData = {
       ...body
-    }
+    };
   }
   return screenConfigBodyData;
-}
+};
 
-export const prepareFinalQueryData=(query,queryObjectJsonPath)=>
-{
-  let screenConfigQueryData=[];
-  if (queryObjectJsonPath.length>0) {
+export const prepareFinalQueryData = (query, queryObjectJsonPath) => {
+  let screenConfigQueryData = [];
+  if (queryObjectJsonPath.length > 0) {
     for (var i = 0; i < queryObjectJsonPath.length; i++) {
-      let object=get(query,queryObjectJsonPath[i]);
-      screenConfigQueryData=[
-        ...screenConfigQueryData,
-        object
-      ]
+      let object = get(query, queryObjectJsonPath[i]);
+      screenConfigQueryData = [...screenConfigQueryData, object];
     }
   } else {
-    screenConfigQueryData={
+    screenConfigQueryData = {
       ...query
-    }
+    };
   }
   return screenConfigQueryData;
-}
+};

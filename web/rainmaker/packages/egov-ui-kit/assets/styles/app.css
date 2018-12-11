@@ -26,7 +26,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0; }
 
 .screen {
-  padding: 0 8px 60px 8px; }
+  padding: 60px 8px 60px 8px; }
 
 .rainmaker-displayInline {
   display: flex; }
@@ -200,7 +200,8 @@ body.employee-user-profile {
   background-color: #fff;
   min-height: calc(100vh - 64px);
   position: fixed;
-  z-index: 1001; }
+  z-index: 1001;
+  border-right: 1px solid #00000024; }
 
 .responsive-action-button-cont {
   position: fixed;
@@ -237,8 +238,9 @@ body.employee-user-profile {
     background: #fff;
     display: flex;
     justify-content: flex-end;
-    padding: 6px 8px;
-    left: 0; }
+    padding: 8px;
+    left: 0;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24); }
   .custom-padding-for-screens {
     padding: 10px 16px 0 16px; }
   .responsive-action-button {

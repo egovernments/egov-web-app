@@ -31,7 +31,7 @@ class PaymentRedirect extends React.Component {
             txnAmount
         );
       } else {
-        let transactionId = get(pgUpdateResponse, "Transaction[0].receipt[0].transactionId");
+        //let transactionId = get(pgUpdateResponse, "Transaction[0].receipt[0].transactionId");
         this.props.toggleSpinner();
         history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1]);
       }

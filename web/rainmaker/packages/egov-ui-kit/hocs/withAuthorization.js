@@ -231,7 +231,7 @@ var withAuthorization = function withAuthorization() {
                     ),
                     sortButton && _react2.default.createElement(
                       "div",
-                      { className: "sort-button col-xs-4", style: { paddingTop: "24px" } },
+                      { className: "sort-button col-xs-4", style: { padding: "20px 20px 0px 0px" } },
                       _react2.default.createElement(
                         "div",
                         {
@@ -239,7 +239,12 @@ var withAuthorization = function withAuthorization() {
                           style: { cursor: "pointer", justifyContent: "flex-end" },
                           onClick: this.onSortClick
                         },
-                        _react2.default.createElement(_translationNode2.default, { label: "Sort", color: "#484848", containerStyle: { marginRight: 5 } }),
+                        _react2.default.createElement(_translationNode2.default, {
+                          label: "ES_SORT_BOTTON",
+                          color: "rgba(0, 0, 0, 0.8700000047683716)",
+                          containerStyle: { marginRight: 5 },
+                          labelStyle: { fontWeight: 500 }
+                        }),
                         _react2.default.createElement(_components.Icon, { style: style.iconStyle, action: "action", name: "swap-vert", color: "#484848" })
                       ),
                       _react2.default.createElement(_SortDialog2.default, { sortPopOpen: this.state.sortPopOpen, closeSortDialog: this.closeSortDialog })

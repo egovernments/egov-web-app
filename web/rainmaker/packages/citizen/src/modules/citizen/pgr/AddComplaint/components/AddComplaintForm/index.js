@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "components";
 import { ImageUpload } from "modules/common";
 import LocationDetailsCard from "../LocationDetails";
-import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
 
 const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories }) => {

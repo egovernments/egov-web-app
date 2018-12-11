@@ -520,7 +520,7 @@ export const convertEpochToDate = dateEpoch => {
   return `${day}/${month}/${year}`;
 };
 
-export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
+export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
   //example input format : "2018-10-02"
   try {
     const parts = dateString.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
@@ -539,8 +539,11 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd) => {
 export const convertDateTimeToEpoch = dateTimeString => {
   //example input format : "26-07-2018 17:43:21"
   try {
+    // const parts = dateTimeString.match(
+    //   /(\d{2})\-(\d{2})\-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+    // );
     const parts = dateTimeString.match(
-      /(\d{2})\-(\d{2})\-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+      /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
     );
     return Date.UTC(+parts[3], parts[2] - 1, +parts[1], +parts[4], +parts[5]);
   } catch (e) {
@@ -564,7 +567,6 @@ export const getReceiptData = async queryObject => {
 };
 
 export const getAutoSelector = textScheama => {
-  const { textLabel = {}, jsonPath, props = {} } = textScheama;
   return {
     uiFramework: "custom-molecules-local",
     componentPath: "AutoSelector",
@@ -619,35 +621,35 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   }
 };
 
-const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
+//const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
 //applyScreenMdmsData.MdmsRes.TradeLicense.TradeType
-const reTrasnformerForNestedDropDown = (
-  originaJsonPath,
-  value,
-  state,
-  dispatch
-) => {
-  let nestedValues = value.split(".");
-  while (nestedValues.length > 1) {
-    const originalNestedValues = value.split(".");
-    const originalObject = get(state, `${originaJsonPath}`);
-    nestedValues = value.split(".");
-    const targetLevel = nestedValues.pop();
-    const targetpath = nestedValues.join(".");
-    let targetValues = get(originalObject, `${targetpath}`, []);
-    targetValues =
-      targetValues.length && targetValues.length >= 0
-        ? targetValues
-        : objectToDropdown(targetValues);
+// const reTrasnformerForNestedDropDown = (
+//   originaJsonPath,
+//   value,
+//   state,
+//   dispatch
+// ) => {
+//   let nestedValues = value.split(".");
+//   while (nestedValues.length > 1) {
+//     const originalNestedValues = value.split(".");
+//     const originalObject = get(state, `${originaJsonPath}`);
+//     nestedValues = value.split(".");
+//     const targetLevel = nestedValues.pop();
+//     const targetpath = nestedValues.join(".");
+//     let targetValues = get(originalObject, `${targetpath}`, []);
+//     targetValues =
+//       targetValues.length && targetValues.length >= 0
+//         ? targetValues
+//         : objectToDropdown(targetValues);
 
-    dispatch(
-      prepareFinalObject(
-        `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
-        targetValues
-      )
-    );
-  }
-};
+//     dispatch(
+//       prepareFinalObject(
+//         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
+//         targetValues
+//       )
+//     );
+//   }
+// };
 
 export const getMdmsData = async queryObject => {
   try {
@@ -760,6 +762,24 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       `Licenses[0].tradeLicenseDetail.owners[${cardIndex}].mobileNumber`,
       ""
     );
+    const owners = get(
+      state.screenConfiguration.preparedFinalObject,
+      `Licenses[0].tradeLicenseDetail.owners`,
+      []
+    );
+
+    if (owners && owners.length > 1) {
+      const currentNumber = owners[cardIndex].mobileNumber;
+      const numbers = owners.filter(
+        item => currentNumber === item.mobileNumber
+      );
+      if (numbers.length > 1) {
+        dispatch(
+          toggleSnackbarAndSetText(true, "Owner already added !", "error")
+        );
+        return;
+      }
+    }
     let payload = await httpRequest(
       "post",
       "/user/_search?tenantId=pb",
@@ -857,15 +877,14 @@ const getTaxValue = item => {
     ? item.debitAmount
       ? -Math.abs(item.debitAmount)
       : item.crAmountToBePaid
-        ? item.crAmountToBePaid
-        : 0
+      ? item.crAmountToBePaid
+      : 0
     : 0;
 };
 
 const getToolTipInfo = (taxHead, LicenseData) => {
   switch (taxHead) {
     case "TL_ADHOC_PENALTY":
-      console.log(LicenseData);
       return get(LicenseData, "tradeLicenseDetail.adhocPenaltyReason");
     case "TL_ADHOC_REBATE":
       return get(LicenseData, "tradeLicenseDetail.adhocExemptionReason");
@@ -937,6 +956,90 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   }
 };
 
+const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
+  const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
+    billingSlabIds || {};
+  if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
+    const accessoryUnit =
+      accesssoryBillingSlabIds &&
+      accesssoryBillingSlabIds.reduce((result, item) => {
+        result.push(item.split("|")[0]);
+        return result;
+      }, []);
+
+    const tradeUnit =
+      tradeTypeBillingSlabIds &&
+      tradeTypeBillingSlabIds.reduce((result, item) => {
+        result.push(item.split("|")[0]);
+        return result;
+      }, []);
+
+    let billingData = tradeUnit && [...tradeUnit];
+    accessoryUnit && (billingData = [...billingData, ...accessoryUnit]);
+    const queryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "ids", value: billingData && billingData.join(",") }
+    ];
+    const response = await httpRequest(
+      "post",
+      "/tl-calculator/billingslab/_search",
+      "",
+      queryObject
+    );
+
+    let tradeTotal = 0;
+    let accessoriesTotal = 0;
+    const finalData =
+      response &&
+      response.billingSlab.reduce(
+        (result, item) => {
+          if (item.tradeType) {
+            tradeTotal = tradeTotal + item.rate;
+            result.tradeUnitData.push({
+              rate: item.rate,
+              category: item.tradeType,
+              type: "trade"
+            });
+          } else {
+            accessoriesTotal = accessoriesTotal + item.rate;
+            result.accessoryData.push({
+              rate: item.rate,
+              category: item.accessoryCategory,
+              type: "accessories"
+            });
+          }
+          return result;
+        },
+        { tradeUnitData: [], accessoryData: [] }
+      );
+    const { accessoryData, tradeUnitData } = finalData;
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.tradeUnitData",
+        tradeUnitData
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.tradeTotal",
+        tradeTotal
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.accessoriesUnitData",
+        accessoryData
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].billingSlabData.accessoriesTotal",
+        accessoriesTotal
+      )
+    );
+  }
+};
+
 export const createEstimateData = async (
   LicenseData,
   jsonPath,
@@ -967,9 +1070,12 @@ export const createEstimateData = async (
   const estimateData = payload
     ? getFromReceipt
       ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt, LicenseData)
-      : getEstimateData(payload.Bill, false, LicenseData)
+      : payload.billResponse &&
+        getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
+  payload.billingSlabIds &&
+    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });
@@ -1004,7 +1110,6 @@ export const validateFields = (
     objectJsonPath,
     {}
   );
-  // console.log("fields is.....", fields);
   let isFormValid = true;
   for (var variable in fields) {
     if (fields.hasOwnProperty(variable)) {
@@ -1048,8 +1153,11 @@ export const epochToYmdDate = et => {
 
 export const getTodaysDateInYMD = () => {
   let date = new Date();
-  date = date.valueOf();
-  date = epochToYmdDate(date);
+  //date = date.valueOf();
+  let month = date.getMonth() + 1;
+  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  date = `${date.getFullYear()}-${month}-${day}`;
+  // date = epochToYmdDate(date);
   return date;
 };
 
@@ -1136,23 +1244,28 @@ export const fetchBill = async (action, state, dispatch) => {
 
   //initiate receipt object
   payload &&
-    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.Bill[0]));
+    payload.billResponse &&
+    dispatch(
+      prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
+    );
 
   //set amount paid as total amount from bill
   payload &&
+    payload.billResponse &&
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        payload.Bill[0].billDetails[0].totalAmount
+        payload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
   //set total amount in instrument
   payload &&
+    payload.billResponse &&
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].instrument.amount",
-        payload.Bill[0].billDetails[0].totalAmount
+        payload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
@@ -1308,12 +1421,17 @@ export const getTransformedStatus = status => {
   }
 };
 
-export const updateDropDowns = async (payload, action, state, dispatch) => {
+export const updateDropDowns = async (
+  payload,
+  action,
+  state,
+  dispatch,
+  queryValue
+) => {
   const structType = get(
     payload,
     "Licenses[0].tradeLicenseDetail.structureType"
   );
-
   if (structType) {
     set(
       payload,
@@ -1346,57 +1464,76 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
     }
   }
 
-  const tradeSubType = get(
+  const tradeTypes = get(
+    state.screenConfiguration.preparedFinalObject,
+    "applyScreenMdmsData.TradeLicense.TradeType",
+    []
+  );
+  // debugger;
+  const tradeTypeDropdownData =
+    tradeTypes &&
+    Object.keys(tradeTypes).map(item => {
+      return { code: item, active: true };
+    });
+  tradeTypeDropdownData &&
+    dispatch(
+      prepareFinalObject(
+        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+        tradeTypeDropdownData
+      )
+    );
+  const tradeSubTypes = get(
     payload,
-    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+    "Licenses[0].tradeLicenseDetail.tradeUnits"
   );
 
-  if (tradeSubType) {
-    const tradeCat = tradeSubType.split(".")[0];
-    const tradeType = tradeSubType.split(".")[1];
-    set(payload, "LicensesTemp[0].tradeType", tradeCat);
-    set(payload, "LicensesTemp[0].tradeSubType", tradeType);
-
+  if (tradeSubTypes.length > 0) {
     try {
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
-          objectToDropdown(
+      tradeSubTypes.forEach((tradeSubType, i) => {
+        const tradeCat = tradeSubType.tradeType.split(".")[0];
+        const tradeType = tradeSubType.tradeType.split(".")[1];
+        set(payload, `LicensesTemp.tradeUnits[${i}].tradeType`, tradeCat);
+        set(payload, `LicensesTemp.tradeUnits[${i}].tradeSubType`, tradeType);
+
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeCategoryTransformed",
+            objectToDropdown(
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+                []
+              )
+            )
+          )
+        );
+
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
             get(
               state.screenConfiguration.preparedFinalObject,
-              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
               []
             )
           )
-        )
-      );
-
-      dispatch(
-        prepareFinalObject(
-          "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
-          get(
-            state.screenConfiguration.preparedFinalObject,
-            `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
-            []
-          )
-        )
-      );
-
-      payload &&
-        dispatch(
-          prepareFinalObject(
-            "LicensesTemp[0].tradeType",
-            payload.LicensesTemp[0].tradeType
-          )
         );
+        payload &&
+          dispatch(
+            prepareFinalObject(
+              `LicensesTemp.tradeUnits[${i}].tradeType`,
+              tradeCat
+            )
+          );
 
-      payload &&
-        dispatch(
-          prepareFinalObject(
-            "LicensesTemp[0].tradeSubType",
-            payload.LicensesTemp[0].tradeSubType
-          )
-        );
+        payload &&
+          dispatch(
+            prepareFinalObject(
+              `LicensesTemp.tradeUnits[${i}].tradeSubType`,
+              tradeType
+            )
+          );
+      });
     } catch (e) {
       console.log(e);
     }
@@ -1405,23 +1542,39 @@ export const updateDropDowns = async (payload, action, state, dispatch) => {
 };
 
 export const getDocList = (state, dispatch) => {
-  const tradeSubType = get(
+  const tradeSubTypes = get(
     state.screenConfiguration.preparedFinalObject,
-    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType"
+    "Licenses[0].tradeLicenseDetail.tradeUnits"
   );
 
   const tradeSubCategories = get(
     state.screenConfiguration.preparedFinalObject,
-    "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed"
+    "applyScreenMdmsData.TradeLicense.MdmsTradeType"
   );
-
-  let currentObject = filter(tradeSubCategories, {
-    code: tradeSubType
+  let selectedTypes = [];
+  tradeSubTypes.forEach(tradeSubType => {
+    selectedTypes.push(
+      filter(tradeSubCategories, {
+        code: tradeSubType.tradeType
+      })
+    );
   });
-  const applicationDocument =
-    currentObject[0] &&
-    prepareDocumentTypeObj(currentObject[0].applicationDocument);
 
+  // selectedTypes[0] &&
+  //
+  let applicationDocArray = [];
+
+  selectedTypes.forEach(tradeSubTypeDoc => {
+    applicationDocArray = [
+      ...applicationDocArray,
+      ...tradeSubTypeDoc[0].applicationDocument
+    ];
+  });
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+  applicationDocArray = applicationDocArray.filter(onlyUnique);
+  let applicationDocument = prepareDocumentTypeObj(applicationDocArray);
   dispatch(
     prepareFinalObject(
       "LicensesTemp[0].applicationDocuments",
@@ -1576,4 +1729,262 @@ export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const showHideBreakupPopup = (state, dispatch, screenKey) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig[screenKey],
+    "components.breakUpDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField(screenKey, "components.breakUpDialog", "props.open", !toggle)
+  );
+};
+export const getDialogButton = (name, key, screenKey) => {
+  return {
+    componentPath: "Button",
+    props: {
+      color: "primary",
+      style: {}
+    },
+    children: {
+      previousButtonLabel: getLabel({
+        labelName: name,
+        labelKey: key
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        showHideBreakupPopup(state, dispatch, screenKey);
+      }
+    }
+    //visible: false
+  };
+};
+
+const getAllBillingSlabs = async tenantId => {
+  let payload = await httpRequest(
+    "post",
+    `/tl-calculator/billingslab/_search?tenantId=${tenantId}`,
+    "_search",
+    [],
+    {}
+  );
+  return payload;
+};
+
+export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
+  const payload = await getAllBillingSlabs(tenantId);
+  const processedData =
+    payload.billingSlab &&
+    payload.billingSlab.reduce(
+      (acc, item) => {
+        let accessory = { active: true };
+        let tradeType = { active: true };
+        if (item.accessoryCategory && item.tradeType === null) {
+          accessory.code = item.accessoryCategory;
+          accessory.uom = item.uom;
+          accessory.rate = item.rate;
+          item.rate && item.rate > 0 && acc.accessories.push(accessory);
+        } else if (item.accessoryCategory === null && item.tradeType) {
+          tradeType.code = item.tradeType;
+          tradeType.uom = item.uom;
+          tradeType.structureType = item.structureType;
+          tradeType.licenseType = item.licenseType;
+          tradeType.rate = item.rate;
+          item.rate && item.rate > 0 && acc.tradeTypeData.push(tradeType);
+        }
+        return acc;
+      },
+      { accessories: [], tradeTypeData: [] }
+    );
+
+  const accessories = getUniqueItemsFromArray(
+    processedData.accessories,
+    "code"
+  );
+  let structureTypes = getUniqueItemsFromArray(
+    processedData.tradeTypeData,
+    "structureType"
+  );
+  structureTypes = commonTransform(
+    {
+      StructureType: structureTypes.map(item => {
+        return { code: item.structureType, active: true };
+      })
+    },
+    "StructureType"
+  );
+  let licenseTypes = getUniqueItemsFromArray(
+    processedData.tradeTypeData,
+    "licenseType"
+  );
+  licenseTypes = licenseTypes.map(item => {
+    return { code: item.licenseType, active: true };
+  });
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.common-masters.StructureType",
+      structureTypes.StructureType
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.AccessoriesCategory",
+      accessories
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.licenseType",
+      licenseTypes
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.common-masters.StructureTypeTransformed",
+      objectToDropdown(structureTypes.StructureType)
+    )
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.TradeLicense.TradeType",
+      processedData.tradeTypeData
+    )
+  );
+};
+
+export const getUniqueItemsFromArray = (data, identifier) => {
+  const uniqueArray = [];
+  const map = new Map();
+  for (const item of data) {
+    if (!map.has(item[identifier])) {
+      map.set(item[identifier], true); // set any value to Map
+      uniqueArray.push(item);
+    }
+  }
+  return uniqueArray;
+};
+
+export const setFilteredTradeTypes = (
+  state,
+  dispatch,
+  licenseType,
+  structureSubtype
+) => {
+  const tradeTypeBSlab = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.TradeLicense.TradeType",
+    []
+  );
+  const mdmsTradeTypes = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.TradeLicense.MdmsTradeType",
+    []
+  );
+  try {
+    if (tradeTypeBSlab.length > 0 && mdmsTradeTypes.length > 0) {
+      const mdmsTTTransformed = mdmsTradeTypes.reduce((acc, item) => {
+        item.code && (acc[item.code] = item);
+        return acc;
+      }, {});
+      let tradeTypeList = [];
+      tradeTypeBSlab.length > 0 &&
+        tradeTypeBSlab.forEach(item => {
+          if (
+            item.code &&
+            mdmsTTTransformed[item.code] &&
+            mdmsTTTransformed[item.code].applicationDocument
+          ) {
+            tradeTypeList.push({
+              ...item,
+              applicationDocument:
+                mdmsTTTransformed[item.code].applicationDocument
+            });
+          }
+        });
+      if (tradeTypeList && tradeTypeList.length > 0) {
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.TradeType",
+            tradeTypeList
+          )
+        );
+        let filteredList =
+          tradeTypeList &&
+          tradeTypeList.length > 0 &&
+          tradeTypeList.filter(item => {
+            if (
+              item.licenseType === licenseType &&
+              item.structureType === structureSubtype
+            )
+              return true;
+          });
+        let tradeTypeTransformed = commonTransform(
+          { TradeType: [...filteredList] },
+          "TradeType"
+        );
+        tradeTypeTransformed.TradeType &&
+          dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.TradeLicense.TradeType",
+              tradeTypeTransformed.TradeType
+            )
+          );
+        return tradeTypeTransformed;
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const showCityPicker = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["home"],
+    "components.cityPickerDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField("home", "components.cityPickerDialog", "props.open", !toggle)
+  );
+};
+
+export const applyForm = (state, dispatch) => {
+  const tenantId = get(
+    state.screenConfiguration.preparedFinalObject,
+    "citiesByModule.citizenTenantId"
+  );
+
+  const isTradeDetailsValid = validateFields(
+    "components.cityPickerDialog.children.dialogContent.children.popup.children.cityPicker.children",
+    state,
+    dispatch,
+    "home"
+  );
+  if (isTradeDetailsValid) {
+    window.location.href =
+      process.env.NODE_ENV === "development"
+        ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+  }
+};
+
+export const sortByEpoch = (data, order) => {
+  if (order) {
+    return data.sort((a, b) => {
+      return a[a.length - 1] - b[b.length - 1];
+    });
+  } else {
+    return data.sort((a, b) => {
+      return b[b.length - 1] - a[a.length - 1];
+    });
+  }
+};
+
+export const getEpochForDate = date => {
+  const dateSplit = date.split("/");
+  return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
 };

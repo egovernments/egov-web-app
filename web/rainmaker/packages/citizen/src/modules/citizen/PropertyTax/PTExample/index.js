@@ -101,7 +101,7 @@ class PTExample extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { common, app } = state;
+  const { app } = state;
   const { urls } = app;
   return { urls };
 };

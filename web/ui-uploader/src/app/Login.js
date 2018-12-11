@@ -24,7 +24,7 @@ class UserLogin extends Component {
       const tenantId = this.state.tenantId;
       const usertype = "EMPLOYEE";
       const tenantSel = {};
-      tenantSel["tenantId"] = this.state.tenantId;
+      tenantSel["tenant-id"] = this.state.tenantId;
       persistInLocalStorage(tenantSel);
       this.props.loginUser(username, password, usertype, history);
 

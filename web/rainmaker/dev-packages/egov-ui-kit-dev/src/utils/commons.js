@@ -41,9 +41,11 @@ export const transformById = (payload, id) => {
   return (
     payload &&
     payload.reduce((result, item) => {
-      result[item[id]] = {
-        ...item,
-      };
+      if (!item.hasOwnProperty("active") || (item.hasOwnProperty("active") && item.active)) {
+        result[item[id]] = {
+          ...item,
+        };
+      }
 
       return result;
     }, {})

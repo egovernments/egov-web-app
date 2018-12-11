@@ -41,7 +41,7 @@ body {
 }
 
 .common-div-css {
-  margin: 16px 16px 88px 16px;
+  margin: 80px 16px 88px 16px;
 }
 
 .common-card-css {
@@ -167,5 +167,14 @@ input[type="date"]:valid::before {
   }
   #custom-atoms-applicationSuccessCard {
     margin-bottom: 190px;
+  }
+  .MuiFormControl-fullWidth-296 {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .common-div-css {
+    margin: 30px 16px 88px 16px;
   }
 }

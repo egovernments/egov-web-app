@@ -8,21 +8,16 @@ import some from "lodash/some";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
-  epochToYmdDate,
   setMultiOwnerForApply,
   setValidToFromVisibilityForApply,
   getDocList,
   setOwnerShipDropDownFieldChange
 } from "../../utils";
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
 import {
   createEstimateData,
   validateFields,
-  getBaseURL,
   ifUserRoleExists
 } from "../../utils";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
@@ -30,7 +25,7 @@ import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
 
 import html2canvas from "html2canvas";
-import pdfMake from "pdfmake/build/pdfmake";
+import jsPDF from "jspdf";
 
 const moveToSuccess = (LicenseData, dispatch) => {
   const applicationNo = get(LicenseData, "applicationNumber");
@@ -48,33 +43,39 @@ const generatePdfFromDiv = (action, applicationNumber) => {
   let target = document.querySelector("#custom-atoms-div");
   html2canvas(target, {
     onclone: function(clonedDoc) {
-      // clonedDoc.getElementById("custom-atoms-footer").style = "width: 900px"; //Not Working
-      clonedDoc.getElementById("custom-atoms-footer")[
-        "data-html2canvas-ignore"
-      ] = "true";
+      // clonedDoc.getElementById("custom-atoms-footer")[
+      //   "data-html2canvas-ignore"
+      // ] = "true";
+      clonedDoc.getElementById("custom-atoms-footer").style.display = "none";
     }
   }).then(canvas => {
-    var data = canvas.toDataURL();
-    var docDefinition = {
-      content: [
-        {
-          image: data,
-          width: 500
-        }
-      ]
-    };
+    var data = canvas.toDataURL("image/jpeg", 1);
+    var imgWidth = 200;
+    var pageHeight = 295;
+    var imgHeight = (canvas.height * imgWidth) / canvas.width;
+    var heightLeft = imgHeight;
+    var doc = new jsPDF("p", "mm");
+    var position = 0;
+
+    doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      doc.addPage();
+      doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
     if (action === "download") {
-      pdfMake
-        .createPdf(docDefinition)
-        .download(`preview-${applicationNumber}.pdf`);
+      doc.save(`preview-${applicationNumber}.pdf`);
     } else if (action === "print") {
-      pdfMake.createPdf(docDefinition).print();
+      doc.autoPrint();
+      window.open(doc.output("bloburl"), "_blank");
     }
   });
 };
 
 export const callBackForNext = async (state, dispatch) => {
-  let applicationSuccess = true;
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -117,11 +118,28 @@ export const callBackForNext = async (state, dispatch) => {
       )
         isAccessoriesValid = false;
     }
-    const isTradeUnitValid = validateFields(
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.children.cardContent.children.tradeUnitCardContainer.children",
-      state,
-      dispatch
+
+    let tradeUnitJsonPath =
+      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeUnitCard.props.items";
+    let tradeUnits = get(
+      state.screenConfiguration.screenConfig.apply,
+      tradeUnitJsonPath,
+      []
     );
+    let isTradeUnitValid = true;
+
+    for (var j = 0; j < tradeUnits.length; j++) {
+      if (
+        (tradeUnits[j].isDeleted === undefined ||
+          tradeUnits[j].isDeleted !== false) &&
+        !validateFields(
+          `${tradeUnitJsonPath}[${j}].item${j}.children.cardContent.children.tradeUnitCardContainer.children`,
+          state,
+          dispatch
+        )
+      )
+        isTradeUnitValid = false;
+    }
     if (
       !isTradeDetailsValid ||
       !isTradeLocationValid ||
@@ -153,12 +171,12 @@ export const callBackForNext = async (state, dispatch) => {
         ownersJsonPath,
         []
       );
-      for (var i = 0; i < owners.length; i++) {
+      for (var k = 0; k < owners.length; k++) {
         if (
-          (owners[i].isDeleted === undefined ||
-            owners[i].isDeleted !== false) &&
+          (owners[k].isDeleted === undefined ||
+            owners[k].isDeleted !== false) &&
           !validateFields(
-            `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
+            `${ownersJsonPath}[${k}].item${k}.children.cardContent.children.tradeUnitCardContainer.children`,
             state,
             dispatch
           )
@@ -167,25 +185,25 @@ export const callBackForNext = async (state, dispatch) => {
       }
     } else {
       let ownersJsonPath =
-        "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.props.items";
-      let owners = get(
-        state.screenConfiguration.screenConfig.apply,
-        ownersJsonPath,
-        []
-      );
-      for (var i = 0; i < owners.length; i++) {
-        if (
-          (owners[i].isDeleted === undefined ||
-            owners[i].isDeleted !== false) &&
-          !validateFields(
-            `${ownersJsonPath}[${i}].item${i}.children.cardContent.children.tradeUnitCardContainer.children`,
-            state,
-            dispatch
-          )
-        )
-          isFormValid = false;
-      }
+        "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.children.cardContent.children.tradeUnitCardContainer.children";
+      // let owners = get(
+      //   state.screenConfiguration.screenConfig.apply,
+      //   ownersJsonPath,
+      //   []
+      // );
+      // for (var x = 0; x < owners.length; x++) {
+      //   if (
+      //     (owners[x].isDeleted === undefined ||
+      //       owners[x].isDeleted !== false) &&
+      //     !validateFields(
+      //       `${ownersJsonPath}[${x}].item${x}.children.cardContent.children.tradeUnitCardContainer.children`,
+      //       state,
+      //       dispatch
+      //     )
+      //   )
+      if (!validateFields(ownersJsonPath, state, dispatch)) isFormValid = false;
     }
+
     // check for multiple owners
     if (
       get(
@@ -241,10 +259,10 @@ export const callBackForNext = async (state, dispatch) => {
       []
     );
 
-    for (var i = 0; i < uploadedTempDocData.length; i++) {
+    for (var y = 0; y < uploadedTempDocData.length; y++) {
       if (
-        uploadedTempDocData[i].required &&
-        !some(uploadedDocData, { documentType: uploadedTempDocData[i].name })
+        uploadedTempDocData[y].required &&
+        !some(uploadedDocData, { documentType: uploadedTempDocData[y].name })
       ) {
         isFormValid = false;
       }
@@ -296,8 +314,7 @@ export const callBackForNext = async (state, dispatch) => {
             "Please fill all mandatory fields for Owner Details, then do next !";
           break;
         case 2:
-          errorMessage =
-            "Please upload all the required documents !";
+          errorMessage = "Please upload all the required documents !";
           break;
       }
       dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));

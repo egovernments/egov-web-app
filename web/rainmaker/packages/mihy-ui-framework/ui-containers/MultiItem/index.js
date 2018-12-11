@@ -118,18 +118,28 @@ var MultiItem = function (_React$Component) {
         if (!items.length && !editItems.length) {
           _this.addItem();
         } else {
-          for (var i = 0; i < editItems.length; i++) {
-            if (checkActiveItem(editItems[i])) {
-              if (i) {
-                _this.addItem();
-              } else {
-                _this.addItem(true);
+          if (items.length < editItems.length) {
+            for (var i = 0; i < editItems.length; i++) {
+              if (checkActiveItem(editItems[i])) {
+                if (i) {
+                  _this.addItem();
+                } else {
+                  _this.addItem(true);
+                }
+                // this.addItem(true);
               }
-              // this.addItem(true);
             }
           }
         }
       }
+    }, _this.objectToDropdown = function (object) {
+      var dropDown = [];
+      for (var variable in object) {
+        if (object.hasOwnProperty(variable)) {
+          dropDown.push({ code: variable });
+        }
+      }
+      return dropDown;
     }, _this.addItem = function () {
       var isNew = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var _this$props = _this.props,
@@ -142,7 +152,8 @@ var MultiItem = function (_React$Component) {
           componentJsonpath = _this$props.componentJsonpath,
           headerName = _this$props.headerName,
           headerJsonPath = _this$props.headerJsonPath,
-          screenConfig = _this$props.screenConfig;
+          screenConfig = _this$props.screenConfig,
+          preparedFinalObject = _this$props.preparedFinalObject;
 
       var items = isNew ? [] : (0, _get2.default)(screenConfig, screenKey + "." + componentJsonpath + ".props.items", []);
       var itemsLength = items.length;
@@ -151,13 +162,43 @@ var MultiItem = function (_React$Component) {
         var multiItemContent = (0, _get2.default)(scheama, prefixSourceJsonPath, {});
         for (var variable in multiItemContent) {
           if (multiItemContent.hasOwnProperty(variable) && multiItemContent[variable].props && multiItemContent[variable].props.jsonPath) {
-            var splitedJsonPath = multiItemContent[variable].props.jsonPath.split(sourceJsonPath);
+            var prefixJP = multiItemContent[variable].props.jsonPathUpdatePrefix ? multiItemContent[variable].props.jsonPathUpdatePrefix : sourceJsonPath;
+            var splitedJsonPath = multiItemContent[variable].props.jsonPath.split(prefixJP);
             if (splitedJsonPath.length > 1) {
               var propertyName = splitedJsonPath[1].split("]");
               if (propertyName.length > 1) {
-                multiItemContent[variable].jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
-                multiItemContent[variable].props.jsonPath = sourceJsonPath + "[" + itemsLength + "]" + propertyName[1];
+                multiItemContent[variable].jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
+                multiItemContent[variable].props.jsonPath = prefixJP + "[" + itemsLength + "]" + propertyName[1];
                 multiItemContent[variable].index = itemsLength;
+              }
+            }
+            //Temporary fix - For setting trade type - should be generalised
+            var value = (0, _get2.default)(preparedFinalObject, multiItemContent[variable].props.jsonPath);
+            if (multiItemContent[variable].props.setDataInField && value) {
+              if (multiItemContent[variable].props.jsonPath.split(".")[0] === "LicensesTemp" && multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
+                var tradeTypeData = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType", []);
+                var tradeTypeDropdownData = tradeTypeData && tradeTypeData.TradeType && Object.keys(tradeTypeData.TradeType).map(function (item) {
+                  return { code: item, active: true };
+                });
+                multiItemContent[variable].props.data = tradeTypeDropdownData;
+                var data = tradeTypeData[value];
+                if (data) {
+                  multiItemContent["tradeType"].props.data = _this.objectToDropdown(data);
+                }
+              } else if (multiItemContent[variable].props.jsonPath.split(".").pop() === "tradeType") {
+                var _data = (0, _get2.default)(preparedFinalObject, "applyScreenMdmsData.TradeLicense.TradeType." + value.split(".")[0] + "." + value.split(".")[1]);
+                if (_data) {
+                  multiItemContent[variable].props.data = _data;
+                }
+              } else if (multiItemContent[variable].props.jsonPath.split(".").pop() === "uomValue" && value > 0) {
+                multiItemContent[variable].props.disabled = false;
+                multiItemContent[variable].props.required = true;
+              }
+            }
+            if (multiItemContent[variable].props.setDataInField && multiItemContent[variable].props.disabled) {
+              if (multiItemContent[variable].props.jsonPath.split(".").pop() === "uomValue") {
+                var disabledValue = (0, _get2.default)(screenConfig[screenKey], multiItemContent[variable].componentJsonpath + ".props.disabled", true);
+                multiItemContent[variable].props.disabled = disabledValue;
               }
             }
           } else if (afterPrefixJsonPath && multiItemContent.hasOwnProperty(variable) && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props") && (0, _get2.default)(multiItemContent[variable], afterPrefixJsonPath + ".props.jsonPath")) {
@@ -210,7 +251,8 @@ var MultiItem = function (_React$Component) {
           onFieldChange = _props.onFieldChange,
           onComponentClick = _props.onComponentClick,
           hasAddItem = _props.hasAddItem,
-          screenKey = _props.screenKey;
+          screenKey = _props.screenKey,
+          isReviewPage = _props.isReviewPage;
       var addItem = this.addItem,
           removeItem = this.removeItem;
 
@@ -222,7 +264,7 @@ var MultiItem = function (_React$Component) {
             return _react2.default.createElement(
               _Div2.default,
               { key: key },
-              checkActiveItems(items) > 1 && _react2.default.createElement(
+              checkActiveItems(items) > 1 && !isReviewPage && _react2.default.createElement(
                 _Container2.default,
                 null,
                 _react2.default.createElement(

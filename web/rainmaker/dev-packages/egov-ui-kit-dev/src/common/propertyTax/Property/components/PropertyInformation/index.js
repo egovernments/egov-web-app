@@ -26,7 +26,6 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
           <Label
             bold={true}
             label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyTaxAssessmentID}`}
-            debugger
             containerStyle={{ marginLeft: "13px" }}
             labelStyle={{ letterSpacing: 0 }}
             color="#767676"

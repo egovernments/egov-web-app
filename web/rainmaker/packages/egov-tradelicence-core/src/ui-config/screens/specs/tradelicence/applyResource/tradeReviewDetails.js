@@ -1,11 +1,10 @@
 import {
   getCommonCard,
   getCommonGrayCard,
-  getCommonTitle,
-  getCommonParagraph
+  getCommonTitle
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
-import { getFeesEstimateCard } from "../../utils";
+import { getFeesEstimateCard, getDialogButton } from "../../utils";
 
 import { getReviewTrade } from "./review-trade";
 import { getReviewOwner } from "./review-owner";
@@ -33,6 +32,11 @@ export const tradeReviewDetails = getCommonCard({
   //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
   // }),
   estimate,
+  viewBreakupButton: getDialogButton(
+    "VIEW BREAKUP",
+    "TL_PAYMENT_VIEW_BREAKUP",
+    "apply"
+  ),
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails

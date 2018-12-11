@@ -11,10 +11,10 @@ export const userLoginSuccess = response => {
   const token = response.access_token;
   const userInfo = response.UserRequest;
   responseObj["token"] = token;
-  responseObj["userRequest"] = JSON.stringify(userInfo);
+  responseObj["user-info"] = JSON.stringify(userInfo);
   responseObj["type"] = response.UserRequest.type;
   responseObj["id"] = response.UserRequest.id;
-  responseObj["tenantId"] = response.UserRequest.tenantId;
+  responseObj["tenant-id"] = response.UserRequest.tenantId;
   responseObj["refresh-token"] = response.refresh_token;
   responseObj["expires-in"] = response.expires_in;
 

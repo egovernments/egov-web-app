@@ -6,10 +6,8 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer,
-  getContainerWithElement,
   getDateField,
-  getPattern,
-  getLabel
+  getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getDetailsForOwner, getTodaysDateInYMD } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -108,11 +106,6 @@ export const getFatherNameField = getTextField({
 });
 
 export const ownerInfoInstitutional = {
-  // {
-  //   uiFramework: "custom-containers",
-  //   componentPath: "MultiItem",
-  //   props: {
-  //     scheama:
   ...getCommonGrayCard({
     header: getCommonSubHeader(
       {
@@ -170,7 +163,30 @@ export const ownerInfoInstitutional = {
       }),
       getFatherNameField,
       getOwnerGenderField,
-      getOwnerDOBField,
+      //getOwnerDOBField,
+      ownerDOB: {
+        ...getDateField({
+          label: { labelName: "Date of Birth" },
+          placeholder: { labelName: "Enter Date of Birth" },
+          required: true,
+          pattern: getPattern("Date"),
+          isDOB: true,
+          errorMessage: "Please enter valid Date of Birth!",
+          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+          props: {
+            inputProps: {
+              max: getTodaysDateInYMD()
+            }
+          }
+        })
+        // beforeFieldChange: (action, state, dispatch) => {
+        //   let currentDate = new Date().getTime();
+        //   let ownerDOB = new Date(action.value).getTime();
+        //   if (ownerDOB > currentDate) {
+        //     action.value = null;
+        //   }
+        // }
+      },
       getOwnerEmailField,
       ownerAddress: getTextField({
         label: {
@@ -189,22 +205,6 @@ export const ownerInfoInstitutional = {
   }),
   visible: false
 };
-//   ,
-//   items: [],
-//   addItemLabel: "ADD OWNER",
-//   headerName: "Owner Information",
-//   hasAddItem: false,
-//   headerJsonPath:
-//     "children.cardContent.children.header.children.Owner Information.props.label",
-//   sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
-//   prefixSourceJsonPath:
-//     "children.cardContent.children.tradeUnitCardContainer.children"
-// }
-
-//   ,
-//   visible: false,
-//   type: "array"
-// };
 
 const OwnerInfoCard = {
   uiFramework: "custom-containers",
@@ -239,7 +239,29 @@ const OwnerInfoCard = {
         }),
         getFatherNameField,
         getOwnerGenderField,
-        getOwnerDOBField,
+        ownerDOB: {
+          ...getDateField({
+            label: { labelName: "Date of Birth" },
+            placeholder: { labelName: "Enter Date of Birth" },
+            required: true,
+            pattern: getPattern("Date"),
+            isDOB: true,
+            errorMessage: "Please enter valid Date of Birth!",
+            jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
+            props: {
+              inputProps: {
+                max: getTodaysDateInYMD()
+              }
+            }
+          })
+          // beforeFieldChange: (action, state, dispatch) => {
+          //   let currentDate = new Date().getTime();
+          //   let ownerDOB = new Date(action.value).getTime();
+          //   if (ownerDOB > currentDate) {
+          //     action.value = null;
+          //   }
+          // }
+        },
         getOwnerEmailField,
         ownerPAN: getTextField({
           label: {
@@ -317,6 +339,9 @@ export const tradeOwnerDetails = getCommonCard({
       }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
+          // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
+          // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
+          // "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.children.cardContent.children.tradeUnitCardContainer.children.designation"
           dispatch(
             pFO(
               "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
@@ -330,6 +355,25 @@ export const tradeOwnerDetails = getCommonCard({
             )
           );
           if (action.value === "INDIVIDUAL") {
+            if (
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                "Licenses[0].tradeLicenseDetail.institution"
+              )
+            ) {
+              dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", null));
+            }
+            if (
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+              )
+            ) {
+              dispatch(
+                pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
+              );
+            }
+            // const items = get(apply, "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items[0].item0")
             dispatch(
               handleField(
                 "apply",
@@ -363,6 +407,9 @@ export const tradeOwnerDetails = getCommonCard({
                 true
               )
             );
+            dispatch(
+              pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
+            );
           }
         } catch (e) {
           console.log(e);
@@ -379,6 +426,8 @@ export const tradeOwnerDetails = getCommonCard({
           "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
       }),
       beforeFieldChange: (action, state, dispatch) => {
+        // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
+        // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
         if (action.value === "INDIVIDUAL.SINGLEOWNER") {
           const ownerInfoCards = get(
             state.screenConfiguration.screenConfig.apply, //hardcoded to apply screen

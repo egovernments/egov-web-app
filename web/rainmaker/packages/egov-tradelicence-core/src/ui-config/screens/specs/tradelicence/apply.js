@@ -13,7 +13,8 @@ import set from "lodash/set";
 import {
   commonTransform,
   objectToDropdown,
-  getCurrentFinancialYear
+  getCurrentFinancialYear,
+  getAllDataFromBillingSlab
 } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
@@ -39,10 +40,10 @@ export const stepper = getStepperObject(
   { props: { activeStep: 0 } },
   stepsData
 );
-export const queryValue = getQueryArg(
-  window.location.href,
-  "applicationNumber"
-);
+// export const queryValue = getQueryArg(
+//   window.location.href,
+//   "applicationNumber"
+// );
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -121,21 +122,15 @@ export const getMdmsData = async (action, state, dispatch) => {
       [],
       mdmsBody
     );
+    set(
+      payload,
+      "MdmsRes.TradeLicense.MdmsTradeType",
+      get(payload, "MdmsRes.TradeLicense.TradeType", [])
+    );
     payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
     payload = commonTransform(
       payload,
       "MdmsRes.common-masters.OwnerShipCategory"
-    );
-    payload = commonTransform(payload, "MdmsRes.common-masters.StructureType");
-    set(
-      payload,
-      "MdmsRes.TradeLicense.TradeTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.TradeLicense.TradeType", []))
-    );
-    set(
-      payload,
-      "MdmsRes.common-masters.StructureTypeTransformed",
-      objectToDropdown(get(payload, "MdmsRes.common-masters.StructureType", []))
     );
     set(
       payload,
@@ -144,14 +139,25 @@ export const getMdmsData = async (action, state, dispatch) => {
         get(payload, "MdmsRes.common-masters.OwnerShipCategory", [])
       )
     );
+    const localities = get(
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.tenant.localities",
+      []
+    );
+    if (localities && localities.length > 0) {
+      payload.MdmsRes.tenant.localities = localities;
+    }
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getData = async (action, state, dispatch, queryValue) => {
+export const getData = async (action, state, dispatch) => {
+  const queryValue = getQueryArg(window.location.href, "applicationNumber");
   await getMdmsData(action, state, dispatch);
+  await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
+
   if (queryValue) {
     await updatePFOforSearchResults(action, state, dispatch, queryValue);
   } else {
@@ -163,7 +169,10 @@ export const getData = async (action, state, dispatch, queryValue) => {
 
 export const formwizardFirstStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form1"
+  },
   children: {
     tradeDetails,
     tradeLocationDetails
@@ -172,7 +181,10 @@ export const formwizardFirstStep = {
 
 export const formwizardSecondStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form2"
+  },
   children: {
     tradeOwnerDetails
   },
@@ -181,7 +193,10 @@ export const formwizardSecondStep = {
 
 export const formwizardThirdStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form3"
+  },
   children: {
     tradeDocumentDetails
   },
@@ -190,7 +205,10 @@ export const formwizardThirdStep = {
 
 export const formwizardFourthStep = {
   uiFramework: "custom-atoms",
-  componentPath: "Div",
+  componentPath: "Form",
+  props: {
+    id: "apply_form4"
+  },
   children: {
     tradeReviewDetails
   },
@@ -200,42 +218,44 @@ export const formwizardFourthStep = {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
+  // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
-    const queryValue = getQueryArg(window.location.href, "applicationNumber");
-    getData(action, state, dispatch, queryValue);
+    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    dispatch(prepareFinalObject("LicensesTemp", []));
+    // getData(action, state, dispatch);
+    getData(action, state, dispatch).then(responseAction => {
+      const tenantId = localStorage.getItem("tenant-id");
+      const queryObj = [{ key: "tenantId", value: tenantId }];
+      getBoundaryData(action, state, dispatch, queryObj);
+      let props = get(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+        {}
+      );
+      props.value = tenantId;
+      props.disabled = true;
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+        props
+      );
+      dispatch(
+        prepareFinalObject(
+          "Licenses[0].tradeLicenseDetail.address.city",
+          tenantId
+        )
+      );
+      //hardcoding license type to permanent
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+        "PERMANENT"
+      );
+    });
 
-    //For Employee, city dropdown will be disabled and prefilled with employee tenantId.
-    const tenantId = localStorage.getItem("tenant-id");
-    let props = get(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      {}
-    );
-    props.value = tenantId;
-    props.disabled = true;
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-      props
-    );
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address.city",
-        tenantId
-      )
-    );
-    //hardcoding license type to permanent
-    set(
-      action.screenConfig,
-      "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
-      "PERMANENT"
-    );
-
-    //Call and set boundary dropdown data, since there is no handleField for city in employee app
-    const queryObj = [{ key: "tenantId", value: tenantId }];
-    getBoundaryData(action, state, dispatch, queryObj);
     return action;
   },
+
   components: {
     div: {
       uiFramework: "custom-atoms",
@@ -263,6 +283,15 @@ const screenConfig = {
         formwizardThirdStep,
         formwizardFourthStep,
         footer
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "apply"
       }
     }
   }

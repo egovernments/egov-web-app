@@ -3,7 +3,6 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle,
-  getCommonParagraph,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
@@ -12,15 +11,12 @@ import estimateDetails from "./payResource/estimate-details";
 import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
-import { showHideAdhocPopup, getBill } from "../utils";
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { showHideAdhocPopup, getDialogButton } from "../utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import set from "lodash/set";
-import { getSearchResults } from "ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { fetchBill } from "../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+// import store from "mihy-ui-framework/ui-redux/store";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -40,15 +36,18 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
+    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", []));
+    dispatch(prepareFinalObject("ReceiptTemp[0].instrument", {}));
     fetchBill(action, state, dispatch);
     return action;
   },
   components: {
     div: {
       uiFramework: "custom-atoms",
-      componentPath: "Div",
+      componentPath: "Form",
       props: {
-        className: "common-div-css"
+        className: "common-div-css",
+        id: "pay"
       },
       children: {
         headerDiv: {
@@ -94,6 +93,11 @@ const screenConfig = {
                   callBack: showHideAdhocPopup
                 }
               },
+              viewBreakupButton: getDialogButton(
+                "VIEW BREAKUP",
+                "TL_PAYMENT_VIEW_BREAKUP",
+                "pay"
+              ),
               capturePaymentDetails,
               g8Details
             })
@@ -103,18 +107,24 @@ const screenConfig = {
       }
     },
     adhocDialog: {
-      componentPath: "Dialog",
+      uiFramework: "custom-containers-local",
+      componentPath: "DialogContainer",
       props: {
         open: false,
-        maxWidth: "md"
+        maxWidth: "sm",
+        screenKey: "pay"
       },
       children: {
-        dialogContent: {
-          componentPath: "DialogContent",
-          children: {
-            popup: adhocPopup
-          }
-        }
+        popup: adhocPopup
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "pay"
       }
     }
   }

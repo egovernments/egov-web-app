@@ -1,4 +1,3 @@
-// property tax
 import asyncComponent from "./asyncComponent";
 
 const PTHome = asyncComponent(() => import("modules/citizen/PropertyTax/PTHome").then((module) => module.default));
@@ -9,23 +8,13 @@ const IncompleteAssessments = asyncComponent(() => import("modules/citizen/Prope
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
 const Property = asyncComponent(() => import("egov-ui-kit/common/propertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
-// const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
-//   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
-// );
 const PaymentSuccess = asyncComponent(() => import("modules/citizen/PropertyTax/PaymentSuccess").then((module) => module.default));
 const PaymentFailure = asyncComponent(() => import("modules/citizen/PropertyTax/PaymentFailure").then((module) => module.default));
 const ReviewForm = asyncComponent(() => import("modules/citizen/PropertyTax/ReviewForm").then((module) => module.default));
-// const PropertyAddress = asyncComponent(() =>
-//   import("modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress").then((module) => module.default)
-// );
-
 const FormWizard = asyncComponent(() => import("modules/citizen/PropertyTax/FormWizard").then((module) => module.default));
-
 const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/LinkPastPayments").then((module) => module.default));
-
 const PaymentRedirectPage = asyncComponent(() => import("modules/citizen/PropertyTax/Payment-rediect-page").then((module) => module.default));
 const HowItWorks = asyncComponent(() => import("modules/citizen/PropertyTax/HowItWorks").then((module) => module.default));
-const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
 const PTExamples = asyncComponent(() => import("modules/citizen/PropertyTax/PTExample").then((module) => module.default));
 
 const routes = [

@@ -55,6 +55,9 @@ definitions:
   ShareMetaData:
     type: object
     properties:
+      id:
+        description: Unique id for for a id.
+        type: string
       tenantId:
         description: Unique id for for a tenant.
         type: string

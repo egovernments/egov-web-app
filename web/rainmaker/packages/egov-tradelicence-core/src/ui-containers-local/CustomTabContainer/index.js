@@ -156,8 +156,7 @@ class MultiItem extends React.Component {
   };
 
   onTabClick = tabIndex => {
-    const { onTabClick: tabClick, state, dispatch } = this.props;
-    // tabClick(tabIndex, state, dispatch);
+    const { state, dispatch } = this.props;
     this.onTabChange(tabIndex, dispatch, state);
     this.setState({ tabIndex });
   };

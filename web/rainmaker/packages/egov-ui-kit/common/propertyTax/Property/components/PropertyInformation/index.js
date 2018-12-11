@@ -60,7 +60,6 @@ var ReceiptItems = function ReceiptItems(_ref) {
         _react2.default.createElement(_translationNode2.default, {
           bold: true,
           label: (0, _commons.getTranslatedLabel)("PT_PROPERTY_PTUID", localizationLabelsData) + " " + propertyTaxAssessmentID,
-          "debugger": true,
           containerStyle: { marginLeft: "13px" },
           labelStyle: { letterSpacing: 0 },
           color: "#767676"

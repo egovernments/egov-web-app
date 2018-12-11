@@ -8,6 +8,11 @@ const Div = Loadable({
   loader: () => import("./HtmlElements/Div"),
   loading: () => <Loading />
 });
+const Form = Loadable({
+  loader: () => import("./HtmlElements/Form"),
+  loading: () => <Loading />
+});
+
 const Main = Loadable({
   loader: () => import("./HtmlElements/Main"),
   loading: () => <Loading />
@@ -101,6 +106,7 @@ const Snackbar = Loadable({
 
 export {
   Div,
+  Form,
   Main,
   AppBar,
   Typegraphy,

@@ -7,23 +7,17 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import {
-  getRadioGroupWithLabel,
   getApprovalTextField,
-  getSubHeaderLabel,
   getCheckbox,
   getContainerWithElement,
   getUploadFilesMultiple,
   getCheckBoxJsonpath,
-  getSafetyNormsJson,
-  getHygeneLevelJson,
-  getLocalityHarmedJson,
   getCurrentFinancialYear
 } from "../utils";
 import { footerApprove } from "./approveResource/footer";
 import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
 import set from "lodash/set";
 
-const radioButtonLabels = ["Yes", "No", "Not Applicable"];
 const queryValueAN = getQueryArg(window.location.href, "applicationNumber");
 
 const header = getCommonContainer({
@@ -59,48 +53,6 @@ const getApproveCard = queryValuePurpose => {
               }
             }
           ),
-    // headerTwo: getContainerWithElement({
-    //   children: {
-    //     subHeader: getSubHeaderLabel(queryValuePurpose)
-    //   },
-    //   props: {
-    //     style: {
-    //       marginTop: "33px"
-    //     }
-    //   }
-    // }),
-    // safetyNorms:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Are Safety Norms Satisfactory?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_1",
-    //         radioButtonLabels,
-    //         getSafetyNormsJson(queryValuePurpose),
-    //         "Yes"
-    //       ),
-
-    // hygieneMeasure:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Are Hygiene Levels Satisfactory?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_2",
-    //         radioButtonLabels,
-    //         getHygeneLevelJson(queryValuePurpose),
-    //         "Yes"
-    //       ),
-
-    // localityMeasure:
-    //   queryValuePurpose === "cancel"
-    //     ? {}
-    //     : getRadioGroupWithLabel(
-    //         "Is Locality harmed/disturbed by this trade?",
-    //         "TL_APPROVAL_CHECKLIST_APPROV_CHECKLIST_ITEM_3",
-    //         radioButtonLabels,
-    //         getLocalityHarmedJson(queryValuePurpose),
-    //         "No"
-    //       ),
 
     commentSection: getContainerWithElement({
       children: {
@@ -184,7 +136,7 @@ const screenConfig = {
   components: {
     div: {
       uiFramework: "custom-atoms",
-      componentPath: "Div",
+      componentPath: "Form",
       props: {
         className: "common-div-css"
       }
@@ -210,6 +162,11 @@ const screenConfig = {
       queryValuePurpose
     );
     set(action, "screenConfig.components.div.children", data);
+    set(
+      action,
+      "screenConfig.components.div.props.id",
+      `action_${queryValuePurpose}`
+    );
     return action;
   }
 };

@@ -74,7 +74,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           bodyData.push(dataRow);
           units && units.map(function (unit) {
             dataRow = [];
-            dataRow.push(unit.usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" ? "NA" : transform(unit.floorNo, "Floor"));
+            dataRow.push(transform(unit.floorNo, "Floor"));
             dataRow.push(transform(unit.usageCategoryMajor === "NONRESIDENTIAL" ? unit.usageCategoryMinor : unit.usageCategoryMajor, unit.usageCategoryMajor === "NONRESIDENTIAL" ? "UsageCategoryMinor" : "UsageCategoryMajor"));
             dataRow.push(transform(unit.usageCategoryDetail ? unit.usageCategoryDetail : unit.usageCategorySubMinor, unit.usageCategoryDetail ? "UsageCategoryDetail" : "UsageCategorySubMinor"));
             dataRow.push(transform(unit.occupancyType, "OccupancyType"));
@@ -91,6 +91,8 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           return null;
         }
       };
+
+      var floorData = getFloorDetails();
 
       var borderKey = [true, true, false, true];
       var borderValue = [false, true, true, true];
@@ -237,11 +239,11 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             }]]
           },
           layout: tableborder
-        }, getFloorDetails() && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" }, getFloorDetails() && {
+        }, floorData && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" }, floorData && {
           style: "receipt-assess-table",
           table: {
             widths: ["*", "*", "*", "*", "*"],
-            body: getFloorDetails()
+            body: floorData
           },
           layout: tableborder
         }, { text: "OWNERSHIP INFORMATION", style: "pt-reciept-citizen-subheader" }, {

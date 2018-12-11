@@ -66,11 +66,13 @@ const appReducer = (state = initialState, action) => {
         window.location.pathname && window.location.pathname.split("/").pop() === "property-tax"
           ? []
           : index > -1
-            ? state.urls.splice(index, 1)
-            : [...state.urls, action.url];
+          ? state.urls.splice(index, 1)
+          : [...state.urls, action.url];
       localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return { ...state, urls: url };
-
+    case actionTypes.FETCH_EXTERNAL_URLS: {
+      return { ...state, routesData: action.payload };
+    }
     default:
       return state;
   }

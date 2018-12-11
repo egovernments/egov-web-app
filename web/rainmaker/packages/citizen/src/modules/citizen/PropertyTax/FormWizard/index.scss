@@ -187,3 +187,54 @@ div[class^="floorDetails_"] .text-left {
   font-weight: 500;
   font-size: 16px;
 }
+
+@media only screen and (max-width: 704px) {
+  #tax-wizard-buttons {
+    text-align: initial;
+    text-align: initial;
+    margin: 0;
+    padding: 0;
+    .button-container {
+      float: none;
+      display: flex;
+      width: 100%;
+      margin: initial;
+      padding: initial;
+      div:nth-of-type(1), div:nth-of-type(2) {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+    }
+  }
+  .wizard-content {
+    .dropdown {
+      width: 100% !important;
+    }
+  }
+  .fare-section {
+    display: flex;
+    flex-direction: column;
+    > div {
+      margin-right: 2px !important;
+      div[class^="clearfix"] {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding: 0;
+        &:before, &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  .tax-calculation-card-header {
+    .amt-radio {
+      margin-right: 11px;
+    }
+  }
+  .pt-review-form {
+    .grayout {
+      padding: initial;
+    }
+  }
+}

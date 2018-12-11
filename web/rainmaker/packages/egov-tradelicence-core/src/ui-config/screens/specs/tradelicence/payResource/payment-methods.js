@@ -280,7 +280,8 @@ export const cardDetails = getCommonContainer({
       labelKey: "TL_CARD_LAST_DIGITS_LABEL_PLACEHOLDER"
     },
     required: true,
-    jsonPath: "ReceiptTemp[0].instrument.instrumentNumber"
+    jsonPath: "ReceiptTemp[0].instrument.instrumentNumber",
+    pattern: "^([0-9]){4}$"
   }),
   TrxNo: getTextField({
     label: {

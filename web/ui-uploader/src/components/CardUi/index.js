@@ -3,7 +3,7 @@ import React from "react";
 const styles = {
   cardUi: {
     color: "rgb(95, 92, 98)",
-    backgroundColor: "rgb(247, 247, 247)",
+    backgroundColor: "#fff",
     transition: "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
     boxSizing: "border-box",
     fontFamily: "Lato, sans",
@@ -30,6 +30,7 @@ const CardUi = ({ children, cardTitle }) => {
       <div className="col-lg-12" style={styles.cardTitle}>
         {cardTitle}
       </div>
+      <br />
       <div>{children}</div>
     </div>
   );

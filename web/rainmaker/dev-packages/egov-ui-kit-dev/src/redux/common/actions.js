@@ -174,3 +174,33 @@ export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
   type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
   prepareFormData,
 });
+
+const fetchpgrConstantSuccess = (data) => ({
+  type: actionTypes.FETCH_PGR_CONSTANTS,
+  data
+})
+
+export const fetchpgrConstants = () => {
+  return async (dispatch) => {
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "RAINMAKER-PGR",
+            masterDetails: [
+              {
+                name: "UIConstants",
+              }],
+          },
+        ],
+      },
+    };
+    try {
+      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+      dispatch(fetchpgrConstantSuccess(payload.MdmsRes));
+    } catch (error) {
+      dispatch(generalMDMSFetchError(error));
+    }
+  };
+}

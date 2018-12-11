@@ -211,14 +211,18 @@ class ActionMenuComp extends Component {
                         name={iconLeft[1]}
                         action={iconLeft[0]}
                         color="rgba(0, 0, 0, 0.6000000238418579)"
-                        style={navigationURL === item.navigationURL ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                        style={
+                          navigationURL === item.navigationURL
+                            ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle }
+                            : styles.fibreIconStyle
+                        }
                         className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                       />
                     )
                   }
                   primaryText={
                     <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                      <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)"}}>{item.name || ""}</span>
+                      <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
                     </div>
                   }
                   rightIcon={
@@ -243,7 +247,11 @@ class ActionMenuComp extends Component {
           } else {
             if (item.navigationURL && item.navigationURL !== "newTab") {
               return (
-                <Link style={{ textDecoration: 'none' }} key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={index}
+                  to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
+                >
                   <div className="sideMenuItem">
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
@@ -252,6 +260,15 @@ class ActionMenuComp extends Component {
                       onClick={() => {
                         localStorage.setItem("menuPath", item.path);
                         document.title = item.name;
+                        console.log(
+                          "menu change",
+                          window.location.pathname,
+                          `/${item.navigationURL}`,
+                          window.location.pathname.startsWith("/integration")
+                        );
+                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
+                          window.location.reload();
+                        }
                       }}
                       leftIcon={
                         iconLeft &&
@@ -261,7 +278,11 @@ class ActionMenuComp extends Component {
                             action={iconLeft[0]}
                             fill="rgba(0, 0, 0, 0.6000000238418579)"
                             color="rgba(0, 0, 0, 0.6000000238418579)"
-                            style={navigationURL === item.navigationURL ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                            style={
+                              navigationURL === item.navigationURL
+                                ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle }
+                                : styles.fibreIconStyle
+                            }
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                           />
                         )
@@ -295,7 +316,11 @@ class ActionMenuComp extends Component {
                             action={iconLeft[0]}
                             fill="rgba(0, 0, 0, 0.6000000238418579)"
                             color="rgba(0, 0, 0, 0.6000000238418579)"
-                            style={navigationURL === item.navigationURL ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                            style={
+                              navigationURL === item.navigationURL
+                                ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle }
+                                : styles.fibreIconStyle
+                            }
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                           />
                         )
@@ -323,7 +348,11 @@ class ActionMenuComp extends Component {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return (
-                  <Link style={{ textDecoration: 'none' }} key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    key={index}
+                    to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
+                  >
                     <div className="sideMenuItem">
                       <MenuItem
                         innerDivStyle={styles.defaultMenuItemStyle}
@@ -340,7 +369,11 @@ class ActionMenuComp extends Component {
                               name={item.leftIcon.name}
                               action={item.leftIcon.action}
                               color={"rgba(0, 0, 0, 0.6000000238418579)"}
-                              style={navigationURL === item.navigationURL ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
+                              style={
+                                navigationURL === item.navigationURL
+                                  ? { ...{ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, ...styles.fibreIconStyle }
+                                  : styles.fibreIconStyle
+                              }
                               className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                             />
                           )
@@ -407,4 +440,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
 });
-export default connect(null, mapDispatchToProps)(ActionMenuComp);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ActionMenuComp);

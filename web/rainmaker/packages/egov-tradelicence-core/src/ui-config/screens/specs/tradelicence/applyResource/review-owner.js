@@ -2,7 +2,6 @@ import {
   getCommonGrayCard,
   getCommonSubHeader,
   getCommonContainer,
-  getDivider,
   getLabelWithValue,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
@@ -186,7 +185,7 @@ export const getReviewOwner = (isEditable = true) => {
         hasAddItem: false,
         sourceJsonPath: "Licenses[0].tradeLicenseDetail.owners",
         prefixSourceJsonPath: "children.cardContent.children.viewFive.children",
-        afterPrefixJsonPath:"children.value.children.key"
+        afterPrefixJsonPath: "children.value.children.key"
       },
       type: "array"
     },
@@ -221,7 +220,10 @@ export const getReviewOwner = (isEditable = true) => {
                 labelName: "Designation",
                 labelKey: "TL_NEW_OWNER_DESIG_LABEL"
               },
-              { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name" }
+              {
+                jsonPath:
+                  "Licenses[0].tradeLicenseDetail.institution.designation"
+              }
             ),
             reviewOwnerFatherName,
             reviewOwnerGender,

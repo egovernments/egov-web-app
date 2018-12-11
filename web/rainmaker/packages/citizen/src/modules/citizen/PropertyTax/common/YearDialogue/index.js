@@ -11,27 +11,6 @@ import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
-// const getYearList = () => {
-//   let today = new Date();
-//   let month = today.getMonth() + 1;
-//   let yearRange = [];
-//   var counter = 0;
-//   if (month <= 3) {
-//     return getLastFiveYear(yearRange, today.getFullYear() - 1, counter);
-//   } else {
-//     return getLastFiveYear(yearRange, today.getFullYear(), counter);
-//   }
-// };
-
-// const getLastFiveYear = (yearRange, currentYear, counter) => {
-//   if (counter < 5) {
-//     counter++;
-//     yearRange.push(`${currentYear}-${currentYear + 1}`);
-//     getLastFiveYear(yearRange, currentYear - 1, counter);
-//   }
-//   return yearRange;
-// };
-
 const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPay", isCoreConfiguration: true })(SingleButtonForm);
 
 class YearDialog extends Component {
@@ -64,7 +43,7 @@ class YearDialog extends Component {
   };
 
   render() {
-    let { open, closeDialogue, getYearList, history, form, removeForm, urlToAppend } = this.props;
+    let { open, closeDialogue, getYearList, history, urlToAppend } = this.props;
     return getYearList ? (
       <Dialog
         open={open}

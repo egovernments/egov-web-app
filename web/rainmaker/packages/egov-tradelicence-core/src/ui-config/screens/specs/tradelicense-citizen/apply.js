@@ -1,12 +1,12 @@
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { updatePFOforSearchResults } from "../../../../ui-utils/commons";
+import {
+  updatePFOforSearchResults,
+  getBoundaryData
+} from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-
 import {
   header,
-  tradeDocumentDetails,
-  stepsData,
   formwizardFirstStep,
   formwizardSecondStep,
   formwizardThirdStep,
@@ -15,6 +15,7 @@ import {
   // queryValue,
   getMdmsData
 } from "../tradelicence/apply";
+import { getAllDataFromBillingSlab } from "../utils";
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -33,6 +34,16 @@ const screenConfig = {
       );
     }
     getMdmsData(action, state, dispatch);
+    getAllDataFromBillingSlab(tenantId, dispatch);
+    getBoundaryData(action, state, dispatch, [
+      { key: "tenantId", value: tenantId }
+    ]);
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.address.tenantId",
+        tenantId
+      )
+    );
     return action;
   },
   components: {
@@ -62,6 +73,15 @@ const screenConfig = {
         formwizardThirdStep,
         formwizardFourthStep,
         footer
+      }
+    },
+    breakUpDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "ViewBreakupContainer",
+      props: {
+        open: false,
+        maxWidth: "md",
+        screenKey: "apply"
       }
     }
   }

@@ -7,51 +7,73 @@ import DateFilter from "./UserJobsDateFilter";
 import UserJobsCodeFilter from "./UserJobsCodeFilter";
 import RequesterNamesFilter from "./RequesterNamesFilter";
 import RequesterFileNamesFilter from "./RequesterFileNamesFilter";
+import Grid from "@material-ui/core/Grid";
 
 const FiltersView = ({ handleApplyFilter, handleResetFilter }) => {
   return (
     <div>
-      <div className="row">
-        <CardUi>
-          <div className="col-lg-4 col-md-4">
+      <CardUi cardTitle="Uploader- Search Jobs">
+        <Grid container="true" sm="12" spacing={16}>
+          {/* <div
+            className="row"
+            style={{
+              marginTop: "16px",
+              paddingBottom: "8px"
+            }}
+          > */}
+          <Grid sm="4">
             <UserJobsCodeFilter />
-          </div>
-          <div className="col-lg-4 col-md-4">
+          </Grid>
+          <Grid item="true" sm="4">
             <RequesterFileNamesFilter />
-          </div>
-          <div>
+          </Grid>
+          <Grid item="true" sm="4">
             <RequesterNamesFilter />
-          </div>
-        </CardUi>
+          </Grid>
+          {/* </div> */}
 
-        <CardUi cardTitle="By Date">
-          <div>
-            <DateFilter />
-          </div>
-        </CardUi>
+          {/* <div
+            className="row"
+            style={{
+              marginTop: "16px",
+              paddingBottom: "8px"
+            }}
+          > */}
 
-        <CardUi cardTitle="By Job Completion Status">
-          <JobStatusFilter />
-        </CardUi>
-      </div>
-      <div className="row">
-        <div style={{ textAlign: "center", width: "100%", margin: "15px 0px" }}>
-          <ButtonUi
-            onClick={handleApplyFilter}
-            style={{ marginRight: "15px" }}
-            type="button"
-            primary={true}
-            label="Filter"
-            icon={{ style: { color: "white" }, name: "search" }}
-          />
-          <ButtonUi
-            onClick={handleResetFilter}
-            type="button"
-            label="Reset"
-            icon={{ style: { color: "black" }, name: "backspace" }}
-          />
+          <DateFilter />
+
+          <Grid item="true" sm="4">
+            <JobStatusFilter />
+          </Grid>
+        </Grid>
+        <div
+          className="row"
+          style={{
+            marginTop: "16px",
+            paddingBottom: "8px"
+          }}
+        >
+          <div
+            style={{ textAlign: "center", width: "100%", margin: "15px 0px" }}
+          >
+            <ButtonUi
+              onClick={handleApplyFilter}
+              className={"uploader-primary-button"}
+              style={{ marginRight: "15px" }}
+              type="button"
+              primary={true}
+              label="Filter"
+              icon={{ style: { color: "white" }, name: "search" }}
+            />
+            <ButtonUi
+              onClick={handleResetFilter}
+              type="button"
+              label="Reset"
+              icon={{ style: { color: "black" }, name: "backspace" }}
+            />
+          </div>
         </div>
-      </div>
+      </CardUi>
     </div>
   );
 };

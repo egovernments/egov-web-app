@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchExternalUrls = exports.setExternalUrls = exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -26,6 +26,8 @@ var _commons = require("egov-ui-kit/utils/commons");
 var _common = require("config/common");
 
 var _common2 = _interopRequireDefault(_common);
+
+var _util = require("util");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -64,7 +66,7 @@ var fetchLocalizationLabel = exports.fetchLocalizationLabel = function fetchLoca
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
+              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
 
             case 3:
               payload = _context.sent;
@@ -171,6 +173,86 @@ var fetchActionItems = exports.fetchActionItems = function fetchActionItems(role
 
     return function (_x3, _x4) {
       return _ref3.apply(this, arguments);
+    };
+  }();
+};
+
+var setExternalUrls = exports.setExternalUrls = function setExternalUrls(payload) {
+  return {
+    type: actionTypes.FETCH_EXTERNAL_URLS,
+    payload: payload
+  };
+};
+var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls() {
+  _util.debug;
+  return function () {
+    var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
+      var requestBody, payload, MdmsRes, commonMasters, UiCommonConfig;
+      return _regenerator2.default.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              requestBody = {
+                MdmsCriteria: {
+                  tenantId: "pb",
+                  moduleDetails: [{
+                    moduleName: "common-masters",
+                    masterDetails: [{
+                      name: "Ui-Common-Config"
+                    }]
+                  }]
+                }
+              };
+              _context4.prev = 1;
+              _context4.next = 4;
+              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody);
+
+            case 4:
+              payload = _context4.sent;
+              MdmsRes = payload.MdmsRes;
+              commonMasters = MdmsRes["common-masters"];
+              UiCommonConfig = commonMasters["Ui-Common-Config"];
+              // const payload = {
+              //   tradelicense: {
+              //     routes: {
+              //       search: {
+              //         routePath: "/employee-tradelicence/mihy-ui-framework/tradelicence/search",
+              //         isOrigin: false,
+              //         domain: "https://egov-micro-dev.egovernments.org",
+              //       },
+              //     },
+              //   },
+              //   ws: {
+              //     routes: {
+              //       dashboard: {
+              //         routePath: "",
+              //         isOrigin: false,
+              //         domain: "https://dashboard-pbuat.egovernments.org/app/kibana#/dashboards?title=W%20%26%20S%20Consumers%20Dashboard&embed=true",
+              //       },
+              //     },
+              //   },
+              // };
+
+              dispatch(setExternalUrls(UiCommonConfig[0]));
+              _context4.next = 14;
+              break;
+
+            case 11:
+              _context4.prev = 11;
+              _context4.t0 = _context4["catch"](1);
+
+              console.log(_context4.t0);
+
+            case 14:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, undefined, [[1, 11]]);
+    }));
+
+    return function (_x5) {
+      return _ref4.apply(this, arguments);
     };
   }();
 };

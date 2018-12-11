@@ -29,7 +29,7 @@ var formConfig = (0, _extends3.default)({
       disabled: true,
       numcols: 4
     }
-  }, _reusableFields.subUsageType, _reusableFields.occupancy, _reusableFields.superArea, _reusableFields.measuringUnit, _reusableFields.annualRent),
+  }, _reusableFields.subUsageType, _reusableFields.occupancy, _reusableFields.superArea, _reusableFields.measuringUnit, _reusableFields.floorName, _reusableFields.annualRent),
   isFormValid: false
 }, _reusableFields.beforeInitFormForPlot);
 

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateUserJobFilters } from "../jobs/actions";
-import DatePickerUi from "../components/DatePickerUi";
+import DatePickerUi from "../components/DatePickerUINew";
+import Grid from "@material-ui/core/Grid";
 
 class UserJobsDateFilterContainer extends Component {
   static propTypes = {
@@ -15,25 +16,27 @@ class UserJobsDateFilterContainer extends Component {
     const { maxDate } = this;
 
     return (
-      <div>
-        <div className="col-lg-4 col-md-4">
+      <React.Fragment>
+        <Grid item sm="4">
           <DatePickerUi
             value={startDate}
             onChange={(event, date) => {
-              updateUserJobFilters({ startDate: date });
+              updateUserJobFilters({ startDate: event.target.value });
             }}
             label="From Date"
             maxDate={maxDate}
           />
-        </div>
-        <DatePickerUi
-          value={endDate}
-          onChange={(event, date) => {
-            updateUserJobFilters({ endDate: date });
-          }}
-          label="To Date"
-        />
-      </div>
+        </Grid>
+        <Grid item sm="4">
+          <DatePickerUi
+            value={endDate}
+            onChange={(event, date) => {
+              updateUserJobFilters({ endDate: event.target.value });
+            }}
+            label="To Date"
+          />
+        </Grid>
+      </React.Fragment>
     );
   }
 }
@@ -47,6 +50,7 @@ const mapDispatchToProps = dispatch => ({
   updateUserJobFilters: filter => dispatch(updateUserJobFilters(filter))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UserJobsDateFilterContainer
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserJobsDateFilterContainer);

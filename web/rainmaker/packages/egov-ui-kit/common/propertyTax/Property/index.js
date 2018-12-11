@@ -338,9 +338,9 @@ var transform = function transform(floor, key, generalMDMSDataById, propertyDeta
       if (dataKey === "usageCategoryDetail") {
         return generalMDMSDataById["UsageCategoryDetail"] ? generalMDMSDataById["UsageCategoryDetail"][floor[dataKey]].name : generalMDMSDataById["UsageCategorySubMinor"] ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name : "NA";
       }
-      if (usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
-        return "NA";
-      }
+      // if (usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
+      //   return "NA";
+      // }
       if (floor[dataKey] === "NONRESIDENTIAL") {
         return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
       } else {

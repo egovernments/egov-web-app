@@ -86,7 +86,9 @@ var displayLocalizedStatusMessage = exports.displayLocalizedStatusMessage = func
 };
 var transformById = exports.transformById = function transformById(payload, id) {
   return payload && payload.reduce(function (result, item) {
-    result[item[id]] = (0, _extends3.default)({}, item);
+    if (!item.hasOwnProperty("active") || item.hasOwnProperty("active") && item.active) {
+      result[item[id]] = (0, _extends3.default)({}, item);
+    }
 
     return result;
   }, {});

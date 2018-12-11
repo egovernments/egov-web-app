@@ -2,7 +2,6 @@ import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
 // import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
-// import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
 import { ReOpenComplaint } from "modules/common";
@@ -34,6 +33,7 @@ import SearchScreen from "modules/employee/pgr/SearchScreen";
 //pt
 import ptRoutes from "./pt";
 import tlRoutes from "./tl";
+import externalRoutes from "./exterenalURL";
 
 // import PTHome from "modules/employee/PropertyTax/PTHome";
 
@@ -101,13 +101,10 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      // title: "ES_OPEN_COMPLAINTS_HEADER",
       hideTitle: true,
-      // redirectionUrl,
       isHomeScreen: true,
       hideFor: "ao",
       customFor: "csr",
-      //customTitle: "ES_ALL_COMPLAINTS_HEADER",
     },
   },
   {
@@ -117,6 +114,7 @@ const routes = [
     options: {
       hideFooter: true,
       redirectionUrl,
+      title: "Home",
       hideTitle: true,
       isHomeScreen: true,
     },
@@ -343,6 +341,17 @@ const routes = [
       hideBackButton: true,
     },
   },
+  // {
+  //   path: "create-employee",
+  //   component: CreateEmployee,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "Create Employee",
+  //     hideTitle: true,
+  //     hideBackButton: true,
+  //   },
+  // },
   {
     path: "report/:moduleName/:reportName",
     component: Report,
@@ -357,6 +366,7 @@ const routes = [
   },
   ...ptRoutes,
   ...tlRoutes,
+  ...externalRoutes,
 ];
 
 export default routes;

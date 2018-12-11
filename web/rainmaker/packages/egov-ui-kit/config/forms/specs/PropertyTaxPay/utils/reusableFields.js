@@ -401,6 +401,18 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
     var dispatch = store.dispatch;
 
     var propertyType = (0, _get2.default)(state, "form.basicInformation.fields.typeOfBuilding.value");
+
+    var _ref7 = state.common && state.common.generalMDMSDataById,
+        Floor = _ref7.Floor;
+
+    if ((0, _get2.default)(action, "form.fields.floorName")) {
+      if (propertyType === "SHAREDPROPERTY") {
+        (0, _set2.default)(action, "form.fields.floorName.hideField", false);
+        (0, _set2.default)(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      } else {
+        (0, _set2.default)(action, "form.fields.floorName.hideField", true);
+      }
+    }
     if (propertyType != "VACANT") {
       var occupancy = (0, _get2.default)(state, "common.generalMDMSDataById.OccupancyType");
       var usageCategoryMinor = (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
@@ -451,7 +463,7 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
     }
     if (propertyType == "SHAREDPROPERTY") {
       dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].noOfFloors", 2));
-      dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[0].floorNo", -1));
+      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
     }
     if ((0, _get2.default)(state, "common.prepareFormData." + (0, _get2.default)(action, "form.fields.occupancy.jsonPath")) === "RENTED") {
       (0, _set2.default)(action, "form.fields.annualRent.hideField", false);
@@ -499,11 +511,11 @@ var city = exports.city = {
         fieldKey: "mohalla"
       }]
     },
-    updateDependentFields: function updateDependentFields(_ref7) {
-      var formKey = _ref7.formKey,
-          field = _ref7.field,
-          dispatch = _ref7.dispatch,
-          state = _ref7.state;
+    updateDependentFields: function updateDependentFields(_ref8) {
+      var formKey = _ref8.formKey,
+          field = _ref8.field,
+          dispatch = _ref8.dispatch,
+          state = _ref8.state;
 
       dispatch((0, _actions.prepareFormData)("Properties[0].tenantId", field.value));
       var requestBody = {
@@ -615,10 +627,10 @@ var mohalla = exports.mohalla = {
     },
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     required: true,
-    updateDependentFields: function updateDependentFields(_ref8) {
-      var formKey = _ref8.formKey,
-          field = _ref8.field,
-          dispatch = _ref8.dispatch;
+    updateDependentFields: function updateDependentFields(_ref9) {
+      var formKey = _ref9.formKey,
+          field = _ref9.field,
+          dispatch = _ref9.dispatch;
 
       if (field.value && field.value.length > 0) {
         var _mohalla = field.dropDownData.find(function (option) {

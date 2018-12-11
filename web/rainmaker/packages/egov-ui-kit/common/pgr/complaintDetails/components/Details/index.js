@@ -179,6 +179,17 @@ var Details = function (_Component) {
                   labelStyle: { color: "inherit" }
                 })
               ),
+              description && _react2.default.createElement(
+                "div",
+                { className: "complaint-detail-detail-section-status row" },
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6  col-sm-4 col-md-2 status-color", label: "CS_ADDCOMPLAINT_COMPLAINT_DETAILS" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
+                  label: description,
+                  id: "complaint-details-submission-date",
+                  labelStyle: { color: "inherit" }
+                })
+              ),
               _react2.default.createElement(
                 "div",
                 { style: { marginTop: "16px" }, className: "complaint-image-cont" },

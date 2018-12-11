@@ -36,7 +36,12 @@ const themeObject = {
         marginTop: "8px"
       },
       fullWidth: {
-        width: "80% !important"
+        width: "80%"
+      }
+    },
+    MuiSnackbarContent: {
+      root: {
+        flexWrap: "inherit"
       }
     },
     MuiTypography: {

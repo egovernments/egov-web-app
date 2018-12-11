@@ -9,9 +9,7 @@ import {
   getDateField,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import get from "lodash/get";
 import { searchApiCall } from "./functions";
-import { textToLocalMapping } from "./searchResults";
 
 export const tradeLicenseApplication = getCommonCard({
   subHeader: getCommonTitle({
@@ -37,7 +35,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9\-]*$/i,
+      pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "Invalid Application No.",
       jsonPath: "searchScreen.applicationNumber"
     }),
@@ -56,8 +54,7 @@ export const tradeLicenseApplication = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: "",
-      pattern: /^[a-zA-Z0-9\-]*$/i,
+      pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "Invalid Trade License No.",
       jsonPath: "searchScreen.licenseNumber"
     }),

@@ -34,10 +34,16 @@ export const callPGService = async (state, dispatch) => {
       const requestBody = {
         Transaction: {
           tenantId,
-          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
+          txnAmount: get(
+            billPayload,
+            "billResponse.Bill[0].billDetails[0].totalAmount"
+          ),
           module: "TL",
-          billId: get(billPayload, "Bill[0].id"),
-          moduleId: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
+          billId: get(billPayload, "billResponse.Bill[0].id"),
+          moduleId: get(
+            billPayload,
+            "billResponse.Bill[0].billDetails[0].consumerCode"
+          ),
           productInfo: "Trade License Payment",
           gateway: "AXIS",
           callbackUrl

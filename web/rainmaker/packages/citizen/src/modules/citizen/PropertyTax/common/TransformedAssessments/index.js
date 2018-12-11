@@ -3,7 +3,6 @@ import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
-import { fail } from "assert";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,

@@ -39,7 +39,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
   const billInRedux = cloneDeep(
     get(state.screenConfiguration.preparedFinalObject, "ReceiptTemp[0].Bill[0]")
   );
-  const mergedBillObj = { ...billInRedux, ...billPayload.Bill[0] };
+  const mergedBillObj = { ...billInRedux, ...billPayload.billResponse.Bill[0] };
 
   //merge bill in Receipt obj
   billPayload &&
@@ -50,7 +50,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        billPayload.Bill[0].billDetails[0].totalAmount
+        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
@@ -59,7 +59,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
     dispatch(
       prepareFinalObject(
         "ReceiptTemp[0].instrument.amount",
-        billPayload.Bill[0].billDetails[0].totalAmount
+        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
       )
     );
 
@@ -71,16 +71,101 @@ const updateAdhoc = (state, dispatch) => {
 };
 
 export const adhocPopup = getCommonContainer({
-  header: getCommonHeader({
-    labelName: "Add Adhoc Penalty/Rebate",
-    labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
-  }),
+  // header: getCommonHeader({
+  //   labelName: "Add Adhoc Penalty/Rebate",
+  //   labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+  // }),
+  header: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+    props: {
+      style: {
+        width: "100%",
+        float: "right"
+      }
+    },
+    children: {
+      div1: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 10,
+          sm: 10
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right"
+          }
+        },
+        children: {
+          div: getCommonHeader(
+            {
+              labelName: "Add Adhoc Penalty/Rebate",
+              labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+            },
+            {
+              style: {
+                fontSize: "20px"
+              }
+            }
+          )
+        }
+      },
+      div2: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 2,
+          sm: 2
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right",
+            cursor: "pointer"
+          }
+        },
+        children: {
+          closeButton: {
+            componentPath: "Button",
+            props: {
+              style: {
+                float: "right",
+                color: "rgba(0, 0, 0, 0.60)"
+              }
+            },
+            children: {
+              previousButtonIcon: {
+                uiFramework: "custom-atoms",
+                componentPath: "Icon",
+                props: {
+                  iconName: "close"
+                }
+              }
+            },
+            onClickDefination: {
+              action: "condition",
+              callBack: showHideAdhocPopup
+            }
+          }
+        }
+      }
+    }
+  },
   adhocPenaltyCard: getCommonContainer(
     {
-      subheader: getCommonSubHeader({
-        labelName: "Adhoc Penalty",
-        labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_FIRST"
-      }),
+      subheader: getCommonSubHeader(
+        {
+          labelName: "Adhoc Penalty",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_FIRST"
+        },
+        {
+          style: {
+            fontSize: "16px"
+          }
+        }
+      ),
       penaltyAmountAndReasonContainer: getCommonContainer({
         penaltyAmount: getTextField({
           label: {
@@ -90,6 +175,11 @@ export const adhocPopup = getCommonContainer({
           placeholder: {
             labelName: "Enter Adhoc Charge Amount",
             labelKey: "TL_ADD_HOC_CHARGES_POPUP_PEN_AMT_PLACEHOLDER"
+          },
+          props: {
+            style: {
+              width: "90%"
+            }
           },
           jsonPath: "Licenses[0].tradeLicenseDetail.adhocPenalty"
         }),
@@ -101,6 +191,11 @@ export const adhocPopup = getCommonContainer({
           placeholder: {
             labelName: "Select reason for Adhoc Penalty",
             labelKey: "TL_PAYMENT_PENALTY_REASON_SELECT"
+          },
+          props: {
+            style: {
+              width: "90%"
+            }
           },
           data: [
             {
@@ -132,7 +227,100 @@ export const adhocPopup = getCommonContainer({
           xs: 12,
           sm: 12
         },
+        props: {
+          style: {
+            width: "90%"
+          }
+        },
         jsonPath: "Licenses[0].tradeLicenseDetail.penaltyComments"
+      })
+    },
+    {
+      style: {
+        marginTop: "12px"
+      }
+    }
+  ),
+  adhocRebateCard: getCommonContainer(
+    {
+      subHeader: getCommonSubHeader(
+        {
+          labelName: "Adhoc Rebate",
+          labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_SEC"
+        },
+        {
+          style: {
+            fontSize: "16px"
+          }
+        }
+      ),
+      rebateAmountAndReasonContainer: getCommonContainer({
+        rebateAmount: getTextField({
+          label: {
+            labelName: "Adhoc Rebate Amount",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Adhoc Rebate Amount",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_PLACEHOLDER"
+          },
+          props: {
+            style: {
+              width: "90%"
+            }
+          },
+          jsonPath: "Licenses[0].tradeLicenseDetail.adhocExemption"
+        }),
+        rebateReason: getSelectField({
+          label: {
+            labelName: "Reason for Adhoc Rebate",
+            labelKey: "TL_PAYMENT_REBATE_REASON"
+          },
+          placeholder: {
+            labelName: "Select Reason for Adhoc Rebate",
+            labelKey: "TL_PAYMENT_REBATE_REASON_SELECT"
+          },
+          props: {
+            style: {
+              width: "90%"
+            }
+          },
+          data: [
+            {
+              code: "Advanced paid by citizen earlier"
+            },
+            {
+              code: "Rebate provided by commissioner/EO"
+            },
+            {
+              code: "Additional amount charged from the citizen"
+            },
+            {
+              code: "Others"
+            }
+          ],
+          jsonPath: "Licenses[0].tradeLicenseDetail.adhocExemptionReason"
+        }),
+        rebateCommentsField: getTextField({
+          label: {
+            labelName: "Enter Comments",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Comments",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
+          },
+          gridDefination: {
+            xs: 12,
+            sm: 12
+          },
+          props: {
+            style: {
+              width: "90%"
+            }
+          },
+          jsonPath: "Licenses[0].tradeLicenseDetail.rebateComments"
+        })
       })
     },
     {
@@ -141,65 +329,6 @@ export const adhocPopup = getCommonContainer({
       }
     }
   ),
-  adhocRebateCard: getCommonContainer({
-    subHeader: getCommonSubHeader({
-      labelName: "Adhoc Rebate",
-      labelKey: "TL_ADD_HOC_CHARGES_POPUP_SUB_SEC"
-    }),
-    rebateAmountAndReasonContainer: getCommonContainer({
-      rebateAmount: getTextField({
-        label: {
-          labelName: "Adhoc Rebate Amount",
-          labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Adhoc Rebate Amount",
-          labelKey: "TL_ADD_HOC_CHARGES_POPUP_RBT_AMT_PLACEHOLDER"
-        },
-        jsonPath: "Licenses[0].tradeLicenseDetail.adhocExemption"
-      }),
-      rebateReason: getSelectField({
-        label: {
-          labelName: "Reason for Adhoc Rebate",
-          labelKey: "TL_PAYMENT_REBATE_REASON"
-        },
-        placeholder: {
-          labelName: "Select Reason for Adhoc Rebate",
-          labelKey: "TL_PAYMENT_REBATE_REASON_SELECT"
-        },
-        data: [
-          {
-            code: "Advanced paid by citizen earlier"
-          },
-          {
-            code: "Rebate provided by commissioner/EO"
-          },
-          {
-            code: "Additional amount charged from the citizen"
-          },
-          {
-            code: "Others"
-          }
-        ],
-        jsonPath: "Licenses[0].tradeLicenseDetail.adhocExemptionReason"
-      }),
-      rebateCommentsField: getTextField({
-        label: {
-          labelName: "Enter Comments",
-          labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Comments",
-          labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
-        },
-        gridDefination: {
-          xs: 12,
-          sm: 12
-        },
-        jsonPath: "Licenses[0].tradeLicenseDetail.rebateComments"
-      })
-    })
-  }),
   div: {
     uiFramework: "custom-atoms",
     componentPath: "Div",
@@ -216,7 +345,7 @@ export const adhocPopup = getCommonContainer({
           variant: "outlined",
           color: "primary",
           style: {
-            width: "200px",
+            width: "140px",
             height: "48px",
             marginRight: "16px"
           }
@@ -238,7 +367,7 @@ export const adhocPopup = getCommonContainer({
           variant: "contained",
           color: "primary",
           style: {
-            width: "200px",
+            width: "140px",
             height: "48px"
           }
         },

@@ -1,4 +1,3 @@
-import isEmpty from "lodash/isEmpty";
 import { uploadFile, httpRequest } from "ui-utils/api";
 import {
   convertDateToEpoch,
@@ -6,7 +5,8 @@ import {
   getCheckBoxJsonpath,
   getSafetyNormsJson,
   getHygeneLevelJson,
-  getLocalityHarmedJson
+  getLocalityHarmedJson,
+  setFilteredTradeTypes
 } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
@@ -96,7 +96,14 @@ export const updatePFOforSearchResults = async (
     { key: "applicationNumber", value: queryValue }
   ];
   const payload = await getSearchResults(queryObject);
-  await updateDropDowns(payload, action, state, dispatch);
+  if (payload) {
+    dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  }
+  const licenseType = payload && get(payload, "Licenses[0].licenseType");
+  const structureSubtype =
+    payload && get(payload, "Licenses[0].tradeLicenseDetail.structureType");
+  setFilteredTradeTypes(state, dispatch, licenseType, structureSubtype);
+  updateDropDowns(payload, action, state, dispatch, queryValue);
 
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");
@@ -105,8 +112,8 @@ export const updatePFOforSearchResults = async (
   }
   set(payload, getCheckBoxJsonpath(queryValuePurpose), true);
 
-  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   setApplicationNumberBox(state, dispatch);
+  // return action;
 };
 
 export const getBoundaryData = async (
@@ -161,12 +168,16 @@ export const getBoundaryData = async (
   }
 };
 
-const getMultipleAccessories = licenses => {
-  let accessories = get(licenses, "tradeLicenseDetail.accessories");
-  let mergedAccessories =
-    accessories &&
-    accessories.reduce((result, item) => {
-      if (item && item !== null && item.hasOwnProperty("accessoryCategory")) {
+const getMultiUnits = multiUnits => {
+  let hasTradeType = false;
+  let hasAccessoryType = false;
+
+  let mergedUnits =
+    multiUnits &&
+    multiUnits.reduce((result, item) => {
+      hasTradeType = item.hasOwnProperty("tradeType");
+      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
+      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
         if (item.hasOwnProperty("id")) {
           if (item.hasOwnProperty("active") && item.active) {
             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
@@ -185,8 +196,35 @@ const getMultipleAccessories = licenses => {
       return result;
     }, []);
 
-  return mergedAccessories;
+  return mergedUnits;
 };
+
+// const getMultipleAccessories = licenses => {
+//   let accessories = get(licenses, "tradeLicenseDetail.accessories");
+//   let mergedAccessories =
+//     accessories &&
+//     accessories.reduce((result, item) => {
+//       if (item && item !== null && item.hasOwnProperty("accessoryCategory")) {
+//         if (item.hasOwnProperty("id")) {
+//           if (item.hasOwnProperty("active") && item.active) {
+//             if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+//               set(item, "active", false);
+//               result.push(item);
+//             } else {
+//               result.push(item);
+//             }
+//           }
+//         } else {
+//           if (!item.hasOwnProperty("isDeleted")) {
+//             result.push(item);
+//           }
+//         }
+//       }
+//       return result;
+//     }, []);
+
+//   return mergedAccessories;
+// };
 
 const getMultipleOwners = owners => {
   let mergedOwners =
@@ -258,11 +296,17 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
 
     if (queryObject[0].applicationNumber) {
       //call update
-
+      let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
+      set(
+        queryObject[0],
+        "tradeLicenseDetail.tradeUnits",
+        getMultiUnits(tradeUnits)
+      );
       set(
         queryObject[0],
         "tradeLicenseDetail.accessories",
-        getMultipleAccessories(queryObject[0])
+        getMultiUnits(accessories)
       );
       set(
         queryObject[0],
@@ -284,23 +328,44 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         action = "APPLY";
       }
       set(queryObject[0], "action", action);
-      const response = await httpRequest(
+      const updateResponse = await httpRequest(
         "post",
         "/tl-services/v1/_update",
         "",
         [],
         { Licenses: queryObject }
       );
-      dispatch(prepareFinalObject("Licenses", response.Licenses));
+      let searchQueryObject = [
+        { key: "tenantId", value: queryObject[0].tenantId },
+        { key: "applicationNumber", value: queryObject[0].applicationNumber }
+      ];
+      let searchResponse = await getSearchResults(searchQueryObject);
+      dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      const updatedtradeUnits = get(
+        searchResponse,
+        "Licenses[0].tradeLicenseDetail.tradeUnits"
+      );
+      const tradeTemp = updatedtradeUnits.map((item, index) => {
+        return {
+          tradeSubType: item.tradeType.split(".")[1],
+          tradeType: item.tradeType.split(".")[0]
+        };
+      });
+      dispatch(prepareFinalObject("LicensesTemp.tradeUnits", tradeTemp));
     } else {
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
       // let owners = get(queryObject[0], "tradeLicenseDetail.owners");
+      let mergedTradeUnits =
+        tradeUnits &&
+        tradeUnits.filter(item => !item.hasOwnProperty("isDeleted"));
       let mergedAccessories =
         accessories &&
         accessories.filter(item => !item.hasOwnProperty("isDeleted"));
       let mergedOwners =
         owners && owners.filter(item => !item.hasOwnProperty("isDeleted"));
 
+      set(queryObject[0], "tradeLicenseDetail.tradeUnits", mergedTradeUnits);
       set(queryObject[0], "tradeLicenseDetail.accessories", mergedAccessories);
       set(queryObject[0], "tradeLicenseDetail.owners", mergedOwners);
       set(queryObject[0], "action", "INITIATE");
@@ -414,7 +479,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
       if (uploadDocument) {
         if (file.type.match(/^image\//)) {
-          const imageUri = await getImageUrlByFile(file);
+          //const imageUri = await getImageUrlByFile(file);
           const fileStoreId = await uploadFile(
             S3_BUCKET.endPoint,
             "TL",

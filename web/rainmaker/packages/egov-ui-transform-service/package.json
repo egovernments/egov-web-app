@@ -4,11 +4,15 @@
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "dev": "npm run dev:migrate-up && cross-env NODE_ENV=development nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "cross-env NODE_ENV=production node dist",
     "prestart": "npm run -s build",
-    "test": "eslint src"
+    "test": "eslint src",
+    "dev:migrate-up": "db-migrate up --config config/database.json -e dev",
+    "dev:migrate-down": "db-migrate down --config config/database.json -e dev",
+    "prod:migrate-up": "db-migrate up --config config/database.json -e prod",
+    "prod:migrate-down": "db-migrate down --config config/database.json -e prod"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -35,11 +39,16 @@
     "compression": "^1.5.2",
     "cors": "^2.7.1",
     "cross-env": "^5.2.0",
+    "db-migrate": "^0.11.4",
+    "db-migrate-pg": "^0.4.0",
     "dotenv": "^6.1.0",
     "express": "^4.13.3",
     "kafka-node": "^3.0.1",
     "morgan": "^1.8.0",
-    "resource-router-middleware": "^0.6.0"
+    "node-pg-migrate": "^3.14.0",
+    "pg": "^7.6.1",
+    "resource-router-middleware": "^0.6.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
+import { sortByEpoch, getEpochForDate } from "../../utils";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(
@@ -63,14 +64,13 @@ export const searchResults = {
         format: rowData => {
           return (
             <Link to={onRowClick(rowData)}>
-             <span
-              style={{
-                color:"#FE7A51"
-              }}
-            >
-              {rowData[get(textToLocalMapping, "Application No")]}
-            </span>
-              
+              <span
+                style={{
+                  color: "#FE7A51"
+                }}
+              >
+                {rowData[get(textToLocalMapping, "Application No")]}
+              </span>
             </Link>
           );
         }
@@ -91,7 +91,22 @@ export const searchResults = {
       responsive: "stacked",
       selectableRows: false,
       hover: true,
-      rowsPerPageOptions: [10, 20, 40]
+      rowsPerPageOptions: [10, 15, 20]
+    },
+    customSortColumn: {
+      column: "Application Date",
+      sortingFn: (data, i, sortDateOrder) => {
+        const epochDates = data.reduce((acc, curr) => {
+          acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
+          return acc;
+        }, []);
+        const order = sortDateOrder === "asc" ? true : false;
+        const finalData = sortByEpoch(epochDates, !order).map(item => {
+          item.pop();
+          return item;
+        });
+        return { data: finalData, currentOrder: !order ? "asc" : "desc" };
+      }
     }
   }
 };
