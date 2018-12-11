@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import MenuItem from "material-ui/MenuItem";
-import { Grid, Row, Col, Table, DropdownButton } from "react-bootstrap";
-import { Card, CardHeader, CardText } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
 import { commonApiPost } from "egov-ui-kit/utils/api";
-import { translate, epochToDate } from "./commons/common";
+import { translate } from "./commons/common";
 import $ from "jquery";
 import _ from "lodash";
-import { customizePdfPrint } from "./customizePDF.js";
 import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
 import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
@@ -20,20 +16,15 @@ import "react-jquery-datatables";
 import "datatables.net-buttons-bs";
 import "datatables.net-responsive";
 import "datatables.net-responsive-dt";
-// import "../../../assets/styles/jquery-3.3.1.js";
-// import "../../../assets/styles/dataTables.responsive.min.js";
-import { Icon } from "components";
 import JSZip from "jszip/dist/jszip";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
-import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
 import commonConfig from "config/common.js";
 import "./index.css";
-
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.JSZip = JSZip;
@@ -78,27 +69,6 @@ class ShowField extends Component {
       moduleName: _this.props.match.params.moduleName,
     });
     _this.subHeader(_this.props.match.params.moduleName);
-    // var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
-    // commonApiPost("/tenant/v1/tenant/_search?tenantId=" + tenantId + "&code=" + tenantId + "&pageSize=200").then(
-    //   function(response) {
-    //     let imgpath = response.tenant[0].logoId.substr(1);
-    //     if (response.tenant && response.tenant[0].logoId) {
-    //       _this.convertImgToBase64URL("https://raw.githubusercontent.com/egovernments/egov-web-app/master/web/ui-app/public/" + imgpath, (data) => {
-    //         _this.setState({
-    //           logoBase64: data,
-    //         });
-    //       });
-
-    //       _this.setState({
-    //         ulbname: response.tenant[0].name,
-    //       });
-    //     }
-    //     // setForm();
-    //   },
-    //   function(err) {
-    //     alert("Try again later");
-    //   }
-    // );
   }
 
   componentWillReceiveProps(nextprops) {
@@ -110,59 +80,6 @@ class ShowField extends Component {
     this.subHeader(nextprops.match.params.moduleName);
     // }
   }
-
-  // PrintingCutomize(doc) {
-  //   let _this = this;
-  //   if (_this.state.moduleName == "lcms" && doc && doc.content) {
-  //     doc.content.map((item) => {
-  //       if (item.style == "title") {
-  //         return (doc.content[0].text = _this.state.ulbname);
-  //       }
-  //     });
-  //     doc.content.splice(1, 0, {
-  //       table: {
-  //         widths: ["auto", "*", "auto"],
-  //         body: [
-  //           [
-  //             {
-  //               image: _this.state.logoBase64,
-  //               height: 100,
-  //               width: 100,
-  //             },
-  //             {
-  //               alignment: "center",
-  //               stack: [
-  //                 {
-  //                   margin: [0, 10, 0, 0],
-  //                   fontSize: 16,
-  //                   bold: true,
-  //                   text: _this.state.reportSubTitle,
-  //                 },
-  //               ],
-  //             },
-  //             {
-  //               alignment: "right",
-  //               image: headerLogo,
-  //               height: 100,
-  //               width: 100,
-  //             },
-  //           ],
-  //         ],
-  //       },
-  //       layout: {
-  //         hLineWidth: function(line) {
-  //           return 0;
-  //         },
-  //         vLineWidth: function() {
-  //           return 0;
-  //         },
-  //         paddingBottom: function() {
-  //           return 5;
-  //         },
-  //       },
-  //     });
-  //   }
-  // }
 
   convertImgToBase64URL = (url, callback) => {
     var img = new Image();
@@ -238,23 +155,6 @@ class ShowField extends Component {
         exportOptions,
       },
     ];
-
-    // if (reportName == "DumpingGroundDetailReport") {
-    //   const customizedPrint = {
-    //     extend: "pdfHtml5",
-    //     exportOptions,
-    //     filename: _this.state.reportName,
-    //     title: _this.state.reportSubTitle,
-    //     text: "Print Report",
-    //     orientation: "landscape",
-    //     pageSize: "A4",
-    //     footer: true,
-    //     customize: function(doc) {
-    //       customizePdfPrint(doc, ulbname, logoBase64, headerLogo, searchForm.wasteprocess, reportResult);
-    //     },
-    //   };
-    //   buttons.push(customizedPrint);
-    // }
     return buttons;
   };
 
@@ -494,13 +394,11 @@ class ShowField extends Component {
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr className="report-table-header">
           <th key={"S. No."}>{"S. No."}</th>
-          {metaData &&
-            metaData.reportDetails &&
-            metaData.reportDetails.selectiveDownload && (
-              <th key={"testKey"}>
-                <input type="checkbox" onChange={checkAllRows} />
-              </th>
-            )}
+          {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
+            <th key={"testKey"}>
+              <input type="checkbox" onChange={checkAllRows} />
+            </th>
+          )}
           {reportResult.hasOwnProperty("reportHeader") &&
             reportResult.reportHeader.map((item, i) => {
               if (item.showColumn) {
@@ -611,35 +509,33 @@ class ShowField extends Component {
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? "selected" : ""}>
                 <td>{dataIndex + 1}</td>
-                {metaData &&
-                  metaData.reportDetails &&
-                  metaData.reportDetails.selectiveDownload && (
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={this.state.ck[dataIndex] ? true : false}
-                        onClick={(e) => {
-                          let ck = { ...this.state.ck };
-                          ck[dataIndex] = e.target.checked;
-                          let rows = this.state.rows;
-                          if (e.target.checked) {
-                            rows[dataIndex] = dataItem;
-                          } else {
-                            delete rows[dataIndex];
-                          }
+                {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={this.state.ck[dataIndex] ? true : false}
+                      onClick={(e) => {
+                        let ck = { ...this.state.ck };
+                        ck[dataIndex] = e.target.checked;
+                        let rows = this.state.rows;
+                        if (e.target.checked) {
+                          rows[dataIndex] = dataItem;
+                        } else {
+                          delete rows[dataIndex];
+                        }
 
-                          let showPrintBtn;
-                          if (Object.keys(rows).length) showPrintBtn = true;
-                          else showPrintBtn = false;
-                          this.setState({
-                            ck,
-                            rows,
-                            showPrintBtn,
-                          });
-                        }}
-                      />
-                    </td>
-                  )}
+                        let showPrintBtn;
+                        if (Object.keys(rows).length) showPrintBtn = true;
+                        else showPrintBtn = false;
+                        this.setState({
+                          ck,
+                          rows,
+                          showPrintBtn,
+                        });
+                      }}
+                    />
+                  </td>
+                )}
                 {dataItem.map((item, itemIndex) => {
                   var columnObj = {};
                   //array for particular row
@@ -768,7 +664,7 @@ class ShowField extends Component {
               padding: "0 !important",
               backgroundColor: "#ffffff",
               overflowY: "auto",
-              width: "100%"
+              width: "100%",
             }}
             // className="mdl-data-table"
             className="display responsive nowrap"
@@ -935,4 +831,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowField);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShowField);

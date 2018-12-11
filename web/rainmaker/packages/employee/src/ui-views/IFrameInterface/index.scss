@@ -41,7 +41,7 @@ body {
 }
 
 .common-div-css {
-  margin: 26px 16px 88px 16px;
+  margin: 80px 16px 88px 16px;
 }
 
 .common-card-css {
@@ -123,5 +123,11 @@ span[class^="MuiFormLabel-asterisk"] {
     position: fixed;
     width: 83.5%;
     height: calc(100vh - 64px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .common-div-css {
+    margin: 30px 16px 88px 16px;
   }
 }

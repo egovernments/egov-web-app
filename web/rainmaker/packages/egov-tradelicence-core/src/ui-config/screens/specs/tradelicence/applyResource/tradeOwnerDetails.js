@@ -339,6 +339,9 @@ export const tradeOwnerDetails = getCommonCard({
       }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
+          // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
+          // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
+          // "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.children.cardContent.children.tradeUnitCardContainer.children.designation"
           dispatch(
             pFO(
               "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
@@ -352,6 +355,25 @@ export const tradeOwnerDetails = getCommonCard({
             )
           );
           if (action.value === "INDIVIDUAL") {
+            if (
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                "Licenses[0].tradeLicenseDetail.institution"
+              )
+            ) {
+              dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", null));
+            }
+            if (
+              get(
+                state.screenConfiguration.preparedFinalObject,
+                "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+              )
+            ) {
+              dispatch(
+                pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
+              );
+            }
+            // const items = get(apply, "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items[0].item0")
             dispatch(
               handleField(
                 "apply",
@@ -385,6 +407,9 @@ export const tradeOwnerDetails = getCommonCard({
                 true
               )
             );
+            dispatch(
+              pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
+            );
           }
         } catch (e) {
           console.log(e);
@@ -401,6 +426,8 @@ export const tradeOwnerDetails = getCommonCard({
           "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
       }),
       beforeFieldChange: (action, state, dispatch) => {
+        // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
+        // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
         if (action.value === "INDIVIDUAL.SINGLEOWNER") {
           const ownerInfoCards = get(
             state.screenConfiguration.screenConfig.apply, //hardcoded to apply screen

@@ -90,18 +90,16 @@ var items = {
           id: "header-home",
           renderforcsr: 1,
           renderforadmin: 1,
-          renderforTLEmp: 1
-        },
-        // {
-        //   primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
-        //   route: "/closed-complaints",
-        //   leftIcon: <Icon action="custom" name="file-check" />,
-        //   id: "header-closed-complaint",
-        //   renderforcsr: 0,
-        //   renderforadmin: 0,
-        //   renderforTLEmp: 0,
-        // },
-        {
+          renderforPGREmp: 1
+        }, {
+          primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_CLOSED_COMPLAINTS_HEADER" }),
+          route: "/closed-complaints",
+          leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "file-check" }),
+          id: "header-closed-complaint",
+          renderforcsr: 0,
+          renderforadmin: 0,
+          renderforPGREmp: 0
+        }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_EMPLOYEE_DIRECTORY_HEADER" }),
           route: "/employee-directory",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "communication", name: "call" }),
@@ -112,7 +110,7 @@ var items = {
           id: "header-contact-us",
           renderforcsr: 1,
           renderforadmin: 1,
-          renderforTLEmp: 1
+          renderforPGREmp: 1
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_PROFILE" }),
           route: "/user/profile",
@@ -124,7 +122,7 @@ var items = {
           id: "header-profile",
           renderforcsr: 1,
           renderforadmin: 1,
-          renderforTLEmp: 1
+          renderforPGREmp: 1
         }]
       },
       two: {
@@ -139,7 +137,7 @@ var items = {
           id: "header-logout",
           renderforcsr: 1,
           renderforadmin: 1,
-          renderforTLEmp: 1
+          renderforPGREmp: 1
         }]
       }
     }
@@ -159,12 +157,12 @@ var renderMenuForADMIN = function renderMenuForADMIN(role, section) {
   return menuForADMIN;
 };
 
-// const renderMenuForTLEmp = (role, section) => {
-//   const menuForTLEmp = items[role].sections[section].items.filter((item) => {
-//     return item.renderforTLEmp === 1;
-//   });
-//   return menuForTLEmp;
-// };
+var renderMenuForPGREmp = function renderMenuForPGREmp(role, section) {
+  var menuForPGREmp = items[role].sections[section].items.filter(function (item) {
+    return item.renderforPGREmp === 1;
+  });
+  return menuForPGREmp;
+};
 
 var menuItems = function menuItems() {
   var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "citizen";
@@ -172,7 +170,8 @@ var menuItems = function menuItems() {
   var isCSR = arguments[2];
   var isADMIN = arguments[3];
 
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+  var isPGR = role === "employee" && !window.location.pathname.includes("complaint");
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : isPGR ? renderMenuForPGREmp(role, section) : items[role].sections[section].items;
 };
 
 exports.default = menuItems;
