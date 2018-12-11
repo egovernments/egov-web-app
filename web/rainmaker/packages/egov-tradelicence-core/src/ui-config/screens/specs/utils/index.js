@@ -1558,7 +1558,6 @@ export const getDocList = (state, dispatch) => {
         code: tradeSubType.tradeType
       })
     );
-    console.log(selectedTypes);
   });
 
   // selectedTypes[0] &&
