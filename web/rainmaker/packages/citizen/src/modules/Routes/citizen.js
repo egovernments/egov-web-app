@@ -73,7 +73,12 @@ const routes = [
     path: "/",
     component: LandingPage,
     needsAuthentication: true,
-    options: { isHomeScreen: true, title: "Home", redirectionUrl: "/user/register" },
+    options: {
+      isHomeScreen: true,
+      title: "Home",
+      hideTitle: true,
+      redirectionUrl: "/user/register",
+    },
   },
   {
     path: "image",

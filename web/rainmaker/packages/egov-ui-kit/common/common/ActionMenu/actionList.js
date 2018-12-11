@@ -231,3 +231,25 @@ var actionList = {
 };
 
 exports.default = actionList;
+
+// const template = {
+//   id: 1717,
+//   name: "rainmaker-common-share",
+//   url: "/complaint-details/:serviceRequestId",
+//   displayName: "",
+//   orderNumber: -1,
+//   parentModule: "",
+//   enabled: true,
+//   serviceCode: "",
+//   code: "",
+//   path: "",
+//   navigationURL: "",
+//   leftIcon: "",
+//   rightIcon: "",
+//   queryParams: "",
+//   metaData: {
+//     jsonPaths: ["filedBy","filedUserMobileNumber","complaint","description","addressDetail.houseNoAndStreetName","addressDetail.locality","addressDetail.landMark","timelineSLAStatus.slaStatement"],
+//     title: "Complaint Summary",
+//     template: `Dear Sir/Madam,\nPlease find complaint detail given below :\n{0}, {1},\n{2}, {3}\nAddress: {4},\n{5},\n{6}\nSLA: {7}\nThanks`,
+//   },
+// };

@@ -91,17 +91,17 @@ const items = {
             id: "header-home",
             renderforcsr: 1,
             renderforadmin: 1,
-            renderforTLEmp: 1,
+            renderforPGREmp: 1,
           },
-          // {
-          //   primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
-          //   route: "/closed-complaints",
-          //   leftIcon: <Icon action="custom" name="file-check" />,
-          //   id: "header-closed-complaint",
-          //   renderforcsr: 0,
-          //   renderforadmin: 0,
-          //   renderforTLEmp: 0,
-          // },
+          {
+            primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
+            route: "/closed-complaints",
+            leftIcon: <Icon action="custom" name="file-check" />,
+            id: "header-closed-complaint",
+            renderforcsr: 0,
+            renderforadmin: 0,
+            renderforPGREmp: 0,
+          },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
             route: "/employee-directory",
@@ -113,7 +113,7 @@ const items = {
             id: "header-contact-us",
             renderforcsr: 1,
             renderforadmin: 1,
-            renderforTLEmp: 1,
+            renderforPGREmp: 1,
           },
 
           {
@@ -127,7 +127,7 @@ const items = {
             id: "header-profile",
             renderforcsr: 1,
             renderforadmin: 1,
-            renderforTLEmp: 1,
+            renderforPGREmp: 1,
           },
           // {
           //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -154,7 +154,7 @@ const items = {
             id: "header-logout",
             renderforcsr: 1,
             renderforadmin: 1,
-            renderforTLEmp: 1,
+            renderforPGREmp: 1,
           },
         ],
       },
@@ -175,15 +175,22 @@ const renderMenuForADMIN = (role, section) => {
   return menuForADMIN;
 };
 
-// const renderMenuForTLEmp = (role, section) => {
-//   const menuForTLEmp = items[role].sections[section].items.filter((item) => {
-//     return item.renderforTLEmp === 1;
-//   });
-//   return menuForTLEmp;
-// };
+const renderMenuForPGREmp = (role, section) => {
+  const menuForPGREmp = items[role].sections[section].items.filter((item) => {
+    return item.renderforPGREmp === 1;
+  });
+  return menuForPGREmp;
+};
 
 const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
-  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
+  const isPGR = role === "employee" && !window.location.pathname.includes("complaint");
+  return isCSR
+    ? renderMenuForCSR(role, section)
+    : isADMIN
+    ? renderMenuForADMIN(role, section)
+    : isPGR
+    ? renderMenuForPGREmp(role, section)
+    : items[role].sections[section].items;
 };
 
 export default menuItems;

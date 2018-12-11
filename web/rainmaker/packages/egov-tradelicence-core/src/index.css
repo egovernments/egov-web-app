@@ -172,3 +172,9 @@ input[type="date"]:valid::before {
     width: 100% !important;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .common-div-css {
+    margin: 30px 16px 88px 16px;
+  }
+}

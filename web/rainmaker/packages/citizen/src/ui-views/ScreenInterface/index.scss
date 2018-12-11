@@ -111,3 +111,9 @@ span[class^="MuiFormLabel-asterisk"] {
     height: calc(100vh - 64px);
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .common-div-css {
+    margin: 30px 16px 88px 16px;
+  }
+}

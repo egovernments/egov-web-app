@@ -115,6 +115,7 @@ const routes = [
       hideFooter: true,
       redirectionUrl,
       title: "Home",
+      hideTitle: true,
       isHomeScreen: true,
     },
   },
