@@ -10,7 +10,7 @@ import $ from "jquery";
 import _ from "lodash";
 import { customizePdfPrint } from "./customizePDF.js";
 import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
-// import "../../../assets/styles/responsive.dataTables.min.css";
+import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
 import "datatables.net";
