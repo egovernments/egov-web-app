@@ -45,7 +45,7 @@ class LandingPage extends Component {
       //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "action",
       iconName: "announcement",
-      iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
       className: "pgr-landing-card",
     },
     PT: {
@@ -57,7 +57,7 @@ class LandingPage extends Component {
       iconAction: "custom",
       route: "property-tax",
       iconName: "dashboard-complaint",
-      iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
       className: "pt-landing-card",
       // cities :
     },
@@ -71,7 +71,7 @@ class LandingPage extends Component {
       iconAction: "places",
       iconName: "business-center",
       route: "tradelicense/home",
-      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
 

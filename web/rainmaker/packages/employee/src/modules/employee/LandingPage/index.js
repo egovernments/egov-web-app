@@ -47,7 +47,7 @@ class LandingPage extends Component {
       iconAction: "action",
       route: "all-complaints",
       iconName: "announcement",
-      iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     PT: {
       moduleTitle: "Property Tax",
@@ -56,7 +56,7 @@ class LandingPage extends Component {
       iconAction: "custom",
       iconName: "dashboard-complaint",
       route: "property-tax",
-      iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     Finance: {
       moduleTitle: "Finance",
@@ -65,7 +65,7 @@ class LandingPage extends Component {
       iconAction: "custom",
       iconName: "rupee",
       route: "services/EGF/inbox",
-      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     TL: {
       moduleTitle: "TradeLicense",
@@ -74,7 +74,7 @@ class LandingPage extends Component {
       iconAction: "places",
       iconName: "business-center",
       route: "tradelicense/search",
-      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.6000000238418579)" },
+      iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };
   render() {

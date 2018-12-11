@@ -71,10 +71,81 @@ const updateAdhoc = (state, dispatch) => {
 };
 
 export const adhocPopup = getCommonContainer({
-  header: getCommonHeader({
-    labelName: "Add Adhoc Penalty/Rebate",
-    labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
-  }),
+  // header: getCommonHeader({
+  //   labelName: "Add Adhoc Penalty/Rebate",
+  //   labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+  // }),
+  header: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+    props: {
+      style: {
+        width: "100%",
+        float: "right"
+      }
+    },
+    children: {
+      div1: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 10,
+          sm: 10
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right"
+          }
+        },
+        children: {
+          div: getCommonHeader({
+            labelName: "Add Adhoc Penalty/Rebate",
+            labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+          })
+        }
+      },
+      div2: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 2,
+          sm: 2
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right",
+            cursor: "pointer"
+          }
+        },
+        children: {
+          closeButton: {
+            componentPath: "Button",
+            props: {
+              style: {
+                float: "right",
+                color: "rgba(0, 0, 0, 0.60)"
+              }
+            },
+            children: {
+              previousButtonIcon: {
+                uiFramework: "custom-atoms",
+                componentPath: "Icon",
+                props: {
+                  iconName: "close"
+                }
+              }
+            },
+            onClickDefination: {
+              action: "condition",
+              callBack: showHideAdhocPopup
+            }
+          }
+        }
+      }
+    }
+  },
   adhocPenaltyCard: getCommonContainer(
     {
       subheader: getCommonSubHeader({

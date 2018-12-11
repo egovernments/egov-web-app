@@ -13,8 +13,10 @@ import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
 import { showHideAdhocPopup, getDialogButton } from "../utils";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { fetchBill } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+// import store from "mihy-ui-framework/ui-redux/store";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -105,18 +107,15 @@ const screenConfig = {
       }
     },
     adhocDialog: {
-      componentPath: "Dialog",
+      uiFramework: "custom-containers-local",
+      componentPath: "DialogContainer",
       props: {
         open: false,
-        maxWidth: "md"
+        maxWidth: "md",
+        screenKey: "pay"
       },
       children: {
-        dialogContent: {
-          componentPath: "DialogContent",
-          children: {
-            popup: adhocPopup
-          }
-        }
+        popup: adhocPopup
       }
     },
     breakUpDialog: {

@@ -41,6 +41,11 @@ const PaymentRedirectPage = Loadable({
   loading: () => <Loading />
 });
 
+const DialogContainer = Loadable({
+  loader: () => import("./DialogContainer"),
+  loading: () => <Loading />
+});
+
 const ViewBreakupContainer = Loadable({
   loader: () => import("./ViewbreakupDialogContainer"),
   loading: () => <Loading />
@@ -56,5 +61,6 @@ export {
   AutosuggestContainer,
   DocumentListContainer,
   PaymentRedirectPage,
-  ViewBreakupContainer
+  ViewBreakupContainer,
+  DialogContainer
 };
