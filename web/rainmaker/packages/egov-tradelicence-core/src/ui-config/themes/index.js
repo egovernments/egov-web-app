@@ -39,6 +39,11 @@ const themeObject = {
         width: "80%"
       }
     },
+    MuiSnackbarContent: {
+      root: {
+        flexWrap: "inherit"
+      }
+    },
     MuiTypography: {
       title: {
         color: "rgba(0, 0, 0, 0.87)",

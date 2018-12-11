@@ -341,6 +341,17 @@ const routes = [
       hideBackButton: true,
     },
   },
+  // {
+  //   path: "create-employee",
+  //   component: CreateEmployee,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "Create Employee",
+  //     hideTitle: true,
+  //     hideBackButton: true,
+  //   },
+  // },
   {
     path: "report/:moduleName/:reportName",
     component: Report,
