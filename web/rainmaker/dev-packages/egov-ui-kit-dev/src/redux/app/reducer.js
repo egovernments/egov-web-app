@@ -70,9 +70,13 @@ const appReducer = (state = initialState, action) => {
           : [...state.urls, action.url];
       localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return { ...state, urls: url };
-    case actionTypes.FETCH_EXTERNAL_URLS: {
-      return { ...state, routesData: action.payload };
+    case actionTypes.FETCH_UI_COMMON_CONFIG: {
+      return { ...state, uiCommonConfig: action.payload };
     }
+    case actionTypes.FETCH_UI_COMMON_CONSTANTS: {
+      return { ...state, uiCommonConstants: action.payload };
+    }
+
     default:
       return state;
   }

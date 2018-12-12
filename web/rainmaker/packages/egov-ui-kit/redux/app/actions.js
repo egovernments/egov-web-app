@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchExternalUrls = exports.setExternalUrls = exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchUiCommonConstants = exports.fetchUiCommonConfig = exports.setUiCommonConstants = exports.setUiCommonConfig = exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -177,13 +177,21 @@ var fetchActionItems = exports.fetchActionItems = function fetchActionItems(role
   }();
 };
 
-var setExternalUrls = exports.setExternalUrls = function setExternalUrls(payload) {
+var setUiCommonConfig = exports.setUiCommonConfig = function setUiCommonConfig(payload) {
   return {
-    type: actionTypes.FETCH_EXTERNAL_URLS,
+    type: actionTypes.FETCH_UI_COMMON_CONFIG,
     payload: payload
   };
 };
-var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls() {
+
+var setUiCommonConstants = exports.setUiCommonConstants = function setUiCommonConstants(payload) {
+  return {
+    type: actionTypes.FETCH_UI_COMMON_CONSTANTS,
+    payload: payload
+  };
+};
+
+var fetchUiCommonConfig = exports.fetchUiCommonConfig = function fetchUiCommonConfig() {
   _util.debug;
   return function () {
     var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
@@ -198,7 +206,7 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
                   moduleDetails: [{
                     moduleName: "common-masters",
                     masterDetails: [{
-                      name: "Ui-Common-Config"
+                      name: "uiCommonConfig"
                     }]
                   }]
                 }
@@ -211,7 +219,7 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
               payload = _context4.sent;
               MdmsRes = payload.MdmsRes;
               commonMasters = MdmsRes["common-masters"];
-              UiCommonConfig = commonMasters["Ui-Common-Config"];
+              UiCommonConfig = commonMasters["uiCommonConfig"];
               // const payload = {
               //   tradelicense: {
               //     routes: {
@@ -233,7 +241,7 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
               //   },
               // };
 
-              dispatch(setExternalUrls(UiCommonConfig[0]));
+              dispatch(setUiCommonConfig(UiCommonConfig[0]));
               _context4.next = 14;
               break;
 
@@ -253,6 +261,60 @@ var fetchExternalUrls = exports.fetchExternalUrls = function fetchExternalUrls()
 
     return function (_x5) {
       return _ref4.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchUiCommonConstants = exports.fetchUiCommonConstants = function fetchUiCommonConstants() {
+  _util.debug;
+  return function () {
+    var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
+      var requestBody, payload, MdmsRes, commonMasters, UiCommonConstants;
+      return _regenerator2.default.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              requestBody = {
+                MdmsCriteria: {
+                  tenantId: "pb",
+                  moduleDetails: [{
+                    moduleName: "common-masters",
+                    masterDetails: [{
+                      name: "uiCommonConstants"
+                    }]
+                  }]
+                }
+              };
+              _context5.prev = 1;
+              _context5.next = 4;
+              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody);
+
+            case 4:
+              payload = _context5.sent;
+              MdmsRes = payload.MdmsRes;
+              commonMasters = MdmsRes["common-masters"];
+              UiCommonConstants = commonMasters["uiCommonConstants"];
+
+              dispatch(setUiCommonConstants(UiCommonConstants[0]));
+              _context5.next = 14;
+              break;
+
+            case 11:
+              _context5.prev = 11;
+              _context5.t0 = _context5["catch"](1);
+
+              console.log(_context5.t0);
+
+            case 14:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, undefined, [[1, 11]]);
+    }));
+
+    return function (_x6) {
+      return _ref5.apply(this, arguments);
     };
   }();
 };

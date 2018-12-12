@@ -78,13 +78,21 @@ export const fetchActionItems = (role, ts) => {
   };
 };
 
-export const setExternalUrls = (payload) => {
+export const setUiCommonConfig = (payload) => {
   return {
-    type: actionTypes.FETCH_EXTERNAL_URLS,
+    type: actionTypes.FETCH_UI_COMMON_CONFIG,
     payload,
   };
 };
-export const fetchExternalUrls = () => {
+
+export const setUiCommonConstants = (payload) => {
+  return {
+    type: actionTypes.FETCH_UI_COMMON_CONSTANTS,
+    payload,
+  };
+};
+
+export const fetchUiCommonConfig = () => {
   debug;
   return async (dispatch) => {
     const requestBody = {
@@ -95,7 +103,7 @@ export const fetchExternalUrls = () => {
             moduleName: "common-masters",
             masterDetails: [
               {
-                name: "Ui-Common-Config",
+                name: "uiCommonConfig",
               },
             ],
           },
@@ -106,7 +114,7 @@ export const fetchExternalUrls = () => {
       const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
       const { MdmsRes } = payload;
       const commonMasters = MdmsRes["common-masters"];
-      const UiCommonConfig = commonMasters["Ui-Common-Config"];
+      const UiCommonConfig = commonMasters["uiCommonConfig"];
       // const payload = {
       //   tradelicense: {
       //     routes: {
@@ -127,7 +135,37 @@ export const fetchExternalUrls = () => {
       //     },
       //   },
       // };
-      dispatch(setExternalUrls(UiCommonConfig[0]));
+      dispatch(setUiCommonConfig(UiCommonConfig[0]));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchUiCommonConstants = () => {
+  debug;
+  return async (dispatch) => {
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "common-masters",
+            masterDetails: [
+              {
+                name: "uiCommonConstants",
+              },
+            ],
+          },
+        ],
+      },
+    };
+    try {
+      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+      const { MdmsRes } = payload;
+      const commonMasters = MdmsRes["common-masters"];
+      const UiCommonConstants = commonMasters["uiCommonConstants"];
+      dispatch(setUiCommonConstants(UiCommonConstants[0]));
     } catch (error) {
       console.log(error);
     }

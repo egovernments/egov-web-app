@@ -87,10 +87,15 @@ var appReducer = function appReducer() {
       var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : index > -1 ? state.urls.splice(index, 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
       localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return (0, _extends3.default)({}, state, { urls: url });
-    case actionTypes.FETCH_EXTERNAL_URLS:
+    case actionTypes.FETCH_UI_COMMON_CONFIG:
       {
-        return (0, _extends3.default)({}, state, { routesData: action.payload });
+        return (0, _extends3.default)({}, state, { uiCommonConfig: action.payload });
       }
+    case actionTypes.FETCH_UI_COMMON_CONSTANTS:
+      {
+        return (0, _extends3.default)({}, state, { uiCommonConstants: action.payload });
+      }
+
     default:
       return state;
   }

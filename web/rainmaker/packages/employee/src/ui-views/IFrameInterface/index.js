@@ -5,7 +5,7 @@ import themeObject from "../../ui-config/themes";
 import "./index.css";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import { fetchExternalUrls } from "egov-ui-kit/redux/app/actions";
+import { fetchUiCommonConstants } from "egov-ui-kit/redux/app/actions";
 const theme = createMuiTheme(themeObject);
 
 class IFrameInterface extends React.Component {
@@ -32,17 +32,19 @@ class IFrameInterface extends React.Component {
     //     },
     //   },
     // };
-    let { routesData, fetchExternalUrls } = props;
-    if (!routesData) fetchExternalUrls();
-    const isOrign = get(routesData, `${moduleName}.routes.${pageName}.isOrigin`, false);
+    let { uiCommonConstants, fetchUiCommonConstants } = props;
+    console.log("uiCommonConstants", uiCommonConstants);
+    if (!uiCommonConstants) fetchUiCommonConstants();
+    const isOrign = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.isOrigin`, false);
     const domain = isOrign
       ? process.env.NODE_ENV === "development"
         ? "https://egov-micro-dev.egovernments.org"
         : window.origin
-      : get(routesData, `${moduleName}.routes.${pageName}.domain`, "");
+      : get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.domain`, "");
 
-    const contextPath = get(routesData, `${moduleName}.routes.${pageName}.routePath`, "");
+    const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     let url = `${domain}${contextPath}`;
+    console.log("url", url);
     this.setState({ url });
   };
 
@@ -53,8 +55,8 @@ class IFrameInterface extends React.Component {
     const { params: currentParams } = currentMatch;
     const { moduleName: nextmoduleName, pageName: nextpageName } = nextParams;
     const { moduleName: currentmoduleName, pageName: currentpageName } = currentParams;
-    const { routesData: nextRoutesData } = nextProps;
-    const { routesData: currentRoutesData } = this.props;
+    const { uiCommonConstants: nextUiCommonConstants } = nextProps;
+    const { uiCommonConstants: currentUiCommonConstants } = this.props;
     this.buildURL(nextProps);
 
     // if (nextmoduleName !== currentmoduleName || nextpageName !== currentpageName || nextRoutesData !== currentRoutesData) {
@@ -75,14 +77,14 @@ class IFrameInterface extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchExternalUrls: () => dispatch(fetchExternalUrls()),
+    fetchUiCommonConstants: () => dispatch(fetchUiCommonConstants()),
   };
 };
 
 const mapStateToProps = (state) => {
   const { app } = state;
-  const { routesData } = app;
-  return { routesData };
+  const { uiCommonConstants } = app;
+  return { uiCommonConstants };
 };
 export default connect(
   mapStateToProps,

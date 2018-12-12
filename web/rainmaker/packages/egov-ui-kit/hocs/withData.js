@@ -36,6 +36,8 @@ var _actions2 = require("egov-ui-kit/redux/complaints/actions");
 
 var _actions3 = require("egov-ui-kit/redux/common/actions");
 
+var _actions4 = require("egov-ui-kit/redux/app/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withData = function withData(Component) {
@@ -54,12 +56,16 @@ var withData = function withData(Component) {
             searchUser = _props.searchUser,
             fetchComplaintCategories = _props.fetchComplaintCategories,
             authenticated = _props.authenticated,
-            fetchpgrConstants = _props.fetchpgrConstants;
+            fetchpgrConstants = _props.fetchpgrConstants,
+            fetchUiCommonConfig = _props.fetchUiCommonConfig,
+            fetchUiCommonConstants = _props.fetchUiCommonConstants;
 
         if (localStorage.getItem("token")) {
           fetchComplaintCategories();
           searchUser();
           fetchpgrConstants();
+          fetchUiCommonConfig();
+          fetchUiCommonConstants();
         }
       }
     }, {
@@ -94,6 +100,12 @@ var withData = function withData(Component) {
       },
       fetchpgrConstants: function fetchpgrConstants() {
         return dispatch((0, _actions3.fetchpgrConstants)());
+      },
+      fetchUiCommonConfig: function fetchUiCommonConfig() {
+        return dispatch((0, _actions4.fetchUiCommonConfig)());
+      },
+      fetchUiCommonConstants: function fetchUiCommonConstants() {
+        return dispatch((0, _actions4.fetchUiCommonConstants)());
       }
     };
   };
