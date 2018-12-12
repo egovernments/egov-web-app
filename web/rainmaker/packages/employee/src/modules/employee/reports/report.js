@@ -71,8 +71,10 @@ class Report extends Component {
     let needDefaultSearch = options[this.props.match.params.moduleName] ? options[this.props.match.params.moduleName][0].needDefaultSearch : false;
     return (
       <Screen>
+        <div style={{margin:"8px"}}>
         <SearchForm match={match} needDefaultSearch={needDefaultSearch} updateTabLabel={this.updateTabLabel} />
         <ReportResult match={match} tabLabel={this.state.tabLabel} />
+        </div>
       </Screen>
     );
   }
