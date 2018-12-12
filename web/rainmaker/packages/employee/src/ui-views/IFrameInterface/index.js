@@ -33,7 +33,6 @@ class IFrameInterface extends React.Component {
     //   },
     // };
     let { uiCommonConstants, fetchUiCommonConstants } = props;
-    console.log("uiCommonConstants", uiCommonConstants);
     if (!uiCommonConstants) fetchUiCommonConstants();
     const isOrign = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.isOrigin`, false);
     const domain = isOrign
@@ -44,7 +43,6 @@ class IFrameInterface extends React.Component {
 
     const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     let url = `${domain}${contextPath}`;
-    console.log("url", url);
     this.setState({ url });
   };
 
