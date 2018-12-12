@@ -20,7 +20,7 @@ class UiBoundary extends Component {
       dropDownDataVal: {},
       labelArr: [],
       viewLabels: [],
-      localityArray: []
+      localityArray: [],
     };
   }
 
@@ -198,9 +198,9 @@ class UiBoundary extends Component {
   };
   handler = (key, property) => {
     let { dropDownDataVal, dropDownData } = this.state;
-    
+
     let newDropDownDataVal = { dropDownDataVal: {} };
-    for (let i=0; i<this.state.labelArr.length; i++) {
+    for (let i = 0; i < this.state.labelArr.length; i++) {
       if (this.state.labelArr[i] == property) {
         newDropDownDataVal.dropDownDataVal[property] = key;
         break;
@@ -273,7 +273,7 @@ class UiBoundary extends Component {
       }
       var jPath = "$.*.children" + str + `[?(@.code=='${key}')]`;
       objArr = jp.query(this.state.boundaryData, jPath + `.children[?(@.label=='${this.state.labelArr[index + 1]}')]`);
-      
+
       /**Code to set the locality array locality wise reports data*/
       if (this.state.labelArr.length - index == 2) {
         this.state.localityArray = jp.query(objArr, `$..code`);
@@ -283,7 +283,7 @@ class UiBoundary extends Component {
         this.state.localityArray = jp.query(objArr, `$..children[?(@.label=="Locality")].code`);
       }
       /**End of locality array code*/
-      
+
       if (objArr.length > 0) {
         objArr.map((v) => {
           if (v.label == this.state.labelArr[index + 1]) {
@@ -309,7 +309,7 @@ class UiBoundary extends Component {
       floatingLabelFixed: true,
       floatingLabelText: (
         <div className="rainmaker-displayInline">
-          <Label className="show-field-label" label={level} fontSize="25px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+          <Label className="show-field-label" label={level} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
           <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
         </div>
       ),
@@ -317,7 +317,7 @@ class UiBoundary extends Component {
     };
     return (
       <SelectField
-        className="custom-form-control-for-select"
+        // className="custom-form-control-for-select"
         id={this.props.item.jsonPath.split(".").join("-") + "-" + level}
         dropDownMenuProps={{
           targetOrigin: { horizontal: "left", vertical: "bottom" },
@@ -344,20 +344,27 @@ class UiBoundary extends Component {
     if (window.location.hash.split("/")[1] != "view") {
       // switch (this.props.ui) {
       //   case "google":
-      return (
-        <div>
-          <Row>
-            {this.state.labelArr.map((v, i) => {
-              return (
-                <Col xs={3} md={3} key={i}>
-                  {this.renderFields(v)}
-                </Col>
-              );
-            })}
-          </Row>
-          <br />
-        </div>
-      );
+      return this.state.labelArr.map((v, i) => {
+        return (
+          <Col xs={12} sm={4} md={4} lg={4} key={i}>
+            {this.renderFields(v)}
+          </Col>
+        );
+      });
+      // (
+      //   <div>
+      //     {/*<Row>*/}
+      //       {this.state.labelArr.map((v, i) => {
+      //         return (
+      //           <Col xs={12} sm={4} md={3} lg={3} key={i}>
+      //             {this.renderFields(v)}
+      //           </Col>
+      //         );
+      //       })}
+      //     {/*</Row>*/}
+      //     <br />
+      //   </div>
+      // );
       // }
     } else {
     }
@@ -365,16 +372,17 @@ class UiBoundary extends Component {
 
   render() {
     console.log(this.state);
-    return (
-      <div style={this.props.item.style && this.props.item.style}>
-        {/* // The commented part is for view purpose (Populate, upadte, view) */}
-        {/* {this.props.match.url.split("/")[1] == "view" && typeof _.get(this.props.formData, this.props.item.jsonPath) != "undefined"
-          ? this.renderView(this.state.viewLabels)
-          : this.renderBoundary(this.props.item)} */}
-        {this.renderBoundary(this.props.item)}
-        {/* {this.props.item.type == 'boundary' ? null : this.props.callbackFromCollectionRoute(this.state.dropDownDataVal, this.state.labelArr)} */}
-      </div>
-    );
+    return this.renderBoundary(this.props.item);
+    // (
+    //   {/*<div style={this.props.item.style && this.props.item.style}>*/}
+    //     {/* // The commented part is for view purpose (Populate, upadte, view) */}
+    //     {/* {this.props.match.url.split("/")[1] == "view" && typeof _.get(this.props.formData, this.props.item.jsonPath) != "undefined"
+    //       ? this.renderView(this.state.viewLabels)
+    //       : this.renderBoundary(this.props.item)} */}
+    //     {this.renderBoundary(this.props.item)}
+    //     {/* {this.props.item.type == 'boundary' ? null : this.props.callbackFromCollectionRoute(this.state.dropDownDataVal, this.state.labelArr)} */}
+    //   {/*</div>*/}
+    // );
   }
 }
 
@@ -400,9 +408,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(
-    null,
-    null
-  )(UiBoundary)
-);
+export default withRouter(connect(null, null)(UiBoundary));

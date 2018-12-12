@@ -41,7 +41,7 @@ export default class ShowField extends Component {
     switch (obj.type) {
       case "string":
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <TextField
               value={this.props.value}
               id={obj.label.split(".").join("-")}
@@ -59,7 +59,7 @@ export default class ShowField extends Component {
         );
       case "number":
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <TextField
               value={this.props.value}
               id={obj.label.split(".").join("-")}
@@ -76,7 +76,7 @@ export default class ShowField extends Component {
         );
       case "date":
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <DatePicker
               autoOk={true}
               className="custom-form-control-for-textfield"
@@ -85,7 +85,7 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label label={description} fontSize="18px" color="#03b0c6" />
+                  <Label label={description}  color="#03b0c6" />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -111,7 +111,7 @@ export default class ShowField extends Component {
               required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description}  color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -147,7 +147,7 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description}  color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -165,7 +165,7 @@ export default class ShowField extends Component {
       case "singlevaluelistac":
         const dataSourceConfig = { text: "value", value: "key" };
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
               className="custom-form-control-for-textfield"
               floatingLabelStyle={{ color: obj.disabled ? "#A9A9A9" : "#696969", fontSize: "20px", whiteSpace: "nowrap" }}
@@ -195,7 +195,7 @@ export default class ShowField extends Component {
 
       case "url":
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
               className="custom-form-control-for-select"
               hintText="Select"
@@ -224,7 +224,7 @@ export default class ShowField extends Component {
 
       case "multivaluelist":
         return (
-          <Col xs={12} sm={4} md={3} lg={3}>
+          <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
               className="custom-form-control-for-select"
               hintText="Select"
@@ -276,9 +276,7 @@ export default class ShowField extends Component {
 
       case "boundarylist":
         return (
-          <Col xs={12} sm={12} md={12} lg={12}>
             <UiBoundary item={boundaryConfig} handleFieldChange={this.props.handler} />
-          </Col>
         );
 
       default:

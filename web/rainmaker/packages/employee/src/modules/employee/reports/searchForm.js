@@ -484,16 +484,18 @@ class ShowForm extends Component {
               }}
             >
               <Card
-                style={{ margin: "16px" }}
+                style={{ padding:"16px" }}
                 textChildren={
                   <div>
                     <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
-
                     <Row>
                       {this.handleFormFields()}
-                      <div style={{ marginTop: "16px" }} className="col-xs-12 col-sm-4">
+                    </Row>
+                    <Row>
+
+                      <div style={{ marginTop: "16px",textAlign:"center" }} className="col-xs-12">
                         <RaisedButton
-                          style={{ height: "50px", lineHeight: "50px", width: "80%", background: "#fe7a51" }}
+                          // style={{ height: "50px", lineHeight: "50px", width: "80%", background: "#fe7a51" }}
                           type="submit"
                           //disabled={!isFormValid}
                           primary={true}

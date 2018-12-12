@@ -5,6 +5,7 @@ import SearchForm from "./searchForm";
 import ReportResult from "./reportResult";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
 import commonConfig from "config/common.js";
+import {Screen} from "modules/common";
 
 class Report extends Component {
   constructor(props) {
@@ -69,11 +70,10 @@ class Report extends Component {
     let { match } = this.props;
     let needDefaultSearch = options[this.props.match.params.moduleName] ? options[this.props.match.params.moduleName][0].needDefaultSearch : false;
     return (
-      <div>
+      <Screen>
         <SearchForm match={match} needDefaultSearch={needDefaultSearch} updateTabLabel={this.updateTabLabel} />
-
         <ReportResult match={match} tabLabel={this.state.tabLabel} />
-      </div>
+      </Screen>
     );
   }
 }

@@ -127,13 +127,16 @@ class ShowField extends Component {
       },
       {
         extend: "pdf",
-        exportOptions,
+        // exportOptions: {
+        //             columns: [ 0, 1, 2, 5,6,7 ]
+        // },
+        // exportOptions,
         filename: _this.state.reportName,
         //title: reportTitle,
         messageTop: tabLabel,
         text: "PDF",
         orientation: orientation,
-        pageSize: "A4",
+        pageSize : 'LEGAL',
         footer: true,
         customize: function(doc) {
           // _this.PrintingCutomize(doc);
@@ -142,7 +145,7 @@ class ShowField extends Component {
           doc.content[0].text.push({ text: "mSeva System Reports\n\n", bold: true, fontSize: 20 });
           doc.content[0].text.push({ text: reportTitle, fontSize: 18 });
         },
-        className: "report-pdf-button",
+        className: "report-pdf-button"
       },
       {
         extend: "excel",
@@ -152,7 +155,7 @@ class ShowField extends Component {
         messageTop: tabLabel,
         footer: true,
         className: "report-excel-button",
-        exportOptions,
+        // exportOptions,
       },
     ];
     return buttons;
@@ -249,6 +252,9 @@ class ShowField extends Component {
           });
         }
       },
+      // scrollResize: true,
+      // scrollY: 100,
+      // scrollCollapse: true,
     });
     showTabLabel();
   }
