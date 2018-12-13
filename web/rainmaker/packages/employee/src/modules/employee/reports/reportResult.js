@@ -136,7 +136,7 @@ class ShowField extends Component {
         messageTop: tabLabel,
         text: "PDF",
         orientation: orientation,
-        pageSize : 'LEGAL',
+        pageSize: "LEGAL",
         footer: true,
         customize: function(doc) {
           // _this.PrintingCutomize(doc);
@@ -145,7 +145,7 @@ class ShowField extends Component {
           doc.content[0].text.push({ text: "mSeva System Reports\n\n", bold: true, fontSize: 20 });
           doc.content[0].text.push({ text: reportTitle, fontSize: 18 });
         },
-        className: "report-pdf-button"
+        className: "report-pdf-button",
       },
       {
         extend: "excel",
@@ -400,11 +400,13 @@ class ShowField extends Component {
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr className="report-table-header">
           <th key={"S. No."}>{"S. No."}</th>
-          {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
-            <th key={"testKey"}>
-              <input type="checkbox" onChange={checkAllRows} />
-            </th>
-          )}
+          {metaData &&
+            metaData.reportDetails &&
+            metaData.reportDetails.selectiveDownload && (
+              <th key={"testKey"}>
+                <input type="checkbox" onChange={checkAllRows} />
+              </th>
+            )}
           {reportResult.hasOwnProperty("reportHeader") &&
             reportResult.reportHeader.map((item, i) => {
               if (item.showColumn) {
@@ -515,33 +517,35 @@ class ShowField extends Component {
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? "selected" : ""}>
                 <td>{dataIndex + 1}</td>
-                {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={this.state.ck[dataIndex] ? true : false}
-                      onClick={(e) => {
-                        let ck = { ...this.state.ck };
-                        ck[dataIndex] = e.target.checked;
-                        let rows = this.state.rows;
-                        if (e.target.checked) {
-                          rows[dataIndex] = dataItem;
-                        } else {
-                          delete rows[dataIndex];
-                        }
+                {metaData &&
+                  metaData.reportDetails &&
+                  metaData.reportDetails.selectiveDownload && (
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={this.state.ck[dataIndex] ? true : false}
+                        onClick={(e) => {
+                          let ck = { ...this.state.ck };
+                          ck[dataIndex] = e.target.checked;
+                          let rows = this.state.rows;
+                          if (e.target.checked) {
+                            rows[dataIndex] = dataItem;
+                          } else {
+                            delete rows[dataIndex];
+                          }
 
-                        let showPrintBtn;
-                        if (Object.keys(rows).length) showPrintBtn = true;
-                        else showPrintBtn = false;
-                        this.setState({
-                          ck,
-                          rows,
-                          showPrintBtn,
-                        });
-                      }}
-                    />
-                  </td>
-                )}
+                          let showPrintBtn;
+                          if (Object.keys(rows).length) showPrintBtn = true;
+                          else showPrintBtn = false;
+                          this.setState({
+                            ck,
+                            rows,
+                            showPrintBtn,
+                          });
+                        }}
+                      />
+                    </td>
+                  )}
                 {dataItem.map((item, itemIndex) => {
                   var columnObj = {};
                   //array for particular row
@@ -794,19 +798,19 @@ class ShowField extends Component {
         </div>
       );
     };
-    return (
-      <div>
-        {isTableShow &&
-          !_.isEmpty(reportResult) &&
-          reportResult.hasOwnProperty("reportData") &&
-          metaData &&
-          metaData.reportDetails &&
-          metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
-        <div className="report-result-table">
-          {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
+    return isTableShow?(
+
+        <div>
+          {!_.isEmpty(reportResult) &&
+            reportResult.hasOwnProperty("reportData") &&
+            metaData &&
+            metaData.reportDetails &&
+            metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
+          <div className="report-result-table">
+            {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
+          </div>
         </div>
-      </div>
-    );
+    ):null;
   }
 }
 
@@ -837,7 +841,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowField);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowField);
