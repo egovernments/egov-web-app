@@ -4,6 +4,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { transformById } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 
 const propertyFetchPending = () => {
   return {
@@ -393,7 +394,11 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
         },
         true
       );
-      const receiptbyId = transformById(payloadReceipts["Receipt"], "transactionId");
+      const payloadWithReceiptAsId = cloneDeep(payloadReceipts["Receipt"]).map((item) => {
+        item.receiptNumber = get(item, "Bill[0].billDetails[0].receiptNumber", "");
+        return item;
+      });
+      const receiptbyId = transformById(payloadWithReceiptAsId, "receiptNumber");
       const receiptDetails =
         receiptbyId &&
         Object.values(receiptbyId).reduce((acc, curr) => {

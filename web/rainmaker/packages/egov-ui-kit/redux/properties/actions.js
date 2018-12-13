@@ -39,6 +39,10 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
+var _cloneDeep = require("lodash/cloneDeep");
+
+var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -552,7 +556,7 @@ var getAssesmentsandStatus = exports.getAssesmentsandStatus = function getAssesm
 var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function getSingleAssesmentandStatus(queryObjectproperty) {
   return function () {
     var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
-      var consumerCodes, finalcc, payloadReceipts, receiptbyId, receiptDetails;
+      var consumerCodes, finalcc, payloadReceipts, payloadWithReceiptAsId, receiptbyId, receiptDetails;
       return _regenerator2.default.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
@@ -576,7 +580,11 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
 
             case 6:
               payloadReceipts = _context5.sent;
-              receiptbyId = (0, _commons.transformById)(payloadReceipts["Receipt"], "transactionId");
+              payloadWithReceiptAsId = (0, _cloneDeep2.default)(payloadReceipts["Receipt"]).map(function (item) {
+                item.receiptNumber = (0, _get2.default)(item, "Bill[0].billDetails[0].receiptNumber", "");
+                return item;
+              });
+              receiptbyId = (0, _commons.transformById)(payloadWithReceiptAsId, "receiptNumber");
               receiptDetails = receiptbyId && Object.values(receiptbyId).reduce(function (acc, curr) {
                 if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
                 acc[curr.Bill[0].billDetails[0].consumerCode].push({
@@ -588,21 +596,21 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
               }, {});
 
               dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
-              _context5.next = 15;
+              _context5.next = 16;
               break;
 
-            case 12:
-              _context5.prev = 12;
+            case 13:
+              _context5.prev = 13;
               _context5.t0 = _context5["catch"](1);
 
               dispatch(SingleAssessmentStatusFetchError(_context5.t0.message));
 
-            case 15:
+            case 16:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, undefined, [[1, 12]]);
+      }, _callee5, undefined, [[1, 13]]);
     }));
 
     return function (_x6) {
