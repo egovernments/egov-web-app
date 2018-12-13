@@ -279,7 +279,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
-                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="rgba(0,0,0,0.60)" fontSize="12px" />}
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
@@ -300,7 +300,7 @@ class AllComplaints extends Component {
                       />
                     }
                     errorText={errorText}
-                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="rgba(0,0,0,0.60)" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
@@ -375,7 +375,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
-                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="rgba(0,0,0,0.60)" fontSize="12px" />}
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
@@ -396,7 +396,7 @@ class AllComplaints extends Component {
                       />
                     }
                     errorText={errorText}
-                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="rgba(0,0,0,0.60)" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
