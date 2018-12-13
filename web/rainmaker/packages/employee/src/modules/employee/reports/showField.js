@@ -79,13 +79,13 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <DatePicker
               autoOk={true}
-              className="custom-form-control-for-textfield"
+              // className="custom-form-control-for-textfield"
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label label={description}  color="#03b0c6" />
+                  <Label label={description}  />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -102,7 +102,7 @@ export default class ShowField extends Component {
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <DatePicker
-              className="custom-form-control-for-textfield"
+              // className="custom-form-control-for-textfield"
               id={obj.label.split(".").join("-")}
               autoOk={true}
               fullWidth={true}
@@ -111,7 +111,7 @@ export default class ShowField extends Component {
               required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description}  color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description}   containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -138,7 +138,7 @@ export default class ShowField extends Component {
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <DropDown
-              className="custom-form-control-for-select"
+              // className="custom-form-control-for-select"
               hintText="Select"
               disabled={obj.disabled ? true : false}
               id={obj.label.split(".").join("-")}
@@ -147,7 +147,7 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description}  color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description}  containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -167,7 +167,7 @@ export default class ShowField extends Component {
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
-              className="custom-form-control-for-textfield"
+              // className="custom-form-control-for-textfield"
               floatingLabelStyle={{ color: obj.disabled ? "#A9A9A9" : "#696969", fontSize: "20px", whiteSpace: "nowrap" }}
               inputStyle={{ color: "#5F5C57" }}
               floatingLabelFixed={true}
@@ -197,7 +197,7 @@ export default class ShowField extends Component {
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
-              className="custom-form-control-for-select"
+              // className="custom-form-control-for-select"
               hintText="Select"
               underlineDisabledStyle={{ background: "blue" }}
               disabled={obj.disabled ? true : false}
@@ -226,7 +226,7 @@ export default class ShowField extends Component {
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
-              className="custom-form-control-for-select"
+              // className="custom-form-control-for-select"
               hintText="Select"
               id={obj.label.split(".").join("-")}
               fullWidth={true}

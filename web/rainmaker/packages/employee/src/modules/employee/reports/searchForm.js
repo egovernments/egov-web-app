@@ -495,11 +495,12 @@ class ShowForm extends Component {
 
                       <div style={{ marginTop: "16px",textAlign:"center" }} className="col-xs-12">
                         <RaisedButton
-                          // style={{ height: "50px", lineHeight: "50px", width: "80%", background: "#fe7a51" }}
+                          // style={{ height: "48px",borderRadius: "2px", width: "80%", backgroundColor: "rgba(0, 0, 0, 0.6)" }}
                           type="submit"
                           //disabled={!isFormValid}
                           primary={true}
                           label={buttonText}
+
                         />
                       </div>
                     </Row>
@@ -524,6 +525,7 @@ class ShowForm extends Component {
               }}
               primary={true}
               label={"Back"}
+
             />
             <br />
             <br />

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 // import UiSelectField from './UiSelectField';
 // import { translate, validate_fileupload } from '../../common/common';
 // import RaisedButton from 'material-ui/RaisedButton';
-import { SelectField, MenuItem } from "material-ui";
+// import { DropDown} from "components";
+import { SelectField, MenuItem} from "material-ui";
 import { Row, Col } from "react-bootstrap";
 import _ from "lodash";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -309,7 +310,7 @@ class UiBoundary extends Component {
       floatingLabelFixed: true,
       floatingLabelText: (
         <div className="rainmaker-displayInline">
-          <Label className="show-field-label" label={level} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
+          <Label className="show-field-label" label={level} fontSize="18px" containerStyle={{ marginRight: "5px" }} />
           <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
         </div>
       ),
@@ -325,7 +326,7 @@ class UiBoundary extends Component {
         style={{ display: "inline-block" }}
         errorStyle={{ float: "left" }}
         fullWidth={true}
-        underlineDisabledStyle={{ backgroundColor: "#eee!important" }}
+        // underlineDisabledStyle={{ backgroundColor: "#eee!important" }}
         // {...labelProperty}
         maxHeight={200}
         {...labelProperty}
