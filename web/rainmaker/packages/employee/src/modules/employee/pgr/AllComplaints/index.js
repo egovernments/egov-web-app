@@ -159,7 +159,7 @@ class AllComplaints extends Component {
         <div className="sort-button rainmaker-displayInline" style={{ padding: "20px 20px 0px 0px", justifyContent: "flex-end" }}>
           <div className="rainmaker-displayInline" style={{ cursor: "pointer", marginRight: "20px" }} onClick={onSortClick}>
             <Label
-              label="ES_SORT_BOTTON"
+              label="ES_SORT_BUTTON"
               color="rgba(0, 0, 0, 0.8700000047683716)"
               containerStyle={{ marginRight: 5 }}
               labelStyle={{ fontWeight: 500 }}
@@ -168,7 +168,7 @@ class AllComplaints extends Component {
           </div>
           <div className="rainmaker-displayInline" style={{ cursor: "pointer" }} onClick={() => history.push("search-complaint")}>
             <Label
-              label="ES_SEARCH_BOTTON"
+              label="ES_SEARCH_BUTTON"
               color="rgba(0, 0, 0, 0.8700000047683716)"
               containerStyle={{ marginRight: 5 }}
               labelStyle={{ fontWeight: 500 }}

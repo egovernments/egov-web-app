@@ -240,7 +240,7 @@ var withAuthorization = function withAuthorization() {
                           onClick: this.onSortClick
                         },
                         _react2.default.createElement(_translationNode2.default, {
-                          label: "ES_SORT_BOTTON",
+                          label: "ES_SORT_BUTTON",
                           color: "rgba(0, 0, 0, 0.8700000047683716)",
                           containerStyle: { marginRight: 5 },
                           labelStyle: { fontWeight: 500 }
