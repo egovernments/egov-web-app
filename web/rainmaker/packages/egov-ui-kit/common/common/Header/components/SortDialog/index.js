@@ -32,7 +32,7 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
-var _actions = require("egov-ui-kit/redux/complaints/actions");
+var _actions = require(" egov-ui-kit/redux/complaints/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
