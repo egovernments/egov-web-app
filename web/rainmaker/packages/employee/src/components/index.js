@@ -39,7 +39,7 @@ import TableUi from "egov-ui-kit/components/Tables";
 import ToolTipUi from "egov-ui-kit/components/Tooltip";
 import Receipt from "egov-ui-kit/components/Receipt";
 import ShareButton from "egov-ui-kit/components/ShareButton";
-
+import CommonShareContainer from "./CommonShareContainer";
 export {
   Label,
   Image,
@@ -82,4 +82,5 @@ export {
   ToolTipUi,
   Receipt,
   ShareButton,
+  CommonShareContainer,
 };

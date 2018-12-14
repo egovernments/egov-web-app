@@ -11,6 +11,8 @@ import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import Button from "@material-ui/core/Button";
 import ShareIcon from "@material-ui/icons/Share";
 import get from "lodash/get";
+import isEqual from "lodash/isEqual";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
 import {
   getDateFromEpoch,
@@ -32,7 +34,8 @@ class ComplaintDetails extends Component {
     openMap: false,
   };
   componentDidMount() {
-    let { fetchComplaints, match, resetFiles } = this.props;
+    let { fetchComplaints, match, resetFiles, transformedComplaint, prepareFormData } = this.props;
+    prepareFormData("complaints", transformedComplaint);
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     if (this.props.form && this.props.form.complaintResolved) {
       resetFiles("complaintResolved");
@@ -110,6 +113,10 @@ class ComplaintDetails extends Component {
       this.setState({ openMap: true });
     } else {
       this.setState({ openMap: false });
+    }
+    const { transformedComplaint, prepareFormData } = this.props;
+    if (!isEqual(transformedComplaint, nextProps.transformedComplaint)) {
+      prepareFormData("complaints", nextProps.transformedComplaint);
     }
   }
 
@@ -234,12 +241,12 @@ class ComplaintDetails extends Component {
         <Screen>
           {complaint && !openMap && (
             <div>
-              <div className="share-btn">
+              {/* <div className="share-btn">
                 {navigator.share && (
                   <CommonShare variant="fab" shareCallback={shareCallback} roleDefination={{ rolePath: "user-info.roles", roles: ["EMPLOYEE"] }} />
                 )}
-                {/*<ShareButton onLoadFn={this.ShareButtonOnClick} />*/}
-              </div>
+               *<ShareButton onLoadFn={this.ShareButtonOnClick} />*
+              </div> */}
               <div className="form-without-button-cont-generic">
                 <Details
                   {...complaint}
@@ -442,6 +449,7 @@ const mapDispatchToProps = (dispatch) => {
     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
     sendMessage: (message) => dispatch(sendMessage(message)),
     sendMessageMedia: (message) => dispatch(sendMessageMedia(message)),
+    prepareFormData: (jsonPath, value) => dispatch(prepareFormData(jsonPath, value)),
   };
 };
 

@@ -10,7 +10,7 @@ import commonConfig from "config/common";
 // import logoMseva from "egov-ui-kit/assets/images/logo-white.png";
 import routes from "./Routes";
 //import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
-import { LoadingIndicator } from "components";
+import { LoadingIndicator, CommonShareContainer } from "components";
 
 class App extends Component {
   constructor(props) {
@@ -80,6 +80,7 @@ class App extends Component {
         <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
         {loading && <LoadingIndicator />}
+        <CommonShareContainer componentId="rainmaker-common-share" />
       </div>
     );
   }
