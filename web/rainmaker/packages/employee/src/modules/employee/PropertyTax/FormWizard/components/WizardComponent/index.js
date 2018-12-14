@@ -33,7 +33,7 @@ const WizardComponent = ({
   nextButtonEnabled
 }) => {
   return (
-    <div className="wizard-cont">
+    <div className={`wizard-cont active-step-${selected}`}>
       {/*<BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />*/}
       <Stepper
         activeStep={selected}
@@ -41,6 +41,7 @@ const WizardComponent = ({
         style={{
           background:"inherit"
         }}
+        className="stepper-container"
       >
         {ptSteps.map(label => {
           return (
