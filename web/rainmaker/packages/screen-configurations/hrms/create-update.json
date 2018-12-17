@@ -3,6 +3,8 @@
     {
       "hrms":{
         "create-update":{
+          "name" : "create-update",
+          "components" : {
           "stepper":{
               "stepps":["step1","steps2"],
               "activeStep":0
@@ -12,6 +14,8 @@
 
              }
            }
+          }
+          
         }
        }
     }
