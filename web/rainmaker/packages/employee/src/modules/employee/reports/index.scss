@@ -38,6 +38,18 @@
   font-size: 14px;
   color: #484848;
 }
+.total td {
+  border-top: 1px solid #111 !important;
+  font-weight: bold;
+}
+
+.report-header-cell {
+  padding: 10px !important;
+}
+
+.report-header-row-label {
+  font-weight: bold;
+}
 
 @media only screen and (max-width: 704px) {
   #reportTable_wrapper {
