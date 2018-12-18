@@ -1,7 +1,5 @@
 {
-  "ui-screen-configurations" : [
-    {
-      "hrms":{
+  
         "create-update":{
           "name" : "create-update",
           "components" : {
@@ -15,9 +13,8 @@
              }
            }
           }
-          
         }
-       }
-    }
-  ]
+          
+        
+   
 }
