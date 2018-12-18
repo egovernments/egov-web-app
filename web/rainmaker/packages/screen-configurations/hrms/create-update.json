@@ -4,10 +4,8 @@
     "components": {
       "stepper": {
         "steps": [
-          "Employee Details",
-          "Address Info",
-          "Summary"
-        ],
+          "Employee Details"
+                  ],
         "activeStep": 0
       },
       "step-one": {
