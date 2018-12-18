@@ -172,14 +172,14 @@ class ShowField extends Component {
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
-      dom: '<".col-sm-8 report-result-table-header"l><"col-sm-4"B><"col-sm-4"f>rtip',
+      dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       order: [],
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
       paging: true,
-      bInfo: false,
+      // bInfo: false,
       // order: [[3, "desc"]],
       ordering: true,
       bDestroy: true,
