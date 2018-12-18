@@ -3,7 +3,7 @@
     "name": "create-update",
     "components": {
       "stepper": {
-        "stepps": [
+        "steps": [
           "Employee Details",
           "Address Info",
           "Summary"
