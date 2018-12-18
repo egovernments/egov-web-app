@@ -10,7 +10,157 @@
         "activeStep": 0
       },
       "step-one": {
-        "card-one": {}
+        "card-one": {
+          "name": {
+            "label": {
+              "labelName": "Name",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Name",
+              "labelKey": ""
+            },
+            "required": true
+          },
+          "mobileNo": {
+            "label": {
+              "labelName": "Mobile No",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Mobile No",
+              "labelKey": ""
+            },
+            "required": true
+          },
+          "emailId": {
+            "label": {
+              "labelName": "Email",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Email Id",
+              "labelKey": ""
+            }
+          },
+          "dob": {
+            "label": {
+              "labelName": "DOB",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter DOB",
+              "labelKey": ""
+            },
+            "type": "date",
+            "required": true
+          },
+          "aadhaar": {
+            "label": {
+              "labelName": "Aadhaar",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Aadhaar No.",
+              "labelKey": ""
+            }
+          },
+          "pan": {
+            "label": {
+              "labelName": "PAN",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter PAN No.",
+              "labelKey": ""
+            }
+          },
+          "correspondenceAddress": {
+            "label": {
+              "labelName": "Correspondence Address",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter correspondence address",
+              "labelKey": ""
+            }
+          },
+          "permanentAddress": {
+            "label": {
+              "labelName": "Permanent Address",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter permanent address",
+              "labelKey": ""
+            },
+            "required": true
+          },
+          "employeeCode": {
+            "label": {
+              "labelName": "Employee  Code",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter your Employee Code",
+              "labelKey": ""
+            },
+            "required": true
+          },
+          "department": {
+            "label": {
+              "labelName": "Department",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Department",
+              "labelKey": ""
+            }
+          },
+          "designation": {
+            "label": {
+              "labelName": "Designation",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter Designation",
+              "labelKey": ""
+            }
+          },
+          "dateofAppointment": {
+            "label": {
+              "labelName": "Date of Appointment",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter appointment date",
+              "labelKey": ""
+            },
+            "type": "date"
+          },
+          "fromDate": {
+            "label": {
+              "labelName": "From",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter appointment date",
+              "labelKey": ""
+            },
+            "type": "date"
+          },
+          "toDate": {
+            "label": {
+              "labelName": "To",
+              "labelKey": ""
+            },
+            "placeholder": {
+              "labelName": "Enter appointment date",
+              "labelKey": ""
+            },
+            "type": "date"
+          }
+        }
       }
     }
   }
