@@ -85,6 +85,7 @@ class YearDialog extends Component {
         isClose={false}
         onRequestClose={closeDialogue}
         contentStyle={{ width: "20%" }}
+        className="year-dialog"
       />
     ) : null;
   }
