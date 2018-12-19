@@ -3,7 +3,17 @@ import { Button } from "components";
 import BreadCrumbsForm from "./components/BreadCrumbsForm";
 import Declaration from "./components/Declaration";
 import Label from "egov-ui-kit/utils/translationNode";
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 import "./index.css";
+
+const ptSteps = [
+  "Property Address",
+  "Assessment Information",
+  "Owner Information",
+  "Review & Pay"
+]
 
 const WizardComponent = ({
   content,
@@ -20,9 +30,26 @@ const WizardComponent = ({
   nextLabel,
   history,
 }) => {
+  console.log("selected", selected)
   return (
-    <div className="wizard-cont">
-      <BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />
+    <div className={`wizard-cont active-step-${selected}`}>
+      {/*<BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />*/}
+      <Stepper
+        activeStep={selected}
+        alternativeLabel
+        style={{
+          background:"inherit"
+        }}
+        className="stepper-container"
+      >
+        {ptSteps.map(label => {
+          return (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
       {header}
       <div className="wizard-content clearfix">{content}</div>
       {footer}
