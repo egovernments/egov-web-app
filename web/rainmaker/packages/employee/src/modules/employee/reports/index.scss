@@ -53,13 +53,14 @@
 
 .dataTables_filter {
   float: left !important;
-  text-align: left !important;
+  text-align: center !important;
   margin-left: 10px;
 }
 
 .report-buttons {
   float: right !important;
-  text-align: right !important;
+  text-align: center !important;
+  margin-right: 10px;
 }
 
 @media only screen and (max-width: 704px) {
