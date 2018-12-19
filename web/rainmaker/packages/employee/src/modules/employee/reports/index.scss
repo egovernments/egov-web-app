@@ -51,6 +51,17 @@
   font-weight: bold;
 }
 
+.dataTables_filter {
+  float: left !important;
+  text-align: left !important;
+  margin-left: 10px;
+}
+
+.report-buttons {
+  float: right !important;
+  text-align: right !important;
+}
+
 @media only screen and (max-width: 704px) {
   #reportTable_wrapper {
     overflow: scroll;

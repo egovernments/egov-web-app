@@ -172,17 +172,24 @@ class ShowField extends Component {
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
-      dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       order: [],
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
-      paging: true,
+      paging: false,
       // bInfo: false,
       // order: [[3, "desc"]],
       ordering: true,
-      bDestroy: true,
+      // bDestroy: true,
+      columnDefs: [
+        {
+          targets: 0,
+          orderable: false,
+        },
+      ],
       fnDrawCallback: function() {
         let tableId = "reportTable";
         let tableRows = document.getElementById(tableId).rows;
