@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dashboard } from "modules/common";
 import { connect } from "react-redux";
+import { Label } from "egov-ui-kit/utils/translationNode";
 
 class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
@@ -36,11 +37,10 @@ class LandingPage extends Component {
 
   moduleData = {
     PGR: {
-      moduleTitle: "Complaints",
-      moduleDescription:
-        "mSeva Complaints offers an easy to use interface which enables you to lodge civic works related complaints. It also lets you track the status of your complaint and facilitates direct interaction with your municipality till its resolution.",
-      button1: "Complaints",
-      button2: "How it works?",
+      moduleTitle: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
+      moduleDescription: "CS_LANDING_PAGE_COMPLAINTS_DESCRIPTION",
+      button1: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
+      button2: "CS_HOME_HEADER_HOW_IT_WORKS",
       route: "pgr-home",
       //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "action",
@@ -49,24 +49,22 @@ class LandingPage extends Component {
       className: "pgr-landing-card",
     },
     PT: {
-      moduleTitle: "Property Tax",
-      moduleDescription: "Assess, pay and track your Property Taxes online with mSeva Property Tax.",
-      button1: "Property Tax",
-      button2: "How it works?",
+      moduleTitle: "PT_PAYMENT_STEP_HEADER1",
+      moduleDescription: "CS_LANDING_PAGE_PROPERTY_TAX_DESCRIPTION",
+      button1: "PT_PAYMENT_STEP_HEADER1",
+      button2: "CS_HOME_HEADER_HOW_IT_WORKS",
       //borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       route: "property-tax",
       iconName: "dashboard-complaint",
       iconStyle: { width: "60px", height: "60px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
       className: "pt-landing-card",
-      // cities :
     },
     TL: {
-      moduleTitle: "TradeLicense",
-      moduleDescription:
-        "A licensed trade will always enjoy a greater goodwill and attract more customers and investors than unregistered entities. Help your city to plan and support your business. Apply for your Trade License Now!",
-      button1: "TradeLicense",
-      button2: "How it works?",
+      moduleTitle: "TL_COMMON_TL",
+      moduleDescription: "CS_LANDING_PAGE_TRADE_LICENSE_DESCRIPTION",
+      button1: "TL_COMMON_TL",
+      button2: "CS_HOME_HEADER_HOW_IT_WORKS",
       // borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
       iconName: "business-center",

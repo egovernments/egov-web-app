@@ -49,6 +49,7 @@ var SuccessMessage = function (_Component) {
     value: function render() {
       var _props = this.props,
           successmessage = _props.successmessage,
+          employeeName = _props.employeeName,
           secondaryLabel = _props.secondaryLabel,
           tertiaryLabel = _props.tertiaryLabel,
           icon = _props.icon,
@@ -69,7 +70,12 @@ var SuccessMessage = function (_Component) {
               icon
             )
           ),
-          _react2.default.createElement(_translationNode2.default, { className: "thankyou-text", label: successmessage, color: "#767676" }),
+          _react2.default.createElement(
+            "div",
+            { className: "rainmaker-displayInline", style: { justifyContent: "center" } },
+            _react2.default.createElement(_translationNode2.default, { className: "thankyou-text", label: successmessage, color: "#767676" }),
+            employeeName && _react2.default.createElement(_translationNode2.default, { className: "thankyou-text", label: employeeName, color: "#767676", containerStyle: { marginLeft: 5 } })
+          ),
           _react2.default.createElement(_translationNode2.default, { className: "secondary-text", label: secondaryLabel, color: "#767676" }),
           _react2.default.createElement(_translationNode2.default, { className: "tertiary-text", label: tertiaryLabel, color: "#767676" })
         )

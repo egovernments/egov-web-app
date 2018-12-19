@@ -215,7 +215,7 @@ var Details = function (_Component) {
                 "div",
                 { className: "rainmaker-displayInline" },
                 _react2.default.createElement(_components.Icon, { className: "map-icon", action: "maps", name: "place", style: { marginRight: 13 }, color: "#767676" }),
-                _react2.default.createElement(_translationNode2.default, { label: "Address Details", labelClassName: "dark-heading" })
+                _react2.default.createElement(_translationNode2.default, { label: "CS_COMPLAINT_DETAILS_ADDRESS_DETAILS", labelClassName: "dark-heading" })
               ),
               houseNoAndStreetName && _react2.default.createElement(
                 "div",

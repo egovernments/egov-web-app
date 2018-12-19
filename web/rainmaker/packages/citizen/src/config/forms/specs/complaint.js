@@ -93,8 +93,6 @@ const formConfig = {
     landmark: {
       id: "landmark",
       jsonPath: "services[0].addressDetail.landmark",
-      // floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
-      // hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorMessage: "Landmark should be less than 100 characters",

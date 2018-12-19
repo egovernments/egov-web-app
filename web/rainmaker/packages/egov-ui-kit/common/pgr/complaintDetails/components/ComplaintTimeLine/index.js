@@ -480,7 +480,7 @@ var StatusContent = function StatusContent(_ref2) {
             marginRight: "3px",
             paddingTop: "6px"
           },
-          label: "Complaint pending at GRO"
+          label: "CS_COMPLAINT_DETAILS_PENDING_STATUS"
         })
       );
   }

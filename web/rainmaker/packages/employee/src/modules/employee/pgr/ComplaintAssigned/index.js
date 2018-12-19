@@ -24,7 +24,8 @@ class ComplaintAssigned extends Component {
         <div className="success-message-main-screen">
           {employeeDetails && employeeDetails.employeeName && (
             <SuccessMessage
-              successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
+              successmessage={isReassign ? "CS_COMMON_REASSIGNED_TO" : "CS_COMMON_ASSIGNED_TO"}
+              employeeName={employeeDetails.employeeName}
               secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
               tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
               icon={<Icon action="navigation" name="check" />}

@@ -34,6 +34,10 @@ var _Location_pin2 = _interopRequireDefault(_Location_pin);
 
 var _actions = require("egov-ui-kit/redux/form/actions");
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 var _isEmpty = require("lodash/isEmpty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
@@ -191,7 +195,7 @@ var TrackLocation = function (_Component) {
           _react2.default.createElement(_components.Button, {
             id: "map-pick-button",
             className: "pick responsive-action-button",
-            label: "Pick",
+            label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CORE_COMMON_PICK" }),
             style: pickBtn,
             primary: true,
             labelColor: "#ffffff",

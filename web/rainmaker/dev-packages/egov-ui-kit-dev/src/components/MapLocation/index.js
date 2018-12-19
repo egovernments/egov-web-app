@@ -4,6 +4,7 @@ import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
 import Icon from "../Icon";
 import commonConfig from "config/common";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const styles = [
   {
@@ -435,7 +436,9 @@ const MapLocation = compose(
                   padding: "7px 10px",
                 }}
               >
-                <div style={{ color: "#fff" }}>Move pin to adjust</div>
+                <div style={{ color: "#fff" }}>
+                  <Label buttonLabel={true} label="CS_MAP_MOVE_PIN" />
+                </div>
               </div>
               <div
                 style={{
@@ -465,7 +468,9 @@ const MapLocation = compose(
               padding: "7px 10px",
             }}
           >
-            <div style={{ color: "#fff" }}>Move pin to adjust</div>
+            <div style={{ color: "#fff" }}>
+              <Label buttonLabel={true} label="CS_MAP_MOVE_PIN" />
+            </div>
           </div>
           <div
             style={{

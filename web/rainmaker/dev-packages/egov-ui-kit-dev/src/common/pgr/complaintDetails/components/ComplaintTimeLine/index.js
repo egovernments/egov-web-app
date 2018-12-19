@@ -98,12 +98,6 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
-
-
-
-
-
-
 const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy, filedUserMobileNumber, reopenValidChecker }) => {
   var {
     action,
@@ -120,9 +114,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     groMobileNumber,
     groDesignation,
   } = stepData;
-  const currDate = new Date().getTime()
-  const resolvedDate = new Date(date).getTime()
-  const isReopenValid = (currDate - resolvedDate) <= reopenValidChecker
+  const currDate = new Date().getTime();
+  const resolvedDate = new Date(date).getTime();
+  const isReopenValid = currDate - resolvedDate <= reopenValidChecker;
   switch (status) {
     case "open":
       openStatusCount++;
@@ -422,21 +416,23 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   />
                 </div>
               )}
-              {isReopenValid && <div
-                className="complaint-details-timline-button"
-                onClick={(e) => {
-                  role === "citizen"
-                    ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
-                    : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
-                }}
-              >
-                <Label
-                  label="CS_COMPLAINT_DETAILS_REOPEN"
-                  fontSize="12px"
-                  labelStyle={timelineButtonLabelStyle}
-                  containerStyle={timelineButtonContainerStyle}
-                />
-              </div>}
+              {isReopenValid && (
+                <div
+                  className="complaint-details-timline-button"
+                  onClick={(e) => {
+                    role === "citizen"
+                      ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                      : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                  }}
+                >
+                  <Label
+                    label="CS_COMPLAINT_DETAILS_REOPEN"
+                    fontSize="12px"
+                    labelStyle={timelineButtonLabelStyle}
+                    containerStyle={timelineButtonContainerStyle}
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -474,7 +470,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                     paddingTop: "6px",
                   }
             }
-            label={"Complaint pending at GRO"}
+            label={"CS_COMPLAINT_DETAILS_PENDING_STATUS"}
           />
         </div>
       );
