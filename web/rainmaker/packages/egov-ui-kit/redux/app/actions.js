@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchUiCommonConstants = exports.fetchUiCommonConfig = exports.setUiCommonConstants = exports.setUiCommonConfig = exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchUiCommonConstants = exports.fetchUiCommonConfig = exports.setUiCommonConstants = exports.setUiCommonConfig = exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = exports.updateActiveRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -32,6 +32,11 @@ var _util = require("util");
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var updateActiveRoute = exports.updateActiveRoute = function updateActiveRoute(routePath) {
+  window.localStorage.setItem('menuPath', routePath);
+  return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath: routePath };
+};
 
 var setRoute = exports.setRoute = function setRoute(route) {
   return { type: actionTypes.SET_ROUTE, route: route };

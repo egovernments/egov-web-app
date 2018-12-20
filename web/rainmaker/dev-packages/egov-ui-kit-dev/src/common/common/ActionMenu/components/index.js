@@ -10,13 +10,6 @@ import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const styles = {
-  menuStyle: {
-    marginLeft: 15,
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    flex: 1,
-  },
 
   inputStyle: {
     color: "white !important",
@@ -38,6 +31,7 @@ const styles = {
     justifyContent: "flex-start",
     marginLeft: 0,
     padding: 0,
+    paddingLeft:0
   },
 };
 
@@ -184,10 +178,11 @@ class ActionMenuComp extends Component {
   };
 
   render() {
-    let { role, actionListArr } = this.props;
+    let { role, actionListArr,activeRoutePath,updateActiveRoute } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
+    let menuTitle = path.split('.')
 
     const showMenuItem = () => {
       const navigationURL = window.location.href.split("/").pop();
@@ -221,8 +216,8 @@ class ActionMenuComp extends Component {
                     )
                   }
                   primaryText={
-                    <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                      <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
+                    <div className="menuStyle with-childs">
+                      {item.name || ""}
                     </div>
                   }
                   rightIcon={
@@ -252,13 +247,14 @@ class ActionMenuComp extends Component {
                   key={index}
                   to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
                 >
-                  <div className="sideMenuItem">
+                  <div className={`sideMenuItem ${activeRoutePath ==item.path ? "slected": "" }`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
                       style={{ whiteSpace: "initial" }}
                       key={index}
                       onClick={() => {
-                        localStorage.setItem("menuPath", item.path);
+                      //  localStorage.setItem("menuPath", item.path);
+                        updateActiveRoute(item.path)
                         document.title = item.name;
                         console.log(
                           "menu change",
@@ -288,8 +284,8 @@ class ActionMenuComp extends Component {
                         )
                       }
                       primaryText={
-                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                          <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
+                        <div className="menuStyle">
+                          {item.name || ""}
                         </div>
                       }
                     />
@@ -326,8 +322,8 @@ class ActionMenuComp extends Component {
                         )
                       }
                       primaryText={
-                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                          <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.name || ""}</span>
+                        <div className="menuStyle">
+                          {item.name || ""}
                         </div>
                       }
                     />
@@ -379,8 +375,8 @@ class ActionMenuComp extends Component {
                           )
                         }
                         primaryText={
-                          <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                            <span style={{ color: "rgba(0, 0, 0, 0.8700000047683716)" }}>{item.displayName || ""}</span>
+                          <div className="menuStyle">
+                            {item.displayName || ""}
                           </div>
                         }
                       />
@@ -397,7 +393,7 @@ class ActionMenuComp extends Component {
     return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" />
-
+        <div className="menu-item-title">{menuTitle && menuTitle[menuTitle.length-1]}</div>
         <Menu
           disableAutoFocus={true}
           desktop={true}

@@ -22,6 +22,7 @@ const initialState = {
     error: true,
   },
   localizationLabels,
+  activeRoutePath:"",
 };
 
 const appReducer = (state = initialState, action) => {
@@ -76,7 +77,9 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.FETCH_UI_COMMON_CONSTANTS: {
       return { ...state, uiCommonConstants: action.payload };
     }
-
+    case actionTypes.UPDATE_ACTIVE_ROUTE_PATH : {
+      return {...state, activeRoutePath: action.routePath}
+    }
     default:
       return state;
   }

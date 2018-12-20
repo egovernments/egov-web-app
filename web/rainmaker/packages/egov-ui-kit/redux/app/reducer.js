@@ -43,7 +43,8 @@ var initialState = {
     open: false,
     error: true
   },
-  localizationLabels: localizationLabels
+  localizationLabels: localizationLabels,
+  activeRoutePath: ""
 };
 
 var appReducer = function appReducer() {
@@ -95,7 +96,10 @@ var appReducer = function appReducer() {
       {
         return (0, _extends3.default)({}, state, { uiCommonConstants: action.payload });
       }
-
+    case actionTypes.UPDATE_ACTIVE_ROUTE_PATH:
+      {
+        return (0, _extends3.default)({}, state, { activeRoutePath: action.routePath });
+      }
     default:
       return state;
   }

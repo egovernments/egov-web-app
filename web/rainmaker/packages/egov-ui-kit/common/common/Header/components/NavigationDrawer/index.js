@@ -18,9 +18,17 @@ var _UserProfile = require("./UserProfile");
 
 var _UserProfile2 = _interopRequireDefault(_UserProfile);
 
-var _menuItems = require("./menuItems");
+var _MenuItem = require("material-ui/MenuItem");
 
-var _menuItems2 = _interopRequireDefault(_menuItems);
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+var _commonMenuItems = require("./commonMenuItems");
+
+var _Divider = require("@material-ui/core/Divider");
+
+var _Divider2 = _interopRequireDefault(_Divider);
+
+var _common = require("modules/common");
 
 var _logo_black = require("egov-ui-kit/assets/images/logo_black.png");
 
@@ -28,11 +36,30 @@ var _logo_black2 = _interopRequireDefault(_logo_black);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { Icon } from "components";
+
 // import LanguageSelection from "./LanguageSelection";
+// import menuItems from "./menuItems";
 var styles = {
-  listInnerDivStyle: {
-    padding: "16px 0px 16px 60px"
+  // listInnerDivStyle: {
+  //   padding: "16px 0px 16px 60px",
+  // },
+  menuStyle: {
+    marginLeft: 15,
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    flex: 1
+  },
+  defaultMenuItemStyle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginLeft: 0,
+    padding: 0,
+    lineHeight: "unset"
   }
+
 };
 
 var defaultContainerStyle = {
@@ -69,22 +96,27 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
     _react2.default.createElement(_UserProfile2.default, { role: role, cities: cities, userInfo: userInfo }),
     _react2.default.createElement(
       "div",
-      { className: "drawer-list-poweredBy-wrapper" },
-      _react2.default.createElement(_components.List, {
-        onItemClick: handleItemClick,
-        innerDivStyle: styles.listInnerDivStyle,
-        className: "drawer-list-style",
-        items: (0, _menuItems2.default)(role, "one", isCSR, isADMIN),
-        listContainerStyle: { background: "#ffffff" },
-        listItemStyle: { borderBottom: "1px solid #e0e0e0" }
-      }),
-      _react2.default.createElement(_components.List, {
-        onItemClick: handleItemClick,
-        innerDivStyle: styles.listInnerDivStyle,
-        className: "drawer-list-style",
-        items: (0, _menuItems2.default)(role, "two", isCSR, isADMIN),
-        listContainerStyle: { background: "#ffffff" },
-        listItemStyle: { borderBottom: "1px solid #e0e0e0" }
+      { className: "col-sm-1 drawer-list-poweredBy-wrapper" },
+      _react2.default.createElement(_common.ActionMenu, { role: role }),
+      _react2.default.createElement(_Divider2.default, { light: true }),
+      _commonMenuItems.CommonMenuItems.map(function (item) {
+        return _react2.default.createElement(
+          "div",
+          { className: "sideMenuItem" },
+          _react2.default.createElement(_MenuItem2.default, {
+            innerDivStyle: styles.defaultMenuItemStyle,
+            style: { whiteSpace: "initial" },
+            onClick: function onClick() {
+              handleItemClick(item, true);
+            },
+            leftIcon: item.leftIcon,
+            primaryText: _react2.default.createElement(
+              "div",
+              { className: "menuStyle", style: styles.menuStyle },
+              item.primaryText || ""
+            )
+          })
+        );
       }),
       _react2.default.createElement(
         "div",
