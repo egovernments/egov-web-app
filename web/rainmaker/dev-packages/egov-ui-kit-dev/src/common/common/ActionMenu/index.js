@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { get } from "lodash";
 import ActionMenuComp from "../ActionMenu/components";
 import "./index.css";
-import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
+import { fetchActionItems,updateActiveRoute } from "egov-ui-kit/redux/app/actions";
 
 class ActionMenu extends Component {
   componentDidMount = async () => {
@@ -25,22 +25,29 @@ class ActionMenu extends Component {
   };
 
   render() {
-    let { actionListArr } = this.props;
+    let { actionListArr,activeRoutePath,updateActiveRoute } = this.props;
     let transformedRole = "";
     // actionListArr.push({url:"https://www.google.com",navigationURL:"newTab",path:"test.new tab"});
-    return actionListArr && actionListArr.length > 0 ? <ActionMenuComp role={transformedRole} actionListArr={actionListArr} /> : null;
+    return actionListArr && actionListArr.length > 0 ? 
+    <ActionMenuComp role={transformedRole} 
+    actionListArr={actionListArr}          
+    activeRoutePath = {activeRoutePath}
+    updateActiveRoute={updateActiveRoute}/> : null;
   }
 }
 
 const mapStateToProps = ({ app }) => {
   const actionListArr = app.menu || [];
-  return { actionListArr };
+  const activeRoutePath = app.activeRoutePath
+
+  return { actionListArr ,activeRoutePath};
 };
 
 const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
   fetchActionMenu: (role, ts) => dispatch(fetchActionItems(role, ts)),
+  updateActiveRoute :(routepath) =>dispatch(updateActiveRoute(routepath))
 });
 export default connect(
   mapStateToProps,

@@ -91,11 +91,15 @@ var Header = function (_Component) {
       left: false,
       ulbLogo: ""
     }, _this.componentDidMount = function () {
-      var role = _this.props.role;
+      var _this$props = _this.props,
+          role = _this$props.role,
+          updateActiveRoute = _this$props.updateActiveRoute;
 
       if (role && role.toLowerCase() !== "citizen") {
         var tenantId = localStorage.getItem("tenant-id");
+        var menupath = localStorage.getItem("menuPath");
         var ulbLogo = "https://s3.ap-south-1.amazonaws.com/pb-egov-assets/" + tenantId + "/logo.png";
+        updateActiveRoute(menupath);
         _this.setState({ ulbLogo: ulbLogo });
       }
     }, _this._handleToggleMenu = function () {
@@ -151,11 +155,15 @@ var Header = function (_Component) {
       var onToolBarIconClick = _this._handleToggleMenu;
 
       return { style: style, iconElementLeft: iconElementLeft, onLeftIconButtonClick: onLeftIconButtonClick, onToolBarIconClick: onToolBarIconClick, isHomeScreen: isHomeScreen };
-    }, _this._handleItemClick = function (item, index) {
+    }, _this._handleItemClick = function (item, toggleMenu) {
       var route = item.route;
       // close the navigation bar
 
-      _this._handleToggleMenu();
+      toggleMenu && _this._handleToggleMenu();
+      //updating route poth in reducerxxxx
+      if (item.path) {
+        _this.props.updateActiveRoute(item.path);
+      }
       // this logic is a bit shaky!! might break in future
       switch (route.slice(1)) {
         case "logout":
@@ -206,7 +214,8 @@ var Header = function (_Component) {
           defaultTitle = _props.defaultTitle,
           refreshButton = _props.refreshButton,
           sortButton = _props.sortButton,
-          searchButton = _props.searchButton;
+          searchButton = _props.searchButton,
+          activeRoutePath = _props.activeRoutePath;
 
       return _react2.default.createElement(
         "div",
@@ -225,7 +234,9 @@ var Header = function (_Component) {
           sortButton: sortButton,
           searchButton: searchButton,
           sortDialogOpen: onSortClick,
-          history: this.props.history
+          history: this.props.history,
+          handleItemClick: _handleItemClick,
+          activeRoutePath: activeRoutePath
         })),
         _react2.default.createElement(_NavigationDrawer2.default, (_React$createElement = {
           handleItemClick: _handleItemClick,
@@ -271,7 +282,8 @@ var mapStateToProps = function mapStateToProps(state) {
   var ulbGrade = userTenant && (0, _get2.default)(userTenant[0], "city.ulbGrade");
   var name = userTenant && (0, _get2.default)(userTenant[0], "name");
   var defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
-  return { cities: cities, defaultTitle: defaultTitle };
+  var activeRoutePath = state.app.activeRoutePath;
+  return { cities: cities, defaultTitle: defaultTitle, activeRoutePath: activeRoutePath };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -281,6 +293,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchLocalizationLabel: function fetchLocalizationLabel(locale) {
       return dispatch((0, _actions2.fetchLocalizationLabel)(locale));
+    },
+    updateActiveRoute: function updateActiveRoute(routepath) {
+      return dispatch((0, _actions2.updateActiveRoute)(routepath));
     }
   };
 };
