@@ -17,7 +17,10 @@ export const documentList = {
     //     jsonPath: "Trade[0].businessProof"
     //   }
     // ],
-    buttonLabel: "UPLOAD FILE",
+    buttonLabel: {
+      labelName: "UPLOAD FILE",
+      labelKey: "TL_BUTTON_UPLOAD FILE"
+    },
     description: "Only .jpg and .pdf files. 6MB max file size.",
     inputProps: {
       accept: "image/*, .pdf, .png, .jpeg"
