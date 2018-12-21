@@ -1,22 +1,22 @@
 import React from "react";
 import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
-import LabelContainer from "mihy-ui-framework/ui-containers/LabelContainer";
+// import LabelContainer from "mihy-ui-framework/ui-containers/LabelContainer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import themeObject from "../../ui-config/themes";
-// import Label from "egov-ui-kit/utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { fetchUiCommonConstants } from "egov-ui-kit/redux/app/actions";
 const theme = createMuiTheme(themeObject);
 
-const headerStyle={
+const headerStyle = {
   color: "rgb(72, 72, 72)",
   fontWeight: 500,
   fontSize: "20px",
-  margin:"16px"
-}
+  margin: "16px",
+};
 
 class IFrameInterface extends React.Component {
   constructor(props) {
@@ -46,15 +46,13 @@ class IFrameInterface extends React.Component {
     if (!uiCommonConstants) fetchUiCommonConstants();
     const isOrign = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.isOrigin`, false);
     const domain = isOrign
-      ? process.env.NODE_ENV === "development"
-        ? "https://egov-micro-dev.egovernments.org"
-        : window.origin
+      ? process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org" : window.origin
       : get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.domain`, "");
 
     const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     const title = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.title`, "");
     let url = `${domain}${contextPath}`;
-    this.setState({ url ,title});
+    this.setState({ url, title });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -73,16 +71,16 @@ class IFrameInterface extends React.Component {
   }
 
   render() {
-    const { url ,title} = this.state;
+    const { url, title } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
-        {
-        title && <div className="row">
-          <div className="col-sm-12">
-            <LabelContainer style={headerStyle} labelKey={title}/>
+        {title && (
+          <div className="row">
+            <div className="col-sm-12" style={{ margin: "24px" }}>
+              <Label className="screen-title-label" label={title} dark={true} bold={true} fontSize={20} />
+            </div>
           </div>
-        </div>
-        }
+        )}
         <div className="app-container-iframe">
           <iframe src={url} className="app-container-iframe" />
         </div>
@@ -102,7 +100,4 @@ const mapStateToProps = (state) => {
   const { uiCommonConstants } = app;
   return { uiCommonConstants };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IFrameInterface);
+export default connect(mapStateToProps, mapDispatchToProps)(IFrameInterface);
