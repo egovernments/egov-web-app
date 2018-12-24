@@ -75,7 +75,7 @@ class ViewBreakupContainer extends React.Component {
         <Grid sm={10}>
           <LabelContainer
             labelName={"Total"}
-            labelKey={"TL_ViewBreakupContainer_Total"}
+            labelKey={"TL_VIEWBREAKUPCONTAINER_TOTAL"}
             style={
               style
                 ? style
@@ -146,7 +146,7 @@ class ViewBreakupContainer extends React.Component {
               <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
                 <LabelContainer
                   labelName={"Calculation Breakup"}
-                  labelKey={"TL_ViewBreakupContainer_Calculation_Breakup"}
+                  labelKey={"TL_VIEWBREAKUPCONTAINER_CALCULATION_BREAKUP"}
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",
@@ -159,7 +159,7 @@ class ViewBreakupContainer extends React.Component {
                 <div style={{ paddingBottom: "12px" }}>
                   <LabelContainer
                     labelName={"Trade Unit"}
-                    labelKey={"TL_ViewBreakupContainer_Trade_Unit"}
+                    labelKey={"TL_VIEWBREAKUPCONTAINER_TRADE_UNIT"}
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",
@@ -206,7 +206,7 @@ class ViewBreakupContainer extends React.Component {
               <div style={{ paddingBottom: "16px" }}>
                 <LabelContainer
                   labelName={"Calculation Breakup"}
-                  labelKey={"TL_ViewBreakupContainer_Calculation_Breakup"}
+                  labelKey={"TL_VIEWBREAKUPCONTAINER_CALCULATION_BREAKUP"}
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",
