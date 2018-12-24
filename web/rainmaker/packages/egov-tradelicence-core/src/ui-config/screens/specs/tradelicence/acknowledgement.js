@@ -25,8 +25,8 @@ const getAcknowledgementCard = (
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: `Application for New Trade License (${getCurrentFinancialYear()})`
-        // labelKey: "TL_COMMON_APPL_NEW_LIC"
+        labelName: `Application for New Trade License (${getCurrentFinancialYear()})`,
+        labelKey: "TL_COMMON_APPL_NEW_LICe"
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -35,10 +35,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Application Submitted Successfully",
-            body:
-              "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
-            tailText: "Application No.",
+            header: {
+              labelName: "Application Submitted Successfully",
+              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_BODY"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_TAILTEXT"
+            },
             number: applicationNumber
           })
         }
@@ -59,8 +68,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Payment for New Trade License (${getCurrentFinancialYear()})`
-          // labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+          labelName: `Payment for New Trade License (${getCurrentFinancialYear()})`,
+          labelKey: "TL_COMMON_PAYMENT_NEW_LICe"
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -77,10 +86,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Payment has been collected successfully!",
-            body:
-              "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
-            tailText: "Payment Receipt No.",
+            header: {
+              labelName: "Payment has been collected successfully!",
+              labelKey: "TL_ACKNOWLEDGEMENT_PAY_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_PAY_BODY"
+            },
+            tailText: {
+              labelName: "Payment Receipt No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_PAY_TAILTEXT"
+            },
             number: secondNumber
           })
         }
@@ -110,10 +128,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Trade License Approved Successfully",
-            body:
-              "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-            tailText: "Trade License No.",
+            header: {
+              labelName: "Trade License Approved Successfully",
+              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_BODY"
+            },
+            tailText: {
+              labelName: "Trade License No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_TAILTEXT"
+            },
             number: secondNumber
           })
         }
@@ -142,9 +169,15 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Trade License Application Rejected",
-            body:
-              "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No."
+            header: {
+              labelName: "Trade License Application Rejected",
+              labelKey: "TL_ACKNOWLEDGEMENT_REJECT_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_REJECT_BODY"
+            }
           })
         }
       },
@@ -172,10 +205,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Trade License Cancelled",
-            body:
-              "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
-            tailText: "Trade License No.",
+            header: {
+              labelName: "Trade License Cancelled",
+              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_BODY"
+            },
+            tailText: {
+              labelName: "Trade License No.",
+              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_TAILTEXT"
+            },
             number: secondNumber
           })
         }
@@ -204,9 +246,15 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Payment has failed!",
-            body:
-              "A notification regarding payment failure has been sent to the trade owner and applicant."
+            header: {
+              labelName: "Payment has failed!",
+              labelKey: "TL_ACKNOWLEDGEMENT_FAILURE_HEADER"
+            },
+            body: {
+              labelName:
+                "A notification regarding payment failure has been sent to the trade owner and applicant.",
+              labelKey: "TL_ACKNOWLEDGEMENT_FAILURE_BODY"
+            }
           })
         }
       },

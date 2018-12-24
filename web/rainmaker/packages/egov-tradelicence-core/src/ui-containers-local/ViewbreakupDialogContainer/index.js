@@ -75,6 +75,7 @@ class ViewBreakupContainer extends React.Component {
         <Grid sm={10}>
           <LabelContainer
             labelName={"Total"}
+            labelKey={"TL_ViewBreakupContainer_Total"}
             style={
               style
                 ? style
@@ -143,8 +144,9 @@ class ViewBreakupContainer extends React.Component {
                 <Icon style={closebuttonStyle}>{closeIcon}</Icon>
               </div>
               <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName={"Calculation Breakup"}
+                  labelKey={"TL_ViewBreakupContainer_Calculation_Breakup"}
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",
@@ -155,8 +157,9 @@ class ViewBreakupContainer extends React.Component {
               </div>
               {tradeUnitData && tradeUnitData.length > 0 && (
                 <div style={{ paddingBottom: "12px" }}>
-                  <Label
-                    label={"Trade Unit"}
+                  <LabelContainer
+                    labelName={"Trade Unit"}
+                    labelKey={"TL_ViewBreakupContainer_Trade_Unit"}
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",
@@ -175,8 +178,9 @@ class ViewBreakupContainer extends React.Component {
                 getGridItem(tradeTotal, classes)}
               {accessoriesUnitData && accessoriesUnitData.length > 0 && (
                 <div style={{ paddingBottom: "12px", marginTop: 20 }}>
-                  <Label
-                    label={"Accessory Unit"}
+                  <LabelContainer
+                    labelName={"Accessory Unit"}
+                    labelKey={"TL_ViewBreakupContainer_Accessory_Unit"}
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",
@@ -200,8 +204,9 @@ class ViewBreakupContainer extends React.Component {
           ) : (
             <div style={{ padding: "16px", width: "500px" }}>
               <div style={{ paddingBottom: "16px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName={"Calculation Breakup"}
+                  labelKey={"TL_ViewBreakupContainer_Calculation_Breakup"}
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",

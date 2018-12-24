@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     []
   );
   const estimate = {
-    header: "Fee Estimate",
+    header: { labelName: "Fee Estimate", labelKey: "TL_ESTIMATE_CARD_HEADER" },
     fees,
     extra: [
       //   { textLeft: "Last Date for Rebate (20% of TL)" },

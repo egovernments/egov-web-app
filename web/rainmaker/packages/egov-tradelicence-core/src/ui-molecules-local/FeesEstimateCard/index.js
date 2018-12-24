@@ -65,7 +65,9 @@ function FeesEstimateCard(props) {
   return (
     <Grid container>
       <Grid xs={12} sm={7}>
-        <Typography variant="subheading">{estimate.header}</Typography>
+        <Typography variant="subheading">
+          <LabelContainer {...estimate.header} />
+        </Typography>
         <div style={{ marginTop: 48, maxWidth: 400 }}>
           <Grid container>
             {estimate.fees.map((fee, key) => {
@@ -121,7 +123,12 @@ function FeesEstimateCard(props) {
           <Divider style={{ marginBottom: 16 }} />
           <Grid container>
             <Grid item xs={6}>
-              <Typography variant="body2">Total Amount</Typography>
+              <Typography variant="body2">
+                <LabelContainer
+                  labelName="Total Amount"
+                  labelKey="TL_ESTIMATE_CARD_TOTAL_AMOUNT"
+                />
+              </Typography>
             </Grid>
             <Grid
               item
@@ -141,7 +148,10 @@ function FeesEstimateCard(props) {
           align="right"
           className="tl-total-amount-text"
         >
-          Total Amount
+          <LabelContainer
+            labelName="Total Amount"
+            labelKey="TL_ESTIMATE_CARD_TOTAL_AMOUNT"
+          />
         </Typography>
         <Typography className={totalHeadClassName} align="right">
           Rs {total}
