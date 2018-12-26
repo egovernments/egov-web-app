@@ -27,11 +27,13 @@ class Header extends Component {
     const { role,updateActiveRoute } = this.props;
     if (role && role.toLowerCase() !== "citizen") {
       const tenantId = localStorage.getItem("tenant-id");
-      const menupath =  localStorage.getItem("menuPath");
       const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
-      updateActiveRoute(menupath)
       this.setState({ ulbLogo });
     }
+    const menupath = localStorage.getItem("menuPath");
+    const menuName = localStorage.getItem("menuName");
+    updateActiveRoute(menupath,menuName)
+
   };
 
   _handleToggleMenu = () => {
@@ -108,7 +110,7 @@ class Header extends Component {
     toggleMenu && this._handleToggleMenu();
     //updating route poth in reducerxxxx
     if(item.path){
-      this.props.updateActiveRoute(item.path)
+      this.props.updateActiveRoute(item.path,item.path)
     }
     // this logic is a bit shaky!! might break in future
     switch (route.slice(1)) {
@@ -218,7 +220,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
-    updateActiveRoute :(routepath) =>dispatch(updateActiveRoute(routepath))
+    updateActiveRoute :(routepath,menuName) =>dispatch(updateActiveRoute(routepath,menuName))
   };
 };
 

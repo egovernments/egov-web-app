@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
   fetchActionMenu: (role, ts) => dispatch(fetchActionItems(role, ts)),
-  updateActiveRoute :(routepath) =>dispatch(updateActiveRoute(routepath))
+  updateActiveRoute :(routepath,routeName) =>dispatch(updateActiveRoute(routepath,routeName))
 });
 export default connect(
   mapStateToProps,

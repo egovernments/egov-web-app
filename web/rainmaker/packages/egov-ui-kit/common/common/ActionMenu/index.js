@@ -131,8 +131,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchActionMenu: function fetchActionMenu(role, ts) {
       return dispatch((0, _actions.fetchActionItems)(role, ts));
     },
-    updateActiveRoute: function updateActiveRoute(routepath) {
-      return dispatch((0, _actions.updateActiveRoute)(routepath));
+    updateActiveRoute: function updateActiveRoute(routepath, routeName) {
+      return dispatch((0, _actions.updateActiveRoute)(routepath, routeName));
     }
   };
 };

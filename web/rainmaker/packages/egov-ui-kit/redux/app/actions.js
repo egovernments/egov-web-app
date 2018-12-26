@@ -33,8 +33,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var updateActiveRoute = exports.updateActiveRoute = function updateActiveRoute(routePath) {
+var updateActiveRoute = exports.updateActiveRoute = function updateActiveRoute(routePath, menuName) {
   window.localStorage.setItem('menuPath', routePath);
+  window.localStorage.setItem('menuName', menuName);
   return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath: routePath };
 };
 
