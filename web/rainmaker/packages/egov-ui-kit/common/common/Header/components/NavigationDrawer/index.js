@@ -55,7 +55,7 @@ var styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginLeft: 0,
+    marginLeft: "4px",
     padding: 0,
     lineHeight: "unset"
   }
@@ -97,7 +97,7 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
     _react2.default.createElement(
       "div",
       { className: "col-sm-1 drawer-list-poweredBy-wrapper" },
-      _react2.default.createElement(_common.ActionMenu, { role: role }),
+      window && window.outerWidth <= 768 && _react2.default.createElement(_common.ActionMenu, { role: role }),
       _react2.default.createElement(_Divider2.default, { light: true }),
       _commonMenuItems.CommonMenuItems.map(function (item) {
         return _react2.default.createElement(
