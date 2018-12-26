@@ -478,14 +478,14 @@ div[class^="MuiPaper-root"], .stepper-container {
     }
   }
   .stepper-container {
-    padding: initial;
+    padding: 0px !important;
     margin-top: 73px;
   }
-  .year-dialog {
-    left: initial;
-    right: 11%;
-     > div > div > div {
-      width: calc(100% + 104px);
-    }
-  }
+  // .year-dialog {
+  //   // left: initial;
+  //   // right: 11%;
+  //   //  > div > div > div {
+  //   //   width: calc(100% + 104px);
+  //   // }
+  // }
 }
