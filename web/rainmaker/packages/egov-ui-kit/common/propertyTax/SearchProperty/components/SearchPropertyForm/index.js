@@ -36,14 +36,14 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
     _react2.default.createElement(_components.Card, {
       textChildren: _react2.default.createElement(
         "div",
-        { className: formKey + " col-xs-12" },
+        { className: formKey + " col-sm-12" },
         Object.keys(fields).map(function (fieldKey, index) {
           return _react2.default.createElement(
             "div",
             {
               style: fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {},
               key: index,
-              className: fields[fieldKey].numcols ? "col-xs-" + fields[fieldKey].numcols : "col-xs-6"
+              className: fields[fieldKey].numcols ? "col-sm-" + fields[fieldKey].numcols : "col-sm-6"
             },
             _react2.default.createElement(_field2.default, { fieldKey: fieldKey, field: fields[fieldKey], handleFieldChange: handleFieldChange })
           );
