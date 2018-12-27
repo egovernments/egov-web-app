@@ -10,7 +10,7 @@ const PropertyAddress = ({ form, icon, editIcon, component }) => {
     <Card
       textChildren={
         <div>
-          <div className="pt-rf-title rainmaker-displayInline">
+          <div className="pt-rf-title rainmaker-displayInline" style={{ justifyContent: "space-between" }}>
             <div className="rainmaker-displayInline" style={{ alignItems: "center" }}>
               <span className="pt-rf-icon">{icon}</span>
               <Label className="pt-rf-title-text" label="PT_PROPERTY_ADDRESS_SUB_HEADER" />

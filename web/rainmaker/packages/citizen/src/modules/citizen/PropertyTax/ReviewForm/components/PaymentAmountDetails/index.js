@@ -52,7 +52,7 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
               <div className="property-amount-radio">
                 <div className="amt-radio">
                   <input type="radio" checked={optionSelected === "Full_Amount"} onClick={onRadioButtonChange} value="Full_Amount" name="radio" />
-                  <Label label="Full Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                  <Label label="PT_FULL_AMOUNT" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
                 <div className="amt-radio">
                   <input
@@ -62,7 +62,7 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
                     value="Partial_Amount"
                     name="radio"
                   />
-                  <Label label="Partial Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                  <Label label="PT_PARTIAL_AMOUNT" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
               </div>
             </div>
@@ -71,10 +71,9 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
                 id="amount-to-be-paid"
                 onChange={(e, value) => handleFieldChange(e, value)}
                 value={value}
-                floatingLabelText="Amount to pay (INR)"
+                floatingLabelText="PT_AMOUNT_TO_PAY_INR"
                 floatingLabelShrinkStyle={{
                   fontSize: "12px",
-                  color: "#00bcd1",
                   transform: "scale(1) translate(0px, -16px)",
                   fontWeight: 500,
                   zIndex: 0,

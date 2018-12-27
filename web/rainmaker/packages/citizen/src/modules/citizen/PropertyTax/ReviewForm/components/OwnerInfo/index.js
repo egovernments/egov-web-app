@@ -13,7 +13,7 @@ const OwnerInfo = ({ form, icon, editIcon, component }) => {
             <span className="pt-rf-title-text">Owner Information</span>
             <span className="pt-rf-edit-icon">{editIcon}</span>
           </div> */}
-          <div className="pt-rf-title rainmaker-displayInline">
+          <div className="pt-rf-title rainmaker-displayInline" style={{ justifyContent: "space-between" }}>
             <div className="rainmaker-displayInline" style={{ alignItems: "center" }}>
               <span className="pt-rf-icon">{icon}</span>
               <Label className="pt-rf-title-text" label="PT_OWNER_INFORMATION_FORM_HEADING" />
