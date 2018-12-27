@@ -41,13 +41,13 @@ var onButton1Click = function onButton1Click(item, history, onPGRClick) {
 };
 var onButton2Click = function onButton2Click(item, history) {
   if (process.env.REACT_APP_NAME === "Citizen") {
-    if (item.moduleTitle === "Property Tax") {
+    if (item.moduleTitle === "PT_PAYMENT_STEP_HEADER1") {
       history && history.push("property-tax/how-it-works");
     }
-    if (item.moduleTitle === "Complaints") {
+    if (item.moduleTitle === "COMMON_BOTTOM_NAVIGATION_COMPLAINTS") {
       history && history.push("how-it-works");
     }
-    if (item.moduleTitle === "TradeLicense") {
+    if (item.moduleTitle === "TL_COMMON_TL") {
       history && history.push("trade-license/how-it-works");
     }
   }
