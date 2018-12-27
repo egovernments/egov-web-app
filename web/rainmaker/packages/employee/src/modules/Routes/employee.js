@@ -7,6 +7,7 @@ import { TrackLocation } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
 import LandingPage from "modules/employee/LandingPage";
+import Inbox from "modules/employee/Inbox";
 // Employee
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
@@ -74,6 +75,18 @@ const routes = [
       hideFooter: true,
       redirectionUrl,
       title: "Home",
+      hideTitle: true,
+      isHomeScreen: true,
+    },
+  },
+  {
+    path: "inbox",
+    component: Inbox,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      redirectionUrl,
+      title: "Inbox",
       hideTitle: true,
       isHomeScreen: true,
     },
