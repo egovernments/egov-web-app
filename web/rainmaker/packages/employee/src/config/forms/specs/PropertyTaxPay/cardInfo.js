@@ -10,7 +10,7 @@ const formConfig = {
       pattern: /^([0-9]){4}$/i,
       jsonPath: "Receipt[0].instrument.instrumentNumber",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      errorMessage: "Enter 4 digits",
+      errorMessage: "PT_FOUR_DIGIT_ERROR_MESSAGE",
       value: "",
     },
     receiptNo: {

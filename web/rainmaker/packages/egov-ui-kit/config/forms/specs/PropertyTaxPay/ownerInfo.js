@@ -22,7 +22,9 @@ var _set2 = _interopRequireDefault(_set);
 
 var _actions = require("egov-ui-kit/redux/form/actions");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var formConfig = {
   name: "ownerInfo",
@@ -36,7 +38,7 @@ var formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
-      errorMessage: "Enter valid name (max length 64)"
+      errorMessage: "PT_NAME_ERROR_MESSAGE"
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -46,18 +48,19 @@ var formConfig = {
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
       pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[5-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number",
+      errorMessage: "PT_MOBILE_NUMBER_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
     ownerGuardian: {
       id: "ownerGuardian",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
       pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       required: true,
-      errorMessage: "Enter valid name (max length 64)",
+      errorMessage: "PT_NAME_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
     ownerEmail: {
@@ -78,7 +81,7 @@ var formConfig = {
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,256}$/,
-      errorMessage: "Enter valid address"
+      errorMessage: "PT_ADDRESS_ERROR_MESSAGE"
     },
     ownerRelationship: {
       id: "ownerRelationship",
@@ -86,7 +89,10 @@ var formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
-      dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
+      dropDownData: [
+        { label: "Father", value: "FATHER" },
+        { label: "Husband", value: "HUSBAND" }
+      ],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
     ownerCategory: {
@@ -101,36 +107,79 @@ var formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       updateDependentFields: function updateDependentFields(_ref) {
         var formKey = _ref.formKey,
-            sourceField = _ref.field,
-            dispatch = _ref.dispatch,
-            state = _ref.state;
+          sourceField = _ref.field,
+          dispatch = _ref.dispatch,
+          state = _ref.state;
         var value = sourceField.value;
 
         var dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
-          return docu.ownerTypeCode === value;
-        }).reduce(function (acc, curr) {
-          var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
-          var dropDownData = {
-            label: curr.name,
-            value: curr.code
-          };
-          currAcc.push(dropDownData);
-          return currAcc;
-        }, []);
+        var documentTypes = (0, _get3.default)(
+          state,
+          (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") +
+            ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument",
+          []
+        )
+          .filter(function(docu) {
+            return docu.ownerTypeCode === value;
+          })
+          .reduce(function(acc, curr) {
+            var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
+            var dropDownData = {
+              label: curr.name,
+              value: curr.code
+            };
+            currAcc.push(dropDownData);
+            return currAcc;
+          }, []);
 
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "value", (0, _get3.default)(documentTypes, "[0].value", "")));
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "dropDownData",
+            documentTypes
+          )
+        );
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "value",
+            (0, _get3.default)(documentTypes, "[0].value", "")
+          )
+        );
         switch (value) {
           case "NONE":
-            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, true);
+            (0, _enableDependentFields.setDependentFields)(
+              dependentFields,
+              dispatch,
+              formKey,
+              true
+            );
             break;
           case "WIDOW":
-            dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", "Female"));
-            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
+            dispatch(
+              (0, _actions.setFieldProperty)(
+                formKey,
+                "ownerGender",
+                "value",
+                "Female"
+              )
+            );
+            (0, _enableDependentFields.setDependentFields)(
+              dependentFields,
+              dispatch,
+              formKey,
+              false
+            );
             break;
           default:
-            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
+            (0, _enableDependentFields.setDependentFields)(
+              dependentFields,
+              dispatch,
+              formKey,
+              false
+            );
             break;
         }
       },
@@ -138,29 +187,64 @@ var formConfig = {
         var dispatch = store.dispatch;
         var state = store.getState();
         var fieldKey = action.fieldKey,
-            formKey = action.formKey,
-            propertyValue = action.propertyValue;
+          formKey = action.formKey,
+          propertyValue = action.propertyValue;
 
         var dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        var currentCategory = (0, _get3.default)(state, "form." + formKey + ".fields." + fieldKey + ".value", "NONE");
-        var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
-          return docu.ownerTypeCode === currentCategory;
-        }).reduce(function (acc, curr) {
-          var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
-          var dropDownData = {
-            label: curr.name,
-            value: curr.code
-          };
-          currAcc.push(dropDownData);
-          return currAcc;
-        }, []);
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "value", (0, _get3.default)(documentTypes, "[0].value", "")));
+        var currentCategory = (0, _get3.default)(
+          state,
+          "form." + formKey + ".fields." + fieldKey + ".value",
+          "NONE"
+        );
+        var documentTypes = (0, _get3.default)(
+          state,
+          (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") +
+            ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument",
+          []
+        )
+          .filter(function(docu) {
+            return docu.ownerTypeCode === currentCategory;
+          })
+          .reduce(function(acc, curr) {
+            var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
+            var dropDownData = {
+              label: curr.name,
+              value: curr.code
+            };
+            currAcc.push(dropDownData);
+            return currAcc;
+          }, []);
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "dropDownData",
+            documentTypes
+          )
+        );
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "value",
+            (0, _get3.default)(documentTypes, "[0].value", "")
+          )
+        );
         if (propertyValue.length > 0) {
           if (currentCategory === "NONE") {
-            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, true);
+            (0, _enableDependentFields.setDependentFields)(
+              dependentFields,
+              dispatch,
+              formKey,
+              true
+            );
           } else {
-            (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
+            (0, _enableDependentFields.setDependentFields)(
+              dependentFields,
+              dispatch,
+              formKey,
+              false
+            );
           }
         }
         return action;
@@ -168,7 +252,8 @@ var formConfig = {
     },
     ownerCategoryId: {
       id: "ownerCategoryId",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentUid",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].document.documentUid",
       required: true,
       type: "textfield",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
@@ -180,7 +265,8 @@ var formConfig = {
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentType",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].document.documentType",
       required: true,
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
@@ -193,17 +279,45 @@ var formConfig = {
       hideField: true,
       updateDependentFields: function updateDependentFields(_ref2) {
         var formKey = _ref2.formKey,
-            sourceField = _ref2.field,
-            dispatch = _ref2.dispatch,
-            state = _ref2.state;
+          sourceField = _ref2.field,
+          dispatch = _ref2.dispatch,
+          state = _ref2.state;
         var value = sourceField.value;
 
         if (value === "Aadhar") {
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "pattern", /^[0-9]{12}$/i));
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "errorMessage", "Enter valid 12 digits aadhar no"));
+          dispatch(
+            (0, _actions.setFieldProperty)(
+              formKey,
+              "ownerCategoryId",
+              "pattern",
+              /^[0-9]{12}$/i
+            )
+          );
+          dispatch(
+            (0, _actions.setFieldProperty)(
+              formKey,
+              "ownerCategoryId",
+              "errorMessage",
+              "Enter valid 12 digits aadhar no"
+            )
+          );
         } else {
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "pattern", ""));
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "errorMessage", ""));
+          dispatch(
+            (0, _actions.setFieldProperty)(
+              formKey,
+              "ownerCategoryId",
+              "pattern",
+              ""
+            )
+          );
+          dispatch(
+            (0, _actions.setFieldProperty)(
+              formKey,
+              "ownerCategoryId",
+              "errorMessage",
+              ""
+            )
+          );
         }
       }
     },
@@ -220,33 +334,60 @@ var formConfig = {
       value: "",
       updateDependentFields: function updateDependentFields(_ref3) {
         var formKey = _ref3.formKey,
-            sourceField = _ref3.field,
-            dispatch = _ref3.dispatch,
-            state = _ref3.state;
+          sourceField = _ref3.field,
+          dispatch = _ref3.dispatch,
+          state = _ref3.state;
         var iscorrAddrSameProp = sourceField.value;
 
         var _get = (0, _get3.default)(state, "form.propertyAddress.fields", {}),
-            _get$city = _get.city,
-            city = _get$city === undefined ? "" : _get$city,
-            _get$colony = _get.colony,
-            colony = _get$colony === undefined ? "" : _get$colony,
-            _get$houseNumber = _get.houseNumber,
-            houseNumber = _get$houseNumber === undefined ? "" : _get$houseNumber,
-            _get$mohalla = _get.mohalla,
-            mohalla = _get$mohalla === undefined ? "" : _get$mohalla,
-            _get$pincode = _get.pincode,
-            pincode = _get$pincode === undefined ? "" : _get$pincode,
-            _get$street = _get.street,
-            street = _get$street === undefined ? "" : _get$street;
+          _get$city = _get.city,
+          city = _get$city === undefined ? "" : _get$city,
+          _get$colony = _get.colony,
+          colony = _get$colony === undefined ? "" : _get$colony,
+          _get$houseNumber = _get.houseNumber,
+          houseNumber = _get$houseNumber === undefined ? "" : _get$houseNumber,
+          _get$mohalla = _get.mohalla,
+          mohalla = _get$mohalla === undefined ? "" : _get$mohalla,
+          _get$pincode = _get.pincode,
+          pincode = _get$pincode === undefined ? "" : _get$pincode,
+          _get$street = _get.street,
+          street = _get$street === undefined ? "" : _get$street;
 
-        var mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(function (mohallaData) {
-          return mohallaData.value === (0, _get3.default)(mohalla, "value", "");
-        });
+        var mohallaDetails =
+          mohalla &&
+          mohalla.dropDownData &&
+          mohalla.dropDownData.find(function(mohallaData) {
+            return (
+              mohallaData.value === (0, _get3.default)(mohalla, "value", "")
+            );
+          });
         if (iscorrAddrSameProp) {
-          var correspondingAddress = ["" + (0, _get3.default)(houseNumber, "value", ""), "" + (0, _get3.default)(colony, "value", ""), "" + (0, _get3.default)(street, "value", ""), "" + (0, _get3.default)(mohallaDetails, "label", ""), "" + (0, _get3.default)(city, "value", "").split(".").pop(), "" + (0, _get3.default)(pincode, "value", "")].join(", ").replace(/^(,\s)+|(,\s)+$/g, "").replace(/(,\s){2,}/g, ", ");
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", correspondingAddress));
+          var correspondingAddress = [
+            "" + (0, _get3.default)(houseNumber, "value", ""),
+            "" + (0, _get3.default)(colony, "value", ""),
+            "" + (0, _get3.default)(street, "value", ""),
+            "" + (0, _get3.default)(mohallaDetails, "label", ""),
+            "" +
+              (0, _get3.default)(city, "value", "")
+                .split(".")
+                .pop(),
+            "" + (0, _get3.default)(pincode, "value", "")
+          ]
+            .join(", ")
+            .replace(/^(,\s)+|(,\s)+$/g, "")
+            .replace(/(,\s){2,}/g, ", ");
+          dispatch(
+            (0, _actions.setFieldProperty)(
+              formKey,
+              "ownerAddress",
+              "value",
+              correspondingAddress
+            )
+          );
         } else {
-          dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", ""));
+          dispatch(
+            (0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", "")
+          );
         }
       }
     }
@@ -254,14 +395,36 @@ var formConfig = {
   beforeInitForm: function beforeInitForm(action, store, dispatch) {
     try {
       var state = store.getState();
-      var OwnerTypes = (0, _get3.default)(state, "common.generalMDMSDataById.OwnerType");
+      var OwnerTypes = (0, _get3.default)(
+        state,
+        "common.generalMDMSDataById.OwnerType"
+      );
       var financialYearFromQuery = window.location.search.split("FY=")[1];
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
-      var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(Object.values(OwnerTypes), financialYearFromQuery);
-      (0, _set2.default)(action, "form.fields.ownerCategory.dropDownData", dropdownData);
-      var ownerShipType = (0, _get3.default)(state, "form.ownershipType.fields.typeOfOwnership.value", "");
+      var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(
+        Object.values(OwnerTypes),
+        financialYearFromQuery
+      );
+      (0, _set2.default)(
+        action,
+        "form.fields.ownerCategory.dropDownData",
+        dropdownData
+      );
+      var ownerShipType = (0, _get3.default)(
+        state,
+        "form.ownershipType.fields.typeOfOwnership.value",
+        ""
+      );
       if (ownerShipType === "SINGLEOWNER") {
-        (0, _set2.default)(action, "form.fields.ownerGender.value", (0, _get3.default)(state, "form.ownerInfo.fields.ownerGender.value", "Male"));
+        (0, _set2.default)(
+          action,
+          "form.fields.ownerGender.value",
+          (0, _get3.default)(
+            state,
+            "form.ownerInfo.fields.ownerGender.value",
+            "Male"
+          )
+        );
       }
       return action;
     } catch (e) {
@@ -273,31 +436,95 @@ var formConfig = {
     try {
       var formKey = (0, _get3.default)(action, "form.name", "");
       var state = store.getState();
-      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerRelationship.value", "NONE") === "NONE") {
-        dispatch((0, _actions.handleFieldChange)(formKey, "ownerRelationship", "FATHER"));
+      if (
+        (0, _get3.default)(
+          state,
+          "form." + formKey + ".fields.ownerRelationship.value",
+          "NONE"
+        ) === "NONE"
+      ) {
+        dispatch(
+          (0, _actions.handleFieldChange)(
+            formKey,
+            "ownerRelationship",
+            "FATHER"
+          )
+        );
       }
 
-      if ((0, _get3.default)(state, "form." + formKey + ".fields.ownerCategory.value", "NONE") === "NONE") {
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", true));
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", true));
+      if (
+        (0, _get3.default)(
+          state,
+          "form." + formKey + ".fields.ownerCategory.value",
+          "NONE"
+        ) === "NONE"
+      ) {
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryId",
+            "hideField",
+            true
+          )
+        );
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "hideField",
+            true
+          )
+        );
       } else {
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryId", "hideField", false));
-        dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "hideField", false));
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryId",
+            "hideField",
+            false
+          )
+        );
+        dispatch(
+          (0, _actions.setFieldProperty)(
+            formKey,
+            "ownerCategoryIdType",
+            "hideField",
+            false
+          )
+        );
       }
-      var currentCategory = (0, _get3.default)(state, "form." + action.form.name + ".fields.ownerCategory.value", "NONE");
-      var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
-        return docu.ownerTypeCode === currentCategory;
-      }).reduce(function (acc, curr) {
-        var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
-        var dropDownData = {
-          label: curr.name,
-          value: curr.code
-        };
-        currAcc.push(dropDownData);
-        return currAcc;
-      }, []);
+      var currentCategory = (0, _get3.default)(
+        state,
+        "form." + action.form.name + ".fields.ownerCategory.value",
+        "NONE"
+      );
+      var documentTypes = (0, _get3.default)(
+        state,
+        (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") +
+          ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument",
+        []
+      )
+        .filter(function(docu) {
+          return docu.ownerTypeCode === currentCategory;
+        })
+        .reduce(function(acc, curr) {
+          var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
+          var dropDownData = {
+            label: curr.name,
+            value: curr.code
+          };
+          currAcc.push(dropDownData);
+          return currAcc;
+        }, []);
 
-      dispatch((0, _actions.setFieldProperty)(action.form.name, "ownerCategoryIdType", "dropDownData", documentTypes));
+      dispatch(
+        (0, _actions.setFieldProperty)(
+          action.form.name,
+          "ownerCategoryIdType",
+          "dropDownData",
+          documentTypes
+        )
+      );
       return action;
     } catch (e) {
       console.log(e);

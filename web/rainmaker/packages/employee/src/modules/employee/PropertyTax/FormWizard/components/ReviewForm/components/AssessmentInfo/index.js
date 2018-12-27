@@ -12,7 +12,7 @@ const AssessmentInfo = ({ icon, editIcon, component }) => {
             <span className="pt-rf-title-text">Assessment Info</span>
             <span className="pt-rf-edit-icon">{editIcon}</span>
           </div> */}
-          <div className="pt-rf-title rainmaker-displayInline">
+          <div className="pt-rf-title rainmaker-displayInline" style={{ justifyContent: "space-between" }}>
             <div className="rainmaker-displayInline" style={{ alignItems: "center" }}>
               <span className="pt-rf-icon">{icon}</span>
               <Label className="pt-rf-title-text" label="PT_ASSESMENT_INFO_SUB_HEADER" />

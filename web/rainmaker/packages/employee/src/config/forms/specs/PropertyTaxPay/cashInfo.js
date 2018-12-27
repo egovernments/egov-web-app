@@ -28,7 +28,7 @@ const formConfig = {
       jsonPath: "Receipt[0].Bill[0].mobileNumber",
       required: true,
       pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number",
+      errorMessage: "PT_MOBILE_NUMBER_ERROR_MESSAGE",
       value: "",
     },
   },
