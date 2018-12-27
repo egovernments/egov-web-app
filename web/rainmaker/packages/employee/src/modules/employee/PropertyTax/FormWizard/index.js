@@ -455,11 +455,12 @@ class FormWizard extends Component {
     this.setState({
       financialYearFromQuery,
     });
-    const customTitle = isReassesment
-      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
-      : `Property Assessment (${financialYearFromQuery}) : New Property`;
 
-    renderCustomTitleForPt(customTitle);
+    const titleObject = isReassesment
+      ? ["PT_PROPERTY_ASSESSMENT_HEADER", `(${financialYearFromQuery})`, ":", "PT_UNIQUE_ID", "-", propertyId]
+      : ["PT_PROPERTY_ASSESSMENT_HEADER", `(${financialYearFromQuery})`, ":", "PT_NEW_PROPERTY_HEADER"];
+
+    renderCustomTitleForPt({ titleObject });
     hideSpinner();
   };
 

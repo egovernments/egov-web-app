@@ -1,20 +1,18 @@
 import React from "react";
 import { Button } from "components";
-import BreadCrumbsForm from "./components/BreadCrumbsForm";
-import Declaration from "./components/Declaration";
 import Label from "egov-ui-kit/utils/translationNode";
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
 import "./index.css";
 
 const ptSteps = [
-  "Property Address",
-  "Assessment Information",
-  "Owner Information",
-  "Review & Pay",
-  "Payment Details"
-]
+  "PT_PROPERTY_ADDRESS_SUB_HEADER",
+  "PT_ASSESMENT_INFO_SUB_HEADER",
+  "PT_OWNER_INFORMATION_FORM_HEADING",
+  "PT_REVIEW_PAY_FORM_HEADING",
+  "PT_PAYMENT_DETAILS",
+];
 
 const WizardComponent = ({
   content,
@@ -30,7 +28,7 @@ const WizardComponent = ({
   backLabel,
   nextLabel,
   history,
-  nextButtonEnabled
+  nextButtonEnabled,
 }) => {
   return (
     <div className={`wizard-cont active-step-${selected}`}>
@@ -39,14 +37,16 @@ const WizardComponent = ({
         activeStep={selected}
         alternativeLabel
         style={{
-          background:"inherit"
+          background: "inherit",
         }}
         className="stepper-container"
       >
-        {ptSteps.map(label => {
+        {ptSteps.map((label) => {
           return (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel>
+                <Label label={label} />
+              </StepLabel>
             </Step>
           );
         })}

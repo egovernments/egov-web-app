@@ -1,32 +1,23 @@
 import React from "react";
 import { Card } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 
 import "./index.css";
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
 
 const PropertyAddress = ({ form, icon, editIcon, component }) => {
   return (
     <Card
       textChildren={
         <div>
-          <div className="pt-rf-title">
-            <span className="pt-rf-icon">{icon}</span>
-            <span className="pt-rf-title-text">Property Address</span>
-            <span className="pt-rf-edit-icon">{editIcon}</span>
+          <div className="pt-rf-title rainmaker-displayInline">
+            <div className="rainmaker-displayInline" style={{ alignItems: "center" }}>
+              <span className="pt-rf-icon">{icon}</span>
+              <Label className="pt-rf-title-text" label="PT_PROPERTY_ADDRESS_SUB_HEADER" />
+            </div>
+            <span style={{ alignItems: "right" }}>{editIcon}</span>
           </div>
           {component}
-          {/* <div className="pt-review-form col-xs-12">
-            {Object.keys(fields).map((fieldKey, index) => {
-              const field = { ...fields[fieldKey] };
-              field.disabled = true;
-              return (
-                <div key={index} className={index === 0 ? "col-xs-12" : "col-xs-6"}>
-                  <div className="pt-review-form-field">
-                    <Field fieldKey={fieldKey} field={field} />
-                  </div>
-                </div>
-              );
-            })}
-          </div> */}
         </div>
       }
     />

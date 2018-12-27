@@ -69,6 +69,7 @@ var withAuthorization = function withAuthorization() {
 
         _this.state = {
           titleAddon: "",
+          titleObject: [],
           sortPopOpen: false
         };
         _this.style = {
@@ -102,9 +103,16 @@ var withAuthorization = function withAuthorization() {
           });
         };
 
-        _this.renderCustomTitleForPt = function (title) {
-          var titleAddon = title ? title : "";
-          _this.setState({ titleAddon: titleAddon });
+        _this.renderCustomTitleForPt = function (_ref) {
+          var title = _ref.title,
+              titleObject = _ref.titleObject;
+
+          if (title) {
+            // const titleAddon = title ? title : "";
+            _this.setState({ titleAddon: titleAddon });
+          } else if (titleObject) {
+            _this.setState({ titleObject: titleObject });
+          }
         };
 
         if (typeof androidAppProxy !== "undefined" && window.androidAppProxy.smsReceiverRunning()) {
@@ -150,7 +158,9 @@ var withAuthorization = function withAuthorization() {
               authenticated = _props.authenticated,
               userInfo = _props.userInfo,
               complaints = _props.complaints;
-          var titleAddon = this.state.titleAddon;
+          var _state = this.state,
+              titleAddon = _state.titleAddon,
+              titleObject = _state.titleObject;
           var style = this.style;
 
           var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") || this.roleFromUserInfo(userInfo, "DGRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : this.roleFromUserInfo(userInfo, "PGR-ADMIN") ? "pgr-admin" : "";
@@ -173,8 +183,9 @@ var withAuthorization = function withAuthorization() {
             { className: "rainmaker-header-cont", style: { position: "relative" } },
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, {
               title: title,
-              titleAddon: role !== hideFor && titleAddon && titleAddon,
-              userInfo: userInfo,
+              titleAddon: role !== hideFor && titleAddon && titleAddon
+              //titleObject={role !== hideFor && titleObject && titleObject}
+              , userInfo: userInfo,
               role: role,
               options: options,
               history: history,
@@ -227,7 +238,21 @@ var withAuthorization = function withAuthorization() {
                         dark: true,
                         bold: true,
                         fontSize: 20
-                      })
+                      }),
+                      titleObject && _react2.default.createElement(
+                        "div",
+                        { className: "rainmaker-displayInline" },
+                        titleObject.map(function (item) {
+                          return _react2.default.createElement(_translationNode2.default, {
+                            className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                            label: item,
+                            dark: true,
+                            bold: true,
+                            fontSize: 20,
+                            containerStyle: { marginRight: 5 }
+                          });
+                        })
+                      )
                     ),
                     sortButton && _react2.default.createElement(
                       "div",
@@ -269,8 +294,8 @@ var withAuthorization = function withAuthorization() {
           authenticated = _state$auth.authenticated,
           userInfo = _state$auth.userInfo;
 
-      var _ref = state || {},
-          complaints = _ref.complaints;
+      var _ref2 = state || {},
+          complaints = _ref2.complaints;
 
       return { authenticated: authenticated, userInfo: userInfo };
     };

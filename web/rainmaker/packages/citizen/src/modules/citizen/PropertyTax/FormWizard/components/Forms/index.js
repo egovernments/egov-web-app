@@ -16,7 +16,6 @@ const options = [
 
 const styles = {
   labelStyle: {
-    color: "rgb(0, 188, 209)",
     font: "12px",
     letterSpacing: 0.6,
     marginBottom: 5,
@@ -61,24 +60,23 @@ const OwnerInformation = ({
         <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
-            {!disabled &&
-              deleteBtn && (
-                <div
-                  className="pt-ownerinfo-deletebtn"
-                  onClick={() => {
-                    handleRemoveOwner(formId, formKey);
-                  }}
-                >
-                  <Icon action="content" name="clear" />
-                </div>
-              )}
+            {!disabled && deleteBtn && (
+              <div
+                className="pt-ownerinfo-deletebtn"
+                onClick={() => {
+                  handleRemoveOwner(formId, formKey);
+                }}
+              >
+                <Icon action="content" name="clear" />
+              </div>
+            )}
           </div>
           <div className={`${formKey} col-sm-12`}>
             <div className="col-sm-6">
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div className="col-sm-6" style={{ paddingTop: "10px", paddingBottom: "5px" }}>
-              <Label label={"Gender"} required fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+              <Label label={"PT_FORM3_GENDER"} required fontSize={12} labelStyle={styles.labelStyle} bold={true} />
               <RadioButton
                 id="gender-selection"
                 name="gender-selection"
@@ -124,17 +122,15 @@ const OwnerInformation = ({
                 disabled={disabled}
                 className="ownerCategoryIdType"
               />
-              {fields["ownerCategoryIdType"] &&
-                fields["ownerCategoryIdType"].toolTip &&
-                !fields["ownerCategoryIdType"].hideField && (
-                  <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryIdType"].toolTipMessage} />
-                )}
+              {fields["ownerCategoryIdType"] && fields["ownerCategoryIdType"].toolTip && !fields["ownerCategoryIdType"].hideField && (
+                <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryIdType"].toolTipMessage} />
+              )}
             </div>
             <div className="col-sm-6" style={{ display: "flex", alignItems: "center" }}>
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              {fields["ownerCategoryId"] &&
-                fields["ownerCategoryId"].toolTip &&
-                !fields["ownerCategoryId"].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />}
+              {fields["ownerCategoryId"] && fields["ownerCategoryId"].toolTip && !fields["ownerCategoryId"].hideField && (
+                <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />
+              )}
             </div>
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
