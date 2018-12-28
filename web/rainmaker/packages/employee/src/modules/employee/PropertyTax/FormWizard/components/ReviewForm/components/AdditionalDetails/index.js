@@ -77,7 +77,7 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                 id="amount-to-be-paid"
                 onChange={(e, value) => handleFieldChange(e, value)}
                 value={value}
-                floatingLabelText="PT_AMOUNT_TO_PAY_INR"
+                floatingLabelText={<Label label="PT_AMOUNT_TO_PAY_INR" color="rgba(0,0,0,0.60)" />}
                 floatingLabelShrinkStyle={{
                   fontSize: "12px",
                   transform: "scale(1) translate(0px, -16px)",

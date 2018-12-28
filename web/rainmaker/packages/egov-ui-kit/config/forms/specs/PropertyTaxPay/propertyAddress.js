@@ -137,7 +137,7 @@ var formConfig = {
       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
       numcols: 6,
       //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
-      errorMessage: "Pincode should be 6 digits",
+      errorMessage: "PT_PINCODE_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: "^([0-9]){6}$"
     },

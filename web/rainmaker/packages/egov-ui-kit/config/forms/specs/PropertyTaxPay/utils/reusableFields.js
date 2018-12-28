@@ -50,7 +50,7 @@ var plotSize = exports.plotSize = {
     type: "number",
     floatingLabelText: "PT_FORM2_PLOT_SIZE",
     hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
-    errorMessage: "Enter a valid Plot Size",
+    errorMessage: "PT_PLOT_SIZE_ERROR_MESSAGE",
     required: true,
     fullWidth: true,
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
@@ -174,7 +174,7 @@ var builtArea = exports.builtArea = {
     type: "number",
     floatingLabelText: "PT_FORM2_BUILT_AREA",
     hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
-    errorMessage: "Enter a valid built area size",
+    errorMessage: "PT_BUILT_AREA_ERROR_MESSAGE",
     toolTip: true,
     toolTipMessage: "PT_BUILT_UP_AREA_TOOLTIP_MESSAGE",
     required: true,
@@ -207,7 +207,7 @@ var superArea = exports.superArea = {
       dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
     },
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
-    errorMessage: "Enter a valid super area size"
+    errorMessage: "PT_SUPER_AREA_ERROR_MESSAGE"
   }
 };
 
@@ -651,7 +651,7 @@ var pincode = exports.pincode = {
     hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
     numcols: 6,
     //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
-    errorMessage: "Pincode should be 6 digits",
+    errorMessage: "PT_PINCODE_ERROR_MESSAGE",
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     pattern: "^([0-9]){6}$"
   }
