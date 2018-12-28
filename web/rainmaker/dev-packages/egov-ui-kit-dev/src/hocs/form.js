@@ -3,7 +3,6 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm, deleteForm } from "egov-ui-kit/redux/form/actions";
 
-
 const form = ({ formKey, path, copyName, rowData, isCoreConfiguration, edit = false, ...rest }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
@@ -94,11 +93,14 @@ const form = ({ formKey, path, copyName, rowData, isCoreConfiguration, edit = fa
       handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
       submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
       initForm: (form) => dispatch(initForm(form)),
-      deleteForm: () => dispatch(deleteForm(formKey))
+      deleteForm: () => dispatch(deleteForm(formKey)),
     };
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(FormWrapper);
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FormWrapper);
 };
 
 export default form;

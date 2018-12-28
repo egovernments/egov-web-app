@@ -28,8 +28,8 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
                     fields[fieldKey].hideField
                       ? {}
                       : fields[fieldKey].toolTip
-                        ? { display: "flex", alignItems: "center", height: 80 }
-                        : { height: 80 }
+                      ? { display: "flex", alignItems: "center", height: 80 }
+                      : { height: 80 }
                   }
                   className={
                     fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "hidden-field" : `col-sm-${fields[fieldKey].numcols}`) : `col-sm-6`
@@ -42,8 +42,9 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
                     disabled={disabled}
                     className={className}
                   />
-                  {fields[fieldKey].toolTip &&
-                    !fields[fieldKey].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
+                  {fields[fieldKey].toolTip && !fields[fieldKey].hideField && (
+                    <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />
+                  )}
                 </div>
               )
               // </div>

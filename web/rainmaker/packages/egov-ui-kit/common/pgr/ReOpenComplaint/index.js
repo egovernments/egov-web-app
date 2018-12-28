@@ -48,7 +48,7 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ReopenComplaintFormHOC = (0, _form2.default)({ formKey: "reopenComplaint" })(_ReopenComplaintForm2.default);
+var ReopenComplaintFormHOC = (0, _form2.default)({ formKey: "reopenComplaint", isCoreConfiguration: true, path: "pgr" })(_ReopenComplaintForm2.default);
 
 var ReOpenComplaint = function (_Component) {
   (0, _inherits3.default)(ReOpenComplaint, _Component);

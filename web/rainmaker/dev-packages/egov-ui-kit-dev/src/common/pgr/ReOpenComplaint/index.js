@@ -8,7 +8,7 @@ import { fileUpload, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import "./index.css";
 
-const ReopenComplaintFormHOC = formHoc({ formKey: "reopenComplaint" })(ReopenComplaintForm);
+const ReopenComplaintFormHOC = formHoc({ formKey: "reopenComplaint", isCoreConfiguration: true, path: "pgr" })(ReopenComplaintForm);
 
 class ReOpenComplaint extends Component {
   state = {

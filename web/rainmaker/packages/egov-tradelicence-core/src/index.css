@@ -168,9 +168,9 @@ input[type="date"]:valid::before {
   #custom-atoms-applicationSuccessCard {
     margin-bottom: 190px;
   }
-  .MuiFormControl-fullWidth-296 {
+  /* .MuiFormControl-fullWidth-296 {
     width: 100% !important;
-  }
+  } */
 }
 
 @media only screen and (min-width: 768px) {

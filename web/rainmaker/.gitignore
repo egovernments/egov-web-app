@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/packages/egov-ui-kit
+/packages/mihy-ui-framework
 
 npm-debug.log*
 yarn-debug.log*

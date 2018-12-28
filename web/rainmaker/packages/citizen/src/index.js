@@ -23,7 +23,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 const muiTheme = getMuiTheme(theme);
 
 // to eliminate the click delay
-injectTapEventPlugin();
+// injectTapEventPlugin();
 
 // load material icons
 WebFont.load({

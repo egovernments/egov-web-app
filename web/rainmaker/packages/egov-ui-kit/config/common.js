@@ -10,3 +10,6 @@ var commonConfig = {
 };
 
 exports.default = commonConfig;
+var screenConfigPaths = exports.screenConfigPaths = {
+  pgrCitizenConfigPath: "pgr-citizen/config/forms/specs/"
+};

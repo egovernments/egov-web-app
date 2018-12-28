@@ -90,7 +90,7 @@ class CommonShareContainer extends React.Component {
 }
 
 CommonShareContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

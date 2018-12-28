@@ -56,7 +56,7 @@ var imageStyles = {
   marginRight: "8px"
 };
 
-var WriteCommentHOC = (0, _form2.default)({ formKey: "comment" })(_WriteComment2.default);
+var WriteCommentHOC = (0, _form2.default)({ formKey: "comment", isCoreConfiguration: true, path: "pgr" })(_WriteComment2.default);
 
 var Comments = function (_Component) {
   (0, _inherits3.default)(Comments, _Component);

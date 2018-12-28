@@ -5,3 +5,7 @@ const commonConfig = {
 };
 
 export default commonConfig;
+
+export const screenConfigPaths = {
+  pgrCitizenConfigPath: "pgr-citizen/config/forms/specs/",
+};

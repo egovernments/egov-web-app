@@ -14,7 +14,7 @@ const imageStyles = {
   marginRight: "8px",
 };
 
-const WriteCommentHOC = formHoc({ formKey: "comment" })(WriteComment);
+const WriteCommentHOC = formHoc({ formKey: "comment", isCoreConfiguration: true, path: "pgr" })(WriteComment);
 
 class Comments extends Component {
   render() {
@@ -49,8 +49,8 @@ class Comments extends Component {
                     comment.role === "Citizen Service Representative"
                       ? `${complainant} (From citizen service desk)`
                       : comment.name
-                        ? `${comment.name} ${comment.designation && `(${comment.designation})`}`
-                        : ""
+                      ? `${comment.name} ${comment.designation && `(${comment.designation})`}`
+                      : ""
                   }
                 />
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
