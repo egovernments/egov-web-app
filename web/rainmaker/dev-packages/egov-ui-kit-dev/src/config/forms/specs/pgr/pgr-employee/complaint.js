@@ -131,7 +131,7 @@ const formConfig = {
       jsonPath: "services[0].addressDetail.houseNoAndStreetName",
       floatingLabelText: "CS_ADDCOMPLAINT_HOUSE_NO",
       hintText: "CS_ADDCOMPLAINT_HOUSE_NO_PLACEHOLDER",
-      errorMessage: "House no should be less than 100 characters",
+      errorMessage: "PT_HOUSE_NO_ERROR_MESSAGE",
       value: "",
     },
     landmark: {

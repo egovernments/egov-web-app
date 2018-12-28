@@ -26,8 +26,8 @@ var formConfig = {
       jsonPath: "propertyDetails[0].institution.name",
       type: "textfield",
       floatingLabelText: "Name of Institution",
-      hintText: "Enter Institute's name",
-      errorMessage: "Enter a valid name",
+      hintText: "PT_INSTITUTION_NAME_HINT_TEXT",
+      errorMessage: "PT_NAME_ERROR_MESSAGE",
       numcols: 6,
       required: true
     },

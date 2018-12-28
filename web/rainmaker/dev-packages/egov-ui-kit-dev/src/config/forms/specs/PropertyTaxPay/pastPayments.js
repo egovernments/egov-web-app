@@ -17,7 +17,7 @@ const formConfig = {
       required: true,
       floatingLabelText: "Amount Paid",
       hintText: "Enter the amount paid",
-      errorMessage: "Enter valid details",
+      errorMessage: "PT_VALID_DETAILS",
       pattern: "^[0-9]+$",
     },
     misplacedReceipt: {
@@ -52,7 +52,7 @@ const formConfig = {
         ...config.fields,
         year: {
           ...config.fields.year,
-          jsonPath: `abc[${index}].xyzz`
+          jsonPath: `abc[${index}].xyzz`,
         },
       },
     };

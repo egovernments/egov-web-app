@@ -171,7 +171,7 @@ export const ownerInfoInstitutional = {
           required: true,
           pattern: getPattern("Date"),
           isDOB: true,
-          errorMessage: "Please enter valid Date of Birth!",
+          errorMessage: "TL_DOB_ERROR_MESSAGE",
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
           props: {
             inputProps: {
@@ -179,13 +179,6 @@ export const ownerInfoInstitutional = {
             }
           }
         })
-        // beforeFieldChange: (action, state, dispatch) => {
-        //   let currentDate = new Date().getTime();
-        //   let ownerDOB = new Date(action.value).getTime();
-        //   if (ownerDOB > currentDate) {
-        //     action.value = null;
-        //   }
-        // }
       },
       getOwnerEmailField,
       ownerAddress: getTextField({
@@ -246,7 +239,7 @@ const OwnerInfoCard = {
             required: true,
             pattern: getPattern("Date"),
             isDOB: true,
-            errorMessage: "Please enter valid Date of Birth!",
+            errorMessage: "TL_DOB_ERROR_MESSAGE",
             jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
             props: {
               inputProps: {

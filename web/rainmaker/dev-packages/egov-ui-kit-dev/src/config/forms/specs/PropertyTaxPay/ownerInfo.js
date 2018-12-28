@@ -46,7 +46,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_EMAIL_ID",
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
-      errorMessage: "Enter valid email id",
+      errorMessage: "PT_EMAIL_ID_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/,
     },

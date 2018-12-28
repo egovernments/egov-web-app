@@ -1310,7 +1310,7 @@ class FormWizard extends Component {
     const { isFullPayment, partialAmountError, totalAmountToBePaid, termsAccepted, selected } = this.state;
     if (!termsAccepted) {
       this.setState({
-        termsError: "Please check the declaration box to proceed futher",
+        termsError: "PT_CHECK_DECLARATION_BOX",
       });
       alert("Please check the declaration box to proceed futher");
       return;
@@ -1321,13 +1321,6 @@ class FormWizard extends Component {
     }
     if (!isFullPayment && partialAmountError) return;
     this.updateIndex(selected + 1);
-    {
-      /*if (totalAmountToBePaid % 1 === 0) {
-      this.setState({ dialogueOpen: true });
-    } else {
-      alert("Amount cannot be a fraction!");
-    }*/
-    }
   };
 
   render() {

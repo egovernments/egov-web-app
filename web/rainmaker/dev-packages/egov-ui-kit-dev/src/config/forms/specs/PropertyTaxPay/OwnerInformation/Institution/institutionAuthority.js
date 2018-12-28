@@ -37,7 +37,7 @@ const formConfig = {
       hintText: "Enter Landline No.",
       required: true,
       pattern: /^[0-9]{11}$/i,
-      errorMessage: "Enter valid landline number",
+      errorMessage: "PT_LAND_NUMBER_ERROR_MESSAGE",
       required: true,
     },
     email: {
@@ -46,7 +46,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_EMAIL_ID",
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
-      errorMessage: "Enter valid email id",
+      errorMessage: "PT_EMAIL_ID_ERROR_MESSAGE",
       pattern: /^(([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     address: {

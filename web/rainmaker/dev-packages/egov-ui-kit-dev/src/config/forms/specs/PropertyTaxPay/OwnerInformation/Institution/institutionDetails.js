@@ -1,7 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import get from "lodash/get"
-import { updateInstituteType } from "../../utils/formConfigModifier"
-import set from "lodash/set"
+import get from "lodash/get";
+import { updateInstituteType } from "../../utils/formConfigModifier";
+import set from "lodash/set";
 
 const formConfig = {
   name: "institutionDetails",
@@ -11,8 +11,8 @@ const formConfig = {
       jsonPath: "propertyDetails[0].institution.name",
       type: "textfield",
       floatingLabelText: "Name of Institution",
-      hintText: "Enter Institute's name",
-      errorMessage: "Enter a valid name",
+      hintText: "PT_INSTITUTION_NAME_HINT_TEXT",
+      errorMessage: "PT_NAME_ERROR_MESSAGE",
       numcols: 6,
       required: true,
     },
@@ -52,9 +52,9 @@ const formConfig = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
     const value = get(state, "form.ownershipType.fields.typeOfOwnership.value", "");
-    const  institutedropDown = updateInstituteType(state, value)
-    set(action, "form.fields.type.dropDownData", institutedropDown)
-    return action
+    const institutedropDown = updateInstituteType(state, value);
+    set(action, "form.fields.type.dropDownData", institutedropDown);
+    return action;
   },
   action: "",
   redirectionRoute: "",

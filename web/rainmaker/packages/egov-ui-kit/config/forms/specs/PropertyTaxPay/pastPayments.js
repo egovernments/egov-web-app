@@ -29,7 +29,7 @@ var formConfig = {
       required: true,
       floatingLabelText: "Amount Paid",
       hintText: "Enter the amount paid",
-      errorMessage: "Enter valid details",
+      errorMessage: "PT_VALID_DETAILS",
       pattern: "^[0-9]+$"
     },
     misplacedReceipt: {
