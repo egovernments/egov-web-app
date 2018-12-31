@@ -14,34 +14,6 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_OWNERSHIP_TYPE",
       hintText: "PT_FORM3_OWNERSHIP_TYPE_PLACEHOLDER",
-      // floatingLabelText: "Type of Ownership",
-      // hintText: "Select Ownership Type",
-      // dropDownData: [
-      //   { label: "Individual Owner", value: "IND" },
-      //   { label: "Multiple Owners", value: "MUL" },
-      //   { label: "Institution", value: "Institution" },
-      // ],
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "OwnerShipCategory",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.PropertyTax.OwnerShipCategory"],
-      // },
       numcols: 6,
       required: true,
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {

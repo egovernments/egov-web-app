@@ -5,6 +5,7 @@ import { createReceiptDetails } from "../../../PaymentStatus/Components/createRe
 import generateReceipt from "../../../PaymentStatus/Components/receiptsPDF";
 import React, { Component } from "react";
 import get from "lodash/get";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const styles = {
   customWidth: {
@@ -63,13 +64,6 @@ class DropDown extends Component {
       case "Re-Assess":
         localStorage.setItem("draftId", "");
         history &&
-          //&& citizenUserId
-          // ? history.push(
-          //     `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-          //       item.assessmentNo
-          //     }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-          //   )
-          // :
           history.push(
             `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
               item.propertyId
@@ -91,13 +85,6 @@ class DropDown extends Component {
       case "Complete Payment":
         localStorage.setItem("draftId", "");
         history &&
-          // citizenUserId
-          //   ? history.push(
-          //       `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-          //         item.assessmentNo
-          //       }&isReassesment=true&isCompletePayment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-          //     )
-          //   :
           history.push(
             `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
               item.assessmentNo
@@ -124,7 +111,6 @@ class DropDown extends Component {
           return acc;
         }, 0);
       const totalAmountToPay = lastAmount + totalAmountBeforeLast;
-      // const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
       const totalAmountPaid =
         payload &&
         payload.Receipt &&
@@ -159,7 +145,7 @@ class DropDown extends Component {
         <SelectField
           autoWidth={true}
           className="pt-action-dropDown"
-          hintText={"Select action"}
+          hintText={<Label label="PT_SELECT_ACTION" />}
           underlineStyle={styles.underlineStyle}
           iconStyle={styles.iconStyle}
           style={styles.customWidth}

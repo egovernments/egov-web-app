@@ -14,6 +14,10 @@ var _CityPicker = require("../../../common/CityPicker");
 
 var _CityPicker2 = _interopRequireDefault(_CityPicker);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ProfileForm = function ProfileForm(_ref) {
@@ -33,8 +37,8 @@ var ProfileForm = function ProfileForm(_ref) {
         id: "profile-form-name",
         fullWidth: true,
         value: name,
-        hintText: "Enter your Name",
-        floatingLabelText: "Name",
+        hintText: _react2.default.createElement(_translationNode2.default, { label: "CORE_COMMON_NAME_PLACEHOLDER" }),
+        floatingLabelText: _react2.default.createElement(_translationNode2.default, { label: "PT_OWNER_NAME" }),
         onChange: handleNameChange,
         isRequired: true
       }),
@@ -44,8 +48,8 @@ var ProfileForm = function ProfileForm(_ref) {
         id: "profile-form-email",
         fullWidth: true,
         value: emailId,
-        floatingLabelText: "Email Id",
-        hintText: "Enter your Email Id",
+        floatingLabelText: _react2.default.createElement(_translationNode2.default, { label: "CS_PROFILE_EMAIL" }),
+        hintText: _react2.default.createElement(_translationNode2.default, { label: "CS_PROFILE_EMAIL_PLACEHOLDER" }),
         onChange: handleMailChange
       })
     ),

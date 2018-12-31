@@ -54,11 +54,15 @@ var _lodash = require("lodash");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var styles = {
+var styles = (0, _defineProperty3.default)({
   inputStyle: {
     color: "white !important",
     marginTop: "0px",
@@ -260,7 +264,7 @@ var ActionMenuComp = function (_Component) {
 
       var actionList = actionListArr;
       var menuTitle = path.split(".");
-
+      var activeItmem = localStorage.getItem("menuName");
       var showMenuItem = function showMenuItem() {
         var navigationURL = window.location.href.split("/").pop();
         if (searchText.length == 0) {
@@ -443,6 +447,16 @@ var ActionMenuComp = function (_Component) {
             className: "actionMenuMenu",
             menuItemStyle: { paddingLeft: "0", width: "100%" }
           },
+          !path && _react2.default.createElement(_components.TextFieldIcon, {
+            value: searchText,
+            hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),
+            iconStyle: styles.inputIconStyle,
+            inputStyle: styles.inputStyle,
+            textFieldStyle: styles.textFieldStyle,
+            onChange: function onChange(e) {
+              _this2.handleChange(e);
+            }
+          }),
           (path || searchText) && _react2.default.createElement(
             "div",
             {

@@ -85,7 +85,7 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label label={description}  />
+                  <Label label={description} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -111,11 +111,11 @@ export default class ShowField extends Component {
               required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description}   containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
-              hintText="dd/mm/yy"
+              hintText={<Label label="PT_DATE_HINT_TEXT" />}
               value={obj.value ? obj.value : {}}
               errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError : "") : ""}
               formatDate={(date) => {
@@ -139,7 +139,7 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <DropDown
               // className="custom-form-control-for-select"
-              hintText="Select"
+              hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
               disabled={obj.disabled ? true : false}
               id={obj.label.split(".").join("-")}
               fullWidth={true}
@@ -147,7 +147,7 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description}  containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -198,7 +198,7 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
               // className="custom-form-control-for-select"
-              hintText="Select"
+              hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
               underlineDisabledStyle={{ background: "blue" }}
               disabled={obj.disabled ? true : false}
               id={obj.label.split(".").join("-")}
@@ -217,7 +217,9 @@ export default class ShowField extends Component {
               }}
               maxHeight={200}
             >
-              {dropDownData.map((dd, index) => <MenuItem value={translate(dd.key)} key={index} primaryText={translate(dd.value)} />)}
+              {dropDownData.map((dd, index) => (
+                <MenuItem value={translate(dd.key)} key={index} primaryText={translate(dd.value)} />
+              ))}
             </SelectField>
           </Col>
         );
@@ -227,7 +229,7 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <SelectField
               // className="custom-form-control-for-select"
-              hintText="Select"
+              hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               multiple={true}
@@ -275,9 +277,7 @@ export default class ShowField extends Component {
         );
 
       case "boundarylist":
-        return (
-            <UiBoundary item={boundaryConfig} handleFieldChange={this.props.handler} />
-        );
+        return <UiBoundary item={boundaryConfig} handleFieldChange={this.props.handler} />;
 
       default:
         return <div />;

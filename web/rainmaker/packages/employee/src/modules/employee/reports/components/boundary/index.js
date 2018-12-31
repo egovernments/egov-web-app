@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import { translate, validate_fileupload } from '../../common/common';
 // import RaisedButton from 'material-ui/RaisedButton';
 // import { DropDown} from "components";
-import { SelectField, MenuItem} from "material-ui";
+import { SelectField, MenuItem } from "material-ui";
 import { Row, Col } from "react-bootstrap";
 import _ from "lodash";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -314,7 +314,7 @@ class UiBoundary extends Component {
           <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
         </div>
       ),
-      hintText: "-- Please Select --",
+      hintText: "PT_COMMON_PLEASE_SELECT",
     };
     return (
       <SelectField
@@ -409,4 +409,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(connect(null, null)(UiBoundary));
+export default withRouter(
+  connect(
+    null,
+    null
+  )(UiBoundary)
+);

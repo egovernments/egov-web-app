@@ -75,6 +75,7 @@ class ViewBreakupContainer extends React.Component {
         <Grid sm={10}>
           <LabelContainer
             labelName={"Total"}
+            labelKey={"PT_FORM4_TOTAL"}
             style={
               style
                 ? style
@@ -155,8 +156,9 @@ class ViewBreakupContainer extends React.Component {
               </div>
               {tradeUnitData && tradeUnitData.length > 0 && (
                 <div style={{ paddingBottom: "12px" }}>
-                  <Label
-                    label={"Trade Unit"}
+                  <LabelContainer
+                    labelName={"Trade Unit"}
+                    labelKey={"TL_NEW_TRADE_DETAILS_TRADE_UNIT_HEADER"}
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",

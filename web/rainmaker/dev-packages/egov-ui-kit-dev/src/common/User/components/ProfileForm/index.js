@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, TextField } from "components";
 import CityPicker from "../../../common/CityPicker";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
   return (
@@ -11,8 +12,8 @@ const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
           id="profile-form-name"
           fullWidth={true}
           value={name}
-          hintText="Enter your Name"
-          floatingLabelText="Name"
+          hintText={<Label label="CORE_COMMON_NAME_PLACEHOLDER" />}
+          floatingLabelText={<Label label="PT_OWNER_NAME" />}
           onChange={handleNameChange}
           isRequired={true}
         />
@@ -22,8 +23,8 @@ const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
           id="profile-form-email"
           fullWidth={true}
           value={emailId}
-          floatingLabelText="Email Id"
-          hintText="Enter your Email Id"
+          floatingLabelText={<Label label="CS_PROFILE_EMAIL" />}
+          hintText={<Label label="CS_PROFILE_EMAIL_PLACEHOLDER" />}
           onChange={handleMailChange}
         />
       </form>

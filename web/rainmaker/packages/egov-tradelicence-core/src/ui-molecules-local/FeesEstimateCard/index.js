@@ -121,7 +121,12 @@ function FeesEstimateCard(props) {
           <Divider style={{ marginBottom: 16 }} />
           <Grid container>
             <Grid item xs={6}>
-              <Typography variant="body2">Total Amount</Typography>
+              <Typography variant="body2">
+                <LabelContainer
+                  labelName="Total Amount"
+                  labelKey="TL_COMMON_TOTAL_AMT"
+                />
+              </Typography>
             </Grid>
             <Grid
               item
@@ -141,7 +146,10 @@ function FeesEstimateCard(props) {
           align="right"
           className="tl-total-amount-text"
         >
-          Total Amount
+          <LabelContainer
+            labelName="Total Amount"
+            labelKey="TL_COMMON_TOTAL_AMT"
+          />
         </Typography>
         <Typography className={totalHeadClassName} align="right">
           Rs {total}

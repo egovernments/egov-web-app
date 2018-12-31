@@ -18,17 +18,17 @@ var formConfig = {
       type: "textfield",
       jsonPath: "",
       required: true,
-      floatingLabelText: "Receipt No.",
+      floatingLabelText: "TL_EMP_APPLICATION_RCPT_NO",
       errorMessage: "",
-      hintText: "Enter receipt no."
+      hintText: "PT_RECEIPT_NUMBER_HINT_TEXT"
     },
     amount: {
       id: "amount-paid",
       type: "textfield",
       jsonPath: "",
       required: true,
-      floatingLabelText: "Amount Paid",
-      hintText: "Enter the amount paid",
+      floatingLabelText: "PT_ADVANCE_CARRYFORWARD",
+      hintText: "PT_AMOUNT_PAID_HINT_TEXT",
       errorMessage: "PT_VALID_DETAILS",
       pattern: "^[0-9]+$"
     },
@@ -37,7 +37,7 @@ var formConfig = {
       type: "checkbox",
       jsonPath: "",
       errorMessage: "",
-      floatingLabelText: "Misplaced Receipt",
+      floatingLabelText: "PT_MISPLACED_RECEIPT_FLOATING_LABEL",
       value: "misplaced Receipt"
     }
   },

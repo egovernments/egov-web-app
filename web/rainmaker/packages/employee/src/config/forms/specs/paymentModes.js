@@ -9,8 +9,8 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.instrumentType.name",
       required: true,
       type: "singleValueList",
-      floatingLabelText: "Mode of payment",
-      hintText: "Select payment mode",
+      floatingLabelText: "PT_MODE_OF_PAYMENT",
+      hintText: "PT_SELECT_PAYMENT_MODE",
       dropDownData: [
         { label: "Cash", value: "Cash" },
         { label: "DD", value: "DD" },

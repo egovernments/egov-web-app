@@ -35,10 +35,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Application Submitted Successfully",
-            body:
-              "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
-            tailText: "Application No.",
+            header: {
+              labelName: "Application Submitted Successfully",
+              labelKey: "TL_APPLICATION_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName:
+                "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_APPLICATION_SUCCESS_MESSAGE_SUB"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+            },
             number: applicationNumber
           })
         }
@@ -77,10 +86,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Payment has been collected successfully!",
-            body:
-              "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
-            tailText: "Payment Receipt No.",
+            header: {
+              labelName: "Payment has been collected successfully!",
+              labelKey: "TL_CONFIRMATION_MESSAGE_MAIN"
+            },
+            body: {
+              labelName:
+                "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_CONFIRMATION_MESSAGE_SUB"
+            },
+            tailText: {
+              labelName: "Payment Receipt No.",
+              labelKey: "TL_PMT_RCPT_NO"
+            },
             number: secondNumber
           })
         }
@@ -110,10 +128,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "done",
             backgroundColor: "#39CB74",
-            header: "Trade License Approved Successfully",
-            body:
-              "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-            tailText: "Trade License No.",
+            header: {
+              labelName: "Trade License Approved Successfully",
+              labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_HEAD"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_SUB"
+            },
+            tailText: {
+              labelName: "Trade License No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
+            },
             number: secondNumber
           })
         }
@@ -142,9 +169,15 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Trade License Application Rejected",
-            body:
-              "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No."
+            header: {
+              labelName: "Trade License Application Rejected",
+              labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_APPROVAL_REJ_MESSAGE_SUBHEAD"
+            }
           })
         }
       },
@@ -172,10 +205,19 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Trade License Cancelled",
-            body:
-              "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
-            tailText: "Trade License No.",
+            header: {
+              labelName: "Trade License Cancelled",
+              labelKey: "TL_TL_CANCELLED_MESSAGE_HEAD"
+            },
+            body: {
+              labelName:
+                "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
+              labelKey: "TL_TL_CANCELLED_MESSAGE_SUBHEAD"
+            },
+            tailText: {
+              labelName: "Trade License No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
+            },
             number: secondNumber
           })
         }

@@ -10,6 +10,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _components = require("components");
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintStyle = {
@@ -27,7 +31,7 @@ var TextAreaUi = function TextAreaUi(_ref) {
 
   return _react2.default.createElement(_components.TextArea, {
     id: "reopencomplaint-comment-field",
-    hintText: hintText,
+    hintText: _react2.default.createElement(_translationNode2.default, { label: hintText }),
     hintStyle: hintStyle,
     rowsMax: 2,
     onChange: onChange,
