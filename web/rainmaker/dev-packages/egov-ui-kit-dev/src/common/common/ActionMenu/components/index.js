@@ -8,11 +8,11 @@ import get from "lodash/get";
 import { split, orderBy, some } from "lodash";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import { TextFieldIcon } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 
 import "./index.css";
 
 const styles = {
-
   inputStyle: {
     color: "white !important",
     marginTop: "0px",
@@ -23,7 +23,7 @@ const styles = {
     width: "21px",
     margin: 0,
     position: "relative",
-    fill: "rgba(0, 0, 0, 0.6)"
+    fill: "rgba(0, 0, 0, 0.6)",
   },
   arrowIconStyle: {
     right: "-10px",
@@ -34,22 +34,22 @@ const styles = {
     justifyContent: "flex-start",
     marginLeft: 0,
     padding: 0,
-    paddingLeft:0
+    paddingLeft: 0,
   },
-  inputIconStyle:{
-    margin:"0",
-    bottom:"15px",
-    top:"auto",
-    right:"6px"
+  inputIconStyle: {
+    margin: "0",
+    bottom: "15px",
+    top: "auto",
+    right: "6px",
   },
-  textFieldStyle:{
-    height:"auto",
+  textFieldStyle: {
+    height: "auto",
   },
-  inputStyle:{
-    bottom:"5px",
-    height:"auto",
-    marginTop:0
-  }
+  inputStyle: {
+    bottom: "5px",
+    height: "auto",
+    marginTop: 0,
+  },
 };
 
 class ActionMenuComp extends Component {
@@ -69,10 +69,10 @@ class ActionMenuComp extends Component {
   }
 
   componentDidMount() {
-     // for better reusability moving out
-      this.initialMenuUpdate()
+    // for better reusability moving out
+    this.initialMenuUpdate();
   }
-  initialMenuUpdate(){
+  initialMenuUpdate() {
     let pathParam = {};
     let { actionListArr } = this.props;
     const menuPath = fetchFromLocalStorage("menuPath");
@@ -97,13 +97,13 @@ class ActionMenuComp extends Component {
       this.menuChange(pathParam);
     }
   }
-  componentWillReceiveProps(nextProps){
-      if(nextProps && nextProps.activeRoutePath != this.props.activeRoutePath){
-        this.initialMenuUpdate();
-        this.setState({
-        searchText:""
-      })
-      }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.activeRoutePath != this.props.activeRoutePath) {
+      this.initialMenuUpdate();
+      this.setState({
+        searchText: "",
+      });
+    }
   }
   changeModulesActions(modules, items) {
     this.setState({
@@ -205,11 +205,11 @@ class ActionMenuComp extends Component {
   };
 
   render() {
-    let { role, actionListArr,activeRoutePath,updateActiveRoute } = this.props;
+    let { role, actionListArr, activeRoutePath, updateActiveRoute } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
-    let menuTitle = path.split('.');
+    let menuTitle = path.split(".");
     let activeItmem = localStorage.getItem("menuName");
     const showMenuItem = () => {
       // const navigationURL = window.location.href.split("/").pop();
@@ -233,18 +233,12 @@ class ActionMenuComp extends Component {
                         name={iconLeft[1]}
                         action={iconLeft[0]}
                         color="rgba(0, 0, 0, 0.6000000238418579)"
-                        style={
-                            styles.fibreIconStyle
-                        }
+                        style={styles.fibreIconStyle}
                         className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                       />
                     )
                   }
-                  primaryText={
-                    <div className="menuStyle with-childs">
-                      {item.name || ""}
-                    </div>
-                  }
+                  primaryText={<div className="menuStyle with-childs">{item.name || ""}</div>}
                   rightIcon={
                     <Icon
                       name="chevron-right"
@@ -272,14 +266,14 @@ class ActionMenuComp extends Component {
                   key={index}
                   to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
                 >
-                  <div className={`sideMenuItem ${activeItmem ==item.name ? "selected": "" }`}>
+                  <div className={`sideMenuItem ${activeItmem == item.name ? "selected" : ""}`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
                       style={{ whiteSpace: "initial" }}
                       key={index}
                       onClick={() => {
-                      //  localStorage.setItem("menuPath", item.path);
-                        updateActiveRoute(item.path,item.name)
+                        //  localStorage.setItem("menuPath", item.path);
+                        updateActiveRoute(item.path, item.name);
                         document.title = item.name;
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
@@ -293,18 +287,12 @@ class ActionMenuComp extends Component {
                             action={iconLeft[0]}
                             // fill="rgba(0, 0, 0, 0.6000000238418579)"
                             color="rgba(0, 0, 0, 0.6000000238418579)"
-                            style={
-                              styles.fibreIconStyle
-                            }
+                            style={styles.fibreIconStyle}
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                           />
                         )
                       }
-                      primaryText={
-                        <div className="menuStyle">
-                          {item.name || ""}
-                        </div>
-                      }
+                      primaryText={<div className="menuStyle">{item.name || ""}</div>}
                     />
                   </div>
                 </Link>
@@ -328,18 +316,12 @@ class ActionMenuComp extends Component {
                             name={iconLeft[1]}
                             action={iconLeft[0]}
                             color="rgba(0, 0, 0, 0.6000000238418579)"
-                            style={
-                               styles.fibreIconStyle
-                            }
+                            style={styles.fibreIconStyle}
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                           />
                         )
                       }
-                      primaryText={
-                        <div className="menuStyle">
-                          {item.name || ""}
-                        </div>
-                      }
+                      primaryText={<div className="menuStyle">{item.name || ""}</div>}
                     />
                   </div>
                 </a>
@@ -369,7 +351,7 @@ class ActionMenuComp extends Component {
                         style={{ whiteSpace: "initial" }}
                         onClick={() => {
                           document.title = item.displayName;
-                          updateActiveRoute(item.path,item.displayName)
+                          updateActiveRoute(item.path, item.displayName);
                         }}
                         leftIcon={
                           iconLeft &&
@@ -378,18 +360,12 @@ class ActionMenuComp extends Component {
                               name={iconLeft[1]}
                               action={iconLeft[0]}
                               color={"rgba(0, 0, 0, 0.6000000238418579)"}
-                              style={
-                                styles.fibreIconStyle
-                              }
+                              style={styles.fibreIconStyle}
                               className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                             />
                           )
                         }
-                        primaryText={
-                          <div className="menuStyle">
-                            {item.displayName || ""}
-                          </div>
-                        }
+                        primaryText={<div className="menuStyle">{item.displayName || ""}</div>}
                       />
                     </div>
                   </Link>
@@ -404,7 +380,7 @@ class ActionMenuComp extends Component {
     return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" />
-        <div className="menu-item-title">{menuTitle && menuTitle[menuTitle.length-1]}</div>
+        <div className="menu-item-title">{menuTitle && menuTitle[menuTitle.length - 1]}</div>
         <Menu
           disableAutoFocus={true}
           desktop={true}
@@ -413,7 +389,18 @@ class ActionMenuComp extends Component {
           className="actionMenuMenu"
           menuItemStyle={{ paddingLeft: "0", width: "100%" }}
         >
-          {!path && <TextFieldIcon value={searchText} hintText="Search" iconStyle={styles.inputIconStyle} inputStyle={styles.inputStyle} textFieldStyle={styles.textFieldStyle} onChange={(e)=>{this.handleChange(e)}}/> }
+          {!path && (
+            <TextFieldIcon
+              value={searchText}
+              hintText={<Label label="PT_SEARCH_BUTTON" />}
+              iconStyle={styles.inputIconStyle}
+              inputStyle={styles.inputStyle}
+              textFieldStyle={styles.textFieldStyle}
+              onChange={(e) => {
+                this.handleChange(e);
+              }}
+            />
+          )}
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
@@ -429,7 +416,7 @@ class ActionMenuComp extends Component {
               className="pull-right pointerCursor"
               onClick={() => {
                 // changeLevel("");
-                updateActiveRoute("Home","Home");
+                updateActiveRoute("Home", "Home");
                 this.changeRoute("/");
               }}
             >

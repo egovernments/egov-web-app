@@ -1,6 +1,7 @@
 import React from "react";
 import SearchIcon from "material-ui/svg-icons/action/search";
-import { Icon, Label, TextFieldIcon } from "components";
+import { Icon, TextFieldIcon } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
@@ -113,7 +114,7 @@ const MDMSTable = ({ masterName, onSearch, onAddClick, columns, tableData, defau
                 onChange={onSearch}
                 underlineShow={true}
                 fullWidth={false}
-                hintText="Search"
+                hintText={<Label label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
                 Icon={SearchIcon}
                 value={searchValue}
                 id="search-mdms"

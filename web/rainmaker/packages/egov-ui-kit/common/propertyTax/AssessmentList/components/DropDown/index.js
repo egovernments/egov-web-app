@@ -52,6 +52,10 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = {
@@ -118,15 +122,7 @@ var DropDown = function (_Component) {
       switch (payload) {
         case "Re-Assess":
           localStorage.setItem("draftId", "");
-          history &&
-          //&& citizenUserId
-          // ? history.push(
-          //     `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-          //       item.assessmentNo
-          //     }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-          //   )
-          // :
-          history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
 
           break;
         case "Download Receipt":
@@ -142,15 +138,7 @@ var DropDown = function (_Component) {
           break;
         case "Complete Payment":
           localStorage.setItem("draftId", "");
-          history &&
-          // citizenUserId
-          //   ? history.push(
-          //       `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
-          //         item.assessmentNo
-          //       }&isReassesment=true&isCompletePayment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
-          //     )
-          //   :
-          history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&isCompletePayment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&isCompletePayment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
 
           break;
       }
@@ -176,8 +164,6 @@ var DropDown = function (_Component) {
                   return acc;
                 }, 0);
                 totalAmountToPay = lastAmount + totalAmountBeforeLast;
-                // const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
-
                 totalAmountPaid = payload && payload.Receipt && payload.Receipt.reduce(function (acc, curr) {
                   acc += (0, _get2.default)(curr, "Bill[0].billDetails[0].amountPaid");
                   return acc;
@@ -225,7 +211,7 @@ var DropDown = function (_Component) {
           {
             autoWidth: true,
             className: "pt-action-dropDown",
-            hintText: "Select action",
+            hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SELECT_ACTION" }),
             underlineStyle: styles.underlineStyle,
             iconStyle: styles.iconStyle,
             style: styles.customWidth,

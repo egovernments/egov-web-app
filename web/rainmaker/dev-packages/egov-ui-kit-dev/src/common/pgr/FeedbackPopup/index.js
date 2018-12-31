@@ -1,6 +1,7 @@
 import React from "react";
-import { Dialog, Ratings, Checkbox, TextArea, Button, Icon, Label } from "components";
+import { Dialog, Ratings, Checkbox, TextArea, Button, Icon } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const titleStyle = {
   textAlign: "center",
@@ -45,9 +46,14 @@ const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit, selecte
                   selected={selected}
                   onCheck={onCheck}
                 />,
-                <TextArea key={"feedback-textarea"} hintText="Type your comments" underlineShow={true} hintStyle={{ letterSpacing: "0.7px" }} />,
+                <TextArea
+                  key={"feedback-textarea"}
+                  hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER" />}
+                  underlineShow={true}
+                  hintStyle={{ letterSpacing: "0.7px" }}
+                />,
                 <div key={"feedback-submit-button"} className="feedback-popup-button-cont">
-                  <Button label="SUBMIT" primary={true} fullWidth={true} onClick={onSubmit} />
+                  <Button label="CS_COMMON_SUBMIT" buttonLabel={true} primary={true} fullWidth={true} onClick={onSubmit} />
                 </div>,
               ]
             : [
@@ -58,7 +64,7 @@ const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit, selecte
                 </div>,
                 <Label
                   key="thankyou-text"
-                  label={"Thank you for your feedback"}
+                  label="CS_FEEDBACK_SUCCESS"
                   className="feedback-thankyou-text"
                   dark={true}
                   bold={true}

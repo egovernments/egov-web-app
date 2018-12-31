@@ -14,6 +14,10 @@ var _FloatingActionButton = require("material-ui/FloatingActionButton");
 
 var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var titleStyle = {
@@ -61,10 +65,15 @@ var FeedbackPopup = function FeedbackPopup(_ref) {
         containerClassName: "feedback-checkbox-cont",
         selected: selected,
         onCheck: onCheck
-      }), _react2.default.createElement(_components.TextArea, { key: "feedback-textarea", hintText: "Type your comments", underlineShow: true, hintStyle: { letterSpacing: "0.7px" } }), _react2.default.createElement(
+      }), _react2.default.createElement(_components.TextArea, {
+        key: "feedback-textarea",
+        hintText: _react2.default.createElement(_translationNode2.default, { label: "CS_COMMON_COMMENTS_PLACEHOLDER" }),
+        underlineShow: true,
+        hintStyle: { letterSpacing: "0.7px" }
+      }), _react2.default.createElement(
         "div",
         { key: "feedback-submit-button", className: "feedback-popup-button-cont" },
-        _react2.default.createElement(_components.Button, { label: "SUBMIT", primary: true, fullWidth: true, onClick: onSubmit })
+        _react2.default.createElement(_components.Button, { label: "CS_COMMON_SUBMIT", buttonLabel: true, primary: true, fullWidth: true, onClick: onSubmit })
       )] : [_react2.default.createElement(
         "div",
         { className: "feedback-submitted-icon-cont", key: "feedback-submitted-icon-cont" },
@@ -73,9 +82,9 @@ var FeedbackPopup = function FeedbackPopup(_ref) {
           { className: "floating-button", style: { boxShadow: 0 }, backgroundColor: "#22b25f" },
           _react2.default.createElement(_components.Icon, { action: "navigation", name: "check" })
         )
-      ), _react2.default.createElement(_components.Label, {
+      ), _react2.default.createElement(_translationNode2.default, {
         key: "thankyou-text",
-        label: "Thank you for your feedback",
+        label: "CS_FEEDBACK_SUCCESS",
         className: "feedback-thankyou-text",
         dark: true,
         bold: true,

@@ -25,7 +25,7 @@ var formConfig = {
       id: "institution-name",
       jsonPath: "propertyDetails[0].institution.name",
       type: "textfield",
-      floatingLabelText: "Name of Institution",
+      floatingLabelText: "PT_INSTITUTION_NAME",
       hintText: "PT_INSTITUTION_NAME_HINT_TEXT",
       errorMessage: "PT_NAME_ERROR_MESSAGE",
       numcols: 6,
@@ -35,30 +35,7 @@ var formConfig = {
       id: "institution-type",
       jsonPath: "propertyDetails[0].institution.type",
       type: "singleValueList",
-      floatingLabelText: "Type of Institution",
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "UsageCategorySubMinor",
-      //               filter: "[?(@.usageCategoryMinor=='INSTITUTIONAL')]", //year value for this filter should be dynamic.
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
-      // },
-      // dropDownData:[],
+      floatingLabelText: "PT_INSTITUTION_TYPE",
       numcols: 6,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true

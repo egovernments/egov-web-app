@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Label, TextField, Card } from "components";
+import { Button, TextField, Card } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const OTP = ({ onOtpChanged, onOtpSubmit, disabled, otp, btnText }) => {
@@ -18,8 +19,8 @@ const OTP = ({ onOtpChanged, onOtpSubmit, disabled, otp, btnText }) => {
               disabled={disabled}
               value={otp}
               fullWidth={true}
-              hintText="Enter OTP"
-              floatingLabelText="OTP"
+              hintText={<Label label="CORE_OTP_HEADING" />}
+              floatingLabelText={<Label label="CORE_OTP_OTP" />}
             />
             <div style={{ marginBottom: "24px" }} className="text-right">
               <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />

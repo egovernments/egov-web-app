@@ -4,9 +4,9 @@ const formConfig = {
     paidBy: {
       id: "paidBy",
       required: true,
-      hintText: "Please Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       type: "singleValueList",
-      floatingLabelText: "Paid By",
+      floatingLabelText: "TL_EMP_APPLICATION_PAID_BY",
       jsonPath: "Receipt[0].Bill[0].payer",
       dropDownData: [{ label: "Owner", value: "Owner" }, { label: "Other", value: "Other" }],
       value: "",
@@ -14,8 +14,8 @@ const formConfig = {
     payerName: {
       id: "payerName",
       type: "textfield",
-      floatingLabelText: "Payer Name",
-      hintText: "Enter payer Name",
+      floatingLabelText: "TL_PAYMENT_PAYER_NAME_LABEL",
+      hintText: "TL_PAYMENT_PAYER_NAME_PLACEHOLDER",
       jsonPath: "Receipt[0].Bill[0].paidBy",
       required: true,
       value: "",
@@ -23,7 +23,7 @@ const formConfig = {
     payerMobile: {
       id: "ownerMobile",
       type: "textfield",
-      floatingLabelText: "Payer Mobile No.",
+      floatingLabelText: "TL_PAYMENT_PAYER_MOB_LABEL",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       jsonPath: "Receipt[0].Bill[0].mobileNumber",
       required: true,

@@ -10,7 +10,7 @@ var formConfig = {
       id: "individual",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Individiual Exemption Category (if applicable)",
+      floatingLabelText: "PT_INDIVIDUAL_EXCEMPTION",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [{ label: "Individual Owner", value: "IND" }, { label: "Multiple Owners", value: "MUL" }, { label: "Organization (Govt.)", value: "ORGGov" }, { label: "Organization (Private)", value: "ORGPvt" }],
       numcols: 6
@@ -19,7 +19,7 @@ var formConfig = {
       id: "usage",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Usage Exemption Category (if applicable)",
+      floatingLabelText: "PT_USAGE_EXCEMPTION",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [{ label: "Individual Owner", value: "IND" }, { label: "Multiple Owners", value: "MUL" }, { label: "Organization (Govt.)", value: "ORGGov" }, { label: "Organization (Private)", value: "ORGPvt" }],
       numcols: 6

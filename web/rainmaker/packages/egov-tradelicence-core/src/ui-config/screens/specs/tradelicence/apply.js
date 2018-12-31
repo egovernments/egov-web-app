@@ -31,10 +31,10 @@ import {
 } from "../../../../ui-utils/commons";
 
 export const stepsData = [
-  { labelName: "Trade Details", labelKey: "TL_COMMON_APPL_STEP_1" },
-  { labelName: "Owner Details", labelKey: "TL_COMMON_APPL_STEP_2" },
-  { labelName: "Documents", labelKey: "TL_COMMON_APPL_STEP_3" },
-  { labelName: "Summary", labelKey: "TL_COMMON_APPL_STEP_4" }
+  { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
+  { labelName: "Owner Details", labelKey: "TL_COMMON_OWN_DETAILS" },
+  { labelName: "Documents", labelKey: "TL_COMMON_DOCS" },
+  { labelName: "Summary", labelKey: "TL_COMMON_SUMMARY" }
 ];
 export const stepper = getStepperObject(
   { props: { activeStep: 0 } },

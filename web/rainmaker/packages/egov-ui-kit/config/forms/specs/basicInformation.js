@@ -3,31 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// const formConfig = {
-//   name: "basicInformation",
-//   fields: {
-//     typeOfUsage: {
-//       id: "typeOfUsage",
-//       jsonPath: "",
-//       type: "singleValueList",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_TYPE_OF_USAGE",
-//       hintText: "PT_PROPERTY_DETAILS_CITY_PLACEHOLDER",
-//     },
-//     typeOfBuilding: {
-//       id: "typeOfBuilding",
-//       jsonPath: "",
-//       type: "singleValueList",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_TYPE_OF_BUILDING",
-//       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
-//     },
-//   },
-//   action: "",
-//   redirectionRoute: "",
-//   saveUrl: "",
-// };
-
-// export default formConfig;
-
 var formConfig = {
   name: "basicInformation",
   fields: {
@@ -35,14 +10,14 @@ var formConfig = {
       id: "typeOfUsage",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Type of usage",
+      floatingLabelText: "PT_TYPE_OF_USAGE",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER"
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Type of Buiding",
+      floatingLabelText: "PT_TYPE_OF_BUILDING",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER"
     }
   },

@@ -37,16 +37,16 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: {
               labelName: "Application Submitted Successfully",
-              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_HEADER"
+              labelKey: "TL_APPLICATION_SUCCESS_MESSAGE_MAIN"
             },
             body: {
               labelName:
                 "A notification regarding Application Submission has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_BODY"
+              labelKey: "TL_APPLICATION_SUCCESS_MESSAGE_SUB"
             },
             tailText: {
               labelName: "Application No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_SUBMIT_TAILTEXT"
+              labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
             },
             number: applicationNumber
           })
@@ -88,16 +88,16 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: {
               labelName: "Payment has been collected successfully!",
-              labelKey: "TL_ACKNOWLEDGEMENT_PAY_HEADER"
+              labelKey: "TL_CONFIRMATION_MESSAGE_MAIN"
             },
             body: {
               labelName:
                 "A notification regarding Payment Collection has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_PAY_BODY"
+              labelKey: "TL_CONFIRMATION_MESSAGE_SUB"
             },
             tailText: {
               labelName: "Payment Receipt No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_PAY_TAILTEXT"
+              labelKey: "TL_PMT_RCPT_NO"
             },
             number: secondNumber
           })
@@ -130,16 +130,16 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: {
               labelName: "Trade License Approved Successfully",
-              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_HEADER"
+              labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_HEAD"
             },
             body: {
               labelName:
                 "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_BODY"
+              labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_SUB"
             },
             tailText: {
               labelName: "Trade License No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_APPROVE_TAILTEXT"
+              labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
             },
             number: secondNumber
           })
@@ -171,12 +171,12 @@ const getAcknowledgementCard = (
             backgroundColor: "#E54D42",
             header: {
               labelName: "Trade License Application Rejected",
-              labelKey: "TL_ACKNOWLEDGEMENT_REJECT_HEADER"
+              labelKey: "TL_APPROVAL_REJ_MESSAGE_HEAD"
             },
             body: {
               labelName:
                 "A notification regarding Trade License Rejection has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_REJECT_BODY"
+              labelKey: "TL_APPROVAL_REJ_MESSAGE_SUBHEAD"
             }
           })
         }
@@ -207,16 +207,16 @@ const getAcknowledgementCard = (
             backgroundColor: "#E54D42",
             header: {
               labelName: "Trade License Cancelled",
-              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_HEADER"
+              labelKey: "TL_TL_CANCELLED_MESSAGE_HEAD"
             },
             body: {
               labelName:
                 "A notification regarding Trade License cancellation has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_BODY"
+              labelKey: "TL_TL_CANCELLED_MESSAGE_SUBHEAD"
             },
             tailText: {
               labelName: "Trade License No.",
-              labelKey: "TL_ACKNOWLEDGEMENT_CANCELLED_TAILTEXT"
+              labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
             },
             number: secondNumber
           })

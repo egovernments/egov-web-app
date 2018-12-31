@@ -1,5 +1,6 @@
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import Label from "egov-ui-kit/utils/translationNode";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import createReceipt from "../../../PaymentStatus/Components/createReceipt";
 import generateReceipt from "../../../PaymentStatus/Components/receiptsPDF";
@@ -63,7 +64,7 @@ const DropDown = ({ history, item }) => {
       <SelectField
         autoWidth={true}
         className="pt-action-dropDown"
-        hintText={"Select action"}
+        hintText={<Label label="PT_SELECT_ACTION" />}
         underlineStyle={styles.underlineStyle}
         iconStyle={styles.iconStyle}
         style={styles.customWidth}

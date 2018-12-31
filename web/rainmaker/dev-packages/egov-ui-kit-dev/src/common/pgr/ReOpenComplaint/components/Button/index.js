@@ -1,4 +1,5 @@
 import React from "react";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const hintStyle = {
   color: "rgba(0, 0, 0, 0.3799999952316284)",
@@ -12,7 +13,7 @@ const TextAreaUi = () => {
   return (
     <TextArea
       id="reopencomplaint-comment-field"
-      hintText="Type your comments"
+      hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER" />}
       hintStyle={hintStyle}
       rowsMax={2}
       onChange={handleCommentChange}
