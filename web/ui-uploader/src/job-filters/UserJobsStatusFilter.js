@@ -18,7 +18,7 @@ class UserJobsStatusFilterContainer extends Component {
       label: "Completed"
     },
     {
-      value: "in-progress",
+      value: "InProgress",
       label: "In Progress"
     },
     {
