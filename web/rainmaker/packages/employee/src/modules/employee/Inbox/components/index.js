@@ -7,55 +7,18 @@ import { Card } from "components";
 import React from "react";
 import "./index.css";
 
-const headers = ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"];
-
-const rows = [
-  [
-    { text: "Property Tax", subtext: "New Assessment" },
-    { text: "TL-252-2828" },
-    { text: "Initiated" },
-    { text: "Raminder Pal" },
-    { text: "Surjeet Singh" },
-    { text: "01", badge: true },
-  ],
-  [
-    { text: "Module/Service", subtext: "New Assessment" },
-    { text: "TL-252-2828" },
-    { text: "Initiated" },
-    { text: "Raminder Pal" },
-    { text: "Surjeet Singh" },
-    { text: "01", badge: true },
-  ],
-  [
-    { text: "Module/Service", subtext: "New Assessment" },
-    { text: "TL-252-2828" },
-    { text: "Initiated" },
-    { text: "Raminder Pal" },
-    { text: "Surjeet Singh" },
-    { text: "01", badge: true },
-  ],
-  [
-    { text: "Module/Service", subtext: "New Assessment" },
-    { text: "TL-252-2828" },
-    { text: "Initiated" },
-    { text: "Raminder Pal" },
-    { text: "Surjeet Singh" },
-    { text: "01", badge: true },
-  ],
-];
-
 export const InboxData = ({ data }) => {
   return (
     <Table>
       <TableHead>
         <TableRow>
-          {headers.map((item) => {
+          {data.headers.map((item) => {
             return <TableCell className="inbox-data-table-headcell">{item}</TableCell>;
           })}
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row, i) => {
+        {data.rows.map((row, i) => {
           return (
             <TableRow key={i} className="inbox-data-table-bodyrow">
               {row.map((item) => {
