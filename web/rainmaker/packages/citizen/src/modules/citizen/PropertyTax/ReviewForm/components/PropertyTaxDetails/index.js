@@ -128,7 +128,8 @@ class PropertyTaxDetails extends React.Component {
                     }
                   />
                 </div>
-                <div className="col-xs-12 calculation-button">
+              </div>
+              <div className="col-xs-12 calculation-button">
                   <FlatButton
                     label={<Label buttonLabel={true} label="PT_CALCULATION_DETAILS" bold={true} fontSize="12px" color="rgb(254, 122, 81)" />}
                     primary={true}
@@ -142,7 +143,6 @@ class PropertyTaxDetails extends React.Component {
                     }}
                   />
                 </div>
-              </div>
             </div>
             <div className="col-sm-6">
               <div className="date-details">

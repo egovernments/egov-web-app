@@ -45,7 +45,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates, optionSelected }
       />
       <CardText expandable={true}>
         <div className="clearfix fare-section">
-          <div className="col-sm-6" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+          <div className="col-sm-6 col-xs-12" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
             <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_DETAILED_BILL" bold={true} />
             {taxHeadEstimates &&
               taxHeadEstimates.map((item, index) => {
@@ -102,7 +102,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates, optionSelected }
               </div>
             </div>
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-6 col-xs-12 date-details-container">
             <div className="date-details">
               <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_IMPORTANT_DATES" bold={true} />
               <ul>

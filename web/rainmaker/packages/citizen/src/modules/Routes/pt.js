@@ -25,8 +25,9 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
-      isHomeScreen: true,
+      title: "Property Tax",
+      // hideBackButton: true,
+      // isHomeScreen: true,
       hideTitle: true,
     },
   },
@@ -37,7 +38,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_ASSESPAY_SELECTPROPERTY",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -47,7 +48,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_INCOMPLETE_ASSESSMENT",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -57,7 +58,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_COMPLETED_ASSESSMENTS",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
 
@@ -68,7 +69,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_MY_PROPERTY",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -77,7 +78,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -87,7 +88,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_SEARCH_PROPERTY",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -126,7 +127,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -159,7 +160,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
       title: "PT_HOW_IT_WORKS",
     },
   },
@@ -169,7 +170,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
       title: "Examples",
     },
   },

@@ -17,7 +17,7 @@ import orderby from "lodash/orderBy";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
 
 const innerDivStyle = {
-  padding: "20px 56px 20px 50px",
+  padding: "0",
   borderBottom: "1px solid #e0e0e0",
   marginLeft: 0,
 };
@@ -141,7 +141,7 @@ class Property extends Component {
     const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails, tenantId } = props;
     return [
       {
-        primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_INFORMATION"  labelClassName="property-info-title"/>,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -168,7 +168,7 @@ class Property extends Component {
         initiallyOpen: true,
       },
       {
-        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY"  labelClassName="property-info-title"/>,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
@@ -206,9 +206,9 @@ class Property extends Component {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
     //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
-
+    let clsName = appName === "Citizen" ? "screen-with-bredcrumb" : "";
     return (
-      <Screen>
+      <Screen className={clsName}>
         {appName === "Citizen" && <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />}
         {
           <AssessmentList

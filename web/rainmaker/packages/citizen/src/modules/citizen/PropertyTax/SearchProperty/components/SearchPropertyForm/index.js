@@ -17,13 +17,13 @@ const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick })
                 <div
                   style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
                   key={index}
-                  className={fields[fieldKey].numcols ? `col-xs-${fields[fieldKey].numcols}` : `col-xs-6`}
+                  className={fields[fieldKey].numcols ? `col-sm-${fields[fieldKey].numcols}` : `col-sm-6`}
                 >
                   <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
                 </div>
               );
             })}
-            <div className="search-property-btn col-xs-12">
+            <div className="search-property-btn col-sm-12">
               <Button
                 label={<Label label="PT_SEARCH_BUTTON" buttonLabel={true} fontSize="16px" />}
                 className=""

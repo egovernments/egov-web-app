@@ -70,8 +70,8 @@ class MyProperties extends Component {
   render() {
     const { urls, history, transformedProperties, loading } = this.props;
     return (
-      <Screen loading={loading}>
-        <BreadCrumbs url={urls} history={history} />
+      <Screen loading={loading}  className="screen-with-bredcrumb">
+        <BreadCrumbs url={urls} history={history}/>
         <AssessmentList
           // pageTitle={`My Properties (${numProperties})`}
           onItemClick={this.onListItemClick}
