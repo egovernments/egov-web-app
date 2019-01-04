@@ -35,6 +35,12 @@ export const InboxData = ({ data }) => {
                       <span class="inbox-cell-badge-primary ">{item.text}</span>
                     </TableCell>
                   );
+                } else if (item.historyButton) {
+                  return (
+                    <TableCell className="inbox-data-table-bodycell">
+                      <i class="material-icons">history</i>
+                    </TableCell>
+                  );
                 } else {
                   return <TableCell className="inbox-data-table-bodycell">{item.text}</TableCell>;
                 }
