@@ -205,7 +205,7 @@ class ActionMenuComp extends Component {
   };
 
   render() {
-    let { role, actionListArr, activeRoutePath, updateActiveRoute } = this.props;
+    let { role, actionListArr, activeRoutePath, updateActiveRoute,toggleDrawer } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
@@ -244,7 +244,7 @@ class ActionMenuComp extends Component {
                       name="chevron-right"
                       action="navigation"
                       color="rgba(0, 0, 0, 0.8700000047683716)"
-                      className="iconClassHover material-icons whiteColor"
+                      className="iconClassHover material-icons whiteColor menu-right-icon"
                       style={styles.arrowIconStyle}
                     />
                   }
@@ -253,6 +253,7 @@ class ActionMenuComp extends Component {
                       path: !item.path ? item.name : item.path,
                       parentPath: false,
                     };
+                    toggleDrawer && toggleDrawer();
                     menuChange(pathParam);
                   }}
                 />
@@ -275,6 +276,7 @@ class ActionMenuComp extends Component {
                         //  localStorage.setItem("menuPath", item.path);
                         updateActiveRoute(item.path, item.name);
                         document.title = item.name;
+                        toggleDrawer && toggleDrawer();
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
@@ -351,6 +353,7 @@ class ActionMenuComp extends Component {
                         style={{ whiteSpace: "initial" }}
                         onClick={() => {
                           document.title = item.displayName;
+                          toggleDrawer && toggleDrawer();
                           updateActiveRoute(item.path, item.displayName);
                         }}
                         leftIcon={
@@ -390,7 +393,7 @@ class ActionMenuComp extends Component {
           menuItemStyle={{ paddingLeft: "0", width: "100%" }}
         >
           {!path && (
-            <TextFieldIcon
+            <div onClick={()=>{toggleDrawer && toggleDrawer()}}><TextFieldIcon
               value={searchText}
               hintText={<Label label="PT_SEARCH_BUTTON" />}
               iconStyle={styles.inputIconStyle}
@@ -399,12 +402,13 @@ class ActionMenuComp extends Component {
               onChange={(e) => {
                 this.handleChange(e);
               }}
-            />
+            /></div>
           )}
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
               onClick={() => {
+                toggleDrawer && toggleDrawer()
                 changeLevel(path);
               }}
             >

@@ -281,7 +281,8 @@ var ActionMenuComp = function (_Component) {
           role = _props.role,
           actionListArr = _props.actionListArr,
           activeRoutePath = _props.activeRoutePath,
-          updateActiveRoute = _props.updateActiveRoute;
+          updateActiveRoute = _props.updateActiveRoute,
+          toggleDrawer = _props.toggleDrawer;
       var _state = this.state,
           searchText = _state.searchText,
           path = _state.path,
@@ -324,7 +325,7 @@ var ActionMenuComp = function (_Component) {
                     name: "chevron-right",
                     action: "navigation",
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
-                    className: "iconClassHover material-icons whiteColor",
+                    className: "iconClassHover material-icons whiteColor menu-right-icon",
                     style: styles.arrowIconStyle
                   }),
                   onClick: function onClick() {
@@ -332,6 +333,7 @@ var ActionMenuComp = function (_Component) {
                       path: !item.path ? item.name : item.path,
                       parentPath: false
                     };
+                    toggleDrawer && toggleDrawer();
                     menuChange(pathParam);
                   }
                 })
@@ -356,6 +358,7 @@ var ActionMenuComp = function (_Component) {
                         //  localStorage.setItem("menuPath", item.path);
                         updateActiveRoute(item.path, item.name);
                         document.title = item.name;
+                        toggleDrawer && toggleDrawer();
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
@@ -432,6 +435,7 @@ var ActionMenuComp = function (_Component) {
                       style: { whiteSpace: "initial" },
                       onClick: function onClick() {
                         document.title = item.displayName;
+                        toggleDrawer && toggleDrawer();
                         updateActiveRoute(item.path, item.displayName);
                       },
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
@@ -474,21 +478,28 @@ var ActionMenuComp = function (_Component) {
             className: "actionMenuMenu",
             menuItemStyle: { paddingLeft: "0", width: "100%" }
           },
-          !path && _react2.default.createElement(_components.TextFieldIcon, {
-            value: searchText,
-            hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),
-            iconStyle: styles.inputIconStyle,
-            inputStyle: styles.inputStyle,
-            textFieldStyle: styles.textFieldStyle,
-            onChange: function onChange(e) {
-              _this2.handleChange(e);
-            }
-          }),
+          !path && _react2.default.createElement(
+            "div",
+            { onClick: function onClick() {
+                toggleDrawer && toggleDrawer();
+              } },
+            _react2.default.createElement(_components.TextFieldIcon, {
+              value: searchText,
+              hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),
+              iconStyle: styles.inputIconStyle,
+              inputStyle: styles.inputStyle,
+              textFieldStyle: styles.textFieldStyle,
+              onChange: function onChange(e) {
+                _this2.handleChange(e);
+              }
+            })
+          ),
           (path || searchText) && _react2.default.createElement(
             "div",
             {
               className: "pull-left whiteColor pointerCursor",
               onClick: function onClick() {
+                toggleDrawer && toggleDrawer();
                 changeLevel(path);
               }
             },

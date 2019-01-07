@@ -31,7 +31,7 @@
     .sideMenuItem:hover .iconClassHover, .sideMenuItem.selected .iconClassHover {
       fill: #FE7A51 !important; }
   .selected {
-    border-left: 2px solid red; } }
+    border-left: 4px solid red; } }
 
 .menu-item-title {
   font-size: 16px;

@@ -25,13 +25,14 @@ class ActionMenu extends Component {
   };
 
   render() {
-    let { actionListArr,activeRoutePath,updateActiveRoute } = this.props;
+    let { actionListArr,activeRoutePath,updateActiveRoute,toggleDrawer} = this.props;
     let transformedRole = "";
     // actionListArr.push({url:"https://www.google.com",navigationURL:"newTab",path:"test.new tab"});
     return actionListArr && actionListArr.length > 0 ? 
     <ActionMenuComp role={transformedRole} 
     actionListArr={actionListArr}          
     activeRoutePath = {activeRoutePath}
+    toggleDrawer={toggleDrawer}
     updateActiveRoute={updateActiveRoute}/> : null;
   }
 }

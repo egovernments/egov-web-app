@@ -9,6 +9,9 @@ import IconButton from "material-ui/IconButton";
 import Label from "egov-ui-kit/utils/translationNode";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import SortDialog from "../common/common/Header/components/SortDialog";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Tooltip from "@material-ui/core/Tooltip";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -22,6 +25,7 @@ const withAuthorization = (options = {}) => (Component) => {
       titleAddon: "",
       titleObject: [],
       sortPopOpen: false,
+      menuDrawerOpen:true,
     };
     style = {
       iconStyle: {
@@ -75,7 +79,11 @@ const withAuthorization = (options = {}) => (Component) => {
         this.setState({ titleObject });
       }
     };
-
+    toggleDrawer(menuClick){
+      this.setState({
+        menuDrawerOpen : menuClick ? true : !this.state.menuDrawerOpen
+      })
+    }
     render() {
       const {
         hideHeader,
@@ -94,7 +102,7 @@ const withAuthorization = (options = {}) => (Component) => {
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
-      const { titleAddon, titleObject } = this.state;
+      const { titleAddon, titleObject,menuDrawerOpen} = this.state;
       const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
@@ -120,6 +128,8 @@ const withAuthorization = (options = {}) => (Component) => {
         let { userInfo } = this.props;
         return (userInfo && userInfo.roles && userInfo.roles.length > 0 && userInfo.roles[0].code.toUpperCase()) || null;
       };
+      let drawerClsName = menuDrawerOpen ? "full-menu-drawer" : "icon-menu-drawer"
+      let screencls = menuDrawerOpen ? "with-full-menu" : "with-icon-menu"
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
@@ -140,16 +150,23 @@ const withAuthorization = (options = {}) => (Component) => {
           <div className=" col-xs-12" style={{ padding: 0 }}>
             {!hideActionMenu && authenticated && (
               <div>
-                <div className="col-xs-2 action-menu-drawer show-action-menu" id="menu-container">
+                <div className={`col-xs-2 action-menu-drawer show-action-menu ${drawerClsName}`} id="menu-container">
                   <div className="rainmaker-action-menu">
-                    <ActionMenu role={role} />
+                    <ActionMenu role={role} toggleDrawer={()=>{this.toggleDrawer(true)}}/>
+                    <div className={"drawer-toggle-button"}>
+                    <Tooltip id={"menu-toggle-tooltip"} placement={"right"} title={<div style={{color:"black"}}>{menuDrawerOpen ? "Collapse Memnu" : "Expand menu"}</div>}>
+                      <IconButton  onClick={()=>{this.toggleDrawer()}}>
+                                {menuDrawerOpen ? <ChevronLeftIcon /> : <ChevronRightIcon /> }
+                      </IconButton>  
+                    </Tooltip> 
+                    </div>               
                   </div>
                 </div>
                 <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
               </div>
             )}
 
-            <div className={"col-xs-12 col-sm-10"} style={{ padding: 0 }}>
+            <div className={`col-xs-12 col-sm-10 ${screencls}`} style={{ padding: 0 }}>
               {authenticated ? (
                 <div>
                   {!hideTitle && role !== hideFor && (
