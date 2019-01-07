@@ -4,14 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-var _extends2 = require("babel-runtime/helpers/extends");
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -27,6 +19,10 @@ var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorRet
 var _inherits2 = require("babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
 var _react = require("react");
 
@@ -72,7 +68,8 @@ var styles = (0, _defineProperty3.default)({
     height: "21px",
     width: "21px",
     margin: 0,
-    position: "relative"
+    position: "relative",
+    fill: "rgba(0, 0, 0, 0.6)"
   },
   arrowIconStyle: {
     right: "-10px"
@@ -84,8 +81,21 @@ var styles = (0, _defineProperty3.default)({
     marginLeft: 0,
     padding: 0,
     paddingLeft: 0
+  },
+  inputIconStyle: {
+    margin: "0",
+    bottom: "15px",
+    top: "auto",
+    right: "6px"
+  },
+  textFieldStyle: {
+    height: "auto"
   }
-};
+}, "inputStyle", {
+  bottom: "5px",
+  height: "auto",
+  marginTop: 0
+});
 
 var ActionMenuComp = function (_Component) {
   (0, _inherits3.default)(ActionMenuComp, _Component);
@@ -215,6 +225,12 @@ var ActionMenuComp = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      // for better reusability moving out
+      this.initialMenuUpdate();
+    }
+  }, {
+    key: "initialMenuUpdate",
+    value: function initialMenuUpdate() {
       var pathParam = {};
       var menuPath = (0, _commons.fetchFromLocalStorage)("menuPath");
       pathParam = {
@@ -240,6 +256,16 @@ var ActionMenuComp = function (_Component) {
       }
     }
   }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps && nextProps.activeRoutePath != this.props.activeRoutePath) {
+        this.initialMenuUpdate();
+        this.setState({
+          searchText: ""
+        });
+      }
+    }
+  }, {
     key: "changeModulesActions",
     value: function changeModulesActions(modules, items) {
       this.setState({
@@ -250,6 +276,8 @@ var ActionMenuComp = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           role = _props.role,
           actionListArr = _props.actionListArr,
@@ -285,7 +313,7 @@ var ActionMenuComp = function (_Component) {
                     name: iconLeft[1],
                     action: iconLeft[0],
                     color: "rgba(0, 0, 0, 0.6000000238418579)",
-                    style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                    style: styles.fibreIconStyle,
                     className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                   }),
                   primaryText: _react2.default.createElement(
@@ -320,14 +348,14 @@ var ActionMenuComp = function (_Component) {
                   },
                   _react2.default.createElement(
                     "div",
-                    { className: "sideMenuItem " + (activeRoutePath == item.path ? "slected" : "") },
+                    { className: "sideMenuItem " + (activeItmem == item.name ? "selected" : "") },
                     _react2.default.createElement(_MenuItem2.default, {
                       innerDivStyle: styles.defaultMenuItemStyle,
                       style: { whiteSpace: "initial" },
                       key: index,
                       onClick: function onClick() {
                         //  localStorage.setItem("menuPath", item.path);
-                        updateActiveRoute(item.path);
+                        updateActiveRoute(item.path, item.name);
                         document.title = item.name;
                         console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
@@ -339,7 +367,7 @@ var ActionMenuComp = function (_Component) {
                         action: iconLeft[0],
                         fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                        style: styles.fibreIconStyle,
                         className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                       }),
                       primaryText: _react2.default.createElement(
@@ -370,7 +398,7 @@ var ActionMenuComp = function (_Component) {
                         action: iconLeft[0],
                         fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle,
+                        style: styles.fibreIconStyle,
                         className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
                       }),
                       primaryText: _react2.default.createElement(
@@ -409,11 +437,12 @@ var ActionMenuComp = function (_Component) {
                       style: { whiteSpace: "initial" },
                       onClick: function onClick() {
                         document.title = item.displayName;
+                        updateActiveRoute(item.path, item.displayName);
                       },
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, (_React$createElement = {
                         name: iconLeft[1],
                         action: iconLeft[0]
-                      }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
+                      }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
                       primaryText: _react2.default.createElement(
                         "div",
                         { className: "menuStyle" },
@@ -472,7 +501,9 @@ var ActionMenuComp = function (_Component) {
             {
               className: "pull-right pointerCursor",
               onClick: function onClick() {
-                changeLevel("");
+                // changeLevel("");
+                updateActiveRoute("Home", "Home");
+                _this2.changeRoute("/");
               }
             },
             _react2.default.createElement(_components.Icon, { name: "home", action: "action", color: "rgba(0, 0, 0, 0.6000000238418579)" })
