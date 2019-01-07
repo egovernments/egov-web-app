@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
-import { DropDown, Icon, Image } from "components";
+import { DropDown, Icon, Image, List } from "components";
 import emptyFace from "egov-ui-kit/assets/images/download.png";
+import { CommonMenuItems } from "../NavigationDrawer/commonMenuItems";
 
 import "./index.css";
 
 class UserSettings extends Component {
   state = {
     languageSelected: localStorage.getItem("locale"),
+    displayAccInfo: false,
   };
   items = [
     {
@@ -46,6 +48,11 @@ class UserSettings extends Component {
     listStyle: {
       display: "block",
     },
+    listInnerDivStyle: {
+      padding: "10px",
+      display: "flex",
+      alignItems: "center",
+    },
   };
 
   onChange = (event, index, value) => {
@@ -53,11 +60,16 @@ class UserSettings extends Component {
     this.props.fetchLocalizationLabel(value);
   };
 
-  render() {
-    const { languageSelected } = this.state;
-    const { items, style } = this;
-    const { onIconClick, userInfo } = this.props;
+  toggleAccInfo() {
+    this.setState({
+      displayAccInfo: !this.state.displayAccInfo,
+    });
+  }
 
+  render() {
+    const { languageSelected, displayAccInfo } = this.state;
+    const { items, style } = this;
+    const { onIconClick, userInfo, handleItemClick } = this.props;
     return (
       <div className="userSettingsContainer">
         {/* <DropDown
@@ -69,9 +81,31 @@ class UserSettings extends Component {
           value={languageSelected}
         /> */}
         {/* <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} /> */}
-        <div onClick={onIconClick} className="userSettingsInnerContainer">
+        <div
+          onClick={() => {
+            this.toggleAccInfo();
+          }}
+          className="userSettingsInnerContainer"
+        >
           <Image width={"33px"} circular={true} source={userInfo.photo || emptyFace} />
           <Icon action="navigation" name="arrow-drop-down" color="#767676" style={style.arrowIconStyle} />
+
+          <div className="user-acc-info">
+            {displayAccInfo ? (
+              <List
+                onItemClick={(item) => {
+                  handleItemClick(item, false);
+                }}
+                innerDivStyle={style.listInnerDivStyle}
+                className="drawer-list-style"
+                items={CommonMenuItems}
+                listContainerStyle={{ background: "#ffffff" }}
+                listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     );

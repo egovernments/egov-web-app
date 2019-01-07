@@ -25,6 +25,7 @@ const WizardComponent = ({
   nextLabel,
   history,
 }) => {
+  console.log("selected", selected);
   return (
     <div className={`wizard-cont active-step-${selected}`}>
       {/*<BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />*/}

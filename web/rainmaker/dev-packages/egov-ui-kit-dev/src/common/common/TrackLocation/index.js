@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { MapLocation, Button, Icon } from "components";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
@@ -136,7 +137,7 @@ class TrackLocation extends Component {
           <Button
             id="map-pick-button"
             className="pick responsive-action-button"
-            label={"Pick"}
+            label={<Label buttonLabel={true} label="CORE_COMMON_PICK" />}
             style={pickBtn}
             primary={true}
             labelColor="#ffffff"

@@ -20,6 +20,7 @@ const withAuthorization = (options = {}) => (Component) => {
     }
     state = {
       titleAddon: "",
+      titleObject: [],
       sortPopOpen: false,
     };
     style = {
@@ -66,9 +67,13 @@ const withAuthorization = (options = {}) => (Component) => {
     };
     //Duplication due to lack of time for proper testing in PGR
 
-    renderCustomTitleForPt = (title) => {
-      const titleAddon = title ? title : "";
-      this.setState({ titleAddon });
+    renderCustomTitleForPt = ({ title, titleObject }) => {
+      if (title) {
+        // const titleAddon = title ? title : "";
+        this.setState({ titleAddon });
+      } else if (titleObject) {
+        this.setState({ titleObject });
+      }
     };
 
     render() {
@@ -89,7 +94,7 @@ const withAuthorization = (options = {}) => (Component) => {
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
-      const { titleAddon } = this.state;
+      const { titleAddon, titleObject } = this.state;
       const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
@@ -121,6 +126,7 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header
               title={title}
               titleAddon={role !== hideFor && titleAddon && titleAddon}
+              //titleObject={role !== hideFor && titleObject && titleObject}
               userInfo={userInfo}
               role={role}
               options={options}
@@ -165,6 +171,22 @@ const withAuthorization = (options = {}) => (Component) => {
                             bold={true}
                             fontSize={20}
                           />
+                        )}
+                        {titleObject && (
+                          <div className="rainmaker-displayInline">
+                            {titleObject.map((item) => {
+                              return (
+                                <Label
+                                  className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
+                                  label={item}
+                                  dark={true}
+                                  bold={true}
+                                  fontSize={20}
+                                  containerStyle={{ marginRight: 5 }}
+                                />
+                              );
+                            })}
+                          </div>
                         )}
                       </div>
                       {sortButton && (

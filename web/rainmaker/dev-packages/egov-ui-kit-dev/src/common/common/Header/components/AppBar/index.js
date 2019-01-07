@@ -21,7 +21,6 @@ const iconButtonStyle = {
 // handle listners
 const EgovAppBar = ({
   className,
-  ulbName,
   defaultTitle,
   ulbLogo,
   title,
@@ -36,6 +35,7 @@ const EgovAppBar = ({
   searchButton,
   sortDialogOpen,
   history,
+  handleItemClick,
   ...rest
 }) => {
   return (
@@ -59,21 +59,24 @@ const EgovAppBar = ({
                 label={titleAddon}
               />
             )}
-            <div className="rainmaker-displayInline">
-              <Label
-                containerStyle={{ marginLeft: "10px" }}
-                className="screenHeaderLabelStyle appbar-municipal-label"
-                label={ulbName && ulbName.toUpperCase()}
-              />
-              <Label containerStyle={{ marginLeft: "4px" }} className="screenHeaderLabelStyle appbar-municipal-label" label={defaultTitle} />
-            </div>
+            <Label
+              containerStyle={{ marginLeft: "10px" }}
+              className="screenHeaderLabelStyle appbar-municipal-label"
+              label={
+                role && role.toLowerCase() === "citizen"
+                  ? "PUNJAB MUNICIPAL CORPORATION"
+                  : defaultTitle
+                  ? defaultTitle
+                  : "PUNJAB MUNICIPAL CORPORATION"
+              }
+            />
           </div>
         }
         titleStyle={styles.titleStyle}
         {...rest}
       >
         <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
-          <UserSettings onIconClick={onToolBarIconClick} userInfo={userInfo} />
+          <UserSettings onIconClick={onToolBarIconClick} userInfo={userInfo} handleItemClick={handleItemClick} />
         </Toolbar>
         <div className="appbar-right-logo">
           <img src={digitLogo} />

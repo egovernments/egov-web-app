@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import { LabelContainer } from "mihy-ui-framework/ui-containers";
 
 const UploadFile = props => {
   const {
@@ -26,7 +27,7 @@ const UploadFile = props => {
       />
       <label htmlFor="contained-button-file">
         <Button component="span" className={classes.button} {...buttonProps}>
-          {buttonLabel}
+          <LabelContainer {...buttonLabel} />
         </Button>
       </label>
     </div>

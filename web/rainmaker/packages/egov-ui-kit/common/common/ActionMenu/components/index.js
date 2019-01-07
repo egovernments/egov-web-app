@@ -59,14 +59,6 @@ require("./index.css");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = {
-  menuStyle: {
-    marginLeft: 15,
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    flex: 1
-  },
-
   inputStyle: {
     color: "white !important",
     marginTop: "0px",
@@ -86,7 +78,8 @@ var styles = {
     alignItems: "center",
     justifyContent: "flex-start",
     marginLeft: 0,
-    padding: 0
+    padding: 0,
+    paddingLeft: 0
   }
 };
 
@@ -255,7 +248,9 @@ var ActionMenuComp = function (_Component) {
     value: function render() {
       var _props = this.props,
           role = _props.role,
-          actionListArr = _props.actionListArr;
+          actionListArr = _props.actionListArr,
+          activeRoutePath = _props.activeRoutePath,
+          updateActiveRoute = _props.updateActiveRoute;
       var _state = this.state,
           searchText = _state.searchText,
           path = _state.path,
@@ -264,6 +259,7 @@ var ActionMenuComp = function (_Component) {
           menuChange = this.menuChange;
 
       var actionList = actionListArr;
+      var menuTitle = path.split(".");
 
       var showMenuItem = function showMenuItem() {
         var navigationURL = window.location.href.split("/").pop();
@@ -290,12 +286,8 @@ var ActionMenuComp = function (_Component) {
                   }),
                   primaryText: _react2.default.createElement(
                     "div",
-                    { className: "menuStyle whiteColor", style: styles.menuStyle },
-                    _react2.default.createElement(
-                      "span",
-                      { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
-                      item.name || ""
-                    )
+                    { className: "menuStyle with-childs" },
+                    item.name || ""
                   ),
                   rightIcon: _react2.default.createElement(_components.Icon, {
                     name: "chevron-right",
@@ -324,13 +316,14 @@ var ActionMenuComp = function (_Component) {
                   },
                   _react2.default.createElement(
                     "div",
-                    { className: "sideMenuItem" },
+                    { className: "sideMenuItem " + (activeRoutePath == item.path ? "slected" : "") },
                     _react2.default.createElement(_MenuItem2.default, {
                       innerDivStyle: styles.defaultMenuItemStyle,
                       style: { whiteSpace: "initial" },
                       key: index,
                       onClick: function onClick() {
-                        localStorage.setItem("menuPath", item.path);
+                        //  localStorage.setItem("menuPath", item.path);
+                        updateActiveRoute(item.path);
                         document.title = item.name;
                         console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
@@ -347,12 +340,8 @@ var ActionMenuComp = function (_Component) {
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
-                        _react2.default.createElement(
-                          "span",
-                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
-                          item.name || ""
-                        )
+                        { className: "menuStyle" },
+                        item.name || ""
                       )
                     })
                   )
@@ -382,12 +371,8 @@ var ActionMenuComp = function (_Component) {
                       }),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
-                        _react2.default.createElement(
-                          "span",
-                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
-                          item.name || ""
-                        )
+                        { className: "menuStyle" },
+                        item.name || ""
                       )
                     })
                   )
@@ -427,12 +412,8 @@ var ActionMenuComp = function (_Component) {
                       }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "rgba(0, 0, 0, 0.6000000238418579)" }, styles.fibreIconStyle) : styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
                       primaryText: _react2.default.createElement(
                         "div",
-                        { className: "menuStyle whiteColor", style: styles.menuStyle },
-                        _react2.default.createElement(
-                          "span",
-                          { style: { color: "rgba(0, 0, 0, 0.8700000047683716)" } },
-                          item.displayName || ""
-                        )
+                        { className: "menuStyle" },
+                        item.displayName || ""
                       )
                     })
                   )
@@ -447,6 +428,11 @@ var ActionMenuComp = function (_Component) {
         "div",
         { ref: this.setWrapperRef },
         _react2.default.createElement("div", { className: "whiteColor" }),
+        _react2.default.createElement(
+          "div",
+          { className: "menu-item-title" },
+          menuTitle && menuTitle[menuTitle.length - 1]
+        ),
         _react2.default.createElement(
           _Menu2.default,
           {

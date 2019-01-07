@@ -6,7 +6,7 @@ import "./index.css";
 
 class SuccessMessage extends Component {
   render() {
-    const { successmessage, secondaryLabel, tertiaryLabel, icon, backgroundColor } = this.props;
+    const { successmessage, employeeName, secondaryLabel, tertiaryLabel, icon, backgroundColor } = this.props;
     return (
       <div className="success-message-main-cont ">
         <div className="success-message-inner-cont">
@@ -15,7 +15,10 @@ class SuccessMessage extends Component {
               {icon}
             </FloatingActionButton>
           </div>
-          <Label className="thankyou-text" label={successmessage} color="#767676" />
+          <div className="rainmaker-displayInline" style={{ justifyContent: "center" }}>
+            <Label className="thankyou-text" label={successmessage} color="#767676" />
+            {employeeName && <Label className="thankyou-text" label={employeeName} color="#767676" containerStyle={{ marginLeft: 5 }} />}
+          </div>
           <Label className="secondary-text" label={secondaryLabel} color="#767676" />
           <Label className="tertiary-text" label={tertiaryLabel} color="#767676" />
         </div>

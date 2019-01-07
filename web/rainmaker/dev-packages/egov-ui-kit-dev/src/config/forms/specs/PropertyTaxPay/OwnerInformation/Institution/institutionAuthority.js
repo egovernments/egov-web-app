@@ -18,7 +18,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       pattern: /^(\+\d{1,2}[-]{0,1})?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number",
+      errorMessage: "PT_MOBILE_NUMBER_ERROR_MESSAGE",
     },
     designation: {
       id: "authority-designation",
@@ -66,10 +66,23 @@ const formConfig = {
       value: "",
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value: iscorrAddrSameProp } = sourceField;
-        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = ""} = get(state, "form.propertyAddress.fields", {});
-        const mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(mohallaData => mohallaData.value === get(mohalla, "value", ""))
+        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = "" } = get(state, "form.propertyAddress.fields", {});
+        const mohallaDetails =
+          mohalla && mohalla.dropDownData && mohalla.dropDownData.find((mohallaData) => mohallaData.value === get(mohalla, "value", ""));
         if (iscorrAddrSameProp) {
-        const correspondingAddress = [`${get(houseNumber, "value", "")}`,`${get(colony, "value", "")}`,`${get(street, "value", "")}`, `${get(mohallaDetails, "label", "")}`,`${get(city,"value","").split(".").pop()}`, `${get(pincode, "value", "")}`].join(", ").replace(/^(,\s)+|(,\s)+$/g, '').replace(/(,\s){2,}/g, ", ")
+          const correspondingAddress = [
+            `${get(houseNumber, "value", "")}`,
+            `${get(colony, "value", "")}`,
+            `${get(street, "value", "")}`,
+            `${get(mohallaDetails, "label", "")}`,
+            `${get(city, "value", "")
+              .split(".")
+              .pop()}`,
+            `${get(pincode, "value", "")}`,
+          ]
+            .join(", ")
+            .replace(/^(,\s)+|(,\s)+$/g, "")
+            .replace(/(,\s){2,}/g, ", ");
           dispatch(setFieldProperty(formKey, "address", "value", correspondingAddress));
         } else {
           dispatch(setFieldProperty(formKey, "address", "value", ""));

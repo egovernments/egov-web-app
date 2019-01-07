@@ -6,18 +6,13 @@ import CustomSelectForm from "../CustomSelectForm";
 import GenericForm from "egov-ui-kit/common/GenericForm";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-// import DynamicForm from "../../DynamicForm";
+import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
 class FloorDetails extends React.Component {
-  // cacheFloors=JSON.parse(localStorage.getItem("floors"));
   state = {
     floors: this.cacheFloors ? this.cacheFloors : [],
   };
-
-  // updatedFloorsInCache=(floors)=>{
-  //   localStorage.setItem("floors",JSON.stringify(floors))
-  // }
 
   componentDidMount() {
     this.configureFloors(this.props);
@@ -129,13 +124,20 @@ class FloorDetails extends React.Component {
               className={"grayout"}
               handleRemoveItem={key !== 0 ? (!disabled ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined) : undefined}
               disabled={disabled}
-              formName={`Unit-${key + 1}`}
+              formName={
+                <div style={{ display: "flex" }}>
+                  <Label label="PT_UNIT" />
+                  <Label label="-" />
+                  <Label label={`${key + 1}`} />
+                </div>
+              }
             />
           );
         })}
         {!disabled && (
           <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
-            <span style={{ marginRight: 6 }}>+ ADD ONE MORE UNIT</span>
+            <Label label="+" color="#fe7a51" containerStyle={{ marginRight: 5 }} />
+            <Label label="PT_ADD_UNIT" color="#fe7a51" />
             <ToolTipUi id={"form-wizard-tooltip"} title={"PT_FLOOR_DETAILS_ADD_ONE_MORE_UNIT_INFO"} style={{ fontSize: 24 }} />
           </div>
         )}

@@ -35,7 +35,11 @@ const onButton2Click = (item, history) => {
 const Dashboard = ({ moduleItems, userName, history, onPGRClick, onDialogueClose, dialogueOpen, renderCityPicker }) => {
   return (
     <div className="col-sm-12 landing-page-main-container">
-      <Label className="landingPageUser" label={` Welcome ${userName}, `} />
+      <div className="rainmaker-displayInline">
+        <Label className="landingPageUser" label={"CS_LANDING_PAGE_WELCOME_TEXT"} />
+        <Label className="landingPageUser" label={userName} />
+        <Label className="landingPageUser" label={","} />
+      </div>
       <ModuleCard onPGRClick={onPGRClick} items={moduleItems} onButton2Click={onButton2Click} onButton1Click={onButton1Click} history={history} />
       {/* {renderCityPicker && <CityPicker history={history} moduleItems={moduleItems} onDialogueClose={onDialogueClose} dialogueOpen={dialogueOpen} />} */}
     </div>

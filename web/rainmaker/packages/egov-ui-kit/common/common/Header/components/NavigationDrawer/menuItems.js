@@ -39,13 +39,20 @@ var items = {
             paddingTop: "3px"
           },
           id: "header-profile"
+        }, {
+          primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_LANGUAGE" }),
+          route: "/language-selection",
+          leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "language" }),
+          style: {
+            borderBottom: "none"
+          },
+          id: "header-language"
         }]
       },
       two: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_CONTACT_US" }),
           route: "/contact-us",
-          leftIcon: _react2.default.createElement(_components.Icon, { action: "communication", name: "call" }),
           style: {
             paddingBottom: "8px",
             paddingTop: "8px"
@@ -56,7 +63,8 @@ var items = {
         //   primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
         //   route: "/how-it-works",
         //   leftIcon: <Icon action="custom" name="help-circle" />,
-        //   style: {
+        //   style: {            leftIcon: <Icon action="communication" name="call" />,
+
         //     paddingBottom: "2px",
         //     paddingTop: "2px",
         //   },
@@ -123,6 +131,15 @@ var items = {
           renderforcsr: 1,
           renderforadmin: 1,
           renderforPGREmp: 1
+        }, {
+          primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_LANGUAGE" }),
+          route: "/language-selection",
+          leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "language" }),
+          style: {
+            borderBottom: "none"
+          },
+          id: "header-language",
+          renderforcsr: true
         }]
       },
       two: {

@@ -13,7 +13,7 @@ import filter from "lodash/filter";
 import { httpRequest } from "ui-utils/api";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-
+import isUndefined from "lodash/isUndefined";
 export const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -1794,7 +1794,9 @@ export const getAllDataFromBillingSlab = async (tenantId, dispatch) => {
           tradeType.structureType = item.structureType;
           tradeType.licenseType = item.licenseType;
           tradeType.rate = item.rate;
-          item.rate && item.rate > 0 && acc.tradeTypeData.push(tradeType);
+          !isUndefined(item.rate) &&
+            item.rate !== null &&
+            acc.tradeTypeData.push(tradeType);
         }
         return acc;
       },

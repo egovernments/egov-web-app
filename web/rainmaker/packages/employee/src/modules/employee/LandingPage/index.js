@@ -41,8 +41,8 @@ class LandingPage extends Component {
 
   moduleData = {
     PGR: {
-      moduleTitle: "Complaints",
-      button1: "mSeva Complaints",
+      moduleTitle: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
+      button1: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
       //borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "action",
       route: "all-complaints",
@@ -50,8 +50,8 @@ class LandingPage extends Component {
       iconStyle: { width: "50px", height: "50px", marginTop: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     PT: {
-      moduleTitle: "Property Tax",
-      button1: "mSeva Property Tax",
+      moduleTitle: "PT_PAYMENT_STEP_HEADER1",
+      button1: "PT_PAYMENT_STEP_HEADER1",
       //borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       iconName: "dashboard-complaint",
@@ -68,8 +68,8 @@ class LandingPage extends Component {
       iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
     TL: {
-      moduleTitle: "TradeLicense",
-      button1: "Mseva TradeLicense",
+      moduleTitle: "TL_COMMON_TL",
+      button1: "TL_COMMON_TL",
       // borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
       iconName: "business-center",

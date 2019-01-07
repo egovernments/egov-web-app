@@ -152,7 +152,8 @@ var YearDialog = function (_Component) {
         bodyStyle: { backgroundColor: "#ffffff" },
         isClose: false,
         onRequestClose: closeDialogue,
-        contentStyle: { width: "20%" }
+        contentStyle: { width: "20%" },
+        className: "year-dialog"
       }) : null;
     }
   }]);

@@ -28,15 +28,15 @@ const items = {
             },
             id: "header-profile",
           },
-          // {
-          //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
-          //   route: "/language-selection",
-          //   leftIcon: <Icon action="action" name="language" />,
-          //   style: {
-          //     borderBottom: "none",
-          //   },
-          //   id: "header-language",
-          // },
+          {
+            primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
+            route: "/language-selection",
+            leftIcon: <Icon action="action" name="language" />,
+            style: {
+              borderBottom: "none",
+            },
+            id: "header-language",
+          },
         ],
       },
       two: {
@@ -44,7 +44,6 @@ const items = {
           {
             primaryText: <Label label="CS_HOME_HEADER_CONTACT_US" />,
             route: "/contact-us",
-            leftIcon: <Icon action="communication" name="call" />,
             style: {
               paddingBottom: "8px",
               paddingTop: "8px",
@@ -55,7 +54,8 @@ const items = {
           //   primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
           //   route: "/how-it-works",
           //   leftIcon: <Icon action="custom" name="help-circle" />,
-          //   style: {
+          //   style: {            leftIcon: <Icon action="communication" name="call" />,
+
           //     paddingBottom: "2px",
           //     paddingTop: "2px",
           //   },
@@ -129,16 +129,16 @@ const items = {
             renderforadmin: 1,
             renderforPGREmp: 1,
           },
-          // {
-          //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
-          //   route: "/language-selection",
-          //   leftIcon: <Icon action="action" name="language" />,
-          //   style: {
-          //     borderBottom: "none",
-          //   },
-          //   id: "header-language",
-          //   renderforcsr: true,
-          // },
+          {
+            primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
+            route: "/language-selection",
+            leftIcon: <Icon action="action" name="language" />,
+            style: {
+              borderBottom: "none",
+            },
+            id: "header-language",
+            renderforcsr: true,
+          },
         ],
       },
       two: {

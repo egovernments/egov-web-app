@@ -143,7 +143,7 @@ class Details extends Component {
                 {addressDetail && !isEmpty(addressDetail) && (
                   <div className="rainmaker-displayInline">
                     <Icon className="map-icon" action="maps" name="place" style={{ marginRight: 13 }} color={"#767676"} />
-                    <Label label="Address Details" labelClassName="dark-heading" />
+                    <Label label="CS_COMPLAINT_DETAILS_ADDRESS_DETAILS" labelClassName="dark-heading" />
                   </div>
                 )}
                 {houseNoAndStreetName && (

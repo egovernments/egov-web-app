@@ -172,84 +172,65 @@ class ShowField extends Component {
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
-      dom: '<".col-sm-8 report-result-table-header"l><"col-sm-4"B><"col-sm-4"f>rtip',
+      // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       order: [],
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
-      searching: false,
+      searching: true,
       paging: false,
-      bInfo: false,
+      // bInfo: false,
       // order: [[3, "desc"]],
       ordering: true,
-      bDestroy: true,
-      footerCallback: function(row, data, start, end, display) {
-        var api = this.api(),
-          data,
-          total,
-          pageTotal;
-
+      // bDestroy: true,
+      columnDefs: [
         {
-          sumColumn.map((columnObj, index) => {
-            if (columnObj.total) {
-              // Remove the formatting to get integer data for summation
+          targets: 0,
+          orderable: false,
+        },
+      ],
+      fnDrawCallback: function() {
+        let tableId = "reportTable";
+        let tableRows = document.getElementById(tableId).rows;
+        let rowCount = tableRows.length;
+        let cellCount = tableRows[0].cells.length;
+        let totalsRowIndex = -1;
+        let totalValues = [];
+        let i;
+        let j;
 
-              var intVal = function(i) {
-                if (typeof i === "string") {
-                  let a = i.replace(/,/g, "");
-                  a = a.replace(/[^-+0-9. ]/g, " ").split(" ")[0];
-                  let inta = a && Number(a);
-                  return inta;
-                } else if (typeof i === "number") {
-                  return i;
-                }
-                //return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
-              };
-
-              // Total over all pages
-              total = api
-                .column(index)
-                .data()
-                .reduce(function(a, b) {
-                  if (typeof b === "string" && b.match(/[A-za-z]/g)) {
-                    return;
-                  } else {
-                    return intVal(a) + intVal(b);
-                  }
-                }, 0);
-
-              // Total over this page
-              pageTotal = api
-                .column(index, { page: "current" })
-                .data()
-                .reduce(function(a, b, ind) {
-                  if (typeof b === "string" && b.match(/[A-za-z]/g)) {
-                    return;
-                  } else if (typeof b === "string" && b.split("/") && b.split("/").length === 2) {
-                    let fraction = b.split("/");
-                    if (ind == end - 1) {
-                      let sum = intVal(a) + intVal(Number(fraction[0]));
-                      let avg = (sum / end).toPrecision(3);
-                      return Math.abs(avg) + "/" + fraction[1];
-                    } else {
-                      return intVal(a) + intVal(Number(fraction[0]));
-                    }
-                  } else {
-                    return intVal(a) + intVal(b);
-                  }
-                }, 0);
-              let hideFooter = false;
-              if (isNaN(pageTotal) && typeof pageTotal === "number") {
-                hideFooter = true;
-              }
-
-              // Update footer
-              //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
-              typeof pageTotal !== "undefined" && !hideFooter && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
-              //}
+        for (i = 0; i < rowCount; i++) {
+          if (tableRows[i].className.indexOf("total") !== -1) {
+            totalsRowIndex = i;
+            for (j = 0; j < cellCount; j++) {
+              totalValues[j] = tableRows[i].cells[j].innerText;
             }
-            // }
-          });
+            tableRows[i].classList.remove("total");
+            break;
+          }
+        }
+
+        if (totalsRowIndex === -1) {
+          return;
+        }
+
+        for (i = totalsRowIndex; i < rowCount - 1; i++) {
+          for (j = 0; j < cellCount; j++) {
+            tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
+          }
+        }
+
+        for (i = 0; i < cellCount; i++) {
+          tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
+        }
+        tableRows[rowCount - 1].classList.add("total");
+
+        for (i = 0; i < rowCount; i++) {
+          $("#" + tableId)
+            .DataTable()
+            .row(tableRows[i])
+            .invalidate();
         }
       },
       // scrollResize: true,
@@ -399,22 +380,22 @@ class ShowField extends Component {
     return (
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr className="report-table-header">
-          <th key={"S. No."}>{"S. No."}</th>
-          {metaData &&
-            metaData.reportDetails &&
-            metaData.reportDetails.selectiveDownload && (
-              <th key={"testKey"}>
-                <input type="checkbox" onChange={checkAllRows} />
-              </th>
-            )}
+          <th key={"S. No."} className="report-header-cell">
+            {"S. No."}
+          </th>
+          {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
+            <th key={"testKey"}>
+              <input type="checkbox" onChange={checkAllRows} />
+            </th>
+          )}
           {reportResult.hasOwnProperty("reportHeader") &&
             reportResult.reportHeader.map((item, i) => {
               if (item.showColumn) {
                 return (
-                  <th key={i}>
+                  <th key={i} className="report-header-cell">
                     <Label
                       className="report-header-row-label"
-                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset" }}
+                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset", fontWeight: "bold" }}
                       label={item.label}
                     />
                   </th>
@@ -424,7 +405,7 @@ class ShowField extends Component {
                   <th style={{ display: "none" }} key={i}>
                     <Label
                       className="report-header-row-label"
-                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset" }}
+                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset", fontWeight: "bold" }}
                       label={item.label}
                     />
                   </th>
@@ -517,35 +498,33 @@ class ShowField extends Component {
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? "selected" : ""}>
                 <td>{dataIndex + 1}</td>
-                {metaData &&
-                  metaData.reportDetails &&
-                  metaData.reportDetails.selectiveDownload && (
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={this.state.ck[dataIndex] ? true : false}
-                        onClick={(e) => {
-                          let ck = { ...this.state.ck };
-                          ck[dataIndex] = e.target.checked;
-                          let rows = this.state.rows;
-                          if (e.target.checked) {
-                            rows[dataIndex] = dataItem;
-                          } else {
-                            delete rows[dataIndex];
-                          }
+                {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={this.state.ck[dataIndex] ? true : false}
+                      onClick={(e) => {
+                        let ck = { ...this.state.ck };
+                        ck[dataIndex] = e.target.checked;
+                        let rows = this.state.rows;
+                        if (e.target.checked) {
+                          rows[dataIndex] = dataItem;
+                        } else {
+                          delete rows[dataIndex];
+                        }
 
-                          let showPrintBtn;
-                          if (Object.keys(rows).length) showPrintBtn = true;
-                          else showPrintBtn = false;
-                          this.setState({
-                            ck,
-                            rows,
-                            showPrintBtn,
-                          });
-                        }}
-                      />
-                    </td>
-                  )}
+                        let showPrintBtn;
+                        if (Object.keys(rows).length) showPrintBtn = true;
+                        else showPrintBtn = false;
+                        this.setState({
+                          ck,
+                          rows,
+                          showPrintBtn,
+                        });
+                      }}
+                    />
+                  </td>
+                )}
                 {dataItem.map((item, itemIndex) => {
                   var columnObj = {};
                   //array for particular row
@@ -579,6 +558,7 @@ class ShowField extends Component {
               </tr>
             );
           })}
+        {this.renderFooter()}
       </tbody>
     );
   };
@@ -610,15 +590,48 @@ class ShowField extends Component {
       sumColumn.unshift(firstColObj);
     }
 
+    var intVal = function(i) {
+      if (typeof i === "string") {
+        let a = i.replace(/,/g, "");
+        a = a.replace(/[^-+0-9. ]/g, " ").split(" ")[0];
+        let inta = a && Number(a);
+        return inta;
+      } else if (typeof i === "number") {
+        return i;
+      }
+      //return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
+    };
+
+    let total = [];
+    for (let i = 0; i < reportResult.reportData.length; i++) {
+      for (let j = 0; j < reportResult.reportData[i].length; j++) {
+        let val = intVal(reportResult.reportData[i][j]);
+        if (i == 0) {
+          if (sumColumn[j + 1].total && typeof val === "number") {
+            total.push(val);
+          } else {
+            total.push("");
+          }
+          continue;
+        }
+        if (sumColumn[j + 1].total) {
+          if (typeof val === "number") {
+            if (typeof total[j] === "string") {
+              total[j] = val;
+            }
+            total[j] += val;
+          }
+        }
+      }
+    }
+
     if (footerexist) {
       return (
-        <tfoot>
-          <tr>
-            {sumColumn.map((columnObj, index) => {
-              return <th key={index}>{index === 0 ? "Total" : ""}</th>;
-            })}
-          </tr>
-        </tfoot>
+        <tr className="total">
+          {sumColumn.map((columnObj, index) => {
+            return <td key={index}>{index === 0 ? "Total" : total[index - 1]}</td>;
+          })}
+        </tr>
       );
     }
   };
@@ -683,7 +696,6 @@ class ShowField extends Component {
           >
             {self.renderHeader()}
             {self.renderBody()}
-            {self.renderFooter()}
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
@@ -798,19 +810,18 @@ class ShowField extends Component {
         </div>
       );
     };
-    return isTableShow?(
-
-        <div>
-          {!_.isEmpty(reportResult) &&
-            reportResult.hasOwnProperty("reportData") &&
-            metaData &&
-            metaData.reportDetails &&
-            metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
-          <div className="report-result-table">
-            {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
-          </div>
+    return isTableShow ? (
+      <div>
+        {!_.isEmpty(reportResult) &&
+          reportResult.hasOwnProperty("reportData") &&
+          metaData &&
+          metaData.reportDetails &&
+          metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
+        <div className="report-result-table">
+          {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>
-    ):null;
+      </div>
+    ) : null;
   }
 }
 
@@ -841,4 +852,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowField);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShowField);

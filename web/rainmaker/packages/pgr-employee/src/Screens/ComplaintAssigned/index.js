@@ -9,7 +9,9 @@ import { Screen } from "modules/common";
 class ComplaintAssigned extends Component {
   componentDidMount = () => {
     let { fetchComplaints, match } = this.props;
-    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    fetchComplaints([
+      { key: "serviceRequestId", value: match.params.serviceRequestId }
+    ]);
   };
 
   handleComplaintReassigned = () => {
@@ -18,15 +20,28 @@ class ComplaintAssigned extends Component {
 
   render() {
     let { employeeDetails, fetchSuccess } = this.props;
-    const isReassign = window.location.href.includes("complaint-reassigned") ? true : false;
+    const isReassign = window.location.href.includes("complaint-reassigned")
+      ? true
+      : false;
     return (
       <Screen loading={!fetchSuccess} className="padding-0">
         <div className="success-message-main-screen">
           {employeeDetails && employeeDetails.employeeName && (
             <SuccessMessage
-              successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
-              secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
-              tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
+              successmessage={
+                isReassign ? "CS_COMMON_REASSIGNED_TO" : "CS_COMMON_ASSIGNED_TO"
+              }
+              employeeName={employeeDetails.employeeName}
+              secondaryLabel={
+                employeeDetails &&
+                employeeDetails.employeeDesignation &&
+                employeeDetails.employeeDesignation
+              }
+              tertiaryLabel={
+                employeeDetails &&
+                employeeDetails.employeeDepartment &&
+                employeeDetails.employeeDepartment + " Department"
+              }
               icon={<Icon action="navigation" name="check" />}
               backgroundColor={"#22b25f"}
             />
@@ -54,20 +69,39 @@ const getNameFromId = (obj, id, defaultValue) => {
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
   const { departmentById, designationsById, employeeById } = state.common;
-  let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
-  const selectedEmployee = selectedComplaint && employeeById && employeeById[selectedComplaint.actions[0].assignee];
+  let selectedComplaint =
+    complaints["byId"][
+      decodeURIComponent(window.location.href.split("/").pop())
+    ];
+  const selectedEmployee =
+    selectedComplaint &&
+    employeeById &&
+    employeeById[selectedComplaint.actions[0].assignee];
   const employeeDetails = {
     employeeName: selectedEmployee && selectedEmployee.name,
-    employeeDesignation: selectedEmployee && getNameFromId(designationsById, selectedEmployee.assignments[0].designation, "Engineer"),
-    employeeDepartment: selectedEmployee && getNameFromId(departmentById, selectedEmployee.assignments[0].department, "Administration"),
+    employeeDesignation:
+      selectedEmployee &&
+      getNameFromId(
+        designationsById,
+        selectedEmployee.assignments[0].designation,
+        "Engineer"
+      ),
+    employeeDepartment:
+      selectedEmployee &&
+      getNameFromId(
+        departmentById,
+        selectedEmployee.assignments[0].department,
+        "Administration"
+      )
   };
-  const fetchSuccess = employeeDetails && employeeDetails.employeeName ? true : false;
+  const fetchSuccess =
+    employeeDetails && employeeDetails.employeeName ? true : false;
   return { employeeDetails, fetchSuccess };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    fetchComplaints: criteria => dispatch(fetchComplaints(criteria))
   };
 };
 

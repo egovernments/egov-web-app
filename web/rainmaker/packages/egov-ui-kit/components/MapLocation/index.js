@@ -26,6 +26,10 @@ var _common = require("config/common");
 
 var _common2 = _interopRequireDefault(_common);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = [{
@@ -385,7 +389,7 @@ var MapLocation = compose(withProps({
             _react2.default.createElement(
               "div",
               { style: { color: "#fff" } },
-              "Move pin to adjust"
+              _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CS_MAP_MOVE_PIN" })
             )
           ),
           _react2.default.createElement("div", {
@@ -423,7 +427,7 @@ var MapLocation = compose(withProps({
           _react2.default.createElement(
             "div",
             { style: { color: "#fff" } },
-            "Move pin to adjust"
+            _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CS_MAP_MOVE_PIN" })
           )
         ),
         _react2.default.createElement("div", {

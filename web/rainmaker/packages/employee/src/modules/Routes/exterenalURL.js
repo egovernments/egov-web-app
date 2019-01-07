@@ -16,6 +16,7 @@ const routes = [
     component: IFrameInterface,
     needsAuthentication: true,
     options: {
+      hideTitle: true,
       title: "",
       hideFooter: true,
       hideBackButton: true,

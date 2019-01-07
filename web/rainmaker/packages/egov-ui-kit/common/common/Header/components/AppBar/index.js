@@ -59,7 +59,6 @@ var iconButtonStyle = {
 // handle listners
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
-      ulbName = _ref.ulbName,
       defaultTitle = _ref.defaultTitle,
       ulbLogo = _ref.ulbLogo,
       title = _ref.title,
@@ -75,7 +74,8 @@ var EgovAppBar = function EgovAppBar(_ref) {
       searchButton = _ref.searchButton,
       sortDialogOpen = _ref.sortDialogOpen,
       history = _ref.history,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "ulbName", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history"]);
+      handleItemClick = _ref.handleItemClick,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history", "handleItemClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -104,23 +104,18 @@ var EgovAppBar = function EgovAppBar(_ref) {
             className: "screenHeaderLabelStyle appbar-title-label",
             label: titleAddon
           }),
-          _react2.default.createElement(
-            "div",
-            { className: "rainmaker-displayInline" },
-            _react2.default.createElement(_translationNode2.default, {
-              containerStyle: { marginLeft: "10px" },
-              className: "screenHeaderLabelStyle appbar-municipal-label",
-              label: ulbName && ulbName.toUpperCase()
-            }),
-            _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "4px" }, className: "screenHeaderLabelStyle appbar-municipal-label", label: defaultTitle })
-          )
+          _react2.default.createElement(_translationNode2.default, {
+            containerStyle: { marginLeft: "10px" },
+            className: "screenHeaderLabelStyle appbar-municipal-label",
+            label: role && role.toLowerCase() === "citizen" ? "PUNJAB MUNICIPAL CORPORATION" : defaultTitle ? defaultTitle : "PUNJAB MUNICIPAL CORPORATION"
+          })
         ),
         titleStyle: styles.titleStyle
       }, rest),
       _react2.default.createElement(
         _Toolbar2.default,
         { className: "app-toolbar", style: { padding: "0px", height: "64px", background: "#ffffff" } },
-        _react2.default.createElement(_UserSettings2.default, { onIconClick: onToolBarIconClick, userInfo: userInfo })
+        _react2.default.createElement(_UserSettings2.default, { onIconClick: onToolBarIconClick, userInfo: userInfo, handleItemClick: handleItemClick })
       ),
       _react2.default.createElement(
         "div",

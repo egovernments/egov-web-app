@@ -16,7 +16,7 @@ const formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
-      errorMessage: "Enter valid name (max length 64)",
+      errorMessage: "PT_NAME_ERROR_MESSAGE",
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -26,7 +26,7 @@ const formConfig = {
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
       pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[5-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number",
+      errorMessage: "PT_MOBILE_NUMBER_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerGuardian: {
@@ -37,7 +37,7 @@ const formConfig = {
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
       pattern: /^[a-zA-Z\.\'\-\s\`]{1,64}$/i,
       required: true,
-      errorMessage: "Enter valid name (max length 64)",
+      errorMessage: "PT_NAME_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerEmail: {
@@ -58,7 +58,7 @@ const formConfig = {
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,256}$/,
-      errorMessage: "Enter valid address",
+      errorMessage: "PT_ADDRESS_ERROR_MESSAGE",
     },
     ownerRelationship: {
       id: "ownerRelationship",

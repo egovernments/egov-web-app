@@ -30,6 +30,8 @@ var _download = require("egov-ui-kit/assets/images/download.png");
 
 var _download2 = _interopRequireDefault(_download);
 
+var _commonMenuItems = require("../NavigationDrawer/commonMenuItems");
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49,7 +51,8 @@ var UserSettings = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = UserSettings.__proto__ || Object.getPrototypeOf(UserSettings)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      languageSelected: localStorage.getItem("locale")
+      languageSelected: localStorage.getItem("locale"),
+      displayAccInfo: false
     }, _this.items = [{
       label: "ENGLISH",
       value: "en_IN"
@@ -81,6 +84,11 @@ var UserSettings = function (_Component) {
       },
       listStyle: {
         display: "block"
+      },
+      listInnerDivStyle: {
+        padding: "10px",
+        display: "flex",
+        alignItems: "center"
       }
     }, _this.onChange = function (event, index, value) {
       _this.setState({ languageSelected: value });
@@ -89,24 +97,54 @@ var UserSettings = function (_Component) {
   }
 
   (0, _createClass3.default)(UserSettings, [{
+    key: "toggleAccInfo",
+    value: function toggleAccInfo() {
+      this.setState({
+        displayAccInfo: !this.state.displayAccInfo
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var languageSelected = this.state.languageSelected;
+      var _this2 = this;
+
+      var _state = this.state,
+          languageSelected = _state.languageSelected,
+          displayAccInfo = _state.displayAccInfo;
       var items = this.items,
           style = this.style;
       var _props = this.props,
           onIconClick = _props.onIconClick,
-          userInfo = _props.userInfo;
-
+          userInfo = _props.userInfo,
+          handleItemClick = _props.handleItemClick;
 
       return _react2.default.createElement(
         "div",
         { className: "userSettingsContainer" },
         _react2.default.createElement(
           "div",
-          { onClick: onIconClick, className: "userSettingsInnerContainer" },
+          {
+            onClick: function onClick() {
+              _this2.toggleAccInfo();
+            },
+            className: "userSettingsInnerContainer"
+          },
           _react2.default.createElement(_components.Image, { width: "33px", circular: true, source: userInfo.photo || _download2.default }),
-          _react2.default.createElement(_components.Icon, { action: "navigation", name: "arrow-drop-down", color: "#767676", style: style.arrowIconStyle })
+          _react2.default.createElement(_components.Icon, { action: "navigation", name: "arrow-drop-down", color: "#767676", style: style.arrowIconStyle }),
+          _react2.default.createElement(
+            "div",
+            { className: "user-acc-info" },
+            displayAccInfo ? _react2.default.createElement(_components.List, {
+              onItemClick: function onItemClick(item) {
+                handleItemClick(item, false);
+              },
+              innerDivStyle: style.listInnerDivStyle,
+              className: "drawer-list-style",
+              items: _commonMenuItems.CommonMenuItems,
+              listContainerStyle: { background: "#ffffff" },
+              listItemStyle: { borderBottom: "1px solid #e0e0e0" }
+            }) : ""
+          )
         )
       );
     }

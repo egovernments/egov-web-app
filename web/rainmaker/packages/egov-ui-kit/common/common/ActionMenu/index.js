@@ -95,11 +95,14 @@ var ActionMenu = function (_Component) {
   (0, _createClass3.default)(ActionMenu, [{
     key: "render",
     value: function render() {
-      var actionListArr = this.props.actionListArr;
+      var _props = this.props,
+          actionListArr = _props.actionListArr,
+          activeRoutePath = _props.activeRoutePath,
+          updateActiveRoute = _props.updateActiveRoute;
 
       var transformedRole = "";
       // actionListArr.push({url:"https://www.google.com",navigationURL:"newTab",path:"test.new tab"});
-      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole, actionListArr: actionListArr }) : null;
+      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole, actionListArr: actionListArr, activeRoutePath: activeRoutePath, updateActiveRoute: updateActiveRoute }) : null;
     }
   }]);
   return ActionMenu;
@@ -109,7 +112,9 @@ var mapStateToProps = function mapStateToProps(_ref3) {
   var app = _ref3.app;
 
   var actionListArr = app.menu || [];
-  return { actionListArr: actionListArr };
+  var activeRoutePath = app.activeRoutePath;
+
+  return { actionListArr: actionListArr, activeRoutePath: activeRoutePath };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -122,6 +127,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchActionMenu: function fetchActionMenu(role, ts) {
       return dispatch((0, _actions.fetchActionItems)(role, ts));
+    },
+    updateActiveRoute: function updateActiveRoute(routepath) {
+      return dispatch((0, _actions.updateActiveRoute)(routepath));
     }
   };
 };

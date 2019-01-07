@@ -21,11 +21,35 @@
 .custom-style-for-send {
   transform: rotate(-20deg); }
 
-.sideMenuItem:hover {
+.sideMenuItem:hover,
+.sideMenuItem.slected {
   background-color: rgba(254, 122, 81, 0.12); }
-  .sideMenuItem:hover div:nth-of-type(1) > span {
+  .sideMenuItem:hover div:nth-of-type(1) > span,
+  .sideMenuItem.slected div:nth-of-type(1) > span {
     background: none !important; }
-    .sideMenuItem:hover div:nth-of-type(1) > span div > div > div > span {
-      color: #FE7A51 !important; }
-  .sideMenuItem:hover .iconClassHover {
-    fill: #FE7A51 !important; }
+    .sideMenuItem:hover div:nth-of-type(1) > span div > div > div > span,
+    .sideMenuItem.slected div:nth-of-type(1) > span div > div > div > span {
+      color: #fe7a51 !important; }
+  .sideMenuItem:hover .iconClassHover,
+  .sideMenuItem.slected .iconClassHover {
+    fill: #fe7a51 !important; }
+
+.menu-item-title {
+  font-size: 16px;
+  color: black;
+  padding: 15px 0 0 5px; }
+
+.slected {
+  border-left: 2px solid red; }
+
+.menuStyle {
+  margin-left: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.87); }
+
+.menuStyle.with-childs {
+  margin-right: 15px; }

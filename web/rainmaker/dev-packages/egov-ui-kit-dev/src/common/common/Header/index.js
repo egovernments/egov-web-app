@@ -10,6 +10,7 @@ import { logout } from "egov-ui-kit/redux/auth/actions";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 import get from "lodash/get";
 import "./index.css";
+import { updateActiveRoute } from "egov-ui-kit/redux/app/actions";
 
 // get userInfo role
 class Header extends Component {
@@ -23,10 +24,12 @@ class Header extends Component {
   };
 
   componentDidMount = () => {
-    const { role } = this.props;
+    const { role, updateActiveRoute } = this.props;
     if (role && role.toLowerCase() !== "citizen") {
       const tenantId = localStorage.getItem("tenant-id");
+      const menupath = localStorage.getItem("menuPath");
       const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
+      updateActiveRoute(menupath);
       this.setState({ ulbLogo });
     }
   };
@@ -99,10 +102,14 @@ class Header extends Component {
     return { style, iconElementLeft, onLeftIconButtonClick, onToolBarIconClick, isHomeScreen };
   };
 
-  _handleItemClick = (item, index) => {
+  _handleItemClick = (item, toggleMenu) => {
     const { route } = item;
     // close the navigation bar
-    this._handleToggleMenu();
+    toggleMenu && this._handleToggleMenu();
+    //updating route poth in reducerxxxx
+    if (item.path) {
+      this.props.updateActiveRoute(item.path);
+    }
     // this logic is a bit shaky!! might break in future
     switch (route.slice(1)) {
       case "logout":
@@ -126,7 +133,6 @@ class Header extends Component {
       className,
       role,
       cities,
-      name,
       history,
       title,
       titleAddon,
@@ -137,13 +143,13 @@ class Header extends Component {
       refreshButton,
       sortButton,
       searchButton,
+      activeRoutePath,
     } = this.props;
     return (
       <div>
         <AppBar
           className={className}
           title={title}
-          ulbName={name}
           defaultTitle={defaultTitle}
           titleAddon={titleAddon}
           role={role}
@@ -156,6 +162,8 @@ class Header extends Component {
           searchButton={searchButton}
           sortDialogOpen={onSortClick}
           history={this.props.history}
+          handleItemClick={_handleItemClick}
+          activeRoutePath={activeRoutePath}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -179,32 +187,38 @@ class Header extends Component {
   }
 }
 
-const getUlbGradeLabel = (ulbGrade) => {
+const getReceiptHeaderLabel = (name, ulbGrade) => {
   if (ulbGrade) {
-    let ulbWiseHeaderName = ulbGrade.toUpperCase();
-    if (ulbWiseHeaderName.indexOf(" ") > 0) {
-      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
+    if (ulbGrade === "NP") {
+      return `${name.toUpperCase()} NAGAR PANCHAYAT`;
+    } else if (ulbGrade === "Municipal Corporation") {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    } else if (ulbGrade.includes("MC Class")) {
+      return `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+    } else {
+      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
     }
-    return "ULB" + "_" + ulbWiseHeaderName;
+  } else {
+    return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
   }
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const cities = state.common.cities || [];
-  const { role } = ownProps;
-  const tenantId =
-    role && role.toLowerCase() === "citizen" ? JSON.parse(localStorage.getItem("user-info")).permanentCity : localStorage.getItem("tenant-id");
+  const tenantId = localStorage.getItem("tenant-id");
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "name");
-  const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
-  return { cities, defaultTitle, name };
+  const defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
+  const activeRoutePath = state.app.activeRoutePath;
+  return { cities, defaultTitle, activeRoutePath };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
+    updateActiveRoute: (routepath) => dispatch(updateActiveRoute(routepath)),
   };
 };
 

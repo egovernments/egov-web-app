@@ -434,15 +434,17 @@ div[class^="floorDetails_"] .text-left {
   margin-left: 15px;
 }
 
-div[class^="MuiPaper-root"] {
+div[class^="MuiPaper-root"],
+.stepper-container {
   svg {
     text {
       fill: #fff;
       font-size: 1.2rem;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     }
-    circle, path {
-      color: #FE7A51;
+    circle,
+    path {
+      color: #fe7a51;
     }
   }
   [class*="MuiStepLabel"] {
@@ -453,22 +455,40 @@ div[class^="MuiPaper-root"] {
   }
 }
 
+#tax-wizard-buttons {
+  height: 64px;
+  padding: 8px;
+}
+
 @media only screen and (max-width: 704px) {
   #tax-wizard-buttons {
     text-align: initial;
     text-align: initial;
     margin: 0;
     padding: 0;
+    height: initial;
     .button-container {
       float: none;
       display: flex;
       width: 100%;
       margin: initial;
       padding: initial;
-      div:nth-of-type(1), div:nth-of-type(2) {
+      div:nth-of-type(1),
+      div:nth-of-type(2) {
         width: 100% !important;
         margin: 0 !important;
       }
+    }
+  }
+  .stepper-container {
+    padding: initial;
+    margin-top: 73px;
+  }
+  .year-dialog {
+    left: initial;
+    right: 11%;
+    > div > div > div {
+      width: calc(100% + 104px);
     }
   }
 }
