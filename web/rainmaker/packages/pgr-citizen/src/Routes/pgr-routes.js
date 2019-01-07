@@ -1,21 +1,46 @@
+import React from "react";
+import Loadable from "react-loadable";
 // user routes
 import Register from "../Screens/User/Register";
 import Login from "../Screens/User/Login";
 import OTP from "../Screens/User/OTP";
-
-// pgr citizen specific screens
-import MyComplaints from "../Screens/MyComplaints";
-import ComplaintDetails from "../Screens/ComplaintDetails";
-import ComplaintCreated from "../Screens/ComplaintCreated";
-import Feedback from "../Screens/Feedback";
-import PGRHome from "../Screens/Home";
-import AddComplaint from "../Screens/AddComplaint";
-import FeedbackAcknowledge from "../Screens/FeedbackAcknowledgement";
 import {
   ReOpenComplaint,
   ReopenAcknowledgement,
   ComplaintType
 } from "modules/common";
+
+const Loading = () => <div />;
+
+// pgr citizen specific screens
+const MyComplaints = Loadable({
+  loader: () => import("../Screens/MyComplaints"),
+  loading: Loading
+});
+const ComplaintDetails = Loadable({
+  loader: () => import("../Screens/ComplaintDetails"),
+  loading: Loading
+});
+const ComplaintCreated = Loadable({
+  loader: () => import("../Screens/ComplaintCreated"),
+  loading: Loading
+});
+const Feedback = Loadable({
+  loader: () => import("../Screens/Feedback"),
+  loading: Loading
+});
+const PGRHome = Loadable({
+  loader: () => import("../Screens/Home"),
+  loading: Loading
+});
+const AddComplaint = Loadable({
+  loader: () => import("../Screens/AddComplaint"),
+  loading: Loading
+});
+const FeedbackAcknowledge = Loadable({
+  loader: () => import("../Screens/FeedbackAcknowledgement"),
+  loading: Loading
+});
 
 const routes = [
   {

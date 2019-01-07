@@ -66,7 +66,7 @@ var fetchLocalizationLabel = exports.fetchLocalizationLabel = function fetchLoca
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
+              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
 
             case 3:
               payload = _context.sent;

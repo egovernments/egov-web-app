@@ -21,6 +21,7 @@ const iconButtonStyle = {
 // handle listners
 const EgovAppBar = ({
   className,
+  ulbName,
   defaultTitle,
   ulbLogo,
   title,
@@ -58,17 +59,14 @@ const EgovAppBar = ({
                 label={titleAddon}
               />
             )}
-            <Label
-              containerStyle={{ marginLeft: "10px" }}
-              className="screenHeaderLabelStyle appbar-municipal-label"
-              label={
-                role && role.toLowerCase() === "citizen"
-                  ? "PUNJAB MUNICIPAL CORPORATION"
-                  : defaultTitle
-                  ? defaultTitle
-                  : "PUNJAB MUNICIPAL CORPORATION"
-              }
-            />
+            <div className="rainmaker-displayInline">
+              <Label
+                containerStyle={{ marginLeft: "10px" }}
+                className="screenHeaderLabelStyle appbar-municipal-label"
+                label={ulbName && ulbName.toUpperCase()}
+              />
+              <Label containerStyle={{ marginLeft: "4px" }} className="screenHeaderLabelStyle appbar-municipal-label" label={defaultTitle} />
+            </div>
           </div>
         }
         titleStyle={styles.titleStyle}
