@@ -145,11 +145,27 @@ export const fetchEmployeeToAssign = (queryObj, requestBody) => {
   };
 };
 
-export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray, key) => {
+export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray, key, tenantId) => {
+  if (!requestBody) {
+    var genRequestBody = {
+      MdmsCriteria: {
+        tenantId,
+        moduleDetails: [
+          {
+            moduleName,
+            masterDetails: masterArray.map((item) => {
+              return {
+                name: item,
+              };
+            }),
+          },
+        ],
+      },
+    };
+  }
   return async (dispatch) => {
     try {
-      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
-
+      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody || genRequestBody);
       dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray, key));
     } catch (error) {
       dispatch(generalMDMSFetchError(error.message));
@@ -169,7 +185,6 @@ export const hideSpinner = () => ({
   type: actionTypes.HIDE_SPINNER,
 });
 
-
 export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
   type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
   prepareFormData,
@@ -177,8 +192,8 @@ export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
 
 const fetchpgrConstantSuccess = (data) => ({
   type: actionTypes.FETCH_PGR_CONSTANTS,
-  data
-})
+  data,
+});
 
 export const fetchpgrConstants = () => {
   return async (dispatch) => {
@@ -191,7 +206,8 @@ export const fetchpgrConstants = () => {
             masterDetails: [
               {
                 name: "UIConstants",
-              }],
+              },
+            ],
           },
         ],
       },
@@ -203,4 +219,4 @@ export const fetchpgrConstants = () => {
       dispatch(generalMDMSFetchError(error));
     }
   };
-}
+};

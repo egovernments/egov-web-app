@@ -4,6 +4,8 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import PaymentStatus from "egov-ui-kit/common/propertyTax/PaymentStatus";
 import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/actions";
+import { clearForms } from "egov-ui-kit/redux/form/actions";
+import { updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import { createReceiptDetails, createReceiptUIInfo } from "egov-ui-kit/common/propertyTax/PaymentStatus/Components/createReceipt";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
@@ -111,6 +113,8 @@ class PaymentSuccess extends Component {
         this.setState({ imageUrl: data });
       }.bind(this)
     );
+    this.props.clearForms();
+    this.props.updatePrepareFormDataFromDraft({});
   };
 
   goToHome = () => {
@@ -212,6 +216,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName, key) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName, key)),
+    updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
+    clearForms: () => dispatch(clearForms()),
   };
 };
 export default connect(

@@ -188,19 +188,47 @@ div[class^="floorDetails_"] .text-left {
   font-size: 16px;
 }
 
+div[class^="MuiPaper-root"],
+.stepper-container {
+  svg {
+    text {
+      fill: #fff;
+      font-size: 1.2rem;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+    circle,
+    path {
+      color: #fe7a51;
+    }
+  }
+  [class*="MuiStepLabel"] {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  > div > span > span:nth-of-type(2) > span {
+    font-size: 14px;
+  }
+}
+
+#tax-wizard-buttons {
+  height: 64px;
+  padding: 8px;
+}
+
 @media only screen and (max-width: 704px) {
   #tax-wizard-buttons {
     text-align: initial;
     text-align: initial;
     margin: 0;
     padding: 0;
+    height: initial;
     .button-container {
       float: none;
       display: flex;
       width: 100%;
       margin: initial;
       padding: initial;
-      div:nth-of-type(1), div:nth-of-type(2) {
+      div:nth-of-type(1),
+      div:nth-of-type(2) {
         width: 100% !important;
         margin: 0 !important;
       }
@@ -221,7 +249,8 @@ div[class^="floorDetails_"] .text-left {
         justify-content: space-between;
         margin-bottom: 8px;
         padding: 0;
-        &:before, &:after {
+        &:before,
+        &:after {
           display: none;
         }
       }
@@ -236,5 +265,9 @@ div[class^="floorDetails_"] .text-left {
     .grayout {
       padding: initial;
     }
+  }
+  .stepper-container {
+    padding: 24px 0 !important;
+    margin-top: 47px;
   }
 }

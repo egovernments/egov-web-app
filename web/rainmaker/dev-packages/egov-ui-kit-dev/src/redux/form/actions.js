@@ -70,9 +70,16 @@ export const submitForm = (formKey, saveUrl) => {
         let formResponse = {};
         // this will eventually moved out to the auth action; bit messy
         if (formData.hasOwnProperty("login")) {
-          formResponse = await loginRequest(formData.login.username, formData.login.password,"","password","","CITIZEN");
+          formResponse = await loginRequest(formData.login.username, formData.login.password, "", "password", "", "CITIZEN");
         } else if (formData.hasOwnProperty("employee")) {
-          formResponse = await loginRequest(formData.employee.username, formData.employee.password, "", "password", formData.employee.tenantId,"EMPLOYEE");
+          formResponse = await loginRequest(
+            formData.employee.username,
+            formData.employee.password,
+            "",
+            "password",
+            formData.employee.tenantId,
+            "EMPLOYEE"
+          );
         } else {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }
@@ -140,3 +147,9 @@ export const updateForms = (forms) => ({
   type: actionTypes.UPDATE_FORM,
   forms,
 });
+
+export const clearForms = () => {
+  return {
+    type: actionTypes.CLEAR_FORMS,
+  };
+};

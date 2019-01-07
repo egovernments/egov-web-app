@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import { validateField, getFormFields, getFiles } from "./utils";
 
-const intialState = {};
+const initialState = {};
 
 const setFormProperty = (state, formKey, propertyKey, propertyValue) => {
   const form = state[formKey] || {};
@@ -94,7 +94,7 @@ const removeFile = (state, formKey, fieldKey, fileIndex) => {
   return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.filter((f, index) => index !== fileIndex) } } };
 };
 
-const form = (state = intialState, action) => {
+const form = (state = initialState, action) => {
   const { type, formKey, fieldKey } = action;
   switch (type) {
     case actionTypes.INIT_FORM:
@@ -111,6 +111,8 @@ const form = (state = intialState, action) => {
       const newState = { ...state };
       delete newState[formKey];
       return { ...newState };
+    case actionTypes.CLEAR_FORMS:
+      return { ...initialState };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);
