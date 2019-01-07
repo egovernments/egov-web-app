@@ -57,6 +57,26 @@ const FeesEstimateCard = Loadable({
   loading: () => <Loading />
 });
 
+const TaskDialog = Loadable({
+  loader: () => import("./TaskDialog"),
+  loading: () => <Loading />
+});
+
+const TaskStatusComponents = Loadable({
+  loader: () => import("./TaskStatusComponents"),
+  loading: () => <Loading />
+});
+
+const Footer = Loadable({
+  loader: () => import("./Footer"),
+  loading: () => <Loading />
+});
+
+const ActionDialog = Loadable({
+  loader: () => import("./ActionDialog"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -66,7 +86,10 @@ export {
   UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
-  // AutoSelector,
+  TaskStatusComponents,
+  TaskDialog,
   MapLocator,
-  FeesEstimateCard
+  FeesEstimateCard,
+  Footer,
+  ActionDialog
 };

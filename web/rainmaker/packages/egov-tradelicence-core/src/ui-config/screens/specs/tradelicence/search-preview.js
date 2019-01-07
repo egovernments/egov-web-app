@@ -29,6 +29,7 @@ import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
+import { getWorkFlowData } from "../../../../ui-redux/workflow/actions";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
 let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
@@ -354,6 +355,11 @@ const screenConfig = {
     const status = getQueryArg(window.location.href, "status");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     //To set the application no. at the  top
+    const queryObject = [
+      { key: "businessIds", value: "PB-TL-2018-10-31-000756" },
+      { key: "history", value: true }
+    ];
+    dispatch(getWorkFlowData(queryObject));
     set(
       action.screenConfig,
       "components.div.children.headerDiv.children.header1.children.applicationNumber.props.number",
@@ -434,7 +440,11 @@ const screenConfig = {
             }
           }
         },
-        tradeReviewDetails
+        tradeReviewDetails,
+        taskStatus: {
+          uiFramework: "custom-containers-local",
+          componentPath: "WorkFlowContainer"
+        }
         //footer
       }
     },
