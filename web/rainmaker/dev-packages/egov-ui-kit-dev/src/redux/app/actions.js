@@ -5,8 +5,9 @@ import { getCurrentAddress } from "egov-ui-kit/utils/commons";
 import commonConfig from "config/common";
 import { debug } from "util";
 
-export const updateActiveRoute = (routePath) => {
+export const updateActiveRoute = (routePath,menuName) => {
   window.localStorage.setItem("menuPath", routePath);
+  window.localStorage.setItem('menuName',menuName);
   return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath };
 };
 

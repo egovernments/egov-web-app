@@ -27,7 +27,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginLeft: 0,
+    marginLeft: "4px",
     padding: 0,
     lineHeight: "unset",
   },
@@ -80,7 +80,7 @@ const NavigationDrawer = ({
           listContainerStyle={{ background: "#ffffff" }}
           listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
         /> */}
-        <ActionMenu role={role} />
+          {window && window.outerWidth <= 768 && <ActionMenu role={role} /> }
         <Divider light />
         {CommonMenuItems.map((item) => {
           return (

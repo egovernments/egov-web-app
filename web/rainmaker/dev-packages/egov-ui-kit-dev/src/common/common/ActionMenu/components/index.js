@@ -8,6 +8,9 @@ import get from "lodash/get";
 import { split, orderBy, some } from "lodash";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import { TextFieldIcon } from "components";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Tooltip from "@material-ui/core/Tooltip";
 import Label from "egov-ui-kit/utils/translationNode";
 
 import "./index.css";
@@ -206,7 +209,7 @@ class ActionMenuComp extends Component {
   };
 
   render() {
-    let { role, actionListArr, activeRoutePath, updateActiveRoute } = this.props;
+    let { role, actionListArr, activeRoutePath, updateActiveRoute,toggleDrawer,menuDrawerOpen } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
@@ -245,7 +248,7 @@ class ActionMenuComp extends Component {
                       name="chevron-right"
                       action="navigation"
                       color="rgba(0, 0, 0, 0.8700000047683716)"
-                      className="iconClassHover material-icons whiteColor"
+                      className="iconClassHover material-icons whiteColor menu-right-icon"
                       style={styles.arrowIconStyle}
                     />
                   }
@@ -254,6 +257,7 @@ class ActionMenuComp extends Component {
                       path: !item.path ? item.name : item.path,
                       parentPath: false,
                     };
+                    toggleDrawer && toggleDrawer();
                     menuChange(pathParam);
                   }}
                 />
@@ -276,12 +280,7 @@ class ActionMenuComp extends Component {
                         //  localStorage.setItem("menuPath", item.path);
                         updateActiveRoute(item.path, item.name);
                         document.title = item.name;
-                        console.log(
-                          "menu change",
-                          window.location.pathname,
-                          `/${item.navigationURL}`,
-                          window.location.pathname.startsWith("/integration")
-                        );
+                        toggleDrawer && toggleDrawer();
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
@@ -292,7 +291,6 @@ class ActionMenuComp extends Component {
                           <Icon
                             name={iconLeft[1]}
                             action={iconLeft[0]}
-                            fill="rgba(0, 0, 0, 0.6000000238418579)"
                             color="rgba(0, 0, 0, 0.6000000238418579)"
                             style={styles.fibreIconStyle}
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
@@ -322,7 +320,6 @@ class ActionMenuComp extends Component {
                           <Icon
                             name={iconLeft[1]}
                             action={iconLeft[0]}
-                            fill="rgba(0, 0, 0, 0.6000000238418579)"
                             color="rgba(0, 0, 0, 0.6000000238418579)"
                             style={styles.fibreIconStyle}
                             className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
@@ -359,6 +356,7 @@ class ActionMenuComp extends Component {
                         style={{ whiteSpace: "initial" }}
                         onClick={() => {
                           document.title = item.displayName;
+                          toggleDrawer && toggleDrawer();
                           updateActiveRoute(item.path, item.displayName);
                         }}
                         leftIcon={
@@ -367,8 +365,6 @@ class ActionMenuComp extends Component {
                             <Icon
                               name={iconLeft[1]}
                               action={iconLeft[0]}
-                              name={item.leftIcon.name}
-                              action={item.leftIcon.action}
                               color={"rgba(0, 0, 0, 0.6000000238418579)"}
                               style={styles.fibreIconStyle}
                               className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
@@ -400,7 +396,7 @@ class ActionMenuComp extends Component {
           menuItemStyle={{ paddingLeft: "0", width: "100%" }}
         >
           {!path && (
-            <TextFieldIcon
+            <div onClick={()=>{toggleDrawer && toggleDrawer()}}><TextFieldIcon
               value={searchText}
               hintText={<Label label="PT_SEARCH_BUTTON" />}
               iconStyle={styles.inputIconStyle}
@@ -409,12 +405,13 @@ class ActionMenuComp extends Component {
               onChange={(e) => {
                 this.handleChange(e);
               }}
-            />
+            /></div>
           )}
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
               onClick={() => {
+                toggleDrawer && toggleDrawer()
                 changeLevel(path);
               }}
             >
@@ -437,8 +434,22 @@ class ActionMenuComp extends Component {
           <div className="clearfix" />
 
           <div style={{ paddingLeft: "-24px" }}>{showMenuItem()}</div>
+         {toggleDrawer ? <div className="sideMenuItem drawer-collapse-menu-item">
+                      <MenuItem
+                        innerDivStyle={styles.defaultMenuItemStyle}
+                        style={{ whiteSpace: "initial" }}
+                        onClick={() => {
+                          toggleDrawer && toggleDrawer(false);
+                        }}
+                        leftIcon={
+                            menuDrawerOpen ? <ChevronLeftIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor"/> :  <Tooltip id={"menu-toggle-tooltip"} placement={"right"} title={<div style={{color:"black"}}>Expand menu</div>}><ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" /></Tooltip>
+                        }
+                        primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
+                      />
+                    </div> : "" }
+
         </Menu>
-      </div>
+      </div>      
     ) : null;
   }
 }

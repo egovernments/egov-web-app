@@ -98,11 +98,18 @@ var ActionMenu = function (_Component) {
       var _props = this.props,
           actionListArr = _props.actionListArr,
           activeRoutePath = _props.activeRoutePath,
-          updateActiveRoute = _props.updateActiveRoute;
+          updateActiveRoute = _props.updateActiveRoute,
+          toggleDrawer = _props.toggleDrawer,
+          menuDrawerOpen = _props.menuDrawerOpen;
 
       var transformedRole = "";
       // actionListArr.push({url:"https://www.google.com",navigationURL:"newTab",path:"test.new tab"});
-      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole, actionListArr: actionListArr, activeRoutePath: activeRoutePath, updateActiveRoute: updateActiveRoute }) : null;
+      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components2.default, { role: transformedRole,
+        actionListArr: actionListArr,
+        activeRoutePath: activeRoutePath,
+        toggleDrawer: toggleDrawer,
+        menuDrawerOpen: menuDrawerOpen,
+        updateActiveRoute: updateActiveRoute }) : null;
     }
   }]);
   return ActionMenu;
@@ -128,8 +135,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchActionMenu: function fetchActionMenu(role, ts) {
       return dispatch((0, _actions.fetchActionItems)(role, ts));
     },
-    updateActiveRoute: function updateActiveRoute(routepath) {
-      return dispatch((0, _actions.updateActiveRoute)(routepath));
+    updateActiveRoute: function updateActiveRoute(routepath, routeName) {
+      return dispatch((0, _actions.updateActiveRoute)(routepath, routeName));
     }
   };
 };

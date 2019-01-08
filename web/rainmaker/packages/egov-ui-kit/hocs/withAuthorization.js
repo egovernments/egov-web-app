@@ -70,7 +70,8 @@ var withAuthorization = function withAuthorization() {
         _this.state = {
           titleAddon: "",
           titleObject: [],
-          sortPopOpen: false
+          sortPopOpen: false,
+          menuDrawerOpen: true
         };
         _this.style = {
           iconStyle: {
@@ -135,6 +136,13 @@ var withAuthorization = function withAuthorization() {
         //Duplication due to lack of time for proper testing in PGR
 
       }, {
+        key: "toggleDrawer",
+        value: function toggleDrawer(menuClick) {
+          this.setState({
+            menuDrawerOpen: menuClick ? true : !this.state.menuDrawerOpen
+          });
+        }
+      }, {
         key: "render",
         value: function render() {
           var _this2 = this;
@@ -160,7 +168,8 @@ var withAuthorization = function withAuthorization() {
               complaints = _props.complaints;
           var _state = this.state,
               titleAddon = _state.titleAddon,
-              titleObject = _state.titleObject;
+              titleObject = _state.titleObject,
+              menuDrawerOpen = _state.menuDrawerOpen;
           var style = this.style;
 
           var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") || this.roleFromUserInfo(userInfo, "DGRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : this.roleFromUserInfo(userInfo, "PGR-ADMIN") ? "pgr-admin" : "";
@@ -178,6 +187,8 @@ var withAuthorization = function withAuthorization() {
 
             return userInfo && userInfo.roles && userInfo.roles.length > 0 && userInfo.roles[0].code.toUpperCase() || null;
           };
+          var drawerClsName = menuDrawerOpen ? "full-menu-drawer" : "icon-menu-drawer";
+          var screencls = menuDrawerOpen ? "with-full-menu" : "with-icon-menu";
           return _react2.default.createElement(
             "div",
             { className: "rainmaker-header-cont", style: { position: "relative" } },
@@ -202,11 +213,14 @@ var withAuthorization = function withAuthorization() {
                 null,
                 _react2.default.createElement(
                   "div",
-                  { className: "col-xs-2 action-menu-drawer show-action-menu", id: "menu-container" },
+                  { className: "col-xs-2 action-menu-drawer show-action-menu " + drawerClsName, id: "menu-container" },
                   _react2.default.createElement(
                     "div",
                     { className: "rainmaker-action-menu" },
-                    _react2.default.createElement(_common.ActionMenu, { role: role })
+                    _react2.default.createElement(_common.ActionMenu, { role: role, toggleDrawer: function toggleDrawer() {
+                        var menuItmeClick = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+                        _this2.toggleDrawer(menuItmeClick);
+                      }, menuDrawerOpen: menuDrawerOpen })
                   )
                 ),
                 _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
@@ -214,7 +228,7 @@ var withAuthorization = function withAuthorization() {
               ),
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-12 col-sm-10", style: { padding: 0 } },
+                { className: "col-xs-12 col-sm-10 " + screencls, style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,
