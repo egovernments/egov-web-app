@@ -9,9 +9,7 @@ import IconButton from "material-ui/IconButton";
 import Label from "egov-ui-kit/utils/translationNode";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import SortDialog from "../common/common/Header/components/SortDialog";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Tooltip from "@material-ui/core/Tooltip";
+
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -152,14 +150,7 @@ const withAuthorization = (options = {}) => (Component) => {
               <div>
                 <div className={`col-xs-2 action-menu-drawer show-action-menu ${drawerClsName}`} id="menu-container">
                   <div className="rainmaker-action-menu">
-                    <ActionMenu role={role} toggleDrawer={(menuItmeClick=true)=>{this.toggleDrawer(menuItmeClick)}} menuDrawerOpen={menuDrawerOpen}/>
-                    <div className={"drawer-toggle-button"}>
-                    {/* <Tooltip id={"menu-toggle-tooltip"} placement={"right"} title={<div style={{color:"black"}}>{menuDrawerOpen ? "Collapse Memnu" : "Expand menu"}</div>}>
-                      {/* <IconButton  onClick={()=>{this.toggleDrawer()}}>
-                                {menuDrawerOpen ? <ChevronLeftIcon /> : <ChevronRightIcon /> }
-                      </IconButton>   
-                    </Tooltip>  */}
-                    </div>               
+                    <ActionMenu role={role} toggleDrawer={(menuItmeClick=true)=>{this.toggleDrawer(menuItmeClick)}} menuDrawerOpen={menuDrawerOpen}/>             
                   </div>
                 </div>
                 <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}

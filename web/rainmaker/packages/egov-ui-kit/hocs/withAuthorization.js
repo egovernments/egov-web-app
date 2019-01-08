@@ -54,18 +54,6 @@ var _SortDialog = require("../common/common/Header/components/SortDialog");
 
 var _SortDialog2 = _interopRequireDefault(_SortDialog);
 
-var _ChevronLeft = require("@material-ui/icons/ChevronLeft");
-
-var _ChevronLeft2 = _interopRequireDefault(_ChevronLeft);
-
-var _ChevronRight = require("@material-ui/icons/ChevronRight");
-
-var _ChevronRight2 = _interopRequireDefault(_ChevronRight);
-
-var _Tooltip = require("@material-ui/core/Tooltip");
-
-var _Tooltip2 = _interopRequireDefault(_Tooltip);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withAuthorization = function withAuthorization() {
@@ -232,8 +220,7 @@ var withAuthorization = function withAuthorization() {
                     _react2.default.createElement(_common.ActionMenu, { role: role, toggleDrawer: function toggleDrawer() {
                         var menuItmeClick = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
                         _this2.toggleDrawer(menuItmeClick);
-                      }, menuDrawerOpen: menuDrawerOpen }),
-                    _react2.default.createElement("div", { className: "drawer-toggle-button" })
+                      }, menuDrawerOpen: menuDrawerOpen })
                   )
                 ),
                 _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
