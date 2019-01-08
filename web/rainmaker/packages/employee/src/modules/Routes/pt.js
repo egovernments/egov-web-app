@@ -16,8 +16,8 @@ const routes = [
     options: {
       title: "Property Tax",
       hideFooter: true,
-      hideBackButton: true,
-      isHomeScreen: true,
+      // hideBackButton: true,
+      // isHomeScreen: true,
     },
   },
   {
@@ -27,7 +27,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "Search Property",
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
   {
@@ -36,7 +36,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
 
@@ -46,7 +46,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
+      // hideBackButton: true,
     },
   },
 

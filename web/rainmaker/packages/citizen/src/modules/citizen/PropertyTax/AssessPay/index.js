@@ -83,7 +83,7 @@ class AssessPay extends Component {
   render() {
     const { urls, history } = this.props;
     return (
-      <Screen>
+      <Screen className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
         <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={this.closeYearRangeDialogue} />

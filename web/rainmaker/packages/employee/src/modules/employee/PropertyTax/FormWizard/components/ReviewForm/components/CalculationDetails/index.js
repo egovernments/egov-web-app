@@ -48,6 +48,7 @@ const CalculationDetails = ({ open, closeDialogue, data }) => {
       handleClose={closeDialogue}
       onRequestClose={closeDialogue}
       contentStyle={{ width: "35%" }}
+      contentClassName="claculation-details-content"
     />
   );
 };

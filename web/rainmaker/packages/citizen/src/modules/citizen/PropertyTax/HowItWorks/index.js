@@ -244,7 +244,7 @@ class HowItWorks extends Component {
     const { renderList, listItems } = this;
     const { urls, history } = this.props;
     return (
-      <Screen>
+      <Screen className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
         <div className="form-without-button-cont-generic">
           <Card className="how-it-works-card" textChildren={renderList(listItems)} />

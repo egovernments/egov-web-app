@@ -489,3 +489,14 @@ div[class^="MuiPaper-root"], .stepper-container {
   //   // }
   // }
 }
+@media only screen and (max-width:768px){
+  .propertyAddress,.pt-review-form,.ownerInfo,.bill-details,.basicInformation,.plotDetails,.ownershipType,.date-details-container{
+    padding: 0px !important;
+  }
+  .owner-gender-selection.RadioComp{
+    display: block;
+  }
+  .MuiStepLabel-labelContainer-47 >span{
+    font-size :12px !important;
+  }
+}

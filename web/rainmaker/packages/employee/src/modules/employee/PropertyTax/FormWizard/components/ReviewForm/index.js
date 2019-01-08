@@ -22,9 +22,9 @@ const defaultIconStyle = {
   totalAmountTobePaid: "",
 };
 
-const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
-const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
-const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
+const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" className="review-title-icon"/>;
+const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment"  className="review-title-icon"/>;
+const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person"  className="review-title-icon"/>;
 
 const AddRebatePopUp = formHoc({ formKey: "additionalRebate", path: "PropertyTaxPay" })(AddRebateExemption);
 
@@ -105,6 +105,7 @@ class ReviewForm extends Component {
             isClose={false}
             onRequestClose={() => addRebateBox(false)}
             contentStyle={{ width: "56%" }}
+            contentClassName="rebate-modal-content"
           />
         </div>
       </div>

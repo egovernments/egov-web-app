@@ -11,6 +11,7 @@ import orderby from "lodash/orderBy";
 import get from "lodash/get";
 import { getFinalAssessments } from "../common/TransformedAssessments";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import "./index.css";
 getFinalAssessments;
 
 const secondaryTextLabelStyle = {
@@ -26,8 +27,7 @@ const secondaryTextContainer = {
 };
 
 const innerDivStyle = {
-  paddingTop: "16px",
-  paddingLeft: 0,
+  padding:"0px",
   borderBottom: "1px solid #e0e0e0",
 };
 class IncompleteAssessments extends Component {
@@ -55,7 +55,7 @@ class IncompleteAssessments extends Component {
   render() {
     const { urls, history, loading, sortedProperties } = this.props;
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
         {sortedProperties && (
           <AssessmentList
@@ -79,8 +79,8 @@ const getTransformedItems = (propertiesById, cities) => {
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
           return {
-            primaryText: <Label label={item.financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
-            secondaryText: (
+            primaryText: <div className="incomplete-assesment-info">
+              <Label label={item.financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />
               <div style={{ height: "auto" }}>
                 <Label
                   label={getCommaSeperatedAddress(curr.address, cities)}
@@ -96,8 +96,26 @@ const getTransformedItems = (propertiesById, cities) => {
                   containerStyle={secondaryTextContainer}
                   color="#767676"
                 />
-              </div>
-            ),
+              </div></div>
+              // secondaryText: (
+            //   <div style={{ height: "auto" }}>
+            //     <Label
+            //       label={getCommaSeperatedAddress(curr.address, cities)}
+            //       labelStyle={secondaryTextLabelStyle}
+            //       fontSize="14px"
+            //       containerStyle={secondaryTextContainer}
+            //       color="#484848"
+            //     />
+            //     <Label
+            //       label={`Assessment No.: ${get(item, "assessmentNumber")}`}
+            //       labelStyle={secondaryTextLabelStyle}
+            //       fontSize="13px"
+            //       containerStyle={secondaryTextContainer}
+            //       color="#767676"
+            //     />
+            //   </div>
+            // )
+            ,
             epocDate: get(item, "auditDetails.lastModifiedTime"),
             route: `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNumber}&isReassesment=true&propertyId=${
               curr.propertyId
@@ -139,18 +157,29 @@ const mapStateToProps = (state) => {
       const address = getAddressFromProperty(get(prepareFormData, "Properties[0].address"), mohallaById);
       const financialYear = get(prepareFormData, "Properties[0].propertyDetails[0].financialYear");
       result.push({
-        primaryText: <Label label={financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label
-              label={getCommaSeperatedAddress(address, cities)}
-              labelStyle={secondaryTextLabelStyle}
-              fontSize="14px"
-              containerStyle={secondaryTextContainer}
-              color="#484848"
-            />
-          </div>
-        ),
+        primaryText: <div className="incomplete-assesment-info"><Label label={financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />
+                        <div style={{ height: "auto" }}>
+                        <Label
+                          label={getCommaSeperatedAddress(address, cities)}
+                          labelStyle={secondaryTextLabelStyle}
+                          fontSize="14px"
+                          containerStyle={secondaryTextContainer}
+                          color="#484848"
+                        />
+                      </div>
+                    </div>
+        // secondaryText: (
+        //   <div style={{ height: "auto" }}>
+        //     <Label
+        //       label={getCommaSeperatedAddress(address, cities)}
+        //       labelStyle={secondaryTextLabelStyle}
+        //       fontSize="14px"
+        //       containerStyle={secondaryTextContainer}
+        //       color="#484848"
+        //     />
+        //   </div>
+        // )
+        ,
         epocDate: get(draft, "auditDetails.lastModifiedTime"),
         route: `/property-tax/assessment-form?FY=${financialYear}&assessmentId=${draft.id}&tenantId=${draft.tenantId}`,
         financialYear: financialYear,

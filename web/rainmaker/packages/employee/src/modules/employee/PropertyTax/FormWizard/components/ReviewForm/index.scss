@@ -10,8 +10,8 @@
   position: relative;
   top: 4px;
 }
-.rebate-box-labels {
-}
+// .rebate-box-labels {
+// }
 .add-rebate-box {
   padding: 10px;
   padding-bottom: 36px;
@@ -49,4 +49,16 @@
   margin: 0px;
   padding: 0px;
   outline: none;
+}
+
+@media only screen and (max-width:768px){
+  .claculation-details-content{
+    width: 75% !important;
+  }
+  .rebate-modal-content{
+    width: 75% !important;
+  }
+  .review-title-icon{
+    margin-left: 16px !important;
+  }
 }

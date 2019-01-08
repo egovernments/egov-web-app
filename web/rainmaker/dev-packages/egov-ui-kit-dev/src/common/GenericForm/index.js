@@ -21,7 +21,7 @@ const GenericForm = ({ form, handleFieldChange, cardTitle, formKey, containerSty
             return (
               // <div key={index}>
               fieldKey === "dummy" ? (
-                <div className="col-xs-6" style={{ height: 72, marginTop: 14 }} />
+                <div className="col-xs-6 dummy-field" style={{ height: 72, marginTop: 14 }} />
               ) : (
                 <div
                   style={
