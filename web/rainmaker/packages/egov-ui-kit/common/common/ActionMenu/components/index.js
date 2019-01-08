@@ -50,6 +50,18 @@ var _lodash = require("lodash");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _ChevronLeft = require("@material-ui/icons/ChevronLeft");
+
+var _ChevronLeft2 = _interopRequireDefault(_ChevronLeft);
+
+var _ChevronRight = require("@material-ui/icons/ChevronRight");
+
+var _ChevronRight2 = _interopRequireDefault(_ChevronRight);
+
+var _Tooltip = require("@material-ui/core/Tooltip");
+
+var _Tooltip2 = _interopRequireDefault(_Tooltip);
+
 var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
@@ -282,7 +294,9 @@ var ActionMenuComp = function (_Component) {
           role = _props.role,
           actionListArr = _props.actionListArr,
           activeRoutePath = _props.activeRoutePath,
-          updateActiveRoute = _props.updateActiveRoute;
+          updateActiveRoute = _props.updateActiveRoute,
+          toggleDrawer = _props.toggleDrawer,
+          menuDrawerOpen = _props.menuDrawerOpen;
       var _state = this.state,
           searchText = _state.searchText,
           path = _state.path,
@@ -325,7 +339,7 @@ var ActionMenuComp = function (_Component) {
                     name: "chevron-right",
                     action: "navigation",
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
-                    className: "iconClassHover material-icons whiteColor",
+                    className: "iconClassHover material-icons whiteColor menu-right-icon",
                     style: styles.arrowIconStyle
                   }),
                   onClick: function onClick() {
@@ -333,6 +347,7 @@ var ActionMenuComp = function (_Component) {
                       path: !item.path ? item.name : item.path,
                       parentPath: false
                     };
+                    toggleDrawer && toggleDrawer();
                     menuChange(pathParam);
                   }
                 })
@@ -357,7 +372,7 @@ var ActionMenuComp = function (_Component) {
                         //  localStorage.setItem("menuPath", item.path);
                         updateActiveRoute(item.path, item.name);
                         document.title = item.name;
-                        console.log("menu change", window.location.pathname, "/" + item.navigationURL, window.location.pathname.startsWith("/integration"));
+                        toggleDrawer && toggleDrawer();
                         if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
                           window.location.reload();
                         }
@@ -365,7 +380,6 @@ var ActionMenuComp = function (_Component) {
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
                         name: iconLeft[1],
                         action: iconLeft[0],
-                        fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
                         style: styles.fibreIconStyle,
                         className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
@@ -396,7 +410,6 @@ var ActionMenuComp = function (_Component) {
                       leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
                         name: iconLeft[1],
                         action: iconLeft[0],
-                        fill: "rgba(0, 0, 0, 0.6000000238418579)",
                         color: "rgba(0, 0, 0, 0.6000000238418579)",
                         style: styles.fibreIconStyle,
                         className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
@@ -420,8 +433,6 @@ var ActionMenuComp = function (_Component) {
             }
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
-                var _React$createElement;
-
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
                   {
@@ -437,12 +448,16 @@ var ActionMenuComp = function (_Component) {
                       style: { whiteSpace: "initial" },
                       onClick: function onClick() {
                         document.title = item.displayName;
+                        toggleDrawer && toggleDrawer();
                         updateActiveRoute(item.path, item.displayName);
                       },
-                      leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, (_React$createElement = {
+                      leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
                         name: iconLeft[1],
-                        action: iconLeft[0]
-                      }, (0, _defineProperty3.default)(_React$createElement, "name", item.leftIcon.name), (0, _defineProperty3.default)(_React$createElement, "action", item.leftIcon.action), (0, _defineProperty3.default)(_React$createElement, "color", "rgba(0, 0, 0, 0.6000000238418579)"), (0, _defineProperty3.default)(_React$createElement, "style", styles.fibreIconStyle), (0, _defineProperty3.default)(_React$createElement, "className", "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name), _React$createElement)),
+                        action: iconLeft[0],
+                        color: "rgba(0, 0, 0, 0.6000000238418579)",
+                        style: styles.fibreIconStyle,
+                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
+                      }),
                       primaryText: _react2.default.createElement(
                         "div",
                         { className: "menuStyle" },
@@ -476,21 +491,28 @@ var ActionMenuComp = function (_Component) {
             className: "actionMenuMenu",
             menuItemStyle: { paddingLeft: "0", width: "100%" }
           },
-          !path && _react2.default.createElement(_components.TextFieldIcon, {
-            value: searchText,
-            hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),
-            iconStyle: styles.inputIconStyle,
-            inputStyle: styles.inputStyle,
-            textFieldStyle: styles.textFieldStyle,
-            onChange: function onChange(e) {
-              _this2.handleChange(e);
-            }
-          }),
+          !path && _react2.default.createElement(
+            "div",
+            { onClick: function onClick() {
+                toggleDrawer && toggleDrawer();
+              } },
+            _react2.default.createElement(_components.TextFieldIcon, {
+              value: searchText,
+              hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),
+              iconStyle: styles.inputIconStyle,
+              inputStyle: styles.inputStyle,
+              textFieldStyle: styles.textFieldStyle,
+              onChange: function onChange(e) {
+                _this2.handleChange(e);
+              }
+            })
+          ),
           (path || searchText) && _react2.default.createElement(
             "div",
             {
               className: "pull-left whiteColor pointerCursor",
               onClick: function onClick() {
+                toggleDrawer && toggleDrawer();
                 changeLevel(path);
               }
             },
@@ -513,7 +535,32 @@ var ActionMenuComp = function (_Component) {
             "div",
             { style: { paddingLeft: "-24px" } },
             showMenuItem()
-          )
+          ),
+          toggleDrawer ? _react2.default.createElement(
+            "div",
+            { className: "sideMenuItem drawer-collapse-menu-item" },
+            _react2.default.createElement(_MenuItem2.default, {
+              innerDivStyle: styles.defaultMenuItemStyle,
+              style: { whiteSpace: "initial" },
+              onClick: function onClick() {
+                toggleDrawer && toggleDrawer(false);
+              },
+              leftIcon: menuDrawerOpen ? _react2.default.createElement(_ChevronLeft2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" }) : _react2.default.createElement(
+                _Tooltip2.default,
+                { id: "menu-toggle-tooltip", placement: "right", title: _react2.default.createElement(
+                    "div",
+                    { style: { color: "black" } },
+                    "Expand menu"
+                  ) },
+                _react2.default.createElement(_ChevronRight2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" })
+              ),
+              primaryText: _react2.default.createElement(
+                "div",
+                { className: "menuStyle" },
+                menuDrawerOpen ? "Collapse" : ""
+              )
+            })
+          ) : ""
         )
       ) : null;
     }

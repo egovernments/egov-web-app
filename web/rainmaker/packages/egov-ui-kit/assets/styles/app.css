@@ -120,7 +120,13 @@ body.employee-user-profile {
 @media only screen and (min-width: 768px) {
   .screenHeaderLabelStyle .label-text {
     color: #484848 !important;
-    font-size: 14px !important; } }
+    font-size: 14px !important; }
+  .with-icon-menu {
+    width: calc(100% - 50px);
+    margin-left: 50px; }
+  .full-menu-drawer .textfield {
+    margin-left: 5px;
+    width: auto !important; } }
 
 .inline-Localization-text .label-container {
   display: inline-block; }
@@ -201,7 +207,8 @@ body.employee-user-profile {
   min-height: calc(100vh - 64px);
   position: fixed;
   z-index: 1001;
-  border-right: 1px solid #00000024; }
+  border-right: 1px solid #00000024;
+  padding: 0px; }
 
 .responsive-action-button-cont {
   position: fixed;
@@ -383,3 +390,30 @@ body.employee-user-profile {
 .pagination-sm > li:last-child > span {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px; }
+
+.icon-menu-drawer {
+  width: 50px; }
+
+.icon-menu-drawer .menuStyle, .icon-menu-drawer .menu-right-icon, .icon-menu-drawer .textfield .label-container, .icon-menu-drawer .menu-item-title {
+  display: none !important; }
+
+.icon-menu-drawer .sideMenuItem > div > span {
+  display: flex !important;
+  align-items: center; }
+
+.icon-menu-drawer .sideMenuItem > div > span > div {
+  width: 100%; }
+
+.icon-menu-drawer .pull-left, .icon-menu-drawer .pull-right {
+  text-align: center;
+  float: none !important; }
+
+.icon-menu-drawer .iconClassHover {
+  margin: auto !important;
+  left: unset !important; }
+
+.drawer-toggle-button {
+  background: #fe7a511f;
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid #fe7a511f !important; }

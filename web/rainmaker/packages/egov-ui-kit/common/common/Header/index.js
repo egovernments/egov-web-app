@@ -97,11 +97,14 @@ var Header = function (_Component) {
 
       if (role && role.toLowerCase() !== "citizen") {
         var tenantId = localStorage.getItem("tenant-id");
-        var menupath = localStorage.getItem("menuPath");
+        // const menupath = localStorage.getItem("menuPath");
         var ulbLogo = "https://s3.ap-south-1.amazonaws.com/pb-egov-assets/" + tenantId + "/logo.png";
-        updateActiveRoute(menupath);
+        // updateActiveRoute(menupath);
         _this.setState({ ulbLogo: ulbLogo });
       }
+      var menupath = localStorage.getItem("menuPath");
+      var menuName = localStorage.getItem("menuName");
+      updateActiveRoute(menupath, menuName);
     }, _this._handleToggleMenu = function () {
       var toggleMenu = _this.state.toggleMenu;
 
@@ -162,7 +165,7 @@ var Header = function (_Component) {
       toggleMenu && _this._handleToggleMenu();
       //updating route poth in reducerxxxx
       if (item.path) {
-        _this.props.updateActiveRoute(item.path);
+        _this.props.updateActiveRoute(item.path, item.path);
       }
       // this logic is a bit shaky!! might break in future
       switch (route.slice(1)) {
@@ -294,8 +297,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchLocalizationLabel: function fetchLocalizationLabel(locale) {
       return dispatch((0, _actions2.fetchLocalizationLabel)(locale));
     },
-    updateActiveRoute: function updateActiveRoute(routepath) {
-      return dispatch((0, _actions2.updateActiveRoute)(routepath));
+    updateActiveRoute: function updateActiveRoute(routepath, menuName) {
+      return dispatch((0, _actions2.updateActiveRoute)(routepath, menuName));
     }
   };
 };
