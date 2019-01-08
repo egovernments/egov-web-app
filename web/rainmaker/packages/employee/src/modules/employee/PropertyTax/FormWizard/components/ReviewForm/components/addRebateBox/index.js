@@ -86,21 +86,21 @@ class AddRebateExemption extends React.Component {
       <div className="add-rebate-box">
         <div className="pt-emp-penalty-charges col-xs-12">
           <Label label="Additional Charges" className="rebate-box-labels" labelStyle={labelStyle} />
-          <div className="adhocPenalty col-xs-6">
+          <div className="adhocPenalty col-sm-6 col-xs-12">
             <TextField onChange={(e, value) => handleFieldChange("adhocPenalty", value)} {...adhocPenalty} />
           </div>
-          <div className="adhocPenaltyReason col-xs-6">
+          <div className="adhocPenaltyReason col-sm-6 col-xs-12">
             <DropDown onChange={(e) => this.onChangePenaltyField(e.target.innerHTML)} {...adhocPenaltyReason} />
           </div>
           {showExtraPenaltyField && (
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <TextField onChange={(e, value) => handleFieldChange("otherPenaltyReason", value)} fullWidth={true} {...otherPenaltyReason} />
             </div>
           )}
         </div>
         <div className="pt-emp-rebate-charges col-xs-12">
           <Label label="Additional Rebate" labelStyle={labelStyle} />
-          <div className="adhocExemption col-xs-6">
+          <div className="adhocExemption col-sm-6 col-xs-12">
             <TextField
               onChange={(e, value) => {
                 handleFieldChange("adhocExemption", value);
@@ -109,11 +109,11 @@ class AddRebateExemption extends React.Component {
               {...adhocExemption}
             />
           </div>
-          <div className="adhocExemptionReason col-xs-6">
+          <div className="adhocExemptionReason col-sm-6 col-xs-12">
             <DropDown onChange={(e) => this.onChangeExemptField(e.target.innerHTML)} {...adhocExemptionReason} />
           </div>
           {showExtraExemptField && (
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <TextField onChange={(e, value) => handleFieldChange("otherExemptionReason", value)} fullWidth={true} {...otherExemptionReason} />
             </div>
           )}

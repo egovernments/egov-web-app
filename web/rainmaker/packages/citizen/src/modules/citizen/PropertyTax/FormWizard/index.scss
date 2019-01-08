@@ -267,7 +267,16 @@ div[class^="MuiPaper-root"],
     }
   }
   .stepper-container {
-    padding: initial;
+    padding:20px 0px !important;
     margin-top: 47px;
+  }
+}
+
+@media only screen and (max-width:768px){
+  .propertyAddress,.pt-review-form,.ownerInfo,.basicInformation,.plotDetails,.ownershipType{
+    padding: 0px !important;
+  }
+  .owner-gender-selection.RadioComp{
+    display: block;
   }
 }

@@ -65,31 +65,46 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
     Object.values(assessmentsByStatus).map((item, index) => {
       return {
         primaryText: (
-          <Label
+         <div className="assesment-history-info"><Label
             label={`INR ${get(item, "receiptInfo.totalAmount")}`}
             fontSize="16px"
             color="#484848"
             bold={true}
             labelStyle={primaryTextLabelStyle}
           />
-        ),
-        secondaryText: (
           <div style={{ height: "auto", marginTop: 0 }}>
-            <Label label={item && item.financialYear} containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} color="#484848" />
-            <Label
-              label={getCommaSeperatedAddress(item.address, cities)}
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-              color="#484848"
-            />
-            <Label
-              label={`Assessment No.: ${item.assessmentNumber}`}
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-              color="#484848"
-            />
-          </div>
+          <Label label={item && item.financialYear} containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} color="#484848" />
+          <Label
+            label={getCommaSeperatedAddress(item.address, cities)}
+            containerStyle={secondaryTextContainer}
+            labelStyle={secondaryTextLabelStyle}
+            color="#484848"
+          />
+          <Label
+            label={`Assessment No.: ${item.assessmentNumber}`}
+            containerStyle={secondaryTextContainer}
+            labelStyle={secondaryTextLabelStyle}
+            color="#484848"
+          />
+        </div></div>
         ),
+        // secondaryText: (
+        //   <div style={{ height: "auto", marginTop: 0 }}>
+        //     <Label label={item && item.financialYear} containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} color="#484848" />
+        //     <Label
+        //       label={getCommaSeperatedAddress(item.address, cities)}
+        //       containerStyle={secondaryTextContainer}
+        //       labelStyle={secondaryTextLabelStyle}
+        //       color="#484848"
+        //     />
+        //     <Label
+        //       label={`Assessment No.: ${item.assessmentNumber}`}
+        //       containerStyle={secondaryTextContainer}
+        //       labelStyle={secondaryTextLabelStyle}
+        //       color="#484848"
+        //     />
+        //   </div>
+        //),
         epocDate: item.assessmentDate,
         financialYear: item.financialYear,
         assessmentNo: item.assessmentNumber,

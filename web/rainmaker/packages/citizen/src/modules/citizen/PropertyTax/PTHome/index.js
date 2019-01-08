@@ -127,26 +127,26 @@ class PTHome extends Component {
                   bold={true}
                 />
               </div>
-              <div className="col-xs-12 row pt-service-list">
+              <div className="row pt-service-list">
                 <Link to="/property-tax/assess-pay">
-                  <div className="col-xs-4 text-center pt-new-property">
+                  <div className="col-sm-4 text-center pt-new-property">
                     <Icon style={iconStyle} action="communication" name="business" />
-                    <Label label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
+                    <Label label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="20px"  color="#484848" bold={true} className="pt-home-servicess"/>
                   </div>
                 </Link>
                 <Link to="/property-tax/incomplete-assessments">
-                  <div className="col-xs-4 text-center pt-search-property">
+                  <div className="col-sm-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
-                    <div className="pt-home-rainmaker-displayInline">
+                    <div className="pt-home-rainmaker-displayInline pt-home-servicess">
                       <Label label="PT_INCOMPLETE_ASSESSMENT" fontSize="20px" color="#484848" bold={true} />
                       <Label label={`(${numDrafts})`} fontSize="20px" color="#484848" bold={true} />
                     </div>
                   </div>
                 </Link>
                 <Link to="/property-tax/my-properties">
-                  <div className="col-xs-4 text-center pt-my-properties">
+                  <div className="col-sm-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <div className="pt-home-rainmaker-displayInline">
+                    <div className="pt-home-rainmaker-displayInline pt-home-servicess">
                       <Label label="PT_MY_PROPERTY" fontSize="20px" color="#484848" />
                       <Label label={`(${numProperties})`} fontSize="20px" color="#484848" />
                     </div>
