@@ -97,6 +97,7 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
         propertyDetails: item,
         property: item.property,
         tenantId: item.tenantId,
+        latestAssessmentNumber: item.latestAssessmentNumber,
         date: getDateFromEpoch(item.assessmentDate),
         status: get(item, "receiptInfo.status"),
         consumerCode: `${item.propertyId}:${item.assessmentNumber}`,

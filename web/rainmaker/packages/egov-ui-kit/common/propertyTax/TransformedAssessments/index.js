@@ -110,6 +110,7 @@ var getCompletedTransformedItems = exports.getCompletedTransformedItems = functi
       propertyDetails: item,
       property: item.property,
       tenantId: item.tenantId,
+      latestAssessmentNumber: item.latestAssessmentNumber,
       date: (0, _commons.getDateFromEpoch)(item.assessmentDate),
       status: (0, _get2.default)(item, "receiptInfo.status"),
       consumerCode: item.propertyId + ":" + item.assessmentNumber,

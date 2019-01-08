@@ -126,7 +126,7 @@ var DropDown = function (_Component) {
           //     }&isReassesment=true&uuid=${citizenUserId}&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
           //   )
           // :
-          history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.latestAssessmentNumber + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
 
           break;
         case "Download Receipt":
