@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
-import { Taskboard, InboxData } from "./components";
+import { Taskboard } from "./components";
+import InboxData from "./components";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import "./index.css";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import _ from "lodash";
-import TaskDialog from "mihy-ui-framework/ui-molecules/TaskDialog";
 
 const taskboardData = [{ head: "34", body: "Total Task" }, { head: "12", body: "Nearing SLA" }, { head: "05", body: "Over SLA" }];
 const tabdata = ["Assigned to me (4)", "All (30)"];
@@ -71,18 +71,6 @@ class Inbox extends Component {
     tabData: [],
     taskboardData: [],
     inboxData: [{ headers: [], rows: [] }],
-    dialogOpen: false,
-  };
-  onHistoryClick = () => {
-    this.setState({
-      dialogOpen: true,
-    });
-  };
-
-  onDialogClose = () => {
-    this.setState({
-      dialogOpen: false,
-    });
   };
 
   handleChange = (event, value) => {
@@ -117,14 +105,12 @@ class Inbox extends Component {
     tabData.push(`All (${allDataRows.length})`);
 
     inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
-
     this.setState({ inboxData, taskboardData, tabData });
   };
 
   render() {
     const { name } = this.props;
     const { value, taskboardData, tabData, inboxData } = this.state;
-    const { onHistoryClick, onDialogClose } = this;
     return (
       <div className="col-sm-12">
         <Label className="landingPageUser" label={` Welcome ${name}, `} />
@@ -135,13 +121,8 @@ class Inbox extends Component {
               return <Tab className="inbox-tab" label={item} />;
             })}
           </Tabs>
-          {<InboxData data={inboxData[value]} onHistoryClick={onHistoryClick} />}
+          {<InboxData data={inboxData[value]} />}
         </div>
-        <TaskDialog
-          open={this.state.dialogOpen}
-          onClose={onDialogClose}
-          //history={ProcessInstances}
-        />
       </div>
     );
   }

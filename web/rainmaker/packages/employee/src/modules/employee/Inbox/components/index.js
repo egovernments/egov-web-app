@@ -3,57 +3,101 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TaskDialog from "mihy-ui-framework/ui-molecules/TaskDialog";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import { connect } from "react-redux";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { Card } from "components";
 import React from "react";
 import "./index.css";
 
-export const InboxData = ({ data, onHistoryClick }) => {
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          {data.headers.map((item) => {
-            return <TableCell className="inbox-data-table-headcell">{item}</TableCell>;
+class InboxData extends React.Component {
+  state = {
+    dialogOpen: false,
+    workflowHistory: [],
+  };
+
+  onHistoryClick = async (moduleNumber) => {
+    const { toggleSnackbarAndSetText } = this.props;
+    this.setState({
+      dialogOpen: true,
+    });
+    const queryObject = [{ key: "businessIds", value: moduleNumber.text }, { key: "history", value: true }, { key: "tenantId", value: "pb" }];
+    const payload = await httpRequest("egov-workflow-v2/egov-wf/process/_search?", "", queryObject);
+    this.setState({
+      workflowHistory: payload.ProcessInstances,
+    });
+    if (!payload || payload.ProcessInstances.length < 1) toggleSnackbarAndSetText(true, "OTP has been Resent");
+  };
+
+  onDialogClose = () => {
+    this.setState({
+      dialogOpen: false,
+    });
+  };
+
+  render() {
+    const { data } = this.props;
+    const { onHistoryClick, onDialogClose } = this;
+    return (
+      <Table>
+        <TableHead>
+          <TableRow>
+            {data.headers.map((item) => {
+              return <TableCell className="inbox-data-table-headcell">{item}</TableCell>;
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.rows.map((row, i) => {
+            return (
+              <TableRow key={i} className="inbox-data-table-bodyrow">
+                {row.map((item) => {
+                  if (item.subtext) {
+                    return (
+                      <TableCell className="inbox-data-table-bodycell">
+                        <div className="inbox-cell-text">{item.text}</div>
+                        <div className="inbox-cell-subtext">{item.subtext}</div>
+                      </TableCell>
+                    );
+                  } else if (item.badge) {
+                    return (
+                      <TableCell className="inbox-data-table-bodycell">
+                        <span class="inbox-cell-badge-primary ">{item.text}</span>
+                      </TableCell>
+                    );
+                  } else if (item.historyButton) {
+                    return (
+                      <TableCell className="inbox-data-table-bodycell">
+                        <div onClick={() => onHistoryClick(row[1])} style={{ cursor: "pointer" }}>
+                          <i class="material-icons">history</i>
+                        </div>
+                      </TableCell>
+                    );
+                  } else {
+                    return <TableCell className="inbox-data-table-bodycell">{item.text}</TableCell>;
+                  }
+                })}
+              </TableRow>
+            );
           })}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data.rows.map((row, i) => {
-          return (
-            <TableRow key={i} className="inbox-data-table-bodyrow">
-              {row.map((item) => {
-                if (item.subtext) {
-                  return (
-                    <TableCell className="inbox-data-table-bodycell">
-                      <div className="inbox-cell-text">{item.text}</div>
-                      <div className="inbox-cell-subtext">{item.subtext}</div>
-                    </TableCell>
-                  );
-                } else if (item.badge) {
-                  return (
-                    <TableCell className="inbox-data-table-bodycell">
-                      <span class="inbox-cell-badge-primary ">{item.text}</span>
-                    </TableCell>
-                  );
-                } else if (item.historyButton) {
-                  return (
-                    <TableCell className="inbox-data-table-bodycell">
-                      <div onClick={onHistoryClick} style={{ cursor: "pointer" }}>
-                        <i class="material-icons">history</i>
-                      </div>
-                    </TableCell>
-                  );
-                } else {
-                  return <TableCell className="inbox-data-table-bodycell">{item.text}</TableCell>;
-                }
-              })}
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
+          <TaskDialog open={this.state.dialogOpen} onClose={onDialogClose} history={this.state.workflowHistory} />
+        </TableBody>
+      </Table>
+    );
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleSnackbarAndSetText: (open, message) => dispatch(toggleSnackbarAndSetText(open, message)),
+  };
 };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(InboxData);
 
 export const Taskboard = ({ data }) => {
   return (

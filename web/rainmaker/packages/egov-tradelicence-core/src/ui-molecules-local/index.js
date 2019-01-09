@@ -57,16 +57,6 @@ const FeesEstimateCard = Loadable({
   loading: () => <Loading />
 });
 
-const TaskDialog = Loadable({
-  loader: () => import("./TaskDialog"),
-  loading: () => <Loading />
-});
-
-const TaskStatusComponents = Loadable({
-  loader: () => import("./TaskStatusComponents"),
-  loading: () => <Loading />
-});
-
 const Footer = Loadable({
   loader: () => import("./Footer"),
   loading: () => <Loading />
@@ -86,8 +76,6 @@ export {
   UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
-  TaskStatusComponents,
-  TaskDialog,
   MapLocator,
   FeesEstimateCard,
   Footer,

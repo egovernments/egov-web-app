@@ -36,6 +36,16 @@ class WorkFlowContainer extends React.Component {
     return workFLowActions;
   };
 
+  getEmployeeRoles = actions => {
+    const roles =
+      actions &&
+      actions.reduce((result, item) => {
+        result.push(item.roles.join(","));
+        return result;
+      }, []);
+    return roles.join(",");
+  };
+
   createWorkFLow = async () => {
     const { WorkFlowObject } = this.props;
     const { action } = this.state;
@@ -78,6 +88,7 @@ class WorkFlowContainer extends React.Component {
       onForwardClick,
       onClose,
       getActionsFromWorkFlow,
+      getEmployeeRoles,
       createWorkFLow
     } = this;
     const { ProcessInstances, prepareFinalObject } = this.props;
@@ -99,6 +110,7 @@ class WorkFlowContainer extends React.Component {
         <ActionDialog
           open={open}
           action={action}
+          getEmployeeRoles={getEmployeeRoles}
           onClose={onClose}
           handleFieldChange={prepareFinalObject}
           onButtonClick={createWorkFLow}

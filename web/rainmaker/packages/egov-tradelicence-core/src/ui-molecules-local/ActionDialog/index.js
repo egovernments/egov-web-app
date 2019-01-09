@@ -9,6 +9,7 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import { UploadMultipleFiles } from "../../ui-molecules-local";
+import { httpRequest } from "ui-utils/api";
 
 const styles = theme => ({
   root: {
@@ -62,8 +63,31 @@ const getButtonName = action => {
   }
 };
 
+// const getEmployeeList = async roles => {
+//   console.log("roles is.....", roles);
+//const tenantId = localStorage.getItem("tenant-id");
+//   const queryObj = [
+//     { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
+//   ];
+//   const payload = await httpRequest(
+//     "get",
+//     "/hr-employee-v2/employees/_search",
+//     "",
+//     queryObj
+//   );
+//   console("payload is.....", payload);
+// };
+const employeeList = ["ShivaG", "Shreya"];
+
 const ActionDialog = props => {
-  const { open, onClose, action, handleFieldChange, onButtonClick } = props;
+  const {
+    open,
+    onClose,
+    action,
+    handleFieldChange,
+    onButtonClick,
+    getEmployeeRoles
+  } = props;
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogContent
@@ -91,7 +115,7 @@ const ActionDialog = props => {
                 >
                   <CloseIcon />
                 </Grid>
-                {action === "FORWARD" && (
+                {action === "RESOLVE" && (
                   <Grid
                     item
                     sm="12"
@@ -104,6 +128,7 @@ const ActionDialog = props => {
                       style={{ marginRight: "15px" }}
                       label={fieldConfig.approverName.label}
                       placeholder={fieldConfig.approverName.placeholder}
+                      dropdownData={employeeList}
                       // onChange={e =>
                       //   handleFieldChange(
                       //     "WorkFlow.TradeLicense.approve.comment",
