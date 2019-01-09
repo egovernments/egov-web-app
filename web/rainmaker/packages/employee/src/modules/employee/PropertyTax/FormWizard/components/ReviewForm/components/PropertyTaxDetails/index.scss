@@ -29,8 +29,8 @@
 
 .fare-section {
   display: flex;
-  .bill-details {
-  }
+  // .bill-details {
+  // }
   .pt-rf-detailed-bill {
     width: 454px;
     background-color: #f2f2f2;
@@ -119,4 +119,10 @@
       }
     }
   }
+}
+
+@media only screen and (max-width:768px){
+  .fare-section{
+    display: block;
+  } 
 }

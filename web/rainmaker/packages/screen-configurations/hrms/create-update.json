@@ -5,8 +5,10 @@
       "stepper": {
         "steps": [
           "Employee Details",
-          "Address Info",
-          "Summary"
+          "Jurisdiction Details",
+          "Assignment Details",
+          "Service Details",
+          "Other Details"
         ],
         "activeStep": 0
       },

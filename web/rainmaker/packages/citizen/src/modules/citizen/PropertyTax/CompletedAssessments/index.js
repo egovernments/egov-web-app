@@ -12,10 +12,10 @@ import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
+import "./index.css";
 
 const innerDivStyle = {
-  paddingTop: "16px",
-  paddingLeft: 0,
+  padding:"0px",
   borderBottom: "1px solid #e0e0e0",
 };
 
@@ -130,7 +130,7 @@ class CompletedAssessments extends Component {
   render() {
     const { urls, history, loading, sortedProperties, generalMDMSDataById } = this.props;
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
         {sortedProperties && (
           <AssessmentList

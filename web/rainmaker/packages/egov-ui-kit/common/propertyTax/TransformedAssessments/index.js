@@ -79,30 +79,51 @@ var getTransformedItems = exports.getTransformedItems = function getTransformedI
 var getCompletedTransformedItems = exports.getCompletedTransformedItems = function getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels) {
   return assessmentsByStatus && Object.values(assessmentsByStatus).map(function (item, index) {
     return {
-      primaryText: _react2.default.createElement(_translationNode2.default, {
-        label: "INR " + (0, _get2.default)(item, "receiptInfo.totalAmount"),
-        fontSize: "16px",
-        color: "#484848",
-        bold: true,
-        labelStyle: primaryTextLabelStyle
-      }),
-      secondaryText: _react2.default.createElement(
+      primaryText: _react2.default.createElement(
         "div",
-        { style: { height: "auto", marginTop: 0 } },
-        _react2.default.createElement(_translationNode2.default, { label: item && item.financialYear, containerStyle: secondaryTextContainer, labelStyle: secondaryTextLabelStyle, color: "#484848" }),
+        { className: "assesment-history-info" },
         _react2.default.createElement(_translationNode2.default, {
-          label: (0, _commons.getCommaSeperatedAddress)(item.address, cities),
-          containerStyle: secondaryTextContainer,
-          labelStyle: secondaryTextLabelStyle,
-          color: "#484848"
+          label: "INR " + (0, _get2.default)(item, "receiptInfo.totalAmount"),
+          fontSize: "16px",
+          color: "#484848",
+          bold: true,
+          labelStyle: primaryTextLabelStyle
         }),
-        _react2.default.createElement(_translationNode2.default, {
-          label: "Assessment No.: " + item.assessmentNumber,
-          containerStyle: secondaryTextContainer,
-          labelStyle: secondaryTextLabelStyle,
-          color: "#484848"
-        })
+        _react2.default.createElement(
+          "div",
+          { style: { height: "auto", marginTop: 0 } },
+          _react2.default.createElement(_translationNode2.default, { label: item && item.financialYear, containerStyle: secondaryTextContainer, labelStyle: secondaryTextLabelStyle, color: "#484848" }),
+          _react2.default.createElement(_translationNode2.default, {
+            label: (0, _commons.getCommaSeperatedAddress)(item.address, cities),
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          }),
+          _react2.default.createElement(_translationNode2.default, {
+            label: "Assessment No.: " + item.assessmentNumber,
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          })
+        )
       ),
+      // secondaryText: (
+      //   <div style={{ height: "auto", marginTop: 0 }}>
+      //     <Label label={item && item.financialYear} containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} color="#484848" />
+      //     <Label
+      //       label={getCommaSeperatedAddress(item.address, cities)}
+      //       containerStyle={secondaryTextContainer}
+      //       labelStyle={secondaryTextLabelStyle}
+      //       color="#484848"
+      //     />
+      //     <Label
+      //       label={`Assessment No.: ${item.assessmentNumber}`}
+      //       containerStyle={secondaryTextContainer}
+      //       labelStyle={secondaryTextLabelStyle}
+      //       color="#484848"
+      //     />
+      //   </div>
+      //),
       epocDate: item.assessmentDate,
       financialYear: item.financialYear,
       assessmentNo: item.assessmentNumber,

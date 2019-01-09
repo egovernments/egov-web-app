@@ -77,7 +77,7 @@ var _utils = require("egov-ui-kit/redux/app/utils");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var innerDivStyle = {
-  padding: "20px 56px 20px 50px",
+  padding: "0",
   borderBottom: "1px solid #e0e0e0",
   marginLeft: 0
 };
@@ -141,10 +141,10 @@ var Property = function (_Component) {
         urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
       }
       //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
-
+      var clsName = appName === "Citizen" ? "screen-with-bredcrumb" : "";
       return _react2.default.createElement(
         _Screen2.default,
-        null,
+        { className: clsName },
         appName === "Citizen" && _react2.default.createElement(_components.BreadCrumbs, { url: urls.length > 0 ? urls : urlArray, pathname: pathname, history: history }),
         _react2.default.createElement(_AssessmentList2.default, {
           onItemClick: this.onListItemClick,
@@ -245,7 +245,7 @@ var _initialiseProps = function _initialiseProps() {
         tenantId = props.tenantId;
 
     return [{
-      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_INFORMATION", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
+      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_INFORMATION", labelClassName: "property-info-title" }),
       leftIcon: _react2.default.createElement(
         "div",
         { style: IconStyle },
@@ -267,7 +267,7 @@ var _initialiseProps = function _initialiseProps() {
       ),
       initiallyOpen: true
     }, {
-      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_ASSESSMENT_HISTORY", fontSize: "16px", color: "#484848", labelStyle: { fontWeight: 500 } }),
+      primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_ASSESSMENT_HISTORY", labelClassName: "property-info-title" }),
       leftIcon: _react2.default.createElement(
         "div",
         { style: IconStyle },

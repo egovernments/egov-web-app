@@ -49,14 +49,14 @@ var ReceiptItems = function ReceiptItems(_ref) {
 
   return _react2.default.createElement(
     "div",
-    null,
+    { className: "property-informtion" },
     _react2.default.createElement(
       "div",
       { className: "rainmaker-displayInline", style: { justifyContent: "space-between", alignItems: "center" } },
       _react2.default.createElement(
         "div",
-        { className: "receipt-displayInline" },
-        _react2.default.createElement(_components.Icon, { action: "action", name: "assignment", color: "#767676" }),
+        { className: "receipt-displayInline assignment-title-half" },
+        _react2.default.createElement(_components.Icon, { action: "action", name: "assignment", color: "#767676", className: "assignment-icon" }),
         _react2.default.createElement(_translationNode2.default, {
           bold: true,
           label: (0, _commons.getTranslatedLabel)("PT_PROPERTY_PTUID", localizationLabelsData) + " " + propertyTaxAssessmentID,
@@ -67,7 +67,7 @@ var ReceiptItems = function ReceiptItems(_ref) {
       ),
       _react2.default.createElement(
         "div",
-        { className: "receipt-displayInline text-right", style: { cursor: "pointer", marginRight: 5 } },
+        { className: "receipt-displayInline text-right accesspay-button", style: { cursor: "pointer", marginRight: 5 } },
         _react2.default.createElement(_components.Button, {
           onClick: onButtonClick,
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "PT_PAYMENT_ASSESS_AND_PAY", fontSize: "12px" }),

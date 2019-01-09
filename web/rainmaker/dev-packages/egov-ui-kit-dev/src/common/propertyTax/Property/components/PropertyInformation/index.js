@@ -19,10 +19,10 @@ const editIconStyle = {
 
 const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onButtonClick }) => {
   return (
-    <div>
+    <div className="property-informtion">
       <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
-        <div className="receipt-displayInline">
-          <Icon action="action" name="assignment" color="#767676" />
+        <div className="receipt-displayInline assignment-title-half">
+          <Icon action="action" name="assignment" color="#767676" className="assignment-icon"/>
           <Label
             bold={true}
             label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyTaxAssessmentID}`}
@@ -31,7 +31,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
             color="#767676"
           />
         </div>
-        <div className="receipt-displayInline text-right" style={{ cursor: "pointer", marginRight: 5 }}>
+        <div className="receipt-displayInline text-right accesspay-button" style={{ cursor: "pointer", marginRight: 5 }}>
           <Button
             onClick={onButtonClick}
             label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}

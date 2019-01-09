@@ -125,7 +125,7 @@ class SearchProperty extends Component {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="screen-with-bredcrumb">
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}

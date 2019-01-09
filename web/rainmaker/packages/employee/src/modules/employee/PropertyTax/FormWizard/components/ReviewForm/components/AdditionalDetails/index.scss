@@ -10,3 +10,8 @@
     cursor: pointer;
   }
 }
+@media only screen and (max-width:768px){
+  .amt-radio{
+    margin-right: 15px;
+  }
+}

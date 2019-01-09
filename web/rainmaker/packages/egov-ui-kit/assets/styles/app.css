@@ -221,7 +221,9 @@ body.employee-user-profile {
   .show-action-menu {
     display: none; }
   .sort-button {
-    display: none; } }
+    display: none; }
+  .screen-with-bredcrumb {
+    padding-top: 80px; } }
 
 @media only screen and (max-width: 768px) {
   .screen-title-label {

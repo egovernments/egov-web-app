@@ -478,14 +478,25 @@ div[class^="MuiPaper-root"], .stepper-container {
     }
   }
   .stepper-container {
-    padding: initial;
+    padding: 0px !important;
     margin-top: 73px;
   }
-  .year-dialog {
-    left: initial;
-    right: 11%;
-     > div > div > div {
-      width: calc(100% + 104px);
-    }
+  // .year-dialog {
+  //   // left: initial;
+  //   // right: 11%;
+  //   //  > div > div > div {
+  //   //   width: calc(100% + 104px);
+  //   // }
+  // }
+}
+@media only screen and (max-width:768px){
+  .propertyAddress,.pt-review-form,.ownerInfo,.bill-details,.basicInformation,.plotDetails,.ownershipType,.date-details-container{
+    padding: 0px !important;
+  }
+  .owner-gender-selection.RadioComp{
+    display: block;
+  }
+  .MuiStepLabel-labelContainer-47 >span{
+    font-size :12px !important;
   }
 }

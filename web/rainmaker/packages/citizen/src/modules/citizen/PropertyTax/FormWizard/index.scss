@@ -214,7 +214,7 @@ div[class^="MuiPaper-root"],
   padding: 8px;
 }
 
-@media only screen and (max-width: 704px) {
+@media only screen and (max-width: 768px) {
   #tax-wizard-buttons {
     text-align: initial;
     text-align: initial;
@@ -269,5 +269,14 @@ div[class^="MuiPaper-root"],
   .stepper-container {
     padding: 24px 0 !important;
     margin-top: 47px;
+  }
+}
+
+@media only screen and (max-width:768px){
+  .propertyAddress,.pt-review-form,.ownerInfo,.basicInformation,.plotDetails,.ownershipType{
+    padding: 0px !important;
+  }
+  .owner-gender-selection.RadioComp{
+    display: block;
   }
 }

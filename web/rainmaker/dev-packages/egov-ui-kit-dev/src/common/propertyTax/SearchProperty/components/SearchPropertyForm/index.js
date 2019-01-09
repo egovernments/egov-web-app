@@ -12,13 +12,13 @@ const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick })
     <div className="form-without-button-cont-generic">
       <Card
         textChildren={
-          <div className={`${formKey} col-xs-12`}>
+          <div className={`${formKey} col-sm-12`}>
             {Object.keys(fields).map((fieldKey, index) => {
               return (
                 <div
                   style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
                   key={index}
-                  className={fields[fieldKey].numcols ? `col-xs-${fields[fieldKey].numcols}` : `col-xs-6`}
+                  className={fields[fieldKey].numcols ? `col-sm-${fields[fieldKey].numcols}` : `col-sm-6`}
                 >
                   <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
                 </div>
