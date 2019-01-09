@@ -65,28 +65,35 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
     Object.values(assessmentsByStatus).map((item, index) => {
       return {
         primaryText: (
-         <div className="assesment-history-info"><Label
-            label={`INR ${get(item, "receiptInfo.totalAmount")}`}
-            fontSize="16px"
-            color="#484848"
-            bold={true}
-            labelStyle={primaryTextLabelStyle}
-          />
-          <div style={{ height: "auto", marginTop: 0 }}>
-          <Label label={item && item.financialYear} containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} color="#484848" />
-          <Label
-            label={getCommaSeperatedAddress(item.address, cities)}
-            containerStyle={secondaryTextContainer}
-            labelStyle={secondaryTextLabelStyle}
-            color="#484848"
-          />
-          <Label
-            label={`Assessment No.: ${item.assessmentNumber}`}
-            containerStyle={secondaryTextContainer}
-            labelStyle={secondaryTextLabelStyle}
-            color="#484848"
-          />
-        </div></div>
+          <div className="assesment-history-info">
+            <Label
+              label={`INR ${get(item, "receiptInfo.totalAmount")}`}
+              fontSize="16px"
+              color="#484848"
+              bold={true}
+              labelStyle={primaryTextLabelStyle}
+            />
+            <div style={{ height: "auto", marginTop: 0 }}>
+              <Label
+                label={item && item.financialYear}
+                containerStyle={secondaryTextContainer}
+                labelStyle={secondaryTextLabelStyle}
+                color="#484848"
+              />
+              <Label
+                label={getCommaSeperatedAddress(item.address, cities)}
+                containerStyle={secondaryTextContainer}
+                labelStyle={secondaryTextLabelStyle}
+                color="#484848"
+              />
+              <Label
+                label={`Assessment No.: ${item.assessmentNumber}`}
+                containerStyle={secondaryTextContainer}
+                labelStyle={secondaryTextLabelStyle}
+                color="#484848"
+              />
+            </div>
+          </div>
         ),
         // secondaryText: (
         //   <div style={{ height: "auto", marginTop: 0 }}>
@@ -108,6 +115,7 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
         epocDate: item.assessmentDate,
         financialYear: item.financialYear,
         assessmentNo: item.assessmentNumber,
+        latestAssessmentNumber: item.latestAssessmentNumber,
         propertyId: item.propertyId,
         propertyDetails: item,
         property: item.property,

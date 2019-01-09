@@ -92,7 +92,12 @@ var getCompletedTransformedItems = exports.getCompletedTransformedItems = functi
         _react2.default.createElement(
           "div",
           { style: { height: "auto", marginTop: 0 } },
-          _react2.default.createElement(_translationNode2.default, { label: item && item.financialYear, containerStyle: secondaryTextContainer, labelStyle: secondaryTextLabelStyle, color: "#484848" }),
+          _react2.default.createElement(_translationNode2.default, {
+            label: item && item.financialYear,
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          }),
           _react2.default.createElement(_translationNode2.default, {
             label: (0, _commons.getCommaSeperatedAddress)(item.address, cities),
             containerStyle: secondaryTextContainer,
@@ -127,6 +132,7 @@ var getCompletedTransformedItems = exports.getCompletedTransformedItems = functi
       epocDate: item.assessmentDate,
       financialYear: item.financialYear,
       assessmentNo: item.assessmentNumber,
+      latestAssessmentNumber: item.latestAssessmentNumber,
       propertyId: item.propertyId,
       propertyDetails: item,
       property: item.property,
