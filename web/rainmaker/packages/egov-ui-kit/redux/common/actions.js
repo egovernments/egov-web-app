@@ -283,7 +283,22 @@ var fetchEmployeeToAssign = exports.fetchEmployeeToAssign = function fetchEmploy
   }();
 };
 
-var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralMDMSData(requestBody, moduleName, masterArray, key) {
+var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralMDMSData(requestBody, moduleName, masterArray, key, tenantId) {
+  if (!requestBody) {
+    var genRequestBody = {
+      MdmsCriteria: {
+        tenantId: tenantId,
+        moduleDetails: [{
+          moduleName: moduleName,
+          masterDetails: masterArray.map(function (item) {
+            return {
+              name: item
+            };
+          })
+        }]
+      }
+    };
+  }
   return function () {
     var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
       var payload;
@@ -293,11 +308,10 @@ var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralM
             case 0:
               _context5.prev = 0;
               _context5.next = 3;
-              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody);
+              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody || genRequestBody);
 
             case 3:
               payload = _context5.sent;
-
 
               dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray, key));
               _context5.next = 10;

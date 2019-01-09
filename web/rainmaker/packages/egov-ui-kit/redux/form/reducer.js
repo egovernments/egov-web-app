@@ -26,7 +26,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var intialState = {};
+var initialState = {};
 
 var setFormProperty = function setFormProperty(state, formKey, propertyKey, propertyValue) {
   var form = state[formKey] || {};
@@ -116,7 +116,7 @@ var removeFile = function removeFile(state, formKey, fieldKey, fileIndex) {
 };
 
 var form = function form() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : intialState;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
   var type = action.type,
       formKey = action.formKey,
@@ -140,6 +140,8 @@ var form = function form() {
       var newState = (0, _extends15.default)({}, state);
       delete newState[formKey];
       return (0, _extends15.default)({}, newState);
+    case actionTypes.CLEAR_FORMS:
+      return (0, _extends15.default)({}, initialState);
     case actionTypes.FIELD_CHANGE:
       var value = action.value;
 

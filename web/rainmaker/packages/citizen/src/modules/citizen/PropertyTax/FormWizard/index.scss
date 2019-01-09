@@ -188,15 +188,17 @@ div[class^="floorDetails_"] .text-left {
   font-size: 16px;
 }
 
-div[class^="MuiPaper-root"], .stepper-container {
+div[class^="MuiPaper-root"],
+.stepper-container {
   svg {
     text {
       fill: #fff;
       font-size: 1.2rem;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     }
-    circle, path {
-      color: #FE7A51;
+    circle,
+    path {
+      color: #fe7a51;
     }
   }
   [class*="MuiStepLabel"] {
@@ -225,7 +227,8 @@ div[class^="MuiPaper-root"], .stepper-container {
       width: 100%;
       margin: initial;
       padding: initial;
-      div:nth-of-type(1), div:nth-of-type(2) {
+      div:nth-of-type(1),
+      div:nth-of-type(2) {
         width: 100% !important;
         margin: 0 !important;
       }
@@ -246,7 +249,8 @@ div[class^="MuiPaper-root"], .stepper-container {
         justify-content: space-between;
         margin-bottom: 8px;
         padding: 0;
-        &:before, &:after {
+        &:before,
+        &:after {
           display: none;
         }
       }
@@ -263,7 +267,7 @@ div[class^="MuiPaper-root"], .stepper-container {
     }
   }
   .stepper-container {
-    padding:20px 0px !important;
+    padding: 24px 0 !important;
     margin-top: 47px;
   }
 }

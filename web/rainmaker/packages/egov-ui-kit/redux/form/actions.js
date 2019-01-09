@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateForms = exports.deleteForm = exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
+exports.clearForms = exports.updateForms = exports.deleteForm = exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -270,5 +270,11 @@ var updateForms = exports.updateForms = function updateForms(forms) {
   return {
     type: actionTypes.UPDATE_FORM,
     forms: forms
+  };
+};
+
+var clearForms = exports.clearForms = function clearForms() {
+  return {
+    type: actionTypes.CLEAR_FORMS
   };
 };
