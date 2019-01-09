@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CustomTabContainer = exports.SnackbarContainer = exports.MultiItem = exports.LabelContainer = exports.TextFieldContainer = undefined;
+exports.DownloadFileContainer = exports.CustomTabContainer = exports.SnackbarContainer = exports.MultiItem = exports.LabelContainer = exports.TextFieldContainer = undefined;
 
 var _react = require("react");
 
@@ -68,8 +68,18 @@ var CustomTabContainer = (0, _reactLoadable2.default)({
   }
 });
 
+var DownloadFileContainer = (0, _reactLoadable2.default)({
+  loader: function loader() {
+    return import("./DownloadFileContainer");
+  },
+  loading: function loading() {
+    return _react2.default.createElement(Loading, null);
+  }
+});
+
 exports.TextFieldContainer = TextFieldContainer;
 exports.LabelContainer = LabelContainer;
 exports.MultiItem = MultiItem;
 exports.SnackbarContainer = SnackbarContainer;
 exports.CustomTabContainer = CustomTabContainer;
+exports.DownloadFileContainer = DownloadFileContainer;

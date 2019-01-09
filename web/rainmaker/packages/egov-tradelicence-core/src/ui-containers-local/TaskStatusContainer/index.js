@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { Card, CardContent, Grid, Typography, Button } from "@material-ui/core";
 import { Container } from "mihy-ui-framework/ui-atoms";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
-import { TaskStatusComponents, TaskDialog } from "../../ui-molecules-local";
+import {
+  TaskDialog,
+  TaskStatusComponents
+} from "mihy-ui-framework/ui-molecules";
+//import { TaskStatusComponents, TaskDialog } from "../../ui-molecules-local";
 import HistoryIcon from "@material-ui/icons/History";
 import { withStyles } from "@material-ui/core/styles";
 

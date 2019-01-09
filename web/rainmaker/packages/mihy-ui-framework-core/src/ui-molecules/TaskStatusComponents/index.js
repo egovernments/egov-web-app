@@ -1,8 +1,10 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
-import { LabelContainer } from "mihy-ui-framework/ui-containers";
-import DownloadFileContainer from "../../ui-containers-local/DownloadFileContainer";
-import { convertEpochToDate } from "ui-config/screens/specs/utils";
+import {
+  LabelContainer,
+  DownloadFileContainer
+} from "mihy-ui-framework/ui-containers";
+import { convertEpochToDate } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 
 const data = [
@@ -67,7 +69,7 @@ const TaskStatusComponents = ({ currentStatus }) => {
           <LabelContainer labelName={get(currentStatus, "comment")} />
         </Typography>
       </Grid>
-      {get(currentStatus, "comment") && (
+      {get(currentStatus, "documents") && (
         <DownloadFileContainer
           documentData={data}
           className="review-documents"

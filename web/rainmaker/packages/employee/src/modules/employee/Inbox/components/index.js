@@ -7,7 +7,7 @@ import { Card } from "components";
 import React from "react";
 import "./index.css";
 
-export const InboxData = ({ data }) => {
+export const InboxData = ({ data, onHistoryClick }) => {
   return (
     <Table>
       <TableHead>
@@ -38,7 +38,9 @@ export const InboxData = ({ data }) => {
                 } else if (item.historyButton) {
                   return (
                     <TableCell className="inbox-data-table-bodycell">
-                      <i class="material-icons">history</i>
+                      <div onClick={onHistoryClick} style={{ cursor: "pointer" }}>
+                        <i class="material-icons">history</i>
+                      </div>
                     </TableCell>
                   );
                 } else {

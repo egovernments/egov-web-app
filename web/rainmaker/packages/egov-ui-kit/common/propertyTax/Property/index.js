@@ -244,6 +244,7 @@ var _initialiseProps = function _initialiseProps() {
         selPropertyDetails = props.selPropertyDetails,
         tenantId = props.tenantId;
 
+    console.log("sorted assessments are.....", sortedAssessments);
     return [{
       primaryText: _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_INFORMATION", labelClassName: "property-info-title" }),
       leftIcon: _react2.default.createElement(
