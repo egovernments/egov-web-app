@@ -104,8 +104,9 @@ var withAuthorization = function withAuthorization() {
           });
         };
 
-        _this.renderCustomTitleForPt = function (_ref) {
-          var title = _ref.title,
+        _this.renderCustomTitleForPt = function (obj) {
+          var _ref = obj || {},
+              title = _ref.title,
               titleObject = _ref.titleObject;
 
           if (title) {
@@ -217,10 +218,15 @@ var withAuthorization = function withAuthorization() {
                   _react2.default.createElement(
                     "div",
                     { className: "rainmaker-action-menu" },
-                    _react2.default.createElement(_common.ActionMenu, { role: role, toggleDrawer: function toggleDrawer() {
+                    _react2.default.createElement(_common.ActionMenu, {
+                      role: role,
+                      toggleDrawer: function toggleDrawer() {
                         var menuItmeClick = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
                         _this2.toggleDrawer(menuItmeClick);
-                      }, menuDrawerOpen: menuDrawerOpen })
+                      },
+                      menuDrawerOpen: menuDrawerOpen
+                    })
                   )
                 ),
                 _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
