@@ -1,20 +1,70 @@
+import React from "react";
+import Loadable from "react-loadable";
+
 // pgr employee specific screens
-import RequestReAssign from "../Screens/RequestReAssign";
-import AllComplaints from "../Screens/AllComplaints";
-import ComplaintResolved from "../Screens/ComplaintResolved";
-import ComplaintCreated from "../Screens/ComplaintCreated";
-import ComplaintSummary from "../Screens/ComplaintDetails";
-import AssignComplaint from "../Screens/AssignComplaint";
-import EmployeeDirectory from "../Screens/EmployeeDirectory";
-import ClosedComplaints from "../Screens/ClosedComplaints";
-import RejectComplaint from "../Screens/RejectComplaint";
-import ComplaintRejected from "../Screens/ComplaintRejected";
-import ComplaintAssigned from "../Screens/ComplaintAssigned";
-import ResolveSuccess from "../Screens/ResolveSuccess";
-import ReassignSuccess from "../Screens/ReassignSuccess";
-import CreateComplaint from "../Screens/CreateComplaint";
-import SearchScreen from "../Screens/SearchScreen";
 import { ReOpenComplaint, ReopenAcknowledgement } from "../modules/common";
+const Loading = () => <div />;
+
+const RequestReAssign = Loadable({
+  loader: () => import("../Screens/RequestReAssign"),
+  loading: Loading
+});
+const AllComplaints = Loadable({
+  loader: () => import("../Screens/AllComplaints"),
+  loading: Loading
+});
+const ComplaintResolved = Loadable({
+  loader: () => import("../Screens/ComplaintResolved"),
+  loading: Loading
+});
+const ComplaintCreated = Loadable({
+  loader: () => import("../Screens/ComplaintCreated"),
+  loading: Loading
+});
+const ComplaintSummary = Loadable({
+  loader: () => import("../Screens/ComplaintDetails"),
+  loading: Loading
+});
+const AssignComplaint = Loadable({
+  loader: () => import("../Screens/AssignComplaint"),
+  loading: Loading
+});
+const EmployeeDirectory = Loadable({
+  loader: () => import("../Screens/EmployeeDirectory"),
+  loading: Loading
+});
+const ClosedComplaints = Loadable({
+  loader: () => import("../Screens/ClosedComplaints"),
+  loading: Loading
+});
+const RejectComplaint = Loadable({
+  loader: () => import("../Screens/RejectComplaint"),
+  loading: Loading
+});
+const ComplaintRejected = Loadable({
+  loader: () => import("../Screens/ComplaintRejected"),
+  loading: Loading
+});
+const ComplaintAssigned = Loadable({
+  loader: () => import("../Screens/ComplaintAssigned"),
+  loading: Loading
+});
+const ResolveSuccess = Loadable({
+  loader: () => import("../Screens/ResolveSuccess"),
+  loading: Loading
+});
+const ReassignSuccess = Loadable({
+  loader: () => import("../Screens/ReassignSuccess"),
+  loading: Loading
+});
+const CreateComplaint = Loadable({
+  loader: () => import("../Screens/CreateComplaint"),
+  loading: Loading
+});
+const SearchScreen = Loadable({
+  loader: () => import("../Screens/SearchScreen"),
+  loading: Loading
+});
 
 // import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 const redirectionUrl = "/user/login";
