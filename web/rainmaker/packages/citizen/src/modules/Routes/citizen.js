@@ -26,12 +26,13 @@ import { TrackLocation } from "modules/common";
 // import AddComplaint from "modules/citizen/pgr/AddComplaint";
 // import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 // import { ReopenAcknowledgement } from "modules/common";
-import ptRoutes from "./pt";
+// import ptRoutes from "./pt";
 import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
 
 import TLHowItWorks from "../../ui-views/HowItWorks";
 import pgrRoutes from "pgr-citizen/lib/Routes/pgr-routes";
+import ptRoutes from "pt-citizen/lib/Routes/pt-routes";
 
 const routes = [
   {
