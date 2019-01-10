@@ -4,7 +4,7 @@ import TaxBreakUp from "./TaxBreakUp";
 import PaymentModes from "./PaymentModes";
 import formHoc from "egov-ui-kit/hocs/form";
 import { CashInformation, ChequeInformation, DemandDraftInformation, CardInformation, PaymentModeInformation } from "./forms";
-import AdditionalDetails from "modules/employee/PropertyTax/FormWizard/components/ReviewForm/components/AdditionalDetails";
+import AdditionalDetails from "../ReviewForm/components/AdditionalDetails";
 
 const PaymentModeSelector = formHoc({ formKey: "paymentModes" })(PaymentModeInformation);
 

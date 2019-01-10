@@ -38,8 +38,8 @@ import {
   generalMDMSFetchSuccess,
   updatePrepareFormDataFromDraft
 } from "egov-ui-kit/redux/common/actions";
-import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
-import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
+import PaymentDetails from "./components/PaymentDetails";
+import { getDocumentTypes } from "./utils/mdmsCalls";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";

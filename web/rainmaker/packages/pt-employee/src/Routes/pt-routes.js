@@ -1,10 +1,10 @@
 import asyncComponent from "./asyncComponent";
 
 const PTHome = asyncComponent(() =>
-  import("modules/employee/PropertyTax/PTHome").then(module => module.default)
+  import("../Screens/PTHome").then(module => module.default)
 );
 const SearchProperty = asyncComponent(() =>
-  import("modules/employee/PropertyTax/SearchProperty").then(
+  import("../Screens/SearchProperty").then(
     module => module.default
   )
 );
@@ -14,22 +14,22 @@ const Property = asyncComponent(() =>
   )
 );
 const FormWizard = asyncComponent(() =>
-  import("modules/employee/PropertyTax/FormWizard").then(
+  import("../Screens/FormWizard").then(
     module => module.default
   )
 );
 const PaymentSuccess = asyncComponent(() =>
-  import("modules/employee/PropertyTax/PaymentSuccess").then(
+  import("../Screens/PaymentSuccess").then(
     module => module.default
   )
 );
 const PaymentFailure = asyncComponent(() =>
-  import("modules/employee/PropertyTax/PaymentFailure").then(
+  import("../Screens/PaymentFailure").then(
     module => module.default
   )
 );
 const PropertyInformationForm = asyncComponent(() =>
-  import("modules/employee/PropertyTax/PropertyEditForm").then(
+  import("../Screens/PropertyEditForm").then(
     module => module.default
   )
 );
