@@ -134,10 +134,13 @@ div[class^="MuiPaper-root"] svg text,
   font-size: 1.2rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif; }
 
-div[class^="MuiPaper-root"] svg circle,
-div[class^="MuiPaper-root"] svg path,
-.stepper-container svg circle,
-.stepper-container svg path {
+div[class^="MuiPaper-root"] [class*="MuiStepIcon-active"] circle,
+div[class^="MuiPaper-root"] [class*="MuiStepIcon-active"] path, div[class^="MuiPaper-root"] [class*="MuiStep-completed"] circle,
+div[class^="MuiPaper-root"] [class*="MuiStep-completed"] path,
+.stepper-container [class*="MuiStepIcon-active"] circle,
+.stepper-container [class*="MuiStepIcon-active"] path,
+.stepper-container [class*="MuiStep-completed"] circle,
+.stepper-container [class*="MuiStep-completed"] path {
   color: #fe7a51; }
 
 div[class^="MuiPaper-root"] [class*="MuiStepLabel"],
@@ -188,11 +191,16 @@ div[class^="MuiPaper-root"] > div > span > span:nth-of-type(2) > span,
   .pt-review-form .grayout {
     padding: initial; }
   .stepper-container {
-    padding: 20px 0px !important;
+    padding: 24px 0 !important;
     margin-top: 47px; } }
 
 @media only screen and (max-width: 768px) {
-  .propertyAddress, .pt-review-form, .ownerInfo, .basicInformation, .plotDetails, .ownershipType {
+  .propertyAddress,
+  .pt-review-form,
+  .ownerInfo,
+  .basicInformation,
+  .plotDetails,
+  .ownershipType {
     padding: 0px !important; }
   .owner-gender-selection.RadioComp {
     display: block; } }

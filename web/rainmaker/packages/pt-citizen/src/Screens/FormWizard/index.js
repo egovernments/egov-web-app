@@ -15,7 +15,7 @@ import {
   OwnerInformation,
   InstitutionAuthorityHOC
 } from "./components/Forms";
-import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
+import ReviewForm from "../ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
@@ -38,7 +38,7 @@ import {
   fetchGeneralMDMSData,
   updatePrepareFormDataFromDraft
 } from "egov-ui-kit/redux/common/actions";
-import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
+import { getDocumentTypes } from "./utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
 import {

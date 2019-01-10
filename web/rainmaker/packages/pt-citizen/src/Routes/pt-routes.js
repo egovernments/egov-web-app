@@ -19,7 +19,7 @@ const MyProperties = asyncComponent(() =>
   import("../Screens/MyProperties").then(module => module.default)
 );
 const Property = asyncComponent(() =>
-  import("../Screens/Property").then(module => module.default)
+  import("egov-ui-kit/common/propertyTax/Property").then(module => module.default)
 );
 const MyReceipts = asyncComponent(() =>
   import("../Screens/MyReceipts").then(module => module.default)
