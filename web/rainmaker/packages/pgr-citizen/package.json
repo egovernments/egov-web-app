@@ -57,7 +57,7 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "transpile": "babel src -d lib --copy-files",
+    "transpile": "npm run build-css && babel src -d lib --copy-files",
     "start": "npm-run-all -p transpile watch-css start-js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
