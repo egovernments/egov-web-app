@@ -43,6 +43,8 @@ var _cloneDeep = require("lodash/cloneDeep");
 
 var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -556,29 +558,31 @@ var getAssesmentsandStatus = exports.getAssesmentsandStatus = function getAssesm
 var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function getSingleAssesmentandStatus(queryObjectproperty) {
   return function () {
     var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
-      var consumerCodes, finalcc, payloadReceipts, payloadWithReceiptAsId, receiptbyId, receiptDetails;
+      var latestPropertyDetails, consumerCodes, finalcc, payloadReceipts, payloadWithReceiptAsId, receiptbyId, receiptDetails;
       return _regenerator2.default.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               dispatch(SingleAssessmentStatusFetchPending());
               _context5.prev = 1;
+              latestPropertyDetails = queryObjectproperty && queryObjectproperty.propertyDetails && (0, _PTCommon.getLatestPropertyDetails)(queryObjectproperty.propertyDetails);
               consumerCodes = queryObjectproperty && queryObjectproperty.propertyDetails && queryObjectproperty.propertyDetails.reduce(function (acc, item) {
                 acc[queryObjectproperty.propertyId + ":" + item.assessmentNumber] = (0, _extends3.default)({}, item, {
                   propertyId: queryObjectproperty.propertyId,
                   address: queryObjectproperty.address,
                   tenantId: queryObjectproperty.tenantId,
-                  property: queryObjectproperty
+                  property: queryObjectproperty,
+                  latestAssessmentNumber: latestPropertyDetails.assessmentNumber
                 });
                 return acc;
               }, {});
               finalcc = Object.keys(consumerCodes).join(",");
-              _context5.next = 6;
+              _context5.next = 7;
               return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, [{ key: "consumerCode", value: finalcc }], {}, [], {
                 ts: 0
               }, true);
 
-            case 6:
+            case 7:
               payloadReceipts = _context5.sent;
               payloadWithReceiptAsId = (0, _cloneDeep2.default)(payloadReceipts["Receipt"]).map(function (item) {
                 item.receiptNumber = (0, _get2.default)(item, "Bill[0].billDetails[0].receiptNumber", "");
@@ -596,21 +600,21 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
               }, {});
 
               dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
-              _context5.next = 16;
+              _context5.next = 17;
               break;
 
-            case 13:
-              _context5.prev = 13;
+            case 14:
+              _context5.prev = 14;
               _context5.t0 = _context5["catch"](1);
 
               dispatch(SingleAssessmentStatusFetchError(_context5.t0.message));
 
-            case 16:
+            case 17:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, undefined, [[1, 13]]);
+      }, _callee5, undefined, [[1, 14]]);
     }));
 
     return function (_x6) {

@@ -196,6 +196,8 @@ div[class^="MuiPaper-root"],
       font-size: 1.2rem;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     }
+  }
+  [class*="MuiStepIcon-active"] ,[class*="MuiStep-completed"]{
     circle,
     path {
       color: #fe7a51;

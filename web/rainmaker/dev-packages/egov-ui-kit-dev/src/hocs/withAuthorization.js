@@ -10,7 +10,6 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import SortDialog from "../common/common/Header/components/SortDialog";
 
-
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
     constructor(props) {
@@ -23,7 +22,7 @@ const withAuthorization = (options = {}) => (Component) => {
       titleAddon: "",
       titleObject: [],
       sortPopOpen: false,
-      menuDrawerOpen:true,
+      menuDrawerOpen: true,
     };
     style = {
       iconStyle: {
@@ -69,7 +68,8 @@ const withAuthorization = (options = {}) => (Component) => {
     };
     //Duplication due to lack of time for proper testing in PGR
 
-    renderCustomTitleForPt = ({ title, titleObject }) => {
+    renderCustomTitleForPt = (obj) => {
+      const { title, titleObject } = obj || {};
       if (title) {
         // const titleAddon = title ? title : "";
         this.setState({ titleAddon });
@@ -77,10 +77,10 @@ const withAuthorization = (options = {}) => (Component) => {
         this.setState({ titleObject });
       }
     };
-    toggleDrawer(menuClick){
+    toggleDrawer(menuClick) {
       this.setState({
-        menuDrawerOpen : menuClick ? true : !this.state.menuDrawerOpen
-      })
+        menuDrawerOpen: menuClick ? true : !this.state.menuDrawerOpen,
+      });
     }
     render() {
       const {
@@ -100,7 +100,7 @@ const withAuthorization = (options = {}) => (Component) => {
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
-      const { titleAddon, titleObject,menuDrawerOpen} = this.state;
+      const { titleAddon, titleObject, menuDrawerOpen } = this.state;
       const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
@@ -126,8 +126,8 @@ const withAuthorization = (options = {}) => (Component) => {
         let { userInfo } = this.props;
         return (userInfo && userInfo.roles && userInfo.roles.length > 0 && userInfo.roles[0].code.toUpperCase()) || null;
       };
-      let drawerClsName = menuDrawerOpen ? "full-menu-drawer" : "icon-menu-drawer"
-      let screencls = menuDrawerOpen ? "with-full-menu" : "with-icon-menu"
+      let drawerClsName = menuDrawerOpen ? "full-menu-drawer" : "icon-menu-drawer";
+      let screencls = menuDrawerOpen ? "with-full-menu" : "with-icon-menu";
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
@@ -150,7 +150,13 @@ const withAuthorization = (options = {}) => (Component) => {
               <div>
                 <div className={`col-xs-2 action-menu-drawer show-action-menu ${drawerClsName}`} id="menu-container">
                   <div className="rainmaker-action-menu">
-                    <ActionMenu role={role} toggleDrawer={(menuItmeClick=true)=>{this.toggleDrawer(menuItmeClick)}} menuDrawerOpen={menuDrawerOpen}/>             
+                    <ActionMenu
+                      role={role}
+                      toggleDrawer={(menuItmeClick = true) => {
+                        this.toggleDrawer(menuItmeClick);
+                      }}
+                      menuDrawerOpen={menuDrawerOpen}
+                    />
                   </div>
                 </div>
                 <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}

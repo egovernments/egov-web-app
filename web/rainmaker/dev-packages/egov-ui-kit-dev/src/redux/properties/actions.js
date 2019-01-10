@@ -5,6 +5,7 @@ import { transformById } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
+import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
 
 const propertyFetchPending = () => {
   return {
@@ -368,6 +369,8 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
   return async (dispatch) => {
     dispatch(SingleAssessmentStatusFetchPending());
     try {
+      const latestPropertyDetails =
+        queryObjectproperty && queryObjectproperty.propertyDetails && getLatestPropertyDetails(queryObjectproperty.propertyDetails);
       const consumerCodes =
         queryObjectproperty &&
         queryObjectproperty.propertyDetails &&
@@ -378,6 +381,7 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
             address: queryObjectproperty.address,
             tenantId: queryObjectproperty.tenantId,
             property: queryObjectproperty,
+            latestAssessmentNumber: latestPropertyDetails.assessmentNumber,
           };
           return acc;
         }, {});

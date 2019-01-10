@@ -122,7 +122,7 @@ var DropDown = function (_Component) {
       switch (payload) {
         case "Re-Assess":
           localStorage.setItem("draftId", "");
-          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
+          history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.latestAssessmentNumber + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
 
           break;
         case "Download Receipt":
