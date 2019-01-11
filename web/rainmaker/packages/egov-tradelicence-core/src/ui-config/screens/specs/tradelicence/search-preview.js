@@ -356,7 +356,7 @@ const screenConfig = {
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     //To set the application no. at the  top
     const queryObject = [
-      { key: "businessIds", value: "pgr-00005" },
+      { key: "businessIds", value: applicationNumber },
       { key: "history", value: true }
     ];
     dispatch(getWorkFlowData(queryObject));

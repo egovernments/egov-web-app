@@ -36,9 +36,21 @@ class InboxData extends React.Component {
     });
   };
 
+  getModuleLink = (item, index) => {
+    const status = index === 2 && item.text;
+    const taskId = index === 1 && item.text;
+    const tenantId = localStorage.getItem("tenant-id");
+    let baseUrl = "http://localhost:3000/";
+    let contextPath = status === "INITIATED" ? "integration/tradelicense/apply" : "integration/tradelicense/search-preview";
+    let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
+    return `${baseUrl}${contextPath}?${queryParams}`;
+  };
+
   render() {
     const { data } = this.props;
-    const { onHistoryClick, onDialogClose } = this;
+    const { onHistoryClick, onDialogClose, getModuleLink } = this;
+    // let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org/" : window.origin;
+
     return (
       <Table>
         <TableHead>
@@ -52,7 +64,7 @@ class InboxData extends React.Component {
           {data.rows.map((row, i) => {
             return (
               <TableRow key={i} className="inbox-data-table-bodyrow">
-                {row.map((item) => {
+                {row.map((item, index) => {
                   if (item.subtext) {
                     return (
                       <TableCell className="inbox-data-table-bodycell">
@@ -75,7 +87,11 @@ class InboxData extends React.Component {
                       </TableCell>
                     );
                   } else {
-                    return <TableCell className="inbox-data-table-bodycell">{item.text}</TableCell>;
+                    return (
+                      <TableCell className="inbox-data-table-bodycell">
+                        {index === 1 ? <a href={getModuleLink(item, index)}> {item.text} </a> : item.text}
+                      </TableCell>
+                    );
                   }
                 })}
               </TableRow>

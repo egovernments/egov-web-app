@@ -37,14 +37,14 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
 
   return _react2.default.createElement(
     _core.Grid,
-    { container: true, sm: 12, style: { marginLeft: 10 } },
+    { container: true, sm: 12 },
     _react2.default.createElement(
       _core.Grid,
-      { item: true, sm: 2 },
+      { item: true, sm: 2, style: { paddingRight: 20 } },
       _react2.default.createElement(
         _core.Typography,
         { variant: "caption" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Date" })
+        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Date", labelKey: "TL_DATE_LABEL" })
       ),
       _react2.default.createElement(
         _core.Typography,
@@ -56,11 +56,14 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
     ),
     _react2.default.createElement(
       _core.Grid,
-      { item: true, sm: 2 },
+      { item: true, sm: 2, style: { paddingRight: 20 } },
       _react2.default.createElement(
         _core.Typography,
         { variant: "caption" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Updated By" })
+        _react2.default.createElement(_uiContainers.LabelContainer, {
+          labelName: "Updated By",
+          labelKey: "TL_UPDATED_BY_LABEL"
+        })
       ),
       _react2.default.createElement(
         _core.Typography,
@@ -70,11 +73,14 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
     ),
     _react2.default.createElement(
       _core.Grid,
-      { item: true, sm: 2 },
+      { item: true, sm: 2, style: { paddingRight: 20 } },
       _react2.default.createElement(
         _core.Typography,
         { variant: "caption" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Status" })
+        _react2.default.createElement(_uiContainers.LabelContainer, {
+          labelName: "Status",
+          labelKey: "TL_COMMON_TABLE_COL_STATUS"
+        })
       ),
       _react2.default.createElement(
         _core.Typography,
@@ -84,11 +90,14 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
     ),
     _react2.default.createElement(
       _core.Grid,
-      { item: true, sm: 3 },
+      { item: true, sm: 3, style: { paddingRight: 20 } },
       _react2.default.createElement(
         _core.Typography,
         { variant: "caption" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Current Owner" })
+        _react2.default.createElement(_uiContainers.LabelContainer, {
+          labelName: "Current Owner",
+          labelKey: "TL_CURRENT_OWNER_LABEL"
+        })
       ),
       _react2.default.createElement(
         _core.Typography,
@@ -98,11 +107,14 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
     ),
     _react2.default.createElement(
       _core.Grid,
-      { item: true, sm: 3 },
+      { item: true, sm: 3, style: { paddingRight: 20 } },
       _react2.default.createElement(
         _core.Typography,
         { variant: "caption" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Comments" })
+        _react2.default.createElement(_uiContainers.LabelContainer, {
+          labelName: "Comments",
+          labelKey: "TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
+        })
       ),
       _react2.default.createElement(
         _core.Typography,
@@ -110,7 +122,7 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
         _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentStatus, "comment") })
       )
     ),
-    (0, _get2.default)(currentStatus, "comment") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
+    (0, _get2.default)(currentStatus, "documents") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
       documentData: data,
       className: "review-documents",
       backgroundGrey: true

@@ -59,7 +59,10 @@ var TaskDialog = function TaskDialog(props) {
             _react2.default.createElement(
               _core.Typography,
               { component: "h2", variant: "subheading" },
-              _react2.default.createElement(_uiContainers.LabelContainer, { labelName: "Task Status" })
+              _react2.default.createElement(_uiContainers.LabelContainer, {
+                labelName: "Task Status",
+                labelKey: "TL_TASK_STATUS"
+              })
             )
           ),
           _react2.default.createElement(

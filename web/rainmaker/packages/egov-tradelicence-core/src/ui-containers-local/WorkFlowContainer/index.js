@@ -74,11 +74,7 @@ class WorkFlowContainer extends React.Component {
         open: false
       });
     } catch (e) {
-      toggleSnackbarAndSetText(
-        true,
-        "Please select city to search by property id !!",
-        "warning"
-      );
+      toggleSnackbarAndSetText(true, e.message, "warning");
     }
   };
 

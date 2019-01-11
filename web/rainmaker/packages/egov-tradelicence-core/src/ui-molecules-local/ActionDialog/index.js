@@ -22,21 +22,21 @@ const fieldConfig = {
   approverName: {
     label: {
       labelName: "Approver Name",
-      labelKey: ""
+      labelKey: "TL_APPROVER_NAME_LABEL"
     },
     placeholder: {
       labelName: "Selet approver Name",
-      labelKey: ""
+      labelKey: "TL_APROVER_NAME_PLACEHOLDER"
     }
   },
   comments: {
     label: {
       labelName: "Comments",
-      labelKey: ""
+      labelKey: "CS_COMMON_COMMENTS"
     },
     placeholder: {
       labelName: "Enter Comments",
-      labelKey: ""
+      labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
     }
   }
 };
@@ -44,22 +44,37 @@ const fieldConfig = {
 const getHeaderName = action => {
   switch (action) {
     case "FORWARD":
-      return "Forward Application";
+      return {
+        labelName: "Forward Application",
+        labelKey: "TL_FORWARD_APPLICATION"
+      };
     case "APPROVE":
-      return "Approve Application";
+      return {
+        labelName: "Approve Application",
+        labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+      };
     default:
-      return "Reject Application";
+      return {
+        labelName: "Reject Application",
+        labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+      };
   }
 };
 
 const getButtonName = action => {
   switch (action) {
     case "FORWARD":
-      return "FORWARD";
+      return { labelName: "FORWARD", labelKey: "TL_FORWARD_BUTTON" };
     case "APPROVE":
-      return "APPROVE";
+      return {
+        labelName: "APPROVE",
+        labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
+      };
     default:
-      return "REJECT";
+      return {
+        labelName: "REJECT",
+        labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
+      };
   }
 };
 
@@ -104,7 +119,7 @@ const ActionDialog = props => {
                   sm={10}
                 >
                   <Typography component="h2" variant="subheading">
-                    <LabelContainer labelName={getHeaderName(action)} />
+                    <LabelContainer {...getHeaderName(action)} />
                   </Typography>
                 </Grid>
                 <Grid

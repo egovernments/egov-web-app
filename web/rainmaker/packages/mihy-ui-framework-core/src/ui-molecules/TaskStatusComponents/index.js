@@ -24,10 +24,10 @@ const data = [
 
 const TaskStatusComponents = ({ currentStatus }) => {
   return (
-    <Grid container={true} sm={12} style={{ marginLeft: 10 }}>
-      <Grid item sm={2}>
+    <Grid container={true} sm={12}>
+      <Grid item sm={2} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
-          <LabelContainer labelName="Date" />
+          <LabelContainer labelName="Date" labelKey="TL_DATE_LABEL" />
         </Typography>
         <Typography variant="body2">
           <LabelContainer
@@ -37,33 +37,45 @@ const TaskStatusComponents = ({ currentStatus }) => {
           />
         </Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item sm={2} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
-          <LabelContainer labelName="Updated By" />
+          <LabelContainer
+            labelName="Updated By"
+            labelKey="TL_UPDATED_BY_LABEL"
+          />
         </Typography>
         <Typography variant="body2">
           <LabelContainer labelName={get(currentStatus, "assigner.name")} />
         </Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item sm={2} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
-          <LabelContainer labelName="Status" />
+          <LabelContainer
+            labelName="Status"
+            labelKey="TL_COMMON_TABLE_COL_STATUS"
+          />
         </Typography>
         <Typography variant="body2">
           <LabelContainer labelName={get(currentStatus, "state.state")} />
         </Typography>
       </Grid>
-      <Grid item sm={3}>
+      <Grid item sm={3} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
-          <LabelContainer labelName="Current Owner" />
+          <LabelContainer
+            labelName="Current Owner"
+            labelKey="TL_CURRENT_OWNER_LABEL"
+          />
         </Typography>
         <Typography variant="body2">
           <LabelContainer labelName={get(currentStatus, "assignee.name")} />
         </Typography>
       </Grid>
-      <Grid item sm={3}>
+      <Grid item sm={3} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
-          <LabelContainer labelName="Comments" />
+          <LabelContainer
+            labelName="Comments"
+            labelKey="TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
+          />
         </Typography>
         <Typography variant="body2">
           <LabelContainer labelName={get(currentStatus, "comment")} />
