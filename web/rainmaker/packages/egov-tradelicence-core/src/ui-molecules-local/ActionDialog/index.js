@@ -119,7 +119,10 @@ const ActionDialog = props => {
                   sm={10}
                 >
                   <Typography component="h2" variant="subheading">
-                    <LabelContainer {...getHeaderName(action)} />
+                    <LabelContainer
+                      labelName={getHeaderName(action).labelName}
+                      labelKey={getHeaderName(action).labelKey}
+                    />
                   </Typography>
                 </Grid>
                 <Grid
@@ -213,7 +216,10 @@ const ActionDialog = props => {
                       }}
                       onClick={() => onButtonClick()}
                     >
-                      <LabelContainer labelName={getButtonName(action)} />
+                      <LabelContainer
+                        labelName={getButtonName(action).labelName}
+                        labelKey={getButtonName(action).labelKey}
+                      />
                     </Button>
                   </Grid>
                 </Grid>

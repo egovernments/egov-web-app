@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import TaskStatusContainer from "../TaskStatusContainer";
 import { Footer, ActionDialog } from "../../ui-molecules-local";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
@@ -27,6 +28,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   getActionsFromWorkFlow = actions => {
+    //modify according to the roles
     const workFLowActions =
       actions &&
       actions.reduce((result, item) => {
@@ -51,11 +53,17 @@ class WorkFlowContainer extends React.Component {
     const { action } = this.state;
     const approveComment = get(WorkFlowObject, "TradeLicense.approve.comment");
     const document = get(WorkFlowObject, "TradeLicense.approve.document");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+    const tenantId = getQueryArg(window.location.href, "tenantId");
     const workFlowRequest = {
       processInstances: {
+        //Modify tenantId accordingly
         tenantId: "pb",
         businessService: "NewTL",
-        businessId: "PB-TL-2018-12-04-001196",
+        businessId: applicationNumber,
         action: action,
         comment: approveComment,
         moduleName: "TL",
