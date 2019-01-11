@@ -25,10 +25,6 @@ var _cloneDeep = require("lodash/cloneDeep");
 
 var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
-var _queryString = require("query-string");
-
-var _queryString2 = _interopRequireDefault(_queryString);
-
 var _assessInfoFormManager = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -77,7 +73,7 @@ var getCurrentFinancialYear = exports.getCurrentFinancialYear = function getCurr
 };
 
 var getQueryValue = exports.getQueryValue = function getQueryValue(query, key) {
-  return (0, _get2.default)(_queryString2.default.parse(query), key, undefined);
+  return query && decodeURIComponent(query.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 };
 
 var findCorrectDateObj = exports.findCorrectDateObj = function findCorrectDateObj(financialYear, category) {

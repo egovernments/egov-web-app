@@ -17,6 +17,19 @@ import {
 } from "../tradelicence/apply";
 import { getAllDataFromBillingSlab } from "../utils";
 
+const getData = async (action, state, dispatch, tenantId) => {
+  await getMdmsData(action, state, dispatch);
+  await getAllDataFromBillingSlab(tenantId, dispatch);
+  await getBoundaryData(action, state, dispatch, [
+    { key: "tenantId", value: tenantId }
+  ]);
+  dispatch(
+    prepareFinalObject(
+      "Licenses[0].tradeLicenseDetail.address.tenantId",
+      tenantId
+    )
+  );
+};
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -33,17 +46,7 @@ const screenConfig = {
         tenantId
       );
     }
-    getMdmsData(action, state, dispatch);
-    getAllDataFromBillingSlab(tenantId, dispatch);
-    getBoundaryData(action, state, dispatch, [
-      { key: "tenantId", value: tenantId }
-    ]);
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address.tenantId",
-        tenantId
-      )
-    );
+    getData(action, state, dispatch, tenantId);
     return action;
   },
   components: {

@@ -2,7 +2,6 @@ import get from "lodash/get";
 import set from "lodash/set";
 import isUndefined from "lodash/isUndefined";
 import cloneDeep from "lodash/cloneDeep";
-import queryString from "query-string";
 import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
 
 export const resetFormWizard = (form, removeForm) => {
@@ -62,7 +61,11 @@ export const getCurrentFinancialYear = () => {
   return fiscalYr;
 };
 
-export const getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
+export const getQueryValue = (query, key) =>
+  query &&
+  decodeURIComponent(
+    query.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1")
+  );
 
 export const findCorrectDateObj = (financialYear, category) => {
   category.sort((a, b) => {
