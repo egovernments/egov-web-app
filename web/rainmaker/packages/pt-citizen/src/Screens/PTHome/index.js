@@ -138,8 +138,8 @@ class PTHome extends Component {
                   <div className="col-sm-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
                     <div className="pt-home-rainmaker-displayInline pt-home-servicess">
-                      <Label label="PT_INCOMPLETE_ASSESSMENT" fontSize="20px" color="#484848" bold={true} />
-                      <Label label={`(${numDrafts})`} fontSize="20px" color="#484848" bold={true} />
+                      <Label label="PT_INCOMPLETE_ASSESSMENT" secondaryText={` (${numDrafts})`} fontSize="20px" color="#484848" bold={true} />
+                      {/* <Label label={`(${numDrafts})`} fontSize="20px" color="#484848" bold={true} /> */}
                     </div>
                   </div>
                 </Link>
@@ -147,8 +147,8 @@ class PTHome extends Component {
                   <div className="col-sm-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
                     <div className="pt-home-rainmaker-displayInline pt-home-servicess">
-                      <Label label="PT_MY_PROPERTY" fontSize="20px" color="#484848" />
-                      <Label label={`(${numProperties})`} fontSize="20px" color="#484848" />
+                      <Label label="PT_MY_PROPERTY" secondaryText={` (${numProperties})`} fontSize="20px" color="#484848" />
+                      {/* <Label label={`(${numProperties})`} fontSize="20px" color="#484848" /> */}
                     </div>
                   </div>
                 </Link>

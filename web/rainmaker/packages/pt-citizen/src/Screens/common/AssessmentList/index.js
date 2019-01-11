@@ -40,8 +40,8 @@ const getItemStatus = (item, history) => {
     case "Payment failed":
       return (
         <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+          <Label label={item.status} labelStyle={{ marginLeft: "5px" }} color={"#e74c3c"} />
           <Icon action="alert" name="warning" style={styles.paidIconStyle} color={"#e74c3c"} />
-          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#e74c3c"} />
         </div>
       );
       break;

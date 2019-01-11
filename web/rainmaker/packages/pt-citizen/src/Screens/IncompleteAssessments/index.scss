@@ -3,12 +3,16 @@
 }
 @media only screen and (max-width:768px){
   .incomplete-assesment-info{
-    padding: 15px 0px;
+    padding: 15px 5px 15px 0px;
   }
   .incomplete-assesment-info .label-container .label-text{
     width:60%;
   }
   .assessment-right-icon{
       width:40% !important;
+      >div{
+        position: absolute;
+        right: 0;
+      }
   }
 }
