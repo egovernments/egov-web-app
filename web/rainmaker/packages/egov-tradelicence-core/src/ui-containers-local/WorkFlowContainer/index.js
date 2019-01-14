@@ -17,10 +17,21 @@ class WorkFlowContainer extends React.Component {
   };
 
   onForwardClick = label => {
-    this.setState({
-      open: true,
-      action: label
-    });
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+    const tenant = getQueryArg(window.location.href, "tenantId");
+    switch (label) {
+      case "PAY":
+        window.location.href = `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`;
+        break;
+      default:
+        this.setState({
+          open: true,
+          action: label
+        });
+    }
   };
 
   onClose = () => {
