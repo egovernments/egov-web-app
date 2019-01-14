@@ -356,16 +356,16 @@ export const tradeOwnerDetails = getCommonCard({
             ) {
               dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", null));
             }
-            if (
-              get(
-                state.screenConfiguration.preparedFinalObject,
-                "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
-              )
-            ) {
-              dispatch(
-                pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
-              );
-            }
+            // if (
+            //   get(
+            //     state.screenConfiguration.preparedFinalObject,
+            //     "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+            //   )
+            // ) {
+            //   dispatch(
+            //     pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
+            //   );
+            // }
             // const items = get(apply, "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items[0].item0")
             dispatch(
               handleField(

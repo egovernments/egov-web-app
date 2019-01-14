@@ -30,6 +30,23 @@ const getData = async (action, state, dispatch, tenantId) => {
     )
   );
 };
+const updateSearchResults = async (
+  action,
+  state,
+  dispatch,
+  queryValue,
+  tenantId
+) => {
+  await getData(action, state, dispatch, tenantId);
+  await updatePFOforSearchResults(
+    action,
+    state,
+    dispatch,
+    queryValue,
+    "",
+    tenantId
+  );
+};
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -37,16 +54,10 @@ const screenConfig = {
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
     const tenantId = getQueryArg(window.location.href, "tenantId");
     if (queryValue) {
-      updatePFOforSearchResults(
-        action,
-        state,
-        dispatch,
-        queryValue,
-        "",
-        tenantId
-      );
+      updateSearchResults(action, state, dispatch, queryValue, tenantId);
+    } else {
+      getData(action, state, dispatch, tenantId);
     }
-    getData(action, state, dispatch, tenantId);
     return action;
   },
   components: {
