@@ -34,8 +34,7 @@ class Header extends Component {
     }
     const menupath = localStorage.getItem("menuPath");
     const menuName = localStorage.getItem("menuName");
-    updateActiveRoute(menupath,menuName)
-
+    updateActiveRoute(menupath, menuName);
   };
 
   _handleToggleMenu = () => {
@@ -112,7 +111,7 @@ class Header extends Component {
     toggleMenu && this._handleToggleMenu();
     //updating route poth in reducerxxxx
     if (item.path) {
-      this.props.updateActiveRoute(item.path,item.path)
+      this.props.updateActiveRoute(item.path, item.path);
     }
     // this logic is a bit shaky!! might break in future
     switch (route.slice(1)) {
@@ -137,6 +136,7 @@ class Header extends Component {
       className,
       role,
       cities,
+      name,
       history,
       title,
       titleAddon,
@@ -191,38 +191,33 @@ class Header extends Component {
   }
 }
 
-const getReceiptHeaderLabel = (name, ulbGrade) => {
+const getUlbGradeLabel = (ulbGrade) => {
   if (ulbGrade) {
-    if (ulbGrade === "NP") {
-      return `${name.toUpperCase()} NAGAR PANCHAYAT`;
-    } else if (ulbGrade === "Municipal Corporation") {
-      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    } else if (ulbGrade.includes("MC Class")) {
-      return `${name.toUpperCase()} MUNICIPAL COUNCIL`;
-    } else {
-      return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    let ulbWiseHeaderName = ulbGrade.toUpperCase();
+    if (ulbWiseHeaderName.indexOf(" ") > 0) {
+      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
     }
-  } else {
-    return `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    return "ULB" + "_" + ulbWiseHeaderName;
   }
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
-  const tenantId = localStorage.getItem("tenant-id");
+  const { role } = ownProps;
+  const tenantId =
+    role && role.toLowerCase() === "citizen" ? JSON.parse(localStorage.getItem("user-info")).permanentCity : localStorage.getItem("tenant-id");
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "name");
-  const defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
-  const activeRoutePath = state.app.activeRoutePath;
-  return { cities, defaultTitle, activeRoutePath };
+  const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
+  return { cities, defaultTitle, name };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
-    updateActiveRoute: (routepath,menuName) => dispatch(updateActiveRoute(routepath,menuName)),
+    updateActiveRoute: (routepath, menuName) => dispatch(updateActiveRoute(routepath, menuName)),
   };
 };
 

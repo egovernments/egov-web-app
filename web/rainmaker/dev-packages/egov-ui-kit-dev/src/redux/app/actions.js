@@ -5,9 +5,9 @@ import { getCurrentAddress } from "egov-ui-kit/utils/commons";
 import commonConfig from "config/common";
 import { debug } from "util";
 
-export const updateActiveRoute = (routePath,menuName) => {
+export const updateActiveRoute = (routePath, menuName) => {
   window.localStorage.setItem("menuPath", routePath);
-  window.localStorage.setItem('menuName',menuName);
+  window.localStorage.setItem("menuName", menuName);
   return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath };
 };
 
@@ -40,7 +40,7 @@ export const fetchLocalizationLabel = (locale) => {
       //let payload = { messages: JSON.parse(window.localStorage.getItem(`localization_${locale}`)) || [] };
       //if (!payload.messages.length) {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
-        { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp" },
+        { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" },
         { key: "locale", value: locale },
         { key: "tenantId", value: commonConfig.tenantId },
       ]);
