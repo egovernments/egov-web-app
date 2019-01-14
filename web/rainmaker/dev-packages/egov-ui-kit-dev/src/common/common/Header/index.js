@@ -154,6 +154,7 @@ class Header extends Component {
         <AppBar
           className={className}
           title={title}
+          ulbName={name}
           defaultTitle={defaultTitle}
           titleAddon={titleAddon}
           role={role}
