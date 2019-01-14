@@ -7,6 +7,7 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
 import get from "lodash/get";
+import set from "lodash/set";
 import { ifUserRoleExists } from "../../ui-config/screens/specs/utils";
 
 class WorkFlowContainer extends React.Component {
@@ -58,7 +59,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   createWorkFLow = async () => {
-    const { WorkFlowObject } = this.props;
+    const { WorkFlowObject, Licenses } = this.props;
     const { action } = this.state;
     const approveComment = get(WorkFlowObject, "TradeLicense.approve.comment");
     const document = get(WorkFlowObject, "TradeLicense.approve.document");
@@ -67,26 +68,11 @@ class WorkFlowContainer extends React.Component {
       "applicationNumber"
     );
     const tenantId = getQueryArg(window.location.href, "tenantId");
-    const workFlowRequest = {
-      processInstances: {
-        //Modify tenantId accordingly
-        tenantId: "pb",
-        businessService: "NewTL",
-        businessId: applicationNumber,
-        action: action,
-        comment: approveComment,
-        moduleName: "TL",
-        documents: document
-      }
-    };
+    set(Licenses[0], "action", action);
     try {
-      await httpRequest(
-        "post",
-        "egov-workflow-v2/egov-wf/process/_transition",
-        "_create",
-        [],
-        workFlowRequest
-      );
+      await httpRequest("post", "/tl-services/v1/_update", "", [], {
+        Licenses: Licenses
+      });
       this.setState({
         open: false
       });
@@ -136,11 +122,11 @@ class WorkFlowContainer extends React.Component {
 const mapStateToProps = (state, ownprops) => {
   const { workflow, screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
-  const { WorkFlowObject } = preparedFinalObject;
+  const { WorkFlowObject, Licenses } = preparedFinalObject;
   //const { TradeLicense } = WorkFlow;
   const { ProcessInstances } = workflow;
 
-  return { ProcessInstances, WorkFlowObject };
+  return { ProcessInstances, WorkFlowObject, Licenses };
 };
 
 const mapDispacthToProps = dispatch => {

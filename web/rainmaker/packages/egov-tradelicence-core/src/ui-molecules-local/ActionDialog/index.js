@@ -53,6 +53,11 @@ const getHeaderName = action => {
         labelName: "Approve Application",
         labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
       };
+    case "CANCEL":
+      return {
+        labelName: "Cancel Workflow",
+        labelKey: "TL_WORKFLOW_CANCEL"
+      };
     default:
       return {
         labelName: "Reject Application",
@@ -69,6 +74,11 @@ const getButtonName = action => {
       return {
         labelName: "APPROVE",
         labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
+      };
+    case "CANCEL":
+      return {
+        labelName: "CANCEL",
+        labelKey: "TL_WORKFLOW_CANCEL_BUTTON_CANCEL"
       };
     default:
       return {
