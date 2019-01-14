@@ -30,7 +30,7 @@ class WorkFlowContainer extends React.Component {
 
   userRolesMatch = userRolesArray => {
     return userRolesArray.find(element => {
-      return ifUserRoleExists(element);
+      return ifUserRoleExists(element) || element === "*";
     });
   };
 
