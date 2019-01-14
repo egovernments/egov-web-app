@@ -7,6 +7,7 @@ import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configurat
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
 import get from "lodash/get";
+import { ifUserRoleExists } from "../../ui-config/screens/specs/utils";
 
 class WorkFlowContainer extends React.Component {
   state = {
@@ -27,12 +28,20 @@ class WorkFlowContainer extends React.Component {
     });
   };
 
+  userRolesMatch = userRolesArray => {
+    return userRolesArray.find(element => {
+      return ifUserRoleExists(element);
+    });
+  };
+
   getActionsFromWorkFlow = actions => {
     //modify according to the roles
     const workFLowActions =
       actions &&
       actions.reduce((result, item) => {
-        result.push(item.action);
+        if (this.userRolesMatch(item.roles)) {
+          result.push(item.action);
+        }
         return result;
       }, []);
     return workFLowActions;
