@@ -137,7 +137,6 @@ class ActionDialog extends React.Component {
       onButtonClick,
       dialogData
     } = this.props;
-    console.log("dialogData is....", dialogData);
     const { buttonLabel, showEmployeeList } = dialogData;
     const { getEmployeeList, getHeaderName, getButtonName } = this;
     return (
@@ -188,11 +187,11 @@ class ActionDialog extends React.Component {
                         optionLabel="label"
                         onChange={e =>
                           handleFieldChange(
-                            "WorkFlowObject.TradeLicense.approve.approver",
+                            "Licenses[0].assignee",
                             e.target.value
                           )
                         }
-                        jsonPath="WorkFlowObject.TradeLicense.approve.approver"
+                        jsonPath="Licenses[0].assignee"
                       />
                     </Grid>
                   )}
@@ -201,12 +200,9 @@ class ActionDialog extends React.Component {
                       InputLabelProps={{ shrink: true }}
                       label={fieldConfig.comments.label}
                       onChange={e =>
-                        handleFieldChange(
-                          "WorkFlowObject.TradeLicense.approve.comment",
-                          e.target.value
-                        )
+                        handleFieldChange("Licenses[0].comment", e.target.value)
                       }
-                      jsonPath="WorkFlowObject.TradeLicense.approve.comment"
+                      jsonPath="Licenses[0].comment"
                       placeholder={fieldConfig.comments.placeholder}
                     />
                   </Grid>
@@ -242,7 +238,7 @@ class ActionDialog extends React.Component {
                         accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
-                      jsonPath="WorkFlowObject.TradeLicense.approve.document"
+                      jsonPath=""
                       maxFileSize={5000}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>

@@ -34,6 +34,10 @@ class Footer extends React.Component {
   };
 
   openActionDialog = item => {
+    if (item.isLast) {
+      window.location.href = item.buttonUrl;
+      return;
+    }
     let state = this.state;
     state.open = true;
     state.data = item;
@@ -47,7 +51,13 @@ class Footer extends React.Component {
   };
 
   render() {
-    const { color, variant, contractData } = this.props;
+    const {
+      color,
+      variant,
+      contractData,
+      handleFieldChange,
+      onDialogButtonClick
+    } = this.props;
     const { open, data } = this.state;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
@@ -69,7 +79,13 @@ class Footer extends React.Component {
               );
             })}
         </div>
-        <ActionDialog open={open} onClose={this.onClose} dialogData={data} />
+        <ActionDialog
+          open={open}
+          onClose={this.onClose}
+          dialogData={data}
+          handleFieldChange={handleFieldChange}
+          onButtonClick={onDialogButtonClick}
+        />
       </div>
     );
   }
