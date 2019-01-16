@@ -91,16 +91,9 @@ class WorkFlowContainer extends React.Component {
     return roles.join(",");
   };
 
-  createWorkFLow = async () => {
-    const { WorkFlowObject, Licenses } = this.props;
-    const { action } = this.state;
-    const approveComment = get(WorkFlowObject, "TradeLicense.approve.comment");
-    const document = get(WorkFlowObject, "TradeLicense.approve.document");
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
-    set(Licenses[0], "action", action);
+  createWorkFLow = async label => {
+    const { Licenses } = this.props;
+    set(Licenses[0], "action", label);
     try {
       await httpRequest("post", "/tl-services/v1/_update", "", [], {
         Licenses: Licenses
@@ -137,40 +130,19 @@ class WorkFlowContainer extends React.Component {
   };
 
   render() {
-    // const { open, action } = this.state;
-    const {
-      // onForwardClick,
-      // onClose,
-      getActionsFromWorkFlow
-      // getEmployeeRoles,
-      // createWorkFLow
-    } = this;
+    const { createWorkFLow } = this;
     const { ProcessInstances, prepareFinalObject } = this.props;
-    const currentStatus = ProcessInstances && ProcessInstances[0];
-    // const actions = getActionsFromWorkFlow(get(currentStatus, "state.actions"));
     const workflowContract = this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
         <TaskStatusContainer />
         <Footer
-          // activeStep={activeStep}
-          // disabled={activeStep === 0}
-          //onPreviousClick={handleBack}
-          //onNextClick={handleNext}
-          //onClick={onForwardClick}
+          handleFieldChange={prepareFinalObject}
           variant={"contained"}
           color={"primary"}
-          //buttons={actions}
+          onDialogButtonClick={createWorkFLow}
           contractData={workflowContract}
         />
-        {/* <ActionDialog
-          open={open}
-          action={action}
-          getEmployeeRoles={getEmployeeRoles}
-          onClose={onClose}
-          handleFieldChange={prepareFinalObject}
-          onButtonClick={createWorkFLow}
-        /> */}
       </div>
     );
   }
@@ -180,9 +152,7 @@ const mapStateToProps = (state, ownprops) => {
   const { workflow, screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
   const { WorkFlowObject, Licenses } = preparedFinalObject;
-  //const { TradeLicense } = WorkFlow;
   const { ProcessInstances } = workflow;
-
   return { ProcessInstances, WorkFlowObject, Licenses };
 };
 

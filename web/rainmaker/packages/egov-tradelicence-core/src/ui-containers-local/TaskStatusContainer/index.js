@@ -10,6 +10,7 @@ import {
 //import { TaskStatusComponents, TaskDialog } from "../../ui-molecules-local";
 import HistoryIcon from "@material-ui/icons/History";
 import { withStyles } from "@material-ui/core/styles";
+import orderBy from "lodash/orderBy";
 
 const styles = theme => ({
   button: {
@@ -44,9 +45,19 @@ class TastStatusContainer extends React.Component {
     });
   };
 
+  getLatestObjectbyTime = object => {
+    const sortedArray = orderBy(
+      object,
+      ["auditDetails.lastModifiedTime"],
+      ["desc"]
+    );
+    return sortedArray[0];
+  };
+
   render() {
     const { classes, ProcessInstances } = this.props;
-    const currentStatus = ProcessInstances && ProcessInstances[0];
+    const currentStatus =
+      ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
     return (
       <div>
         <Card className="">

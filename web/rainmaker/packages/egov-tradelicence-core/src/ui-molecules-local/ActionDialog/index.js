@@ -250,7 +250,7 @@ class ActionDialog extends React.Component {
                           height: "48px",
                           marginRight: "45px"
                         }}
-                        onClick={() => onButtonClick()}
+                        onClick={() => onButtonClick(buttonLabel)}
                       >
                         <LabelContainer
                           labelName={getButtonName(buttonLabel).labelName}
