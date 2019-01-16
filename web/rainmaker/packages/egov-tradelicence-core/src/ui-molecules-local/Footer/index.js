@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
+import { ActionDialog } from "../";
 import "./index.css";
 
 const buttonStyle = {
@@ -26,63 +27,52 @@ const getButtonLabelKey = item => {
   }
 };
 
-const Footer = ({
-  // activeStep,
-  // disabled,
-  // onPreviousClick,
-  // onNextClick,
-  // label1,
-  // label2,
-  // label3,
-  onClick,
-  buttons,
-  color,
-  variant
-}) => {
-  return (
-    <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
-      <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
-        {buttons &&
-          buttons.map((item, index) => {
-            return (
-              <Button
-                color={color}
-                variant={variant}
-                style={buttonStyle}
-                onClick={() => onClick(item)}
-              >
-                <LabelContainer
-                  labelName={item}
-                  labelKey={() => getButtonLabelKey(item)}
-                />
-              </Button>
-            );
-          })}
-        {/* {label1 && (
-          <Button
-            disabled={disabled}
-            color={color}
-            variant={variant}
-            style={buttonStyle}
-            //onClick={() => onPreviousClick(activeStep)}
-          >
-            {label1}
-          </Button>
-        )}
-        <Button
-          color={color}
-          variant={variant}
-          style={buttonStyle}
-          //onClick={() => onNextClick(activeStep)}
-        >
-          {label2}
-        </Button>
-        <Button color={color} variant={variant} style={buttonStyle}>
-          {label3}
-        </Button> */}
+class Footer extends React.Component {
+  state = {
+    open: false,
+    data: {}
+  };
+
+  openActionDialog = item => {
+    let state = this.state;
+    state.open = true;
+    state.data = item;
+    this.setState(state);
+  };
+
+  onClose = () => {
+    this.setState({
+      open: false
+    });
+  };
+
+  render() {
+    const { onClick, buttons, color, variant, contractData } = this.props;
+    const { open } = this.state;
+    return (
+      <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
+        <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
+          {contractData &&
+            contractData.map(item => {
+              return (
+                <Button
+                  color={color}
+                  variant={variant}
+                  style={buttonStyle}
+                  onClick={() => this.openActionDialog(item)}
+                >
+                  <LabelContainer
+                    labelName={item.buttonLabel}
+                    labelKey={() => getButtonLabelKey(item.buttonLabel)}
+                  />
+                </Button>
+              );
+            })}
+        </div>
+        <ActionDialog open={open} onClose={this.onClose} />
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Footer;

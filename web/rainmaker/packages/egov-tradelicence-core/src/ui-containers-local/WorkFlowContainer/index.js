@@ -6,9 +6,30 @@ import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
-import get from "lodash/get";
-import set from "lodash/set";
+import { get, set, orderBy } from "lodash";
 import { ifUserRoleExists } from "../../ui-config/screens/specs/utils";
+
+let workflowContract = [
+  {
+    buttonLabel: "PAY",
+    isLast: true,
+    buttonUrl: "some pay url",
+    dialogHeader: "Payment",
+    showEmployeeList: false
+  },
+  {
+    buttonLabel: "MARK",
+    isLast: false,
+    dialogHeader: "Mark it",
+    showEmployeeList: false
+  },
+  {
+    buttonLabel: "FORWARD",
+    isLast: false,
+    dialogHeader: "Forward it",
+    showEmployeeList: true
+  }
+];
 
 class WorkFlowContainer extends React.Component {
   state = {
@@ -92,6 +113,21 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
+  prepareWorkflowContract = data => {
+    let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
+    let actions = get(sortedData[0], "nextActions", []);
+    return actions.map(item => {
+      item.action;
+      return {
+        buttonLabel: item.action,
+        isLast: item.action === "PAY" ? true : false,
+        buttonUrl: "some pay url",
+        dialogHeader: "Payment",
+        showEmployeeList: item.action === "FORWARD" ? true : false
+      };
+    });
+  };
+
   render() {
     const { open, action } = this.state;
     const {
@@ -104,6 +140,7 @@ class WorkFlowContainer extends React.Component {
     const { ProcessInstances, prepareFinalObject } = this.props;
     const currentStatus = ProcessInstances && ProcessInstances[0];
     const actions = getActionsFromWorkFlow(get(currentStatus, "state.actions"));
+    const workflowContract = this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
         <TaskStatusContainer />
@@ -116,15 +153,16 @@ class WorkFlowContainer extends React.Component {
           variant={"contained"}
           color={"primary"}
           buttons={actions}
+          contractData={workflowContract}
         />
-        <ActionDialog
+        {/* <ActionDialog
           open={open}
           action={action}
           getEmployeeRoles={getEmployeeRoles}
           onClose={onClose}
           handleFieldChange={prepareFinalObject}
           onButtonClick={createWorkFLow}
-        />
+        /> */}
       </div>
     );
   }
