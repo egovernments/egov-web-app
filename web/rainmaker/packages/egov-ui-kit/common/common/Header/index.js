@@ -208,6 +208,7 @@ var Header = function (_Component) {
           className = _props.className,
           role = _props.role,
           cities = _props.cities,
+          name = _props.name,
           history = _props.history,
           title = _props.title,
           titleAddon = _props.titleAddon,
@@ -226,6 +227,7 @@ var Header = function (_Component) {
         _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({
           className: className,
           title: title,
+          ulbName: name,
           defaultTitle: defaultTitle,
           titleAddon: titleAddon,
           role: role,
@@ -260,33 +262,28 @@ var Header = function (_Component) {
   return Header;
 }(_react.Component);
 
-var getReceiptHeaderLabel = function getReceiptHeaderLabel(name, ulbGrade) {
+var getUlbGradeLabel = function getUlbGradeLabel(ulbGrade) {
   if (ulbGrade) {
-    if (ulbGrade === "NP") {
-      return name.toUpperCase() + " NAGAR PANCHAYAT";
-    } else if (ulbGrade === "Municipal Corporation") {
-      return name.toUpperCase() + " MUNICIPAL CORPORATION";
-    } else if (ulbGrade.includes("MC Class")) {
-      return name.toUpperCase() + " MUNICIPAL COUNCIL";
-    } else {
-      return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    var ulbWiseHeaderName = ulbGrade.toUpperCase();
+    if (ulbWiseHeaderName.indexOf(" ") > 0) {
+      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
     }
-  } else {
-    return name.toUpperCase() + " MUNICIPAL CORPORATION";
+    return "ULB" + "_" + ulbWiseHeaderName;
   }
 };
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
   var cities = state.common.cities || [];
-  var tenantId = localStorage.getItem("tenant-id");
+  var role = ownProps.role;
+
+  var tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(localStorage.getItem("user-info")).permanentCity : localStorage.getItem("tenant-id");
   var userTenant = cities.filter(function (item) {
     return item.code === tenantId;
   });
   var ulbGrade = userTenant && (0, _get2.default)(userTenant[0], "city.ulbGrade");
   var name = userTenant && (0, _get2.default)(userTenant[0], "name");
-  var defaultTitle = ulbGrade && name && getReceiptHeaderLabel(name, ulbGrade);
-  var activeRoutePath = state.app.activeRoutePath;
-  return { cities: cities, defaultTitle: defaultTitle, activeRoutePath: activeRoutePath };
+  var defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
+  return { cities: cities, defaultTitle: defaultTitle, name: name };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {

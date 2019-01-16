@@ -59,6 +59,7 @@ var iconButtonStyle = {
 // handle listners
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
+      ulbName = _ref.ulbName,
       defaultTitle = _ref.defaultTitle,
       ulbLogo = _ref.ulbLogo,
       title = _ref.title,
@@ -75,7 +76,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
       sortDialogOpen = _ref.sortDialogOpen,
       history = _ref.history,
       handleItemClick = _ref.handleItemClick,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history", "handleItemClick"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "ulbName", "defaultTitle", "ulbLogo", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick", "refreshButton", "sortButton", "searchButton", "sortDialogOpen", "history", "handleItemClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -104,11 +105,16 @@ var EgovAppBar = function EgovAppBar(_ref) {
             className: "screenHeaderLabelStyle appbar-title-label",
             label: titleAddon
           }),
-          _react2.default.createElement(_translationNode2.default, {
-            containerStyle: { marginLeft: "10px" },
-            className: "screenHeaderLabelStyle appbar-municipal-label",
-            label: role && role.toLowerCase() === "citizen" ? "PUNJAB MUNICIPAL CORPORATION" : defaultTitle ? defaultTitle : "PUNJAB MUNICIPAL CORPORATION"
-          })
+          _react2.default.createElement(
+            "div",
+            { className: "rainmaker-displayInline" },
+            _react2.default.createElement(_translationNode2.default, {
+              containerStyle: { marginLeft: "10px" },
+              className: "screenHeaderLabelStyle appbar-municipal-label",
+              label: ulbName && ulbName.toUpperCase()
+            }),
+            _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "4px" }, className: "screenHeaderLabelStyle appbar-municipal-label", label: defaultTitle })
+          )
         ),
         titleStyle: styles.titleStyle
       }, rest),
