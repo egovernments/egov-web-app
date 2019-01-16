@@ -9,6 +9,8 @@ import { httpRequest } from "ui-utils/api";
 import { get, set, orderBy } from "lodash";
 import { ifUserRoleExists } from "../../ui-config/screens/specs/utils";
 
+const tenant = getQueryArg(window.location.href, "tenantId");
+
 let workflowContract = [
   {
     buttonLabel: "PAY",
@@ -37,23 +39,22 @@ class WorkFlowContainer extends React.Component {
     action: ""
   };
 
-  onForwardClick = label => {
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
-    const tenant = getQueryArg(window.location.href, "tenantId");
-    switch (label) {
-      case "PAY":
-        window.location.href = `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`;
-        break;
-      default:
-        this.setState({
-          open: true,
-          action: label
-        });
-    }
-  };
+  // onForwardClick = label => {
+  //   const applicationNumber = getQueryArg(
+  //     window.location.href,
+  //     "applicationNumber"
+  //   );
+  //   switch (label) {
+  //     case "PAY":
+  //       window.location.href = `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`;
+  //       break;
+  //     default:
+  //       this.setState({
+  //         open: true,
+  //         action: label
+  //       });
+  //   }
+  // };
 
   onClose = () => {
     this.setState({
@@ -67,18 +68,18 @@ class WorkFlowContainer extends React.Component {
     });
   };
 
-  getActionsFromWorkFlow = actions => {
-    //modify according to the roles
-    const workFLowActions =
-      actions &&
-      actions.reduce((result, item) => {
-        if (this.userRolesMatch(item.roles)) {
-          result.push(item.action);
-        }
-        return result;
-      }, []);
-    return workFLowActions;
-  };
+  // getActionsFromWorkFlow = actions => {
+  //   //modify according to the roles
+  //   const workFLowActions =
+  //     actions &&
+  //     actions.reduce((result, item) => {
+  //       if (this.userRolesMatch(item.roles)) {
+  //         result.push(item.action);
+  //       }
+  //       return result;
+  //     }, []);
+  //   return workFLowActions;
+  // };
 
   getEmployeeRoles = actions => {
     const roles =
@@ -99,7 +100,6 @@ class WorkFlowContainer extends React.Component {
       window.location.href,
       "applicationNumber"
     );
-    const tenantId = getQueryArg(window.location.href, "tenantId");
     set(Licenses[0], "action", action);
     try {
       await httpRequest("post", "/tl-services/v1/_update", "", [], {
@@ -113,15 +113,22 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
+  getRedirectUrl = (action, businessId) => {
+    switch (action) {
+      case "PAY":
+        return `/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+    }
+  };
+
   prepareWorkflowContract = data => {
     let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
+    let businessId = get(sortedData[0], "businessId");
     let actions = get(sortedData[0], "nextActions", []);
     return actions.map(item => {
-      item.action;
       return {
         buttonLabel: item.action,
         isLast: item.action === "PAY" ? true : false,
-        buttonUrl: "some pay url",
+        buttonUrl: this.getRedirectUrl(item.action, businessId),
         dialogHeader: "Payment",
         showEmployeeList: item.action === "FORWARD" ? true : false,
         roles: item.roles.toString()
@@ -130,17 +137,17 @@ class WorkFlowContainer extends React.Component {
   };
 
   render() {
-    const { open, action } = this.state;
+    // const { open, action } = this.state;
     const {
-      onForwardClick,
-      onClose,
-      getActionsFromWorkFlow,
-      getEmployeeRoles,
-      createWorkFLow
+      // onForwardClick,
+      // onClose,
+      getActionsFromWorkFlow
+      // getEmployeeRoles,
+      // createWorkFLow
     } = this;
     const { ProcessInstances, prepareFinalObject } = this.props;
     const currentStatus = ProcessInstances && ProcessInstances[0];
-    const actions = getActionsFromWorkFlow(get(currentStatus, "state.actions"));
+    // const actions = getActionsFromWorkFlow(get(currentStatus, "state.actions"));
     const workflowContract = this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
@@ -150,10 +157,10 @@ class WorkFlowContainer extends React.Component {
           // disabled={activeStep === 0}
           //onPreviousClick={handleBack}
           //onNextClick={handleNext}
-          onClick={onForwardClick}
+          //onClick={onForwardClick}
           variant={"contained"}
           color={"primary"}
-          buttons={actions}
+          //buttons={actions}
           contractData={workflowContract}
         />
         {/* <ActionDialog
