@@ -39,23 +39,6 @@ class WorkFlowContainer extends React.Component {
     action: ""
   };
 
-  // onForwardClick = label => {
-  //   const applicationNumber = getQueryArg(
-  //     window.location.href,
-  //     "applicationNumber"
-  //   );
-  //   switch (label) {
-  //     case "PAY":
-  //       window.location.href = `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`;
-  //       break;
-  //     default:
-  //       this.setState({
-  //         open: true,
-  //         action: label
-  //       });
-  //   }
-  // };
-
   onClose = () => {
     this.setState({
       open: false
@@ -67,19 +50,6 @@ class WorkFlowContainer extends React.Component {
       return ifUserRoleExists(element) || element === "*";
     });
   };
-
-  // getActionsFromWorkFlow = actions => {
-  //   //modify according to the roles
-  //   const workFLowActions =
-  //     actions &&
-  //     actions.reduce((result, item) => {
-  //       if (this.userRolesMatch(item.roles)) {
-  //         result.push(item.action);
-  //       }
-  //       return result;
-  //     }, []);
-  //   return workFLowActions;
-  // };
 
   getEmployeeRoles = actions => {
     const roles =
@@ -95,9 +65,15 @@ class WorkFlowContainer extends React.Component {
     const { Licenses } = this.props;
     set(Licenses[0], "action", label);
     try {
-      await httpRequest("post", "/tl-services/v1/_update", "", [], {
-        Licenses: Licenses
-      });
+      const payload = await httpRequest(
+        "post",
+        "/tl-services/v1/_update",
+        "",
+        [],
+        {
+          Licenses: Licenses
+        }
+      );
       this.setState({
         open: false
       });
@@ -113,6 +89,36 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
+  getHeaderName = action => {
+    switch (action) {
+      case "FORWARD":
+        return {
+          labelName: "Forward Application",
+          labelKey: "TL_FORWARD_APPLICATION"
+        };
+      case "MARK":
+        return {
+          labelName: "Mark Application",
+          labelKey: "TL_MARK_APPLICATION"
+        };
+      case "APPROVE":
+        return {
+          labelName: "Approve Application",
+          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+        };
+      case "CANCEL":
+        return {
+          labelName: "Cancel Workflow",
+          labelKey: "TL_WORKFLOW_CANCEL"
+        };
+      default:
+        return {
+          labelName: "Reject Application",
+          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+        };
+    }
+  };
+
   prepareWorkflowContract = data => {
     let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
     let businessId = get(sortedData[0], "businessId");
@@ -122,8 +128,9 @@ class WorkFlowContainer extends React.Component {
         buttonLabel: item.action,
         isLast: item.action === "PAY" ? true : false,
         buttonUrl: this.getRedirectUrl(item.action, businessId),
-        dialogHeader: "Payment",
-        showEmployeeList: item.action === "FORWARD" ? true : false,
+        dialogHeader: this.getHeaderName(item.action),
+        showEmployeeList:
+          item.action === "FORWARD" || item.action === "MARK" ? true : false,
         roles: item.roles.toString()
       };
     });

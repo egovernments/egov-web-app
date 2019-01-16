@@ -97,36 +97,6 @@ class ActionDialog extends React.Component {
     }
   };
 
-  getHeaderName = action => {
-    switch (action) {
-      case "FORWARD":
-        return {
-          labelName: "Forward Application",
-          labelKey: "TL_FORWARD_APPLICATION"
-        };
-      case "MARK":
-        return {
-          labelName: "Mark Application",
-          labelKey: "TL_MARK_APPLICATION"
-        };
-      case "APPROVE":
-        return {
-          labelName: "Approve Application",
-          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
-        };
-      case "CANCEL":
-        return {
-          labelName: "Cancel Workflow",
-          labelKey: "TL_WORKFLOW_CANCEL"
-        };
-      default:
-        return {
-          labelName: "Reject Application",
-          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
-        };
-    }
-  };
-
   getEmployeeList = async roles => {};
   render() {
     const {
@@ -137,7 +107,7 @@ class ActionDialog extends React.Component {
       onButtonClick,
       dialogData
     } = this.props;
-    const { buttonLabel, showEmployeeList } = dialogData;
+    const { buttonLabel, showEmployeeList, dialogHeader } = dialogData;
     const { getEmployeeList, getHeaderName, getButtonName } = this;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
@@ -156,8 +126,9 @@ class ActionDialog extends React.Component {
                   >
                     <Typography component="h2" variant="subheading">
                       <LabelContainer
-                        labelName={getHeaderName(buttonLabel).labelName}
-                        labelKey={getHeaderName(buttonLabel).labelKey}
+                        // labelName={getHeaderName(buttonLabel).labelName}
+                        // labelKey={getHeaderName(buttonLabel).labelKey}
+                        {...dialogHeader}
                       />
                     </Typography>
                   </Grid>
