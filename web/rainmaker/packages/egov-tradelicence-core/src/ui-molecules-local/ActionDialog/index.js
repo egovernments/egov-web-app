@@ -47,8 +47,8 @@ class ActionDialog extends React.Component {
   };
 
   componentDidMount = async () => {
-    const { employeeData } = this.props;
-    const { roles } = employeeData;
+    const { dialogData } = this.props;
+    const { roles } = dialogData;
     const tenantId = localStorage.getItem("tenant-id");
     const queryObj = [
       { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
@@ -134,8 +134,11 @@ class ActionDialog extends React.Component {
       onClose,
       action,
       handleFieldChange,
-      onButtonClick
+      onButtonClick,
+      dialogData
     } = this.props;
+    console.log("dialogData is....", dialogData);
+    const { buttonLabel, showEmployeeList } = dialogData;
     const { getEmployeeList, getHeaderName, getButtonName } = this;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
@@ -154,8 +157,8 @@ class ActionDialog extends React.Component {
                   >
                     <Typography component="h2" variant="subheading">
                       <LabelContainer
-                        labelName={getHeaderName(action).labelName}
-                        labelKey={getHeaderName(action).labelKey}
+                        labelName={getHeaderName(buttonLabel).labelName}
+                        labelKey={getHeaderName(buttonLabel).labelKey}
                       />
                     </Typography>
                   </Grid>
@@ -167,10 +170,7 @@ class ActionDialog extends React.Component {
                   >
                     <CloseIcon />
                   </Grid>
-                  {(action === "RESOLVE" ||
-                    action === "REJECT" ||
-                    action === "MARK" ||
-                    action === "FORWARD") && (
+                  {showEmployeeList && (
                     <Grid
                       item
                       sm="12"
@@ -257,8 +257,8 @@ class ActionDialog extends React.Component {
                         onClick={() => onButtonClick()}
                       >
                         <LabelContainer
-                          labelName={getButtonName(action).labelName}
-                          labelKey={getButtonName(action).labelKey}
+                          labelName={getButtonName(buttonLabel).labelName}
+                          labelKey={getButtonName(buttonLabel).labelKey}
                         />
                       </Button>
                     </Grid>
