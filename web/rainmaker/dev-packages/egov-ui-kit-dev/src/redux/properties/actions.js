@@ -398,10 +398,12 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
         },
         true
       );
-      const payloadWithReceiptAsId = cloneDeep(payloadReceipts["Receipt"]).map((item) => {
-        item.receiptNumber = get(item, "Bill[0].billDetails[0].receiptNumber", "");
-        return item;
-      });
+      const payloadWithReceiptAsId = cloneDeep(payloadReceipts["Receipt"])
+        .filter((item) => get(item, "Bill[0].billDetails[0].status") !== "Cancelled")
+        .map((item) => {
+          item.receiptNumber = get(item, "Bill[0].billDetails[0].receiptNumber", "");
+          return item;
+        });
       const receiptbyId = transformById(payloadWithReceiptAsId, "receiptNumber");
       const receiptDetails =
         receiptbyId &&
