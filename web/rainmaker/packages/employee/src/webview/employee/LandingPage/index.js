@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dashboard } from "modules/common";
+import DTTable from "components/DTTable";
 import { connect } from "react-redux";
 
 class LandingPage extends Component {
@@ -83,15 +84,18 @@ class LandingPage extends Component {
     const moduleItems = getModuleItems(citiesByModule) || [];
     const renderCityPicker = moduleItems && moduleItems.findIndex((item) => item.moduleTitle === "Complaints") > -1;
     return (
-      <Dashboard
-        moduleItems={moduleItems}
-        history={history}
-        userName={name}
-        onPGRClick={onPGRClick}
-        onDialogueClose={onDialogueClose}
-        dialogueOpen={this.state.dialogueOpen}
-        renderCityPicker={false}
-      />
+      <div>
+        <Dashboard
+          moduleItems={moduleItems}
+          history={history}
+          userName={name}
+          onPGRClick={onPGRClick}
+          onDialogueClose={onDialogueClose}
+          dialogueOpen={this.state.dialogueOpen}
+          renderCityPicker={false}
+        />
+        <DTTable/>
+      </div>
     );
   }
 }

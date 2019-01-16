@@ -5,7 +5,7 @@ import { commonApiPost } from "egov-ui-kit/utils/api";
 import { translate } from "./commons/common";
 import $ from "jquery";
 import _ from "lodash";
-import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
+import "egov-ui-kit/assets/styles/jquery.dataTables.min.css"; MCBVJFBBVRHJG
 import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
