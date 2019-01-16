@@ -61,9 +61,25 @@ class WorkFlowContainer extends React.Component {
     return roles.join(",");
   };
 
+  getPurposeString = action => {
+    switch (action) {
+      case "FORWARD":
+        return "purpose=forward&status=success";
+      case "MARK":
+        return "purpose=mark&status=success";
+      case "REJECT":
+        return "purpose=application&status=rejected";
+      case "CANCEL":
+        return "purpose=application&status=cancelled";
+      case "APPROVE":
+        return "purpose=approve&status=success";
+    }
+  };
+
   createWorkFLow = async label => {
     const { Licenses } = this.props;
     set(Licenses[0], "action", label);
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     try {
       const payload = await httpRequest(
         "post",
@@ -77,6 +93,11 @@ class WorkFlowContainer extends React.Component {
       this.setState({
         open: false
       });
+      if (payload) {
+        window.location.href = `acknowledgement?${this.getPurposeString(
+          label
+        )}&applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+      }
     } catch (e) {
       toggleSnackbarAndSetText(true, e.message, "warning");
     }
