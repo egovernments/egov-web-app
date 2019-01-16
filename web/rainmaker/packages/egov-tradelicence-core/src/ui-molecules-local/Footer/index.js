@@ -48,7 +48,7 @@ class Footer extends React.Component {
 
   render() {
     const { onClick, buttons, color, variant, contractData } = this.props;
-    const { open } = this.state;
+    const { open, data } = this.state;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
@@ -69,7 +69,7 @@ class Footer extends React.Component {
               );
             })}
         </div>
-        <ActionDialog open={open} onClose={this.onClose} />
+        <ActionDialog open={open} onClose={this.onClose} employeeData={data} />
       </div>
     );
   }

@@ -41,221 +41,236 @@ const fieldConfig = {
   }
 };
 
-const getHeaderName = action => {
-  switch (action) {
-    case "FORWARD":
-      return {
-        labelName: "Forward Application",
-        labelKey: "TL_FORWARD_APPLICATION"
-      };
-    case "MARK":
-      return {
-        labelName: "Mark Application",
-        labelKey: "TL_MARK_APPLICATION"
-      };
-    case "APPROVE":
-      return {
-        labelName: "Approve Application",
-        labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
-      };
-    case "CANCEL":
-      return {
-        labelName: "Cancel Workflow",
-        labelKey: "TL_WORKFLOW_CANCEL"
-      };
-    default:
-      return {
-        labelName: "Reject Application",
-        labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
-      };
-  }
-};
+class ActionDialog extends React.Component {
+  state = {
+    employeeList: []
+  };
 
-const getButtonName = action => {
-  switch (action) {
-    case "FORWARD":
-      return { labelName: "FORWARD", labelKey: "TL_FORWARD_BUTTON" };
-    case "MARK":
-      return { labelName: "MARK", labelKey: "TL_MARK_BUTTON" };
-    case "APPROVE":
-      return {
-        labelName: "APPROVE",
-        labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
-      };
-    case "CANCEL":
-      return {
-        labelName: "CANCEL",
-        labelKey: "TL_WORKFLOW_CANCEL_BUTTON_CANCEL"
-      };
-    default:
-      return {
-        labelName: "REJECT",
-        labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
-      };
-  }
-};
+  componentDidMount = async () => {
+    const { employeeData } = this.props;
+    const { roles } = employeeData;
+    const tenantId = localStorage.getItem("tenant-id");
+    const queryObj = [
+      { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
+    ];
+    const payload = await httpRequest(
+      "post",
+      "/hr-employee-v2/employees/_search",
+      "",
+      queryObj
+    );
+    const employeeList =
+      payload &&
+      payload.Employee.map((item, index) => {
+        return {
+          value: item.name,
+          label: item.code
+        };
+      });
 
-// const getEmployeeList = async roles => {
-//   console.log("roles is.....", roles);
-//   const tenantId = localStorage.getItem("tenant-id");
-//   const queryObj = [
-//     { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
-//   ];
-//   const payload = await httpRequest(
-//     "get",
-//     "/hr-employee-v2/employees/_search",
-//     "",
-//     queryObj
-//   );
-//   console("payload is.....", payload);
-// };
-const employeeList = [
-  { value: "ShivaG", label: "ShivaG" },
-  { value: "Shreya", label: "Shreya" }
-];
+    this.setState({
+      employeeList: employeeList
+    });
+  };
 
-const ActionDialog = props => {
-  const {
-    open,
-    onClose,
-    action,
-    handleFieldChange,
-    onButtonClick,
-    getEmployeeRoles
-  } = props;
-  // let employeeList1 = getEmployeeList(getEmployeeRoles);
-  return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogContent
-        children={
-          <Container
-            children={
-              <Grid container="true" sm="12" marginTop={16}>
-                <Grid
-                  style={{
-                    alignItems: "center",
-                    display: "flex"
-                  }}
-                  item
-                  sm={10}
-                >
-                  <Typography component="h2" variant="subheading">
-                    <LabelContainer
-                      labelName={getHeaderName(action).labelName}
-                      labelKey={getHeaderName(action).labelKey}
-                    />
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  sm={2}
-                  style={{ textAlign: "right", cursor: "pointer" }}
-                  onClick={onClose}
-                >
-                  <CloseIcon />
-                </Grid>
-                {(action === "RESOLVE" ||
-                  action === "MARK" ||
-                  action === "FORWARD") && (
+  getButtonName = action => {
+    switch (action) {
+      case "FORWARD":
+        return { labelName: "FORWARD", labelKey: "TL_FORWARD_BUTTON" };
+      case "MARK":
+        return { labelName: "MARK", labelKey: "TL_MARK_BUTTON" };
+      case "APPROVE":
+        return {
+          labelName: "APPROVE",
+          labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
+        };
+      case "CANCEL":
+        return {
+          labelName: "CANCEL",
+          labelKey: "TL_WORKFLOW_CANCEL_BUTTON_CANCEL"
+        };
+      default:
+        return {
+          labelName: "REJECT",
+          labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
+        };
+    }
+  };
+
+  getHeaderName = action => {
+    switch (action) {
+      case "FORWARD":
+        return {
+          labelName: "Forward Application",
+          labelKey: "TL_FORWARD_APPLICATION"
+        };
+      case "MARK":
+        return {
+          labelName: "Mark Application",
+          labelKey: "TL_MARK_APPLICATION"
+        };
+      case "APPROVE":
+        return {
+          labelName: "Approve Application",
+          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+        };
+      case "CANCEL":
+        return {
+          labelName: "Cancel Workflow",
+          labelKey: "TL_WORKFLOW_CANCEL"
+        };
+      default:
+        return {
+          labelName: "Reject Application",
+          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+        };
+    }
+  };
+
+  getEmployeeList = async roles => {};
+  render() {
+    const {
+      open,
+      onClose,
+      action,
+      handleFieldChange,
+      onButtonClick
+    } = this.props;
+    const { getEmployeeList, getHeaderName, getButtonName } = this;
+    return (
+      <Dialog open={open} onClose={onClose} maxWidth="lg">
+        <DialogContent
+          children={
+            <Container
+              children={
+                <Grid container="true" sm="12" marginTop={16}>
+                  <Grid
+                    style={{
+                      alignItems: "center",
+                      display: "flex"
+                    }}
+                    item
+                    sm={10}
+                  >
+                    <Typography component="h2" variant="subheading">
+                      <LabelContainer
+                        labelName={getHeaderName(action).labelName}
+                        labelKey={getHeaderName(action).labelKey}
+                      />
+                    </Typography>
+                  </Grid>
                   <Grid
                     item
-                    sm="12"
-                    style={{
-                      marginTop: 16
-                    }}
+                    sm={2}
+                    style={{ textAlign: "right", cursor: "pointer" }}
+                    onClick={onClose}
                   >
+                    <CloseIcon />
+                  </Grid>
+                  {(action === "RESOLVE" ||
+                    action === "REJECT" ||
+                    action === "MARK" ||
+                    action === "FORWARD") && (
+                    <Grid
+                      item
+                      sm="12"
+                      style={{
+                        marginTop: 16
+                      }}
+                    >
+                      <TextFieldContainer
+                        select={true}
+                        style={{ marginRight: "15px" }}
+                        label={fieldConfig.approverName.label}
+                        placeholder={fieldConfig.approverName.placeholder}
+                        data={this.state.employeeList}
+                        optionValue="value"
+                        optionLabel="label"
+                        onChange={e =>
+                          handleFieldChange(
+                            "WorkFlowObject.TradeLicense.approve.approver",
+                            e.target.value
+                          )
+                        }
+                        jsonPath="WorkFlowObject.TradeLicense.approve.approver"
+                      />
+                    </Grid>
+                  )}
+                  <Grid item sm="12">
                     <TextFieldContainer
-                      select={true}
-                      style={{ marginRight: "15px" }}
-                      label={fieldConfig.approverName.label}
-                      placeholder={fieldConfig.approverName.placeholder}
-                      data={employeeList}
-                      optionValue="value"
-                      optionLabel="label"
+                      InputLabelProps={{ shrink: true }}
+                      label={fieldConfig.comments.label}
                       onChange={e =>
                         handleFieldChange(
-                          "WorkFlowObject.TradeLicense.approve.approver",
+                          "WorkFlowObject.TradeLicense.approve.comment",
                           e.target.value
                         )
                       }
-                      jsonPath="WorkFlowObject.TradeLicense.approve.approver"
+                      jsonPath="WorkFlowObject.TradeLicense.approve.comment"
+                      placeholder={fieldConfig.comments.placeholder}
                     />
                   </Grid>
-                )}
-                <Grid item sm="12">
-                  <TextFieldContainer
-                    InputLabelProps={{ shrink: true }}
-                    label={fieldConfig.comments.label}
-                    onChange={e =>
-                      handleFieldChange(
-                        "WorkFlowObject.TradeLicense.approve.comment",
-                        e.target.value
-                      )
-                    }
-                    jsonPath="WorkFlowObject.TradeLicense.approve.comment"
-                    placeholder={fieldConfig.comments.placeholder}
-                  />
-                </Grid>
-                <Grid item sm="12">
-                  <Typography
-                    component="h3"
-                    variant="subheading"
-                    style={{
-                      color: "rgba(0, 0, 0, 0.8700000047683716)",
-                      fontFamily: "Roboto",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                      lineHeight: "20px",
-                      marginBottom: "8px"
-                    }}
-                  >
-                    <LabelContainer labelName="Supporting Documents" />
-                  </Typography>
-                  <div
-                    style={{
-                      color: "rgba(0, 0, 0, 0.60)",
-                      fontFamily: "Roboto",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                      lineHeight: "20px"
-                    }}
-                  >
-                    <LabelContainer labelName="Only .jpg and .pdf files. 5MB max file size." />
-                  </div>
-                  <UploadMultipleFiles
-                    maxFiles={4}
-                    inputProps={{
-                      accept: "image/*, .pdf, .png, .jpeg"
-                    }}
-                    buttonLabel={{ labelName: "UPLOAD FILES" }}
-                    jsonPath="WorkFlowObject.TradeLicense.approve.document"
-                    maxFileSize={5000}
-                  />
-                  <Grid sm={12} style={{ textAlign: "right" }}>
-                    <Button
-                      variant={"contained"}
-                      color={"primary"}
+                  <Grid item sm="12">
+                    <Typography
+                      component="h3"
+                      variant="subheading"
                       style={{
-                        minWidth: "200px",
-                        height: "48px",
-                        marginRight: "45px"
+                        color: "rgba(0, 0, 0, 0.8700000047683716)",
+                        fontFamily: "Roboto",
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        lineHeight: "20px",
+                        marginBottom: "8px"
                       }}
-                      onClick={() => onButtonClick()}
                     >
-                      <LabelContainer
-                        labelName={getButtonName(action).labelName}
-                        labelKey={getButtonName(action).labelKey}
-                      />
-                    </Button>
+                      <LabelContainer labelName="Supporting Documents" />
+                    </Typography>
+                    <div
+                      style={{
+                        color: "rgba(0, 0, 0, 0.60)",
+                        fontFamily: "Roboto",
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        lineHeight: "20px"
+                      }}
+                    >
+                      <LabelContainer labelName="Only .jpg and .pdf files. 5MB max file size." />
+                    </div>
+                    <UploadMultipleFiles
+                      maxFiles={4}
+                      inputProps={{
+                        accept: "image/*, .pdf, .png, .jpeg"
+                      }}
+                      buttonLabel={{ labelName: "UPLOAD FILES" }}
+                      jsonPath="WorkFlowObject.TradeLicense.approve.document"
+                      maxFileSize={5000}
+                    />
+                    <Grid sm={12} style={{ textAlign: "right" }}>
+                      <Button
+                        variant={"contained"}
+                        color={"primary"}
+                        style={{
+                          minWidth: "200px",
+                          height: "48px",
+                          marginRight: "45px"
+                        }}
+                        onClick={() => onButtonClick()}
+                      >
+                        <LabelContainer
+                          labelName={getButtonName(action).labelName}
+                          labelKey={getButtonName(action).labelKey}
+                        />
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            }
-          />
-        }
-      />
-    </Dialog>
-  );
-};
+              }
+            />
+          }
+        />
+      </Dialog>
+    );
+  }
+}
 
 export default withStyles(styles)(ActionDialog);
