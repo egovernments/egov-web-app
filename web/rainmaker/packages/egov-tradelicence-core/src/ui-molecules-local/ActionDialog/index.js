@@ -48,6 +48,11 @@ const getHeaderName = action => {
         labelName: "Forward Application",
         labelKey: "TL_FORWARD_APPLICATION"
       };
+    case "MARK":
+      return {
+        labelName: "Mark Application",
+        labelKey: "TL_MARK_APPLICATION"
+      };
     case "APPROVE":
       return {
         labelName: "Approve Application",
@@ -70,6 +75,8 @@ const getButtonName = action => {
   switch (action) {
     case "FORWARD":
       return { labelName: "FORWARD", labelKey: "TL_FORWARD_BUTTON" };
+    case "MARK":
+      return { labelName: "MARK", labelKey: "TL_MARK_BUTTON" };
     case "APPROVE":
       return {
         labelName: "APPROVE",
@@ -90,7 +97,7 @@ const getButtonName = action => {
 
 // const getEmployeeList = async roles => {
 //   console.log("roles is.....", roles);
-//const tenantId = localStorage.getItem("tenant-id");
+//   const tenantId = localStorage.getItem("tenant-id");
 //   const queryObj = [
 //     { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
 //   ];
@@ -102,7 +109,10 @@ const getButtonName = action => {
 //   );
 //   console("payload is.....", payload);
 // };
-const employeeList = ["ShivaG", "Shreya"];
+const employeeList = [
+  { value: "ShivaG", label: "ShivaG" },
+  { value: "Shreya", label: "Shreya" }
+];
 
 const ActionDialog = props => {
   const {
@@ -113,6 +123,7 @@ const ActionDialog = props => {
     onButtonClick,
     getEmployeeRoles
   } = props;
+  // let employeeList1 = getEmployeeList(getEmployeeRoles);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogContent
@@ -143,7 +154,9 @@ const ActionDialog = props => {
                 >
                   <CloseIcon />
                 </Grid>
-                {action === "RESOLVE" && (
+                {(action === "RESOLVE" ||
+                  action === "MARK" ||
+                  action === "FORWARD") && (
                   <Grid
                     item
                     sm="12"
@@ -156,13 +169,16 @@ const ActionDialog = props => {
                       style={{ marginRight: "15px" }}
                       label={fieldConfig.approverName.label}
                       placeholder={fieldConfig.approverName.placeholder}
-                      dropdownData={employeeList}
-                      // onChange={e =>
-                      //   handleFieldChange(
-                      //     "WorkFlow.TradeLicense.approve.comment",
-                      //     e.target.value
-                      //   )
-                      // }
+                      data={employeeList}
+                      optionValue="value"
+                      optionLabel="label"
+                      onChange={e =>
+                        handleFieldChange(
+                          "WorkFlowObject.TradeLicense.approve.approver",
+                          e.target.value
+                        )
+                      }
+                      jsonPath="WorkFlowObject.TradeLicense.approve.approver"
                     />
                   </Grid>
                 )}
