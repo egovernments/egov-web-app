@@ -123,7 +123,8 @@ class WorkFlowContainer extends React.Component {
         isLast: item.action === "PAY" ? true : false,
         buttonUrl: "some pay url",
         dialogHeader: "Payment",
-        showEmployeeList: item.action === "FORWARD" ? true : false
+        showEmployeeList: item.action === "FORWARD" ? true : false,
+        roles: item.roles.toString()
       };
     });
   };
