@@ -22,7 +22,8 @@ const data = [
   }
 ];
 
-const TaskStatusComponents = ({ currentStatus }) => {
+const TaskStatusComponents = ({ currentObj }) => {
+  console.log("currentObj is....", currentObj);
   return (
     <Grid container={true} sm={12}>
       <Grid item sm={2} style={{ paddingRight: 20 }}>
@@ -32,7 +33,7 @@ const TaskStatusComponents = ({ currentStatus }) => {
         <Typography variant="body2">
           <LabelContainer
             labelName={convertEpochToDate(
-              get(currentStatus, "auditDetails.lastModifiedTime")
+              get(currentObj, "auditDetails.lastModifiedTime")
             )}
           />
         </Typography>
@@ -45,7 +46,7 @@ const TaskStatusComponents = ({ currentStatus }) => {
           />
         </Typography>
         <Typography variant="body2">
-          <LabelContainer labelName={get(currentStatus, "assigner.name")} />
+          <LabelContainer labelName={get(currentObj, "assigner.name")} />
         </Typography>
       </Grid>
       <Grid item sm={2} style={{ paddingRight: 20 }}>
@@ -56,7 +57,7 @@ const TaskStatusComponents = ({ currentStatus }) => {
           />
         </Typography>
         <Typography variant="body2">
-          <LabelContainer labelName={get(currentStatus, "state.state")} />
+          <LabelContainer labelName={get(currentObj, "state.state")} />
         </Typography>
       </Grid>
       <Grid item sm={3} style={{ paddingRight: 20 }}>
@@ -67,7 +68,7 @@ const TaskStatusComponents = ({ currentStatus }) => {
           />
         </Typography>
         <Typography variant="body2">
-          <LabelContainer labelName={get(currentStatus, "assignee.name")} />
+          <LabelContainer labelName={get(currentObj, "assignee.name")} />
         </Typography>
       </Grid>
       <Grid item sm={3} style={{ paddingRight: 20 }}>
@@ -78,10 +79,10 @@ const TaskStatusComponents = ({ currentStatus }) => {
           />
         </Typography>
         <Typography variant="body2">
-          <LabelContainer labelName={get(currentStatus, "comment")} />
+          <LabelContainer labelName={get(currentObj, "comment")} />
         </Typography>
       </Grid>
-      {get(currentStatus, "documents") && (
+      {get(currentObj, "documents") && (
         <DownloadFileContainer
           documentData={data}
           className="review-documents"

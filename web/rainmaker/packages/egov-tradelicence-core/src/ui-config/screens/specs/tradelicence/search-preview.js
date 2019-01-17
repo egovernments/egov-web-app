@@ -27,7 +27,7 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-import { footerReview } from "./applyResource/footer";
+//import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import { getWorkFlowData } from "../../../../ui-redux/workflow/actions";
 
@@ -212,15 +212,15 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
     }
 
-    const footer = footerReview(
-      action,
-      state,
-      dispatch,
-      status,
-      applicationNumber,
-      tenantId
-    );
-    set(action, "screenConfig.components.div.children.footer", footer);
+    // const footer = footerReview(
+    //   action,
+    //   state,
+    //   dispatch,
+    //   status,
+    //   applicationNumber,
+    //   tenantId
+    // );
+    // set(action, "screenConfig.components.div.children.footer", footer);
 
     if (status === "cancelled")
       set(

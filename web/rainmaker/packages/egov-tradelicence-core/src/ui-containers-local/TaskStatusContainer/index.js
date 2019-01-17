@@ -51,12 +51,14 @@ class TastStatusContainer extends React.Component {
       ["auditDetails.lastModifiedTime"],
       ["desc"]
     );
+    console.log("sortedArray is.....", sortedArray[0]);
     return sortedArray[0];
   };
 
   render() {
     const { classes, ProcessInstances } = this.props;
-    const currentStatus =
+    console.log("ProcessInstances is.....", ProcessInstances);
+    const currentObj =
       ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
     return (
       <div>
@@ -90,7 +92,7 @@ class TastStatusContainer extends React.Component {
                       />
                     </Button>
                   </Grid>
-                  <TaskStatusComponents currentStatus={currentStatus} />
+                  <TaskStatusComponents currentObj={currentObj} />
                 </Grid>
               }
             />

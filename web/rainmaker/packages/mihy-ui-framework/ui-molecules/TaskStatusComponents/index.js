@@ -33,8 +33,9 @@ var data = [{
 }];
 
 var TaskStatusComponents = function TaskStatusComponents(_ref) {
-  var currentStatus = _ref.currentStatus;
+  var currentObj = _ref.currentObj;
 
+  console.log("currentObj is....", currentObj);
   return _react2.default.createElement(
     _core.Grid,
     { container: true, sm: 12 },
@@ -50,7 +51,7 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
         _core.Typography,
         { variant: "body2" },
         _react2.default.createElement(_uiContainers.LabelContainer, {
-          labelName: (0, _utils.convertEpochToDate)((0, _get2.default)(currentStatus, "auditDetails.lastModifiedTime"))
+          labelName: (0, _utils.convertEpochToDate)((0, _get2.default)(currentObj, "auditDetails.lastModifiedTime"))
         })
       )
     ),
@@ -68,7 +69,7 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       _react2.default.createElement(
         _core.Typography,
         { variant: "body2" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentStatus, "assigner.name") })
+        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "assigner.name") })
       )
     ),
     _react2.default.createElement(
@@ -85,7 +86,7 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       _react2.default.createElement(
         _core.Typography,
         { variant: "body2" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentStatus, "state.state") })
+        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "state.state") })
       )
     ),
     _react2.default.createElement(
@@ -102,7 +103,7 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       _react2.default.createElement(
         _core.Typography,
         { variant: "body2" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentStatus, "assignee.name") })
+        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "assignee.name") })
       )
     ),
     _react2.default.createElement(
@@ -119,10 +120,10 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       _react2.default.createElement(
         _core.Typography,
         { variant: "body2" },
-        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentStatus, "comment") })
+        _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "comment") })
       )
     ),
-    (0, _get2.default)(currentStatus, "documents") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
+    (0, _get2.default)(currentObj, "documents") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
       documentData: data,
       className: "review-documents",
       backgroundGrey: true
