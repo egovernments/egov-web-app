@@ -7,6 +7,7 @@ import { TrackLocation } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
 import LandingPage from "modules/employee/LandingPage";
+import Inbox from "modules/employee/Inbox";
 // Employee
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
@@ -14,8 +15,8 @@ import Report from "modules/employee/reports/report";
 import EGFFinance from "modules/employee/Erp/EGF";
 
 import tlRoutes from "./tl";
-import pgrRoutes from "pgr-employee/lib/Routes/pgr-routes";
-import ptRoutes from "pt-employee/lib/Routes/pt-routes";
+import pgrRoutes from "pgr-employee/Routes/pgr-routes";
+import ptRoutes from "pt-employee/Routes/pt-routes";
 import externalRoutes from "./exterenalURL";
 
 // import PTHome from "modules/employee/PropertyTax/PTHome";
@@ -74,6 +75,18 @@ const routes = [
       hideFooter: true,
       redirectionUrl,
       title: "Home",
+      hideTitle: true,
+      isHomeScreen: true,
+    },
+  },
+  {
+    path: "inbox",
+    component: Inbox,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      redirectionUrl,
+      title: "Inbox",
       hideTitle: true,
       isHomeScreen: true,
     },

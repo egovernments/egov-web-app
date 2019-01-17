@@ -31,8 +31,8 @@ import tlRoutes from "./tl";
 import { PrivacyPolicy } from "modules/common";
 
 import TLHowItWorks from "../../ui-views/HowItWorks";
-import pgrRoutes from "pgr-citizen/lib/Routes/pgr-routes";
-import ptRoutes from "pt-citizen/lib/Routes/pt-routes";
+import pgrRoutes from "pgr-citizen/Routes/pgr-routes";
+import ptRoutes from "pt-citizen/Routes/pt-routes";
 
 const routes = [
   {
