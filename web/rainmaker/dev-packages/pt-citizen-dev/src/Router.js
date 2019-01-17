@@ -9,7 +9,7 @@ const Main = ({ routes }) => {
         <Route
           path={`/`}
           render={props => {
-            return <PT match={props.match} routes={routes.citizen} />;
+            return <PT match={props.match} routes={routes.pt} />;
           }}
         />
         {/* <Route exact path={`/image`} component={ImageModalDisplay} /> */}

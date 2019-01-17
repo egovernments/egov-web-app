@@ -1,12 +1,18 @@
-import { createStore, applyMiddleware } from "redux"
-import { combineReducers } from "redux";
-import storeConfigs from "egov-ui-kit/redux/store"
-import citizenReducer from "./reducer"
+import { combineReducers, createStore, applyMiddleware, compose } from "redux";
+import storeConfigs from "egov-ui-kit/redux/store";
+import employeeReducer from "./reducer";
 
-const { rootReducer, middlewares } = storeConfigs
+let { rootReducer, middlewares } = storeConfigs;
 
-const store = createStore(combineReducers({
-  ...rootReducer,
-}), applyMiddleware(...middlewares))
+const store = createStore(
+  combineReducers({
+    ...rootReducer,
+    employee: employeeReducer
+  }),
+  compose(
+    applyMiddleware(...middlewares),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
-export default store
+export default store;
