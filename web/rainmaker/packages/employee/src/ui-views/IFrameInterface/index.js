@@ -53,10 +53,7 @@ class IFrameInterface extends React.Component {
 
     const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     const title = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.title`, "");
-
-    const queryParams = props.location.search;
-
-    let url = `${domain}${contextPath}${queryParams}`;
+    let url = `${domain}${contextPath}`;
     this.setState({ url, title });
   };
 
