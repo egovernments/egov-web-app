@@ -57,16 +57,6 @@ const FeesEstimateCard = Loadable({
   loading: () => <Loading />
 });
 
-const Footer = Loadable({
-  loader: () => import("./Footer"),
-  loading: () => <Loading />
-});
-
-const ActionDialog = Loadable({
-  loader: () => import("./ActionDialog"),
-  loading: () => <Loading />
-});
-
 export {
   TestMolecules,
   Table,
@@ -76,8 +66,7 @@ export {
   UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
+  // AutoSelector,
   MapLocator,
-  FeesEstimateCard,
-  Footer,
-  ActionDialog
+  FeesEstimateCard
 };

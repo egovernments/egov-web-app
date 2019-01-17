@@ -6,10 +6,9 @@ import "./index.css";
 
 class DownloadFileContainer extends Component {
   render() {
-    const { data, documentData, ...rest } = this.props;
-    return (
-      <MultiDownloadCard data={data} documentData={documentData} {...rest} />
-    );
+    const { data, ...rest } = this.props;
+    console.log(this.props.className);
+    return <MultiDownloadCard data={data} {...rest} />;
   }
 }
 

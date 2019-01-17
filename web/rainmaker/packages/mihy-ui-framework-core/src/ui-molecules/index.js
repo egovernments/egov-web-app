@@ -119,16 +119,6 @@ const Tooltip = Loadable({
   loading: () => <Loading />
 });
 
-const TaskDialog = Loadable({
-  loader: () => import("./TaskDialog"),
-  loading: () => <Loading />
-});
-
-const TaskStatusComponents = Loadable({
-  loader: () => import("./TaskStatusComponents"),
-  loading: () => <Loading />
-});
-
 export {
   RenderRoutes,
   Map,
@@ -154,7 +144,5 @@ export {
   MultiDownloadCard,
   RadioGroup,
   CustomTab,
-  Tooltip,
-  TaskDialog,
-  TaskStatusComponents
+  Tooltip
 };

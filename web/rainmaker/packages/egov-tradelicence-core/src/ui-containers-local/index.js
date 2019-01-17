@@ -51,16 +51,6 @@ const ViewBreakupContainer = Loadable({
   loading: () => <Loading />
 });
 
-const TaskStatusContainer = Loadable({
-  loader: () => import("./TaskStatusContainer"),
-  loading: () => <Loading />
-});
-
-const WorkFlowContainer = Loadable({
-  loader: () => import("./WorkFlowContainer"),
-  loading: () => <Loading />
-});
-
 export {
   CustomTabContainer,
   LabelContainer,
@@ -72,7 +62,5 @@ export {
   DocumentListContainer,
   PaymentRedirectPage,
   ViewBreakupContainer,
-  DialogContainer,
-  TaskStatusContainer,
-  WorkFlowContainer
+  DialogContainer
 };
