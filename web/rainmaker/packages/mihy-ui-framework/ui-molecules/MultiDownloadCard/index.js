@@ -34,7 +34,13 @@ var _Button = require("@material-ui/core/Button");
 
 var _Button2 = _interopRequireDefault(_Button);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _uiContainers = require("../../ui-containers");
+
+require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -63,51 +69,65 @@ var documentTitle = {
   lineHeight: "19px"
 };
 
+var getDocumentList = function getDocumentList(data, props) {
+  var classes = props.classes,
+      className = props.className;
+
+  return data.map(function (item, key) {
+    return _react2.default.createElement(
+      _Grid2.default,
+      {
+        item: true,
+        container: true,
+        xs: 6,
+        sm: 4,
+        className: props.backgroundGrey ? (0, _classnames2.default)(classes.whiteCard, "background-grey") : classes.whiteCard
+      },
+      _react2.default.createElement(
+        _Grid2.default,
+        { xs: 12 },
+        _react2.default.createElement(_uiContainers.LabelContainer, {
+          labelName: item.title,
+          labelKey: item.title,
+          style: documentTitle
+        })
+      ),
+      _react2.default.createElement(
+        _Grid2.default,
+        { container: true },
+        _react2.default.createElement(
+          _Grid2.default,
+          { xs: 6, className: classes.subtext },
+          _react2.default.createElement(
+            _Typography2.default,
+            null,
+            item.name
+          )
+        ),
+        _react2.default.createElement(
+          _Grid2.default,
+          { xs: 6, align: "right" },
+          _react2.default.createElement(
+            _Button2.default,
+            { href: item.link, color: "primary" },
+            item.linkText
+          )
+        )
+      )
+    );
+  });
+};
+
 function MultiCardDownloadGrid(props) {
   var classes = props.classes,
       data = props.data,
-      rest = (0, _objectWithoutProperties3.default)(props, ["classes", "data"]);
+      documentData = props.documentData,
+      rest = (0, _objectWithoutProperties3.default)(props, ["classes", "data", "documentData"]);
 
   return _react2.default.createElement(
     _Grid2.default,
     (0, _extends3.default)({ container: true }, rest),
-    data.map(function (item, key) {
-      return _react2.default.createElement(
-        _Grid2.default,
-        { item: true, container: true, xs: 6, sm: 4, className: classes.whiteCard },
-        _react2.default.createElement(
-          _Grid2.default,
-          { xs: 12 },
-          _react2.default.createElement(_uiContainers.LabelContainer, {
-            labelName: item.title,
-            labelKey: item.title,
-            style: documentTitle
-          })
-        ),
-        _react2.default.createElement(
-          _Grid2.default,
-          { container: true },
-          _react2.default.createElement(
-            _Grid2.default,
-            { xs: 6, className: classes.subtext },
-            _react2.default.createElement(
-              _Typography2.default,
-              null,
-              item.name
-            )
-          ),
-          _react2.default.createElement(
-            _Grid2.default,
-            { xs: 6, align: "right" },
-            _react2.default.createElement(
-              _Button2.default,
-              { href: item.link, color: "primary" },
-              item.linkText
-            )
-          )
-        )
-      );
-    })
+    documentData ? getDocumentList(documentData, props) : getDocumentList(data, props)
   );
 }
 

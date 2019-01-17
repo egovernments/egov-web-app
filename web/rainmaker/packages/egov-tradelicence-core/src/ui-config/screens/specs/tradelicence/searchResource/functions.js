@@ -13,7 +13,7 @@ export const searchApiCall = async (state, dispatch) => {
       key: "tenantId",
       value: JSON.parse(localStorage.getItem("user-info")).tenantId
     },
-    { key: "limit", value: "200" },
+    { key: "limit", value: "10" },
     { key: "offset", value: "0" }
   ];
   let searchScreenObject = get(
