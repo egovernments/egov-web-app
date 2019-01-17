@@ -1,38 +1,39 @@
-import asyncComponent from "./asyncComponent";
+import React from "react";
+import Loadable from "react-loadable";
 
-const PTHome = asyncComponent(() =>
-  import("../Screens/PTHome").then(module => module.default)
-);
-const SearchProperty = asyncComponent(() =>
-  import("../Screens/SearchProperty").then(
-    module => module.default
-  )
-);
-const Property = asyncComponent(() =>
-  import("egov-ui-kit/common/propertyTax/Property").then(
-    module => module.default
-  )
-);
-const FormWizard = asyncComponent(() =>
-  import("../Screens/FormWizard").then(
-    module => module.default
-  )
-);
-const PaymentSuccess = asyncComponent(() =>
-  import("../Screens/PaymentSuccess").then(
-    module => module.default
-  )
-);
-const PaymentFailure = asyncComponent(() =>
-  import("../Screens/PaymentFailure").then(
-    module => module.default
-  )
-);
-const PropertyInformationForm = asyncComponent(() =>
-  import("../Screens/PropertyEditForm").then(
-    module => module.default
-  )
-);
+const Loading = () => <div />;
+
+const PTHome = Loadable({
+  loader: () => import("../Screens/PTHome"),
+  loading: Loading
+});
+const SearchProperty = Loadable({
+  loader: () => import("../Screens/SearchProperty"),
+  loading: Loading
+});
+const Property = Loadable({
+  loader: () => import("egov-ui-kit/common/propertyTax/Property"),
+  loading: Loading
+});
+const FormWizard = Loadable({
+  loader: () => import("../Screens/FormWizard"),
+  loading: Loading
+});
+const PaymentSuccess = Loadable({
+  loader: () => import("../Screens/PaymentSuccess"),
+  loading: Loading
+});
+const PaymentFailure = Loadable({
+  loader: () => import("../Screens/PaymentFailure"),
+  loading: Loading
+});
+const PropertyInformationForm = Loadable({
+  loader: () => import("../Screens/PropertyEditForm"),
+  loading: Loading
+});
+
+// const redirectionUrl = "/user/login";
+
 const routes = [
   // property tax routes
   {
