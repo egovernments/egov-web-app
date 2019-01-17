@@ -35,7 +35,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var updateActiveRoute = exports.updateActiveRoute = function updateActiveRoute(routePath, menuName) {
   window.localStorage.setItem("menuPath", routePath);
-  window.localStorage.setItem('menuName', menuName);
+  window.localStorage.setItem("menuName", menuName);
   return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath: routePath };
 };
 
@@ -72,7 +72,7 @@ var fetchLocalizationLabel = exports.fetchLocalizationLabel = function fetchLoca
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
+              return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
 
             case 3:
               payload = _context.sent;
