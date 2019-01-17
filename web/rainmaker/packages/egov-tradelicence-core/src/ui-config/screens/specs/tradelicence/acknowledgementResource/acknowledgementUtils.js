@@ -51,10 +51,7 @@ const acknowledgementCard = ({
         uiFramework: "custom-atoms",
         componentPath: "Div",
         children: {
-          text: getCommonHeader(
-            { labelName: tailText },
-            { style: style.tailText }
-          ),
+          text: getCommonHeader(tailText, { style: style.tailText }),
           paragraph: getCommonHeader(
             {
               labelName: number
@@ -97,13 +94,10 @@ const acknowledgementCard = ({
           uiFramework: "custom-atoms",
           componentPath: "Div",
           children: {
-            header: getCommonHeader({ label: header }),
-            paragraph: getCommonParagraph(
-              { labelName: body },
-              {
-                style: style.bodySub
-              }
-            )
+            header: getCommonHeader(header),
+            paragraph: getCommonParagraph(body, {
+              style: style.bodySub
+            })
           },
           props: {
             style: style.bodyBox

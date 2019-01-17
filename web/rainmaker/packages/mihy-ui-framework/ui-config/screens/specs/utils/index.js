@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getPattern = exports.getTab = exports.getTabs = exports.getLabelWithValue = exports.dispatchMultipleFieldChangeAction = exports.getDivider = exports.getCommonContainer = exports.getRadiobuttonGroup = exports.getRadiobuttonwithLabel = exports.getCheckBoxwithLabel = exports.getLocaleLabelsforTL = exports.getTextField = exports.getDateTimeField = exports.getTimeField = exports.getDateField = exports.getSelectField = exports.getLabel = exports.getBreak = exports.getCommonGrayCard = exports.getCommonCardWithHeader = exports.getCommonCard = exports.getCommonValue = exports.getCommonCaption = exports.getCommonParagraph = exports.getCommonSubHeader = exports.getCommonTitle = exports.getCommonHeader = exports.getStepperObject = undefined;
+exports.getPattern = exports.getTab = exports.getTabs = exports.convertEpochToDate = exports.getLabelWithValue = exports.dispatchMultipleFieldChangeAction = exports.getDivider = exports.getCommonContainer = exports.getRadiobuttonGroup = exports.getRadiobuttonwithLabel = exports.getCheckBoxwithLabel = exports.getLocaleLabelsforTL = exports.getTextField = exports.getDateTimeField = exports.getTimeField = exports.getDateField = exports.getSelectField = exports.getLabel = exports.getBreak = exports.getCommonGrayCard = exports.getCommonCardWithHeader = exports.getCommonCard = exports.getCommonValue = exports.getCommonCaption = exports.getCommonParagraph = exports.getCommonSubHeader = exports.getCommonTitle = exports.getCommonHeader = exports.getStepperObject = undefined;
 
 var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
 
@@ -183,17 +183,6 @@ var getBreak = exports.getBreak = function getBreak() {
     props: props
   };
 };
-
-// export const getLabel = (label, props = {}) => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label,
-//       ...props
-//     }
-//   };
-// };
 
 var getLabel = exports.getLabel = function getLabel(label, labelKey) {
   var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -418,30 +407,6 @@ var dispatchMultipleFieldChangeAction = exports.dispatchMultipleFieldChangeActio
   }
 };
 
-// export const getDarkSubHeader = header => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label: header,
-//       className: "review-dark-text"
-//     },
-//     fullWidth: true
-//   };
-// };
-
-// export const getLightSubHeader = header => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label: header,
-//       className: "review-light-text"
-//     },
-//     fullWidth: true
-//   };
-// };
-
 var getLabelWithValue = exports.getLabelWithValue = function getLabelWithValue(label, value) {
   var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
@@ -462,6 +427,16 @@ var getLabelWithValue = exports.getLabelWithValue = function getLabelWithValue(l
       value: getCommonValue(value)
     }
   };
+};
+
+var convertEpochToDate = exports.convertEpochToDate = function convertEpochToDate(dateEpoch) {
+  var dateFromApi = new Date(dateEpoch);
+  var month = dateFromApi.getMonth() + 1;
+  var day = dateFromApi.getDate();
+  var year = dateFromApi.getFullYear();
+  month = (month > 9 ? "" : "0") + month;
+  day = (day > 9 ? "" : "0") + day;
+  return day + "/" + month + "/" + year;
 };
 
 var getTabs = exports.getTabs = function getTabs(list) {

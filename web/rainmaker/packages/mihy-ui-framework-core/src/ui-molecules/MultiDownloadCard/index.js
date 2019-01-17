@@ -4,7 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import classNames from "classnames";
 import { LabelContainer } from "../../ui-containers";
+import "./index.css";
 
 const styles = {
   whiteCard: {
@@ -31,33 +33,74 @@ const documentTitle = {
   lineHeight: "19px"
 };
 
+const getDocumentList = (data, props) => {
+  const { classes, className } = props;
+  return data.map((item, key) => {
+    return (
+      <Grid
+        item
+        container
+        xs={6}
+        sm={4}
+        className={
+          props.backgroundGrey
+            ? classNames(classes.whiteCard, "background-grey")
+            : classes.whiteCard
+        }
+      >
+        <Grid xs={12}>
+          <LabelContainer
+            labelName={item.title}
+            labelKey={item.title}
+            style={documentTitle}
+          />
+        </Grid>
+        <Grid container>
+          <Grid xs={6} className={classes.subtext}>
+            <Typography>{item.name}</Typography>
+          </Grid>
+          <Grid xs={6} align="right">
+            <Button href={item.link} color="primary">
+              {item.linkText}
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  });
+};
+
 function MultiCardDownloadGrid(props) {
-  const { classes, data, ...rest } = props;
+  const { classes, data, documentData, ...rest } = props;
   return (
     <Grid container {...rest}>
-      {data.map((item, key) => {
-        return (
-          <Grid item container xs={6} sm={4} className={classes.whiteCard}>
-            <Grid xs={12}>
-              <LabelContainer
-                labelName={item.title}
-                labelKey={item.title}
-                style={documentTitle}
-              />
-            </Grid>
-            <Grid container>
-              <Grid xs={6} className={classes.subtext}>
-                <Typography>{item.name}</Typography>
+      {/* {data &&
+        data.map((item, key) => {
+          return (
+            <Grid item container xs={6} sm={4} className={classes.whiteCard}>
+              <Grid xs={12}>
+                <LabelContainer
+                  labelName={item.title}
+                  labelKey={item.title}
+                  style={documentTitle}
+                />
               </Grid>
-              <Grid xs={6} align="right">
-                <Button href={item.link} color="primary">
-                  {item.linkText}
-                </Button>
+              <Grid container>
+                <Grid xs={6} className={classes.subtext}>
+                  <Typography>{item.name}</Typography>
+                </Grid>
+                <Grid xs={6} align="right">
+                  <Button href={item.link} color="primary">
+                    {item.linkText}
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        );
-      })}
+          );
+        })} */}
+      {documentData
+        ? getDocumentList(documentData, props)
+        : getDocumentList(data, props)}
     </Grid>
   );
 }

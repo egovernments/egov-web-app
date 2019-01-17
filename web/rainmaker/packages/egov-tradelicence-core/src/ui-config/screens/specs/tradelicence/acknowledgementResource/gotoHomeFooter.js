@@ -12,34 +12,34 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const gotoHomeFooter = () => {
-  const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists
+const getRedirectionURL = () => {
+  const redirectionURL = ifUserRoleExists("CITIZEN")
     ? "/mihy-ui-framework/tradelicense-citizen/home"
     : "/mihy-ui-framework/tradelicence/search";
-
-  return getCommonApplyFooter({
-    gotoHome: {
-      componentPath: "Button",
-      props: {
-        variant: "outlined",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "16px"
-        }
-      },
-      children: {
-        downloadReceiptButtonLabel: getLabel({
-          labelName: "GO TO HOME",
-          labelKey: "TL_COMMON_BUTTON_HOME"
-        })
-      },
-      onClickDefination: {
-        action: "page_change",
-        path: `${redirectionURL}`
-      }
-    }
-  });
+  return redirectionURL;
 };
+
+export const gotoHomeFooter = getCommonApplyFooter({
+  gotoHome: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        minWidth: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      downloadReceiptButtonLabel: getLabel({
+        labelName: "GO TO HOME",
+        labelKey: "TL_COMMON_BUTTON_HOME"
+      })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: `${getRedirectionURL()}`
+    }
+  }
+});
