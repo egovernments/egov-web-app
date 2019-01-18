@@ -1,10 +1,10 @@
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   updatePFOforSearchResults,
   getBoundaryData
 } from "../../../../ui-utils/commons";
 import { footer } from "../tradelicence/applyResource/footer";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
   header,
   formwizardFirstStep,

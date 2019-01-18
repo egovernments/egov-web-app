@@ -17,7 +17,7 @@
     "jspdf": "^1.4.1",
     "lodash": "^4.17.10",
     "marker-animate-unobtrusive": "^0.2.8",
-    "mihy-ui-framework": "^0.1.41",
+    "egov-ui-framework": "^0.1.41",
     "mui-datatables": "^2.0.0-beta-41",
     "pdfmake": "^0.1.39",
     "prop-types": "^15.6.2",

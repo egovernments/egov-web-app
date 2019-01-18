@@ -3,7 +3,7 @@ import {
   getCommonCard,
   getCommonParagraph,
   getCommonContainer
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 const style = {
   bodyBox: {

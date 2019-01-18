@@ -5,7 +5,7 @@ import {
   getCommonContainer,
   getCommonTitle,
   getCommonParagraph
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import get from "lodash/get";
 import set from "lodash/set";
@@ -16,8 +16,8 @@ import {
   getCurrentFinancialYear,
   getAllDataFromBillingSlab
 } from "../utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { footer } from "./applyResource/footer";
 import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
 import { tradeDetails } from "./applyResource/tradeDetails";

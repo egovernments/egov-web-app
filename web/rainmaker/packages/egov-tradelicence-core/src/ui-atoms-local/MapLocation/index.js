@@ -5,7 +5,7 @@ import "./index.css";
 // import Icon from "../Icon";
 // import commonConfig from "config/common";
 import { MAP_API_KEY } from "../../ui-config/tl-app-config";
-import { Icon } from "mihy-ui-framework/ui-atoms";
+import { Icon } from "egov-ui-framework/ui-atoms";
 
 const {
   compose,

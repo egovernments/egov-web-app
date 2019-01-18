@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import formMiddleware from "egov-ui-kit/redux/form/middlewares";
 import authMiddleware from "egov-ui-kit/redux/auth/middleware";
 import appMiddleware from "egov-ui-kit/redux/app/middleware";
-import screenConfigurationMiddleware from "mihy-ui-framework/ui-redux/screen-configuration/middlewares";
+import screenConfigurationMiddleware from "egov-ui-framework/ui-redux/screen-configuration/middlewares";
 
 
 let middlewares = [];

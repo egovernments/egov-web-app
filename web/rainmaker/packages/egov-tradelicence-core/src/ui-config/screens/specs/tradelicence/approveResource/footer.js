@@ -1,5 +1,5 @@
-import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 import {
@@ -9,11 +9,11 @@ import {
   onClickNextButton,
   getCheckBoxJsonpath
 } from "../../utils";
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { updateTradeDetails } from "ui-utils/commons";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
-import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 
 const userName = JSON.parse(window.localStorage.getItem("user-info")).name;
 

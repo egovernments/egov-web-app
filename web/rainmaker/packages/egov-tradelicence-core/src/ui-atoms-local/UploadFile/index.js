@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { LabelContainer } from "mihy-ui-framework/ui-containers";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const UploadFile = props => {
   const {

@@ -8,14 +8,14 @@ import {
   getLocalityHarmedJson,
   setFilteredTradeTypes
 } from "../ui-config/screens/specs/utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getTranslatedLabel,
   updateDropDowns,
   ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";

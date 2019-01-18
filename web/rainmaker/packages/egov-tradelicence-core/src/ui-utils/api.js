@@ -2,10 +2,10 @@ import axios from "axios";
 import {
   fetchFromLocalStorage,
   addQueryArg
-} from "mihy-ui-framework/ui-utils/commons";
+} from "egov-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
-import { toggleSpinner } from "mihy-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 
 const instance = axios.create({
   baseURL: window.location.origin,

@@ -4,7 +4,7 @@ import {
   getCommonContainer,
   getCommonHeader,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
@@ -84,7 +84,7 @@ const tradeLicenseSearchAndResult = {
                       },
                       // onClickDefination: {
                       //   action: "page_change",
-                      //   path: "/mihy-ui-framework/tradelicense-citizen/apply"
+                      //   path: "/egov-ui-framework/tradelicense-citizen/apply"
                       // },
                       onClickDefination: {
                         action: "condition",

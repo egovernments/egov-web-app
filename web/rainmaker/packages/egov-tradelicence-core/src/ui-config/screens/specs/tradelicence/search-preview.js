@@ -4,12 +4,12 @@ import {
   getCommonTitle,
   getCommonGrayCard,
   getCommonContainer
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../ui-utils/commons";
 import {
   createEstimateData,

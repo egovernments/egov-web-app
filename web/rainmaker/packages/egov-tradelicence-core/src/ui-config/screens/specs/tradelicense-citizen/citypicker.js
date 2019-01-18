@@ -2,7 +2,7 @@ import {
   getCommonHeader,
   getCommonContainer,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import { showCityPicker, applyForm } from "../utils";
 

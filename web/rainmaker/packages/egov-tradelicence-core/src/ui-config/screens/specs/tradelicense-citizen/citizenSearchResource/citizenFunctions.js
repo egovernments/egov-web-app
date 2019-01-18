@@ -5,7 +5,7 @@ import { httpRequest } from "../../../../../ui-utils";
 import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
-} from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(

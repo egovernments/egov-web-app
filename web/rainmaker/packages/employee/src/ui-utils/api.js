@@ -1,5 +1,5 @@
 import axios from "axios";
-import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "mihy-ui-framework/ui-utils/commons";
+import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "egov-ui-framework/ui-utils/commons";
 
 const instance = axios.create({
   baseURL: window.location.origin,

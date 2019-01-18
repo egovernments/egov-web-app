@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { TextfieldWithIcon } from "mihy-ui-framework/ui-molecules";
+import { TextfieldWithIcon } from "egov-ui-framework/ui-molecules";
 import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import {

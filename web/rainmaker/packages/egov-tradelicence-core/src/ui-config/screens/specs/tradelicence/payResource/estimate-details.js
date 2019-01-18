@@ -1,4 +1,4 @@
-import { getCommonGrayCard } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getCommonGrayCard } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getFeesEstimateCard } from "../../utils";
 
 const estimate = getCommonGrayCard({

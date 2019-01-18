@@ -3,7 +3,7 @@ import { UploadFile, UploadedDocument } from "ui-atoms-local";
 import { withStyles } from "@material-ui/core/styles";
 import { handleFileUpload } from "../../ui-utils/commons";
 import { connect } from "react-redux";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const styles = theme => ({
   button: {

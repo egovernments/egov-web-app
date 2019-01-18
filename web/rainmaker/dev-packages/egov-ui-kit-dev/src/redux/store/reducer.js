@@ -7,7 +7,7 @@ import formtemp from "../formtemp/reducer";
 import mdms from "../mdms/reducer";
 import report from "../reports/report";
 import properties from "../properties/reducer";
-import screenConfiguration from "mihy-ui-framework/ui-redux/screen-configuration/reducer";
+import screenConfiguration from "egov-ui-framework/ui-redux/screen-configuration/reducer";
 
 
 const rootReducer = {

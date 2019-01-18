@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { AppBar, Drawer, Div, Toolbar, Typegraphy, Icon } from "mihy-ui-framework/ui-atoms";
+import { AppBar, Drawer, Div, Toolbar, Typegraphy, Icon } from "egov-ui-framework/ui-atoms";
 import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 import styles from "./css";
 import { compose } from "recompose";
 import ReactJson from "react-json-view";
-import { screenHoc } from "mihy-ui-framework/ui-hocs";
-import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
+import { screenHoc } from "egov-ui-framework/ui-hocs";
+import CommonView from "egov-ui-framework/ui-molecules/CommonView";
 import defaultScreenConfig from "ui-config/screens/specs/tradelicence/apply";
 // import defaultScreenConfig from "ui-config/screens/specs/tradelicence/apply";
 

@@ -1,4 +1,4 @@
-import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
 
 const getCommonApplyFooter = children => {
@@ -15,8 +15,8 @@ const getCommonApplyFooter = children => {
 export const paymentFailureFooter = (applicationNumber, tenant) => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
-    ? "/mihy-ui-framework/tradelicense-citizen"
-    : "/mihy-ui-framework/tradelicence";
+    ? "/egov-ui-framework/tradelicense-citizen"
+    : "/egov-ui-framework/tradelicence";
 
   return getCommonApplyFooter({
     gotoHome: {

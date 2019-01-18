@@ -1,4 +1,4 @@
-import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import generateReceipt from "../../utils/receiptPdf";
 
 const getCommonApplyFooter = children => {
@@ -32,7 +32,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: `/mihy-ui-framework/tradelicence/search`
+      path: `/egov-ui-framework/tradelicence/search`
     }
   },
   downloadLicenseButton: {

@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { MapLocation } from "../../ui-atoms-local";
 
 import { defaultLocation } from "../../ui-config/tl-app-config";
-import { Button, Icon } from "mihy-ui-framework/ui-atoms";
+import { Button, Icon } from "egov-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 
 const pickBtn = {

@@ -6,9 +6,9 @@ import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import { handleFileUpload, getFileUrlFromAPI } from "ui-utils/commons";
 import { connect } from "react-redux";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { UploadSingleFile } from "ui-molecules-local";
-import { LabelContainer } from "mihy-ui-framework/ui-containers";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const styles = theme => ({
   documentContainer: {

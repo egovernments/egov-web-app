@@ -24,7 +24,7 @@ var _middleware3 = require("egov-ui-kit/redux/app/middleware");
 
 var _middleware4 = _interopRequireDefault(_middleware3);
 
-var _middlewares3 = require("mihy-ui-framework/ui-redux/screen-configuration/middlewares");
+var _middlewares3 = require("egov-ui-framework/ui-redux/screen-configuration/middlewares");
 
 var _middlewares4 = _interopRequireDefault(_middlewares3);
 

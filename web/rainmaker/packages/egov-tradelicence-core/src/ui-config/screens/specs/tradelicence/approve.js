@@ -4,8 +4,8 @@ import {
   getCommonParagraph,
   getCommonSubHeader,
   getCommonHeader
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
   getApprovalTextField,
   getCheckbox,

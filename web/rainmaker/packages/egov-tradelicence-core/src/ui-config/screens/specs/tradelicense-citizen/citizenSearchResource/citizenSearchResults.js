@@ -77,31 +77,31 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
+      return `/egov-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "APPROVED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
+      return `/egov-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
 
     case get(textToLocalMapping, "PAID"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
+      return `/egov-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "CANCELLED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
+      return `/egov-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
-      return `/mihy-ui-framework/tradelicense-citizen/apply?applicationNumber=${
+      return `/egov-ui-framework/tradelicense-citizen/apply?applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "REJECTED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
+      return `/egov-ui-framework/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     default:
-      return `/mihy-ui-framework/tradelicense-citizen/home`;
+      return `/egov-ui-framework/tradelicense-citizen/home`;
   }
 };

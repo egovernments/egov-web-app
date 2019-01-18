@@ -8,7 +8,7 @@ import {
   getPattern,
   getDateField,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { searchApiCall } from "./functions";
 
 export const tradeLicenseApplication = getCommonCard({

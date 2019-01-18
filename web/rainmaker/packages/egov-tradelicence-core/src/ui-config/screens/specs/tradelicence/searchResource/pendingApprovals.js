@@ -1,4 +1,4 @@
-import { getBreak } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getBreak } from "egov-ui-framework/ui-config/screens/specs/utils";
 import React from "react";
 
 export const pendingApprovals = {

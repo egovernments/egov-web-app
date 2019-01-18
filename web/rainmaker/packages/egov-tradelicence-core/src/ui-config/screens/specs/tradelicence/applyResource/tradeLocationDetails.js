@@ -5,12 +5,12 @@ import {
   getSelectField,
   getCommonContainer,
   getPattern
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { httpRequest } from "../../../../../ui-utils/api";
 import { getMapLocator } from "../../utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { showHideMapPopup, getDetailsFromProperty } from "../../utils";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const tradeLocationDetails = getCommonCard({
   header: getCommonTitle(

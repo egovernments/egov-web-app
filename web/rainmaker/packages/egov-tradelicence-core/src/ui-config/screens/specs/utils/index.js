@@ -2,17 +2,17 @@ import {
   getLabel,
   getTextField,
   getCommonSubHeader
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import "./index.css";
-import { validate } from "mihy-ui-framework/ui-redux/screen-configuration/utils";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 import filter from "lodash/filter";
 import { httpRequest } from "ui-utils/api";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
 export const getCommonApplyFooter = children => {
   return {
@@ -353,11 +353,11 @@ export const onClickNextButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     default:
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
   }
 };
 
@@ -368,11 +368,11 @@ export const onClickPreviousButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     default:
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
   }
 };
 export const getFeesEstimateCard = props => {
@@ -1210,9 +1210,9 @@ export const getFinancialYearDates = (format, et) => {
 
 export const getBaseURL = () => {
   if (process.env.REACT_APP_NAME !== "Citizen") {
-    return "/mihy-ui-framework/tradelicence";
+    return "/egov-ui-framework/tradelicence";
   } else {
-    return "/mihy-ui-framework/tradelicense-citizen";
+    return "/egov-ui-framework/tradelicense-citizen";
   }
 };
 
@@ -1969,8 +1969,8 @@ export const applyForm = (state, dispatch) => {
   if (isTradeDetailsValid) {
     window.location.href =
       process.env.NODE_ENV === "development"
-        ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        : `/employee-tradelicence/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };
 
