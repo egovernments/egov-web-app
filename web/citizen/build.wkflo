@@ -1,7 +1,7 @@
 def build(path, ci_image) {
     stage("Build") {
         docker.image("egovio/ci-react:v8.4.0-lerna-v2").inside {
-            sh "cd ${path}/rainmaker && rm -rf node_modules && npm set registry http://egov-micro-dev.egovernments.org/verdaccio && npm i babel-runtime && lerna bootstrap && npm run build-css && babel dev-packages/egov-ui-kit-dev/src --out-dir packages/egov-ui-kit --copy-files && babel packages/mihy-ui-framework-core/src/ --out-dir packages/mihy-ui-framework --copy-files && babel dev-packages/pgr-citizen-dev/src --out-dir packages/pgr-citizen --copy-files &&  babel dev-packages/pt-citizen-dev/src --out-dir packages/pt-citizen --copy-files && cd packages/citizen && npm run build && cp -r build ../../../citizen/";
+            sh "cd ${path}/rainmaker && rm -rf node_modules && npm set registry http://egov-micro-dev.egovernments.org/verdaccio && npm i babel-runtime && lerna bootstrap && npm run build-css && babel dev-packages/egov-ui-kit-dev/src --out-dir packages/egov-ui-kit --copy-files && babel dev-packages/mihy-ui-framework-core/src/ --out-dir packages/mihy-ui-framework --copy-files && babel dev-packages/pgr-citizen-dev/src --out-dir packages/pgr-citizen --copy-files &&  babel dev-packages/pt-citizen-dev/src --out-dir packages/pt-citizen --copy-files && cd packages/citizen && npm run build && cp -r build ../../../citizen/";
         }
     }
 }
