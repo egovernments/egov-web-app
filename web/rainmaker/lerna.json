@@ -1,11 +1,11 @@
 {
   "lerna": "2.11.0",
   "packages": [
-    "packages/*",
     "dev-packages/pgr-citizen-dev",
     "dev-packages/pgr-employee-dev",
     "dev-packages/pt-citizen-dev",
-    "dev-packages/pt-employee-dev"
+    "dev-packages/pt-employee-dev",
+    "packages/*"
   ],
   "version": "0.0.1"
 }
