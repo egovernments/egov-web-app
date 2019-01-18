@@ -8,7 +8,7 @@ import {
   getSelectField,
   getCommonContainer,
   getPattern
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
   getIconStyle,
   objectToDropdown,
@@ -18,8 +18,8 @@ import {
   setFilteredTradeTypes,
   getUniqueItemsFromArray
 } from "../../utils";
-import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import filter from "lodash/filter";
 

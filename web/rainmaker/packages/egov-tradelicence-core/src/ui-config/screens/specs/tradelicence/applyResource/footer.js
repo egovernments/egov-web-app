@@ -1,7 +1,7 @@
 import {
   getLabel,
   dispatchMultipleFieldChangeAction
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { applyTradeLicense } from "../../../../../ui-utils/commons";
 import get from "lodash/get";
 import some from "lodash/some";
@@ -13,14 +13,14 @@ import {
   getDocList,
   setOwnerShipDropDownFieldChange
 } from "../../utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import {
   createEstimateData,
   validateFields,
   ifUserRoleExists
 } from "../../utils";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
 
@@ -34,7 +34,7 @@ const moveToSuccess = (LicenseData, dispatch) => {
   const status = "success";
   dispatch(
     setRoute(
-      `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
+      `/egov-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
     )
   );
 };
@@ -552,8 +552,8 @@ export const footerReview = (
 ) => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
-    ? "/mihy-ui-framework/tradelicense-citizen"
-    : "/mihy-ui-framework/tradelicence";
+    ? "/egov-ui-framework/tradelicense-citizen"
+    : "/egov-ui-framework/tradelicence";
 
   /** MenuButton data based on status */
   let downloadMenu = [];
@@ -701,7 +701,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/egov-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "REJECT"),
               roleDefination: {
@@ -728,7 +728,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/egov-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "APPROVE"),
               roleDefination: {
@@ -782,7 +782,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/egov-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "CANCEL TRADE LICENSE"),
               roleDefination: {

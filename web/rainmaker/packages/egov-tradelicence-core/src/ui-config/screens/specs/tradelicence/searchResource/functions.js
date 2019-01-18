@@ -1,8 +1,8 @@
 import get from "lodash/get";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 

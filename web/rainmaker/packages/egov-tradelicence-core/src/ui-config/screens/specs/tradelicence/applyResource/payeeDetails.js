@@ -2,7 +2,7 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const payeeDetails = getCommonContainer({
   paidBy: getSelectField("Paid By", "Paid By", false, ""),

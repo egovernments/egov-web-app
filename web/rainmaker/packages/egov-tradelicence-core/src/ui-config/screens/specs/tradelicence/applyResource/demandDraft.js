@@ -3,7 +3,7 @@ import {
   getCommonContainer,
   getDateField,
   getCommonSubHeader
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { payeeDetails } from "./payeeDetails";
 
 export const demandDraftDetails = getCommonContainer({

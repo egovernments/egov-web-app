@@ -4,11 +4,11 @@ import {
   getCommonContainer,
   getDateField,
   getPattern
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSpinner } from "mihy-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 
 const onIconClick = (state, dispatch, index) => {
   const ifscCode = get(

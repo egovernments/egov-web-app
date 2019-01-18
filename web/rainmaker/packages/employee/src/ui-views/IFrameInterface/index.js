@@ -1,6 +1,6 @@
 import React from "react";
-import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
-import LabelContainer from "mihy-ui-framework/ui-containers/LabelContainer";
+import CommonView from "egov-ui-framework/ui-molecules/CommonView";
+import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import themeObject from "../../ui-config/themes";
@@ -35,7 +35,7 @@ class IFrameInterface extends React.Component {
     //   tradelicense: {
     //     routes: {
     //       search: {
-    //         routePath: "/employee-tradelicence/mihy-ui-framework/tradelicence/search",
+    //         routePath: "/employee-tradelicence/egov-ui-framework/tradelicence/search",
     //         isOrigin: false,
     //         domain: "https://egov-micro-dev.egovernments.org",
     //       },

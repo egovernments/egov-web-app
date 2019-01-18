@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /packages/egov-ui-kit
-/packages/mihy-ui-framework
+/packages/egov-ui-framework
 /packages/pgr-citizen
 /packages/pgr-employee
 /packages/pt-citizen

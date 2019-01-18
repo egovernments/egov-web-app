@@ -40,7 +40,7 @@ var _reducer15 = require("../properties/reducer");
 
 var _reducer16 = _interopRequireDefault(_reducer15);
 
-var _reducer17 = require("mihy-ui-framework/ui-redux/screen-configuration/reducer");
+var _reducer17 = require("egov-ui-framework/ui-redux/screen-configuration/reducer");
 
 var _reducer18 = _interopRequireDefault(_reducer17);
 

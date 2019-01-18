@@ -3,11 +3,11 @@ import {
   getCommonHeader,
   getCommonCard,
   getCommonTitle
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "../tradelicence/payResource/footer";
 import estimateDetails from "../tradelicence/payResource/estimate-details";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { fetchBill } from "../utils";
 
 const header = getCommonContainer({

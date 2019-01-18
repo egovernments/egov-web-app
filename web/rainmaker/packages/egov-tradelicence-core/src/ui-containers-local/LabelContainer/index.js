@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "mihy-ui-framework/ui-atoms";
+import { Label } from "egov-ui-framework/ui-atoms";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import {

@@ -125,7 +125,7 @@ export const fetchUiCommonConfig = () => {
       //   tradelicense: {
       //     routes: {
       //       search: {
-      //         routePath: "/employee-tradelicence/mihy-ui-framework/tradelicence/search",
+      //         routePath: "/employee-tradelicence/egov-ui-framework/tradelicence/search",
       //         isOrigin: false,
       //         domain: "https://egov-micro-dev.egovernments.org",
       //       },

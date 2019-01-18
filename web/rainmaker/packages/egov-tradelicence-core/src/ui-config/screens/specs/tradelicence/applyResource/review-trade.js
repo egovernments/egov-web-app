@@ -5,7 +5,7 @@ import {
   getLabelWithValue,
   getDivider,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { changeStep } from "./footer";
 
 import { convertEpochToDate } from "../../utils";

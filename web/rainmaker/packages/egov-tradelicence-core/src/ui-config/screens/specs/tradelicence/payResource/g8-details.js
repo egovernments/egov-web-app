@@ -4,7 +4,7 @@ import {
   getTextField,
   getDateField,
   getCommonContainer
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 const g8Details = getCommonGrayCard({
   header: getCommonSubHeader({

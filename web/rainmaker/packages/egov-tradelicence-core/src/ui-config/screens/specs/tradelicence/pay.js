@@ -4,7 +4,7 @@ import {
   getCommonCard,
   getCommonTitle,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "./payResource/footer";
 import estimateDetails from "./payResource/estimate-details";
@@ -12,11 +12,11 @@ import g8Details from "./payResource/g8-details";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import { adhocPopup } from "./applyResource/adhocPopup";
 import { showHideAdhocPopup, getDialogButton } from "../utils";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
-import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { fetchBill } from "../utils";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-// import store from "mihy-ui-framework/ui-redux/store";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+// import store from "egov-ui-framework/ui-redux/store";
 
 const header = getCommonContainer({
   header: getCommonHeader({

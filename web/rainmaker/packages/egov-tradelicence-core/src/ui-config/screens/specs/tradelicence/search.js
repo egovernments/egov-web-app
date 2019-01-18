@@ -2,10 +2,10 @@ import {
   getCommonHeader,
   getLabel,
   getBreak
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
 
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 // import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
@@ -82,7 +82,7 @@ const tradeLicenseSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/mihy-ui-framework/tradelicence/apply"
+                path: "/egov-ui-framework/tradelicence/apply"
               },
               roleDefination: {
                 rolePath: "user-info.roles",

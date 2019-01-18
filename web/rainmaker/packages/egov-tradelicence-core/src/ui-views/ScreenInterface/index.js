@@ -1,6 +1,6 @@
 import React from "react";
-import { screenHoc } from "mihy-ui-framework/ui-hocs";
-import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
+import { screenHoc } from "egov-ui-framework/ui-hocs";
+import CommonView from "egov-ui-framework/ui-molecules/CommonView";
 
 class ScreenInterface extends React.Component {
   constructor(props) {

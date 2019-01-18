@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "ui-redux/store";
 import {
   getMdmsData,

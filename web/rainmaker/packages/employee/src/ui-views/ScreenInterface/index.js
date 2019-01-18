@@ -1,6 +1,6 @@
 import React from "react";
-import { screenHoc } from "mihy-ui-framework/ui-hocs";
-import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
+import { screenHoc } from "egov-ui-framework/ui-hocs";
+import CommonView from "egov-ui-framework/ui-molecules/CommonView";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import themeObject from "../../ui-config/themes";
 import "./index.css";

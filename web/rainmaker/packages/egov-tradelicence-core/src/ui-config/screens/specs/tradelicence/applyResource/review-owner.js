@@ -4,7 +4,7 @@ import {
   getCommonContainer,
   getLabelWithValue,
   getLabel
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { convertEpochToDate } from "../../utils";
 
 import { changeStep } from "./footer";

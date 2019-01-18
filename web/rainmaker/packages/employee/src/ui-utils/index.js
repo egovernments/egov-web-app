@@ -1,4 +1,4 @@
-import {httpRequest,loginRequest,logoutRequest} from "mihy-ui-framework/ui-utils/api";
+import {httpRequest,loginRequest,logoutRequest} from "egov-ui-framework/ui-utils/api";
 
 export {
   httpRequest,

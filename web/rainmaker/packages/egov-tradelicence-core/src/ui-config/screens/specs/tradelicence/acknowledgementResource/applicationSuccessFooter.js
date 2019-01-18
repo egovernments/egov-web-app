@@ -1,7 +1,7 @@
-import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import { ifUserRoleExists } from "../../utils";
 const getCommonApplyFooter = children => {
   return {
@@ -31,7 +31,7 @@ const generatePdfAndDownload = (
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
-    `/employee-tradelicence/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+    `/employee-tradelicence/egov-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
     hasEstimateLoaded = false;
   iframe.onload = function(e) {
@@ -123,8 +123,8 @@ export const applicationSuccessFooter = (
   //const baseURL = getBaseURL();
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
-    ? "/mihy-ui-framework/tradelicense-citizen/home"
-    : "/mihy-ui-framework/tradelicence/search";
+    ? "/egov-ui-framework/tradelicense-citizen/home"
+    : "/egov-ui-framework/tradelicence/search";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -227,7 +227,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/egov-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",
@@ -253,7 +253,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/egov-ui-framework/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",
