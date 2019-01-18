@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "mihy-ui-framework": "babel src/ --out-dir lib --copy-files"
+    "mihy-ui-framework": "babel src/ --out-dir ../../packages/mihy-ui-framework --copy-files"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
