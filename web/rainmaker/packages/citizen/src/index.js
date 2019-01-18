@@ -11,6 +11,8 @@ import "./webview/sms";
 import App from "modules/App";
 import store from "redux/store";
 import theme from "./config/theme";
+import themeNew from "./config/themeNew";
+
 import injectTapEventPlugin from "react-tap-event-plugin";
 //Web font loader
 import WebFont from "webfontloader";
@@ -18,9 +20,11 @@ import WebFont from "webfontloader";
 import "egov-ui-kit/assets/styles/bootstrap-customized.css";
 import "egov-ui-kit/assets/styles/app.css";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; // v1.x
+import { MuiThemeProvider as V0MuiThemeProvider} from 'material-ui';
 
-const muiTheme = getMuiTheme(theme);
+const muiThemeV0 = getMuiTheme(theme);
+const themeVX = createMuiTheme(themeNew);
 
 // to eliminate the click delay
 // injectTapEventPlugin();
@@ -37,10 +41,12 @@ window.basename = process.env.NODE_ENV === "production" ? "/citizen" : "";
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <Router basename={window.basename}>
-        <App />
-      </Router>
+    <MuiThemeProvider theme={themeVX}>
+      <V0MuiThemeProvider muiTheme={muiThemeV0}>
+        <Router basename={window.basename}>
+          <App />
+        </Router>
+      </V0MuiThemeProvider>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
