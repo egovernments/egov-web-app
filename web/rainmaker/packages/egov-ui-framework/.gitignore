@@ -2,13 +2,21 @@
 
 # dependencies
 /node_modules
-/packages/egov-ui-kit
-/packages/pgr-citizen
-/packages/pgr-employee
-/packages/pt-citizen
-/packages/pt-employee
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
