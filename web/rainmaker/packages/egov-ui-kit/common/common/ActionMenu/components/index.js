@@ -101,11 +101,14 @@ var styles = (0, _defineProperty3.default)({
     right: "6px"
   },
   textFieldStyle: {
-    height: "auto"
+    height: "auto",
+    textIndent: "15px"
   }
 }, "inputStyle", {
   bottom: "5px",
   height: "auto",
+  paddingLeft: "5px",
+  textIndent: "5px",
   marginTop: 0
 });
 
@@ -286,6 +289,25 @@ var ActionMenuComp = function (_Component) {
       });
     }
   }, {
+    key: "renderLeftIcon",
+    value: function renderLeftIcon() {
+      var leftIcon = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var item = arguments[1];
+      var menuDrawerOpen = this.props.menuDrawerOpen;
+
+      if (leftIcon.length >= 2) {
+        return _react2.default.createElement(_components.Icon, {
+          name: leftIcon[1],
+          action: leftIcon[0],
+          color: "rgba(0, 0, 0, 0.6000000238418579)",
+          style: styles.fibreIconStyle,
+          className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
+        });
+      } else {
+        return null;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -319,38 +341,36 @@ var ActionMenuComp = function (_Component) {
               return _react2.default.createElement(
                 "div",
                 { className: "sideMenuItem" },
-                _react2.default.createElement(_MenuItem2.default, {
-                  key: index,
-                  innerDivStyle: styles.defaultMenuItemStyle,
-                  style: { whiteSpace: "initial" },
-                  leftIcon: iconLeft && iconLeft.length == 2 && _react2.default.createElement(_components.Icon, {
-                    name: iconLeft[1],
-                    action: iconLeft[0],
-                    color: "rgba(0, 0, 0, 0.6000000238418579)",
-                    style: styles.fibreIconStyle,
-                    className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
-                  }),
-                  primaryText: _react2.default.createElement(
-                    "div",
-                    { className: "menuStyle with-childs" },
-                    item.name || ""
-                  ),
-                  rightIcon: _react2.default.createElement(_components.Icon, {
-                    name: "chevron-right",
-                    action: "navigation",
-                    color: "rgba(0, 0, 0, 0.8700000047683716)",
-                    className: "iconClassHover material-icons whiteColor menu-right-icon",
-                    style: styles.arrowIconStyle
-                  }),
-                  onClick: function onClick() {
-                    var pathParam = {
-                      path: !item.path ? item.name : item.path,
-                      parentPath: false
-                    };
-                    toggleDrawer && toggleDrawer();
-                    menuChange(pathParam);
-                  }
-                })
+                _react2.default.createElement(
+                  _Tooltip2.default,
+                  { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : item.name, placement: "right" },
+                  _react2.default.createElement(_MenuItem2.default, {
+                    key: index,
+                    innerDivStyle: styles.defaultMenuItemStyle,
+                    style: { whiteSpace: "initial" },
+                    leftIcon: _this2.renderLeftIcon(iconLeft, item),
+                    primaryText: _react2.default.createElement(
+                      "div",
+                      { className: "menuStyle with-childs" },
+                      item.name || ""
+                    ),
+                    rightIcon: _react2.default.createElement(_components.Icon, {
+                      name: "chevron-right",
+                      action: "navigation",
+                      color: "rgba(0, 0, 0, 0.8700000047683716)",
+                      className: "iconClassHover material-icons whiteColor menu-right-icon",
+                      style: styles.arrowIconStyle
+                    }),
+                    onClick: function onClick() {
+                      var pathParam = {
+                        path: !item.path ? item.name : item.path,
+                        parentPath: false
+                      };
+                      toggleDrawer && toggleDrawer();
+                      menuChange(pathParam);
+                    }
+                  })
+                )
               );
             } else {
               if (item.navigationURL && item.navigationURL !== "newTab") {
@@ -364,32 +384,30 @@ var ActionMenuComp = function (_Component) {
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem " + (activeItmem == item.name ? "selected" : "") },
-                    _react2.default.createElement(_MenuItem2.default, {
-                      innerDivStyle: styles.defaultMenuItemStyle,
-                      style: { whiteSpace: "initial" },
-                      key: index,
-                      onClick: function onClick() {
-                        //  localStorage.setItem("menuPath", item.path);
-                        updateActiveRoute(item.path, item.name);
-                        document.title = item.name;
-                        toggleDrawer && toggleDrawer();
-                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
-                          window.location.reload();
-                        }
-                      },
-                      leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
-                        name: iconLeft[1],
-                        action: iconLeft[0],
-                        color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: styles.fibreIconStyle,
-                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
-                      }),
-                      primaryText: _react2.default.createElement(
-                        "div",
-                        { className: "menuStyle" },
-                        item.name || ""
-                      )
-                    })
+                    _react2.default.createElement(
+                      _Tooltip2.default,
+                      { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : item.name, placement: "right" },
+                      _react2.default.createElement(_MenuItem2.default, {
+                        innerDivStyle: styles.defaultMenuItemStyle,
+                        style: { whiteSpace: "initial" },
+                        key: index,
+                        onClick: function onClick() {
+                          //  localStorage.setItem("menuPath", item.path);
+                          updateActiveRoute(item.path, item.name);
+                          document.title = item.name;
+                          toggleDrawer && toggleDrawer();
+                          if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
+                            window.location.reload();
+                          }
+                        },
+                        leftIcon: _this2.renderLeftIcon(iconLeft, item),
+                        primaryText: _react2.default.createElement(
+                          "div",
+                          { className: "menuStyle" },
+                          item.name || ""
+                        )
+                      })
+                    )
                   )
                 );
               } else {
@@ -399,27 +417,25 @@ var ActionMenuComp = function (_Component) {
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },
-                    _react2.default.createElement(_MenuItem2.default, {
-                      innerDivStyle: styles.defaultMenuItemStyle,
-                      style: { whiteSpace: "initial" },
-                      key: index,
-                      onClick: function onClick() {
-                        localStorage.setItem("menuPath", item.path);
-                        document.title = item.name;
-                      },
-                      leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
-                        name: iconLeft[1],
-                        action: iconLeft[0],
-                        color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: styles.fibreIconStyle,
-                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
-                      }),
-                      primaryText: _react2.default.createElement(
-                        "div",
-                        { className: "menuStyle" },
-                        item.name || ""
-                      )
-                    })
+                    _react2.default.createElement(
+                      _Tooltip2.default,
+                      { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : item.name, placement: "right" },
+                      _react2.default.createElement(_MenuItem2.default, {
+                        innerDivStyle: styles.defaultMenuItemStyle,
+                        style: { whiteSpace: "initial" },
+                        key: index,
+                        onClick: function onClick() {
+                          localStorage.setItem("menuPath", item.path);
+                          document.title = item.name;
+                        },
+                        leftIcon: _this2.renderLeftIcon(iconLeft, item),
+                        primaryText: _react2.default.createElement(
+                          "div",
+                          { className: "menuStyle" },
+                          item.name || ""
+                        )
+                      })
+                    )
                   )
                 );
               }
@@ -443,27 +459,25 @@ var ActionMenuComp = function (_Component) {
                   _react2.default.createElement(
                     "div",
                     { className: "sideMenuItem" },
-                    _react2.default.createElement(_MenuItem2.default, {
-                      innerDivStyle: styles.defaultMenuItemStyle,
-                      style: { whiteSpace: "initial" },
-                      onClick: function onClick() {
-                        document.title = item.displayName;
-                        toggleDrawer && toggleDrawer();
-                        updateActiveRoute(item.path, item.displayName);
-                      },
-                      leftIcon: iconLeft && iconLeft.length === 2 && _react2.default.createElement(_components.Icon, {
-                        name: iconLeft[1],
-                        action: iconLeft[0],
-                        color: "rgba(0, 0, 0, 0.6000000238418579)",
-                        style: styles.fibreIconStyle,
-                        className: "iconClassHover material-icons whiteColor custom-style-for-" + item.leftIcon.name
-                      }),
-                      primaryText: _react2.default.createElement(
-                        "div",
-                        { className: "menuStyle" },
-                        item.displayName || ""
-                      )
-                    })
+                    _react2.default.createElement(
+                      _Tooltip2.default,
+                      { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : item.name, placement: "right" },
+                      _react2.default.createElement(_MenuItem2.default, {
+                        innerDivStyle: styles.defaultMenuItemStyle,
+                        style: { whiteSpace: "initial" },
+                        onClick: function onClick() {
+                          document.title = item.displayName;
+                          toggleDrawer && toggleDrawer();
+                          updateActiveRoute(item.path, item.displayName);
+                        },
+                        leftIcon: _this2.renderLeftIcon(iconLeft, item),
+                        primaryText: _react2.default.createElement(
+                          "div",
+                          { className: "menuStyle" },
+                          item.displayName || ""
+                        )
+                      })
+                    )
                   )
                 );
               }
@@ -493,7 +507,7 @@ var ActionMenuComp = function (_Component) {
           },
           !path && _react2.default.createElement(
             "div",
-            { onClick: function onClick() {
+            { className: "menu-search-container", onClick: function onClick() {
                 toggleDrawer && toggleDrawer();
               } },
             _react2.default.createElement(_components.TextFieldIcon, {
@@ -502,6 +516,7 @@ var ActionMenuComp = function (_Component) {
               iconStyle: styles.inputIconStyle,
               inputStyle: styles.inputStyle,
               textFieldStyle: styles.textFieldStyle,
+              iconPosition: "before",
               onChange: function onChange(e) {
                 _this2.handleChange(e);
               }
@@ -519,16 +534,20 @@ var ActionMenuComp = function (_Component) {
             _react2.default.createElement(_components.Icon, { name: "arrow-back", action: "navigation", color: "rgba(0, 0, 0, 0.6000000238418579)" })
           ),
           path && _react2.default.createElement(
-            "div",
-            {
-              className: "pull-right pointerCursor",
-              onClick: function onClick() {
-                // changeLevel("");
-                updateActiveRoute("Home", "Home");
-                _this2.changeRoute("/");
-              }
-            },
-            _react2.default.createElement(_components.Icon, { name: "home", action: "action", color: "rgba(0, 0, 0, 0.6000000238418579)" })
+            _Tooltip2.default,
+            { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : "Home", placement: "right" },
+            _react2.default.createElement(
+              "div",
+              {
+                className: "pull-right pointerCursor",
+                onClick: function onClick() {
+                  // changeLevel("");
+                  updateActiveRoute("Home", "Home");
+                  _this2.changeRoute("/");
+                }
+              },
+              _react2.default.createElement(_components.Icon, { name: "home", action: "action", color: "rgba(0, 0, 0, 0.6000000238418579)" })
+            )
           ),
           _react2.default.createElement("div", { className: "clearfix" }),
           _react2.default.createElement(
@@ -539,27 +558,23 @@ var ActionMenuComp = function (_Component) {
           toggleDrawer ? _react2.default.createElement(
             "div",
             { className: "sideMenuItem drawer-collapse-menu-item" },
-            _react2.default.createElement(_MenuItem2.default, {
-              innerDivStyle: styles.defaultMenuItemStyle,
-              style: { whiteSpace: "initial" },
-              onClick: function onClick() {
-                toggleDrawer && toggleDrawer(false);
-              },
-              leftIcon: menuDrawerOpen ? _react2.default.createElement(_ChevronLeft2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" }) : _react2.default.createElement(
-                _Tooltip2.default,
-                { id: "menu-toggle-tooltip", placement: "right", title: _react2.default.createElement(
-                    "div",
-                    { style: { color: "black" } },
-                    "Expand menu"
-                  ) },
-                _react2.default.createElement(_ChevronRight2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" })
-              ),
-              primaryText: _react2.default.createElement(
-                "div",
-                { className: "menuStyle" },
-                menuDrawerOpen ? "Collapse" : ""
-              )
-            })
+            _react2.default.createElement(
+              _Tooltip2.default,
+              { id: "menu-toggle-tooltip", title: menuDrawerOpen ? "" : "Expand Menu", placement: "right" },
+              _react2.default.createElement(_MenuItem2.default, {
+                innerDivStyle: styles.defaultMenuItemStyle,
+                style: { whiteSpace: "initial" },
+                onClick: function onClick() {
+                  toggleDrawer && toggleDrawer(false);
+                },
+                leftIcon: menuDrawerOpen ? _react2.default.createElement(_ChevronLeft2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" }) : _react2.default.createElement(_ChevronRight2.default, { style: styles.fibreIconStyle, className: "iconClassHover material-icons whiteColor" }),
+                primaryText: _react2.default.createElement(
+                  "div",
+                  { className: "menuStyle" },
+                  menuDrawerOpen ? "Collapse" : ""
+                )
+              })
+            )
           ) : ""
         )
       ) : null;

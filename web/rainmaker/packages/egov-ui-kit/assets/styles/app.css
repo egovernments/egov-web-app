@@ -126,7 +126,13 @@ body.employee-user-profile {
     margin-left: 50px; }
   .full-menu-drawer .textfield {
     margin-left: 5px;
-    width: auto !important; } }
+    width: auto !important; }
+  .menu-search-container {
+    margin: 0 5px; }
+  .icon-menu-drawer svg {
+    margin: auto !important; }
+  .icon-menu-drawer input {
+    width: 0px !important; } }
 
 .inline-Localization-text .label-container {
   display: inline-block; }
