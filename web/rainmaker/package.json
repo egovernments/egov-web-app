@@ -9,9 +9,9 @@
     "clean": "lerna clean -f --yes && rm -rf node_modules",
     "reset": "npm run clean && npm i",
     "dev:citizen": "npm run transpile-citizen-modules && cd packages/citizen && npm start",
-    "dev:employee": "npm run transpile-employee-modules && cd packages/employee && npm start",
+    "dev:employee": "cd packages/employee && npm start",
     "prod:citizen": " npm run transpile-citizen-modules && cd packages/citizen && npm run build",
-    "prod:employee": "npm run transpile-employee-modules && cd packages/employee && npm run build",
+    "prod:employee": "cd packages/employee && npm run build",
     "transpile-citizen-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework pgr-citizen pt-citizen",
     "transpile-employee-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework pgr-employee pt-employee",
     "egov-ui-kit-config": "babel dev-packages/egov-ui-kit-dev/src/config --out-dir packages/egov-ui-kit/config --copy-files",
@@ -22,7 +22,7 @@
     "egov-ui-kit-custom-icons": "babel dev-packages/egov-ui-kit-dev/src/custom-icons --out-dir packages/egov-ui-kit/custom-icons --copy-files",
     "egov-ui-kit-hocs": "babel dev-packages/egov-ui-kit-dev/src/hocs --out-dir packages/egov-ui-kit/hocs --copy-files",
     "egov-ui-kit-assets": "babel dev-packages/egov-ui-kit-dev/src/assets --out-dir packages/egov-ui-kit/assets --copy-files",
-    "egov-ui-kit": "npm run egov-ui-kit-components && npm run egov-ui-kit-redux && npm run egov-ui-kit-utils && npm run egov-ui-kit-commons && npm run egov-ui-kit-custom-icons && npm run egov-ui-kit-hocs && npm run egov-ui-kit-assets && npm run egov-ui-kit-config",
+    "egov-ui-kit": "babel dev-packages/egov-ui-kit-dev/src --out-dir packages/egov-ui-kit --copy-files",
     "pgr-citizen": "babel dev-packages/pgr-citizen-dev/src --out-dir packages/pgr-citizen --copy-files",
     "pt-citizen": "babel dev-packages/pt-citizen-dev/src --out-dir packages/pt-citizen --copy-files",
     "pgr-employee": "babel dev-packages/pgr-employee-dev/src --out-dir packages/pgr-employee --copy-files",
@@ -42,7 +42,7 @@
     "egov-ui-framework-atoms": "babel dev-packages/egov-ui-framework-core/src/ui-atoms --out-dir packages/egov-ui-framework/ui-atoms --copy-files",
     "egov-ui-framework-molecules": "babel dev-packages/egov-ui-framework-core/src/ui-molecules --out-dir packages/egov-ui-framework/ui-molecules --copy-files",
     "egov-ui-framework-containers": "babel dev-packages/egov-ui-framework-core/src/ui-containers --out-dir packages/egov-ui-framework/ui-containers --copy-files",
-    "egov-ui-framework": "npm run egov-ui-framework-redux && npm run egov-ui-framework-utils && npm run egov-ui-framework-atoms && npm run egov-ui-framework-molecules && npm run egov-ui-framework-containers && npm run egov-ui-framework-hocs && npm run egov-ui-framework-config"
+    "egov-ui-framework": "babel dev-packages/egov-ui-framework-core/src --out-dir packages/egov-ui-framework --copy-files"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
