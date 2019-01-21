@@ -8,6 +8,11 @@
 /packages/pgr-employee
 /packages/pt-citizen
 /packages/pt-employee
+/packages/egov-ui-framework-core/node_modules
+/packages/pgr-citizen-dev/node_modules
+/packages/pgr-employee-dev/node_modules
+/packages/pt-citizen-dev/node_modules
+/packages/pt-employee-dev/node_modules
 
 npm-debug.log*
 yarn-debug.log*
