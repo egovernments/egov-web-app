@@ -1,6 +1,6 @@
 {
   "name": "egov-ui-kit-dev",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "homepage": "http://egov-micro-dev.egovernments.org/app/v3",
   "proxy": "http://egov-micro-dev.egovernments.org/",

@@ -2,5 +2,6 @@
   "name": "pt-citizen",
   "version": "0.0.2",
   "private": true,
-  "main": "lib/"
+  "main": "lib/",
+  "dependencies": {}
 }
