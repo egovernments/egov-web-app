@@ -1,6 +1,7 @@
 {
   "name": "egov-ui-transform-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "private": true,
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",
   "scripts": {
