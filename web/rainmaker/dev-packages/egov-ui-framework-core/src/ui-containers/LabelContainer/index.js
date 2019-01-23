@@ -28,7 +28,7 @@ class LabelContainer extends React.Component {
     let translatedLabel = getLocaleLabelsforTL(
       labelName,
       labelKey && typeof labelKey === "string"
-        ? labelKey.startsWith("TL_")
+        ? labelKey.startsWith("TL_") || labelKey.startsWith("WF_")
           ? labelKey
           : `TL_${labelKey}`
         : labelKey,

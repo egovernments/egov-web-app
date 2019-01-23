@@ -7,8 +7,8 @@ import formtemp from "../formtemp/reducer";
 import mdms from "../mdms/reducer";
 import report from "../reports/report";
 import properties from "../properties/reducer";
+import workFlow from "../workFlow/reducer";
 import screenConfiguration from "egov-ui-framework/ui-redux/screen-configuration/reducer";
-
 
 const rootReducer = {
   app,
@@ -20,7 +20,8 @@ const rootReducer = {
   formtemp,
   report,
   properties,
-  screenConfiguration
+  screenConfiguration,
+  workFlow,
 };
 
 export default rootReducer;

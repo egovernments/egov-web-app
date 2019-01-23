@@ -1,6 +1,6 @@
 import isEmpty from "lodash/isEmpty";
-import { uploadFile, httpRequest } from "../ui-utils/api";
-import { prepareFinalObject } from "../ui-redux/screen-configuration/actions";
+import { httpRequest } from "../ui-utils/api";
+import cloneDeep from "lodash/cloneDeep";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -172,4 +172,65 @@ export const replaceStrInPath = (inputString, search, replacement) => {
     return target.replace(new RegExp(search, "g"), replacement);
   };
   return inputString.replaceAll(search, replacement);
+};
+
+export const getFileUrlFromAPI = async fileStoreId => {
+  const queryObject = [
+    { key: "tenantId", value: "pb" },
+    { key: "fileStoreIds", value: fileStoreId }
+  ];
+  try {
+    const fileUrl = await httpRequest(
+      "get",
+      "/filestore/v1/files/url",
+      "",
+      queryObject
+    );
+    return fileUrl;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getAllFileStoreIds = async ProcessInstances => {
+  return (
+    ProcessInstances &&
+    ProcessInstances.reduce((result, eachInstance) => {
+      if (eachInstance.documents) {
+        let fileStoreIdArr = eachInstance.documents.map(item => {
+          return item.fileStoreId;
+        });
+        result[eachInstance.id] = fileStoreIdArr.join(",");
+      }
+      return result;
+    }, {})
+  );
+};
+
+export const addWflowFileUrl = async ProcessInstances => {
+  const fileStoreIdByAction = await getAllFileStoreIds(ProcessInstances);
+  const fileUrlPayload = await getFileUrlFromAPI(
+    Object.values(fileStoreIdByAction).join(",")
+  );
+  const processInstances = cloneDeep(ProcessInstances);
+  processInstances.map(item => {
+    if (item.documents && item.documents.length > 0) {
+      item.documents.forEach(i => {
+        i.link = fileUrlPayload[i.fileStoreId];
+        i.title = i.documentType;
+        i.name = decodeURIComponent(
+          fileUrlPayload[i.fileStoreId]
+            .split(",")[0]
+            .split("?")[0]
+            .split("/")
+            .pop()
+            .slice(13)
+        );
+        i.linkText = "View";
+      });
+    }
+  });
+  //setProcessInstances(processInstances);
+
+  localStorage.setItem("ProcessInstances", JSON.stringify(processInstances));
 };
