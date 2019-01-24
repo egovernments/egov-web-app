@@ -1,52 +1,67 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { Container } from "egov-ui-framework/ui-atoms";
-import { LabelContainer, TextFieldContainer } from "egov-ui-framework/ui-containers";
+import {
+  LabelContainer,
+  TextFieldContainer
+} from "egov-ui-framework/ui-containers";
 import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import { UploadMultipleFiles } from "egov-ui-framework/ui-molecules";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     marginTop: 24,
-    width: "100%",
-  },
+    width: "100%"
+  }
 });
 
 const fieldConfig = {
   approverName: {
     label: {
       labelName: "Approver Name",
-      labelKey: "TL_APPROVER_NAME_LABEL",
+      labelKey: "TL_APPROVER_NAME_LABEL"
     },
     placeholder: {
       labelName: "Selet approver Name",
-      labelKey: "TL_APROVER_NAME_PLACEHOLDER",
-    },
+      labelKey: "TL_APROVER_NAME_PLACEHOLDER"
+    }
   },
   comments: {
     label: {
       labelName: "Comments",
-      labelKey: "CS_COMMON_COMMENTS",
+      labelKey: "CS_COMMON_COMMENTS"
     },
     placeholder: {
       labelName: "Enter Comments",
-      labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL",
-    },
-  },
+      labelKey: "TL_ADD_HOC_CHARGES_POPUP_COMMENT_LABEL"
+    }
+  }
 };
 
 class ActionDialog extends React.Component {
   state = {
     employeeList: [],
-    roles: "",
+    roles: ""
   };
 
-  getEmployeeList = async (roles) => {};
+  getEmployeeList = async roles => {};
   render() {
-    const { open, onClose, dropDownData, handleFieldChange, onButtonClick, dialogData } = this.props;
-    const { buttonLabel, showEmployeeList, dialogHeader, moduleName } = dialogData;
+    const {
+      open,
+      onClose,
+      dropDownData,
+      handleFieldChange,
+      onButtonClick,
+      dialogData
+    } = this.props;
+    const {
+      buttonLabel,
+      showEmployeeList,
+      dialogHeader,
+      moduleName
+    } = dialogData;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
         <DialogContent
@@ -57,7 +72,7 @@ class ActionDialog extends React.Component {
                   <Grid
                     style={{
                       alignItems: "center",
-                      display: "flex",
+                      display: "flex"
                     }}
                     item
                     sm={10}
@@ -66,7 +81,12 @@ class ActionDialog extends React.Component {
                       <LabelContainer {...dialogHeader} />
                     </Typography>
                   </Grid>
-                  <Grid item sm={2} style={{ textAlign: "right", cursor: "pointer" }} onClick={onClose}>
+                  <Grid
+                    item
+                    sm={2}
+                    style={{ textAlign: "right", cursor: "pointer" }}
+                    onClick={onClose}
+                  >
                     <CloseIcon />
                   </Grid>
                   {showEmployeeList && (
@@ -74,7 +94,7 @@ class ActionDialog extends React.Component {
                       item
                       sm="12"
                       style={{
-                        marginTop: 16,
+                        marginTop: 16
                       }}
                     >
                       <TextFieldContainer
@@ -86,7 +106,12 @@ class ActionDialog extends React.Component {
                         optionValue="value"
                         optionLabel="label"
                         hasLocalization={false}
-                        onChange={(e) => handleFieldChange("Licenses[0].assignee", e.target.value)}
+                        onChange={e =>
+                          handleFieldChange(
+                            "Licenses[0].assignee",
+                            e.target.value
+                          )
+                        }
                         jsonPath="Licenses[0].assignee"
                       />
                     </Grid>
@@ -95,7 +120,9 @@ class ActionDialog extends React.Component {
                     <TextFieldContainer
                       InputLabelProps={{ shrink: true }}
                       label={fieldConfig.comments.label}
-                      onChange={(e) => handleFieldChange("Licenses[0].comment", e.target.value)}
+                      onChange={e =>
+                        handleFieldChange("Licenses[0].comment", e.target.value)
+                      }
                       jsonPath="Licenses[0].comment"
                       placeholder={fieldConfig.comments.placeholder}
                     />
@@ -110,7 +137,7 @@ class ActionDialog extends React.Component {
                         fontSize: "14px",
                         fontWeight: 400,
                         lineHeight: "20px",
-                        marginBottom: "8px",
+                        marginBottom: "8px"
                       }}
                     >
                       <LabelContainer labelName="Supporting Documents" />
@@ -121,7 +148,7 @@ class ActionDialog extends React.Component {
                         fontFamily: "Roboto",
                         fontSize: "14px",
                         fontWeight: 400,
-                        lineHeight: "20px",
+                        lineHeight: "20px"
                       }}
                     >
                       <LabelContainer labelName="Only .jpg and .pdf files. 5MB max file size." />
@@ -129,12 +156,11 @@ class ActionDialog extends React.Component {
                     <UploadMultipleFiles
                       maxFiles={4}
                       inputProps={{
-                        accept: "image/*, .pdf, .png, .jpeg",
+                        accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
                       jsonPath="Licenses[0].wfDocumnets"
                       maxFileSize={5000}
-                      moduleName={"TL"}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>
                       <Button
@@ -143,11 +169,18 @@ class ActionDialog extends React.Component {
                         style={{
                           minWidth: "200px",
                           height: "48px",
-                          marginRight: "45px",
+                          marginRight: "45px"
                         }}
                         onClick={() => onButtonClick(buttonLabel)}
                       >
-                        <LabelContainer labelName={buttonLabel} labelKey={moduleName ? `WF_${moduleName.toUpperCase()}_${buttonLabel}` : ""} />
+                        <LabelContainer
+                          labelName={buttonLabel}
+                          labelKey={
+                            moduleName
+                              ? `WF_${moduleName.toUpperCase()}_${buttonLabel}`
+                              : ""
+                          }
+                        />
                       </Button>
                     </Grid>
                   </Grid>

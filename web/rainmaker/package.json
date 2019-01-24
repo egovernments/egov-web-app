@@ -42,7 +42,8 @@
     "egov-ui-framework-atoms": "babel dev-packages/egov-ui-framework-core/src/ui-atoms --out-dir packages/egov-ui-framework/ui-atoms --copy-files",
     "egov-ui-framework-molecules": "babel dev-packages/egov-ui-framework-core/src/ui-molecules --out-dir packages/egov-ui-framework/ui-molecules --copy-files",
     "egov-ui-framework-containers": "babel dev-packages/egov-ui-framework-core/src/ui-containers --out-dir packages/egov-ui-framework/ui-containers --copy-files",
-    "egov-ui-framework": "babel dev-packages/egov-ui-framework-core/src --out-dir packages/egov-ui-framework --copy-files"
+    "egov-ui-framework": "babel dev-packages/egov-ui-framework-core/src --out-dir packages/egov-ui-framework --copy-files",
+    "egov-workflow": "babel dev-packages/egov-workflow-dev/src --out-dir packages/egov-workflow --copy-files"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

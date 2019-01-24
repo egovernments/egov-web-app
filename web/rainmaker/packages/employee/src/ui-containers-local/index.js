@@ -8,13 +8,5 @@ const Iframe = Loadable({
   loader: () => import("./iframe"),
   loading: Loading,
 });
-const WorkFlowContainer = Loadable({
-  loader: () => import("./WorkFlowContainer"),
-  loading: () => <Loading />,
-});
-const TaskStatusContainer = Loadable({
-  loader: () => import("./TaskStatusContainer"),
-  loading: () => <Loading />,
-});
 
-export { Iframe, WorkFlowContainer, TaskStatusContainer };
+export { Iframe };

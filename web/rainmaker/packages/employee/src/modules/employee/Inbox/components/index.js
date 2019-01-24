@@ -3,7 +3,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TaskDialog from "egov-ui-framework/ui-molecules/TaskDialog";
+import TaskDialog from "egov-workflow/ui-molecules/TaskDialog";
 import { addWflowFileUrl } from "egov-ui-framework/ui-utils/commons";
 //import { setProcessInstances } from "egov-ui-framework/ui-redux/workflow/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -61,10 +61,10 @@ class InboxData extends React.Component {
       addWflowFileUrl(processInstances);
     }
 
-    let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org" : window.origin;
-    //let baseUrl = "http://localhost:3000/";
-    let contextPath = status === "INITIATED" ? "/employee/integration/tradelicense/apply" : "/employee/integration/tradelicense/search-preview";
-    //let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
+    //let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org" : window.origin;
+    let baseUrl = "http://localhost:3001/";
+    //let contextPath = status === "INITIATED" ? "/employee/integration/tradelicense/apply" : "/employee/integration/tradelicense/search-preview";
+    let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     window.location.href = `${baseUrl}${contextPath}?${queryParams}`;
   };

@@ -444,8 +444,9 @@ const screenConfig = {
         },
         tradeReviewDetails,
         taskStatus: {
-          uiFramework: "custom-containers-local",
-          componentPath: "WorkFlowContainer"
+          uiFramework: "remote-component",
+          componentPath: "WorkFlowContainer",
+          remotePath: "egov-workflow/ui-containers"
         }
         //footer
       }

@@ -8,10 +8,10 @@ import "./index.css";
 const buttonStyle = {
   minWidth: "200px",
   height: "48px",
-  marginRight: "45px",
+  marginRight: "45px"
 };
 
-const getButtonLabelKey = (item) => {
+const getButtonLabelKey = item => {
   switch (item) {
     case "APPROVE":
       return "TL_APPROVER_TRADE_APP_BUTTON_APPROVE";
@@ -30,10 +30,10 @@ class Footer extends React.Component {
   state = {
     open: false,
     data: {},
-    employeeList: [],
+    employeeList: []
   };
 
-  openActionDialog = async (item) => {
+  openActionDialog = async item => {
     const { handleFieldChange } = this.props;
     let employeeList = [];
     handleFieldChange("Licenses[0].comment", "");
@@ -47,20 +47,25 @@ class Footer extends React.Component {
       const queryObj = [
         {
           key: "roleCodes",
-          value: item.roles,
+          value: item.roles
         },
         {
           key: "tenantId",
-          value: tenantId,
-        },
+          value: tenantId
+        }
       ];
-      const payload = await httpRequest("post", "/hr-employee-v2/employees/_search", "", queryObj);
+      const payload = await httpRequest(
+        "post",
+        "/hr-employee-v2/employees/_search",
+        "",
+        queryObj
+      );
       employeeList =
         payload &&
         payload.Employee.map((item, index) => {
           return {
             value: item.uuid,
-            label: item.name,
+            label: item.name
           };
         });
     }
@@ -70,22 +75,36 @@ class Footer extends React.Component {
 
   onClose = () => {
     this.setState({
-      open: false,
+      open: false
     });
   };
 
   render() {
-    const { color, variant, contractData, handleFieldChange, onDialogButtonClick } = this.props;
+    const {
+      color,
+      variant,
+      contractData,
+      handleFieldChange,
+      onDialogButtonClick
+    } = this.props;
     const { open, data, employeeList } = this.state;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
           {contractData &&
-            contractData.map((item) => {
+            contractData.map(item => {
               const { buttonLabel, moduleName } = item;
               return (
-                <Button color={color} variant={variant} style={buttonStyle} onClick={() => this.openActionDialog(item)}>
-                  <LabelContainer labelName={buttonLabel} labelKey={`WF_${moduleName.toUpperCase()}_${buttonLabel}`} />
+                <Button
+                  color={color}
+                  variant={variant}
+                  style={buttonStyle}
+                  onClick={() => this.openActionDialog(item)}
+                >
+                  <LabelContainer
+                    labelName={buttonLabel}
+                    labelKey={`WF_${moduleName.toUpperCase()}_${buttonLabel}`}
+                  />
                 </Button>
               );
             })}
