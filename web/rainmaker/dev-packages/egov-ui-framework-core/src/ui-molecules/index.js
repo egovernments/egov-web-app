@@ -128,6 +128,10 @@ const TaskStatusComponents = Loadable({
   loader: () => import("./TaskStatusComponents"),
   loading: () => <Loading />
 });
+const UploadMultipleFiles = Loadable({
+  loader: () => import("./UploadMultipleFiles"),
+  loading: () => <Loading />
+});
 
 export {
   RenderRoutes,
@@ -156,5 +160,6 @@ export {
   CustomTab,
   Tooltip,
   TaskDialog,
-  TaskStatusComponents
+  TaskStatusComponents,
+  UploadMultipleFiles
 };

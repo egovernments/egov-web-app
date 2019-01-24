@@ -2,13 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import TaskStatusContainer from "../TaskStatusContainer";
 import { Footer, ActionDialog } from "../../ui-molecules-local";
-import {
-  getQueryArg,
-  addWflowFileUrl
-} from "egov-ui-framework/ui-utils/commons";
+import { getQueryArg, addWflowFileUrl } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
-import { httpRequest } from "ui-utils/api";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -22,7 +19,7 @@ const tenant = getQueryArg(window.location.href, "tenantId");
 class WorkFlowContainer extends React.Component {
   state = {
     open: false,
-    action: ""
+    action: "",
   };
 
   // getAllFileStoreIds = async ProcessInstances => {
@@ -74,7 +71,7 @@ class WorkFlowContainer extends React.Component {
 
   onClose = () => {
     this.setState({
-      open: false
+      open: false,
     });
   };
 
@@ -84,7 +81,7 @@ class WorkFlowContainer extends React.Component {
   //   });
   // };
 
-  getPurposeString = action => {
+  getPurposeString = (action) => {
     switch (action) {
       case "FORWARD":
         return "purpose=forward&status=success";
@@ -99,32 +96,21 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
-  createWorkFLow = async label => {
+  createWorkFLow = async (label) => {
     const { Licenses } = this.props;
     set(Licenses[0], "action", label);
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     try {
-      const payload = await httpRequest(
-        "post",
-        "/tl-services/v1/_update",
-        "",
-        [],
-        {
-          Licenses: Licenses
-        }
-      );
+      const payload = await httpRequest("post", "/tl-services/v1/_update", "", [], {
+        Licenses: Licenses,
+      });
       this.setState({
-        open: false
+        open: false,
       });
       if (payload) {
         window.location.href = `acknowledgement?${this.getPurposeString(
           label
-        )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${
-          Licenses[0].licenseNumber
-        }`;
+        )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${Licenses[0].licenseNumber}`;
       }
     } catch (e) {
       toggleSnackbarAndSetText(true, "TL update error!", "error");
@@ -138,47 +124,45 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
-  getHeaderName = action => {
+  getHeaderName = (action) => {
     switch (action) {
       case "FORWARD":
         return {
           labelName: "Forward Application",
-          labelKey: "TL_FORWARD_APPLICATION"
+          labelKey: "TL_FORWARD_APPLICATION",
         };
       case "MARK":
         return {
           labelName: "Mark Application",
-          labelKey: "TL_MARK_APPLICATION"
+          labelKey: "TL_MARK_APPLICATION",
         };
       case "APPROVE":
         return {
           labelName: "Approve Application",
-          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL",
         };
       case "CANCEL":
         return {
           labelName: "Cancel Workflow",
-          labelKey: "TL_WORKFLOW_CANCEL"
+          labelKey: "TL_WORKFLOW_CANCEL",
         };
       default:
         return {
           labelName: "Reject Application",
-          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL",
         };
     }
   };
 
   getEmployeeRoles = (nextAction, currentAction) => {
-    const businessServiceData = JSON.parse(
-      localStorage.getItem("businessServiceData")
-    );
+    const businessServiceData = JSON.parse(localStorage.getItem("businessServiceData"));
     const data = find(businessServiceData, { businessService: "NewTL" });
     let roles = [];
     if (nextAction === currentAction) {
       data.states &&
-        data.states.forEach(state => {
+        data.states.forEach((state) => {
           state.actions &&
-            state.actions.forEach(action => {
+            state.actions.forEach((action) => {
               roles = [...roles, ...action.roles];
             });
         });
@@ -186,7 +170,7 @@ class WorkFlowContainer extends React.Component {
       const states = find(data.states, { uuid: nextAction });
       states &&
         states.actions &&
-        states.actions.forEach(action => {
+        states.actions.forEach((action) => {
           roles = [...roles, ...action.roles];
         });
     }
@@ -196,26 +180,19 @@ class WorkFlowContainer extends React.Component {
     return roles.toString();
   };
 
-  checkIfTerminatedState = nextStateUUID => {
-    const businessServiceData = JSON.parse(
-      localStorage.getItem("businessServiceData")
-    );
+  checkIfTerminatedState = (nextStateUUID) => {
+    const businessServiceData = JSON.parse(localStorage.getItem("businessServiceData"));
     const data = find(businessServiceData, { businessService: "NewTL" });
     const nextState = find(data.states, { uuid: nextStateUUID });
     return nextState.isTerminateState;
   };
 
-  prepareWorkflowContract = data => {
-    const {
-      getRedirectUrl,
-      getHeaderName,
-      checkIfTerminatedState,
-      getEmployeeRoles
-    } = this;
+  prepareWorkflowContract = (data) => {
+    const { getRedirectUrl, getHeaderName, checkIfTerminatedState, getEmployeeRoles } = this;
     //let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
     let businessId = get(data[data.length - 1], "businessId");
     let actions = get(data[data.length - 1], "nextActions", []);
-    return actions.map(item => {
+    return actions.map((item) => {
       return {
         buttonLabel: item.action,
         moduleName: data[data.length - 1].businessService,
@@ -223,7 +200,7 @@ class WorkFlowContainer extends React.Component {
         buttonUrl: getRedirectUrl(item.action, businessId),
         dialogHeader: getHeaderName(item.action),
         showEmployeeList: !checkIfTerminatedState(item.nextState),
-        roles: getEmployeeRoles(item.nextState, item.currentState)
+        roles: getEmployeeRoles(item.nextState, item.currentState),
       };
     });
   };
@@ -231,9 +208,7 @@ class WorkFlowContainer extends React.Component {
   render() {
     const { createWorkFLow } = this;
     const { prepareFinalObject } = this.props;
-    const ProcessInstances = JSON.parse(
-      localStorage.getItem("ProcessInstances")
-    );
+    const ProcessInstances = JSON.parse(localStorage.getItem("ProcessInstances"));
     const workflowContract = this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
@@ -258,10 +233,9 @@ const mapStateToProps = (state, ownprops) => {
   return { ProcessInstances, Licenses };
 };
 
-const mapDispacthToProps = dispatch => {
+const mapDispacthToProps = (dispatch) => {
   return {
-    prepareFinalObject: (path, value) =>
-      dispatch(prepareFinalObject(path, value))
+    prepareFinalObject: (path, value) => dispatch(prepareFinalObject(path, value)),
     //setProcessInstances: payload => dispatch(setProcessInstances(payload))
   };
 };

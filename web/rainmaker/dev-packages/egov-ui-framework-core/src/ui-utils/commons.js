@@ -234,3 +234,60 @@ export const addWflowFileUrl = async ProcessInstances => {
 
   localStorage.setItem("ProcessInstances", JSON.stringify(processInstances));
 };
+
+export const acceptedFiles = acceptedExt => {
+  const splitExtByName = acceptedExt.split(",");
+  const acceptedFileTypes = splitExtByName.reduce((result, curr) => {
+    if (curr.includes("image")) {
+      result.push("image");
+    } else {
+      result.push(curr.split(".")[1]);
+    }
+    return result;
+  }, []);
+  return acceptedFileTypes;
+};
+
+export const handleFileUpload = (event, handleDocument, props) => {
+  const S3_BUCKET = {
+    endPoint: "filestore/v1/files"
+  };
+  let uploadDocument = true;
+  const { inputProps, maxFileSize, moduleName } = props;
+  const input = event.target;
+  if (input.files && input.files.length > 0) {
+    const files = input.files;
+    Object.keys(files).forEach(async (key, index) => {
+      const file = files[key];
+      const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
+      const isSizeValid = getFileSize(file) <= maxFileSize;
+      if (!fileValid) {
+        alert(`Only image or pdf files can be uploaded`);
+        uploadDocument = false;
+      }
+      if (!isSizeValid) {
+        alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
+        uploadDocument = false;
+      }
+      if (uploadDocument) {
+        if (file.type.match(/^image\//)) {
+          const fileStoreId = await uploadFile(
+            S3_BUCKET.endPoint,
+            moduleName,
+            file,
+            "pb"
+          );
+          handleDocument(file, fileStoreId);
+        } else {
+          const fileStoreId = await uploadFile(
+            S3_BUCKET.endPoint,
+            moduleName,
+            file,
+            "pb"
+          );
+          handleDocument(file, fileStoreId);
+        }
+      }
+    });
+  }
+};

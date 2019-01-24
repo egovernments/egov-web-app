@@ -5,9 +5,16 @@ import LinearProgress from "egov-ui-framework//ui-atoms/LinearSpinner";
 const Loading = () => <LinearProgress />;
 const TestMolecules = Loadable({
   loader: () => import("./TestMolecules"),
-  loading: () => <Loading />
+  loading: () => <Loading />,
+});
+const Footer = Loadable({
+  loader: () => import("./Footer"),
+  loading: () => <Loading />,
 });
 
-export {
-  TestMolecules
-};
+const ActionDialog = Loadable({
+  loader: () => import("./ActionDialog"),
+  loading: () => <Loading />,
+});
+
+export { TestMolecules, Footer, ActionDialog };

@@ -27,11 +27,6 @@ const CustomTab = Loadable({
   loading: () => <Loading />
 });
 
-const UploadMultipleFiles = Loadable({
-  loader: () => import("./UploadMultipleFiles"),
-  loading: () => <Loading />
-});
-
 const UploadSingleFile = Loadable({
   loader: () => import("./UploadSingleFile"),
   loading: () => <Loading />
@@ -57,27 +52,14 @@ const FeesEstimateCard = Loadable({
   loading: () => <Loading />
 });
 
-const Footer = Loadable({
-  loader: () => import("./Footer"),
-  loading: () => <Loading />
-});
-
-const ActionDialog = Loadable({
-  loader: () => import("./ActionDialog"),
-  loading: () => <Loading />
-});
-
 export {
   TestMolecules,
   Table,
   RadioButtonsGroup,
   Tooltip,
   CustomTab,
-  UploadMultipleFiles,
   UploadSingleFile,
   DocumentList,
   MapLocator,
-  FeesEstimateCard,
-  Footer,
-  ActionDialog
+  FeesEstimateCard
 };

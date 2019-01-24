@@ -2,7 +2,6 @@ import React from "react";
 import LinearProgress from "../../ui-atoms/LinearSpinner";
 import Loadable from "react-loadable";
 import Item from "../../ui-atoms/Layout/Item";
-
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 
@@ -12,7 +11,7 @@ class ComponentInterface extends React.Component {
     this.state = { module: null };
   }
   componentDidMount() {
-    const { componentPath, uiFramework } = this.props;
+    const { componentPath, uiFramework, remotePath } = this.props;
     let LoadableComponent = null;
     switch (uiFramework) {
       // case "carbon":
@@ -73,6 +72,15 @@ class ComponentInterface extends React.Component {
           loading: () => <LinearProgress />
         });
         break;
+      // case "remote-component":
+      //   LoadableComponent = Loadable({
+      //     loader: () =>
+      //       import("ui-containers-local").then(
+      //         module => module[componentPath]
+      //       ),
+      //     loading: () => <LinearProgress />
+      //   });
+      //   break;
     }
     this.setState({ module: LoadableComponent });
   }
