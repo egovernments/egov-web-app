@@ -9,13 +9,10 @@ import {
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
-import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
-import orderBy from "lodash/orderBy";
 import find from "lodash/find";
-// import { getFileUrlFromAPI } from "ui-utils/commons";
-// import { setProcessInstances } from "ui-redux/workflow/actions";
+import orderBy from "lodash/orderBy";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
 
@@ -25,51 +22,29 @@ class WorkFlowContainer extends React.Component {
     action: ""
   };
 
-  // getAllFileStoreIds = async ProcessInstances => {
-  //   return (
-  //     ProcessInstances &&
-  //     ProcessInstances.reduce((result, eachInstance) => {
-  //       if (eachInstance.documents) {
-  //         let fileStoreIdArr = eachInstance.documents.map(item => {
-  //           return item.fileStoreId;
-  //         });
-  //         result[eachInstance.id] = fileStoreIdArr.join(",");
-  //       }
-  //       return result;
-  //     }, {})
-  //   );
-  // };
-
-  // addWflowFileUrl = async ProcessInstances => {
-  //   const { setProcessInstances } = this.props;
-  //   const fileStoreIdByAction = await this.getAllFileStoreIds(ProcessInstances);
-  //   const fileUrlPayload = await getFileUrlFromAPI(
-  //     Object.values(fileStoreIdByAction).join(",")
-  //   );
-  //   const processInstances = cloneDeep(ProcessInstances);
-  //   processInstances.map(item => {
-  //     if (item.documents && item.documents.length > 0) {
-  //       item.documents.forEach(i => {
-  //         i.link = fileUrlPayload[i.fileStoreId];
-  //         i.title = i.documentType;
-  //         i.name = decodeURIComponent(
-  //           fileUrlPayload[i.fileStoreId]
-  //             .split(",")[0]
-  //             .split("?")[0]
-  //             .split("/")
-  //             .pop()
-  //             .slice(13)
-  //         );
-  //         i.linkText = "View";
-  //       });
-  //     }
-  //   });
-  //   setProcessInstances(processInstances);
-  // };
-
-  componentDidMount = () => {
-    //const { ProcessInstances } = this.props;
-    //addWflowFileUrl(ProcessInstances);
+  componentDidMount = async () => {
+    const { preparedFinalObject } = this.props;
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+    const tenantId = getQueryArg(window.location.href, "tenantId");
+    const queryObject = [
+      { key: "businessIds", value: applicationNumber },
+      { key: "history", value: true },
+      { key: "tenantId", value: tenantId }
+    ];
+    const payload = await httpRequest(
+      "post",
+      "egov-workflow-v2/egov-wf/process/_search",
+      "",
+      queryObject
+    );
+    const processInstances =
+      payload &&
+      payload.ProcessInstances.length > 0 &&
+      orderBy(payload.ProcessInstances, "auditDetails.lastModifiedTime", "asc");
+    addWflowFileUrl(processInstances, preparedFinalObject);
   };
 
   onClose = () => {
@@ -77,12 +52,6 @@ class WorkFlowContainer extends React.Component {
       open: false
     });
   };
-
-  // userRolesMatch = userRolesArray => {
-  //   return userRolesArray.find(element => {
-  //     return ifUserRoleExists(element) || element === "*";
-  //   });
-  // };
 
   getPurposeString = action => {
     switch (action) {
@@ -231,11 +200,8 @@ class WorkFlowContainer extends React.Component {
   render() {
     const { createWorkFLow } = this;
     const { prepareFinalObject } = this.props;
-    const ProcessInstances = JSON.parse(
-      localStorage.getItem("ProcessInstances")
-    );
+    const { ProcessInstances } = this.props;
     const workflowContract = this.prepareWorkflowContract(ProcessInstances);
-    console.log("workflowContract is....", workflowContract);
     return (
       <div>
         <TaskStatusContainer ProcessInstances={ProcessInstances} />
@@ -251,11 +217,11 @@ class WorkFlowContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownprops) => {
-  const { workflow, screenConfiguration } = state;
+const mapStateToProps = state => {
+  const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
-  const { Licenses } = preparedFinalObject;
-  const { ProcessInstances } = workflow;
+  const { Licenses, workflow } = preparedFinalObject;
+  const { ProcessInstances } = workflow || [];
   return { ProcessInstances, Licenses };
 };
 
@@ -263,7 +229,6 @@ const mapDispacthToProps = dispatch => {
   return {
     prepareFinalObject: (path, value) =>
       dispatch(prepareFinalObject(path, value))
-    //setProcessInstances: payload => dispatch(setProcessInstances(payload))
   };
 };
 

@@ -207,7 +207,7 @@ const getAllFileStoreIds = async ProcessInstances => {
   );
 };
 
-export const addWflowFileUrl = async ProcessInstances => {
+export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
   const fileStoreIdByAction = await getAllFileStoreIds(ProcessInstances);
   const fileUrlPayload = await getFileUrlFromAPI(
     Object.values(fileStoreIdByAction).join(",")
@@ -230,9 +230,7 @@ export const addWflowFileUrl = async ProcessInstances => {
       });
     }
   });
-  //setProcessInstances(processInstances);
-
-  localStorage.setItem("ProcessInstances", JSON.stringify(processInstances));
+  prepareFinalObject("workflow.ProcessInstances", processInstances);
 };
 
 export const acceptedFiles = acceptedExt => {

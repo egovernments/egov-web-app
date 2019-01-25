@@ -5,7 +5,7 @@ import screenConfiguration from "egov-ui-framework/ui-redux/screen-configuration
 const rootReducer = {
   app,
   auth,
-  screenConfiguration
+  screenConfiguration,
 };
 
 export default rootReducer;

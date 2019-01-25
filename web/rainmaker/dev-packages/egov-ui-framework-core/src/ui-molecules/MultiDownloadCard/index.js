@@ -19,6 +19,9 @@ const styles = {
   },
   subtext: {
     paddingTop: 7
+  },
+  body2: {
+    wordWrap: "break-word"
   }
 };
 
@@ -47,7 +50,7 @@ function MultiCardDownloadGrid(props) {
             </Grid>
             <Grid container>
               <Grid xs={6} className={classes.subtext}>
-                <Typography>{item.name}</Typography>
+                <Typography className={classes.body2}>{item.name}</Typography>
               </Grid>
               <Grid xs={6} align="right">
                 <Button href={item.link} color="primary">

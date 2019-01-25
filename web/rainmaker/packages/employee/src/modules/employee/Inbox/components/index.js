@@ -5,7 +5,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TaskDialog from "egov-workflow/ui-molecules/TaskDialog";
 import { addWflowFileUrl } from "egov-ui-framework/ui-utils/commons";
-//import { setProcessInstances } from "egov-ui-framework/ui-redux/workflow/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
@@ -30,16 +30,13 @@ class InboxData extends React.Component {
   };
 
   onHistoryClick = async (moduleNumber) => {
-    const { toggleSnackbarAndSetText } = this.props;
+    const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
     const processInstances = await this.getProcessIntanceData(moduleNumber.text);
     if (processInstances && processInstances.length > 0) {
-      addWflowFileUrl(processInstances);
+      addWflowFileUrl(processInstances, prepareFinalObject);
       this.setState({
         dialogOpen: true,
       });
-      // this.setState({
-      //   workflowHistory: processInstances,
-      // });
     } else {
       toggleSnackbarAndSetText(true, "API error");
     }
@@ -52,13 +49,14 @@ class InboxData extends React.Component {
   };
 
   getModuleLink = async (item, row, index) => {
+    const { prepareFinalObject } = this.props;
     const status = row[2].text;
     const taskId = index === 1 && item.text;
     const tenantId = localStorage.getItem("tenant-id");
     const processInstances = await this.getProcessIntanceData(row[1].text);
 
     if (processInstances && processInstances.length > 0) {
-      addWflowFileUrl(processInstances);
+      addWflowFileUrl(processInstances, prepareFinalObject);
     }
 
     //let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org" : window.origin;
@@ -70,10 +68,8 @@ class InboxData extends React.Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, ProcessInstances } = this.props;
     const { onHistoryClick, onDialogClose, getModuleLink } = this;
-    const workflowHistory = JSON.parse(localStorage.getItem("ProcessInstances"));
-
     return (
       <Table>
         <TableHead>
@@ -122,22 +118,30 @@ class InboxData extends React.Component {
               </TableRow>
             );
           })}
-          <TaskDialog open={this.state.dialogOpen} onClose={onDialogClose} history={workflowHistory} />
+          <TaskDialog open={this.state.dialogOpen} onClose={onDialogClose} history={ProcessInstances} />
         </TableBody>
       </Table>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  const { screenConfiguration } = state;
+  const { preparedFinalObject } = screenConfiguration;
+  const { workflow } = preparedFinalObject;
+  const { ProcessInstances } = workflow || [];
+  return { ProcessInstances };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleSnackbarAndSetText: (open, message) => dispatch(toggleSnackbarAndSetText(open, message)),
-    // setProcessInstances: (payload) => dispatch(setProcessInstances(payload)),
+    prepareFinalObject: (path, value) => dispatch(prepareFinalObject(path, value)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(InboxData);
 

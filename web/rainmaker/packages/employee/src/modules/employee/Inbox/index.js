@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Taskboard } from "./components";
-//import { getBuisnessServiceData } from "egov-ui-kit/redux/workFlow/actions";
 import InboxData from "./components";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
