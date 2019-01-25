@@ -29,7 +29,6 @@ import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 //import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
-import { getWorkFlowData } from "../../../../ui-redux/workflow/actions";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
 let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
@@ -354,14 +353,7 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const status = getQueryArg(window.location.href, "status");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
-    const tenantId = getQueryArg(window.location.href, "tenantId");
     //To set the application no. at the  top
-    const queryObject = [
-      { key: "businessIds", value: applicationNumber },
-      { key: "history", value: true },
-      { key: "tenantId", value: tenantId }
-    ];
-    dispatch(getWorkFlowData(queryObject));
     set(
       action.screenConfig,
       "components.div.children.headerDiv.children.header1.children.applicationNumber.props.number",
