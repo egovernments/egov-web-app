@@ -12,8 +12,9 @@
     "dev:employee": "cd packages/employee && npm start",
     "prod:citizen": " npm run transpile-citizen-modules && cd packages/citizen && npm run build",
     "prod:employee": "cd packages/employee && npm run build",
-    "transpile-citizen-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework pgr-citizen pt-citizen",
-    "transpile-employee-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework pgr-employee pt-employee",
+    "transpile-citizen-modules": "npm-run-all --parallel pgr-citizen pt-citizen",
+    "transpile-employee-modules": "npm-run-all --parallel pgr-employee pt-employee",
+    "transpile-common-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework",
     "egov-ui-kit-config": "babel dev-packages/egov-ui-kit-dev/src/config --out-dir packages/egov-ui-kit/config --copy-files",
     "egov-ui-kit-components": "babel dev-packages/egov-ui-kit-dev/src/components --out-dir packages/egov-ui-kit/components --copy-files",
     "egov-ui-kit-redux": "babel dev-packages/egov-ui-kit-dev/src/redux --out-dir packages/egov-ui-kit/redux --copy-files",
@@ -44,6 +45,7 @@
     "egov-ui-framework-containers": "babel dev-packages/egov-ui-framework-core/src/ui-containers --out-dir packages/egov-ui-framework/ui-containers --copy-files",
     "egov-ui-framework": "babel dev-packages/egov-ui-framework-core/src --out-dir packages/egov-ui-framework --copy-files",
     "egov-workflow": "babel dev-packages/egov-workflow-dev/src --out-dir packages/egov-workflow --copy-files"
+    "prepare": "npm run transpile-common-modules && npm run transpile-citizen-modules  && npm run transpile-employee-modules && lerna bootstrap"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
