@@ -65,7 +65,7 @@ function FeesEstimateCard(props) {
   return (
     <Grid container>
       <Grid xs={12} sm={7}>
-        <Typography variant="subheading">{estimate.header}</Typography>
+        {/* <Typography variant="subheading">{estimate.header}</Typography> */}
         <div style={{ marginTop: 48, maxWidth: 400 }}>
           <Grid container>
             {estimate.fees.map((fee, key) => {

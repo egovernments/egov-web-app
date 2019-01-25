@@ -5,6 +5,7 @@
     "dev-packages/pgr-employee-dev",
     "dev-packages/pt-citizen-dev",
     "dev-packages/pt-employee-dev",
+    "dev-packages/egov-workflow-dev",
     "packages/*"
   ],
   "version": "0.0.2"

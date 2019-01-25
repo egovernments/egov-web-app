@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UploadFile, UploadedDocument } from "ui-atoms-local";
+import { UploadFile, UploadedDocument } from "../../ui-atoms";
 import { withStyles } from "@material-ui/core/styles";
 import { handleFileUpload } from "../../ui-utils/commons";
 import { connect } from "react-redux";

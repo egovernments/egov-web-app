@@ -1,4 +1,4 @@
-import { uploadFile, httpRequest } from "ui-utils/api";
+import { httpRequest } from "ui-utils/api";
 import {
   convertDateToEpoch,
   getCurrentFinancialYear,
@@ -427,78 +427,6 @@ export const isFileValid = (file, acceptedFiles) => {
       acceptedFiles.indexOf(mimeType.split("/")[1]) > -1) ||
     false
   );
-};
-
-export const acceptedFiles = acceptedExt => {
-  const splitExtByName = acceptedExt.split(",");
-  const acceptedFileTypes = splitExtByName.reduce((result, curr) => {
-    if (curr.includes("image")) {
-      result.push("image");
-    } else {
-      result.push(curr.split(".")[1]);
-    }
-    return result;
-  }, []);
-  return acceptedFileTypes;
-};
-
-export const handleFileUpload = (event, handleDocument, props) => {
-  const S3_BUCKET = {
-    endPoint: "filestore/v1/files"
-  };
-  let uploadDocument = true;
-  const { inputProps, maxFileSize } = props;
-  const input = event.target;
-  if (input.files && input.files.length > 0) {
-    const files = input.files;
-    Object.keys(files).forEach(async (key, index) => {
-      const file = files[key];
-      const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
-      const isSizeValid = getFileSize(file) <= maxFileSize;
-      if (!fileValid) {
-        // store.dispatch(
-        //   toggleSnackbarAndSetText(
-        //     true,
-        //     `Only image or pdf files can be uploaded`,
-        //     "error"
-        //   )
-        // );
-        alert(`Only image or pdf files can be uploaded`);
-        uploadDocument = false;
-      }
-      if (!isSizeValid) {
-        // store.dispatch(
-        //   toggleSnackbarAndSetText(
-        //     true,
-        //     `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
-        //     "error"
-        //   )
-        // );
-        alert(`Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`);
-        uploadDocument = false;
-      }
-      if (uploadDocument) {
-        if (file.type.match(/^image\//)) {
-          //const imageUri = await getImageUrlByFile(file);
-          const fileStoreId = await uploadFile(
-            S3_BUCKET.endPoint,
-            "TL",
-            file,
-            "pb"
-          );
-          handleDocument(file, fileStoreId);
-        } else {
-          const fileStoreId = await uploadFile(
-            S3_BUCKET.endPoint,
-            "TL",
-            file,
-            "pb"
-          );
-          handleDocument(file, fileStoreId);
-        }
-      }
-    });
-  }
 };
 
 const setApplicationNumberBox = (state, dispatch) => {

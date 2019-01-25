@@ -37,6 +37,7 @@ class TextFieldContainer extends React.Component {
       sourceJsonPath,
       index,
       componentJsonpath,
+      hasLocalization,
       state,
       infoIcon,
       dispatch,
@@ -80,15 +81,21 @@ class TextFieldContainer extends React.Component {
               {translatedPlaceholder}
             </div>
           </MenuItem>
-          {dropdownData.map((option, key) => (
-            <MenuItem key={key} value={option.value}>
-              {getLocaleLabels(
-                option.value,
-                `TL_${option.value}`,
-                transfomedKeys
-              )}
-            </MenuItem>
-          ))}
+          {hasLocalization === false
+            ? dropdownData.map((option, key) => (
+                <MenuItem key={key} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))
+            : dropdownData.map((option, key) => (
+                <MenuItem key={key} value={option.value}>
+                  {getLocaleLabels(
+                    option.value,
+                    `TL_${option.value}`,
+                    transfomedKeys
+                  )}
+                </MenuItem>
+              ))}
         </TextfieldWithIcon>
       );
     } else {
@@ -107,9 +114,9 @@ class TextFieldContainer extends React.Component {
               </div>
             </MenuItem>
           </TextfieldWithIcon>
-          {title &&
-            !isEmpty(title) &&
-            infoIcon && <Tooltip val={title} icon={infoIcon} />}
+          {title && !isEmpty(title) && infoIcon && (
+            <Tooltip val={title} icon={infoIcon} />
+          )}
         </div>
       ) : (
         <div>
@@ -124,9 +131,9 @@ class TextFieldContainer extends React.Component {
             }
             {...rest}
           />
-          {title &&
-            !isEmpty(title) &&
-            infoIcon && <Tooltip val={title} icon={infoIcon} />}
+          {title && !isEmpty(title) && infoIcon && (
+            <Tooltip val={title} icon={infoIcon} />
+          )}
         </div>
       );
     }
@@ -168,6 +175,7 @@ const mapStateToProps = (state, ownprops) => {
       );
     }
   }
+
   return { value: fieldValue, dropdownData, state };
 };
 
