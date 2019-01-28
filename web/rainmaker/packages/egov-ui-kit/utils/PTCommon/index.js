@@ -17,10 +17,6 @@ var _set = require("lodash/set");
 
 var _set2 = _interopRequireDefault(_set);
 
-var _sortBy = require("lodash/sortBy");
-
-var _sortBy2 = _interopRequireDefault(_sortBy);
-
 var _uniqBy = require("lodash/uniqBy");
 
 var _uniqBy2 = _interopRequireDefault(_uniqBy);
