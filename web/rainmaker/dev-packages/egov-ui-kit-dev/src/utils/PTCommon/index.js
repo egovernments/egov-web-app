@@ -1,5 +1,7 @@
 import get from "lodash/get";
 import set from "lodash/set";
+import sortBy from "lodash/sortBy";
+import uniqBy from "lodash/uniqBy";
 import isUndefined from "lodash/isUndefined";
 import cloneDeep from "lodash/cloneDeep";
 import queryString from "query-string";
@@ -243,7 +245,6 @@ export const transformPropertyDataToAssessInfo = (data) => {
   if (formConfigPath["hasFloor"]) {
     configFloor = require(`egov-ui-kit/config/forms/specs/${path}/floorDetails.js`).default;
     let units = data["Properties"][0]["propertyDetails"][0]["units"];
-
     //For assigning consecutive indexes in formkeys irrespective of floor no.
     const floorIndexObj = prepareUniqueFloorIndexObj(units);
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
@@ -291,6 +292,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
+  units = uniqBy(units,"floorNo");
   let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
     if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;

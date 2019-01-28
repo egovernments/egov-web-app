@@ -17,6 +17,14 @@ var _set = require("lodash/set");
 
 var _set2 = _interopRequireDefault(_set);
 
+var _sortBy = require("lodash/sortBy");
+
+var _sortBy2 = _interopRequireDefault(_sortBy);
+
+var _uniqBy = require("lodash/uniqBy");
+
+var _uniqBy2 = _interopRequireDefault(_uniqBy);
+
 var _isUndefined = require("lodash/isUndefined");
 
 var _isUndefined2 = _interopRequireDefault(_isUndefined);
@@ -254,7 +262,6 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
   if (formConfigPath["hasFloor"]) {
     configFloor = require("egov-ui-kit/config/forms/specs/" + path + "/floorDetails.js").default;
     var units = data["Properties"][0]["propertyDetails"][0]["units"];
-
     //For assigning consecutive indexes in formkeys irrespective of floor no.
     var floorIndexObj = prepareUniqueFloorIndexObj(units);
     for (var unitIndex = 0; unitIndex < units.length; unitIndex++) {
@@ -299,6 +306,7 @@ var transformPropertyDataToAssessInfo = exports.transformPropertyDataToAssessInf
 };
 
 var prepareUniqueFloorIndexObj = function prepareUniqueFloorIndexObj(units) {
+  units = (0, _uniqBy2.default)(units, "floorNo");
   var floorIndexObj = units.reduce(function (floorIndexObj, item, index) {
     if ((0, _isUndefined2.default)(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;
