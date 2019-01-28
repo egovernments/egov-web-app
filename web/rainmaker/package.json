@@ -14,7 +14,7 @@
     "prod:employee": "cd packages/employee && npm run build",
     "transpile-citizen-modules": "npm-run-all --parallel pgr-citizen pt-citizen",
     "transpile-employee-modules": "npm-run-all --parallel pgr-employee pt-employee",
-    "transpile-common-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework",
+    "transpile-common-modules": "npm-run-all --parallel egov-ui-kit egov-ui-framework egov-workflow",
     "egov-ui-kit-config": "babel dev-packages/egov-ui-kit-dev/src/config --out-dir packages/egov-ui-kit/config --copy-files",
     "egov-ui-kit-components": "babel dev-packages/egov-ui-kit-dev/src/components --out-dir packages/egov-ui-kit/components --copy-files",
     "egov-ui-kit-redux": "babel dev-packages/egov-ui-kit-dev/src/redux --out-dir packages/egov-ui-kit/redux --copy-files",
