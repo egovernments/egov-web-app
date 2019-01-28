@@ -14,6 +14,7 @@ import {
   OwnerInformation,
   InstitutionAuthorityHOC,
 } from "./components/Forms";
+import sortBy from "lodash/sortBy";
 import ReviewForm from "./components/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
@@ -266,6 +267,11 @@ class FormWizard extends Component {
             value: getQueryValue(search, "propertyId"), //"PT-107-001278",
           },
         ]);
+        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
+          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
+             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
+          })
+        }
         let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [
