@@ -438,7 +438,8 @@ const screenConfig = {
         taskStatus: {
           uiFramework: "remote-component",
           componentPath: "WorkFlowContainer",
-          remotePath: "egov-workflow/ui-containers"
+          remotePath: "egov-workflow/ui-containers",
+          visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
         }
         //footer
       }

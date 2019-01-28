@@ -23,7 +23,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   componentDidMount = async () => {
-    const { preparedFinalObject } = this.props;
+    const { prepareFinalObject } = this.props;
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -44,7 +44,7 @@ class WorkFlowContainer extends React.Component {
       payload &&
       payload.ProcessInstances.length > 0 &&
       orderBy(payload.ProcessInstances, "auditDetails.lastModifiedTime", "asc");
-    addWflowFileUrl(processInstances, preparedFinalObject);
+    addWflowFileUrl(processInstances, prepareFinalObject);
   };
 
   onClose = () => {
@@ -181,7 +181,6 @@ class WorkFlowContainer extends React.Component {
       checkIfTerminatedState,
       getEmployeeRoles
     } = this;
-    //let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
     let businessId = get(data[data.length - 1], "businessId");
     let actions = get(data[data.length - 1], "nextActions", []);
     return actions.map(item => {
@@ -199,12 +198,16 @@ class WorkFlowContainer extends React.Component {
 
   render() {
     const { createWorkFLow } = this;
-    const { prepareFinalObject } = this.props;
-    const { ProcessInstances } = this.props;
-    const workflowContract = this.prepareWorkflowContract(ProcessInstances);
+    const { ProcessInstances, prepareFinalObject } = this.props;
+    const workflowContract =
+      ProcessInstances &&
+      ProcessInstances.length > 0 &&
+      this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
-        <TaskStatusContainer ProcessInstances={ProcessInstances} />
+        {ProcessInstances && ProcessInstances.length > 0 && (
+          <TaskStatusContainer ProcessInstances={ProcessInstances} />
+        )}
         <Footer
           handleFieldChange={prepareFinalObject}
           variant={"contained"}

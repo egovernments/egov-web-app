@@ -4,16 +4,6 @@ import LinearProgress from "egov-ui-framework/ui-atoms/LinearSpinner";
 
 const Loading = () => <LinearProgress />;
 
-const DownloadFileContainer = Loadable({
-  loader: () => import("./DownloadFileContainer"),
-  loading: () => <Loading />
-});
-
-const DocumentListContainer = Loadable({
-  loader: () => import("./DocumentListContainer"),
-  loading: () => <Loading />
-});
-
 const TaskStatusContainer = Loadable({
   loader: () => import("./TaskStatusContainer"),
   loading: () => <Loading />
@@ -24,9 +14,4 @@ const WorkFlowContainer = Loadable({
   loading: () => <Loading />
 });
 
-export {
-  DownloadFileContainer,
-  DocumentListContainer,
-  TaskStatusContainer,
-  WorkFlowContainer
-};
+export { TaskStatusContainer, WorkFlowContainer };
