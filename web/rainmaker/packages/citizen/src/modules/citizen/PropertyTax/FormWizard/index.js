@@ -31,6 +31,7 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import { convertRawDataToFormConfig } from "egov-ui-kit/utils/PTCommon/propertyToFormTransformer";
+import sortBy from "lodash/sortBy";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -300,9 +301,14 @@ class FormWizard extends Component {
           },
           {
             key: "ids",
-            value: getQueryValue(search, "propertyId"), //"PT-107-001278",
+            value: getQueryValue(search, "propertyId"), 
           },
         ]);
+        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
+          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
+             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
+          })
+        }
         let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [
