@@ -1,6 +1,5 @@
 import get from "lodash/get";
 import set from "lodash/set";
-import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import isUndefined from "lodash/isUndefined";
 import cloneDeep from "lodash/cloneDeep";
