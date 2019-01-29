@@ -56,6 +56,7 @@ import {
   normalizePropertyDetails,
   renderPlotAndFloorDetails
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
+import sortBy from "lodash/sortBy";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -155,6 +156,11 @@ class FormWizard extends Component {
             }
           ]
         );
+        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
+          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
+             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
+          })
+        }
         let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [
