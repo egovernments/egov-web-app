@@ -254,6 +254,66 @@ const getAcknowledgementCard = (
       },
       paymentFailureFooter: paymentFailureFooter(applicationNumber, tenant)
     };
+  } else if (purpose === "mark" && status === "success") {
+    return {
+      header: getCommonHeader({
+        labelName: `Application for Trade License (${getCurrentFinancialYear()})`
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Application Marked Successfully",
+              labelKey: "TL_MARK_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName: "Application has been marked successfully",
+              labelKey: "TL_APPLICATION_MARKED_SUCCESS"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      gotoHomeFooter
+    };
+  } else if (purpose === "forward" && status === "success") {
+    return {
+      header: getCommonHeader({
+        labelName: `Application for Trade License (${getCurrentFinancialYear()})`
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Application Forwarded Successfully",
+              labelKey: "TL_FORWARD_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName: "Application has been marked successfully",
+              labelKey: "TL_APPLICATION_FORWARD_SUCCESS"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      gotoHomeFooter
+    };
   }
 };
 

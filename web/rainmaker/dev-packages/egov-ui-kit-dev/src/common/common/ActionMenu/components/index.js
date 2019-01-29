@@ -8,8 +8,8 @@ import get from "lodash/get";
 import { split, orderBy, some } from "lodash";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import { TextFieldIcon } from "components";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Tooltip from "@material-ui/core/Tooltip";
 import Label from "egov-ui-kit/utils/translationNode";
 
@@ -47,13 +47,13 @@ const styles = {
   },
   textFieldStyle: {
     height: "auto",
-    textIndent:"15px"
+    textIndent: "15px",
   },
   inputStyle: {
     bottom: "5px",
     height: "auto",
-    paddingLeft:"5px",
-    textIndent:"5px",
+    paddingLeft: "5px",
+    textIndent: "5px",
     marginTop: 0,
   },
 };
@@ -88,7 +88,7 @@ class ActionMenuComp extends Component {
     const url = get(window, "location.pathname")
       .split("/")
       .pop();
-    if (url !== "landing-page" && menuPath) {
+    if (url !== "inbox" && menuPath) {
       const menupathArray = menuPath && menuPath.split(".");
       if (menupathArray && menupathArray.length > 1) {
         menupathArray.pop();
@@ -211,24 +211,25 @@ class ActionMenuComp extends Component {
     setRoute(route);
   };
 
-  renderLeftIcon(leftIcon=[],item){
-    let {menuDrawerOpen } = this.props;
-    if(leftIcon.length >= 2){
-      return  <Icon
-        name={leftIcon[1]}
-        action={leftIcon[0]}
-        color="rgba(0, 0, 0, 0.6000000238418579)"
-        style={styles.fibreIconStyle}
-        className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
-      />
-    }else{
-      return null
+  renderLeftIcon(leftIcon = [], item) {
+    let { menuDrawerOpen } = this.props;
+    if (leftIcon.length >= 2) {
+      return (
+        <Icon
+          name={leftIcon[1]}
+          action={leftIcon[0]}
+          color="rgba(0, 0, 0, 0.6000000238418579)"
+          style={styles.fibreIconStyle}
+          className={`iconClassHover material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+        />
+      );
+    } else {
+      return null;
     }
-    
   }
 
   render() {
-    let { role, actionListArr, activeRoutePath, updateActiveRoute,toggleDrawer,menuDrawerOpen } = this.props;
+    let { role, actionListArr, activeRoutePath, updateActiveRoute, toggleDrawer, menuDrawerOpen } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
@@ -245,32 +246,32 @@ class ActionMenuComp extends Component {
           if (!item.url) {
             return (
               <div className="sideMenuItem">
-                <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name } placement="right"><MenuItem
-                  key={index}
-                  innerDivStyle={styles.defaultMenuItemStyle}
-                  style={{ whiteSpace: "initial" }}
-                  leftIcon={
-                    this.renderLeftIcon(iconLeft,item)
-                  }
-                  primaryText={<div className="menuStyle with-childs">{item.name || ""}</div>}
-                  rightIcon={
-                    <Icon
-                      name="chevron-right"
-                      action="navigation"
-                      color="rgba(0, 0, 0, 0.8700000047683716)"
-                      className="iconClassHover material-icons whiteColor menu-right-icon"
-                      style={styles.arrowIconStyle}
-                    />
-                  }
-                  onClick={() => {
-                    let pathParam = {
-                      path: !item.path ? item.name : item.path,
-                      parentPath: false,
-                    };
-                    toggleDrawer && toggleDrawer();
-                    menuChange(pathParam);
-                  }}
-                /></Tooltip>
+                <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name} placement="right">
+                  <MenuItem
+                    key={index}
+                    innerDivStyle={styles.defaultMenuItemStyle}
+                    style={{ whiteSpace: "initial" }}
+                    leftIcon={this.renderLeftIcon(iconLeft, item)}
+                    primaryText={<div className="menuStyle with-childs">{item.name || ""}</div>}
+                    rightIcon={
+                      <Icon
+                        name="chevron-right"
+                        action="navigation"
+                        color="rgba(0, 0, 0, 0.8700000047683716)"
+                        className="iconClassHover material-icons whiteColor menu-right-icon"
+                        style={styles.arrowIconStyle}
+                      />
+                    }
+                    onClick={() => {
+                      let pathParam = {
+                        path: !item.path ? item.name : item.path,
+                        parentPath: false,
+                      };
+                      toggleDrawer && toggleDrawer();
+                      menuChange(pathParam);
+                    }}
+                  />
+                </Tooltip>
               </div>
             );
           } else {
@@ -282,25 +283,24 @@ class ActionMenuComp extends Component {
                   to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
                 >
                   <div className={`sideMenuItem ${activeItmem == item.name ? "selected" : ""}`}>
-                  <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name } placement="right">
-                  <MenuItem
-                      innerDivStyle={styles.defaultMenuItemStyle}
-                      style={{ whiteSpace: "initial" }}
-                      key={index}
-                      onClick={() => {
-                        //  localStorage.setItem("menuPath", item.path);
-                        updateActiveRoute(item.path, item.name);
-                        document.title = item.name;
-                        toggleDrawer && toggleDrawer();
-                        if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
-                          window.location.reload();
-                        }
-                      }}
-                      leftIcon={
-                        this.renderLeftIcon(iconLeft,item)
-                      }
-                      primaryText={<div className="menuStyle">{item.name || ""}</div>}
-                    /></Tooltip>
+                    <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name} placement="right">
+                      <MenuItem
+                        innerDivStyle={styles.defaultMenuItemStyle}
+                        style={{ whiteSpace: "initial" }}
+                        key={index}
+                        onClick={() => {
+                          //  localStorage.setItem("menuPath", item.path);
+                          updateActiveRoute(item.path, item.name);
+                          document.title = item.name;
+                          toggleDrawer && toggleDrawer();
+                          if (window.location.href.indexOf(item.navigationURL) > 0 && item.navigationURL.startsWith("integration")) {
+                            window.location.reload();
+                          }
+                        }}
+                        leftIcon={this.renderLeftIcon(iconLeft, item)}
+                        primaryText={<div className="menuStyle">{item.name || ""}</div>}
+                      />
+                    </Tooltip>
                   </div>
                 </Link>
               );
@@ -308,20 +308,19 @@ class ActionMenuComp extends Component {
               return (
                 <a href={item.url} target="_blank">
                   <div className="sideMenuItem">
-                  <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name } placement="right">
-                 <MenuItem
-                      innerDivStyle={styles.defaultMenuItemStyle}
-                      style={{ whiteSpace: "initial" }}
-                      key={index}
-                      onClick={() => {
-                        localStorage.setItem("menuPath", item.path);
-                        document.title = item.name;
-                      }}
-                      leftIcon={
-                        this.renderLeftIcon(iconLeft,item)
-                      }
-                      primaryText={<div className="menuStyle">{item.name || ""}</div>}
-                    /></Tooltip>
+                    <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name} placement="right">
+                      <MenuItem
+                        innerDivStyle={styles.defaultMenuItemStyle}
+                        style={{ whiteSpace: "initial" }}
+                        key={index}
+                        onClick={() => {
+                          localStorage.setItem("menuPath", item.path);
+                          document.title = item.name;
+                        }}
+                        leftIcon={this.renderLeftIcon(iconLeft, item)}
+                        primaryText={<div className="menuStyle">{item.name || ""}</div>}
+                      />
+                    </Tooltip>
                   </div>
                 </a>
               );
@@ -345,20 +344,19 @@ class ActionMenuComp extends Component {
                     to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}
                   >
                     <div className="sideMenuItem">
-                    <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name } placement="right">
-                    <MenuItem
-                        innerDivStyle={styles.defaultMenuItemStyle}
-                        style={{ whiteSpace: "initial" }}
-                        onClick={() => {
-                          document.title = item.displayName;  
-                          toggleDrawer && toggleDrawer();
-                          updateActiveRoute(item.path, item.displayName);
-                        }}
-                        leftIcon={
-                          this.renderLeftIcon(iconLeft,item)
-                        }
-                        primaryText={<div className="menuStyle">{item.displayName || ""}</div>}
-                      /></Tooltip>
+                      <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name} placement="right">
+                        <MenuItem
+                          innerDivStyle={styles.defaultMenuItemStyle}
+                          style={{ whiteSpace: "initial" }}
+                          onClick={() => {
+                            document.title = item.displayName;
+                            toggleDrawer && toggleDrawer();
+                            updateActiveRoute(item.path, item.displayName);
+                          }}
+                          leftIcon={this.renderLeftIcon(iconLeft, item)}
+                          primaryText={<div className="menuStyle">{item.displayName || ""}</div>}
+                        />
+                      </Tooltip>
                     </div>
                   </Link>
                 );
@@ -382,23 +380,30 @@ class ActionMenuComp extends Component {
           menuItemStyle={{ paddingLeft: "0", width: "100%" }}
         >
           {!path && (
-            <div className="menu-search-container" onClick={()=>{toggleDrawer && toggleDrawer()}}><TextFieldIcon
-              value={searchText}
-              hintText={<Label label="PT_SEARCH_BUTTON" />}
-              iconStyle={styles.inputIconStyle}
-              inputStyle={styles.inputStyle}
-              textFieldStyle={styles.textFieldStyle}
-              iconPosition="before"
-              onChange={(e) => {
-                this.handleChange(e);
+            <div
+              className="menu-search-container"
+              onClick={() => {
+                toggleDrawer && toggleDrawer();
               }}
-            /></div>
+            >
+              <TextFieldIcon
+                value={searchText}
+                hintText={<Label label="PT_SEARCH_BUTTON" />}
+                iconStyle={styles.inputIconStyle}
+                inputStyle={styles.inputStyle}
+                textFieldStyle={styles.textFieldStyle}
+                iconPosition="before"
+                onChange={(e) => {
+                  this.handleChange(e);
+                }}
+              />
+            </div>
           )}
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
               onClick={() => {
-                toggleDrawer && toggleDrawer()
+                toggleDrawer && toggleDrawer();
                 changeLevel(path);
               }}
             >
@@ -406,37 +411,48 @@ class ActionMenuComp extends Component {
             </div>
           )}
           {path && (
-            <Tooltip id={"menu-toggle-tooltip"}  title={menuDrawerOpen ? "": "Home"}placement="right"><div
-              className="pull-right pointerCursor"
-              onClick={() => {
-                // changeLevel("");
-                updateActiveRoute("Home", "Home");
-                this.changeRoute("/");
-              }}
-            >
-              <Icon name="home" action="action" color="rgba(0, 0, 0, 0.6000000238418579)" />
-            </div></Tooltip>
+            <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : "Home"} placement="right">
+              <div
+                className="pull-right pointerCursor"
+                onClick={() => {
+                  // changeLevel("");
+                  updateActiveRoute("Home", "Home");
+                  this.changeRoute("/");
+                }}
+              >
+                <Icon name="home" action="action" color="rgba(0, 0, 0, 0.6000000238418579)" />
+              </div>
+            </Tooltip>
           )}
 
           <div className="clearfix" />
 
           <div style={{ paddingLeft: "-24px" }}>{showMenuItem()}</div>
-         {toggleDrawer ? <div className="sideMenuItem drawer-collapse-menu-item">
-                  <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "": "Expand Menu"} placement="right"><MenuItem
-                        innerDivStyle={styles.defaultMenuItemStyle}
-                        style={{ whiteSpace: "initial" }}
-                        onClick={() => {
-                          toggleDrawer && toggleDrawer(false);
-                        }}
-                        leftIcon={
-                            menuDrawerOpen ? <ChevronLeftIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor"/> :  <ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
-                        }
-                        primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
-                      /></Tooltip>
-                    </div> : "" }
-
+          {toggleDrawer ? (
+            <div className="sideMenuItem drawer-collapse-menu-item">
+              <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : "Expand Menu"} placement="right">
+                <MenuItem
+                  innerDivStyle={styles.defaultMenuItemStyle}
+                  style={{ whiteSpace: "initial" }}
+                  onClick={() => {
+                    toggleDrawer && toggleDrawer(false);
+                  }}
+                  leftIcon={
+                    menuDrawerOpen ? (
+                      <ChevronLeftIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
+                    ) : (
+                      <ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
+                    )
+                  }
+                  primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
+                />
+              </Tooltip>
+            </div>
+          ) : (
+            ""
+          )}
         </Menu>
-      </div>      
+      </div>
     ) : null;
   }
 }

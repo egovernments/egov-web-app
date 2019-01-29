@@ -5,9 +5,7 @@ import LinearProgress from "egov-ui-framework//ui-atoms/LinearSpinner";
 const Loading = () => <LinearProgress />;
 const TestMolecules = Loadable({
   loader: () => import("./TestMolecules"),
-  loading: () => <Loading />
+  loading: () => <Loading />,
 });
 
-export {
-  TestMolecules
-};
+export { TestMolecules };

@@ -8,6 +8,7 @@
 /packages/pgr-employee
 /packages/pt-citizen
 /packages/pt-employee
+/packages/egov-workflow
 
 npm-debug.log*
 yarn-debug.log*

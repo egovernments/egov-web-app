@@ -103,6 +103,15 @@ const Snackbar = Loadable({
   loader: () => import("./Snackbar"),
   loading: () => <Loading />
 });
+const UploadFile = Loadable({
+  loader: () => import("./UploadFile"),
+  loading: () => <Loading />
+});
+
+const UploadedDocument = Loadable({
+  loader: () => import("./UploadedDocument"),
+  loading: () => <Loading />
+});
 
 export {
   Div,
@@ -130,5 +139,7 @@ export {
   Label,
   LinearProgress,
   Iframe,
-  Snackbar
+  Snackbar,
+  UploadFile,
+  UploadedDocument
 };
