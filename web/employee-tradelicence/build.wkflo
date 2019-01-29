@@ -1,7 +1,7 @@
 def build(path, ci_image) {
     stage("Build") {
-        docker.image("egovio/ci-react:v8.4.0-lerna-v2").inside {
-            sh "cd ${path}/rainmaker && rm -rf node_modules ../build/* && npm set registry http://egov-micro-dev.egovernments.org/verdaccio && npm i npm-run-all && npm i babel-cli && npm run build-css-employee && npm run transpile-common-modules && npm run transpile-employee-modules && npm run transpile-citizen-modules  && lerna bootstrap && cd packages/egov-tradelicence-core && npm run build && cp -r build ../../../employee-tradelicence/";
+        docker.image("sivaprakash123/ci-react:v8.4.0-lerna-v3").inside {
+            sh "cd ${path}/rainmaker && rm -rf node_modules ../build/* && npm set registry http://egov-micro-dev.egovernments.org/verdaccio && npm i npm-run-all && npm run build-css-employee && npm run transpile-common-modules && npm run transpile-employee-modules && npm run transpile-citizen-modules  && lerna bootstrap && cd packages/egov-tradelicence-core && npm run build && cp -r build ../../../employee-tradelicence/";
         }
     }
 }
