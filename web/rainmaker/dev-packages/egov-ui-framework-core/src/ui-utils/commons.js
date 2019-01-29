@@ -1,5 +1,5 @@
 import isEmpty from "lodash/isEmpty";
-import { httpRequest } from "../ui-utils/api";
+import { httpRequest, uploadFile } from "./api.js";
 import cloneDeep from "lodash/cloneDeep";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {

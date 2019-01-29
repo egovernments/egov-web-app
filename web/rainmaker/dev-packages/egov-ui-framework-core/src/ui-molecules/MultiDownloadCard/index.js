@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import classNames from "classnames";
 import Button from "@material-ui/core/Button";
 import { LabelContainer } from "../../ui-containers";
+import "./index.css";
 
 const styles = {
   whiteCard: {
@@ -40,7 +42,17 @@ function MultiCardDownloadGrid(props) {
     <Grid container {...rest}>
       {data.map((item, key) => {
         return (
-          <Grid item container xs={6} sm={4} className={classes.whiteCard}>
+          <Grid
+            item
+            container
+            xs={6}
+            sm={4}
+            className={
+              props.backgroundGrey
+                ? classNames(classes.whiteCard, "background-grey")
+                : classes.whiteCard
+            }
+          >
             <Grid xs={12}>
               <LabelContainer
                 labelName={item.title}
