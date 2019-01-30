@@ -89,6 +89,15 @@ class ComponentInterface extends React.Component {
           loading: () => <LinearProgress />
         });
         break;
+      case "remote-component":
+        LoadableComponent = Loadable({
+          loader: () =>
+            import("egov-workflow/ui-containers").then(
+              module => module[componentPath]
+            ),
+          loading: () => <LinearProgress />
+        });
+        break;
     }
     this.setState({ module: LoadableComponent });
   }

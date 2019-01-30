@@ -208,32 +208,32 @@ export const applicationSuccessFooter = (
         }
       }
     },
-    collectPaymentButton: {
-      componentPath: "Button",
-      props: {
-        variant: "contained",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "40px"
-        }
-      },
-      children: {
-        collectPaymentButtonLabel: getLabel({
-          labelName: "COLLECT PAYMENT",
-          labelKey: "TL_COLLECT_PAYMENT"
-        })
-      },
-      onClickDefination: {
-        action: "page_change",
-        path: `/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
-      },
-      roleDefination: {
-        rolePath: "user-info.roles",
-        roles: ["TL_CEMP"]
-      }
-    },
+    // collectPaymentButton: {
+    //   componentPath: "Button",
+    //   props: {
+    //     variant: "contained",
+    //     color: "primary",
+    //     style: {
+    //       minWidth: "200px",
+    //       height: "48px",
+    //       marginRight: "40px"
+    //     }
+    //   },
+    //   children: {
+    //     collectPaymentButtonLabel: getLabel({
+    //       labelName: "COLLECT PAYMENT",
+    //       labelKey: "TL_COLLECT_PAYMENT"
+    //     })
+    //   },
+    //   onClickDefination: {
+    //     action: "page_change",
+    //     path: `/egov-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+    //   },
+    //   roleDefination: {
+    //     rolePath: "user-info.roles",
+    //     roles: ["TL_CEMP"]
+    //   }
+    // },
     proceedToPay: {
       componentPath: "Button",
       props: {

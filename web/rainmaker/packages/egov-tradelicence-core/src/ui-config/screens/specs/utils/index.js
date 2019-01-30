@@ -81,8 +81,7 @@ export const getUploadFile = {
 
 export const getUploadFilesMultiple = jsonPath => {
   return {
-    uiFramework: "custom-molecules-local",
-    moduleName: "egov-tradelicence",
+    uiFramework: "custom-molecules",
     componentPath: "UploadMultipleFiles",
     props: {
       maxFiles: 4,
@@ -91,7 +90,8 @@ export const getUploadFilesMultiple = jsonPath => {
         accept: "image/*, .pdf, .png, .jpeg"
       },
       buttonLabel: "UPLOAD FILES",
-      maxFileSize: 5000
+      maxFileSize: 5000,
+      moduleName: "TL"
     }
   };
 };

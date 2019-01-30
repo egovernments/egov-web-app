@@ -1,5 +1,5 @@
 import React from "react";
-import { UploadFile, UploadedDocument } from "../../ui-atoms-local";
+import { UploadFile, UploadedDocument } from "egov-ui-framework/ui-atoms";
 
 const UploadSingleFile = ({
   uploaded,

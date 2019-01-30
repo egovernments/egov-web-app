@@ -119,6 +119,20 @@ const Tooltip = Loadable({
   loading: () => <Loading />
 });
 
+const TaskDialog = Loadable({
+  loader: () => import("./TaskDialog"),
+  loading: () => <Loading />
+});
+
+const TaskStatusComponents = Loadable({
+  loader: () => import("./TaskStatusComponents"),
+  loading: () => <Loading />
+});
+const UploadMultipleFiles = Loadable({
+  loader: () => import("./UploadMultipleFiles"),
+  loading: () => <Loading />
+});
+
 export {
   RenderRoutes,
   Map,
@@ -144,5 +158,8 @@ export {
   MultiDownloadCard,
   RadioGroup,
   CustomTab,
-  Tooltip
+  Tooltip,
+  TaskDialog,
+  TaskStatusComponents,
+  UploadMultipleFiles
 };

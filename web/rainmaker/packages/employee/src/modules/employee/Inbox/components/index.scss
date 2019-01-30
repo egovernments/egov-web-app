@@ -1,0 +1,70 @@
+.inbox-card {
+  padding: 15px;
+}
+.inbox-card .head {
+  text-align: center;
+  font-size: 45px;
+  padding-top: 20px;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 700;
+  letter-spacing: 1.88px;
+  line-height: 54px;
+}
+.inbox-card .body {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.67px;
+  line-height: 19px;
+  text-align: center;
+  padding: 3px;
+  padding-bottom: 15px;
+}
+.inbox-data-table-headcell {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 17px;
+  border-bottom: none !important;
+  padding-bottom: 0px;
+}
+.inbox-data-table-bodycell {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-size: 14px !important;
+  font-weight: 400;
+  line-height: 17px;
+  border-bottom: 10px solid #f4f7fb !important;
+  margin-bottom: 10px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+.inbox-data-table-bodyrow {
+  background-color: white !important;
+  margin-bottom: 10px !important;
+}
+.inbox-cell-text {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  padding-bottom: 5px;
+}
+.inbox-cell-subtext {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+}
+.inbox-cell-badge-primary {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 14px;
+  background-color: rgba(244, 67, 54, 0.87);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.58px;
+  line-height: 17px;
+}

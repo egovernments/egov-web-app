@@ -18,16 +18,6 @@ const Checkbox = Loadable({
   loading: () => <Loading />
 });
 
-const UploadFile = Loadable({
-  loader: () => import("./UploadFile"),
-  loading: () => <Loading />
-});
-
-const UploadedDocument = Loadable({
-  loader: () => import("./UploadedDocument"),
-  loading: () => <Loading />
-});
-
 const MapLocation = Loadable({
   loader: () => import("./MapLocation"),
   loading: () => <Loading />
@@ -51,9 +41,7 @@ const MenuButton = Loadable({
 export {
   TestAtoms,
   ApplicationNoContainer,
-  UploadFile,
   Checkbox,
-  UploadedDocument,
   MapLocation,
   AutoSuggest,
   Asteric,

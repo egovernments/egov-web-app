@@ -58,6 +58,7 @@ import {
   getImportantDates,
   renderPlotAndFloorDetails
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
+import sortBy from "lodash/sortBy";
 
 class FormWizard extends Component {
   state = {
@@ -147,7 +148,12 @@ class FormWizard extends Component {
             }
           ]
         );
-        console.log(searchPropertyResponse);
+        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
+          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
+             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
+          })
+        }
+        // console.log(searchPropertyResponse);
         let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [

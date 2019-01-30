@@ -29,7 +29,7 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-import { footerReview } from "./applyResource/footer";
+//import { footerReview } from "./applyResource/footer";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -213,15 +213,15 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
     }
 
-    const footer = footerReview(
-      action,
-      state,
-      dispatch,
-      status,
-      applicationNumber,
-      tenantId
-    );
-    set(action, "screenConfig.components.div.children.footer", footer);
+    // const footer = footerReview(
+    //   action,
+    //   state,
+    //   dispatch,
+    //   status,
+    //   applicationNumber,
+    //   tenantId
+    // );
+    // set(action, "screenConfig.components.div.children.footer", footer);
 
     if (status === "cancelled")
       set(
@@ -437,7 +437,13 @@ const screenConfig = {
             }
           }
         },
-        tradeReviewDetails
+        tradeReviewDetails,
+        taskStatus: {
+          uiFramework: "remote-component",
+          componentPath: "WorkFlowContainer",
+          remotePath: "egov-workflow/ui-containers",
+          visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
+        }
         //footer
       }
     },

@@ -155,17 +155,6 @@ export const getBreak = (props = {}) => {
   };
 };
 
-// export const getLabel = (label, props = {}) => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label,
-//       ...props
-//     }
-//   };
-// };
-
 export const getLabel = (label, labelKey, props = {}) => {
   return {
     uiFramework: "custom-containers",
@@ -381,30 +370,6 @@ export const dispatchMultipleFieldChangeAction = (
   }
 };
 
-// export const getDarkSubHeader = header => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label: header,
-//       className: "review-dark-text"
-//     },
-//     fullWidth: true
-//   };
-// };
-
-// export const getLightSubHeader = header => {
-//   return {
-//     uiFramework: "custom-atoms",
-//     componentPath: "Label",
-//     props: {
-//       label: header,
-//       className: "review-light-text"
-//     },
-//     fullWidth: true
-//   };
-// };
-
 export const getLabelWithValue = (label, value, props = {}) => {
   return {
     uiFramework: "custom-atoms",
@@ -424,6 +389,16 @@ export const getLabelWithValue = (label, value, props = {}) => {
       value: getCommonValue(value)
     }
   };
+};
+
+export const convertEpochToDate = dateEpoch => {
+  const dateFromApi = new Date(dateEpoch);
+  let month = dateFromApi.getMonth() + 1;
+  let day = dateFromApi.getDate();
+  let year = dateFromApi.getFullYear();
+  month = (month > 9 ? "" : "0") + month;
+  day = (day > 9 ? "" : "0") + day;
+  return `${day}/${month}/${year}`;
 };
 
 export const getTabs = (list, props = {}) => {
