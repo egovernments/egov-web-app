@@ -51,6 +51,11 @@ const ViewBreakupContainer = Loadable({
   loading: () => <Loading />
 });
 
+const StepperWithFooter = Loadable({
+  loader: () => import("./StepperWithFooter"),
+  loading: () => <Loading />
+});
+
 export {
   CustomTabContainer,
   LabelContainer,
@@ -62,5 +67,6 @@ export {
   DocumentListContainer,
   PaymentRedirectPage,
   ViewBreakupContainer,
-  DialogContainer
+  DialogContainer,
+  StepperWithFooter
 };

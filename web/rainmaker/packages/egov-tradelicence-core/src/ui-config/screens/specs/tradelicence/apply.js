@@ -1,5 +1,5 @@
 import {
-  getStepperObject,
+  //getStepperObject,
   getCommonHeader,
   getCommonCard,
   getCommonContainer,
@@ -30,16 +30,73 @@ import {
   getBoundaryData
 } from "../../../../ui-utils/commons";
 
+import {stepperObject }from "./stepperJson";
 export const stepsData = [
   { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
   { labelName: "Owner Details", labelKey: "TL_COMMON_OWN_DETAILS" },
   { labelName: "Documents", labelKey: "TL_COMMON_DOCS" },
   { labelName: "Summary", labelKey: "TL_COMMON_SUMMARY" }
 ];
-export const stepper = getStepperObject(
-  { props: { activeStep: 0 } },
-  stepsData
-);
+// export const stepper = getStepperObject(
+//   { props: { activeStep: 0 } },
+//   stepsData
+// );
+
+export const stepper =  {
+      componentPath: "StepperWithFooter",
+      uiFramework: "custom-containers-local",
+      props:{ ...stepperObject, activeStep: 0 }
+        
+
+
+
+
+        // steps: stepsData,
+        // ...stpperProps.props,
+        // screenProps: {
+        //   screen: { screenKey: "apply", path: "components.div.children.stepper.props" }, childrens: [{ path: "components.div.children.formwizardFirstStep", errMsg: "Please fill all mandatory fields for Trade Details, then do next !" }, { path: "components.div.children.formwizardSecondStep", errMsg: "Please fill all mandatory fields for Owner Details, then do next !" },
+        //   { path: "components.div.children.formwizardThirdStep", errMsg: "" },
+        //   { path: "components.div.children.formwizardFourthStep", errMsg: "" }]
+        // },
+        // screenVaidatePaths: [["tradeDetails.children.cardContent.children.tradeDetailsConatiner.children", "tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children", { dataPath: "tradeDetails.children.cardContent.children.accessoriesCard.props.items", childrenPath: "children.cardContent.children.accessoriesCardContainer.children", isMultiple: true },
+        //   {
+        //     dataPath: "tradeDetails.children.cardContent.children.tradeUnitCard.props.items",
+        //     childrenPath: "children.cardContent.children.tradeUnitCardContainer.children", isMultiple: true
+        //   }
+        // ]],
+        // footerProps: [
+        //   {
+        //     label: {
+        //       labelName: "Previous Step",
+        //       labelKey: "TL_COMMON_BUTTON_PREV_STEP"
+        //     },
+        //     customProps: { variant: "outlined" },
+        //     iconProps: { name: "keyboard_arrow_left", position: "before" },
+        //     visibleFor: [1, 2, 3],
+        //     mode: "previous"
+        //   }, {
+        //     label: {
+        //       labelName: "Next Step",
+        //       labelKey: "TL_COMMON_BUTTON_NXT_STEP"
+        //     },
+        //     iconProps: { name: "keyboard_arrow_right", position: "after" },
+        //     customProps: { style: { marginRight: "45px" } },
+        //     visibleFor: [0, 1, 2],
+        //     mode: "next"
+        //   },
+        //   {
+        //     label: {
+        //       labelName: "Submit",
+        //       labelKey: "TL_COMMON_BUTTON_SUBMIT"
+        //     },
+        //     iconProps: { name: "keyboard_arrow_right", position: "after" },
+        //     customProps: { style: { marginRight: "45px" } },
+        //     visibleFor: [3],
+        //   },
+        // ]
+  
+};
+
 // export const queryValue = getQueryArg(
 //   window.location.href,
 //   "applicationNumber"
@@ -281,7 +338,7 @@ const screenConfig = {
         formwizardSecondStep,
         formwizardThirdStep,
         formwizardFourthStep,
-        footer
+        // footer
       }
     },
     breakUpDialog: {
