@@ -25,6 +25,7 @@ const header = getCommonContainer({
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
+    moduleName: "egov-tradelicence",
     componentPath: "ApplicationNoContainer",
     props: {
       number: getQueryArg(window.location.href, "applicationNumber")
@@ -108,6 +109,7 @@ const screenConfig = {
     },
     adhocDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "DialogContainer",
       props: {
         open: false,
@@ -120,6 +122,7 @@ const screenConfig = {
     },
     breakUpDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "ViewBreakupContainer",
       props: {
         open: false,

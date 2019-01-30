@@ -10,14 +10,16 @@ import set from "lodash/set";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getSearchResults } from "../../../../ui-utils/commons";
+import {
+  getSearchResults,
+  getFileUrlFromAPI
+} from "../../../../ui-utils/commons";
 import {
   createEstimateData,
   setMultiOwnerForSV,
   setValidToFromVisibilityForSV,
   getDialogButton
 } from "../utils";
-import { getFileUrlFromAPI } from "ui-utils/commons";
 import {
   getFeesEstimateCard,
   getHeaderSideText,
@@ -293,6 +295,7 @@ const headerrow = getCommonContainer({
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
+    moduleName: "egov-tradelicence",
     componentPath: "ApplicationNoContainer",
     props: {
       number: applicationNumber
@@ -440,6 +443,7 @@ const screenConfig = {
     },
     breakUpDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "ViewBreakupContainer",
       props: {
         open: false,

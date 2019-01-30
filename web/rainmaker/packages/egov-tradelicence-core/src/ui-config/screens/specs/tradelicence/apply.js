@@ -52,6 +52,7 @@ export const header = getCommonContainer({
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
+    moduleName: "egov-tradelicence",
     componentPath: "ApplicationNoContainer",
     props: {
       number: "NA"
@@ -286,6 +287,7 @@ const screenConfig = {
     },
     breakUpDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "ViewBreakupContainer",
       props: {
         open: false,

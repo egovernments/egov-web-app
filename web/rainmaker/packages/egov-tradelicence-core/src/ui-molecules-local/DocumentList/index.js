@@ -4,10 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import { handleFileUpload, getFileUrlFromAPI } from "ui-utils/commons";
+import { handleFileUpload, getFileUrlFromAPI } from "../../ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { UploadSingleFile } from "ui-molecules-local";
+import { UploadSingleFile } from "../../ui-molecules-local";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const styles = theme => ({

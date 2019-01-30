@@ -16,7 +16,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 import RenderRoutes from "egov-ui-framework/ui-molecules/RenderRoutes";
-import appRoutes from "ui-config/routes/mihy";
+import appRoutes from "../../ui-config/routes/mihy";
 import styles from "./css";
 import { compose } from "recompose";
 import { connect } from "react-redux";

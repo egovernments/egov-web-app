@@ -1,4 +1,4 @@
-import { uploadFile, httpRequest } from "ui-utils/api";
+import { uploadFile, httpRequest } from "./api";
 import {
   convertDateToEpoch,
   getCurrentFinancialYear,

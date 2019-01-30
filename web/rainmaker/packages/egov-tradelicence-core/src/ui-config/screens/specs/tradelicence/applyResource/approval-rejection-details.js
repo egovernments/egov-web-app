@@ -83,6 +83,7 @@ export const getApprovalDetails = (status, isEditable = false) =>
       },
       documents: {
         uiFramework: "custom-containers-local",
+        moduleName: "egov-tradelicence",
         componentPath: "DownloadFileContainer",
         props: {
           sourceJsonPath: "LicensesTemp[0].verifyDocData"

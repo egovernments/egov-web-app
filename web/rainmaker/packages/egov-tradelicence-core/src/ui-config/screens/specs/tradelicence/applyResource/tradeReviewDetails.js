@@ -27,10 +27,6 @@ export const tradeReviewDetails = getCommonCard({
     labelName: "Please review your Application and Submit",
     labelKey: "TL_SUMMARY_HEADER"
   }),
-  // paragraph: getCommonParagraph({
-  //   labelName:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-  // }),
   estimate,
   viewBreakupButton: getDialogButton(
     "VIEW BREAKUP",

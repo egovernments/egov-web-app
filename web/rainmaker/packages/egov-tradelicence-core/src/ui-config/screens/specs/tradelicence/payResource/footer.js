@@ -2,7 +2,7 @@ import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import { httpRequest } from "ui-utils/api";
+import { httpRequest } from "../../../../../ui-utils/api";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
@@ -11,9 +11,7 @@ import { getBill } from "../../utils";
 
 export const callPGService = async (state, dispatch) => {
   const tenantId = getQueryArg(window.location.href, "tenantId");
-  let callbackUrl = `${
-    window.origin
-  }/employee-tradelicence/egov-ui-framework/tradelicense-citizen/PaymentRedirectPage`;
+  let callbackUrl = `${window.origin}/tradelicense-citizen/PaymentRedirectPage`;
   try {
     const queryObj = [
       {
@@ -73,7 +71,7 @@ const moveToSuccess = (href, dispatch, receiptNumber) => {
   const status = "success";
   dispatch(
     setRoute(
-      `/egov-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
+      `/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
     )
   );
 };

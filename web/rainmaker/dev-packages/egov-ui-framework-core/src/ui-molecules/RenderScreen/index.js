@@ -23,7 +23,8 @@ const RenderScreen = ({
           type,
           roleDefination,
           index,
-          beforeFieldChange
+          beforeFieldChange,
+          moduleName
         } = components[componentKey];
         let extraProps = jsonPath
           ? {
@@ -63,10 +64,10 @@ const RenderScreen = ({
           };
         }
         if (beforeFieldChange && typeof beforeFieldChange === "function") {
-          extraProps={
+          extraProps = {
             ...extraProps,
-            hasDependant:true
-          }
+            hasDependant: true
+          };
         }
         if (!isEmpty(components[componentKey].children)) {
           return (
@@ -74,6 +75,7 @@ const RenderScreen = ({
               key={componentKey}
               id={componentKey}
               uiFramework={uiFramework || rootFramework}
+              moduleName={moduleName}
               componentPath={componentPath}
               props={{ ...props, ...extraProps }}
               gridDefination={gridDefination}
@@ -96,6 +98,7 @@ const RenderScreen = ({
               id={componentKey}
               uiFramework={uiFramework || rootFramework}
               componentPath={componentPath}
+              moduleName={moduleName}
               props={{ ...props, ...extraProps }}
               gridDefination={gridDefination}
               visible={visible}

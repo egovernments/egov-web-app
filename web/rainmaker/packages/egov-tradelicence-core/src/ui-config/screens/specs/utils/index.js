@@ -10,7 +10,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import get from "lodash/get";
 import set from "lodash/set";
 import filter from "lodash/filter";
-import { httpRequest } from "ui-utils/api";
+import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
@@ -28,6 +28,7 @@ export const getCommonApplyFooter = children => {
 export const getAsteric = () => {
   return {
     uiFramework: "custom-atoms-local",
+    moduleName: "egov-tradelicence",
     componentPath: "Asteric"
   };
 };
@@ -56,6 +57,7 @@ export const getTooltip = (children, toolTipProps) => {
 export const getCheckbox = (content, jsonPath, props = {}) => {
   return {
     uiFramework: "custom-containers-local",
+    moduleName: "egov-tradelicence",
     componentPath: "CheckboxContainer",
     props: {
       content,
@@ -80,6 +82,7 @@ export const getUploadFile = {
 export const getUploadFilesMultiple = jsonPath => {
   return {
     uiFramework: "custom-molecules-local",
+    moduleName: "egov-tradelicence",
     componentPath: "UploadMultipleFiles",
     props: {
       maxFiles: 4,
@@ -96,6 +99,7 @@ export const getUploadFilesMultiple = jsonPath => {
 export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
   return {
     uiFramework: "custom-containers-local",
+    moduleName: "egov-tradelicence",
     componentPath: "RadioGroupContainer",
     props: {
       buttons,
@@ -156,6 +160,7 @@ export const getRadioGroupWithLabel = (
 export const getApplicationNoContainer = number => {
   return {
     uiFramework: "custom-atoms-local",
+    moduleName: "egov-tradelicence",
     componentPath: "ApplicationNoContainer",
     props: {
       number
@@ -353,11 +358,11 @@ export const onClickNextButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     default:
-      return `/egov-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
   }
 };
 
@@ -368,17 +373,18 @@ export const onClickPreviousButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     default:
-      return `/egov-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
   }
 };
 export const getFeesEstimateCard = props => {
   const { sourceJsonPath, ...rest } = props;
   return {
     uiFramework: "custom-containers-local",
+    moduleName: "egov-tradelicence",
     componentPath: "EstimateCardContainer",
     props: {
       // estimate: {
@@ -569,6 +575,7 @@ export const getReceiptData = async queryObject => {
 export const getAutoSelector = textScheama => {
   return {
     uiFramework: "custom-molecules-local",
+    moduleName: "egov-tradelicence",
     componentPath: "AutoSelector",
     gridDefination: {
       xs: 6,
@@ -583,6 +590,7 @@ export const getAutoSelector = textScheama => {
 export const getMapLocator = textSchema => {
   return {
     uiFramework: "custom-molecules-local",
+    moduleName: "egov-tradelicence",
     componentPath: "MapLocator",
     props: {}
   };
@@ -1210,9 +1218,9 @@ export const getFinancialYearDates = (format, et) => {
 
 export const getBaseURL = () => {
   if (process.env.REACT_APP_NAME !== "Citizen") {
-    return "/egov-ui-framework/tradelicence";
+    return "/tradelicence";
   } else {
-    return "/egov-ui-framework/tradelicense-citizen";
+    return "/tradelicense-citizen";
   }
 };
 
@@ -1969,7 +1977,7 @@ export const applyForm = (state, dispatch) => {
   if (isTradeDetailsValid) {
     window.location.href =
       process.env.NODE_ENV === "development"
-        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        ? `/tradelicense-citizen/apply?tenantId=${tenantId}`
         : `/employee-tradelicence/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };

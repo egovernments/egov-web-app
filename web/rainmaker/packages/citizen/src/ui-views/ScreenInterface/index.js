@@ -20,10 +20,10 @@ class ScreenInterface extends React.Component {
     const { match } = props;
     const { params } = match;
     const { path, screenKey, hasRemoteConfig } = params;
-
+    const moduleName = "egov-tradelicence";
     if (path && screenKey) {
       this.setState({
-        view: screenHoc({ path, screenKey, hasRemoteConfig })(CommonView),
+        view: screenHoc({ path, screenKey, hasRemoteConfig, moduleName })(CommonView),
       });
     }
   };
@@ -42,11 +42,10 @@ class ScreenInterface extends React.Component {
 
   render() {
     const { view: View } = this.state; // Assigning to new variable names @see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-
     return (
       View && (
         <MuiThemeProvider theme={theme}>
-          <div className="app-container-iframe">
+          <div className="">
             <View />
           </div>
         </MuiThemeProvider>

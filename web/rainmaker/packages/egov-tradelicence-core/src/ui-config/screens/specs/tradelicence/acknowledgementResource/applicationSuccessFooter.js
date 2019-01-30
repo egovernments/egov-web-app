@@ -31,7 +31,7 @@ const generatePdfAndDownload = (
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
-    `/employee-tradelicence/egov-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+    `/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
     hasEstimateLoaded = false;
   iframe.onload = function(e) {
@@ -123,8 +123,8 @@ export const applicationSuccessFooter = (
   //const baseURL = getBaseURL();
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
-    ? "/egov-ui-framework/tradelicense-citizen/home"
-    : "/egov-ui-framework/tradelicence/search";
+    ? "/tradelicense-citizen/home"
+    : "/tradelicence/search";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -227,7 +227,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/egov-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",
@@ -253,7 +253,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/egov-ui-framework/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",

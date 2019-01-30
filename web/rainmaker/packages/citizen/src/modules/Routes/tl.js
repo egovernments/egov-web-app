@@ -1,12 +1,12 @@
 import React from "react";
 import Loadable from "react-loadable";
-
+import ScreenInterface from "../../ui-views/ScreenInterface";
 const Loading = () => <div />;
 
-const ScreenInterface = Loadable({
-  loader: () => import("../../ui-views/ScreenInterface"),
-  loading: Loading,
-});
+// const ScreenInterface = Loadable({
+//   loader: () => import("../../ui-views/ScreenInterface"),
+//   loading: Loading,
+// });
 
 const routes = [
   // property tax routes
@@ -15,7 +15,7 @@ const routes = [
     component: ScreenInterface,
     needsAuthentication: true,
     options: {
-      title: "Trade License",
+      title: "",
       hideFooter: true,
       hideBackButton: true,
       isHomeScreen: true,

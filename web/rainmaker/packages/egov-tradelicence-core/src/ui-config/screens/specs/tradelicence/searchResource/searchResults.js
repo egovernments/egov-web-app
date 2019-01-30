@@ -55,6 +55,7 @@ export const textToLocalMapping = {
 
 export const searchResults = {
   uiFramework: "custom-molecules-local",
+  moduleName: "egov-tradelicence",
   componentPath: "Table",
   visible: false,
   props: {
@@ -114,31 +115,31 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
-      return `/egov-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
+      return `/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "APPROVED"):
-      return `/egov-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
+      return `/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
 
     case get(textToLocalMapping, "PAID"):
-      return `/egov-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
+      return `/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "CANCELLED"):
-      return `/egov-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
+      return `/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
-      return `/egov-ui-framework/tradelicence/apply?applicationNumber=${
+      return `/tradelicence/apply?applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "REJECTED"):
-      return `/egov-ui-framework/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
+      return `/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     default:
-      return `/egov-ui-framework/tradelicence/search`;
+      return `/tradelicence/search`;
   }
 };

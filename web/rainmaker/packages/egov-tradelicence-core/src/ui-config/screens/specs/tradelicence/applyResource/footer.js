@@ -34,7 +34,7 @@ const moveToSuccess = (LicenseData, dispatch) => {
   const status = "success";
   dispatch(
     setRoute(
-      `/egov-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
+      `/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`
     )
   );
 };
@@ -551,9 +551,7 @@ export const footerReview = (
   tenantId
 ) => {
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists
-    ? "/egov-ui-framework/tradelicense-citizen"
-    : "/egov-ui-framework/tradelicence";
+  const redirectionURL = roleExists ? "/tradelicense-citizen" : "/tradelicence";
 
   /** MenuButton data based on status */
   let downloadMenu = [];
@@ -648,6 +646,7 @@ export const footerReview = (
           children: {
             downloadMenu: {
               uiFramework: "custom-atoms-local",
+              moduleName: "egov-tradelicence",
               componentPath: "MenuButton",
               props: {
                 data: {
@@ -661,6 +660,7 @@ export const footerReview = (
             },
             printMenu: {
               uiFramework: "custom-atoms-local",
+              moduleName: "egov-tradelicence",
               componentPath: "MenuButton",
               props: {
                 data: {
@@ -701,7 +701,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/egov-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "REJECT"),
               roleDefination: {
@@ -728,7 +728,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/egov-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "APPROVE"),
               roleDefination: {
@@ -782,7 +782,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/egov-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "CANCEL TRADE LICENSE"),
               roleDefination: {

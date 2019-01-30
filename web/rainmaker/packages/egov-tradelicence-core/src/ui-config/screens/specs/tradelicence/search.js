@@ -82,7 +82,7 @@ const tradeLicenseSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/egov-ui-framework/tradelicence/apply"
+                path: "/tradelicence/apply"
               },
               roleDefination: {
                 rolePath: "user-info.roles",

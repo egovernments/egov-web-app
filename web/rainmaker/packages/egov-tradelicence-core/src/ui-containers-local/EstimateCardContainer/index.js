@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FeesEstimateCard } from "ui-molecules-local";
+import { FeesEstimateCard } from "../../ui-molecules-local";
 import { connect } from "react-redux";
 import get from "lodash/get";
 

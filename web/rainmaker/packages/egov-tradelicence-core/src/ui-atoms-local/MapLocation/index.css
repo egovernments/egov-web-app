@@ -1,18 +1,14 @@
 .gm-style-mtc {
-  display: none;
-}
+  display: none; }
 
 .gm-style > button {
-  background: transparent !important;
-}
+  background: transparent !important; }
 
 .gmnoprint {
-  z-index: -1;
-}
+  z-index: -1; }
 
 .gm-fullscreen-control {
-  display: none;
-}
+  display: none; }
 
 .map-container {
   position: absolute;
@@ -21,27 +17,23 @@
   left: 0;
   right: 0;
   padding: 0px !important;
-  height: 100%;
-}
+  height: 100%; }
 
 .myLoc {
   position: absolute;
   bottom: 70px;
-  right: 16px;
-}
+  right: 16px; }
 
 .myLoc svg {
   height: 55px !important;
-  width: 55px !important;
-}
+  width: 55px !important; }
 
 .search-icon {
   position: absolute !important;
   background: transparent;
   margin-left: 15px;
   top: 60px;
-  margin-left: 34px;
-}
+  margin-left: 34px; }
 
 .dragInfoBox {
   top: 230px;
@@ -54,13 +46,10 @@
   font-size: 14px;
   letter-spacing: 0.6px;
   text-align: center;
-  padding-top: 12px;
-}
+  padding-top: 12px; }
 
 .dragInfoBox span {
-  color: #ffffff;
-}
+  color: #ffffff; }
 
 .pac-container {
-  z-index: 1500;
-}
+  z-index: 1500; }

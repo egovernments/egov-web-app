@@ -32,7 +32,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: `/egov-ui-framework/tradelicence/search`
+      path: `/tradelicence/search`
     }
   },
   downloadLicenseButton: {

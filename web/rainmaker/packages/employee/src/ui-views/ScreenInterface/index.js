@@ -46,7 +46,7 @@ class ScreenInterface extends React.Component {
     return (
       View && (
         <MuiThemeProvider theme={theme}>
-          <div className="app-container-iframe">
+          <div className="">
             <View />
           </div>
         </MuiThemeProvider>

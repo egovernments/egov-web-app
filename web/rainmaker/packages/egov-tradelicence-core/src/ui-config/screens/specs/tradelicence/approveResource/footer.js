@@ -10,7 +10,7 @@ import {
   getCheckBoxJsonpath
 } from "../../utils";
 import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { updateTradeDetails } from "ui-utils/commons";
+import { updateTradeDetails } from "../../../../../ui-utils/commons";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";

@@ -6,10 +6,12 @@ const Loading = () => <LinearProgress />;
 
 const Iframe = Loadable({
   loader: () => import("./iframe"),
-  loading: () => <Loading />
+  loading: () => <Loading />,
 });
 
+const Home = Loadable({
+  loader: () => import("./home"),
+  loading: () => <Loading />,
+});
 
-export {
-  Iframe
-};
+export { Iframe, Home };

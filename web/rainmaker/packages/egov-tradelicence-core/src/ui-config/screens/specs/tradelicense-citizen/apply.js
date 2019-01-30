@@ -91,6 +91,7 @@ const screenConfig = {
     },
     breakUpDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "ViewBreakupContainer",
       props: {
         open: false,

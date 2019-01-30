@@ -6,10 +6,11 @@ import {
   submitForm
 } from "../ui-redux/screen-configuration/actions";
 import { setRoute } from "../ui-redux/app/actions";
-import isEmpty from "lodash/isEmpty";
-import get from "lodash/get";
+// import isEmpty from "lodash/isEmpty";
+// import get from "lodash/get";
+import getRemoteConfig from "../ui-config/commonConfig/remote-config-paths";
 // import { addComponentJsonpath } from "../ui-utils";
-import $ from "jquery";
+// import $ from "jquery";
 import cloneDeep from "lodash/cloneDeep";
 
 const screenHoc = ({
@@ -18,6 +19,7 @@ const screenHoc = ({
   hasOwnConfig = false,
   screenConfig: defaultScreenConfig,
   hasRemoteConfig = false,
+  moduleName,
   ...rest
 }) => Screen => {
   class ScreenWrapper extends React.Component {
@@ -27,8 +29,12 @@ const screenHoc = ({
       this.screenConfig = {};
       try {
         const getConfig = (path, screenKey) => {
-          return require(`ui-config/screens/specs/${path}/${screenKey}`)
-            .default;
+          if (path === "tradelicense-citizen" || path === "tradelicence") {
+            return getRemoteConfig("egov-tradelicence", path, screenKey);
+          } else {
+            return require(`ui-config/screens/specs/${path}/${screenKey}`)
+              .default;
+          }
         };
         if (hasOwnConfig) {
           this.screenConfig = defaultScreenConfig || {};
@@ -69,7 +75,7 @@ const screenHoc = ({
       );
     };
 
-    onClick = (onClickDefination, componentJsonpath = "",index=-1) => {
+    onClick = (onClickDefination, componentJsonpath = "", index = -1) => {
       switch (onClickDefination.action) {
         case "submit":
           const { submitForm } = this.props;
@@ -95,7 +101,7 @@ const screenHoc = ({
           const { state, dispatchAction } = this.props;
           const { callBack } = onClickDefination;
           if (typeof callBack === "function") {
-            callBack(state, dispatchAction,{componentJsonpath,index});
+            callBack(state, dispatchAction, { componentJsonpath, index });
           }
           break;
         case "page_change":

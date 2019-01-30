@@ -1,6 +1,6 @@
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "ui-redux/store";
+import store from "../../../../ui-redux/store";
 import {
   getMdmsData,
   getReceiptData,

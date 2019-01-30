@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DocumentList } from "ui-molecules-local";
+import { DocumentList } from "../../ui-molecules-local";
 import { connect } from "react-redux";
 import get from "lodash/get";
 

@@ -162,6 +162,7 @@ const tradeUnitCard = {
           },
           tradeSubType: {
             uiFramework: "custom-containers-local",
+            moduleName: "egov-tradelicence",
             componentPath: "AutosuggestContainer",
             jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
             required: true,
@@ -427,6 +428,7 @@ const accessoriesCard = {
           ),
           ico: {
             uiFramework: "custom-molecules-local",
+            moduleName: "egov-tradelicence",
             componentPath: "Tooltip",
             props: {
               val: {

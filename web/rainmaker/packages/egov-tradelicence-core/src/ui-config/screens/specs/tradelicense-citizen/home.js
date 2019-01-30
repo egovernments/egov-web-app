@@ -27,7 +27,8 @@ const tradeLicenseSearchAndResult = {
       uiFramework: "custom-atoms",
       componentPath: "Div",
       props: {
-        className: "common-div-css"
+        className: "common-div-css",
+        style: { position: "absolute" }
       },
       children: {
         header: header,
@@ -84,7 +85,7 @@ const tradeLicenseSearchAndResult = {
                       },
                       // onClickDefination: {
                       //   action: "page_change",
-                      //   path: "/egov-ui-framework/tradelicense-citizen/apply"
+                      //   path: "/tradelicense-citizen/apply"
                       // },
                       onClickDefination: {
                         action: "condition",

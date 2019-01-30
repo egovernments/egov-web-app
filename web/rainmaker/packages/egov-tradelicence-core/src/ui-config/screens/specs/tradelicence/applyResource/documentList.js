@@ -1,5 +1,6 @@
 export const documentList = {
   uiFramework: "custom-containers-local",
+  moduleName: "egov-tradelicence",
   componentPath: "DocumentListContainer",
   props: {
     // documents: [

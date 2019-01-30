@@ -2,7 +2,7 @@ import React from "react";
 import LinearProgress from "../../ui-atoms/LinearSpinner";
 import Loadable from "react-loadable";
 import Item from "../../ui-atoms/Layout/Item";
-
+import remoteComponents from "../../ui-config/commonConfig/remote-component-paths";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 
@@ -12,7 +12,7 @@ class ComponentInterface extends React.Component {
     this.state = { module: null };
   }
   componentDidMount() {
-    const { componentPath, uiFramework } = this.props;
+    const { componentPath, uiFramework, moduleName } = this.props;
     let LoadableComponent = null;
     switch (uiFramework) {
       // case "carbon":
@@ -41,14 +41,24 @@ class ComponentInterface extends React.Component {
       case "custom-atoms-local":
         LoadableComponent = Loadable({
           loader: () =>
-            import("ui-atoms-local").then(module => module[componentPath]),
+            moduleName
+              ? remoteComponents(moduleName, "ui-atoms-local").then(
+                  module => module[componentPath]
+                )
+              : import("ui-atoms-local").then(module => module[componentPath]),
           loading: () => <LinearProgress />
         });
         break;
       case "custom-molecules-local":
         LoadableComponent = Loadable({
           loader: () =>
-            import("ui-molecules-local").then(module => module[componentPath]),
+            moduleName
+              ? remoteComponents(moduleName, "ui-molecules-local").then(
+                  module => module[componentPath]
+                )
+              : import("ui-molecules-local").then(
+                  module => module[componentPath]
+                ),
           loading: () => <LinearProgress />
         });
         break;
@@ -62,7 +72,13 @@ class ComponentInterface extends React.Component {
       case "custom-containers-local":
         LoadableComponent = Loadable({
           loader: () =>
-            import("ui-containers-local").then(module => module[componentPath]),
+            moduleName
+              ? remoteComponents(moduleName, "ui-containers-local").then(
+                  module => module[componentPath]
+                )
+              : import("ui-containers-local").then(
+                  module => module[componentPath]
+                ),
           loading: () => <LinearProgress />
         });
         break;

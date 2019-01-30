@@ -125,6 +125,7 @@ export const tradeLocationDetails = getCommonCard({
       }),
     // ico: {
     //   uiFramework: "custom-molecules-local",
+    // moduleName: "egov-tradelicence",
     //   componentPath: "Tooltip",
     //   props: {
     //     val: {
@@ -180,6 +181,7 @@ export const tradeLocationDetails = getCommonCard({
     }),
     tradeLocMohalla: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "AutosuggestContainer",
       jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
       required: true,

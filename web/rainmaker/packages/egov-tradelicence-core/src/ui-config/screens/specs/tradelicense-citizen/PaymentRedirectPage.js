@@ -5,6 +5,7 @@ const screenConfig = {
   components: {
     div: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
       componentPath: "PaymentRedirectPage",
       props: {
         className: "payment-redirect-page"

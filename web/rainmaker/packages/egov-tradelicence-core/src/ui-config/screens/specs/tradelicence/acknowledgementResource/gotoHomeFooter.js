@@ -14,8 +14,8 @@ const getCommonApplyFooter = children => {
 
 const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("CITIZEN")
-    ? "/egov-ui-framework/tradelicense-citizen/home"
-    : "/egov-ui-framework/tradelicence/search";
+    ? "/tradelicense-citizen/home"
+    : "/tradelicence/search";
   return redirectionURL;
 };
 

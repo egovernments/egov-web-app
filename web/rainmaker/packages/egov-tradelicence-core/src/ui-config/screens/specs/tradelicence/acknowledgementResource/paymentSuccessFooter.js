@@ -16,8 +16,8 @@ const getCommonApplyFooter = children => {
 export const paymentSuccessFooter = () => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
-    ? "/egov-ui-framework/tradelicense-citizen/home"
-    : "/egov-ui-framework/tradelicence/search";
+    ? "/tradelicense-citizen/home"
+    : "/tradelicence/search";
 
   return getCommonApplyFooter({
     gotoHome: {
