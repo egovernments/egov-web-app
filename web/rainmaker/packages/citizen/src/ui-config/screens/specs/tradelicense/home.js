@@ -10,10 +10,10 @@ const tradeLicenseSearchAndResult = {
   name: "home",
   components: {
     iframe: {
-      componentPath: "Home",
-      // props: {
-      //   src,
-      // },
+      componentPath: "Iframe",
+      props: {
+        src,
+      },
     },
   },
 };
