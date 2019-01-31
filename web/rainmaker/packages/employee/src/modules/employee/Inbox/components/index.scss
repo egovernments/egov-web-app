@@ -27,6 +27,8 @@
   line-height: 17px;
   border-bottom: none !important;
   padding-bottom: 0px;
+  text-align: center !important;
+  padding-right: 24px !important;
 }
 .inbox-data-table-bodycell {
   color: rgba(0, 0, 0, 0.87) !important;
@@ -35,8 +37,11 @@
   line-height: 17px;
   border-bottom: 10px solid #f4f7fb !important;
   margin-bottom: 10px !important;
-  padding-top: 12px !important;
-  padding-bottom: 12px !important;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+  text-align: center !important;
+  // padding-top: 12px !important;
+  // padding-bottom: 12px !important;
 }
 .inbox-data-table-bodyrow {
   background-color: white !important;
