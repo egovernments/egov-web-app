@@ -16,7 +16,7 @@ const routes = [
     component: ScreenInterface,
     needsAuthentication: true,
     options: {
-      title: "Trade License",
+      title: "",
       hideFooter: true,
       hideBackButton: true,
       isHomeScreen: true,

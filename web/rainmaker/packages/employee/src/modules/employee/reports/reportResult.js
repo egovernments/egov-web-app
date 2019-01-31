@@ -6,7 +6,7 @@ import { translate } from "./commons/common";
 import $ from "jquery";
 import _ from "lodash";
 import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
-import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
+// import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
 import "datatables.net";

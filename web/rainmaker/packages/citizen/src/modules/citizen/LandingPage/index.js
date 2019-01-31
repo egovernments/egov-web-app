@@ -68,7 +68,7 @@ class LandingPage extends Component {
       // borderLeftColor: { borderLeft: "4px solid #add8e6" },
       iconAction: "places",
       iconName: "business-center",
-      route: "tradelicense/home",
+      route: "tradelicense-citizen/home",
       iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
     },
   };

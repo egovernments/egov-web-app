@@ -31,6 +31,12 @@ const getAcknowledgementCard = (
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
+        props: {
+          style: {
+            position: "absolute",
+            width: "95%"
+          }
+        },
         children: {
           card: acknowledgementCard({
             icon: "done",
@@ -251,9 +257,11 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: "Payment has failed!",
-            body:
-              "A notification regarding payment failure has been sent to the trade owner and applicant."
+            header: { labelName: "Payment has failed!" },
+            body: {
+              labelName:
+                "A notification regarding payment failure has been sent to the trade owner and applicant."
+            }
           })
         }
       },
