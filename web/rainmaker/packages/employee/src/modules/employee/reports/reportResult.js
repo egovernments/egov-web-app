@@ -618,8 +618,9 @@ class ShowField extends Component {
           if (typeof val === "number") {
             if (typeof total[j] === "string") {
               total[j] = val;
+            }else{
+              total[j] += val;
             }
-            total[j] += val;
           }
         }
       }
