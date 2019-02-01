@@ -14,6 +14,7 @@ class ComponentInterface extends React.Component {
   componentDidMount() {
     const { componentPath, uiFramework, moduleName } = this.props;
     let LoadableComponent = null;
+    const selfRunning = process.env.SELF_RUNNING_APP;
     switch (uiFramework) {
       // case "carbon":
       //   LoadableComponent = Loadable({
@@ -41,7 +42,7 @@ class ComponentInterface extends React.Component {
       case "custom-atoms-local":
         LoadableComponent = Loadable({
           loader: () =>
-            moduleName
+            !selfRunning
               ? remoteComponents(moduleName, "ui-atoms-local").then(
                   module => module[componentPath]
                 )
@@ -52,7 +53,7 @@ class ComponentInterface extends React.Component {
       case "custom-molecules-local":
         LoadableComponent = Loadable({
           loader: () =>
-            moduleName
+            !selfRunning
               ? remoteComponents(moduleName, "ui-molecules-local").then(
                   module => module[componentPath]
                 )
@@ -72,7 +73,7 @@ class ComponentInterface extends React.Component {
       case "custom-containers-local":
         LoadableComponent = Loadable({
           loader: () =>
-            moduleName
+            !selfRunning
               ? remoteComponents(moduleName, "ui-containers-local").then(
                   module => module[componentPath]
                 )

@@ -9,9 +9,4 @@ const Iframe = Loadable({
   loading: () => <Loading />,
 });
 
-const Home = Loadable({
-  loader: () => import("./home"),
-  loading: () => <Loading />,
-});
-
-export { Iframe, Home };
+export { Iframe };

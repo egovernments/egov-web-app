@@ -20,10 +20,9 @@ class ScreenInterface extends React.Component {
     const { match } = props;
     const { params } = match;
     const { path, screenKey, hasRemoteConfig } = params;
-    const moduleName = "egov-tradelicence";
     if (path && screenKey) {
       this.setState({
-        view: screenHoc({ path, screenKey, hasRemoteConfig, moduleName })(CommonView),
+        view: screenHoc({ path, screenKey, hasRemoteConfig })(CommonView),
       });
     }
   };

@@ -6,11 +6,7 @@ import {
   submitForm
 } from "../ui-redux/screen-configuration/actions";
 import { setRoute } from "../ui-redux/app/actions";
-// import isEmpty from "lodash/isEmpty";
-// import get from "lodash/get";
-import getRemoteConfig from "../ui-config/commonConfig/remote-config-paths";
-// import { addComponentJsonpath } from "../ui-utils";
-// import $ from "jquery";
+import getConfig from "../ui-config/commonConfig/remote-config-paths";
 import cloneDeep from "lodash/cloneDeep";
 
 const screenHoc = ({
@@ -28,14 +24,6 @@ const screenHoc = ({
       const { initScreen } = props;
       this.screenConfig = {};
       try {
-        const getConfig = (path, screenKey) => {
-          if (path === "tradelicense-citizen" || path === "tradelicence") {
-            return getRemoteConfig("egov-tradelicence", path, screenKey);
-          } else {
-            return require(`ui-config/screens/specs/${path}/${screenKey}`)
-              .default;
-          }
-        };
         if (hasOwnConfig) {
           this.screenConfig = defaultScreenConfig || {};
         } else if (hasRemoteConfig) {
