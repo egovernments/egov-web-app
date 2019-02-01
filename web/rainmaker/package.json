@@ -10,7 +10,7 @@
     "reset": "npm run clean && npm i",
     "dev:citizen": "npm run transpile-citizen-modules && cd packages/citizen && npm start",
     "dev:employee": "cd packages/employee && npm start",
-    "prod:citizen": " npm run transpile-citizen-modules && cd packages/citizen && npm run build",
+    "prod:citizen": "npm run transpile-citizen-modules && cd packages/citizen && npm run build",
     "prod:employee": "cd packages/employee && npm run build",
     "transpile-citizen-modules": "npm-run-all --parallel pgr-citizen pt-citizen",
     "transpile-employee-modules": "npm-run-all --parallel pgr-employee pt-employee",

@@ -96,7 +96,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {
           MdmsCriteria: {
-            tenantId: "pb",
+            tenantId: process.env.REACT_APP_DEFAULT_TENANT_ID,
             moduleDetails: [
               {
                 moduleName: "PropertyTax",
