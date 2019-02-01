@@ -2,10 +2,10 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { Container } from "egov-ui-framework/ui-atoms";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
-import { Dialog, DialogContent, Divider } from "@material-ui/core";
-import TaskStatusComponents from "../TaskStatusComponents";
+import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
+import VerticalStepper from "../Stepper";
 
 const styles = theme => ({
   root: {
@@ -15,7 +15,7 @@ const styles = theme => ({
 });
 
 const TaskDialog = props => {
-  const { open, onClose, classes, history } = props;
+  const { open, onClose, history } = props;
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogContent
@@ -43,20 +43,28 @@ const TaskDialog = props => {
                 >
                   <CloseIcon />
                 </Grid>
-                <Grid item sm={12} style={{ margin: "10px 0 0 10px" }}>
-                  {history &&
-                    history.map((item, index) => {
-                      return (
-                        <div>
-                          <TaskStatusComponents
-                            currentObj={item}
-                            index={index}
-                          />
-                          <Divider className={classes.root} />
-                        </div>
-                      );
-                    })}
-                </Grid>
+                {/* <Grid item sm={10} style={{ margin: "10px 0 0 10px" }}>
+                  <Stepper orientation="vertical">
+                    {history &&
+                      history.map((item, index) => {
+                        return (
+                          <div>
+                            <Step key={index}>
+                              <StepLabel />
+                              <StepContent>
+                                <TaskStatusComponents
+                                  currentObj={item}
+                                  index={index}
+                                />
+                                <Divider className={classes.root} />
+                              </StepContent>
+                            </Step>
+                          </div>
+                        );
+                      })}
+                  </Stepper>
+                </Grid> */}
+                <VerticalStepper content={history} />
               </Grid>
             }
           />
