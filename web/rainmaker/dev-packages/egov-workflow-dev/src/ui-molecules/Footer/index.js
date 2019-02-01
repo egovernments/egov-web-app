@@ -11,21 +11,6 @@ const buttonStyle = {
   marginRight: "45px"
 };
 
-const getButtonLabelKey = item => {
-  switch (item) {
-    case "APPROVE":
-      return "TL_APPROVER_TRADE_APP_BUTTON_APPROVE";
-    case "FORWARD":
-      return "TL_FORWARD_BUTTON";
-    case "REJECT":
-      return "TL_APPROVER_TRADE_APP_BUTTON_REJECT";
-    case "CANCEL":
-      return "TL_ADD_HOC_CHARGES_POPUP_BUTTON_CANCEL";
-    case "MARK":
-      return "TL_MARK_BUTTON";
-  }
-};
-
 class Footer extends React.Component {
   state = {
     open: false,

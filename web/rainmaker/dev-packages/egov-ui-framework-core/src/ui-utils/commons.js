@@ -147,9 +147,10 @@ export const epochToYmd = et => {
   if (typeof et === "string") return et;
   let date = new Date(et);
   let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  let month =
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
   // date = `${date.getFullYear()}-${month}-${day}`;
-  var formatted_date =
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
+  var formatted_date = date.getFullYear() + "-" + month + "-" + day;
   return formatted_date;
 };
 

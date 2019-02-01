@@ -154,7 +154,11 @@ class DocumentList extends Component {
         {documents &&
           documents.map((document, key) => {
             return (
-              <div key={key} className={classes.documentContainer}>
+              <div
+                key={key}
+                id={`document-upload-${key}`}
+                className={classes.documentContainer}
+              >
                 <Grid container={true}>
                   <Grid item={true} xs={2} sm={1} align="center">
                     {uploadedIndex.indexOf(key) > -1 ? (

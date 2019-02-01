@@ -40,7 +40,13 @@ class LabelContainer extends React.Component {
       transfomedKeys
     );
     return (
-      <Label label={fieldValue ? fieldLabel : translatedLabel} {...rest} />
+      <Label
+        data-localization={
+          labelKey ? labelKey : labelName ? labelName : fieldLabel
+        }
+        label={fieldValue ? fieldLabel : translatedLabel}
+        {...rest}
+      />
     );
   }
 }

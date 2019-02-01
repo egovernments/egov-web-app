@@ -8,7 +8,7 @@ import {
 } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
-import { httpRequest } from "ui-utils/api";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import find from "lodash/find";
@@ -23,7 +23,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   componentDidMount = async () => {
-    const { prepareFinalObject } = this.props;
+    const { prepareFinalObject, toggleSnackbarAndSetText } = this.props;
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -34,17 +34,34 @@ class WorkFlowContainer extends React.Component {
       { key: "history", value: true },
       { key: "tenantId", value: tenantId }
     ];
-    const payload = await httpRequest(
-      "post",
-      "egov-workflow-v2/egov-wf/process/_search",
-      "",
-      queryObject
-    );
-    const processInstances =
-      payload &&
-      payload.ProcessInstances.length > 0 &&
-      orderBy(payload.ProcessInstances, "auditDetails.lastModifiedTime", "asc");
-    addWflowFileUrl(processInstances, prepareFinalObject);
+    try {
+      const payload = await httpRequest(
+        "post",
+        "egov-workflow-v2/egov-wf/process/_search",
+        "",
+        queryObject
+      );
+      if (payload && payload.ProcessInstances.length > 0) {
+        const processInstances = orderBy(
+          payload.ProcessInstances,
+          "auditDetails.lastModifiedTime",
+          "asc"
+        );
+        addWflowFileUrl(processInstances, prepareFinalObject);
+      } else {
+        toggleSnackbarAndSetText(
+          true,
+          "Workflow returned empty object !",
+          "error"
+        );
+      }
+    } catch (e) {
+      toggleSnackbarAndSetText(
+        true,
+        "Workflow returned empty object !",
+        "error"
+      );
+    }
   };
 
   onClose = () => {
@@ -69,7 +86,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   createWorkFLow = async label => {
-    const { Licenses } = this.props;
+    const { Licenses, toggleSnackbarAndSetText } = this.props;
     set(Licenses[0], "action", label);
     const applicationNumber = getQueryArg(
       window.location.href,
@@ -231,7 +248,9 @@ const mapStateToProps = state => {
 const mapDispacthToProps = dispatch => {
   return {
     prepareFinalObject: (path, value) =>
-      dispatch(prepareFinalObject(path, value))
+      dispatch(prepareFinalObject(path, value)),
+    toggleSnackbarAndSetText: (open, message, variant) =>
+      dispatch(toggleSnackbarAndSetText(open, message, variant))
   };
 };
 
