@@ -5,6 +5,7 @@ import {
   getDateField,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
@@ -121,6 +122,7 @@ export const chequeDetails = getCommonContainer({
       labelName: "Enter Cheque  no.",
       labelKey: "TL_PAYMENT_CHQ_NO_PLACEHOLDER"
     },
+    pattern: getPattern("CheckNo"),
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber",
     required: true
   }),
@@ -201,6 +203,7 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_DD_NO_PLACEHOLDER"
     },
     required: true,
+    pattern: getPattern("DDno"),
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
   ddDate: getDateField({

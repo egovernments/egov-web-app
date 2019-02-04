@@ -28,7 +28,7 @@ const appReducer = (state = initialState, action) => {
         toast: {
           message: action.message,
           open: action.open,
-          errorType: action.errorType
+          error: action.error
         }
       };
     case actionTypes.TOGGLE_SPINNER:

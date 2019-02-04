@@ -16,7 +16,7 @@ class CommonView extends React.Component {
       toast,
       spinner
     } = this.props;
-    const { errorType, message, open } = toast;
+    const { error, message, open } = toast;
     return (
       <div>
         <RenderScreen
@@ -28,11 +28,7 @@ class CommonView extends React.Component {
           screenKey={screenKey}
         />
         {open && (
-          <SnackbarContainer
-            variant={errorType}
-            message={message}
-            open={open}
-          />
+          <SnackbarContainer variant={error} message={message} open={open} />
         )}
         {spinner && <LoadingIndicator />}
       </div>
