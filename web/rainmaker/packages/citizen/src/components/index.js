@@ -39,6 +39,7 @@ import Divider from "egov-ui-kit/components/Divider";
 import SingleCheckbox from "egov-ui-kit/components/SingleCheckbox";
 import ToolTipUi from "egov-ui-kit/components/Tooltip";
 import TableUi from "egov-ui-kit/components/Tables";
+import FloatingButton from "egov-ui-kit/components/FloatingButton";
 
 export {
   Label,
@@ -82,4 +83,5 @@ export {
   TableUi,
   Receipt,
   BreadCrumbs,
+  FloatingButton,
 };

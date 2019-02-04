@@ -10,7 +10,6 @@ const ScreenInterface = Loadable({
 });
 
 const routes = [
-  // property tax routes
   {
     path: ":path/:screenKey",
     component: ScreenInterface,
@@ -18,6 +17,7 @@ const routes = [
     options: {
       title: "",
       hideFooter: true,
+      hideTitle: true,
       hideBackButton: true,
       isHomeScreen: true,
     },

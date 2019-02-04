@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Icon } from "components";
+import { Icon, FloatingButton } from "components";
 import { Complaints } from "modules/common";
 import { Screen } from "modules/common";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import {
@@ -71,8 +70,8 @@ class MyComplaints extends Component {
             role={"citizen"}
             noComplaintMessage={"CS_MYCOMPLAINTS_NO_COMPLAINTS"}
           />
-          {/* <div className="floating-button-cont">
-            <FloatingActionButton
+          <div className="floating-button-cont">
+            <FloatingButton
               id="mycomplaints-add"
               onClick={e => {
                 history.push("/add-complaint");
@@ -81,8 +80,8 @@ class MyComplaints extends Component {
               backgroundColor={"#fe7a51"}
             >
               <Icon action="content" name="add" />
-            </FloatingActionButton>
-          </div> */}
+            </FloatingButton>
+          </div>
         </div>
       </Screen>
     );
