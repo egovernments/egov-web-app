@@ -1976,9 +1976,9 @@ export const applyForm = (state, dispatch) => {
   );
   if (isTradeDetailsValid) {
     window.location.href =
-      process.env.NODE_ENV === "development"
-        ? `/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/employee-tradelicence/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+      process.env.SELF_RUNNING_APP === true
+        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        : `/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };
 
