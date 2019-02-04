@@ -1980,6 +1980,7 @@ export const applyForm = (state, dispatch) => {
         ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
         : `/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
+  console.log("window.location.href iss.....", window.location.href);
 };
 
 export const sortByEpoch = (data, order) => {
