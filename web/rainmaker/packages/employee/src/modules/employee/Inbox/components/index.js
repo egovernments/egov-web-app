@@ -33,7 +33,7 @@ class InboxData extends React.Component {
     const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
     const processInstances = await this.getProcessIntanceData(moduleNumber.text);
     if (processInstances && processInstances.length > 0) {
-      addWflowFileUrl(processInstances, prepareFinalObject);
+      await addWflowFileUrl(processInstances, prepareFinalObject);
       this.setState({
         dialogOpen: true,
       });
@@ -56,7 +56,7 @@ class InboxData extends React.Component {
     const processInstances = await this.getProcessIntanceData(row[1].text);
 
     if (processInstances && processInstances.length > 0) {
-      addWflowFileUrl(processInstances, prepareFinalObject);
+      await addWflowFileUrl(processInstances, prepareFinalObject);
     }
 
     let baseUrl = window.origin;
@@ -69,6 +69,7 @@ class InboxData extends React.Component {
 
   render() {
     const { data, ProcessInstances } = this.props;
+    console.log("ProcessInstances is....", ProcessInstances);
     const { onHistoryClick, onDialogClose, getModuleLink } = this;
     return (
       <Table>

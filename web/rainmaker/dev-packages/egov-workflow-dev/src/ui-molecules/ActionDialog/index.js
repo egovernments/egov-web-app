@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { Container } from "egov-ui-framework/ui-atoms";
 import {
@@ -9,6 +10,7 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import { UploadMultipleFiles } from "egov-ui-framework/ui-molecules";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 
 const styles = theme => ({
   root: {
@@ -46,7 +48,21 @@ class ActionDialog extends React.Component {
     roles: ""
   };
 
-  getEmployeeList = async roles => {};
+  onEmployeeClick = e => {
+    const { handleFieldChange, toggleSnackbarAndSetText } = this.props;
+    const selectedValue = e.target.value;
+    const currentUser = JSON.parse(localStorage.getItem("user-info")).uuid;
+    if (selectedValue === currentUser) {
+      toggleSnackbarAndSetText(
+        true,
+        "Please mark to different Employee !",
+        "error"
+      );
+    } else {
+      handleFieldChange("Licenses[0].assignee", e.target.value);
+    }
+  };
+
   render() {
     const {
       open,
@@ -106,12 +122,7 @@ class ActionDialog extends React.Component {
                         optionValue="value"
                         optionLabel="label"
                         hasLocalization={false}
-                        onChange={e =>
-                          handleFieldChange(
-                            "Licenses[0].assignee",
-                            e.target.value
-                          )
-                        }
+                        onChange={e => this.onEmployeeClick(e)}
                         jsonPath="Licenses[0].assignee"
                       />
                     </Grid>
@@ -194,4 +205,16 @@ class ActionDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(ActionDialog);
+const mapDispacthToProps = dispatch => {
+  return {
+    toggleSnackbarAndSetText: (open, message, variant) =>
+      dispatch(toggleSnackbarAndSetText(open, message, variant))
+  };
+};
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispacthToProps
+  )(ActionDialog)
+);
