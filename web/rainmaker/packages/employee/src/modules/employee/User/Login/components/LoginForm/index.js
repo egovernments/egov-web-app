@@ -6,7 +6,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
 
-const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
+const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick,logoUrl }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -15,7 +15,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
+            <Image className="mseva-logo employee-login-logo" source={logoUrl?logoUrl:`${logo}`} />
           </div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
           <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />

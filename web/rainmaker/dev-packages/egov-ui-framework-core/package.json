@@ -2,7 +2,6 @@
   "name": "egov-ui-framework-core",
   "version": "0.1.41",
   "main": "./lib",
-  "private": true,
   "dependencies": {
     "@material-ui/core": "^1.4.1",
     "@material-ui/icons": "^2.0.0",

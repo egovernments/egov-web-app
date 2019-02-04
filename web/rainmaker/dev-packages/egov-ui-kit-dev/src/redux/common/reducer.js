@@ -99,6 +99,8 @@ const commonReducer = (state = intialState, action) => {
     case commonTypes.MDMS_FETCH_SUCCESS:
       let departmentsById = transformById(action.payload.MdmsRes["common-masters"].Department, "code");
       let designationsById = transformById(action.payload.MdmsRes["common-masters"].Designation, "code");
+      let stateInfoById = action.payload.MdmsRes["common-masters"].StateInfo;
+      // transformById(action.payload.MdmsRes["common-masters"].StateInfo, "code");
       const citiesByModule = transformById(action.payload.MdmsRes["tenant"].citymodule, "code");
       const cities = action.payload.MdmsRes["tenant"]["tenants"].map((item) => {
         return {
@@ -117,6 +119,10 @@ const commonReducer = (state = intialState, action) => {
         designationsById: {
           ...state.designationsById,
           ...designationsById,
+        },
+        stateInfoById: {
+          ...state.stateInfoById,
+          ...stateInfoById,
         },
         cities: [...cities],
         citiesByModule: citiesByModule,
