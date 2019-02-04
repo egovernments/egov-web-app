@@ -1974,6 +1974,7 @@ export const applyForm = (state, dispatch) => {
     dispatch,
     "home"
   );
+
   if (isTradeDetailsValid) {
     window.location.href =
       process.env.SELF_RUNNING_APP === true
