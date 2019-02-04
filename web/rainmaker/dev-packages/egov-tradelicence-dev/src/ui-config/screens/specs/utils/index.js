@@ -1975,13 +1975,11 @@ export const applyForm = (state, dispatch) => {
     "home"
   );
 
-  console.log(
-    "window.location.href iss.....",
-    window.origin + `/tradelicense-citizen/apply?tenantId=${tenantId}`
-  );
   if (isTradeDetailsValid) {
     window.location.href =
-      window.origin + `/tradelicense-citizen/apply?tenantId=${tenantId}`;
+      process.env.SELF_RUNNING_APP === true
+        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
+        : `/citizen/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };
 
