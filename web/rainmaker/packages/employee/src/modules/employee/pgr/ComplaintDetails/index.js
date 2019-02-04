@@ -206,7 +206,7 @@ class ComplaintDetails extends Component {
     let { shareCallback } = this;
     let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId, history, isAssignedToEmployee, xyz } = this.props;
+    let { role, serviceRequestId, history, isAssignedToEmployee, reopenValidChecker } = this.props;
     console.log(complaint);
     let btnOneLabel = "";
     let btnTwoLabel = "";
@@ -268,6 +268,7 @@ class ComplaintDetails extends Component {
                   rating={complaint ? complaint.rating : ""}
                   filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
                   filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
+                  reopenValidChecker={reopenValidChecker}
                 />
                 <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
               </div>
@@ -358,6 +359,7 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common, auth, form } = state;
   const { id } = auth.userInfo;
   const { citizenById } = common || {};
+  const reopenValidChecker = get(state, "common.pgrContants.RAINMAKER-PGR.UIConstants[0].REOPENSLA", 4232000000);
   const { employeeById, departmentById, designationsById, cities } = common || {};
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
@@ -437,9 +439,9 @@ const mapStateToProps = (state, ownProps) => {
     const { localizationLabels } = state.app;
     const complaintTypeLocalised = getTranslatedLabel(`SERVICEDEFS.${transformedComplaint.complaint.complaint}`.toUpperCase(), localizationLabels);
 
-    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee, complaintTypeLocalised };
+    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee, complaintTypeLocalised, reopenValidChecker };
   } else {
-    return { form, transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
+    return { form, transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee, reopenValidChecker };
   }
 };
 

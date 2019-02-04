@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 
+/packages/egov-ui-kit
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
