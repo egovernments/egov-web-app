@@ -1974,13 +1974,15 @@ export const applyForm = (state, dispatch) => {
     dispatch,
     "home"
   );
+
+  console.log(
+    "window.location.href iss.....",
+    window.origin + `/tradelicense-citizen/apply?tenantId=${tenantId}`
+  );
   if (isTradeDetailsValid) {
     window.location.href =
-      process.env.SELF_RUNNING_APP === true
-        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/tradelicense-citizen/apply?tenantId=${tenantId}`;
+      window.origin + `/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
-  console.log("window.location.href iss.....", window.location.href);
 };
 
 export const sortByEpoch = (data, order) => {
