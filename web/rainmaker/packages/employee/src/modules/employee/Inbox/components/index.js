@@ -61,7 +61,7 @@ class InboxData extends React.Component {
 
     let baseUrl = window.origin;
     //let baseUrl = "http://localhost:3000/";
-    let contextPath = status === "INITIATED" ? "/tradelicence/apply" : "/tradelicence/search-preview";
+    let contextPath = status === "INITIATED" ? "/employee/tradelicence/apply" : "/employee/tradelicence/search-preview";
     //let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     window.location.href = `${baseUrl}${contextPath}?${queryParams}`;

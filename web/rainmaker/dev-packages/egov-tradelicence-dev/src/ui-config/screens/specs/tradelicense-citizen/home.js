@@ -27,8 +27,7 @@ const tradeLicenseSearchAndResult = {
       uiFramework: "custom-atoms",
       componentPath: "Div",
       props: {
-        className: "common-div-css",
-        style: { position: "absolute" }
+        className: "common-div-css"
       },
       children: {
         header: header,
