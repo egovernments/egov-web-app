@@ -18,6 +18,7 @@ const routes = [
     options: {
       title: "",
       hideFooter: true,
+      hideTitle: true,
       hideBackButton: true,
       isHomeScreen: true,
     },
