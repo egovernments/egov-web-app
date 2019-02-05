@@ -69,7 +69,6 @@ class InboxData extends React.Component {
 
   render() {
     const { data, ProcessInstances } = this.props;
-    console.log("ProcessInstances is....", ProcessInstances);
     const { onHistoryClick, onDialogClose, getModuleLink } = this;
     return (
       <Table>

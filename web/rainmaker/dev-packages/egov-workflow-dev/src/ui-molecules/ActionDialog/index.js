@@ -48,20 +48,20 @@ class ActionDialog extends React.Component {
     roles: ""
   };
 
-  onEmployeeClick = e => {
-    const { handleFieldChange, toggleSnackbarAndSetText } = this.props;
-    const selectedValue = e.target.value;
-    const currentUser = JSON.parse(localStorage.getItem("user-info")).uuid;
-    if (selectedValue === currentUser) {
-      toggleSnackbarAndSetText(
-        true,
-        "Please mark to different Employee !",
-        "error"
-      );
-    } else {
-      handleFieldChange("Licenses[0].assignee", e.target.value);
-    }
-  };
+  // onEmployeeClick = e => {
+  //   const { handleFieldChange, toggleSnackbarAndSetText } = this.props;
+  //   const selectedValue = e.target.value;
+  //   const currentUser = JSON.parse(localStorage.getItem("user-info")).uuid;
+  //   if (selectedValue === currentUser) {
+  //     toggleSnackbarAndSetText(
+  //       true,
+  //       "Please mark to different Employee !",
+  //       "error"
+  //     );
+  //   } else {
+  //     handleFieldChange("Licenses[0].assignee", e.target.value);
+  //   }
+  // };
 
   render() {
     const {
@@ -72,6 +72,7 @@ class ActionDialog extends React.Component {
       onButtonClick,
       dialogData
     } = this.props;
+    console.log("dropDownData is....", dropDownData);
     const {
       buttonLabel,
       showEmployeeList,
@@ -122,7 +123,13 @@ class ActionDialog extends React.Component {
                         optionValue="value"
                         optionLabel="label"
                         hasLocalization={false}
-                        onChange={e => this.onEmployeeClick(e)}
+                        //onChange={e => this.onEmployeeClick(e)}
+                        onChange={e =>
+                          handleFieldChange(
+                            "Licenses[0].assignee",
+                            e.target.value
+                          )
+                        }
                         jsonPath="Licenses[0].assignee"
                       />
                     </Grid>
@@ -205,16 +212,11 @@ class ActionDialog extends React.Component {
   }
 }
 
-const mapDispacthToProps = dispatch => {
-  return {
-    toggleSnackbarAndSetText: (open, message, variant) =>
-      dispatch(toggleSnackbarAndSetText(open, message, variant))
-  };
-};
+// const mapDispacthToProps = dispatch => {
+//   return {
+//     toggleSnackbarAndSetText: (open, message, variant) =>
+//       dispatch(toggleSnackbarAndSetText(open, message, variant))
+//   };
+// };
 
-export default withStyles(styles)(
-  connect(
-    null,
-    mapDispacthToProps
-  )(ActionDialog)
-);
+export default withStyles(styles)(ActionDialog);

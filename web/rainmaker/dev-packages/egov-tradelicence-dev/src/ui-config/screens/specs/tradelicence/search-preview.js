@@ -8,7 +8,10 @@ import {
 import get from "lodash/get";
 import set from "lodash/set";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  setBusinessServiceDataToLocalStorage
+} from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getSearchResults,
@@ -347,7 +350,6 @@ export const tradeReviewDetails = getCommonCard({
   reviewTradeDetails,
   reviewOwnerDetails,
   reviewDocumentDetails
-  // approvalDetails
 });
 
 const screenConfig = {
@@ -369,7 +371,11 @@ const screenConfig = {
         false
       );
     }
-
+    const queryObject = [
+      { key: "tenantId", value: localStorage.getItem("tenant-id") },
+      { key: "businessService", value: "newTL" }
+    ];
+    setBusinessServiceDataToLocalStorage(queryObject);
     beforeInitFn(action, state, dispatch, applicationNumber);
     return action;
   },

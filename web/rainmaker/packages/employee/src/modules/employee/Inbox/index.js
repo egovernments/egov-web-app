@@ -73,7 +73,10 @@ class Inbox extends Component {
     inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
     this.setState({ inboxData, taskboardData, tabData });
 
-    this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
+    this.setBusinessServiceDataToLocalStorage([
+      { key: "tenantId", value: localStorage.getItem("tenant-id") },
+      { key: "businessService", value: "newTL" },
+    ]);
   };
 
   render() {

@@ -1048,6 +1048,23 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
   }
 };
 
+const isApplicationPaid = currentStatus => {
+  const buisnessSeviceStates = JSON.parse(
+    localStorage.getItem("businessServiceData")
+  )[0].states;
+
+  let isPAID = false;
+  for (var i = 0; i < buisnessSeviceStates.length; i++) {
+    if (buisnessSeviceStates[i].state === currentStatus) {
+      break;
+    }
+    if (buisnessSeviceStates[i].state === "PAID") {
+      isPAID = true;
+    }
+  }
+  return isPAID;
+};
+
 export const createEstimateData = async (
   LicenseData,
   jsonPath,
@@ -1072,12 +1089,24 @@ export const createEstimateData = async (
       value: businessService
     }
   ];
-  const payload = getFromReceipt
+  const currentStatus = LicenseData.status;
+  const isPAID = isApplicationPaid(currentStatus);
+  // const payload = getFromReceipt
+  //   ? await getReceipt(queryObj.filter(item => item.key !== "businessService"))
+  //   : await getBill(queryObj);
+  // const estimateData = payload
+  //   ? getFromReceipt
+  //     ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt, LicenseData)
+  //     : payload.billResponse &&
+  //       getEstimateData(payload.billResponse.Bill, false, LicenseData)
+  //   : [];
+
+  const payload = isPAID
     ? await getReceipt(queryObj.filter(item => item.key !== "businessService"))
     : await getBill(queryObj);
   const estimateData = payload
-    ? getFromReceipt
-      ? getEstimateData(payload.Receipt[0].Bill, getFromReceipt, LicenseData)
+    ? isPAID
+      ? getEstimateData(payload.Receipt[0].Bill, isPAID, LicenseData)
       : payload.billResponse &&
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];

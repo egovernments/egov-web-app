@@ -217,7 +217,7 @@ export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
   processInstances.map(item => {
     if (item.documents && item.documents.length > 0) {
       item.documents.forEach(i => {
-        i.link = fileUrlPayload[i.fileStoreId];
+        i.link = fileUrlPayload[i.fileStoreId].split(",")[0];
         i.title = i.documentType;
         i.name = decodeURIComponent(
           fileUrlPayload[i.fileStoreId]
@@ -232,6 +232,19 @@ export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
     }
   });
   prepareFinalObject("workflow.ProcessInstances", processInstances);
+};
+
+export const setBusinessServiceDataToLocalStorage = async queryObject => {
+  const payload = await httpRequest(
+    "post",
+    "egov-workflow-v2/egov-wf/businessservice/_search",
+    "_search",
+    queryObject
+  );
+  localStorage.setItem(
+    "businessServiceData",
+    JSON.stringify(_.get(payload, "BusinessServices"))
+  );
 };
 
 export const acceptedFiles = acceptedExt => {
