@@ -272,7 +272,7 @@ export const footer = getCommonApplyFooter({
       },
       previousButtonLabel: getLabel({
         labelName: "Previous Step",
-        labelKey: "TL_COMMON_BUTTON_PREV_STEP"
+        labelKey: "HR_COMMON_BUTTON_PREV_STEP"
       })
     },
     onClickDefination: {
@@ -295,7 +295,7 @@ export const footer = getCommonApplyFooter({
     children: {
       nextButtonLabel: getLabel({
         labelName: "Next Step",
-        labelKey: "TL_COMMON_BUTTON_NXT_STEP"
+        labelKey: "HR_COMMON_BUTTON_NXT_STEP"
       }),
       nextButtonIcon: {
         uiFramework: "custom-atoms",
@@ -324,7 +324,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "Submit",
-        labelKey: "TL_COMMON_BUTTON_SUBMIT"
+        labelKey: "HR_COMMON_BUTTON_SUBMIT"
       }),
       submitButtonIcon: {
         uiFramework: "custom-atoms",
@@ -341,144 +341,3 @@ export const footer = getCommonApplyFooter({
     visible: false
   }
 });
-
-export const footerReview = (
-  action,
-  state,
-  dispatch,
-  status,
-  applicationNumber,
-  tenantId
-) => {
-  const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists
-    ? "/egov-ui-framework/tradelicense-citizen"
-    : "/egov-ui-framework/hrms";
-
-  return getCommonApplyFooter({
-    container: {
-      uiFramework: "custom-atoms",
-      componentPath: "Container",
-      children: {
-        rightdiv: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          children: {
-            rejectButton: {
-              componentPath: "Button",
-              props: {
-                variant: "outlined",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "16px"
-                }
-              },
-              children: {
-                nextButtonLabel: getLabel({
-                  labelName: "Reject",
-                  labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
-                })
-              },
-              onClickDefination: {
-                action: "page_change",
-                path: `/egov-ui-framework/hrms/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
-              },
-              visible: getButtonVisibility(status, "REJECT"),
-              roleDefination: {
-                rolePath: "user-info.roles",
-                roles: ["TL_APPROVER"]
-              }
-            },
-            approveButton: {
-              componentPath: "Button",
-              props: {
-                variant: "contained",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "45px"
-                }
-              },
-              children: {
-                nextButtonLabel: getLabel({
-                  labelName: "APPROVE",
-                  labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
-                })
-              },
-              onClickDefination: {
-                action: "page_change",
-                path: `/egov-ui-framework/hrms/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
-              },
-              visible: getButtonVisibility(status, "APPROVE"),
-              roleDefination: {
-                rolePath: "user-info.roles",
-                roles: ["TL_APPROVER"]
-              }
-            },
-            proceedPayButton: {
-              componentPath: "Button",
-              props: {
-                variant: "contained",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "45px"
-                }
-              },
-              children: {
-                nextButtonLabel: getLabel({
-                  labelName: "PROCEED TO PAYMENT",
-                  labelKey: "TL_COMMON_BUTTON_PROC_PMT"
-                })
-              },
-              onClickDefination: {
-                action: "page_change",
-                path: `${redirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
-              },
-              visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
-              roleDefination: {
-                rolePath: "user-info.roles",
-                roles: ["TL_CEMP", "CITIZEN"]
-              }
-            },
-            cancelButton: {
-              componentPath: "Button",
-              props: {
-                variant: "contained",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "45px"
-                }
-              },
-              children: {
-                nextButtonLabel: getLabel({
-                  labelName: "CANCEL TRADE LICENSE",
-                  labelKey: "TL_COMMON_BUTTON_CANCEL_LICENSE"
-                })
-              },
-              onClickDefination: {
-                action: "page_change",
-                path: `/egov-ui-framework/hrms/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
-              },
-              visible: getButtonVisibility(status, "CANCEL TRADE LICENSE"),
-              roleDefination: {
-                rolePath: "user-info.roles",
-                roles: ["TL_APPROVER"]
-              }
-            }
-          },
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          }
-        }
-      }
-    }
-  });
-};

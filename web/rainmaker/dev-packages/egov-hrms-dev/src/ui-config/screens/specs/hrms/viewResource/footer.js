@@ -93,7 +93,10 @@ export const hrViewFooter = () => {
       },
       onClickDefination: {
         action: "page_change",
-        path: `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}`
+        path:
+          process.env.SELF_RUNNING_APP === "true"
+            ? `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}`
+            : `/hrms/create?employeeCode=${employeeCode}`
       }
     }
   });

@@ -88,5 +88,6 @@ var searchResults = exports.searchResults = {
 };
 
 var onRowClick = function onRowClick(rowData) {
-  return "/egov-ui-framework/hrms/view?employeeID=" + rowData[(0, _get2.default)(textToLocalMapping, "Employee ID")];
+  var viewEmployeeUrl = process.env.RUNNING_INDEPENDENTLY === "true" ? "/egov-ui-framework/hrms/view" : "/hrms/view";
+  return viewEmployeeUrl + "?employeeID=" + rowData[(0, _get2.default)(textToLocalMapping, "Employee ID")];
 };

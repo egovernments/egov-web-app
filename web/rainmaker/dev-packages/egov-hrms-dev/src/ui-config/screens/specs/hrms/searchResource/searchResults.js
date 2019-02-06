@@ -95,7 +95,11 @@ export const searchResults = {
 };
 
 const onRowClick = rowData => {
-  return `/egov-ui-framework/hrms/view?employeeID=${
+  let viewEmployeeUrl =
+    process.env.SELF_RUNNING_APP === "true"
+      ? "/egov-ui-framework/hrms/view"
+      : "/hrms/view";
+  return `${viewEmployeeUrl}?employeeID=${
     rowData[get(textToLocalMapping, "Employee ID")]
   }`;
 };

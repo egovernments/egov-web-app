@@ -227,7 +227,10 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     try {
       let response = await createEmployee(queryObject, employeeObject);
       let employeeId = get(response, "Employees[0].code");
-      window.location.href = `/egov-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
+      window.location.href =
+        process.env.SELF_RUNNING_APP === "true"
+          ? `/egov-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`
+          : `/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
@@ -235,7 +238,10 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     try {
       let response = await updateEmployee(queryObject, employeeObject);
       let employeeId = response && get(response, "Employees[0].code");
-      window.location.href = `/egov-ui-framework/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`;
+      window.location.href =
+        process.env.SELF_RUNNING_APP === "true"
+          ? `/egov-ui-framework/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`
+          : `/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`;
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
@@ -266,7 +272,10 @@ export const deactivateEmployeeApiCall = async (state, dispatch) => {
   try {
     let response = await updateEmployee(queryObject, employeeObject);
     let employeeId = response && get(response, "Employees[0].code");
-    window.location.href = `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
+    window.location.href =
+      process.env.SELF_RUNNING_APP === "true"
+        ? `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`
+        : `/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
     showHideAdhocPopup(state, dispatch);
   } catch (error) {
     // furnishEmployeeData(state, dispatch);

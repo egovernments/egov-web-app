@@ -119,7 +119,10 @@ const employeeSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/egov-ui-framework/hrms/create"
+                path:
+                  process.env.SELF_RUNNING_APP === "true"
+                    ? "/egov-ui-framework/hrms/create"
+                    : "/hrms/create"
               },
               roleDefination: {
                 rolePath: "user-info.roles",

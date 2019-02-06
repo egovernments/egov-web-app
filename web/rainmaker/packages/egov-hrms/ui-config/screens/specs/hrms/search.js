@@ -178,7 +178,7 @@ var employeeSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/egov-ui-framework/hrms/create"
+                path: process.env.RUNNING_INDEPENDENTLY === "true" ? "/egov-ui-framework/hrms/create" : "/hrms/create"
               },
               roleDefination: {
                 rolePath: "user-info.roles",
