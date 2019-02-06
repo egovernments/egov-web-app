@@ -10,6 +10,7 @@
 /packages/pt-employee
 /packages/egov-tradelicence
 /packages/egov-workflow
+/packages/egov-hrms
 
 npm-debug.log*
 yarn-debug.log*

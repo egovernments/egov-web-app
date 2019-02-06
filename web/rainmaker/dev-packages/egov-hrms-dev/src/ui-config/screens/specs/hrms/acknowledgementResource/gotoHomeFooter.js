@@ -13,7 +13,10 @@ const getCommonApplyFooter = children => {
 };
 
 export const gotoHomeFooter = () => {
-  const redirectionURL = "/egov-ui-framework/hrms/search";
+  const redirectionURL =
+    process.env.SELF_RUNNING_APP === "true"
+      ? `/egov-ui-framework/hrms/search`
+      : `/hrms/search`;
 
   return getCommonApplyFooter({
     gotoHome: {

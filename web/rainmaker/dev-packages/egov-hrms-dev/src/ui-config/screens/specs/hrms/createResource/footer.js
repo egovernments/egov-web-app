@@ -16,7 +16,11 @@ import {
 import "./index.css";
 
 const moveToReview = dispatch => {
-  dispatch(setRoute(`/egov-ui-framework/hrms/review`));
+  const reviewUrl =
+    process.env.SELF_RUNNING_APP === "true"
+      ? `/egov-ui-framework/hrms/review`
+      : `/hrms/review`;
+  dispatch(setRoute(reviewUrl));
 };
 
 export const callBackForNext = async (state, dispatch) => {
