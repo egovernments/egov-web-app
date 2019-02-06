@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Snackbar from "material-ui/Snackbar";
 
 const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, variant }) => {
-  return variant ? (
+  return (
     <Snackbar
       open={open}
       id="toast-message"
@@ -21,7 +21,7 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, v
         textAlign: "center",
       }}
     />
-  ) : null;
+  );
 };
 
 Toast.propTypes = {

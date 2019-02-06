@@ -9,7 +9,7 @@ import {
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const onIconClick = (state, dispatch, index) => {
   const ifscCode = get(
@@ -31,11 +31,7 @@ const onIconClick = (state, dispatch, index) => {
             prepareFinalObject("ReceiptTemp[0].instrument.branchName", "")
           );
           dispatch(
-            toggleSnackbarAndSetText(
-              true,
-              "Bankdetails not found for this IFSC",
-              "error"
-            )
+            toggleSnackbar(true, "Bankdetails not found for this IFSC", "error")
           );
           dispatch(toggleSpinner());
         } else {

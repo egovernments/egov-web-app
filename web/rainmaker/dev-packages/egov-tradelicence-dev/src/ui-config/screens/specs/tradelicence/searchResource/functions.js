@@ -2,7 +2,7 @@ import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 
@@ -37,7 +37,7 @@ export const searchApiCall = async (state, dispatch) => {
 
   if (!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid)) {
     dispatch(
-      toggleSnackbarAndSetText(
+      toggleSnackbar(
         true,
         "Please fill valid fields to start search",
         "warning"
@@ -48,7 +48,7 @@ export const searchApiCall = async (state, dispatch) => {
     Object.values(searchScreenObject).every(x => x === "")
   ) {
     dispatch(
-      toggleSnackbarAndSetText(
+      toggleSnackbar(
         true,
         "Please fill at least one field to start search",
         "warning"
@@ -60,9 +60,7 @@ export const searchApiCall = async (state, dispatch) => {
     searchScreenObject["toDate"] !== undefined &&
     searchScreenObject["toDate"].length !== 0
   ) {
-    dispatch(
-      toggleSnackbarAndSetText(true, "Please fill From Date", "warning")
-    );
+    dispatch(toggleSnackbar(true, "Please fill From Date", "warning"));
   } else {
     // showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
@@ -124,7 +122,7 @@ export const searchApiCall = async (state, dispatch) => {
       showHideTable(true, dispatch);
     } catch (error) {
       // showHideProgress(false, dispatch);
-      dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+      dispatch(toggleSnackbar(true, error.message, "error"));
       console.log(error);
     }
   }

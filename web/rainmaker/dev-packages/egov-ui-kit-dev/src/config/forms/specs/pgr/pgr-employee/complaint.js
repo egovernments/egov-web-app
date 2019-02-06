@@ -181,7 +181,6 @@ const formConfig = {
       }
       let city = get(state, "form.complaint.fields.city.value");
       let mohalla = get(state, "form.complaint.fields.mohalla.value");
-      console.log("city is....", city);
       if (!city) {
         dispatch(handleFieldChange("complaint", "city", tenantId));
       } else {

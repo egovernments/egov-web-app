@@ -1,7 +1,7 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { ifUserRoleExists } from "../../utils";
 const getCommonApplyFooter = children => {
   return {
@@ -22,11 +22,7 @@ const generatePdfAndDownload = (
   tenant
 ) => {
   dispatch(
-    toggleSnackbarAndSetText(
-      true,
-      "Preparing confirmation form, please wait...",
-      "info"
-    )
+    toggleSnackbar(true, "Preparing confirmation form, please wait...", "info")
   );
   var iframe = document.createElement("iframe");
   iframe.src =

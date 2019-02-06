@@ -20,7 +20,7 @@ import {
   validateFields,
   ifUserRoleExists
 } from "../../utils";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
 
@@ -215,9 +215,7 @@ export const callBackForNext = async (state, dispatch) => {
         "Licenses[0].tradeLicenseDetail.owners"
       ).length <= 1
     ) {
-      dispatch(
-        toggleSnackbarAndSetText(true, "Please add multiple owners !", "error")
-      );
+      dispatch(toggleSnackbar(true, "Please add multiple owners !", "error"));
       return false; // to show the above message
     }
     if (isFormValid && isOwnerShipValid) {
@@ -317,7 +315,7 @@ export const callBackForNext = async (state, dispatch) => {
           errorMessage = "Please upload all the required documents !";
           break;
       }
-      dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));
+      dispatch(toggleSnackbar(true, errorMessage, "warning"));
     }
   }
 };

@@ -10,7 +10,7 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import { UploadMultipleFiles } from "egov-ui-framework/ui-molecules";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const styles = theme => ({
   root: {
@@ -49,11 +49,11 @@ class ActionDialog extends React.Component {
   };
 
   // onEmployeeClick = e => {
-  //   const { handleFieldChange, toggleSnackbarAndSetText } = this.props;
+  //   const { handleFieldChange, toggleSnackbar } = this.props;
   //   const selectedValue = e.target.value;
   //   const currentUser = JSON.parse(localStorage.getItem("user-info")).uuid;
   //   if (selectedValue === currentUser) {
-  //     toggleSnackbarAndSetText(
+  //     toggleSnackbar(
   //       true,
   //       "Please mark to different Employee !",
   //       "error"
@@ -214,8 +214,8 @@ class ActionDialog extends React.Component {
 
 // const mapDispacthToProps = dispatch => {
 //   return {
-//     toggleSnackbarAndSetText: (open, message, variant) =>
-//       dispatch(toggleSnackbarAndSetText(open, message, variant))
+//     toggleSnackbar: (open, message, variant) =>
+//       dispatch(toggleSnackbar(open, message, variant))
 //   };
 // };
 

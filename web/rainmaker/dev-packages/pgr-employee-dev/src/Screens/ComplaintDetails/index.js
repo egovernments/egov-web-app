@@ -22,88 +22,115 @@ import {
   returnSLAStatus,
   getPropertyFromObj,
   findLatestAssignee,
-  getTranslatedLabel,
+  getTranslatedLabel
 } from "egov-ui-kit/utils/commons";
-import { fetchComplaints, sendMessage, sendMessageMedia } from "egov-ui-kit/redux/complaints/actions";
+import {
+  fetchComplaints,
+  sendMessage,
+  sendMessageMedia
+} from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
 
 import "./index.css";
 
 class ComplaintDetails extends Component {
   state = {
-    openMap: false,
+    openMap: false
   };
   componentDidMount() {
-    let { fetchComplaints, match, resetFiles, transformedComplaint, prepareFormData } = this.props;
+    let {
+      fetchComplaints,
+      match,
+      resetFiles,
+      transformedComplaint,
+      prepareFormData
+    } = this.props;
     prepareFormData("complaints", transformedComplaint);
-    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    fetchComplaints([
+      { key: "serviceRequestId", value: match.params.serviceRequestId }
+    ]);
     if (this.props.form && this.props.form.complaintResolved) {
       resetFiles("complaintResolved");
     }
     let { details } = this.state;
-    if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
+    if (
+      this.props.location &&
+      this.props.location.search.split("=")[1] === "rejected"
+    ) {
       this.setState({
         status: {
           status: "Rejected",
           message: "JR.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
+          bgColor: "#f5a623"
         },
         details: {
           ...details,
-          status: "Rejected",
-        },
+          status: "Rejected"
+        }
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] === "filed") {
+    } else if (
+      this.props.location &&
+      this.props.location.search.split("=")[1] === "filed"
+    ) {
       this.setState({
         status: {
           status: "Submitted",
           message: "JR.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
+          bgColor: "#f5a623"
         },
         details: {
           ...details,
-          status: "Submitted",
-        },
+          status: "Submitted"
+        }
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] === "unassigned") {
+    } else if (
+      this.props.location &&
+      this.props.location.search.split("=")[1] === "unassigned"
+    ) {
       this.setState({
         status: {
           status: "Unassigned",
           message: "Jr.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
+          bgColor: "#f5a623"
         },
         details: {
           ...details,
-          status: "Unassigned",
+          status: "Unassigned"
         },
         role: "AO",
-        hasComments: false,
+        hasComments: false
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] === "unassigned&reassign") {
+    } else if (
+      this.props.location &&
+      this.props.location.search.split("=")[1] === "unassigned&reassign"
+    ) {
       this.setState({
         status: {
           status: "Reassign",
           message: "Jr.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
+          bgColor: "#f5a623"
         },
         details: {
           ...details,
-          status: "Reassign",
+          status: "Reassign"
         },
-        role: "AO",
+        role: "AO"
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] === "assigned") {
+    } else if (
+      this.props.location &&
+      this.props.location.search.split("=")[1] === "assigned"
+    ) {
       this.setState({
         status: {
           status: "Assign",
           message: "Jr.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
+          bgColor: "#f5a623"
         },
         details: {
           ...details,
-          status: "Assign",
+          status: "Assign"
         },
-        role: "AO",
+        role: "AO"
       });
     }
   }
@@ -120,7 +147,7 @@ class ComplaintDetails extends Component {
     }
   }
 
-  redirectToMap = (isOpen) => {
+  redirectToMap = isOpen => {
     var pathName = this.props.history.location.pathname;
     if (isOpen === true) this.props.history.push(pathName + "?map");
     else if (isOpen === false) this.props.history.goBack();
@@ -157,9 +184,15 @@ class ComplaintDetails extends Component {
   ShareButtonOnClick = () => {
     const complaintData = this.props.transformedComplaint.complaint;
     const name = complaintData.filedBy ? complaintData.filedBy : "NA";
-    const moblileNo = complaintData.filedUserMobileNumber ? complaintData.filedUserMobileNumber : "NA";
-    const complaintNo = complaintData.applicationNo ? complaintData.applicationNo : "NA";
-    const complaintType = this.props.complaintTypeLocalised ? this.props.complaintTypeLocalised : "NA";
+    const moblileNo = complaintData.filedUserMobileNumber
+      ? complaintData.filedUserMobileNumber
+      : "NA";
+    const complaintNo = complaintData.applicationNo
+      ? complaintData.applicationNo
+      : "NA";
+    const complaintType = this.props.complaintTypeLocalised
+      ? this.props.complaintTypeLocalised
+      : "NA";
     const address = complaintData.address ? complaintData.address : "NA";
     const { sendMessage } = this.props;
 
@@ -167,10 +200,16 @@ class ComplaintDetails extends Component {
       tenantId: localStorage.getItem("tenant-id"),
       shareSource: "WEB",
       shareMedia: "SMS",
-      shareContent: [{ to: "", content: { name, moblileNo, complaintNo, complaintType, address }, expiredIn: "", documents: [] }],
-      shareTemplate: "complaintDetails",
+      shareContent: [
+        {
+          to: "",
+          content: { name, moblileNo, complaintNo, complaintType, address },
+          expiredIn: "",
+          documents: []
+        }
+      ],
+      shareTemplate: "complaintDetails"
     };
-    console.log(shareMetaData);
     sendMessage(shareMetaData);
 
     // const messageStr =
@@ -183,31 +222,44 @@ class ComplaintDetails extends Component {
     navigator
       .share({
         title: "Complaint Summary",
-        text: `Dear Sir/Madam,\nPlease find complaint detail given below :\n${get(complaint, "filedBy", "")}, ${get(
+        text: `Dear Sir/Madam,\nPlease find complaint detail given below :\n${get(
           complaint,
-          "filedUserMobileNumber",
+          "filedBy",
           ""
-        )},\n${get(complaint, "complaint", "")}, ${get(complaint, "description", "")}\nAddress: ${get(
+        )}, ${get(complaint, "filedUserMobileNumber", "")},\n${get(
+          complaint,
+          "complaint",
+          ""
+        )}, ${get(complaint, "description", "")}\nAddress: ${get(
           complaint,
           "addressDetail.houseNoAndStreetName",
           ""
-        )},\n${get(complaint, "addressDetail.locality", "")},\n${get(complaint, "addressDetail.landMark", "")}\nSLA: ${get(
+        )},\n${get(complaint, "addressDetail.locality", "")},\n${get(
+          complaint,
+          "addressDetail.landMark",
+          ""
+        )}\nSLA: ${get(
           complaint,
           "timelineSLAStatus.slaStatement",
           ""
         )}\nThanks`,
-        url: "",
+        url: ""
       })
       .then(() => console.log("Successful share"))
-      .catch((error) => console.log("Error sharing", error));
+      .catch(error => console.log("Error sharing", error));
   };
 
   render() {
     let { shareCallback } = this;
     let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId, history, isAssignedToEmployee, xyz } = this.props;
-    console.log(complaint);
+    let {
+      role,
+      serviceRequestId,
+      history,
+      isAssignedToEmployee,
+      xyz
+    } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -266,22 +318,35 @@ class ComplaintDetails extends Component {
                   role={role}
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
-                  filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
-                  filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
+                  filedBy={
+                    complaint && complaint.filedBy ? complaint.filedBy : ""
+                  }
+                  filedUserMobileNumber={
+                    complaint ? complaint.filedUserMobileNumber : ""
+                  }
                 />
-                <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
+                <Comments
+                  comments={comments}
+                  role={role}
+                  isAssignedToEmployee={isAssignedToEmployee}
+                />
               </div>
               <div>
-                {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "closed") ||
+                {(role === "ao" &&
+                  complaint.complaintStatus.toLowerCase() !== "closed") ||
                 (role === "employee" &&
                   isAssignedToEmployee &&
                   complaint.complaintStatus.toLowerCase() === "assigned" &&
                   complaint.complaintStatus.toLowerCase() !== "closed") ? (
                   <ActionButton
                     btnOneLabel={btnOneLabel}
-                    btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                    btnOneOnClick={() =>
+                      this.btnOneOnClick(serviceRequestId, btnOneLabel)
+                    }
                     btnTwoLabel={btnTwoLabel}
-                    btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                    btnTwoOnClick={() =>
+                      this.btnTwoOnClick(serviceRequestId, btnTwoLabel)
+                    }
                   />
                 ) : (
                   ""
@@ -301,13 +366,18 @@ class ComplaintDetails extends Component {
                 style={{
                   height: 24,
                   width: 24,
-                  color: "#484848",
+                  color: "#484848"
                 }}
                 action="navigation"
                 name={"arrow-back"}
               />
             </div>
-            <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
+            <MapLocation
+              currLoc={complaintLoc}
+              icon={pinIcon}
+              hideTerrainBtn={true}
+              viewLocation={true}
+            />
           </div>
         )}
       </div>
@@ -319,11 +389,13 @@ const roleFromUserInfo = (roles = [], role) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
   });
-  return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
+  return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1
+    ? true
+    : false;
 };
 
 //Don't Delete this
-const getLatestStatus = (status) => {
+const getLatestStatus = status => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
     case "open":
@@ -351,27 +423,41 @@ const mapCitizenIdToName = (citizenObjById, id) => {
   return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "";
 };
 const mapCitizenIdToMobileNumber = (citizenObjById, id) => {
-  return citizenObjById && citizenObjById[id] ? citizenObjById[id].mobileNumber : "";
+  return citizenObjById && citizenObjById[id]
+    ? citizenObjById[id].mobileNumber
+    : "";
 };
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common, auth, form } = state;
   const { id } = auth.userInfo;
   const { citizenById } = common || {};
-  const { employeeById, departmentById, designationsById, cities } = common || {};
+  const { employeeById, departmentById, designationsById, cities } =
+    common || {};
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
-  let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
-  let filedUserName = selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.name;
+  let selectedComplaint =
+    complaints["byId"][
+      decodeURIComponent(ownProps.match.params.serviceRequestId)
+    ];
+  let filedUserName =
+    selectedComplaint &&
+    selectedComplaint.citizen &&
+    selectedComplaint.citizen.name;
   let isFiledByCSR =
     selectedComplaint &&
     selectedComplaint.actions &&
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by &&
-    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] &&
-    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(
+      ":"
+    )[1] &&
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(
+      ":"
+    )[1] === "Citizen Service Representative";
   const role =
-    roleFromUserInfo(userInfo.roles, "GRO") || roleFromUserInfo(userInfo.roles, "DGRO")
+    roleFromUserInfo(userInfo.roles, "GRO") ||
+    roleFromUserInfo(userInfo.roles, "DGRO")
       ? "ao"
       : roleFromUserInfo(userInfo.roles, "CSR")
       ? "csr"
@@ -379,77 +465,156 @@ const mapStateToProps = (state, ownProps) => {
 
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
-    let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
+    let userId =
+      selectedComplaint &&
+      selectedComplaint.actions &&
+      selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(
+        ":"
+      )[0];
     let details = {
       status: selectedComplaint.status || "",
-      complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
+      complaint: mapCompIDToName(
+        complaints.categoriesById,
+        selectedComplaint.serviceCode
+      ),
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
-      submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
+      submittedDate: getDateFromEpoch(
+        selectedComplaint.auditDetails.createdTime
+      ),
       landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
-      addressDetail: selectedComplaint.addressDetail ? selectedComplaint.addressDetail : {},
+      addressDetail: selectedComplaint.addressDetail
+        ? selectedComplaint.addressDetail
+        : {},
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,
-      images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: selectedComplaint.status ? getLatestStatus(selectedComplaint.status) : "",
+      images: fetchImages(selectedComplaint.actions).filter(imageSource =>
+        isImage(imageSource)
+      ),
+      complaintStatus: selectedComplaint.status
+        ? getLatestStatus(selectedComplaint.status)
+        : "",
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
       //filedBy: userId && mapCitizenIdToName(citizenById, userId),
-      filedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} @CSR` : filedUserName) : null,
+      filedBy: filedUserName
+        ? isFiledByCSR
+          ? `${filedUserName} @CSR`
+          : filedUserName
+        : null,
 
       //filedUserMobileNumber: userId && mapCitizenIdToMobileNumber(citizenById, userId),
-      filedUserMobileNumber: selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.mobileNumber,
+      filedUserMobileNumber:
+        selectedComplaint &&
+        selectedComplaint.citizen &&
+        selectedComplaint.citizen.mobileNumber,
       timelineSLAStatus: returnSLAStatus(
-        getPropertyFromObj(categoriesById, selectedComplaint.serviceCode, "slaHours", "NA"),
+        getPropertyFromObj(
+          categoriesById,
+          selectedComplaint.serviceCode,
+          "slaHours",
+          "NA"
+        ),
         selectedComplaint.auditDetails.createdTime
-      ),
+      )
     };
 
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine = selectedComplaint.actions.filter(
+      action => action.status && action.status
+    );
     isAssignedToEmployee = id == findLatestAssignee(timeLine) ? true : false; //not checking for type equality due to mismatch
-    timeLine.map((action) => {
+    timeLine.map(action => {
       if (action && action.status && action.status === "assigned") {
         let assignee = action.assignee;
         gro = action.by.split(":")[0];
-        const selectedEmployee = employeeById && assignee && employeeById[assignee];
-        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "");
-        action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
+        const selectedEmployee =
+          employeeById && assignee && employeeById[assignee];
+        action.employeeName =
+          assignee && getPropertyFromObj(employeeById, assignee, "name", "");
+        action.employeeMobileNumber =
+          assignee &&
+          getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
         action.employeeDesignation =
-          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
-        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
-        action.groName = assignee && getPropertyFromObj(employeeById, gro, "name", "");
+          selectedEmployee &&
+          getPropertyFromObj(
+            designationsById,
+            selectedEmployee.assignments[0].designation,
+            "name",
+            ""
+          );
+        action.employeeDepartment =
+          selectedEmployee &&
+          getPropertyFromObj(
+            departmentById,
+            selectedEmployee.assignments[0].department,
+            "name",
+            ""
+          );
+        action.groName =
+          assignee && getPropertyFromObj(employeeById, gro, "name", "");
         action.groDesignation =
           assignee &&
-          getPropertyFromObj(designationsById, employeeById && employeeById[gro] && employeeById[gro].assignments[0].designation, "name", "");
-        action.groMobileNumber = assignee && getPropertyFromObj(employeeById, gro, "mobileNumber", "");
-      } else if (action && action.status && action.status === "reassignrequested") {
+          getPropertyFromObj(
+            designationsById,
+            employeeById &&
+              employeeById[gro] &&
+              employeeById[gro].assignments[0].designation,
+            "name",
+            ""
+          );
+        action.groMobileNumber =
+          assignee && getPropertyFromObj(employeeById, gro, "mobileNumber", "");
+      } else if (
+        action &&
+        action.status &&
+        action.status === "reassignrequested"
+      ) {
         let assignee = action.by.split(":")[0];
-        action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
+        action.employeeMobileNumber =
+          assignee &&
+          getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
       }
     });
 
     let transformedComplaint = {
       complaint: details,
-      timeLine,
+      timeLine
     };
     const { localizationLabels } = state.app;
-    const complaintTypeLocalised = getTranslatedLabel(`SERVICEDEFS.${transformedComplaint.complaint.complaint}`.toUpperCase(), localizationLabels);
+    const complaintTypeLocalised = getTranslatedLabel(
+      `SERVICEDEFS.${transformedComplaint.complaint.complaint}`.toUpperCase(),
+      localizationLabels
+    );
 
-    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee, complaintTypeLocalised };
+    return {
+      form,
+      transformedComplaint,
+      role,
+      serviceRequestId,
+      isAssignedToEmployee,
+      complaintTypeLocalised
+    };
   } else {
-    return { form, transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
+    return {
+      form,
+      transformedComplaint: {},
+      role,
+      serviceRequestId,
+      isAssignedToEmployee
+    };
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    resetFiles: (formKey) => dispatch(resetFiles(formKey)),
-    sendMessage: (message) => dispatch(sendMessage(message)),
-    sendMessageMedia: (message) => dispatch(sendMessageMedia(message)),
-    prepareFormData: (jsonPath, value) => dispatch(prepareFormData(jsonPath, value)),
+    fetchComplaints: criteria => dispatch(fetchComplaints(criteria)),
+    resetFiles: formKey => dispatch(resetFiles(formKey)),
+    sendMessage: message => dispatch(sendMessage(message)),
+    sendMessageMedia: message => dispatch(sendMessageMedia(message)),
+    prepareFormData: (jsonPath, value) =>
+      dispatch(prepareFormData(jsonPath, value))
   };
 };
 

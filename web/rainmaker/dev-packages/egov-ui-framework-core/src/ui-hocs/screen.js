@@ -102,7 +102,7 @@ const screenHoc = ({
     };
 
     render() {
-      const { screenConfig, toast, spinner } = this.props;
+      const { screenConfig, toastObject, spinner } = this.props;
       const {
         [screenKey]: currentScreenConfig,
         preparedFinalObject
@@ -119,7 +119,7 @@ const screenHoc = ({
             onFieldChange={handleScreenConfigurationFieldChange}
             onComponentClick={onClick}
             preparedFinalObject={preparedFinalObject}
-            toast={toast}
+            toastObject={toastObject}
             spinner={spinner}
           />
         );
@@ -131,9 +131,13 @@ const screenHoc = ({
 
   const mapStateToProps = state => {
     const { screenConfiguration, app } = state;
-    const { toast, spinner } = app;
-    const { screenConfig, preparedFinalObject } = screenConfiguration;
-    return { screenConfig, preparedFinalObject, state, toast, spinner };
+    const { spinner } = app;
+    const {
+      screenConfig,
+      preparedFinalObject,
+      toastObject
+    } = screenConfiguration;
+    return { screenConfig, preparedFinalObject, state, toastObject, spinner };
   };
 
   const mapDispatchToProps = dispatch => {

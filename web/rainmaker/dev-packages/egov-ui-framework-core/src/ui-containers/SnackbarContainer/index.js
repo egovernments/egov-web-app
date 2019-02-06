@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Snackbar } from "../../ui-atoms";
 import { connect } from "react-redux";
-import { toggleSnackbarAndSetText } from "../../ui-redux/app/actions";
+import { toggleSnackbar } from "../../ui-redux/screen-configuration/actions";
 
 class SnackbarContainer extends Component {
   handleClose = (event, reason) => {
-    const { toggleSnackbarAndSetText } = this.props;
-    toggleSnackbarAndSetText(false, "", "");
+    const { toggleSnackbar } = this.props;
+    toggleSnackbar(false, "", "");
   };
   render() {
     const { open, variant, message } = this.props;
@@ -23,8 +23,8 @@ class SnackbarContainer extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleSnackbarAndSetText: (open, message, variant) => {
-      dispatch(toggleSnackbarAndSetText(open, message, variant));
+    toggleSnackbar: (open, message, variant) => {
+      dispatch(toggleSnackbar(open, message, variant));
     }
   };
 };

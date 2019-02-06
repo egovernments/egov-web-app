@@ -1,11 +1,15 @@
 import * as screenActionTypes from "./actionTypes";
-import {updateObjectWithComponentJsonPath,prepareFinalObject} from "./utils";
+import { updateObjectWithComponentJsonPath, prepareFinalObject } from "./utils";
 
 const intialState = {
   screenConfig: {},
-  preparedFinalObject: {}
+  preparedFinalObject: {},
+  toastObject: {
+    message: "",
+    open: false,
+    errorType: ""
+  }
 };
-
 
 const screenConfiguration = (state = intialState, action) => {
   switch (action.type) {
@@ -36,16 +40,25 @@ const screenConfiguration = (state = intialState, action) => {
         }
       };
 
-      case screenActionTypes.PREPARE_FINAL_OBJECT:
-        const updatedPreparedFinalObject = prepareFinalObject(
-          state.preparedFinalObject,
-          action.jsonPath,
-          action.value
-        );
-        return {
-          ...state,
-          preparedFinalObject: updatedPreparedFinalObject
-        };
+    case screenActionTypes.PREPARE_FINAL_OBJECT:
+      const updatedPreparedFinalObject = prepareFinalObject(
+        state.preparedFinalObject,
+        action.jsonPath,
+        action.value
+      );
+      return {
+        ...state,
+        preparedFinalObject: updatedPreparedFinalObject
+      };
+    case screenActionTypes.SHOW_NEW_TOAST:
+      return {
+        ...state,
+        toastObject: {
+          message: action.message,
+          open: action.open,
+          error: action.error
+        }
+      };
 
     default:
       return state;

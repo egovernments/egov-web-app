@@ -13,10 +13,10 @@ class CommonView extends React.Component {
       onComponentClick,
       preparedFinalObject,
       screenKey,
-      toast,
+      toastObject,
       spinner
     } = this.props;
-    const { error, message, open } = toast;
+    const { error, message, open } = toastObject;
     return (
       <div>
         <RenderScreen

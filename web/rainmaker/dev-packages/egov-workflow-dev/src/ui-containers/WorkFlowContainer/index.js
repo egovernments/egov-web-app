@@ -7,7 +7,7 @@ import {
   addWflowFileUrl
 } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -23,7 +23,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   componentDidMount = async () => {
-    const { prepareFinalObject, toggleSnackbarAndSetText } = this.props;
+    const { prepareFinalObject, toggleSnackbar } = this.props;
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -49,18 +49,10 @@ class WorkFlowContainer extends React.Component {
         );
         addWflowFileUrl(processInstances, prepareFinalObject);
       } else {
-        toggleSnackbarAndSetText(
-          true,
-          "Workflow returned empty object !",
-          "error"
-        );
+        toggleSnackbar(true, "Workflow returned empty object !", "error");
       }
     } catch (e) {
-      toggleSnackbarAndSetText(
-        true,
-        "Workflow returned empty object !",
-        "error"
-      );
+      toggleSnackbar(true, "Workflow returned empty object !", "error");
     }
   };
 
@@ -86,7 +78,7 @@ class WorkFlowContainer extends React.Component {
   };
 
   createWorkFLow = async label => {
-    const { Licenses, toggleSnackbarAndSetText } = this.props;
+    const { Licenses, toggleSnackbar } = this.props;
     set(Licenses[0], "action", label);
     const applicationNumber = getQueryArg(
       window.location.href,
@@ -106,14 +98,13 @@ class WorkFlowContainer extends React.Component {
         open: false
       });
       if (payload) {
+        const licenseNumber = get(payload, "Licenses[0].licenseNumber");
         window.location.href = `acknowledgement?${this.getPurposeString(
           label
-        )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${
-          Licenses[0].licenseNumber
-        }`;
+        )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${licenseNumber}`;
       }
     } catch (e) {
-      toggleSnackbarAndSetText(true, "TL update error!", "error");
+      toggleSnackbar(true, "TL update error!", "error");
     }
   };
 
@@ -249,8 +240,8 @@ const mapDispacthToProps = dispatch => {
   return {
     prepareFinalObject: (path, value) =>
       dispatch(prepareFinalObject(path, value)),
-    toggleSnackbarAndSetText: (open, message, variant) =>
-      dispatch(toggleSnackbarAndSetText(open, message, variant))
+    toggleSnackbar: (open, message, variant) =>
+      dispatch(toggleSnackbar(open, message, variant))
   };
 };
 

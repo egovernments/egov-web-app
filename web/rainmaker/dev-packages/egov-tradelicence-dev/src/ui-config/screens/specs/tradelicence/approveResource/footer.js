@@ -1,5 +1,5 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import set from "lodash/set";
 import {
@@ -86,17 +86,11 @@ const onNextButtonClick = async (state, dispatch) => {
         response.Error &&
         response.Error[0] &&
         dispatch(
-          toggleSnackbarAndSetText(
-            true,
-            get("response", Error[0].message),
-            "error"
-          )
+          toggleSnackbar(true, get("response", Error[0].message), "error")
         );
     }
   } else {
-    dispatch(
-      toggleSnackbarAndSetText(true, "Please accept the terms !", "error")
-    );
+    dispatch(toggleSnackbar(true, "Please accept the terms !", "error"));
   }
 };
 

@@ -5,7 +5,6 @@ import {
 } from "egov-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 
 const instance = axios.create({
   baseURL: window.location.origin,

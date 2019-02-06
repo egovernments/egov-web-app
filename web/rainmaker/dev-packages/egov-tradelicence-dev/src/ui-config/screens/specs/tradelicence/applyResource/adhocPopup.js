@@ -12,7 +12,10 @@ import get from "lodash/get";
 import { httpRequest } from "../../../../../ui-utils/api";
 import cloneDeep from "lodash/cloneDeep";
 import { createEstimateData } from "../../utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const getEstimateDataAfterAdhoc = async (state, dispatch) => {
   const TLRequestBody = cloneDeep(
@@ -78,9 +81,7 @@ const updateAdhoc = (state, dispatch) => {
   if (adhocAmount || rebateAmount) {
     getEstimateDataAfterAdhoc(state, dispatch);
   } else {
-    dispatch(
-      toggleSnackbarAndSetText(true, "Enter at least one field", "warning")
-    );
+    dispatch(toggleSnackbar(true, "Enter at least one field", "warning"));
   }
 };
 

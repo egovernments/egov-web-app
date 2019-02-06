@@ -1,13 +1,26 @@
 import * as screenActionTypes from "./actionTypes";
-import { prepareFinalBodyData, prepareFinalQueryData,validateForm } from "./utils";
+import {
+  prepareFinalBodyData,
+  prepareFinalQueryData,
+  validateForm
+} from "./utils";
 import { httpRequest, loginRequest } from "../../ui-utils";
-import {toggleSpinner,setRoute} from "../app/actions";
+import { toggleSpinner, setRoute } from "../app/actions";
 
 export const initScreen = (screenKey, screenConfig) => {
   return {
     type: screenActionTypes.INIT_SCREEN,
     screenKey,
     screenConfig
+  };
+};
+
+export const toggleSnackbar = (open, message, error) => {
+  return {
+    type: screenActionTypes.SHOW_NEW_TOAST,
+    open,
+    message,
+    error
   };
 };
 
@@ -34,7 +47,6 @@ export const prepareFinalObject = (jsonPath, value) => {
   };
 };
 
-
 export const submitForm = (
   screenKey,
   method,
@@ -47,13 +59,10 @@ export const submitForm = (
   return async (dispatch, getState) => {
     const state = getState();
     const { screenConfiguration } = state;
-    const {
-      screenConfig,
-      preparedFinalObject
-    } = screenConfiguration;
-    const {[screenKey]:currentScreenConfig}=screenConfig;
+    const { screenConfig, preparedFinalObject } = screenConfiguration;
+    const { [screenKey]: currentScreenConfig } = screenConfig;
     dispatch(toggleSpinner());
-    if (validateForm(screenKey,currentScreenConfig.components,dispatch)) {
+    if (validateForm(screenKey, currentScreenConfig.components, dispatch)) {
       try {
         let screenConfigResponse = {};
         // this will eventually moved out to the auth action; bit messy
@@ -95,8 +104,7 @@ export const submitForm = (
         console.log(error);
         // throw new Error(error);
       }
-    }
-    else {
+    } else {
       dispatch(toggleSpinner());
     }
   };

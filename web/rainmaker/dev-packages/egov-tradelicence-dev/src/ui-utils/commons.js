@@ -8,14 +8,16 @@ import {
   getLocalityHarmedJson,
   setFilteredTradeTypes
 } from "../ui-config/screens/specs/utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getTranslatedLabel,
   updateDropDowns,
   ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -31,7 +33,7 @@ export const updateTradeDetails = async requestBody => {
     );
     return payload;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
   }
 };
 
@@ -76,7 +78,7 @@ export const getSearchResults = async queryObject => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
   }
 };
 
@@ -382,7 +384,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
     setApplicationNumberBox(state, dispatch);
     return true;
   } catch (error) {
-    dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, error.message, "error"));
     console.log(error);
     return false;
   }

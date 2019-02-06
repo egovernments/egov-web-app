@@ -4,11 +4,11 @@ const initialState = {
   name: "MIHY",
   route: "",
   previousRoute: "",
-  toast: {
-    message: "",
-    open: false,
-    errorType: ""
-  },
+  // toastObject: {
+  //   message: "",
+  //   open: false,
+  //   errorType: ""
+  // },
   spinner: false
 };
 
@@ -22,15 +22,15 @@ const appReducer = (state = initialState, action) => {
           : state.previousRoute,
         route: action.route
       };
-    case actionTypes.SHOW_TOAST:
-      return {
-        ...state,
-        toast: {
-          message: action.message,
-          open: action.open,
-          error: action.error
-        }
-      };
+    // case actionTypes.SHOW_TOAST:
+    //   return {
+    //     ...state,
+    //     toastObject: {
+    //       message: action.message,
+    //       open: action.open,
+    //       error: action.error
+    //     }
+    //   };
     case actionTypes.TOGGLE_SPINNER:
       return {
         ...state,

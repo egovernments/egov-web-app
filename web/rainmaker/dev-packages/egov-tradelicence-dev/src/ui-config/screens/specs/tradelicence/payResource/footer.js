@@ -6,7 +6,7 @@ import { httpRequest } from "../../../../../ui-utils/api";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getBill } from "../../utils";
 
 export const callPGService = async (state, dispatch) => {
@@ -216,11 +216,7 @@ const callBackForPay = async (state, dispatch) => {
       get(finalReceiptData, "instrument.transactionNumberConfirm")
     ) {
       dispatch(
-        toggleSnackbarAndSetText(
-          true,
-          "Transaction numbers don't match !",
-          "error"
-        )
+        toggleSnackbar(true, "Transaction numbers don't match !", "error")
       );
       return;
     }
@@ -255,16 +251,12 @@ const callBackForPay = async (state, dispatch) => {
       );
       moveToSuccess(href, dispatch, receiptNumber);
     } catch (e) {
-      dispatch(toggleSnackbarAndSetText(true, e.message, "error"));
+      dispatch(toggleSnackbar(true, e.message, "error"));
       console.log(e);
     }
   } else {
     dispatch(
-      toggleSnackbarAndSetText(
-        true,
-        "Please fill all the mandatory fields",
-        "warning"
-      )
+      toggleSnackbar(true, "Please fill all the mandatory fields", "warning")
     );
   }
 };
