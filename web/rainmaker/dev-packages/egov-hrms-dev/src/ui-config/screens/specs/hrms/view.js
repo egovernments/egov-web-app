@@ -63,6 +63,7 @@ const screenConfig = {
     // },
     adhocDialog: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-hrms",
       componentPath: "DialogContainer",
       props: {
         open: false,

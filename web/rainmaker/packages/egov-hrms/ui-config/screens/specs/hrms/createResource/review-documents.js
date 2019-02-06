@@ -65,6 +65,7 @@ var getReviewDocuments = exports.getReviewDocuments = function getReviewDocument
         },
         documents: {
           uiFramework: "custom-containers-local",
+          moduleName: "egov-hrms",
           componentPath: "DownloadFileContainer",
           props: {
             sourceJsonPath: "LicensesTemp[0].reviewDocData",

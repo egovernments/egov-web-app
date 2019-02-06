@@ -9,6 +9,7 @@ export const pendingApprovals = {
     breakPending: getBreak(),
     pendingApprovals: {
       uiFramework: "custom-molecules-local",
+      moduleName: "egov-hrms",
       componentPath: "Table",
       props: {
         data: [

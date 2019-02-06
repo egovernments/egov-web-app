@@ -10,7 +10,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import get from "lodash/get";
 import set from "lodash/set";
 import filter from "lodash/filter";
-import { httpRequest } from "ui-utils/api";
+import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";

@@ -207,6 +207,7 @@ var professionalDetails = exports.professionalDetails = (0, _utils.getCommonCard
     // },
     role: {
       uiFramework: "custom-containers-local",
+      moduleName: "egov-hrms",
       componentPath: "AutosuggestContainer",
       jsonPath: "Employee[0].user.roles",
       required: true,

@@ -30,7 +30,7 @@ var _reactRedux = require("react-redux");
 
 var _recompose = require("recompose");
 
-var _uiRoutes = require("ui-routes");
+var _uiRoutes = require("../../ui-routes");
 
 var _uiRoutes2 = _interopRequireDefault(_uiRoutes);
 

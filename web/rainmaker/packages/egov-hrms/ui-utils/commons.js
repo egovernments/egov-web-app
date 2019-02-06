@@ -17,7 +17,7 @@ var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _api = require("ui-utils/api");
+var _api = require("../ui-utils/api");
 
 var _utils = require("../ui-config/screens/specs/utils");
 

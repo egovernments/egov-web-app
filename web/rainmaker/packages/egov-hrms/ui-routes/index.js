@@ -12,7 +12,7 @@ var _RenderRoutes = require("egov-ui-framework/ui-molecules/RenderRoutes");
 
 var _RenderRoutes2 = _interopRequireDefault(_RenderRoutes);
 
-var _uiConfig = require("ui-config");
+var _uiConfig = require("../ui-config");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

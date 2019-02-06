@@ -21,6 +21,7 @@ var pendingApprovals = exports.pendingApprovals = {
     breakPending: (0, _utils.getBreak)(),
     pendingApprovals: {
       uiFramework: "custom-molecules-local",
+      moduleName: "egov-hrms",
       componentPath: "Table",
       props: {
         data: [{

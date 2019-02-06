@@ -6,7 +6,10 @@ const remoteConfigPath = (path, screenKey) => {
       config = require(`egov-tradelicence/ui-config/screens/specs/${path}/${screenKey}`)
         .default;
       break;
-
+    case "hrms":
+      config = require(`egov-hrms/ui-config/screens/specs/${path}/${screenKey}`)
+        .default;
+      break;
     default:
       config = require(`ui-config/screens/specs/${path}/${screenKey}`).default;
       break;

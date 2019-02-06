@@ -19,7 +19,7 @@ var _get2 = _interopRequireDefault(_get);
 
 var _actions = require("egov-ui-framework/ui-redux/screen-configuration/actions");
 
-var _store = require("ui-redux/store");
+var _store = require("../../../../ui-redux/store");
 
 var _store2 = _interopRequireDefault(_store);
 

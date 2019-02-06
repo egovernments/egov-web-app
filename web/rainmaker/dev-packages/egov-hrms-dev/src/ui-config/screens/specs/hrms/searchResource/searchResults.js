@@ -49,6 +49,7 @@ const selectToolbarStyle = {
 
 export const searchResults = {
   uiFramework: "custom-molecules-local",
+  moduleName: "egov-hrms",
   componentPath: "Table",
   visible: false,
   props: {

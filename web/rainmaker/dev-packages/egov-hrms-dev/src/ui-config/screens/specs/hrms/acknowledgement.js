@@ -74,6 +74,7 @@ const getAcknowledgementCard = (
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
+          moduleName: "egov-hrms",
           componentPath: "ApplicationNoContainer",
           props: {
             number: applicationNumber
@@ -184,6 +185,7 @@ const getAcknowledgementCard = (
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
+          moduleName: "egov-hrms",
           componentPath: "ApplicationNoContainer",
           props: {
             number: applicationNumber
@@ -225,6 +227,7 @@ const getAcknowledgementCard = (
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
+          moduleName: "egov-hrms",
           componentPath: "ApplicationNoContainer",
           props: {
             number: applicationNumber
@@ -302,6 +305,7 @@ const getAcknowledgementCard = (
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
+          moduleName: "egov-hrms",
           componentPath: "ApplicationNoContainer",
           props: {
             number: applicationNumber

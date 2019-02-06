@@ -18,6 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getHeader = function getHeader(label) {
   return {
     uiFramework: "custom-molecules-local",
+    moduleName: "egov-hrms",
     componentPath: "DividerWithLabel",
     props: {
       className: "hr-generic-divider-label",

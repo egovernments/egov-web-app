@@ -152,6 +152,7 @@ const serviceDetailsCard = {
           },
           currentlyWorkingHere: {
             uiFramework: "custom-molecules-local",
+            moduleName: "egov-hrms",
             componentPath: "SwitchWithLabel",
             jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition",
             props: {

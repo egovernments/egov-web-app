@@ -51,7 +51,7 @@ var _filter = require("lodash/filter");
 
 var _filter2 = _interopRequireDefault(_filter);
 
-var _api = require("ui-utils/api");
+var _api = require("../../../../ui-utils/api");
 
 var _commons = require("egov-ui-framework/ui-utils/commons");
 

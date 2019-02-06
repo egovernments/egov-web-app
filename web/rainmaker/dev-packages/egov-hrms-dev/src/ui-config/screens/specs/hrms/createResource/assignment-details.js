@@ -67,6 +67,7 @@ const assignmentDetailsCard = {
           },
           currentAssignment: {
             uiFramework: "custom-molecules-local",
+            moduleName: "egov-hrms",
             componentPath: "SwitchWithLabel",
             props: {
               items: [
@@ -134,6 +135,7 @@ const assignmentDetailsCard = {
           },
           headOfDepartment: {
             uiFramework: "custom-molecules-local",
+            moduleName: "egov-hrms",
             componentPath: "SwitchWithLabel",
             props: {
               items: [

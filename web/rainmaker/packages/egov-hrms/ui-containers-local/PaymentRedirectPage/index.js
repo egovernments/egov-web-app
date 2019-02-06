@@ -36,7 +36,7 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
-var _api = require("ui-utils/api");
+var _api = require("../../ui-utils/api");
 
 var _reactRouter = require("react-router");
 

@@ -233,6 +233,7 @@ export const professionalDetails = getCommonCard({
       // },
       role: {
         uiFramework: "custom-containers-local",
+        moduleName: "egov-hrms",
         componentPath: "AutosuggestContainer",
         jsonPath: "Employee[0].user.roles",
         required: true,

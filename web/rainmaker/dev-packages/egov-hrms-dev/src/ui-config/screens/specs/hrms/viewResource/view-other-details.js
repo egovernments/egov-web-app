@@ -11,6 +11,7 @@ import { changeStep } from "../createResource/footer";
 const getHeader = label => {
   return {
     uiFramework: "custom-molecules-local",
+    moduleName: "egov-hrms",
     componentPath: "DividerWithLabel",
     props: {
       className: "hr-generic-divider-label",
@@ -25,6 +26,7 @@ const getHeader = label => {
 const getDocuments = () => {
   return {
     uiFramework: "custom-containers-local",
+    moduleName: "egov-hrms",
     componentPath: "DownloadFileContainer",
     props: {
       //   sourceJsonPath: "LicensesTemp[0].reviewDocData",

@@ -1,6 +1,6 @@
 import React from "react";
 import  RenderRoutes  from "egov-ui-framework/ui-molecules/RenderRoutes";
-import { appRoutes } from "ui-config";
+import { appRoutes } from "../ui-config";
 
 const MainRoutes = (childProps) => {
   return (

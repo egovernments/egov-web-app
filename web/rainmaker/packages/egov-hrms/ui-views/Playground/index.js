@@ -56,13 +56,13 @@ var _CommonView = require("egov-ui-framework/ui-molecules/CommonView");
 
 var _CommonView2 = _interopRequireDefault(_CommonView);
 
-var _create = require("ui-config/screens/specs/hrms/create");
+var _create = require("../../ui-config/screens/specs/hrms/create");
 
 var _create2 = _interopRequireDefault(_create);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import defaultScreenConfig from "ui-config/screens/specs/hrms/apply";
+// import defaultScreenConfig from "../../ui-config/screens/specs/hrms/apply";
 
 var initScreenConfig = _create2.default;
 

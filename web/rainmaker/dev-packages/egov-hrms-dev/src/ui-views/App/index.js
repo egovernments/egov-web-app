@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import MainRoutes from "ui-routes";
+import MainRoutes from "../../ui-routes";
 //import LoadingIndicator from "egov-ui-framework/ui-molecules/LoadingIndicator";
 import Div from "egov-ui-framework/ui-atoms/HtmlElements/Div";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
