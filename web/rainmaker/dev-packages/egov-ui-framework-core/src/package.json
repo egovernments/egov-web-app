@@ -1,6 +1,7 @@
 {
   "name": "egov-ui-framework",
   "version": "0.1.41",
+  "license": "egov",
   "description": "",
   "main": "index.js",
   "scripts": {
