@@ -1,0 +1,168 @@
+import {
+  getCommonHeader,
+  getTextField,
+  getSelectField,
+  getCommonContainer,
+  getLabel,
+  getPattern,
+  getDateField
+} from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { deactivateEmployeeApiCall } from "./functions";
+
+const deactivateEmployeeCallback = (state, dispatch) => {
+  deactivateEmployeeApiCall(state, dispatch);
+};
+
+export const deactivateEmployee = getCommonContainer({
+  // header: getCommonHeader({
+  //   labelName: "Add Adhoc Penalty/Rebate",
+  //   labelKey: "TL_ADD_HOC_CHARGES_POPUP_HEAD"
+  // }),
+  header: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+    children: {
+      div1: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 12,
+          sm: 12
+        },
+        children: {
+          div: getCommonHeader(
+            {
+              labelName: "Deactivate Employee",
+              labelKey: "HR_DEACTIVATE_EMPLOYEE_HEAD"
+            },
+            {
+              style: {
+                fontSize: "20px"
+              }
+            }
+          )
+        }
+      },
+      deactivationReason: getSelectField({
+        label: {
+          labelName: "Reason for Deactivation",
+          labelKey: "HR_DEACTIVATION_REASON"
+        },
+        placeholder: {
+          labelName: "Select Reason for Deactivation",
+          labelKey: "HR_DEACTIVATION_REASON_SELECT"
+        },
+        required: true,
+        props: {
+          style: {
+            width: "100%"
+          }
+        },
+        data: [
+          {
+            code: "Others"
+          },
+          {
+            code: "Order by commissioner"
+          }
+        ],
+        jsonPath: "Employee[0].deactivationDetails[0].reasonForDeactivation",
+        gridDefination: {
+          xs: 12,
+          sm: 12
+        }
+      }),
+      effectiveDate: getDateField({
+        label: {
+          labelName: "Effective Date",
+          labelKey: "HR_EFFECTIVE_DATE"
+        },
+        required: true,
+        pattern: getPattern("Date"),
+        props: {
+          style: {
+            width: "100%"
+          }
+        },
+        jsonPath: "Employee[0].deactivationDetails[0].effectiveFrom",
+        gridDefination: {
+          xs: 12,
+          sm: 12
+        }
+      }),
+      orderNo: getTextField({
+        label: {
+          labelName: "Order No.",
+          labelKey: "HR_ORDER_NO"
+        },
+        placeholder: {
+          labelName: "Enter Order No.",
+          labelKey: "HR_ENTER_ORDER_NO"
+        },
+        props: {
+          style: {
+            width: "100%"
+          }
+        },
+        jsonPath: "Employee[0].deactivationDetails[0].orderNo",
+        gridDefination: {
+          xs: 12,
+          sm: 12
+        }
+      }),
+      remarks: getTextField({
+        label: {
+          labelName: "Remarks",
+          labelKey: "HR_REMARKS"
+        },
+        placeholder: {
+          labelName: "Enter Remarks",
+          labelKey: "HR_ENTER_REMARKS"
+        },
+        props: {
+          style: {
+            width: "100%"
+          }
+        },
+        jsonPath: "Employee[0].deactivationDetails[0].remarks",
+        gridDefination: {
+          xs: 12,
+          sm: 12
+        }
+      }),
+      buttonDiv: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        props: {
+          style: {
+            width: "100%",
+            textAlign: "right"
+          }
+        },
+        children: {
+          deactivateButton: {
+            componentPath: "Button",
+            props: {
+              variant: "contained",
+              color: "primary",
+              style: {
+                width: "200px",
+                height: "48px"
+              }
+            },
+            children: {
+              previousButtonLabel: getLabel({
+                labelName: "DEACTIVATE EMPLOYEE",
+                labelKey: "HR_DEACTIVATE_EMPLOYEE_BUTTON_TEXT"
+              })
+            },
+            onClickDefination: {
+              action: "condition",
+              callBack: deactivateEmployeeCallback
+            }
+          }
+        }
+      }
+    }
+  }
+});
