@@ -67,7 +67,21 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
 };
 
 const updateAdhoc = (state, dispatch) => {
-  getEstimateDataAfterAdhoc(state, dispatch);
+  const adhocAmount = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.adhocPenalty"
+  );
+  const rebateAmount = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.adhocExemption"
+  );
+  if (adhocAmount || rebateAmount) {
+    getEstimateDataAfterAdhoc(state, dispatch);
+  } else {
+    dispatch(
+      toggleSnackbarAndSetText(true, "Enter at least one field", "warning")
+    );
+  }
 };
 
 export const adhocPopup = getCommonContainer({
