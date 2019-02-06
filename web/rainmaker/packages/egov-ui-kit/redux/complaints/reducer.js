@@ -24,7 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mergeServiceWithActions = function mergeServiceWithActions(payload) {
   return payload && payload.actionHistory && payload.actionHistory.reduce(function (result, item, index) {
-    if (!(0, _isEmpty2.default)(item) && !(0, _isEmpty2.default)(item.actions)) {
+    if (!(0, _isEmpty2.default)(item) && !(0, _isEmpty2.default)(item.actions) && payload.services[index]) {
       result.push((0, _extends3.default)({}, payload.services[index], {
         actions: item.actions
       }));
