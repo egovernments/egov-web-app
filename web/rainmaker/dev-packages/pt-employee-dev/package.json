@@ -1,6 +1,7 @@
 {
   "name": "pt-employee-dev",
   "version": "0.0.2",
+  "license": "egov",
   "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/employee/",
   "proxy": "https://egov-micro-dev.egovernments.org/",

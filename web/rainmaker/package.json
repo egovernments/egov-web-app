@@ -13,8 +13,8 @@
     "prod:citizen": " yarn run transpile-citizen-modules && cd packages/citizen && yarn run build",
     "prod:employee": "cd packages/employee && yarn run build",
     "transpile-citizen-modules": "run-p pgr-citizen pt-citizen",
-    "transpile-employee-modules": "run-p pgr-employee pt-employee",
-    "transpile-common-modules": "run-p egov-ui-kit egov-ui-framework egov-workflow",
+    "transpile-employee-modules": "run-p pgr-employee pt-employee egov-hrms",
+    "transpile-common-modules": "run-p egov-ui-kit egov-ui-framework egov-workflow egov-tradelicence",
     "egov-ui-kit-config": "babel dev-packages/egov-ui-kit-dev/src/config --out-dir packages/egov-ui-kit/config --copy-files",
     "egov-ui-kit-components": "babel dev-packages/egov-ui-kit-dev/src/components --out-dir packages/egov-ui-kit/components --copy-files",
     "egov-ui-kit-redux": "babel dev-packages/egov-ui-kit-dev/src/redux --out-dir packages/egov-ui-kit/redux --copy-files",
@@ -46,6 +46,7 @@
     "egov-ui-framework": "babel dev-packages/egov-ui-framework-core/src --out-dir packages/egov-ui-framework --copy-files",
     "egov-workflow": "babel dev-packages/egov-workflow-dev/src --out-dir packages/egov-workflow --copy-files",
     "egov-tradelicence": "babel dev-packages/egov-tradelicence-dev/src --out-dir packages/egov-tradelicence --copy-files",
+    "egov-hrms": "babel dev-packages/egov-hrms-dev/src --out-dir packages/egov-hrms --copy-files",
     "prepare": "yarn run transpile-common-modules && yarn run transpile-citizen-modules  && yarn run transpile-employee-modules && lerna bootstrap"
   },
   "devDependencies": {
