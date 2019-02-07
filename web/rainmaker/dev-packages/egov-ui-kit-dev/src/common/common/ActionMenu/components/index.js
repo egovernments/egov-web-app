@@ -252,7 +252,7 @@ class ActionMenuComp extends Component {
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
                     leftIcon={this.renderLeftIcon(iconLeft, item)}
-                    primaryText={<div className="menuStyle with-childs">{item.name || ""}</div>}
+                    primaryText={<Label className="menuStyle with-childs" label={item.name || ""} color="rgba(0, 0, 0, 0.87)" />}
                     rightIcon={
                       <Icon
                         name="chevron-right"
