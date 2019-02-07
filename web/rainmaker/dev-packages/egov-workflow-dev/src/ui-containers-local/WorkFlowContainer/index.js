@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import TaskStatusContainer from "../TaskStatusContainer";
-import { Footer } from "../../ui-molecules";
+import { Footer } from "../../ui-molecules-local";
 import {
   getQueryArg,
   addWflowFileUrl

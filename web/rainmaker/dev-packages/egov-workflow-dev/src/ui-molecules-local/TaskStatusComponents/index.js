@@ -11,8 +11,8 @@ import "./index.css";
 
 const TaskStatusComponents = ({ currentObj, index }) => {
   return (
-    <Grid container={true} sm={12}>
-      <Grid item sm={2} style={{ paddingRight: 20 }}>
+    <Grid container={true} sm={12} style={{ paddingLeft: 10 }}>
+      <Grid item sm={3} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
           <LabelContainer labelName="Date" labelKey="TL_DATE_LABEL" />
         </Typography>
@@ -24,7 +24,7 @@ const TaskStatusComponents = ({ currentObj, index }) => {
           />
         </Typography>
       </Grid>
-      <Grid item sm={2} style={{ paddingRight: 20 }}>
+      <Grid item sm={3} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
           <LabelContainer
             labelName="Updated By"
@@ -35,7 +35,7 @@ const TaskStatusComponents = ({ currentObj, index }) => {
           <LabelContainer labelName={get(currentObj, "assigner.name")} />
         </Typography>
       </Grid>
-      <Grid item sm={2} style={{ paddingRight: 20 }}>
+      <Grid item sm={3} style={{ paddingRight: 20 }}>
         <Typography variant="caption">
           <LabelContainer
             labelName="Status"
@@ -67,7 +67,7 @@ const TaskStatusComponents = ({ currentObj, index }) => {
           <LabelContainer labelName={get(currentObj, "assignee.name")} />
         </Typography>
       </Grid>
-      <Grid item sm={3} style={{ paddingRight: 20 }}>
+      <Grid item sm={3} style={{ marginTop: 15 }}>
         <Typography variant="caption">
           <LabelContainer
             labelName="Comments"

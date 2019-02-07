@@ -32,7 +32,7 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-//import { footerReview } from "./applyResource/footer";
+
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -404,7 +404,7 @@ const screenConfig = {
               componentPath: "Container",
               props: {
                 color: "primary",
-                style: { justifyContent: "flex-end" }
+                style: { justifyContent: "flex-end", display: "block" }
               },
               gridDefination: {
                 xs: 12,
@@ -443,13 +443,14 @@ const screenConfig = {
             }
           }
         },
-        tradeReviewDetails,
         taskStatus: {
-          uiFramework: "remote-component",
+          uiFramework: "custom-containers-local",
           componentPath: "WorkFlowContainer",
-          remotePath: "egov-workflow/ui-containers",
+          moduleName: "egov-workflow",
           visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
-        }
+        },
+        tradeReviewDetails
+
         //footer
       }
     },

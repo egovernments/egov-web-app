@@ -75,7 +75,10 @@ class Footer extends React.Component {
     const { open, data, employeeList } = this.state;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
-        <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
+        <div
+          className="col-xs-6"
+          style={{ float: "right", padding: 0, width: "100%" }}
+        >
           {contractData &&
             contractData.map(item => {
               const { buttonLabel, moduleName } = item;
