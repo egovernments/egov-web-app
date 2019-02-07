@@ -2002,7 +2002,7 @@ export const applyForm = (state, dispatch) => {
     window.location.href =
       process.env.NODE_ENV === "production"
         ? `/citizen/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : process.env.SELF_RUNNING_APP === true
+        : process.env.REACT_APP_SELF_RUNNING === true
         ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
         : `/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }

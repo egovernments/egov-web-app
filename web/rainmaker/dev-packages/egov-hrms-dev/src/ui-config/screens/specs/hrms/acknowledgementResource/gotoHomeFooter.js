@@ -14,7 +14,7 @@ const getCommonApplyFooter = children => {
 
 export const gotoHomeFooter = () => {
   const redirectionURL =
-    process.env.SELF_RUNNING_APP === "true"
+    process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/hrms/search`
       : `/hrms/search`;
 

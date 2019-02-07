@@ -69,7 +69,10 @@ export const getEmployeeDetailsView = (isReview = true) => {
           },
           onClickDefination: {
             action: "page_change",
-            path: "/egov-ui-framework/hrms/create"
+            path:
+              process.env.REACT_APP_SELF_RUNNING === "true"
+                ? `/egov-ui-framework/hrms/create?step=0`
+                : `/hrms/create?step=0`
           }
         }
       }

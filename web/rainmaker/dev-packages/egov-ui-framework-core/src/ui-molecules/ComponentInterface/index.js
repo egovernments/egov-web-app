@@ -14,7 +14,8 @@ class ComponentInterface extends React.Component {
   componentDidMount() {
     const { componentPath, uiFramework, moduleName } = this.props;
     let LoadableComponent = null;
-    const selfRunning = process.env.SELF_RUNNING_APP;
+    const selfRunning =
+      process.env.REACT_APP_SELF_RUNNING === "true" ? true : false;
     switch (uiFramework) {
       // case "carbon":
       //   LoadableComponent = Loadable({
@@ -98,7 +99,7 @@ class ComponentInterface extends React.Component {
       //       ),
       //     loading: () => <LinearProgress />
       //   });
-        // break;
+      // break;
     }
     this.setState({ module: LoadableComponent });
   }

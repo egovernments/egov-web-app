@@ -96,7 +96,7 @@ export const searchResults = {
 
 const onRowClick = rowData => {
   let viewEmployeeUrl =
-    process.env.SELF_RUNNING_APP === "true"
+    process.env.REACT_APP_SELF_RUNNING === "true"
       ? "/egov-ui-framework/hrms/view"
       : "/hrms/view";
   return `${viewEmployeeUrl}?employeeID=${

@@ -116,10 +116,11 @@ export const getServiceDetailsView = (isReview = true) => {
             })
           },
           onClickDefination: {
-            action: "condition",
-            callBack: (state, dispatch) => {
-              changeStep(state, dispatch, "", 0);
-            }
+            action: "page_change",
+            path:
+              process.env.REACT_APP_SELF_RUNNING === "true"
+                ? `/egov-ui-framework/hrms/create?step=3`
+                : `/hrms/create?step=3`
           }
         }
       }

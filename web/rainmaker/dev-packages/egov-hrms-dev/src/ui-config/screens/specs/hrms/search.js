@@ -120,7 +120,7 @@ const employeeSearchAndResult = {
               onClickDefination: {
                 action: "page_change",
                 path:
-                  process.env.SELF_RUNNING_APP === "true"
+                  process.env.REACT_APP_SELF_RUNNING === "true"
                     ? "/egov-ui-framework/hrms/create"
                     : "/hrms/create"
               },

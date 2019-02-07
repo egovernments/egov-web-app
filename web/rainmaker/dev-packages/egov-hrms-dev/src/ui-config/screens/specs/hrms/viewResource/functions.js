@@ -228,7 +228,7 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       let response = await createEmployee(queryObject, employeeObject);
       let employeeId = get(response, "Employees[0].code");
       window.location.href =
-        process.env.SELF_RUNNING_APP === "true"
+        process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`
           : `/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
     } catch (error) {
@@ -239,7 +239,7 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       let response = await updateEmployee(queryObject, employeeObject);
       let employeeId = response && get(response, "Employees[0].code");
       window.location.href =
-        process.env.SELF_RUNNING_APP === "true"
+        process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`
           : `/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`;
     } catch (error) {
@@ -273,7 +273,7 @@ export const deactivateEmployeeApiCall = async (state, dispatch) => {
     let response = await updateEmployee(queryObject, employeeObject);
     let employeeId = response && get(response, "Employees[0].code");
     window.location.href =
-      process.env.SELF_RUNNING_APP === "true"
+      process.env.REACT_APP_SELF_RUNNING === "true"
         ? `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`
         : `/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
     showHideAdhocPopup(state, dispatch);

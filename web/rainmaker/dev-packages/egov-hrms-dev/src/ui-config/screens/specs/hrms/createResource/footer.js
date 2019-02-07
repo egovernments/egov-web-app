@@ -17,7 +17,7 @@ import "./index.css";
 
 const moveToReview = dispatch => {
   const reviewUrl =
-    process.env.SELF_RUNNING_APP === "true"
+    process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/hrms/review`
       : `/hrms/review`;
   dispatch(setRoute(reviewUrl));
