@@ -12,7 +12,7 @@ import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import { ImageModalDisplay } from "modules/common";
 
-import Playground from "modules/citizen/Playground";
+// import Playground from "modules/citizen/Playground";
 
 // pgr specific screens
 
@@ -117,7 +117,6 @@ const routes = [
     needsAuthentication: true,
     options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION", hideTitle: true, hideActionMenu: true },
   },
-
   // {
   //   path: "complaint-submitted",
   //   component: ComplaintCreated,
@@ -186,12 +185,12 @@ const routes = [
   //     hideTitle: true,
   //   },
   // },
-  {
-    path: "playground",
-    component: Playground,
-    needsAuthentication: true,
-    options: { hideFooter: true },
-  },
+  // {
+  //   path: "playground",
+  //   component: Playground,
+  //   needsAuthentication: true,
+  //   options: { hideFooter: true },
+  // },
   {
     path: "trade-license/how-it-works",
     component: TLHowItWorks,

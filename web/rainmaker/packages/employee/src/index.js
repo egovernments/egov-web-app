@@ -29,6 +29,8 @@ const themeVX = createMuiTheme(themeNew);
 // to eliminate the click delay
 // injectTapEventPlugin();
 
+console.log(process.env.REACT_APP_DEFAULT_TENANT_ID);
+
 // load material icons
 WebFont.load({
   google: {

@@ -6,6 +6,7 @@ import OTPForm from "./components/OTPForm";
 import { handleFieldChange, submitForm } from "egov-ui-kit/redux/form/actions";
 import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 import { Screen } from "modules/common";
+import get from "lodash/get";
 
 const OTPFormHOC = formHoc({ formKey: "otp" })(OTPForm);
 
@@ -43,13 +44,13 @@ class OTP extends Component {
   };
 
   render() {
-    const { phoneNumber, loading } = this.props;
+    const { phoneNumber, loading,bannerUrl,logoUrl } = this.props;
     const { resendOTP } = this;
 
     return (
       <Screen loading={loading} className="force-padding-0">
-        <Banner>
-          <OTPFormHOC resendOTP={resendOTP} phoneNumber={phoneNumber} />
+        <Banner bannerUrl={bannerUrl} logoUrl={logoUrl}>
+          <OTPFormHOC resendOTP={resendOTP} phoneNumber={phoneNumber} logoUrl={logoUrl}/>
         </Banner>
       </Screen>
     );
@@ -59,12 +60,15 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const { authenticating } = state.auth;
   const { previousRoute } = state.app;
+  const {stateInfoById}=state.common;
+  let bannerUrl=get(stateInfoById,"0.bannerUrl");
+  let logoUrl=get(stateInfoById,"0.logoUrl");
   const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
   let phoneNumber = null;
   if (intent) {
     phoneNumber = state.form[intent].fields.phone.value;
   }
-  return { previousRoute, intent, phoneNumber, loading: authenticating };
+  return { previousRoute, intent, phoneNumber, loading: authenticating,bannerUrl,logoUrl };
 };
 
 const mapDispatchToProps = (dispatch) => {

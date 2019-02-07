@@ -2,7 +2,6 @@
   "name": "egov-ui-kit-dev",
   "version": "0.0.2",
   "license": "egov",
-  "private": true,
   "homepage": "http://egov-micro-dev.egovernments.org/app/v3",
   "proxy": "http://egov-micro-dev.egovernments.org/",
   "dependencies": {

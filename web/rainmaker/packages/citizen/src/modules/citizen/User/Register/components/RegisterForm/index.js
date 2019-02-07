@@ -8,7 +8,7 @@ import { startSMSRecevier } from "egov-ui-kit/utils/commons";
 import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
 
-const RegisterForm = ({ handleFieldChange, form }) => {
+const RegisterForm = ({ handleFieldChange, form,logoUrl }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -17,7 +17,7 @@ const RegisterForm = ({ handleFieldChange, form }) => {
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
+            <Image className="mseva-logo employee-login-logo" source={logoUrl?logoUrl:`${logo}`} />
           </div>
           <Label className="heading text-center" bold={true} dark={true} fontSize={16} label="CORE_REGISTER_HEADING" />
           <Field fieldKey="phone" field={fields.phone} handleFieldChange={handleFieldChange} />
