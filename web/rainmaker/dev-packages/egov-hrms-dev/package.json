@@ -2,7 +2,6 @@
   "name": "egov-hrms-dev",
   "version": "0.0.1",
   "license": "egov",
-  "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/hrms/",
   "proxy": "https://egov-micro-dev.egovernments.org/",
   "dependencies": {
