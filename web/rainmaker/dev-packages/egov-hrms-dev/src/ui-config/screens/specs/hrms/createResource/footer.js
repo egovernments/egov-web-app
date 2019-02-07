@@ -3,10 +3,8 @@ import {
   dispatchMultipleFieldChangeAction,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import {
-  setRoute,
-  toggleSnackbarAndSetText
-} from "egov-ui-framework/ui-redux/app/actions";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
@@ -107,7 +105,7 @@ export const callBackForNext = async (state, dispatch) => {
       changeStep(state, dispatch);
     } else {
       const errorMessage = "Please fill all fields";
-      dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));
+      dispatch(toggleSnackbar(true, errorMessage, "warning"));
     }
   }
 };
