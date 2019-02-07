@@ -267,10 +267,11 @@ class FormWizard extends Component {
             value: getQueryValue(search, "propertyId"), //"PT-107-001278",
           },
         ]);
-        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
-          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
-             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
-          })
+
+        if (searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length > 0) {
+          searchPropertyResponse.Properties[0].propertyDetails.forEach((item) => {
+            sortBy(item.units, [(unit) => unit.floorNo || -99999]);
+          });
         }
         let propertyResponse = {
           ...searchPropertyResponse,
