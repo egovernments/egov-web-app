@@ -93,9 +93,9 @@ const educationCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].education",
+    sourceJsonPath: "Employee[0].education",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children",
+      "children.cardContent.children.eduCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"
@@ -133,9 +133,9 @@ const deptCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tests",
+    sourceJsonPath: "Employee[0].tests",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children",
+      "children.cardContent.children.deptCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"

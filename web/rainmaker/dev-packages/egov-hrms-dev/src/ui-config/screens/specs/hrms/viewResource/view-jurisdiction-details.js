@@ -41,7 +41,7 @@ const jurisdictionCard = {
     isReviewPage: true,
     sourceJsonPath: "Employee[0].jurisdictions",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children",
+      "children.cardContent.children.jurisCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"

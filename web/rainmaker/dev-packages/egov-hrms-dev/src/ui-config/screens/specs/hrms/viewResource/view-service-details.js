@@ -14,7 +14,7 @@ const assignmentCard = {
   props: {
     className: "review-hr",
     scheama: getCommonGrayCard({
-      assignmentCardContainer: getCommonContainer({
+      serviceCardContainer: getCommonContainer({
         reviewStatus: getLabelWithValue(
           {
             labelName: "Status",
@@ -66,7 +66,7 @@ const assignmentCard = {
     isReviewPage: true,
     sourceJsonPath: "Employee[0].serviceHistory",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children",
+      "children.cardContent.children.serviceCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"
