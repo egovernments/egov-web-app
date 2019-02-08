@@ -3,7 +3,7 @@ import {
   getTextField,
   getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -417,7 +417,9 @@ export const showHideAdhocPopup = (state, dispatch) => {
     "components.adhocDialog.props.open",
     false
   );
-  dispatch(handleField("view", "components.adhocDialog", "props.open", !toggle));
+  dispatch(
+    handleField("view", "components.adhocDialog", "props.open", !toggle)
+  );
 };
 
 export const getButtonVisibility = (status, button) => {
@@ -703,7 +705,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       : localStorage.getItem("tenant-id");
     if (!tenantId) {
       dispatch(
-        toggleSnackbarAndSetText(
+        toggleSnackbar(
           true,
           "Please select city to search by property id !!",
           "warning"
@@ -726,7 +728,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       ) {
         if (payload.Properties.length === 0) {
           dispatch(
-            toggleSnackbarAndSetText(
+            toggleSnackbar(
               true,
               "Property is not found with this Property Id",
               "info"
@@ -795,7 +797,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       );
       if (numbers.length > 1) {
         dispatch(
-          toggleSnackbarAndSetText(true, "Owner already added !", "error")
+          toggleSnackbar(true, "Owner already added !", "error")
         );
         return;
       }
@@ -813,7 +815,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     if (payload && payload.user && payload.user.hasOwnProperty("length")) {
       if (payload.user.length === 0) {
         dispatch(
-          toggleSnackbarAndSetText(
+          toggleSnackbar(
             true,
             "This mobile number is not registered !",
             "info"
@@ -842,7 +844,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       }
     }
   } catch (e) {
-    dispatch(toggleSnackbarAndSetText(true, e.message, "info"));
+    dispatch(toggleSnackbar(true, e.message, "info"));
   }
 };
 

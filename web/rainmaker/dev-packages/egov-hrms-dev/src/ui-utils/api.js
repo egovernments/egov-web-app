@@ -5,7 +5,7 @@ import {
 } from "egov-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -166,7 +166,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
     }
   } catch (error) {
     store.dispatch(toggleSpinner());
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
     console.log(error);
   }
 };
