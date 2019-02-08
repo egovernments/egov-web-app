@@ -71,8 +71,11 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Department",
-      optionLabel: "code",
-      optionValue: "code"
+      props: {
+        optionLabel: "name",
+        optionValue: "code",
+        hasLocalization: false
+      }
     }),
     designation: getSelectField({
       label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
@@ -87,8 +90,11 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Designation",
-      optionLabel: "code",
-      optionValue: "code"
+      props: {
+        optionValue: "code",
+        optionLabel: "name",
+        hasLocalization: false
+      }
     })
   }),
 
