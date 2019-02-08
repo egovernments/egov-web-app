@@ -1,8 +1,5 @@
 import React from "react";
-import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
-// import LabelContainer from "mihy-ui-framework/ui-containers/LabelContainer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
 import themeObject from "../../ui-config/themes";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
@@ -52,7 +49,13 @@ class IFrameInterface extends React.Component {
     const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     const title = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.title`, "");
     let url = `${domain}${contextPath}`;
-    this.setState({ url, title });
+    if (this.props.common && this.props.common.cities) {
+      let tenantid = localStorage.getItem("tenant-id");
+      let tenant_info = this.props.common.cities.filter (key => key.code == tenantid)[0]
+      let tenant_name = tenant_info.name
+      url = url.replace(/__tenantid__/g, tenantid).replace(/__tenantname__/g, tenant_name)
+      this.setState({ url, title });
+    }
   };
 
   componentWillReceiveProps(nextProps) {
@@ -96,8 +99,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-  const { app } = state;
+  const { app, common } = state;
   const { uiCommonConstants } = app;
-  return { uiCommonConstants };
+  return { uiCommonConstants, common };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(IFrameInterface);

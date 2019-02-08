@@ -1,7 +1,12 @@
 {
   "lerna": "2.11.0",
   "packages": [
-    "packages/*"
+    "packages/citizen",
+    "packages/egov-tradelicence-core",
+    "packages/employee",
+    "packages/egov-ui-kit",
+    "packages/mihy-ui-framework",
+    "packages/mihy-ui-framework-core"
   ],
   "version": "0.0.1"
 }
