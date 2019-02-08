@@ -5,7 +5,8 @@ import {
   getSelectField,
   getCommonContainer,
   getCommonParagraph,
-  getLabel
+  getLabel,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { searchApiCall } from "./functions";
 
@@ -33,7 +34,7 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9-]*$/i,
+      pattern: getPattern("Name") || null,
       errorMessage: "HR_EMP_NAME_ERR_MSG",
       jsonPath: "searchScreen.names"
     }),
