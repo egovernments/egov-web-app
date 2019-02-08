@@ -9,6 +9,7 @@ import {
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import map from "lodash/map";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const arrayCrawler = (arr, n) => {
   if (n == 1) {
@@ -74,9 +75,20 @@ const jurisdictionDetailsCard = {
                 boundaryList.push({ value: crawlBoundaryData.label });
                 crawlBoundaryData = get(crawlBoundaryData, "children[0]", null);
               }
+              // dispatch(
+              //   prepareFinalObject(
+              //     "createScreenMdmsData.boundaryList",
+              //     boundaryList
+              //   )
+              // );
               dispatch(
-                prepareFinalObject(
-                  "createScreenMdmsData.boundaryList",
+                handleField(
+                  "create",
+                  action.componentJsonpath.replace(
+                    ".hierarchy",
+                    ".boundaryType"
+                  ),
+                  "props.data",
                   boundaryList
                 )
               );
@@ -96,7 +108,7 @@ const jurisdictionDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].jurisdictions[0].boundary",
-              sourceJsonPath: "createScreenMdmsData.boundaryList",
+              // sourceJsonPath: "createScreenMdmsData.boundaryList",
               props: {
                 className: "hr-generic-selectfield",
                 // data: [
@@ -126,12 +138,19 @@ const jurisdictionDetailsCard = {
                 `createScreenMdmsData.hierarchyList`,
                 []
               );
-              // GET BOUNDARY "TYPE" LIST FROM PFO
+              // GET BOUNDARY LIST FROM SOURCE DATA OF THAT THIS SPECIFIC DROPDOWN (W.R.T Multiitem)
               let boundaryList = get(
-                state.screenConfiguration.preparedFinalObject,
-                `createScreenMdmsData.boundaryList`,
+                state.screenConfiguration.screenConfig.create,
+                `${action.componentJsonpath}.props.data`,
                 []
               );
+
+              // GET BOUNDARY "TYPE" LIST FROM PFO
+              // let boundaryList = get(
+              //   state.screenConfiguration.preparedFinalObject,
+              //   `createScreenMdmsData.boundaryList`,
+              //   []
+              // );
               // GET THE CURRENT CARD NUMBER WHICH IS BEING CHANGED
               let cardNumber = action.componentJsonpath
                 .match(/\[[0-9]*\]/g)
@@ -181,9 +200,20 @@ const jurisdictionDetailsCard = {
                   }
                 ];
               }
+              // dispatch(
+              //   prepareFinalObject(
+              //     "createScreenMdmsData.processedBoundaryDataList",
+              //     processedBoundaryData
+              //   )
+              // );
               dispatch(
-                prepareFinalObject(
-                  "createScreenMdmsData.processedBoundaryDataList",
+                handleField(
+                  "create",
+                  action.componentJsonpath.replace(
+                    ".boundaryType",
+                    ".boundary"
+                  ),
+                  "props.data",
                   processedBoundaryData
                 )
               );
@@ -201,7 +231,7 @@ const jurisdictionDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].jurisdictions[0].boundaryType",
-              sourceJsonPath: "createScreenMdmsData.processedBoundaryDataList",
+              // sourceJsonPath: "createScreenMdmsData.processedBoundaryDataList",
               props: {
                 className: "hr-generic-selectfield",
                 // data: [
