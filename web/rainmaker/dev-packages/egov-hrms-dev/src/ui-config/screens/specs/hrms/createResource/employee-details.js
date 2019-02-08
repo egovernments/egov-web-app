@@ -178,7 +178,7 @@ export const professionalDetails = getCommonCard({
             labelKey: "HR_APPOINTMENT_DATE_LABEL"
           },
           placeholder: {
-            labelName: "Enter Date of Birth",
+            labelName: "Enter Date of Appointment",
             labelKey: "HR_APPOINTMENT_DATE_PLACEHOLDER"
           },
           required: true,
