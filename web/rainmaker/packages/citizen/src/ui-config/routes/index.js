@@ -10,10 +10,10 @@ const Landing = Loadable({
   loading: Loading,
 });
 
-const Playground = Loadable({
-  loader: () => import('ui-views/Playground'),
-  loading: Loading,
-});
+// const Playground = Loadable({
+//   loader: () => import('ui-views/Playground'),
+//   loading: Loading,
+// });
 
 const ScreenInterface=Loadable({
   loader:()=>import ('ui-views/ScreenInterface'),

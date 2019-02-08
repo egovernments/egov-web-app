@@ -1,6 +1,7 @@
 {
   "name": "pgr-employee-dev",
   "version": "0.0.2",
+  "license": "egov",
   "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/citizen/",
   "proxy": "https://egov-micro-dev.egovernments.org/",
@@ -11,7 +12,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
-    "egov-ui-kit": "^0.0.2",
+    "egov-ui-kit": "^0.0.1",
     "jsonpath": "^1.0.0",
     "lodash": "^4.17.5",
     "material-ui": "^0.20.0",

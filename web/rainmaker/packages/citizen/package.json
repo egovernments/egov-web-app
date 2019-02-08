@@ -1,6 +1,7 @@
 {
   "name": "rainmaker-citizen",
   "version": "0.0.2",
+  "license": "egov",
   "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/citizen/",
   "proxy": "https://egov-micro-dev.egovernments.org/",
@@ -20,6 +21,7 @@
     "egov-ui-framework": "0.1.41",
     "egov-ui-kit": "^0.0.1",
     "egov-workflow": "0.0.1",
+    "egov-hrms": "0.0.1",
     "html2canvas": "^1.0.0-alpha.12",
     "jquery": "^3.3.1",
     "jsonpath": "^1.0.0",

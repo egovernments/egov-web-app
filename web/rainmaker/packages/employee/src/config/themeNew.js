@@ -40,12 +40,7 @@ const themeObject = {
         marginTop: "8px",
       },
       fullWidth: {
-        width: window.innerWidth > 480 ? "80%" : "100%",
-      },
-    },
-    MuiSnackbarContent: {
-      root: {
-        flexWrap: "inherit",
+        width: "80% !important",
       },
     },
     MuiTypography: {
@@ -56,6 +51,12 @@ const themeObject = {
         fontWeight: 400,
         letterSpacing: "0.83px",
         lineHeight: "24px",
+      },
+      caption: {
+        fontSize: "12px",
+      },
+      headline: {
+        fontSize: "24px",
       },
       body1: {
         color: "rgba(0, 0, 0, 0.60)",
@@ -80,9 +81,30 @@ const themeObject = {
         letterSpacing: "0.75px",
         fontWeight: 400,
         lineHeight: "20px",
-      }
+      },
     },
-  },
+    MuiInput: {
+      input: {
+        fontSize: "16px",
+      },
+    },
+    MuiMenuItem: {
+      root: {
+        fontSize: "16px",
+      },
+    },
+    MuiInputLabel: {
+      animated: {
+        fontSize: "16px",
+        fontWeight: 500,
+      },
+    },
+    MuiButton: {
+      label: {
+        fontSize: "14px",
+      },
+    },
+  }
 };
 
 export default themeObject;

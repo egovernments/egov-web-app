@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import { addComponentJsonpath, replaceStrInPath } from "../../ui-utils";
+import { addComponentJsonpath } from "../../ui-utils/commons";
 import { prepareFinalObject as pFO } from "../../ui-redux/screen-configuration/actions";
 import isEqual from "lodash/isEqual";
 
@@ -38,7 +38,7 @@ class MultiItem extends React.Component {
       if (!items.length && !editItems.length) {
         this.addItem();
       } else {
-        if (items.length<editItems.length) {
+        if (items.length < editItems.length) {
           for (var i = 0; i < editItems.length; i++) {
             if (checkActiveItem(editItems[i])) {
               if (i) {

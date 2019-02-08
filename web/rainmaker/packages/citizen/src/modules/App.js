@@ -39,6 +39,9 @@ class App extends Component {
               {
                 name: "Designation",
               },
+              {
+                name: "StateInfo"
+              }
             ],
           },
           {

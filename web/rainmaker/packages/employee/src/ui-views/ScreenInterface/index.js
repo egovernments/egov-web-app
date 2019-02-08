@@ -45,11 +45,9 @@ class ScreenInterface extends React.Component {
 
     return (
       View && (
-        <MuiThemeProvider theme={theme}>
           <div className="">
             <View />
           </div>
-        </MuiThemeProvider>
       )
     );
   }
