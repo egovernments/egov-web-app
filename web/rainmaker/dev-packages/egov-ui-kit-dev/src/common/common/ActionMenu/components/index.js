@@ -252,7 +252,9 @@ class ActionMenuComp extends Component {
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
                     leftIcon={this.renderLeftIcon(iconLeft, item)}
-                    primaryText={<Label className="menuStyle with-childs" label={item.name || ""} color="rgba(0, 0, 0, 0.87)" />}
+                    primaryText={
+                      <Label className="menuStyle with-childs" defaultLabel={item.name} label={item.name || ""} color="rgba(0, 0, 0, 0.87)" />
+                    }
                     rightIcon={
                       <Icon
                         name="chevron-right"
@@ -298,7 +300,7 @@ class ActionMenuComp extends Component {
                           }
                         }}
                         leftIcon={this.renderLeftIcon(iconLeft, item)}
-                        primaryText={<div className="menuStyle">{item.name || ""}</div>}
+                        primaryText={<Label className="menuStyle" defaultLabel={item.name} label={item.name || ""} color="rgba(0, 0, 0, 0.87)" />}
                       />
                     </Tooltip>
                   </div>
@@ -318,7 +320,7 @@ class ActionMenuComp extends Component {
                           document.title = item.name;
                         }}
                         leftIcon={this.renderLeftIcon(iconLeft, item)}
-                        primaryText={<div className="menuStyle">{item.name || ""}</div>}
+                        primaryText={<Label className="menuStyle" defaultLabel={item.name} label={item.name || ""} color="rgba(0, 0, 0, 0.87)" />}
                       />
                     </Tooltip>
                   </div>
@@ -354,7 +356,9 @@ class ActionMenuComp extends Component {
                             updateActiveRoute(item.path, item.displayName);
                           }}
                           leftIcon={this.renderLeftIcon(iconLeft, item)}
-                          primaryText={<div className="menuStyle">{item.displayName || ""}</div>}
+                          primaryText={
+                            <Label className="menuStyle" defaultLabel={item.displayName} label={item.displayName || ""} color="rgba(0, 0, 0, 0.87)" />
+                          }
                         />
                       </Tooltip>
                     </div>
@@ -444,7 +448,9 @@ class ActionMenuComp extends Component {
                       <ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
                     )
                   }
-                  primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
+                  primaryText={
+                    <Label className="menuStyle" defaultLabel="Collapse" label={menuDrawerOpen ? "Collapse" : ""} color="rgba(0, 0, 0, 0.87)" />
+                  }
                 />
               </Tooltip>
             </div>
