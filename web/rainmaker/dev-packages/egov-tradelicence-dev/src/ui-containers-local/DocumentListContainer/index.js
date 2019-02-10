@@ -1,7 +1,18 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { DocumentList } from "../../ui-molecules-local";
 import { connect } from "react-redux";
 import get from "lodash/get";
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    padding: "8px 38px"
+  },
+  input: {
+    display: "none !important"
+  }
+});
 
 class DocumentListContainer extends Component {
   render() {
@@ -30,7 +41,9 @@ const mapStateToProps = state => {
   return { documents, tenantId, uploadedDocuments };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(DocumentListContainer);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    null
+  )(DocumentListContainer)
+);

@@ -51,7 +51,9 @@ const DocumentList = props => {
               <Grid item={true} xs={2} sm={1} align="center">
                 {document.uploaded ? (
                   <div className={classes.documentSuccess}>
-                    <Icon>done</Icon>
+                    <Icon>
+                      <i class="material-icons">done</i>
+                    </Icon>
                   </div>
                 ) : (
                   <div className={classes.documentIcon}>
@@ -60,7 +62,12 @@ const DocumentList = props => {
                 )}
               </Grid>
               <Grid item={true} xs={6} sm={6} align="left">
-                <Typography variant="body2">{document.name}{document.required && <sup style={{ color:"#E54D42"}}>*</sup>}</Typography>
+                <Typography variant="body2">
+                  {document.name}
+                  {document.required && (
+                    <sup style={{ color: "#E54D42" }}>*</sup>
+                  )}
+                </Typography>
                 <Typography variant="caption">
                   Only .jpg and .pdf files. 500kb max file size.
                 </Typography>
@@ -75,7 +82,9 @@ const DocumentList = props => {
                     }}
                   >
                     {document.fileName}
-                    <Icon style={{ color: "#E54D42",marginLeft:"16px" }}>highlight_off</Icon>
+                    <Icon style={{ color: "#E54D42", marginLeft: "16px" }}>
+                      <i class="material-icons">highlight_off</i>
+                    </Icon>
                   </Button>
                 ) : (
                   <Button variant="outlined" color="primary">
@@ -93,7 +102,7 @@ const DocumentList = props => {
 
 DocumentList.propTypes = {
   classes: PropTypes.object.isRequired,
-  documents: PropTypes.object.isRequired,
+  documents: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(DocumentList);

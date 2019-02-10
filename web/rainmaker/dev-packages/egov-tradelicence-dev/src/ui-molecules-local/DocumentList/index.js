@@ -163,7 +163,9 @@ class DocumentList extends Component {
                   <Grid item={true} xs={2} sm={1} align="center">
                     {uploadedIndex.indexOf(key) > -1 ? (
                       <div className={classes.documentSuccess}>
-                        <Icon>done</Icon>
+                        <Icon>
+                          <i class="material-icons">done</i>
+                        </Icon>
                       </div>
                     ) : (
                       <div className={classes.documentIcon}>

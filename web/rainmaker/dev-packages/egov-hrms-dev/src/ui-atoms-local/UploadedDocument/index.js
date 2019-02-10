@@ -19,7 +19,7 @@ const UploadedDocument = props => {
         style={{ color: "#E54D42", marginLeft: "16px" }}
         onClick={removeDocument}
       >
-        highlight_off
+        <i class="material-icons">highlight_off </i>
       </Icon>
     </Button>
   );

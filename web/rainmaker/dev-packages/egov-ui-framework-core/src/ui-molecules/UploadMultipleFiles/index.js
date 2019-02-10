@@ -11,7 +11,7 @@ const styles = theme => ({
     padding: "8px 38px"
   },
   input: {
-    display: "none"
+    display: "none !important"
   }
 });
 class UploadMultipleFiles extends Component {
