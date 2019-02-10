@@ -100,7 +100,8 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name"
+                optionLabel: "name",
+                hasLocalization: false
               }
             })
           },
@@ -117,7 +118,8 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name"
+                optionLabel: "name",
+                hasLocalization: false
               }
             })
           },

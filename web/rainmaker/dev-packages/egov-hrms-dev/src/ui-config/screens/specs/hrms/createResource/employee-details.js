@@ -200,6 +200,9 @@ export const professionalDetails = getCommonCard({
           jsonPath: "Employee[0].employeeType",
           sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeType",
           props: {
+            optionLabel: "status",
+            optionValue: "code",
+            hasLocalization: false,
             jsonPath: "Employee[0].employeeType"
           }
         })
@@ -215,6 +218,9 @@ export const professionalDetails = getCommonCard({
           jsonPath: "Employee[0].employeeStatus",
           sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeStatus",
           props: {
+            optionLabel: "status",
+            optionValue: "code",
+            hasLocalization: false,
             jsonPath: "Employee[0].employeeStatus"
           }
         })

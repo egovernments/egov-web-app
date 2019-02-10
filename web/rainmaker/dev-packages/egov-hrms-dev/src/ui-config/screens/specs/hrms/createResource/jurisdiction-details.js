@@ -14,7 +14,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 const arrayCrawler = (arr, n) => {
   if (n == 1) {
     return arr.map(item => {
-      return item.code;
+      return { code: item.code, name: item.name };
     });
   } else
     return arr.map(item => {
@@ -72,7 +72,10 @@ const jurisdictionDetailsCard = {
               let crawlBoundaryData = selectedBoundaryData;
               while (crawlBoundaryData != null) {
                 // console.log(crawlBoundaryData.label);
-                boundaryList.push({ value: crawlBoundaryData.label });
+                boundaryList.push({
+                  value: crawlBoundaryData.label,
+                  label: crawlBoundaryData.label
+                });
                 crawlBoundaryData = get(crawlBoundaryData, "children[0]", null);
               }
               // dispatch(
@@ -122,7 +125,8 @@ const jurisdictionDetailsCard = {
                 //   }
                 // ],
                 optionValue: "value",
-                optionLabel: "label"
+                optionLabel: "label",
+                hasLocalization: false
               }
             }),
             beforeFieldChange: (action, state, dispatch) => {
@@ -187,7 +191,7 @@ const jurisdictionDetailsCard = {
                 )
                   .flat(boundaryIndex)
                   .map(item => {
-                    return { value: item };
+                    return { value: item.code, label: item.name };
                   });
               } else {
                 processedBoundaryData = [
@@ -195,6 +199,11 @@ const jurisdictionDetailsCard = {
                     value: get(
                       tenantBoundary[hierarchyIndex],
                       "boundary.code",
+                      ""
+                    ),
+                    label: get(
+                      tenantBoundary[hierarchyIndex],
+                      "boundary.name",
                       ""
                     )
                   }
@@ -244,6 +253,7 @@ const jurisdictionDetailsCard = {
                 //     label: "Block 2"
                 //   }
                 // ],
+                hasLocalization: false,
                 optionValue: "value",
                 optionLabel: "label"
               }

@@ -59,7 +59,10 @@ export const otherDetails = getCommonCard({
                 },
                 sourceJsonPath: "createScreenMdmsData.egov-hrms.Degree",
                 props: {
-                  jsonPath: "Employee[0].education[0].qualification"
+                  jsonPath: "Employee[0].education[0].qualification",
+                  optionLabel: "status",
+                  optionValue: "code",
+                  hasLocalization: false
                 }
               })
             },

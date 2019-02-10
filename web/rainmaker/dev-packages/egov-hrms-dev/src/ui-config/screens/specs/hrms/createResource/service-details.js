@@ -45,8 +45,9 @@ const serviceDetailsCard = {
                 //     label: "Value 2"
                 //   }
                 // ],
-                // optionValue: "value",
-                // optionLabel: "label"
+                optionValue: "value",
+                optionLabel: "label",
+                hasLocalization: false
               }
             })
           },
