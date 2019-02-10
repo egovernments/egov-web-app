@@ -29,6 +29,11 @@ const themeObject = {
         paddingBottom: "0px",
       },
     },
+    MuiStepIcon:{
+      text:{
+        fontSize: "12px"
+      }
+    },
     MuiCard: {
       root: {
         marginTop: "24px",

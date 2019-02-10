@@ -15,7 +15,7 @@ import {
   ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -31,7 +31,7 @@ export const updateTradeDetails = async requestBody => {
     );
     return payload;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
     throw error;
   }
 };
@@ -78,7 +78,7 @@ export const getSearchResults = async queryObject => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
   }
 };
 
@@ -94,7 +94,7 @@ export const createEmployee = async (queryObject, payload) => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
     throw error;
   }
 };
@@ -111,7 +111,7 @@ export const updateEmployee = async (queryObject, payload) => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    store.dispatch(toggleSnackbar(true, error.message, "error"));
     throw error;
   }
 };
@@ -418,7 +418,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
     setApplicationNumberBox(state, dispatch);
     return true;
   } catch (error) {
-    dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, error.message, "error"));
     console.log(error);
     return false;
   }
@@ -493,7 +493,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       const isSizeValid = getFileSize(file) <= maxFileSize;
       if (!fileValid) {
         // store.dispatch(
-        //   toggleSnackbarAndSetText(
+        //   toggleSnackbar(
         //     true,
         //     `Only image or pdf files can be uploaded`,
         //     "error"
@@ -504,7 +504,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
       if (!isSizeValid) {
         // store.dispatch(
-        //   toggleSnackbarAndSetText(
+        //   toggleSnackbar(
         //     true,
         //     `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
         //     "error"

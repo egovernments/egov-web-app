@@ -26,6 +26,7 @@ const assignmentDetailsCard = {
                 labelName: "Assigned From Date",
                 labelKey: "HR_ASMT_FROM_DATE_PLACEHOLDER"
               },
+              required: true,
               pattern: getPattern("Date"),
               jsonPath: "Employee[0].assignments[0].fromDate",
               props: {
@@ -46,6 +47,7 @@ const assignmentDetailsCard = {
                 labelName: "Assigned To Date",
                 labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
               },
+              required: true,
               pattern: getPattern("Date"),
               jsonPath: "Employee[0].assignments[0].toDate",
               props: {
@@ -98,7 +100,8 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name"
+                optionLabel: "name",
+                hasLocalization: false
               }
             })
           },
@@ -115,7 +118,8 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name"
+                optionLabel: "name",
+                hasLocalization: false
               }
             })
           },

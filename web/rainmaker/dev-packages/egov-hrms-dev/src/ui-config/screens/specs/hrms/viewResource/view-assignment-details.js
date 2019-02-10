@@ -69,7 +69,7 @@ const assignmentCard = {
     isReviewPage: true,
     sourceJsonPath: "Employee[0].assignments",
     prefixSourceJsonPath:
-      "children.cardContent.children.accessoriesCardContainer.children",
+      "children.cardContent.children.assignmentCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"

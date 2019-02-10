@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
-import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 
@@ -27,7 +27,7 @@ export const searchApiCall = async (state, dispatch) => {
 
   if (!isSearchFormValid) {
     dispatch(
-      toggleSnackbarAndSetText(
+      toggleSnackbar(
         true,
         "Please fill valid fields to start search",
         "warning"
@@ -35,10 +35,10 @@ export const searchApiCall = async (state, dispatch) => {
     );
   } else if (
     Object.keys(searchScreenObject).length == 0 ||
-    Object.values(searchScreenObject).every(x => x === "")
+    Object.values(searchScreenObject).every(x => x.trim() === "")
   ) {
     dispatch(
-      toggleSnackbarAndSetText(
+      toggleSnackbar(
         true,
         "Please fill at least one field to start search",
         "warning"
@@ -106,7 +106,11 @@ export const searchApiCall = async (state, dispatch) => {
         [get(textToLocalMapping, "Employee ID")]: get(item, "code", "-") || "-",
         [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
         [get(textToLocalMapping, "Role")]:
-          get(item, "user.roles[0].name", "-") || "-",
+          get(item, "user.roles", [])
+            .map(role => {
+              return ` ${role.name}`;
+            })
+            .join() || "-",
         [get(textToLocalMapping, "Designation")]:
           get(item, "assignments[0].designation", "-") || "-",
         [get(textToLocalMapping, "Department")]:
@@ -135,7 +139,7 @@ export const searchApiCall = async (state, dispatch) => {
       showHideTable(true, dispatch);
     } catch (error) {
       // showHideProgress(false, dispatch);
-      dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+      dispatch(toggleSnackbar(true, error.message, "error"));
       console.log(error);
     }
   }

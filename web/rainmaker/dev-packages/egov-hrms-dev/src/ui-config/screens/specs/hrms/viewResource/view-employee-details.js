@@ -157,7 +157,7 @@ export const getEmployeeDetailsView = (isReview = true) => {
       reviewRole: getLabelWithValue(
         { labelName: "Role", labelKey: "HR_ROLE_LABEL" },
         {
-          jsonPath: "Employee[0].user.role"
+          jsonPath: "hrms.reviewScreen.furnishedRolesList"
         }
       )
     })

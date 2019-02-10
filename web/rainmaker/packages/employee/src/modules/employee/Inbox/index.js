@@ -7,7 +7,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import "./index.css";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
+import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
@@ -31,6 +34,7 @@ class Inbox extends Component {
     tabData: [],
     taskboardData: [],
     inboxData: [{ headers: [], rows: [] }],
+    moduleName: "",
   };
 
   handleChange = (event, value) => {
@@ -43,6 +47,7 @@ class Inbox extends Component {
   };
 
   componentDidMount = async () => {
+    const { toggleSnackbar, prepareFinalObject } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
     const tenantId = localStorage.getItem("tenant-id");
 
@@ -50,38 +55,60 @@ class Inbox extends Component {
     const tabData = [];
     const inboxData = [{ headers: [], rows: [] }];
 
-    const requestBody = [{ key: "tenantId", value: tenantId }];
-    const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
+    try {
+      const requestBody = [{ key: "tenantId", value: tenantId }];
+      const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
 
-    const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
-    const allData = _.get(responseData, "ProcessInstances", []);
+      const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
+      const allData = _.get(responseData, "ProcessInstances", []);
 
-    const assignedDataRows = prepareInboxDataRows(assignedData);
-    const allDataRows = prepareInboxDataRows(allData);
+      const assignedDataRows = prepareInboxDataRows(assignedData);
+      const allDataRows = prepareInboxDataRows(allData);
 
-    inboxData[0].headers = ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"];
-    inboxData[0].rows = assignedDataRows;
+      inboxData[0].headers = ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"];
+      inboxData[0].rows = assignedDataRows;
 
-    const taskCount = allDataRows.length;
-    const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
+      const taskCount = allDataRows.length;
+      const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
 
-    taskboardData.push({ head: taskCount, body: "Total Task" }, { head: "0", body: "Nearing SLA" }, { head: overSla, body: "Over SLA" });
+      taskboardData.push({ head: taskCount, body: "Total Task" }, { head: "0", body: "Nearing SLA" }, { head: overSla, body: "Over SLA" });
 
-    tabData.push(`Assigned to me (${assignedDataRows.length})`);
-    tabData.push(`All (${allDataRows.length})`);
+      tabData.push(`Assigned to me (${assignedDataRows.length})`);
+      tabData.push(`All (${allDataRows.length})`);
 
-    inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
-    this.setState({ inboxData, taskboardData, tabData });
-
+      inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
+      this.setState({ inboxData, taskboardData, tabData });
+    } catch (e) {
+      toggleSnackbar(true, "Workflow search error !", "error");
+    }
+    prepareFinalObject("InboxData", inboxData);
     this.setBusinessServiceDataToLocalStorage([
       { key: "tenantId", value: localStorage.getItem("tenant-id") },
       { key: "businessService", value: "newTL" },
     ]);
   };
 
+  onModuleFilter = (event) => {
+    this.setState({ moduleName: event.target.value }, () => {
+      const { InboxData } = this.props;
+      const filteredData = InboxData.map((item, index) => {
+        return {
+          headers: item.headers,
+          rows: item.rows.filter((eachRow) => {
+            return eachRow[0].subtext === this.state.moduleName;
+          }),
+        };
+      });
+      this.setState({
+        inboxData: filteredData,
+      });
+    });
+  };
+
   render() {
-    const { name } = this.props;
+    const { name, classes } = this.props;
     const { value, taskboardData, tabData, inboxData } = this.state;
+
     return (
       <div className="col-sm-12">
         <Label className="landingPageUser" label={` Welcome ${name}, `} />
@@ -98,6 +125,17 @@ class Inbox extends Component {
             {tabData.map((item) => {
               return <Tab className="inbox-tab" label={item} />;
             })}
+
+            <div style={{ position: "absolute", right: 0, top: "10px" }}>
+              <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
+                <MenuItem value="" disabled>
+                  Module-All
+                </MenuItem>
+                <MenuItem value={"NewTL"}>NewTL</MenuItem>
+                <MenuItem value={"PGR"}>PGR</MenuItem>
+                <MenuItem value={"PT"}>PT</MenuItem>
+              </Select>
+            </div>
           </Tabs>
           {<InboxData data={inboxData[value]} />}
         </div>
@@ -107,14 +145,23 @@ class Inbox extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { auth } = state;
+  const { auth, screenConfiguration } = state;
+  const { preparedFinalObject } = screenConfiguration;
+  const { InboxData } = preparedFinalObject;
   const { userInfo } = auth;
   const name = auth && userInfo.name;
 
-  return { name };
+  return { name, InboxData };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleSnackbar: (open, message, variant) => dispatch(toggleSnackbar(open, message, variant)),
+    prepareFinalObject: (jsonPath, value) => dispatch(prepareFinalObject(jsonPath, value)),
+  };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Inbox);

@@ -59,7 +59,10 @@ export const otherDetails = getCommonCard({
                 },
                 sourceJsonPath: "createScreenMdmsData.egov-hrms.Degree",
                 props: {
-                  jsonPath: "Employee[0].education[0].qualification"
+                  jsonPath: "Employee[0].education[0].qualification",
+                  optionLabel: "status",
+                  optionValue: "code",
+                  hasLocalization: false
                 }
               })
             },
@@ -132,12 +135,12 @@ export const otherDetails = getCommonCard({
                   className: "hr-generic-selectfield",
                   data: [
                     {
-                      value: "Male",
-                      label: "Male"
+                      value: "Arts",
+                      label: "Arts"
                     },
                     {
-                      value: "Female",
-                      label: "Female"
+                      value: "Science",
+                      label: "Science"
                     }
                   ],
                   optionValue: "value",
@@ -282,7 +285,7 @@ export const otherDetails = getCommonCard({
                 },
                 jsonPath: "Employee[0].tests[0].remarks"
               })
-            },
+            }
             // uploadFile: getUploadFilesMultiple(
             //   "Employee[0].deptTestDetails[0].documents"
             // )

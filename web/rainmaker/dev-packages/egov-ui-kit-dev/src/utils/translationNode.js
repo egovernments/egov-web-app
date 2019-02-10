@@ -4,9 +4,10 @@ import { getTranslatedLabel } from "./commons";
 import { Label } from "../components";
 
 const mapStateToProps = (state, ownProps) => {
-  const { label, ...rest } = ownProps;
+  const { label, defaultLabel, ...rest } = ownProps;
   const { localizationLabels } = state.app;
-  const translatedLabel = getTranslatedLabel(label, localizationLabels);
+  const localizedLabel = getTranslatedLabel(label, localizationLabels);
+  const translatedLabel = localizedLabel && localizedLabel.includes("_") && localizedLabel === label ? defaultLabel : localizedLabel;
   return { ...rest, label: translatedLabel };
 };
 

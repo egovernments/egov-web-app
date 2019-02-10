@@ -5,11 +5,7 @@ import {
   updateEmployee,
   getSearchResults
 } from "../../../../..//ui-utils/commons";
-import {
-  convertDateToEpoch,
-  toggleDeactivateDialog,
-  showHideAdhocPopup
-} from "../../utils";
+import { convertDateToEpoch, showHideAdhocPopup } from "../../utils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { epochToYmdDate } from "../../utils";
 
@@ -192,11 +188,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       employeeObject[0],
       `education[${i}].yearOfPassing`
     );
-    set(
-      employeeObject[0],
-      `education[${i}].yearOfPassing`,
-      convertDateToEpoch(`${educationYearOfPassing}-01-01`)
-    );
+    educationYearOfPassing.toString().match(/\d{4}/g) &&
+      set(
+        employeeObject[0],
+        `education[${i}].yearOfPassing`,
+        convertDateToEpoch(`${educationYearOfPassing}-01-01`)
+      );
   }
 
   // FORMAT TESTS PASSING DATES TO EPOCH
@@ -206,11 +203,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       employeeObject[0],
       `tests[${i}].yearOfPassing`
     );
-    set(
-      employeeObject[0],
-      `tests[${i}].yearOfPassing`,
-      convertDateToEpoch(`${testsYearOfPassing}-01-01`)
-    );
+    testsYearOfPassing.toString().match(/\d{4}/g) &&
+      set(
+        employeeObject[0],
+        `tests[${i}].yearOfPassing`,
+        convertDateToEpoch(`${testsYearOfPassing}-01-01`)
+      );
   }
 
   // PROCESS ALL ROLES IN REQUIRED FORMAT

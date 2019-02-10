@@ -5,7 +5,8 @@ import {
   getSelectField,
   getCommonContainer,
   getCommonParagraph,
-  getLabel
+  getLabel,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { searchApiCall } from "./functions";
 
@@ -33,7 +34,7 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9-]*$/i,
+      pattern: getPattern("Name") || null,
       errorMessage: "HR_EMP_NAME_ERR_MSG",
       jsonPath: "searchScreen.names"
     }),
@@ -70,8 +71,11 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Department",
-      optionLabel: "code",
-      optionValue: "code"
+      props: {
+        optionLabel: "name",
+        optionValue: "code",
+        hasLocalization: false
+      }
     }),
     designation: getSelectField({
       label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
@@ -86,8 +90,11 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Designation",
-      optionLabel: "code",
-      optionValue: "code"
+      props: {
+        optionValue: "code",
+        optionLabel: "name",
+        hasLocalization: false
+      }
     })
   }),
 
