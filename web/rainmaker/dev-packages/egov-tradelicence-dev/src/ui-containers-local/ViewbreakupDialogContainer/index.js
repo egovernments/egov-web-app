@@ -141,7 +141,10 @@ class ViewBreakupContainer extends React.Component {
                 onClick={handleClose}
                 style={{ float: "right", cursor: "pointer" }}
               >
-                <Icon style={closebuttonStyle}>{closeIcon}</Icon>
+                <Icon style={closebuttonStyle}>
+                  {" "}
+                  <i class="material-icons">{closeIcon} </i>
+                </Icon>
               </div>
               <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
                 <Label
