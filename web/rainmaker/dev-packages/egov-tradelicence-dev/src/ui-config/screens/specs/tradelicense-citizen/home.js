@@ -49,7 +49,8 @@ const tradeLicenseSearchAndResult = {
                       height: 100,
                       color: "rgba(0, 0, 0, 0.6)",
                       marginLeft: -22
-                    }
+                    },
+                    size: "110px"
                   }
                 },
                 body: {

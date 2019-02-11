@@ -72,7 +72,6 @@ class ActionDialog extends React.Component {
       onButtonClick,
       dialogData
     } = this.props;
-    console.log("dropDownData is....", dropDownData);
     const {
       buttonLabel,
       showEmployeeList,

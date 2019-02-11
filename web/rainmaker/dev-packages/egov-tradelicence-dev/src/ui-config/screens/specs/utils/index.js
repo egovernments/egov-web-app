@@ -982,63 +982,67 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
       { key: "tenantId", value: tenantId },
       { key: "ids", value: billingData && billingData.join(",") }
     ];
-    const response = await httpRequest(
-      "post",
-      "/tl-calculator/billingslab/_search",
-      "",
-      queryObject
-    );
-
-    let tradeTotal = 0;
-    let accessoriesTotal = 0;
-    const finalData =
-      response &&
-      response.billingSlab.reduce(
-        (result, item) => {
-          if (item.tradeType) {
-            tradeTotal = tradeTotal + item.rate;
-            result.tradeUnitData.push({
-              rate: item.rate,
-              category: item.tradeType,
-              type: "trade"
-            });
-          } else {
-            accessoriesTotal = accessoriesTotal + item.rate;
-            result.accessoryData.push({
-              rate: item.rate,
-              category: item.accessoryCategory,
-              type: "accessories"
-            });
-          }
-          return result;
-        },
-        { tradeUnitData: [], accessoryData: [] }
+    try {
+      const response = await httpRequest(
+        "post",
+        "/tl-calculator/billingslab/_search",
+        "",
+        queryObject
       );
-    const { accessoryData, tradeUnitData } = finalData;
-    dispatch(
-      prepareFinalObject(
-        "LicensesTemp[0].billingSlabData.tradeUnitData",
-        tradeUnitData
-      )
-    );
-    dispatch(
-      prepareFinalObject(
-        "LicensesTemp[0].billingSlabData.tradeTotal",
-        tradeTotal
-      )
-    );
-    dispatch(
-      prepareFinalObject(
-        "LicensesTemp[0].billingSlabData.accessoriesUnitData",
-        accessoryData
-      )
-    );
-    dispatch(
-      prepareFinalObject(
-        "LicensesTemp[0].billingSlabData.accessoriesTotal",
-        accessoriesTotal
-      )
-    );
+
+      let tradeTotal = 0;
+      let accessoriesTotal = 0;
+      const finalData =
+        response &&
+        response.billingSlab.reduce(
+          (result, item) => {
+            if (item.tradeType) {
+              tradeTotal = tradeTotal + item.rate;
+              result.tradeUnitData.push({
+                rate: item.rate,
+                category: item.tradeType,
+                type: "trade"
+              });
+            } else {
+              accessoriesTotal = accessoriesTotal + item.rate;
+              result.accessoryData.push({
+                rate: item.rate,
+                category: item.accessoryCategory,
+                type: "accessories"
+              });
+            }
+            return result;
+          },
+          { tradeUnitData: [], accessoryData: [] }
+        );
+      const { accessoryData, tradeUnitData } = finalData;
+      dispatch(
+        prepareFinalObject(
+          "LicensesTemp[0].billingSlabData.tradeUnitData",
+          tradeUnitData
+        )
+      );
+      dispatch(
+        prepareFinalObject(
+          "LicensesTemp[0].billingSlabData.tradeTotal",
+          tradeTotal
+        )
+      );
+      dispatch(
+        prepareFinalObject(
+          "LicensesTemp[0].billingSlabData.accessoriesUnitData",
+          accessoryData
+        )
+      );
+      dispatch(
+        prepareFinalObject(
+          "LicensesTemp[0].billingSlabData.accessoriesTotal",
+          accessoriesTotal
+        )
+      );
+    } catch (e) {
+      dispatch(toggleSnackbar(open, "Billing Slab error!", "error"));
+    }
   }
 };
 
