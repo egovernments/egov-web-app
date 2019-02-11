@@ -34,7 +34,7 @@ const assignmentCard = {
             labelName: "Currently Assigned Here",
             labelKey: "HR_CURR_ASSIGN_LABEL"
           },
-          { jsonPath: "Employee[0].assignments[0].department" }
+          { jsonPath: "Employee[0].assignments[0].isCurrentAssignment" }
         ),
         reviewDepartment: getLabelWithValue(
           { labelName: "Department", labelKey: "HR_DEPT_LABEL" },

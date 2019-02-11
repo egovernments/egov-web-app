@@ -146,7 +146,7 @@ export const searchApiCall = async (state, dispatch) => {
             return assignment.department;
           });
 
-        console.log(getDeptName(state, currentDepartments));
+        // console.log(getDeptName(state, currentDepartments));
         return {
           [get(textToLocalMapping, "Employee ID")]:
             get(item, "code", "-") || "-",
