@@ -243,40 +243,26 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
-  }
-};
-
-export const deactivateEmployeeApiCall = async (state, dispatch) => {
-  const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
-  let queryObject = [
-    {
-      key: "tenantId",
-      value: tenantId
+  } else if (action === "DEACTIVATE") {
+    try {
+      set(employeeObject[0], "isActive", false);
+      set(
+        employeeObject[0],
+        `deactivationDetails[0].effectiveFrom`,
+        convertDateToEpoch(
+          get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
+        )
+      );
+      let response = await updateEmployee(queryObject, employeeObject);
+      let employeeId = response && get(response, "Employees[0].code");
+      window.location.href =
+        process.env.REACT_APP_SELF_RUNNING === "true"
+          ? `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`
+          : `/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
+      showHideAdhocPopup(state, dispatch);
+    } catch (error) {
+      furnishEmployeeData(state, dispatch);
     }
-  ];
-  let employeeObject = get(
-    state.screenConfiguration.preparedFinalObject,
-    "Employee",
-    []
-  );
-  set(employeeObject[0], "isActive", false);
-  set(
-    employeeObject[0],
-    `deactivationDetails[0].effectiveFrom`,
-    convertDateToEpoch(
-      get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
-    )
-  );
-  try {
-    let response = await updateEmployee(queryObject, employeeObject);
-    let employeeId = response && get(response, "Employees[0].code");
-    window.location.href =
-      process.env.REACT_APP_SELF_RUNNING === "true"
-        ? `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`
-        : `/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
-    showHideAdhocPopup(state, dispatch);
-  } catch (error) {
-    // furnishEmployeeData(state, dispatch);
   }
 };
 

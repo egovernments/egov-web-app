@@ -72,8 +72,42 @@ const getAcknowledgementCard = (
             },
             body: {
               labelName:
-                "A notification has been sent to the updated Employee at registered Mobile No.",
+                "A notification has been sent to the Employee at registered Mobile No.",
               labelKey: "HR_UPDATE_SUCCESS_SUBHEADER"
+            },
+            tailText: {
+              labelName: "Employee ID",
+              labelKey: "HR_EMP_ID_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      goToHome
+    };
+  } else if (purpose === "deactivate" && status === "success") {
+    return {
+      header: getCommonContainer({
+        header: getCommonHeader({
+          labelName: `Deactivated Employee`
+          // labelKey: "TL_TRADE_APPLICATION"
+        })
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Employee Deactivated Successfully",
+              labelKey: "HR_DEACTIVATE_SUCCESS_MESSAGE"
+            },
+            body: {
+              labelName:
+                "A notification has been sent to the Employee at registered Mobile No.",
+              labelKey: "HR_DEACTIVATE_SUCCESS_SUBHEADER"
             },
             tailText: {
               labelName: "Employee ID",

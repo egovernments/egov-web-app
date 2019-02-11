@@ -7,10 +7,10 @@ import {
   getPattern,
   getDateField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { deactivateEmployeeApiCall } from "./functions";
+import { createUpdateEmployee } from "./functions";
 
 const deactivateEmployeeCallback = (state, dispatch) => {
-  deactivateEmployeeApiCall(state, dispatch);
+  createUpdateEmployee(state, dispatch, "DEACTIVATE");
 };
 
 export const deactivateEmployee = getCommonContainer({
