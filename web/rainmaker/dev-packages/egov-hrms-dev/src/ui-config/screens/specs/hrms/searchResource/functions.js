@@ -1,9 +1,34 @@
 import get from "lodash/get";
+import find from "lodash/find";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
+
+export const getDeptName = (state, codes) => {
+  let deptMdmsData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "searchScreenMdmsData.common-masters.Department",
+    []
+  );
+  let codeNames = codes.map(code => {
+    return get(find(deptMdmsData, { code: code }), "name", "");
+  });
+  return codeNames.join();
+};
+
+export const getDesigName = (state, codes) => {
+  let desigMdmsData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "searchScreenMdmsData.common-masters.Designation",
+    []
+  );
+  let codeNames = codes.map(code => {
+    return get(find(desigMdmsData, { code: code }), "name", "");
+  });
+  return codeNames.join();
+};
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
@@ -102,20 +127,42 @@ export const searchApiCall = async (state, dispatch) => {
     //   ]
     // };
     try {
-      let data = response.Employees.map(item => ({
-        [get(textToLocalMapping, "Employee ID")]: get(item, "code", "-") || "-",
-        [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
-        [get(textToLocalMapping, "Role")]:
-          get(item, "user.roles", [])
-            .map(role => {
-              return ` ${role.name}`;
-            })
-            .join() || "-",
-        [get(textToLocalMapping, "Designation")]:
-          get(item, "assignments[0].designation", "-") || "-",
-        [get(textToLocalMapping, "Department")]:
-          get(item, "assignments[0].department", "-") || "-"
-      }));
+      let data = response.Employees.map(item => {
+        // GET ALL CURRENT DESIGNATIONS OF EMPLOYEE
+        let currentDesignations = get(item, "assignments", [])
+          .filter(assignment => {
+            return assignment.isCurrentAssignment;
+          })
+          .map(assignment => {
+            return assignment.designation;
+          });
+
+        // GET ALL CURRENT DEPARTMENTS OF EMPLOYEE
+        let currentDepartments = get(item, "assignments", [])
+          .filter(assignment => {
+            return assignment.isCurrentAssignment;
+          })
+          .map(assignment => {
+            return assignment.department;
+          });
+
+        console.log(getDeptName(state, currentDepartments));
+        return {
+          [get(textToLocalMapping, "Employee ID")]:
+            get(item, "code", "-") || "-",
+          [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
+          [get(textToLocalMapping, "Role")]:
+            get(item, "user.roles", [])
+              .map(role => {
+                return ` ${role.name}`;
+              })
+              .join() || "-",
+          [get(textToLocalMapping, "Designation")]:
+            getDesigName(state, currentDesignations) || "-",
+          [get(textToLocalMapping, "Department")]:
+            getDeptName(state, currentDepartments) || "-"
+        };
+      });
 
       dispatch(
         handleField(
