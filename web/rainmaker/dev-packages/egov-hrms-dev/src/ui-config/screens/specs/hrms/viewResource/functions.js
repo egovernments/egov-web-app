@@ -72,6 +72,23 @@ const returnEmptyArrayIfNull = value => {
   }
 };
 
+const setRolesList = (state, dispatch) => {
+  let rolesList = get(
+    state.screenConfiguration.preparedFinalObject,
+    `Employee[0].user.roles`,
+    []
+  );
+  let furnishedRolesList = rolesList.map(item => {
+    return " " + item.label;
+  });
+  dispatch(
+    prepareFinalObject(
+      "hrms.reviewScreen.furnishedRolesList",
+      furnishedRolesList.join()
+    )
+  );
+};
+
 export const furnishEmployeeData = (state, dispatch) => {
   let employeeObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -88,6 +105,7 @@ export const furnishEmployeeData = (state, dispatch) => {
     { object: "tests", values: ["yearOfPassing"] }
   ]);
   setRolesData(employeeObject[0]);
+  setRolesList(state, dispatch);
   dispatch(prepareFinalObject("Employee", employeeObject));
 };
 

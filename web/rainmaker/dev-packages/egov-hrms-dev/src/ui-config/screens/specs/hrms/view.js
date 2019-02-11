@@ -9,8 +9,6 @@ import { getEmployeeData } from "./viewResource/functions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { deactivateEmployee } from "./viewResource/deactivate-employee";
 import { showHideAdhocPopup } from "../utils";
-import get from "lodash/get";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -21,23 +19,6 @@ export const header = getCommonContainer({
 
 const tradeView = employeeReviewDetails(false);
 
-const setRolesValues = (state, dispatch) => {
-  let rolesList = get(
-    state.screenConfiguration.preparedFinalObject,
-    `Employee[0].user.roles`,
-    []
-  );
-  let furnishedRolesList = rolesList.map(item => {
-    return item.label;
-  });
-  dispatch(
-    prepareFinalObject(
-      "hrms.reviewScreen.furnishedRolesList",
-      furnishedRolesList.join()
-    )
-  );
-};
-
 const screenConfig = {
   uiFramework: "material-ui",
   name: "view",
@@ -45,7 +26,6 @@ const screenConfig = {
     let employeeCode = getQueryArg(window.location.href, "employeeID");
     getEmployeeData(state, dispatch, employeeCode);
     showHideAdhocPopup(state, dispatch);
-    setRolesValues(state, dispatch);
     return action;
   },
   components: {

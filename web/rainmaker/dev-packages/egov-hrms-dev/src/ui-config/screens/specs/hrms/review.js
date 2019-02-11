@@ -2,9 +2,7 @@ import {
   getCommonHeader,
   getCommonContainer
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import get from "lodash/get";
 import { employeeReviewDetails } from "./viewResource/employee-review";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -15,28 +13,10 @@ export const header = getCommonContainer({
 
 const tradeReview = employeeReviewDetails(true);
 
-const setRolesValues = (state, dispatch) => {
-  let rolesList = get(
-    state.screenConfiguration.preparedFinalObject,
-    `Employee[0].user.roles`,
-    []
-  );
-  let furnishedRolesList = rolesList.map(item => {
-    return item.label;
-  });
-  dispatch(
-    prepareFinalObject(
-      "hrms.reviewScreen.furnishedRolesList",
-      furnishedRolesList.join()
-    )
-  );
-};
-
 const screenConfig = {
   uiFramework: "material-ui",
   name: "review",
   beforeInitScreen: (action, state, dispatch) => {
-    setRolesValues(state, dispatch);
     //   dispatch(
     //     prepareFinalObject("Employee", [
     //       {
