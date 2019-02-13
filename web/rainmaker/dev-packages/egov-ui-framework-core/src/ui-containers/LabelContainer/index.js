@@ -34,6 +34,9 @@ class LabelContainer extends React.Component {
         : labelKey,
       transfomedKeys
     );
+    if (typeof fieldValue === "boolean") {
+      fieldValue = fieldValue ? "Yes" : "No";
+    }
     let fieldLabel = getLocaleLabelsforTL(
       fieldValue,
       `TL_${fieldValue}`,
