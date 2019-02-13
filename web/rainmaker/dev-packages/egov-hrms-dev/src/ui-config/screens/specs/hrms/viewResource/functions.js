@@ -6,8 +6,11 @@ import {
   getSearchResults
 } from "../../../../..//ui-utils/commons";
 import { convertDateToEpoch, showHideAdhocPopup } from "../../utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { epochToYmdDate } from "../../utils";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { epochToYmdDate, validateFields } from "../../utils";
 
 // SET ALL SIMPLE DATES IN YMD FORMAT
 const setDateInYmdFormat = (obj, values) => {
@@ -135,6 +138,18 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     "Employee",
     []
   );
+
+  // DEACTIVATE EMPLOYEE VALIDATIONS
+  const isDeactivateEmployeeDetailsValid = validateFields(
+    "components.adhocDialog.children.popup.children.header.children",
+    state,
+    dispatch,
+    "view"
+  );
+  if (!isDeactivateEmployeeDetailsValid) {
+    dispatch(toggleSnackbar(true, "Please select the mandatory fields!", "warning"));
+    return;
+  }
 
   // SET TENANT IDS IF THEY DO NOT ALREADY EXIST
   !get(employeeObject[0], "tenantId") &&

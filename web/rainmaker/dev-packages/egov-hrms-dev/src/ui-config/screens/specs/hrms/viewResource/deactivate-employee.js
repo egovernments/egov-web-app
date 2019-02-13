@@ -129,38 +129,38 @@ export const deactivateEmployee = getCommonContainer({
           xs: 12,
           sm: 12
         }
-      }),
-      buttonDiv: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
+      })
+    }
+  },
+  buttonDiv: {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    props: {
+      style: {
+        width: "100%",
+        textAlign: "right"
+      }
+    },
+    children: {
+      deactivateButton: {
+        componentPath: "Button",
         props: {
+          variant: "contained",
+          color: "primary",
           style: {
-            width: "100%",
-            textAlign: "right"
+            width: "200px",
+            height: "48px"
           }
         },
         children: {
-          deactivateButton: {
-            componentPath: "Button",
-            props: {
-              variant: "contained",
-              color: "primary",
-              style: {
-                width: "200px",
-                height: "48px"
-              }
-            },
-            children: {
-              previousButtonLabel: getLabel({
-                labelName: "DEACTIVATE EMPLOYEE",
-                labelKey: "HR_DEACTIVATE_EMPLOYEE_BUTTON_TEXT"
-              })
-            },
-            onClickDefination: {
-              action: "condition",
-              callBack: deactivateEmployeeCallback
-            }
-          }
+          previousButtonLabel: getLabel({
+            labelName: "DEACTIVATE EMPLOYEE",
+            labelKey: "HR_DEACTIVATE_EMPLOYEE_BUTTON_TEXT"
+          })
+        },
+        onClickDefination: {
+          action: "condition",
+          callBack: deactivateEmployeeCallback
         }
       }
     }
