@@ -93,6 +93,21 @@ export const callBackForNext = async (state, dispatch) => {
       )
         isAssignmentDetailsValid = false;
     }
+    let assignmentsData = get(
+      state.screenConfiguration.preparedFinalObject.Employee[0],
+      "assignments",
+      []
+    );
+    let atLeastOneCurrentAssignmentSelected = assignmentsData.some(
+      assignment => {
+        return assignment.isCurrentAssignment;
+      }
+    );
+    if (!atLeastOneCurrentAssignmentSelected) {
+      const errorMessage = "Please select at least one current assignment";
+      dispatch(toggleSnackbar(true, errorMessage, "warning"));
+      return;
+    }
     if (!isAssignmentDetailsValid) {
       isFormValid = false;
     }
