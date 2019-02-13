@@ -134,7 +134,7 @@ export const getEmployeeDetailsView = (isReview = true) => {
           labelName: "Employee ID",
           labelKey: "HR_EMP_ID_LABEL"
         },
-        { jsonPath: "Employee[0].id" }
+        { jsonPath: "Employee[0].code" }
       ),
       reviewDOA: getLabelWithValue(
         { labelName: "Date of Appointment", labelKey: "HR_APPT_DATE_LABEL" },
