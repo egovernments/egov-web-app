@@ -1,14 +1,50 @@
 import {
   getCommonCard,
-  getCommonTitle,
-  getTextField,
-  getSelectField,
   getCommonContainer,
   getCommonParagraph,
+  getCommonTitle,
   getLabel,
-  getPattern
+  getPattern,
+  getSelectField,
+  getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { searchApiCall } from "./functions";
+
+const resetFields = (state, dispatch) => {
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.department",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.designation",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.employeeID",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.employeeName",
+      "props.value",
+      ""
+    )
+  );
+};
 
 export const searchForm = getCommonCard({
   subHeader: getCommonTitle({
@@ -99,32 +135,52 @@ export const searchForm = getCommonCard({
   }),
 
   button: getCommonContainer({
-    // firstCont: {
-
     buttonContainer: getCommonContainer({
-      firstCont: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
+      resetButton: {
+        componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 4
+          sm: 6,
+          // align: "center"
+        },
+        props: {
+          variant: "outlined",
+          style: {
+            color: "#FE7A51",
+            borderColor: "#FE7A51",
+            //   borderRadius: "2px",
+            width: "220px",
+            height: "48px",
+            margin: "8px",
+            float: "right"
+          }
+        },
+        children: {
+          buttonLabel: getLabel({
+            labelName: "Clear Form",
+            labelKey: "HRMS_SEARCH_RESET_BUTTON"
+          })
+        },
+        onClickDefination: {
+          action: "condition",
+          callBack: resetFields
         }
       },
       searchButton: {
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 4
+          sm: 6,
           // align: "center"
         },
         props: {
           variant: "contained",
           style: {
             color: "white",
-
+            margin: "8px",
             backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
             borderRadius: "2px",
-            width: "80%",
+            width: "220px",
             height: "48px"
           }
         },
@@ -137,14 +193,6 @@ export const searchForm = getCommonCard({
         onClickDefination: {
           action: "condition",
           callBack: searchApiCall
-        }
-      },
-      lastCont: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 4
         }
       }
     })
