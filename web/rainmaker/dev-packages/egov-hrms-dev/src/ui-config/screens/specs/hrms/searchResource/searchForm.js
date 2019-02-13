@@ -135,37 +135,29 @@ export const searchForm = getCommonCard({
   }),
 
   button: getCommonContainer({
-    // firstCont: {
-
     buttonContainer: getCommonContainer({
-      firstCont: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 4
-        }
-      },
       resetButton: {
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 4
+          sm: 6,
           // align: "center"
         },
         props: {
           variant: "outlined",
           style: {
-            //   color: "white",
-            //   backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
+            color: "#FE7A51",
+            borderColor: "#FE7A51",
             //   borderRadius: "2px",
-            width: "80%",
-            height: "48px"
+            width: "220px",
+            height: "48px",
+            margin: "8px",
+            float: "right"
           }
         },
         children: {
           buttonLabel: getLabel({
-            labelName: "Reset",
+            labelName: "Clear Form",
             labelKey: "HRMS_SEARCH_RESET_BUTTON"
           })
         },
@@ -174,22 +166,21 @@ export const searchForm = getCommonCard({
           callBack: resetFields
         }
       },
-
       searchButton: {
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 4
+          sm: 6,
           // align: "center"
         },
         props: {
           variant: "contained",
           style: {
             color: "white",
-
+            margin: "8px",
             backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
             borderRadius: "2px",
-            width: "80%",
+            width: "220px",
             height: "48px"
           }
         },
@@ -202,14 +193,6 @@ export const searchForm = getCommonCard({
         onClickDefination: {
           action: "condition",
           callBack: searchApiCall
-        }
-      },
-      lastCont: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 4
         }
       }
     })
