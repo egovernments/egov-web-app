@@ -50,7 +50,7 @@ const tradeLicenseSearchAndResult = {
                       color: "rgba(0, 0, 0, 0.6)",
                       marginLeft: -22
                     },
-                    size: "110px"
+                    iconSize: "110px"
                   }
                 },
                 body: {
@@ -62,10 +62,6 @@ const tradeLicenseSearchAndResult = {
                       labelKey: "TL_COMMON_APPL_NEW_LICe"
                     }),
                     break: getBreak(),
-                    // paragraph: getCommonParagraph({
-                    //   labelName:
-                    //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard Lorem Ipsum has been the industry's standard."
-                    // }),
                     applyButton: {
                       componentPath: "Button",
                       props: {

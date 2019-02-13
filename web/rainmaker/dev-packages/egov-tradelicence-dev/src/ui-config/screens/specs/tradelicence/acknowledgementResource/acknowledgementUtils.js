@@ -86,7 +86,7 @@ const acknowledgementCard = ({
                 style: {
                   fontSize: "50px"
                 },
-                size: "50px"
+                iconSize: "50px"
               }
             }
           }

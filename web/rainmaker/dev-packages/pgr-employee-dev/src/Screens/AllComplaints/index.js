@@ -144,7 +144,7 @@ class AllComplaints extends Component {
     //   fetchComplaints(queryObj, true, true);
     // }
 
-    if (complaintNo) {
+    if (complaintNo && complaintNo.length > 0) {
       if (complaintNo.length >= 6) {
         fetchComplaints(queryObj, true, true);
       } else {
@@ -156,8 +156,15 @@ class AllComplaints extends Component {
       }
     } else if (mobileNo) {
       fetchComplaints(queryObj, true, true);
+    } else {
+      fetchComplaints([], true, true);
     }
     this.setState({ search: true });
+    // if (complaintNo || mobileNo) {
+    //   this.setState({ search: true });
+    // } else {
+    //   this.setState({ search: false });
+    // }
   };
 
   clearSearch = () => {
@@ -194,6 +201,12 @@ class AllComplaints extends Component {
       role,
       searchFilterEmployeeComplaints
     } = this.props;
+    console.log("search is....", search);
+    console.log(
+      "searchFilterEmployeeComplaints is...",
+      searchFilterEmployeeComplaints
+    );
+    console.log("employeeComplaints is...", employeeComplaints);
     const hintTextStyle = {
       letterSpacing: "0.7px",
       textOverflow: "ellipsis",

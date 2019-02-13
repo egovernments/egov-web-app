@@ -9,6 +9,7 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 import { Card } from "components";
 import orderBy from "lodash/orderBy";
 import React from "react";
@@ -86,47 +87,53 @@ class InboxData extends React.Component {
             })}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {data.rows.map((row, i) => {
-            return (
-              <TableRow key={i} className="inbox-data-table-bodyrow">
-                {row.map((item, index) => {
-                  if (item.subtext) {
-                    return (
-                      <TableCell className="inbox-data-table-bodycell">
-                        <div className="inbox-cell-text">{item.text}</div>
-                        <div className="inbox-cell-subtext">{item.subtext}</div>
-                      </TableCell>
-                    );
-                  } else if (item.badge) {
-                    return (
-                      <TableCell className="inbox-data-table-bodycell">
-                        <span class="inbox-cell-badge-primary ">{item.text}</span>
-                      </TableCell>
-                    );
-                  } else if (item.historyButton) {
-                    return (
-                      <TableCell className="inbox-data-table-bodycell">
-                        <div onClick={() => onHistoryClick(row[1])} style={{ cursor: "pointer" }}>
-                          <i class="material-icons">history</i>
-                        </div>
-                      </TableCell>
-                    );
-                  } else {
-                    return (
-                      <TableCell className="inbox-data-table-bodycell">
-                        <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
-                          {index === 1 ? <a> {item.text} </a> : item.text}
-                        </div>
-                      </TableCell>
-                    );
-                  }
-                })}
-              </TableRow>
-            );
-          })}
-          <TaskDialog open={this.state.dialogOpen} onClose={onDialogClose} history={ProcessInstances} />
-        </TableBody>
+        {data.rows.length === 0 ? (
+          <TableBody>
+            <Label labelClassName="" label="No results found !" />
+          </TableBody>
+        ) : (
+          <TableBody>
+            {data.rows.map((row, i) => {
+              return (
+                <TableRow key={i} className="inbox-data-table-bodyrow">
+                  {row.map((item, index) => {
+                    if (item.subtext) {
+                      return (
+                        <TableCell className="inbox-data-table-bodycell">
+                          <div className="inbox-cell-text">{item.text}</div>
+                          <div className="inbox-cell-subtext">{item.subtext}</div>
+                        </TableCell>
+                      );
+                    } else if (item.badge) {
+                      return (
+                        <TableCell className="inbox-data-table-bodycell">
+                          <span class="inbox-cell-badge-primary ">{item.text}</span>
+                        </TableCell>
+                      );
+                    } else if (item.historyButton) {
+                      return (
+                        <TableCell className="inbox-data-table-bodycell">
+                          <div onClick={() => onHistoryClick(row[1])} style={{ cursor: "pointer" }}>
+                            <i class="material-icons">history</i>
+                          </div>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell className="inbox-data-table-bodycell">
+                          <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
+                            {index === 1 ? <a> {item.text} </a> : item.text}
+                          </div>
+                        </TableCell>
+                      );
+                    }
+                  })}
+                </TableRow>
+              );
+            })}
+            <TaskDialog open={this.state.dialogOpen} onClose={onDialogClose} history={ProcessInstances} />
+          </TableBody>
+        )}
       </Table>
     );
   }

@@ -7,7 +7,7 @@ const mergeServiceWithActions = (payload) => {
     payload &&
     payload.actionHistory &&
     payload.actionHistory.reduce((result, item, index) => {
-      if (!isEmpty(item) && !isEmpty(item.actions)) {
+      if (!isEmpty(item) && !isEmpty(item.actions) && payload.services[index]) {
         result.push({
           ...payload.services[index],
           actions: item.actions,

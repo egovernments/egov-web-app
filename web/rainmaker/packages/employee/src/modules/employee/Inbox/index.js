@@ -5,12 +5,12 @@ import { Taskboard } from "./components";
 import InboxData from "./components";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import "./index.css";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import "./index.css";
 
 const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
@@ -91,6 +91,7 @@ class Inbox extends Component {
   onModuleFilter = (event) => {
     this.setState({ moduleName: event.target.value }, () => {
       const { InboxData } = this.props;
+      const { tabData } = this.state;
       const filteredData = InboxData.map((item, index) => {
         return {
           headers: item.headers,
@@ -99,8 +100,11 @@ class Inbox extends Component {
           }),
         };
       });
+      tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
+      tabData[1] = `All (${filteredData[1].rows.length})`;
       this.setState({
         inboxData: filteredData,
+        tabData,
       });
     });
   };
@@ -108,7 +112,6 @@ class Inbox extends Component {
   render() {
     const { name, classes } = this.props;
     const { value, taskboardData, tabData, inboxData } = this.state;
-
     return (
       <div className="col-sm-12">
         <Label className="landingPageUser" label={` Welcome ${name}, `} />
@@ -137,7 +140,7 @@ class Inbox extends Component {
               </Select>
             </div>
           </Tabs>
-          {<InboxData data={inboxData[value]} />}
+          <InboxData data={inboxData[value]} />
         </div>
       </div>
     );
