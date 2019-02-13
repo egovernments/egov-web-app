@@ -140,15 +140,19 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   );
 
   // DEACTIVATE EMPLOYEE VALIDATIONS
-  const isDeactivateEmployeeDetailsValid = validateFields(
-    "components.adhocDialog.children.popup.children.header.children",
-    state,
-    dispatch,
-    "view"
-  );
-  if (!isDeactivateEmployeeDetailsValid) {
-    dispatch(toggleSnackbar(true, "Please select the mandatory fields!", "warning"));
-    return;
+  if (action === "DEACTIVATE") {
+    const isDeactivateEmployeeDetailsValid = validateFields(
+      "components.adhocDialog.children.popup.children.header.children",
+      state,
+      dispatch,
+      "view"
+    );
+    if (!isDeactivateEmployeeDetailsValid) {
+      dispatch(
+        toggleSnackbar(true, "Please select the mandatory fields!", "warning")
+      );
+      return;
+    }
   }
 
   // SET TENANT IDS IF THEY DO NOT ALREADY EXIST
