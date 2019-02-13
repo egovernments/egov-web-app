@@ -36,7 +36,7 @@ const styles1 = theme => ({
   },
   icon: {
     fontSize: 20,
-    color: "#fff"
+    color: "#ffffff"
   },
   iconVariant: {
     opacity: 0.9,
@@ -45,7 +45,7 @@ const styles1 = theme => ({
   message: {
     display: "flex",
     alignItems: "center",
-    color: "#fff"
+    color: "#ffffff"
   }
 });
 
@@ -105,7 +105,7 @@ class CustomizedSnackbars extends React.Component {
             horizontal: "center"
           }}
           open={open}
-          autoHideDuration={5000}
+          autoHideDuration={50000}
           onClose={onClose}
         >
           <MySnackbarContentWrapper

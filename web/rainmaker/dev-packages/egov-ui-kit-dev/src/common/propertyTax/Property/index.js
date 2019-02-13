@@ -39,7 +39,6 @@ const listItemStyle = {
 const appName = process.env.REACT_APP_NAME;
 
 const locale = window.localStorage.getItem("locale") || "en_IN";
-console.log(locale);
 const localizationLabelsData = initLocalizationLabels(locale);
 
 class Property extends Component {
@@ -141,7 +140,7 @@ class Property extends Component {
     const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails, tenantId } = props;
     return [
       {
-        primaryText: <Label label="PT_PROPERTY_INFORMATION"  labelClassName="property-info-title"/>,
+        primaryText: <Label label="PT_PROPERTY_INFORMATION" labelClassName="property-info-title" />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -168,7 +167,7 @@ class Property extends Component {
         initiallyOpen: true,
       },
       {
-        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY"  labelClassName="property-info-title"/>,
+        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" labelClassName="property-info-title" />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />

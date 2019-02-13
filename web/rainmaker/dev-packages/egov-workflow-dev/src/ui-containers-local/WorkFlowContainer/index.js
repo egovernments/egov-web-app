@@ -77,9 +77,8 @@ class WorkFlowContainer extends React.Component {
     }
   };
 
-  createWorkFLow = async label => {
+  tlUpdate = async label => {
     const { Licenses, toggleSnackbar } = this.props;
-    set(Licenses[0], "action", label);
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -94,6 +93,7 @@ class WorkFlowContainer extends React.Component {
           Licenses: Licenses
         }
       );
+
       this.setState({
         open: false
       });
@@ -105,6 +105,22 @@ class WorkFlowContainer extends React.Component {
       }
     } catch (e) {
       toggleSnackbar(true, "TL update error!", "error");
+    }
+  };
+
+  createWorkFLow = async (label, isDocRequired) => {
+    const { Licenses, toggleSnackbar } = this.props;
+    set(Licenses[0], "action", label);
+
+    if (isDocRequired) {
+      const documents = get(Licenses[0], "wfDocumnets");
+      if (documents && documents.length > 0) {
+        this.tlUpdate(label);
+      } else {
+        toggleSnackbar(true, "Please Upload file !", "error");
+      }
+    } else {
+      this.tlUpdate(label);
     }
   };
 
@@ -182,11 +198,21 @@ class WorkFlowContainer extends React.Component {
     return nextState.isTerminateState;
   };
 
+  checkIfDocumentRequired = nextStateUUID => {
+    const businessServiceData = JSON.parse(
+      localStorage.getItem("businessServiceData")
+    );
+    const data = find(businessServiceData, { businessService: "NewTL" });
+    const nextState = find(data.states, { uuid: nextStateUUID });
+    return nextState.docUploadRequired;
+  };
+
   prepareWorkflowContract = data => {
     const {
       getRedirectUrl,
       getHeaderName,
       checkIfTerminatedState,
+      checkIfDocumentRequired,
       getEmployeeRoles
     } = this;
     let businessId = get(data[data.length - 1], "businessId");
@@ -199,7 +225,8 @@ class WorkFlowContainer extends React.Component {
         buttonUrl: getRedirectUrl(item.action, businessId),
         dialogHeader: getHeaderName(item.action),
         showEmployeeList: !checkIfTerminatedState(item.nextState),
-        roles: getEmployeeRoles(item.nextState, item.currentState)
+        roles: getEmployeeRoles(item.nextState, item.currentState),
+        isDocRequired: checkIfDocumentRequired(item.nextState)
       };
     });
   };

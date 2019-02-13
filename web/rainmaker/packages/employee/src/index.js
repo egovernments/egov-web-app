@@ -21,15 +21,13 @@ import WebFont from "webfontloader";
 import "egov-ui-kit/assets/styles/bootstrap-customized.css";
 import "egov-ui-kit/assets/styles/app.css";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; // v1.x
-import { MuiThemeProvider as V0MuiThemeProvider} from 'material-ui';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"; // v1.x
+import { MuiThemeProvider as V0MuiThemeProvider } from "material-ui";
 
 const muiThemeV0 = getMuiTheme(theme);
 const themeVX = createMuiTheme(themeNew);
 // to eliminate the click delay
 // injectTapEventPlugin();
-
-console.log(process.env.REACT_APP_DEFAULT_TENANT_ID);
 
 // load material icons
 WebFont.load({
