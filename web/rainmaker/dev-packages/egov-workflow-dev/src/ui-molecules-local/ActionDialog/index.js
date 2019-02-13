@@ -160,9 +160,10 @@ class ActionDialog extends React.Component {
                     >
                       <div className="rainmaker-displayInline">
                         <LabelContainer labelName="Supporting Documents" />
-                        <span style={{ marginLeft: 5, color: "red" }}>*</span>
+                        {isDocRequired && (
+                          <span style={{ marginLeft: 5, color: "red" }}>*</span>
+                        )}
                       </div>
-                      {/* {isDocRequired && <div>*</div>} */}
                     </Typography>
                     <div
                       style={{

@@ -105,7 +105,7 @@ class CustomizedSnackbars extends React.Component {
             horizontal: "center"
           }}
           open={open}
-          autoHideDuration={50000}
+          autoHideDuration={5000}
           onClose={onClose}
         >
           <MySnackbarContentWrapper
