@@ -1,14 +1,50 @@
 import {
   getCommonCard,
-  getCommonTitle,
-  getTextField,
-  getSelectField,
   getCommonContainer,
   getCommonParagraph,
+  getCommonTitle,
   getLabel,
-  getPattern
+  getPattern,
+  getSelectField,
+  getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { searchApiCall } from "./functions";
+
+const resetFields = (state, dispatch) => {
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.department",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.designation",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.employeeID",
+      "props.value",
+      ""
+    )
+  );
+  dispatch(
+    handleField(
+      "search",
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.employeeName",
+      "props.value",
+      ""
+    )
+  );
+};
 
 export const searchForm = getCommonCard({
   subHeader: getCommonTitle({
@@ -110,6 +146,35 @@ export const searchForm = getCommonCard({
           sm: 4
         }
       },
+      resetButton: {
+        componentPath: "Button",
+        gridDefination: {
+          xs: 12,
+          sm: 4
+          // align: "center"
+        },
+        props: {
+          variant: "outlined",
+          style: {
+            //   color: "white",
+            //   backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
+            //   borderRadius: "2px",
+            width: "80%",
+            height: "48px"
+          }
+        },
+        children: {
+          buttonLabel: getLabel({
+            labelName: "Reset",
+            labelKey: "HRMS_SEARCH_RESET_BUTTON"
+          })
+        },
+        onClickDefination: {
+          action: "condition",
+          callBack: resetFields
+        }
+      },
+
       searchButton: {
         componentPath: "Button",
         gridDefination: {
