@@ -1,13 +1,16 @@
-import { getBreak, getCommonHeader, getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getBreak,
+  getCommonHeader,
+  getLabel
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import get from "lodash/get";
 import { httpRequest } from "../../../../ui-utils";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchForm } from "./searchResource/searchForm";
-// import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
-
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -51,6 +54,13 @@ const getData = async (action, state, dispatch) => {
 };
 
 const gotoCreatePage = (state, dispatch) => {
+  get(state.screenConfiguration.preparedFinalObject, "Employee") &&
+    dispatch(prepareFinalObject("Employee", []));
+  get(
+    state.screenConfiguration.preparedFinalObject,
+    "hrms.reviewScreen.furnishedRolesList"
+  ) && dispatch(prepareFinalObject("hrms.reviewScreen.furnishedRolesList", ""));
+
   const createUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/hrms/create`
