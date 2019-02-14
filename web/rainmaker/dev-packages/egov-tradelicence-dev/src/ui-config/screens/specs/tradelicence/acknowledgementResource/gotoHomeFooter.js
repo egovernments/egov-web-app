@@ -15,7 +15,7 @@ const getCommonApplyFooter = children => {
 const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("CITIZEN")
     ? "/tradelicense-citizen/home"
-    : "/tradelicence/search";
+    : "/inbox";
   return redirectionURL;
 };
 

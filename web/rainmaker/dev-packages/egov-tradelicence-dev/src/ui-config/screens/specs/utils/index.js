@@ -615,6 +615,7 @@ export const showHideMapPopup = (state, dispatch) => {
 export const getHeaderSideText = (status, licenseNo = null) => {
   switch (status) {
     case "PAID":
+    case "PENDINGAPPROVAL":
       return { word1: "Status: ", word2: "Pending Approval" };
     case "APPLIED":
       return { word1: "Status: ", word2: "Pending Payment" };
@@ -1056,8 +1057,12 @@ const isApplicationPaid = currentStatus => {
     if (buisnessSeviceStates[i].state === currentStatus) {
       break;
     }
-    if (buisnessSeviceStates[i].state === "PAID") {
+    if (
+      buisnessSeviceStates[i].actions.filter(item => item.action === "PAY")
+        .length > 0
+    ) {
       isPAID = true;
+      break;
     }
   }
   return isPAID;

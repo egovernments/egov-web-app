@@ -201,12 +201,6 @@ class AllComplaints extends Component {
       role,
       searchFilterEmployeeComplaints
     } = this.props;
-    console.log("search is....", search);
-    console.log(
-      "searchFilterEmployeeComplaints is...",
-      searchFilterEmployeeComplaints
-    );
-    console.log("employeeComplaints is...", employeeComplaints);
     const hintTextStyle = {
       letterSpacing: "0.7px",
       textOverflow: "ellipsis",

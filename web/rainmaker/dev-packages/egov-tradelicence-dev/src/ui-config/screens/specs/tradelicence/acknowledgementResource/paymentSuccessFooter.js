@@ -15,9 +15,7 @@ const getCommonApplyFooter = children => {
 
 export const paymentSuccessFooter = () => {
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists
-    ? "/tradelicense-citizen/home"
-    : "/tradelicence/search";
+  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
 
   return getCommonApplyFooter({
     gotoHome: {

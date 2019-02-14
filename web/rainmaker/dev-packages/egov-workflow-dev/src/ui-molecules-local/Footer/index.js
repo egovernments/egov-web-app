@@ -58,6 +58,21 @@ class Footer extends React.Component {
     this.setState({ open: true, data: item, employeeList });
   };
 
+  getButtonLabelName = label => {
+    switch (label) {
+      case "FORWARD":
+        return "Verify and Forward";
+      case "MARK":
+        return "Mark";
+      case "REJECT":
+        return "Reject";
+      case "CANCEL":
+        return "purpose=application&status=cancelled";
+      case "APPROVE":
+        return "APPROVE";
+    }
+  };
+
   onClose = () => {
     this.setState({
       open: false
@@ -73,6 +88,7 @@ class Footer extends React.Component {
       onDialogButtonClick
     } = this.props;
     const { open, data, employeeList } = this.state;
+    const { getButtonLabelName } = this;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
         <div
@@ -90,7 +106,7 @@ class Footer extends React.Component {
                   onClick={() => this.openActionDialog(item)}
                 >
                   <LabelContainer
-                    labelName={buttonLabel}
+                    labelName={getButtonLabelName(buttonLabel)}
                     labelKey={`WF_${moduleName.toUpperCase()}_${buttonLabel}`}
                   />
                 </Button>

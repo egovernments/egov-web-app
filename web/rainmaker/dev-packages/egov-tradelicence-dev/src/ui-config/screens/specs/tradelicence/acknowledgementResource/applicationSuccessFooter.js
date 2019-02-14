@@ -118,9 +118,7 @@ export const applicationSuccessFooter = (
 ) => {
   //const baseURL = getBaseURL();
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists
-    ? "/tradelicense-citizen/home"
-    : "/tradelicence/search";
+  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",

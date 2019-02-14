@@ -5,6 +5,7 @@ import Item from "../../ui-atoms/Layout/Item";
 import remoteComponents from "../../ui-config/commonConfig/remote-component-paths";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
+import find from "lodash/find";
 
 class ComponentInterface extends React.Component {
   constructor(props) {
@@ -116,6 +117,23 @@ class ComponentInterface extends React.Component {
       roleDefination = {}
     } = this.props;
 
+    // if (visible && !isEmpty(roleDefination)) {
+    //   const splitList = get(roleDefination, "rolePath").split(".");
+    //   const localdata = JSON.parse(localStorage.getItem(splitList[0]));
+    //   const localRoles = get(
+    //     localdata,
+    //     splitList.slice(1).join("."),
+    //     localdata
+    //   );
+
+    //   const roleCodes = localRoles.map(elem => {
+    //     return get(elem, "code");
+    //   });
+    //   const roles = get(roleDefination, "roles");
+    //   let found = roles.some(elem => roleCodes.includes(elem));
+    //   visible = found;
+    // }
+
     if (visible && !isEmpty(roleDefination)) {
       const splitList = get(roleDefination, "rolePath").split(".");
       const localdata = JSON.parse(localStorage.getItem(splitList[0]));
@@ -124,13 +142,41 @@ class ComponentInterface extends React.Component {
         splitList.slice(1).join("."),
         localdata
       );
-
       const roleCodes = localRoles.map(elem => {
         return get(elem, "code");
       });
-      const roles = get(roleDefination, "roles");
-      let found = roles.some(elem => roleCodes.includes(elem));
-      visible = found;
+      if (get(roleDefination, "roles")) {
+        const roles = get(roleDefination, "roles");
+        let found = roles.some(elem => roleCodes.includes(elem));
+        visible = found;
+      } else if (get(roleDefination, "action")) {
+        const businessServiceData = JSON.parse(
+          localStorage.getItem("businessServiceData")
+        );
+        const data = find(businessServiceData, { businessService: "NewTL" });
+        const filteredData =
+          data &&
+          data.states.reduce((res, curr) => {
+            if (
+              curr &&
+              curr.actions &&
+              curr.actions.filter(
+                item => item.action === get(roleDefination, "action")
+              ).length > 0
+            ) {
+              const filteredAction = curr.actions.filter(
+                item => item.action === get(roleDefination, "action")
+              );
+
+              filteredAction.forEach(item => res.push(item.roles));
+            }
+
+            return res;
+          }, []);
+        const roles = filteredData[0];
+        let found = roles.some(elem => roleCodes.includes(elem));
+        visible = found;
+      }
     }
 
     if (gridDefination) {

@@ -32,7 +32,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: `/tradelicence/search`
+      path: `/inbox`
     }
   },
   downloadLicenseButton: {

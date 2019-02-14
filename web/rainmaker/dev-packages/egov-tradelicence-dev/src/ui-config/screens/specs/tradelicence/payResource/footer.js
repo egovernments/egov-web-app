@@ -303,7 +303,8 @@ export const footer = getCommonApplyFooter({
     },
     roleDefination: {
       rolePath: "user-info.roles",
-      roles: ["TL_CEMP"]
+      //roles: ["TL_CEMP"]
+      action: "PAY"
     }
   },
   downloadConfirmationform: {

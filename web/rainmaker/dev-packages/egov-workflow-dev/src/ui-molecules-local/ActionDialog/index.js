@@ -26,7 +26,7 @@ const fieldConfig = {
       labelKey: "TL_APPROVER_NAME_LABEL"
     },
     placeholder: {
-      labelName: "Selet approver Name",
+      labelName: "Select approver Name",
       labelKey: "TL_APROVER_NAME_PLACEHOLDER"
     }
   },
@@ -63,6 +63,21 @@ class ActionDialog extends React.Component {
   //   }
   // };
 
+  getButtonLabelName = label => {
+    switch (label) {
+      case "FORWARD":
+        return "Verify and Forward";
+      case "MARK":
+        return "Mark";
+      case "REJECT":
+        return "Reject";
+      case "CANCEL":
+        return "purpose=application&status=cancelled";
+      case "APPROVE":
+        return "APPROVE";
+    }
+  };
+
   render() {
     const {
       open,
@@ -79,6 +94,7 @@ class ActionDialog extends React.Component {
       moduleName,
       isDocRequired
     } = dialogData;
+    const { getButtonLabelName } = this;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
         <DialogContent
@@ -199,7 +215,7 @@ class ActionDialog extends React.Component {
                         }
                       >
                         <LabelContainer
-                          labelName={buttonLabel}
+                          labelName={getButtonLabelName(buttonLabel)}
                           labelKey={
                             moduleName
                               ? `WF_${moduleName.toUpperCase()}_${buttonLabel}`
