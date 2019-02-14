@@ -1,8 +1,17 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { ifUserRoleExists } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { showHideAdhocPopup } from "../../utils";
 import { handleCreateUpdateEmployee } from "./functions";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+
+const gotoCreateFlow = (state, dispatch) => {
+  const employeeCode = getQueryArg(window.location.href, "employeeID");
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}`
+      : `/hrms/create?employeeCode=${employeeCode}`;
+  dispatch(setRoute(createUrl));
+};
 
 const getCommonCreateFooter = children => {
   return {
@@ -43,7 +52,6 @@ export const hrCommonFooter = () => {
 };
 
 export const hrViewFooter = () => {
-  const employeeCode = getQueryArg(window.location.href, "employeeID");
   return getCommonCreateFooter({
     deactivateEmployee: {
       componentPath: "Button",
@@ -92,11 +100,8 @@ export const hrViewFooter = () => {
         }
       },
       onClickDefination: {
-        action: "page_change",
-        path:
-          process.env.REACT_APP_SELF_RUNNING === "true"
-            ? `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}`
-            : `/hrms/create?employeeCode=${employeeCode}`
+        action: "condition",
+        callBack: gotoCreateFlow
       }
     }
   });

@@ -1,16 +1,21 @@
-import get from "lodash/get";
-import set from "lodash/set";
-import {
-  createEmployee,
-  updateEmployee,
-  getSearchResults
-} from "../../../../..//ui-utils/commons";
-import { convertDateToEpoch, showHideAdhocPopup } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import {
   prepareFinalObject,
   toggleSnackbar
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { epochToYmdDate, validateFields } from "../../utils";
+import get from "lodash/get";
+import set from "lodash/set";
+import {
+  createEmployee,
+  getSearchResults,
+  updateEmployee
+} from "../../../../..//ui-utils/commons";
+import {
+  convertDateToEpoch,
+  epochToYmdDate,
+  showHideAdhocPopup,
+  validateFields
+} from "../../utils";
 
 // SET ALL SIMPLE DATES IN YMD FORMAT
 const setDateInYmdFormat = (obj, values) => {
@@ -262,10 +267,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     try {
       let response = await createEmployee(queryObject, employeeObject);
       let employeeId = get(response, "Employees[0].code");
-      window.location.href =
+      const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`
           : `/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
+      dispatch(setRoute(acknowledgementUrl));
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
@@ -273,10 +279,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     try {
       let response = await updateEmployee(queryObject, employeeObject);
       let employeeId = response && get(response, "Employees[0].code");
-      window.location.href =
+      const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`
           : `/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`;
+      dispatch(setRoute(acknowledgementUrl));
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
@@ -292,11 +299,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       );
       let response = await updateEmployee(queryObject, employeeObject);
       let employeeId = response && get(response, "Employees[0].code");
-      window.location.href =
+      showHideAdhocPopup(state, dispatch);
+      const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`
           : `/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
-      showHideAdhocPopup(state, dispatch);
+      dispatch(setRoute(acknowledgementUrl));
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }

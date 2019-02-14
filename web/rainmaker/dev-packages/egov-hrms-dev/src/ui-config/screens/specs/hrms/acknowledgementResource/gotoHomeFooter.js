@@ -1,5 +1,5 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { ifUserRoleExists } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 
 const getCommonApplyFooter = children => {
   return {
@@ -12,12 +12,15 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const gotoHomeFooter = () => {
-  const redirectionURL =
+const gotoSearchPage = (state, dispatch) => {
+  const searchUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/hrms/search`
       : `/hrms/search`;
+  dispatch(setRoute(searchUrl));
+};
 
+export const gotoHomeFooter = () => {
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -37,8 +40,8 @@ export const gotoHomeFooter = () => {
         })
       },
       onClickDefination: {
-        action: "page_change",
-        path: `${redirectionURL}`
+        action: "condition",
+        callBack: gotoSearchPage
       }
     }
   });

@@ -110,7 +110,7 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_TYPE_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "Employee[0].jurisdictions[0].boundary",
+              jsonPath: "Employee[0].jurisdictions[0].boundaryType",
               // sourceJsonPath: "createScreenMdmsData.boundaryList",
               props: {
                 className: "hr-generic-selectfield",
@@ -239,7 +239,7 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "Employee[0].jurisdictions[0].boundaryType",
+              jsonPath: "Employee[0].jurisdictions[0].boundary",
               // sourceJsonPath: "createScreenMdmsData.processedBoundaryDataList",
               props: {
                 className: "hr-generic-selectfield",

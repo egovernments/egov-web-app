@@ -152,7 +152,7 @@ const assignmentDetailsCard = {
               SwitchProps: {
                 color: "primary"
               },
-              jsonPath: "Employee[0].assignments[0].isHod"
+              jsonPath: "Employee[0].assignments[0].isHOD"
             }
           }
         },

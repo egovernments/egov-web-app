@@ -1,12 +1,19 @@
 import {
+  getCommonContainer,
   getCommonGrayCard,
   getCommonSubHeader,
-  getCommonContainer,
-  getLabelWithValue,
-  getDivider,
-  getLabel
+  getLabel,
+  getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { changeStep } from "../createResource/footer";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+
+const gotoCreatePage = (state, dispatch) => {
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create?step=1`
+      : `/hrms/create?step=1`;
+  dispatch(setRoute(createUrl));
+};
 
 const jurisdictionCard = {
   uiFramework: "custom-containers",
@@ -91,11 +98,8 @@ export const getJurisdictionDetailsView = (isReview = true) => {
             })
           },
           onClickDefination: {
-            action: "page_change",
-            path:
-              process.env.REACT_APP_SELF_RUNNING === "true"
-                ? `/egov-ui-framework/hrms/create?step=1`
-                : `/hrms/create?step=1`
+            action: "condition",
+            callBack: gotoCreatePage
           }
         }
       }

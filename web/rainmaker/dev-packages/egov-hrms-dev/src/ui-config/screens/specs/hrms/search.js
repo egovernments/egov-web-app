@@ -1,16 +1,13 @@
-import {
-  getCommonHeader,
-  getLabel,
-  getBreak
-} from "egov-ui-framework/ui-config/screens/specs/utils";
-import { searchForm } from "./searchResource/searchForm";
-
+import { getBreak, getCommonHeader, getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { httpRequest } from "../../../../ui-utils";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
+import { searchForm } from "./searchResource/searchForm";
 // import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
-import { httpRequest } from "../../../../ui-utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -51,6 +48,14 @@ const getMDMSData = async (action, state, dispatch) => {
 
 const getData = async (action, state, dispatch) => {
   await getMDMSData(action, state, dispatch);
+};
+
+const gotoCreatePage = (state, dispatch) => {
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create`
+      : `/hrms/create`;
+  dispatch(setRoute(createUrl));
 };
 
 const employeeSearchAndResult = {
@@ -118,11 +123,8 @@ const employeeSearchAndResult = {
                 })
               },
               onClickDefination: {
-                action: "page_change",
-                path:
-                  process.env.REACT_APP_SELF_RUNNING === "true"
-                    ? "/egov-ui-framework/hrms/create"
-                    : "/hrms/create"
+                action: "condition",
+                callBack: gotoCreatePage
               },
               roleDefination: {
                 rolePath: "user-info.roles",

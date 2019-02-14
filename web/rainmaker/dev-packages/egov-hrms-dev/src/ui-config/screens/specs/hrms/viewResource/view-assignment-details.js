@@ -1,12 +1,19 @@
 import {
+  getCommonContainer,
   getCommonGrayCard,
   getCommonSubHeader,
-  getCommonContainer,
-  getLabelWithValue,
-  getDivider,
-  getLabel
+  getLabel,
+  getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { changeStep } from "../createResource/footer";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+
+const gotoCreatePage = (state, dispatch) => {
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create?step=2`
+      : `/hrms/create?step=2`;
+  dispatch(setRoute(createUrl));
+};
 
 const assignmentCard = {
   uiFramework: "custom-containers",
@@ -119,11 +126,8 @@ export const getAssignmentDetailsView = (isReview = true) => {
             })
           },
           onClickDefination: {
-            action: "page_change",
-            path:
-              process.env.REACT_APP_SELF_RUNNING === "true"
-                ? `/egov-ui-framework/hrms/create?step=2`
-                : `/hrms/create?step=2`
+            action: "condition",
+            callBack: gotoCreatePage
           }
         }
       }

@@ -144,20 +144,20 @@ export const employeeDetails = getCommonCard({
   })
 });
 
-export const professionalDetails = getCommonCard({
-  header: getCommonTitle(
-    {
-      labelName: "Professional Details",
-      labelKey: "HR_PROFESSIONAL_DETAILS_FORM_HEADER"
-    },
-    {
-      style: {
-        marginBottom: 18
+export const professionalDetails = getCommonCard(
+  {
+    header: getCommonTitle(
+      {
+        labelName: "Professional Details",
+        labelKey: "HR_PROFESSIONAL_DETAILS_FORM_HEADER"
+      },
+      {
+        style: {
+          marginBottom: 18
+        }
       }
-    }
-  ),
-  employeeDetailsContainer: getCommonContainer(
-    {
+    ),
+    employeeDetailsContainer: getCommonContainer({
       employeeId: {
         ...getTextField({
           label: {
@@ -271,12 +271,9 @@ export const professionalDetails = getCommonCard({
           sm: 6
         }
       }
-    },
-    {
-      style: {
-        overflow: "visible",
-        paddingBottom: "300px"
-      }
-    }
-  )
-});
+    })
+  },
+  {
+    style: { overflow: "visible" }
+  }
+);
