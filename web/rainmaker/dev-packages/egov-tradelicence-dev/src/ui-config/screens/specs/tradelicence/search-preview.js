@@ -357,6 +357,7 @@ const screenConfig = {
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
     const status = getQueryArg(window.location.href, "status");
+    const tenantId = getQueryArg(window.location.href, "tenantId");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     //To set the application no. at the  top
     set(
@@ -372,7 +373,7 @@ const screenConfig = {
       );
     }
     const queryObject = [
-      { key: "tenantId", value: localStorage.getItem("tenant-id") },
+      { key: "tenantId", value: tenantId },
       { key: "businessService", value: "newTL" }
     ];
     setBusinessServiceDataToLocalStorage(queryObject);
