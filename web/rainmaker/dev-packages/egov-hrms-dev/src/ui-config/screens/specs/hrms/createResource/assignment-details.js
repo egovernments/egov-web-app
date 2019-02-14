@@ -80,9 +80,11 @@ const assignmentDetailsCard = {
               SwitchProps: {
                 color: "primary"
               },
-              jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
+              jsonPath: "Employee[0].assignments[0].isCurrentAssignment",
+              compJPath:
+                "components.div.children.formwizardThirdStep.children.assignmentDetails.children.cardContent.children.assignmentDetailsCard.props.items",
+              screenKey: "create"
             }
-            // jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
           },
           department: {
             ...getSelectField({
