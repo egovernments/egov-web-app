@@ -8,6 +8,7 @@ import {
   getDateField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { createUpdateEmployee } from "./functions";
+import { showHideAdhocPopup } from "../../utils";
 
 const deactivateEmployeeCallback = (state, dispatch) => {
   createUpdateEmployee(state, dispatch, "DEACTIVATE");
@@ -21,13 +22,26 @@ export const deactivateEmployee = getCommonContainer({
   header: {
     uiFramework: "custom-atoms",
     componentPath: "Container",
+    props: {
+      style: {
+        width: "100%",
+        float: "right",
+        marginBottom: "20px"
+      }
+    },
     children: {
       div1: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
         gridDefination: {
-          xs: 12,
-          sm: 12
+          xs: 10,
+          sm: 10
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right"
+          }
         },
         children: {
           div: getCommonHeader(
@@ -43,6 +57,53 @@ export const deactivateEmployee = getCommonContainer({
           )
         }
       },
+      div2: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 2,
+          sm: 2
+        },
+        props: {
+          style: {
+            width: "100%",
+            float: "right",
+            cursor: "pointer"
+          }
+        },
+        children: {
+          closeButton: {
+            componentPath: "Button",
+            props: {
+              style: {
+                float: "right",
+                color: "rgba(0, 0, 0, 0.60)",
+                marginTop: "-8px",
+                marginRight: "-25px"
+              }
+            },
+            children: {
+              previousButtonIcon: {
+                uiFramework: "custom-atoms",
+                componentPath: "Icon",
+                props: {
+                  iconName: "close"
+                }
+              }
+            },
+            onClickDefination: {
+              action: "condition",
+              callBack: showHideAdhocPopup
+            }
+          }
+        }
+      }
+    }
+  },
+  body: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+    children: {
       deactivationReason: getSelectField({
         label: {
           labelName: "Reason for Deactivation",

@@ -147,7 +147,7 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   // DEACTIVATE EMPLOYEE VALIDATIONS
   if (action === "DEACTIVATE") {
     const isDeactivateEmployeeDetailsValid = validateFields(
-      "components.adhocDialog.children.popup.children.header.children",
+      "components.adhocDialog.children.popup.children.body.children",
       state,
       dispatch,
       "view"
