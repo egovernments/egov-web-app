@@ -15,6 +15,7 @@ import Dialog from 'material-ui/Dialog';
 import { translate } from './components/Common';
 import AutoComplete from 'material-ui/AutoComplete';
 import Api from "./components/api"
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css"
 
 const headerStyle ={
@@ -196,7 +197,7 @@ const isHavingPrimary = function(employee) {
 const makeAjaxUpload = function(file, cb) {
   if (file.constructor == File) {
     let formData = new FormData();
-    formData.append('jurisdictionId', localStorage.getItem('tenantId'));
+    formData.append('jurisdictionId', getTenantId());
     formData.append('module', 'HR');
     formData.append('file', file);
 
@@ -2263,7 +2264,7 @@ class Employee extends Component {
                   {
                     code: 'EMPLOYEE',
                     name: 'EMPLOYEE',
-                    tenantId: localStorage.getItem('tenantId'),
+                    tenantId: getTenantId(),
                   },
                 ],
                 userName: null,
@@ -2290,9 +2291,9 @@ class Employee extends Component {
                 photo: '',
                 type: 'EMPLOYEE',
                 password: '12345678',
-                tenantId: localStorage.getItem('tenantId'),
+                tenantId: getTenantId(),
               },
-              tenantId: localStorage.getItem('tenantId'),
+              tenantId: getTenantId(),
             },
             false
           );
@@ -2380,7 +2381,7 @@ class Employee extends Component {
     });
 
     Api.commonApiGet('egov-location/boundarys', {
-      'Boundary.tenantId': localStorage.getItem('tenantId'),
+      'Boundary.tenantId': getTenantId(),
     }).then(
       function(res) {
         checkCountAndSetState('allBoundariesList', res['Boundary']);

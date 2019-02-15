@@ -1,5 +1,6 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const formConfig = {
   name: "searchProperty",
@@ -65,7 +66,7 @@ const formConfig = {
     try {
       let state = store.getState();
       const { cities, citiesByModule } = state.common;
-      let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+      let tenantId = JSON.parse(getUserInfo()).tenantId;
       const { PT } = citiesByModule;
       if (PT) {
         const tenants = PT.tenants;

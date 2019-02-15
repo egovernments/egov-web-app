@@ -5,8 +5,9 @@ import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
 import { getTranslatedLabel } from "../../../../../utils/commons";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
-const locale = window.localStorage.getItem("locale") || "en_IN";
+const locale = getLocale() || "en_IN";
 const localizationLabelsData = initLocalizationLabels(locale);
 
 const editIconStyle = {
@@ -22,7 +23,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
     <div className="property-informtion">
       <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
         <div className="receipt-displayInline assignment-title-half">
-          <Icon action="action" name="assignment" color="#767676" className="assignment-icon"/>
+          <Icon action="action" name="assignment" color="#767676" className="assignment-icon" />
           <Label
             bold={true}
             label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyTaxAssessmentID}`}

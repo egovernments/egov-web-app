@@ -2,6 +2,10 @@ import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
 import { toggleSpinner } from "../ui-redux/app/actions";
 import store from "../ui-redux/store";
+import {
+  getAccessToken,
+  getTenantId
+} from "egov-ui-kit/utils/localStorageUtils";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -11,7 +15,7 @@ const instance = axios.create({
 });
 
 const wrapRequestBody = (requestBody, action) => {
-  const authToken = fetchFromLocalStorage("token");
+  const authToken = getAccessToken();
   let RequestInfo = {
     apiId: "Mihy",
     ver: ".01",
@@ -126,10 +130,10 @@ export const prepareForm = params => {
 
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
-  const tenantId = fetchFromLocalStorage("tenant-id")
+  const tenantId = getTenantId()
     ? ulbLevel
-      ? fetchFromLocalStorage("tenant-id").split(".")[0]
-      : fetchFromLocalStorage("tenant-id").split(".")[0]
+      ? getTenantId().split(".")[0]
+      : getTenantId().split(".")[0]
     : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,

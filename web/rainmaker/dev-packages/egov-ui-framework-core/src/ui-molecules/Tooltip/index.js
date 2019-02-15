@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Icon from "@material-ui/core/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
 import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 import { transformById } from "../../ui-utils/commons";
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 function SimpleTooltips(props) {
   const { val, icon, ...rest } = props;

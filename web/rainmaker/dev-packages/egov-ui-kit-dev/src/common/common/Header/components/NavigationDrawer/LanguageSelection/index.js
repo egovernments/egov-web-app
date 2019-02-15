@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { ButtonGroup } from "components";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 class LanguageSelection extends Component {
   state = {
-    value: localStorage.getItem("locale"),
+    value: getLocale(),
   };
 
   onClick = (value) => {

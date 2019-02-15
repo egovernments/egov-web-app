@@ -32,7 +32,7 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");

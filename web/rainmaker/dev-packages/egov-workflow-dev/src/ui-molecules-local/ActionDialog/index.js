@@ -51,7 +51,7 @@ class ActionDialog extends React.Component {
   // onEmployeeClick = e => {
   //   const { handleFieldChange, toggleSnackbar } = this.props;
   //   const selectedValue = e.target.value;
-  //   const currentUser = JSON.parse(localStorage.getItem("user-info")).uuid;
+  //   const currentUser = JSON.parse(getUserInfo()).uuid;
   //   if (selectedValue === currentUser) {
   //     toggleSnackbar(
   //       true,

@@ -10,10 +10,9 @@ import {
   getLocaleLabels
 } from "../../ui-utils/commons";
 import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {

@@ -1,7 +1,16 @@
-import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
+import {
+  pincode,
+  mohalla,
+  street,
+  colony,
+  houseNumber,
+  dummy,
+  city
+} from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const formConfig = {
   name: "propertyInformation",
@@ -22,7 +31,7 @@ const formConfig = {
       boundary: true,
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      disabled:true
+      disabled: true
     },
 
     ...pincode,
@@ -38,24 +47,24 @@ const formConfig = {
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[a-zA-Z0-9\:\#\/\-\s]{1,64}$/i,
-      maxLength: 64,
-    },
+      maxLength: 64
+    }
   },
   beforeInitForm: (action, store) => {
     let state = store.getState();
-    set(action,"form.fields.city.required",false);
-    set(action,"form.fields.pincode.disabled",true);
+    set(action, "form.fields.city.required", false);
+    set(action, "form.fields.pincode.disabled", true);
     return action;
   },
   afterInitForm: (action, store, dispatch) => {
-    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    let tenantId = JSON.parse(getUserInfo()).tenantId;
     dispatch(handleFieldChange("propertyInformation", "city", tenantId));
     return action;
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false,
+  isFormValid: false
 };
 
 export default formConfig;

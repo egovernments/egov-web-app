@@ -4,10 +4,11 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { getCurrentAddress } from "egov-ui-kit/utils/commons";
 import commonConfig from "config/common";
 import { debug } from "util";
+import { setLocale, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 
 export const updateActiveRoute = (routePath, menuName) => {
-  window.localStorage.setItem("menuPath", routePath);
-  window.localStorage.setItem("menuName", menuName);
+  localStorageSet("menuPath", routePath);
+  localStorageSet("menuName", menuName);
   return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath };
 };
 
@@ -21,7 +22,7 @@ export const setBottomNavigationIndex = (bottomNavigationIndex) => {
 
 const setLocalizationLabels = (locale, localizationLabels) => {
   window.localStorage.setItem(`localization_${locale}`, JSON.stringify(localizationLabels));
-  window.localStorage.setItem("locale", locale);
+  setLocale(locale);
   return { type: actionTypes.ADD_LOCALIZATION, locale, localizationLabels };
 };
 
@@ -37,7 +38,7 @@ export const toggleSnackbarAndSetText = (open, message, error) => {
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
     try {
-      //let payload = { messages: JSON.parse(window.localStorage.getItem(`localization_${locale}`)) || [] };
+      //let payload = { messages: JSON.parse(localStorageGet(`localization_${locale}`)) || [] };
       //if (!payload.messages.length) {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" },

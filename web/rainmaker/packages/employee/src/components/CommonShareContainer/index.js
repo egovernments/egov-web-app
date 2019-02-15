@@ -7,6 +7,7 @@ import get from "lodash/get";
 import forEach from "lodash/forEach";
 import isEmpty from "lodash/isEmpty";
 import CommonShare from "egov-ui-kit/components/CommonShare";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 class CommonShareContainer extends React.Component {
   visible = false;
@@ -56,7 +57,7 @@ class CommonShareContainer extends React.Component {
     //Get User Role from localStorage
     const roleDefination = { rolePath: "user-info.roles" };
     const splitList = get(roleDefination, "rolePath").split(".");
-    const localdata = JSON.parse(localStorage.getItem(splitList[0]));
+    const localdata = JSON.parse(localStorageGet(splitList[0]));
     const localRoles = localdata && get(localdata, splitList.slice(1).join("."), localdata);
 
     const roleCodes =

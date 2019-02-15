@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 const iconButtonStyle = {
@@ -66,7 +67,7 @@ class AllComplaints extends Component {
         true
       );
       const complaintCountRequest = [
-        { key: "tenantId", value: fetchFromLocalStorage("tenant-id") },
+        { key: "tenantId", value: getTenantId() },
         {
           key: "status",
           value:

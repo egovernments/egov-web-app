@@ -1,9 +1,12 @@
 import * as actionTypes from "./actionTypes";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
-const token = localStorage.getItem("CognitoIdentityServiceProvider.34l3gjbtidmeo10omi969ftoi5.07f4204e-c40e-438a-964e-a0442048e626.accessToken");
+const token = localStorageGet(
+  "CognitoIdentityServiceProvider.34l3gjbtidmeo10omi969ftoi5.07f4204e-c40e-438a-964e-a0442048e626.accessToken"
+);
 
 const intialState = {
-  authenticated:false,
+  authenticated: false,
   authenticationFailed: false,
   token
 };
@@ -13,13 +16,13 @@ const auth = (state = intialState, action) => {
 
   switch (type) {
     case actionTypes.AUTHENTICATING:
-      return { ...state, authenticated: false, authenticationFailed: true};
+      return { ...state, authenticated: false, authenticationFailed: true };
     case actionTypes.AUTHENTICATED:
       return {
         ...state,
         authenticated: true,
         authenticationFailed: false,
-        token: action.accessToken,
+        token: action.accessToken
       };
     case actionTypes.AUTHENTICATION_FAILED:
       return { ...state, authenticated: false, authenticationFailed: true };
@@ -28,7 +31,7 @@ const auth = (state = intialState, action) => {
         ...state,
         authenticated: false,
         authenticationFailed: false,
-        token: "",
+        token: ""
       };
     default:
       return state;

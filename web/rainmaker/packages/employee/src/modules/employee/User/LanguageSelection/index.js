@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 import { Banner } from "modules/common";
 import { LanguageSelectionForm } from "modules/common";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 class LanguageSelection extends Component {
   state = {
-    value: localStorage.getItem("locale"),
+    value: getLocale(),
     items: [
       {
         label: "ENGLISH",

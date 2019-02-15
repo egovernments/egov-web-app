@@ -29,6 +29,7 @@ import {
   updatePFOforSearchResults,
   getBoundaryData
 } from "../../../../ui-utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const stepsData = [
   { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
@@ -156,7 +157,7 @@ export const getMdmsData = async (action, state, dispatch) => {
 export const getData = async (action, state, dispatch) => {
   const queryValue = getQueryArg(window.location.href, "applicationNumber");
   await getMdmsData(action, state, dispatch);
-  await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
+  await getAllDataFromBillingSlab(getTenantId(), dispatch);
 
   if (queryValue) {
     await updatePFOforSearchResults(action, state, dispatch, queryValue);
@@ -224,7 +225,7 @@ const screenConfig = {
     dispatch(prepareFinalObject("LicensesTemp", []));
     // getData(action, state, dispatch);
     getData(action, state, dispatch).then(responseAction => {
-      const tenantId = localStorage.getItem("tenant-id");
+      const tenantId = getTenantId();
       const queryObj = [{ key: "tenantId", value: tenantId }];
       getBoundaryData(action, state, dispatch, queryObj);
       let props = get(

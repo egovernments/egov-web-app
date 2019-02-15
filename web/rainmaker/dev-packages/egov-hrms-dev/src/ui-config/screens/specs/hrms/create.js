@@ -21,6 +21,7 @@ import { commonTransform, objectArrayToDropdown } from "../utils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { getEmployeeData } from "./viewResource/functions";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const stepsData = [
   { labelName: "Employee Details", labelKey: "HR_NEW_EMPLOYEE_FORM_HEADER" },
@@ -223,7 +224,7 @@ const screenConfig = {
   name: "create",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getTenantId();
     const mdmsDataStatus = getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
     employeeCode && getEmployeeData(state, dispatch, employeeCode);

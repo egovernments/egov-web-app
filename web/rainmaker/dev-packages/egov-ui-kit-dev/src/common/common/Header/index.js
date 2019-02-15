@@ -11,6 +11,7 @@ import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 import get from "lodash/get";
 import "./index.css";
 import { updateActiveRoute } from "egov-ui-kit/redux/app/actions";
+import { getTenantId, getUserInfo, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 // get userInfo role
 class Header extends Component {
@@ -26,14 +27,14 @@ class Header extends Component {
   componentDidMount = () => {
     const { role, updateActiveRoute } = this.props;
     if (role && role.toLowerCase() !== "citizen") {
-      const tenantId = localStorage.getItem("tenant-id");
-      // const menupath = localStorage.getItem("menuPath");
+      const tenantId = getTenantId();
+      // const menupath = localStorageGet("menuPath");
       const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
       // updateActiveRoute(menupath);
       this.setState({ ulbLogo });
     }
-    const menupath = localStorage.getItem("menuPath");
-    const menuName = localStorage.getItem("menuName");
+    const menupath = localStorageGet("menuPath");
+    const menuName = localStorageGet("menuName");
     updateActiveRoute(menupath, menuName);
   };
 
@@ -205,8 +206,7 @@ const getUlbGradeLabel = (ulbGrade) => {
 const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
   const { role } = ownProps;
-  const tenantId =
-    role && role.toLowerCase() === "citizen" ? JSON.parse(localStorage.getItem("user-info")).permanentCity : localStorage.getItem("tenant-id");
+  const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "name");

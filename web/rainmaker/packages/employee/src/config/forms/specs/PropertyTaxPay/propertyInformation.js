@@ -2,6 +2,7 @@ import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "egov
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const formConfig = {
   name: "propertyInformation",
@@ -22,7 +23,7 @@ const formConfig = {
       boundary: true,
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      disabled:true
+      disabled: true,
     },
 
     ...pincode,
@@ -43,12 +44,12 @@ const formConfig = {
   },
   beforeInitForm: (action, store) => {
     let state = store.getState();
-    set(action,"form.fields.city.required",false);
-    set(action,"form.fields.pincode.disabled",true);
+    set(action, "form.fields.city.required", false);
+    set(action, "form.fields.pincode.disabled", true);
     return action;
   },
   afterInitForm: (action, store, dispatch) => {
-    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    let tenantId = JSON.parse(getUserInfo()).tenantId;
     dispatch(handleFieldChange("propertyInformation", "city", tenantId));
     return action;
   },

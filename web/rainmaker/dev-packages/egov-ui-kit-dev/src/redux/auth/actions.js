@@ -4,6 +4,15 @@ import { httpRequest, loginRequest } from "egov-ui-kit/utils/api";
 import { AUTH, USER, OTP } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import {
+  setTenantId,
+  getAccessToken,
+  setUserInfo,
+  setAccessToken,
+  setRefreshToken,
+  localStorageSet,
+  localStorageGet,
+} from "../../utils/localStorageUtils";
 
 // temp fix
 const fixUserDob = (user = {}) => {
@@ -19,7 +28,7 @@ const fixUserDob = (user = {}) => {
 
 export const userProfileUpdated = (payload = {}) => {
   const user = fixUserDob(payload.user[0]);
-  window.localStorage.setItem("user-info", JSON.stringify(user));
+  setUserInfo(JSON.stringify(user));
   return { type: authType.USER_PROFILE_UPDATED, user };
 };
 
@@ -31,7 +40,7 @@ export const userProfileUpdateError = (error) => {
 export const searchUserSuccess = (user = {}) => {
   user = fixUserDob(user.user[0]);
   //temporary fix for dat of birth format issue in prfile update
-  window.localStorage.setItem("user-info", JSON.stringify(user));
+  setUserInfo(JSON.stringify(user));
   return { type: authType.USER_SEARCH_SUCCESS, user };
 };
 
@@ -50,12 +59,12 @@ export const authenticated = (payload = {}) => {
   const expiresIn = payload.expires_in;
   const lastLoginTime = new Date().getTime();
 
-  localStorage.setItem("user-info", JSON.stringify(userInfo));
-  localStorage.setItem("token", accessToken);
-  localStorage.setItem("refresh-token", refreshToken);
-  localStorage.setItem("expires-in", expiresIn);
-  localStorage.setItem("tenant-id", userInfo.tenantId);
-  localStorage.setItem("last-login-time", lastLoginTime);
+  setUserInfo(JSON.stringify(userInfo));
+  setAccessToken(accessToken);
+  setRefreshToken(refreshToken);
+  setTenantId(userInfo.tenantId);
+  localStorageSet("expires-in", expiresIn);
+  localStorageSet("last-login-time", lastLoginTime);
 
   return { type: authType.AUTHENTICATED, userInfo, accessToken };
 };
@@ -89,7 +98,7 @@ export const searchUser = () => {
 
 export const refreshTokenRequest = () => {
   return async (dispatch) => {
-    const refreshToken = window.localStorage.getItem("refresh-token");
+    const refreshToken = localStorageGet("refresh-token");
     const grantType = "refresh_token";
     const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
     try {
@@ -122,7 +131,7 @@ export const sendOTP = (intent) => {
 export const logout = () => {
   return async () => {
     try {
-      const authToken = localStorage.getItem("token");
+      const authToken = getAccessToken();
       if (authToken) {
         const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
       } else {
@@ -145,7 +154,7 @@ export const logout = () => {
       });
     }
     // whatever happens the client should clear the user details
-    // let userInfo=localStorage.getItem("user-info");
+    // let userInfo=getUserInfo();
     // let userRole=get(userInfo,"roles[0].code");
 
     Object.keys(localStorage).forEach((key) => {

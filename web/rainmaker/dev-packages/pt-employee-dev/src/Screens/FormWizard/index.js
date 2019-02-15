@@ -59,6 +59,7 @@ import {
   renderPlotAndFloorDetails
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
+import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 class FormWizard extends Component {
   state = {
@@ -73,8 +74,8 @@ class FormWizard extends Component {
     importantDates: {},
     draftRequest: {
       draft: {
-        tenantId: localStorage.getItem("tenant-id"),
-        userId: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+        tenantId: getTenantId(),
+        userId: get(JSON.parse(getUserInfo()), "uuid"),
         draftRecord: {}
       }
     },
@@ -148,10 +149,17 @@ class FormWizard extends Component {
             }
           ]
         );
-        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
-          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
-             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
-          })
+        if (
+          searchPropertyResponse.Properties[0].propertyDetails &&
+          searchPropertyResponse.Properties[0].propertyDetails.length > 0
+        ) {
+          searchPropertyResponse.Properties[0].propertyDetails.map(item => {
+            return (item.units =
+              (item.units &&
+                item.units.length &&
+                sortBy(item.units, ["floorNo"])) ||
+              []);
+          });
         }
         // console.log(searchPropertyResponse);
         let propertyResponse = {

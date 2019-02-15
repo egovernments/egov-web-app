@@ -1,7 +1,8 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
-const tenantId = localStorage.getItem("tenant-id");
+const tenantId = getTenantId();
 
 const formConfig = {
   name: "complaint",

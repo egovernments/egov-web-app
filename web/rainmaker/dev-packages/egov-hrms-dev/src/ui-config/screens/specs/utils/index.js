@@ -14,6 +14,8 @@ import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
+import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+
 export const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -700,9 +702,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.address.tenantId",
       ""
     );
-    const tenantId = ifUserRoleExists("CITIZEN")
-      ? cityId
-      : localStorage.getItem("tenant-id");
+    const tenantId = ifUserRoleExists("CITIZEN") ? cityId : getTenantId();
     if (!tenantId) {
       dispatch(
         toggleSnackbar(
@@ -796,9 +796,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
         item => currentNumber === item.mobileNumber
       );
       if (numbers.length > 1) {
-        dispatch(
-          toggleSnackbar(true, "Owner already added !", "error")
-        );
+        dispatch(toggleSnackbar(true, "Owner already added !", "error"));
         return;
       }
     }
@@ -815,11 +813,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     if (payload && payload.user && payload.user.hasOwnProperty("length")) {
       if (payload.user.length === 0) {
         dispatch(
-          toggleSnackbar(
-            true,
-            "This mobile number is not registered !",
-            "info"
-          )
+          toggleSnackbar(true, "This mobile number is not registered !", "info")
         );
       } else {
         const userInfo =
@@ -1413,7 +1407,7 @@ export const setValidToFromVisibilityForApply = (state, value) => {
 };
 
 export const ifUserRoleExists = role => {
-  let userInfo = JSON.parse(localStorage.getItem("user-info"));
+  let userInfo = JSON.parse(getUserInfo());
   const roles = get(userInfo, "roles");
   const roleCodes = roles ? roles.map(role => role.code) : [];
   if (roleCodes.indexOf(role) > -1) {

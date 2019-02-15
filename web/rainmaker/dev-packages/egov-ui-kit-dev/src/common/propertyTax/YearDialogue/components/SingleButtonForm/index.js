@@ -9,7 +9,6 @@ const SingleButtonForm = ({ label, form, handleFieldChange, history, resetFormWi
     <Button
       {...fields.button}
       onClick={() => {
-        localStorage.setItem("draftId", "");
         handleFieldChange("button", label);
         resetFormWizard();
         history && urlToAppend ? history.push(`${urlToAppend}&FY=${label}`) : history.push(`/property-tax/assessment-form?FY=${label}&type=new`);

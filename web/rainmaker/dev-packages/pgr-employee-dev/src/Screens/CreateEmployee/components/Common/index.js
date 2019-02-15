@@ -1,6 +1,6 @@
 export function translate(locale_text) {
-  // if (locale_text && localStorage.getItem(`localization_${localStorage.getItem("locale")}`)) {
-  //   var langresult = JSON.parse(localStorage.getItem(`localization_${localStorage.getItem("locale")}`)).filter(function(obj) {
+  // if (locale_text && localStorageGet(`localization_${getLocale()}`)) {
+  //   var langresult = JSON.parse(localStorageGet(`localization_${getLocale()}`)).filter(function(obj) {
   //     return obj.code == locale_text;
   //   });
   //   if (langresult[0]) return Object.values(langresult[0])[1];

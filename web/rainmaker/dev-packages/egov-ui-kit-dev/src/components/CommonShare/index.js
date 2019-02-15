@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ShareIcon from "@material-ui/icons/Share";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 const styles = (theme) => ({
   root: {
@@ -29,7 +30,7 @@ class CommonShare extends React.Component {
     let { shareCallback, classes, visible = true, roleDefination = {} } = this.props;
     if (visible && !isEmpty(roleDefination)) {
       const splitList = get(roleDefination, "rolePath").split(".");
-      const localdata = JSON.parse(localStorage.getItem(splitList[0]));
+      const localdata = JSON.parse(localStorageGet(splitList[0]));
       const localRoles = get(localdata, splitList.slice(1).join("."), localdata);
 
       const roleCodes = localRoles.map((elem) => {

@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const getLocalTextFromCode = localCode => {
-  return JSON.parse(localStorage.getItem("localization_en_IN")).find(
+  return JSON.parse(getLocalization("localization_en_IN")).find(
     item => item.code == localCode
   );
 };

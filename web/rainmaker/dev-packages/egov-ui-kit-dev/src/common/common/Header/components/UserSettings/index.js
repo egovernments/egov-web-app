@@ -3,12 +3,13 @@ import React, { Component } from "react";
 import { DropDown, Icon, Image, List } from "components";
 import emptyFace from "egov-ui-kit/assets/images/download.png";
 import { CommonMenuItems } from "../NavigationDrawer/commonMenuItems";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 import "./index.css";
 
 class UserSettings extends Component {
   state = {
-    languageSelected: localStorage.getItem("locale"),
+    languageSelected: getLocale(),
     displayAccInfo: false,
   };
   items = [

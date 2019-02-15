@@ -7,6 +7,7 @@ import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
+import { localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 let floorDropDownData = [];
 
@@ -52,8 +53,8 @@ export const floorCount = {
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       // removeFormKey(formKey, field, dispatch, state);
-      var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
-      localStorage.setItem("previousFloorNo", field.value);
+      var previousFloorNo = localStorageGet("previousFloorNo") || -1;
+      localStorageSet("previousFloorNo", field.value);
       // dispatch(toggleSpinner());
       if (previousFloorNo > field.value) {
         for (var i = field.value; i < previousFloorNo; i++) {

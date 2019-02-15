@@ -6,6 +6,7 @@ import { prepareDropDownData } from "./utils/reusableFields";
 import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
+import { localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 
 const formConfig = {
   name: "basicInformation",
@@ -63,7 +64,7 @@ const formConfig = {
   beforeInitForm: (action, store) => {
     try {
       let state = store.getState();
-      localStorage.setItem("previousFloorNo", -1);
+      localStorageSet("previousFloorNo", -1);
       var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
       var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
       const mergedMaster = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");

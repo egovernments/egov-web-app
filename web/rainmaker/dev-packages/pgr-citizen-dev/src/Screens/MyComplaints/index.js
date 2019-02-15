@@ -13,6 +13,7 @@ import {
 import orderby from "lodash/orderBy";
 import isEqual from "lodash/isEqual";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -23,9 +24,7 @@ class MyComplaints extends Component {
     if (this.props.form && this.props.form.complaint) {
       resetFiles("complaint");
     }
-    const complaintCountRequest = [
-      { key: "tenantId", value: fetchFromLocalStorage("tenant-id") }
-    ];
+    const complaintCountRequest = [{ key: "tenantId", value: getTenantId() }];
     let payloadCount = await httpRequest(
       "rainmaker-pgr/v1/requests/_count",
       "_search",

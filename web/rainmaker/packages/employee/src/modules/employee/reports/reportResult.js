@@ -12,7 +12,7 @@ import "datatables";
 import "datatables.net";
 import "datatables.net-buttons";
 import "datatables.net-dt";
-import "react-jquery-datatables";
+// import "react-jquery-datatables";
 import "datatables.net-buttons-bs";
 import "datatables.net-responsive";
 import "datatables.net-responsive-dt";
@@ -24,6 +24,7 @@ import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
 import commonConfig from "config/common.js";
+import { getTenantId, setReturnUrl, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -280,7 +281,7 @@ class ShowField extends Component {
         searchParams.push({ name: key, input: value });
       }
 
-      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
+      var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
 
       let response = commonApiPost(
         // "/report/" + match.params.moduleName + "/_get",
@@ -295,9 +296,9 @@ class ShowField extends Component {
         function(response) {
           if (response.viewPath && response.reportData && response.reportData[0]) {
             localStorage.reportData = JSON.stringify(response.reportData);
-            localStorage.setItem("returnUrl", window.location.hash.split("#/")[1]);
-            localStorage.setItem("moduleName", match.params.moduleName);
-            localStorage.setItem(
+            setReturnUrl(window.location.hash.split("#/")[1]);
+            localStorageSet("moduleName", match.params.moduleName);
+            localStorageSet(
               "searchCriteria",
               JSON.stringify({
                 tenantId: tenantId,
@@ -305,7 +306,7 @@ class ShowField extends Component {
                 searchParams: copySearchParams,
               })
             );
-            localStorage.setItem("searchForm", JSON.stringify(searchForm));
+            localStorageSet("searchForm", JSON.stringify(searchForm));
             setRoute("/print/report/" + response.viewPath);
           } else {
             pushReportHistory({
@@ -458,7 +459,7 @@ class ShowField extends Component {
       searchParams.push({ name: key, input: values });
       let resulturl = getResultUrl(match.params.moduleName);
 
-      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
+      var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
       let response =
         resulturl &&
         commonApiPost(
@@ -474,7 +475,7 @@ class ShowField extends Component {
           function(response) {
             if (response.viewPath && response.reportData) {
               localStorage.reportData = JSON.stringify(response.reportData);
-              localStorage.setItem("returnUrl", window.location.hash.split("#/")[1]);
+              setReturnUrl(window.location.hash.split("#/")[1]);
               setRoute("/print/report/" + response.viewPath);
             }
           },
@@ -618,7 +619,7 @@ class ShowField extends Component {
           if (typeof val === "number") {
             if (typeof total[j] === "string") {
               total[j] = val;
-            }else{
+            } else {
               total[j] += val;
             }
           }

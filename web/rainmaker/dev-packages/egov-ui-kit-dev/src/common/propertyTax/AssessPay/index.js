@@ -6,6 +6,7 @@ import Screen from "egov-ui-kit/common/common/Screen";
 import { connect } from "react-redux";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const IconStyle = {
   margin: "0px",
@@ -57,7 +58,7 @@ class AssessPay extends Component {
   getListItems = () => {
     let { list1items } = this.props;
     let items = [];
-    let userType = JSON.parse(localStorage.getItem("user-info")).type;
+    let userType = JSON.parse(getUserInfo()).type;
     return (items = [
       {
         primaryText: <Label label={list1items.label} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -105,7 +106,7 @@ class AssessPay extends Component {
   render() {
     const { getListItems } = this;
     const { urls, history } = this.props;
-    let userType = localStorage.getItem("user-info").type;
+    let userType = getUserInfo().type;
     return (
       <Screen>
         {userType === "CITIZEN" ? <BreadCrumbs url={urls} history={history} /> : []}

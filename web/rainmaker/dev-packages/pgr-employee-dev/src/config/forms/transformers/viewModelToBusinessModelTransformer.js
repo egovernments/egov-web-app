@@ -1,8 +1,15 @@
 import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
+import {
+  getTenantId,
+  getUserInfo,
+  localStorageGet
+} from "egov-ui-kit/utils/localStorageUtils";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);
-  const serviceRequestId = decodeURIComponent(window.location.pathname.split("/").pop());
+  const serviceRequestId = decodeURIComponent(
+    window.location.pathname.split("/").pop()
+  );
   const complaint = state.complaints.byId[serviceRequestId];
   if (!formData.services) {
     formData.services = [];
@@ -15,7 +22,7 @@ const updateComplaintStatus = (state, form) => {
 
 const filterObjByKey = (obj, predicate) => {
   return Object.keys(obj)
-    .filter((key) => predicate(key))
+    .filter(key => predicate(key))
     .reduce((res, key) => ((res[key] = obj[key]), res), {});
 };
 
@@ -23,18 +30,28 @@ const transformer = (formKey, form = {}, state = {}) => {
   const transformers = {
     assignComplaint: () => {
       const formData = prepareFormData(form);
-      const serviceRequestId = decodeURIComponent(window.location.pathname.split("/").pop());
+      const serviceRequestId = decodeURIComponent(
+        window.location.pathname.split("/").pop()
+      );
       const serviceData = state.complaints.byId[serviceRequestId];
-      var filteredServiceData = filterObjByKey(serviceData, (key) => key !== "actions");
+      var filteredServiceData = filterObjByKey(
+        serviceData,
+        key => key !== "actions"
+      );
       if (!formData.services) formData.services = [];
       formData.services[0] = filteredServiceData;
       return formData;
     },
     comment: () => {
       const formData = prepareFormData(form);
-      const serviceRequestId = decodeURIComponent(window.location.pathname.split("/").pop());
+      const serviceRequestId = decodeURIComponent(
+        window.location.pathname.split("/").pop()
+      );
       const serviceData = state.complaints.byId[serviceRequestId];
-      var filteredServiceData = filterObjByKey(serviceData, (key) => key !== "actions");
+      var filteredServiceData = filterObjByKey(
+        serviceData,
+        key => key !== "actions"
+      );
       if (!formData.services) formData.services = [];
       formData.services[0] = filteredServiceData;
       return formData;
@@ -57,7 +74,12 @@ const transformer = (formKey, form = {}, state = {}) => {
     profile: () => {
       const { fields } = form;
       let { userInfo: user } = state.auth;
-      user = { ...user, name: fields.name.value, permanentCity: fields.city.value, emailId: fields.email.value };
+      user = {
+        ...user,
+        name: fields.name.value,
+        permanentCity: fields.city.value,
+        emailId: fields.email.value
+      };
       const photos = form.files && form.files["photo"];
       let photo = (photos && photos.length && photos[0]) || null;
       photo = photo ? photo.fileStoreId || photo.imageUri : null;
@@ -67,7 +89,12 @@ const transformer = (formKey, form = {}, state = {}) => {
     profileEmployee: () => {
       const { fields } = form;
       let { userInfo: user } = state.auth;
-      user = { ...user, name: fields.name.value, mobileNumber: fields.phonenumber.value, emailId: fields.email.value };
+      user = {
+        ...user,
+        name: fields.name.value,
+        mobileNumber: fields.phonenumber.value,
+        emailId: fields.email.value
+      };
       const photos = form.files && form.files["photo"];
       let photo = (photos && photos.length && photos[0]) || null;
       photo = photo ? photo.fileStoreId || photo.imageUri : null;
@@ -85,28 +112,28 @@ const transformer = (formKey, form = {}, state = {}) => {
           ...otpFields,
           username: {
             jsonPath: "User.username",
-            value: fields.phone.value,
+            value: fields.phone.value
           },
           name: {
             jsonPath: "User.name",
-            value: fields.name.value,
+            value: fields.name.value
           },
           tenantId: {
             jsonPath: "User.tenantId",
-            value: fields.city.value,
-          },
+            value: fields.city.value
+          }
         };
       } else if (previousRoute.endsWith("login")) {
         fields = state.form["login"].fields;
         fields = {
           password: {
             jsonPath: "login.password",
-            value: otpFields.otp.value,
+            value: otpFields.otp.value
           },
           username: {
             jsonPath: "login.username",
-            value: fields.phone.value,
-          },
+            value: fields.phone.value
+          }
         };
       }
       return prepareFormData({ ...form, fields });
@@ -122,32 +149,36 @@ const transformer = (formKey, form = {}, state = {}) => {
     },
     employeeChangePassword: () => {
       const formData = prepareFormData(form);
-      const tenantId = localStorage.getItem("tenant-id");
+      const tenantId = getTenantId();
       formData.tenantId = tenantId;
       return formData;
     },
     complaint: async () => {
       const formData = prepareFormData(form);
-      const userInfo = localStorage.getItem("user-info");
-      const isNative = localStorage.getItem("isNative");
+      const userInfo = getUserInfo();
+      const isNative = localStorageGet("isNative");
       let userPhone = null;
       let userRole = null;
       try {
         userPhone = JSON.parse(userInfo).mobileNumber;
         userRole = JSON.parse(userInfo).roles[0].code;
-        formData.services[0].source = userRole === "CITIZEN" ? (isNative ? "mobileapp" : "web") : "";
+        formData.services[0].source =
+          userRole === "CITIZEN" ? (isNative ? "mobileapp" : "web") : "";
         formData.services[0].phone = userPhone;
       } catch (error) {}
 
       try {
         const { latitude, longitude } = form.fields;
-        const tenantId = await getTenantForLatLng(latitude.value, longitude.value);
+        const tenantId = await getTenantForLatLng(
+          latitude.value,
+          longitude.value
+        );
         formData.services[0].tenantId = tenantId;
       } catch (error) {
         throw new Error(error.message);
       }
       return formData;
-    },
+    }
   };
 
   if (formKey in transformers) {

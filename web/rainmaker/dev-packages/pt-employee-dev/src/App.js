@@ -16,6 +16,7 @@ import commonConfig from "config/common";
 import routes from "./Routes";
 //import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import { LoadingIndicator } from "components";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 class App extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class App extends Component {
       }
     };
     // can be combined into one mdms call
-    fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
+    fetchLocalizationLabel(getLocale() || "en_IN");
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);

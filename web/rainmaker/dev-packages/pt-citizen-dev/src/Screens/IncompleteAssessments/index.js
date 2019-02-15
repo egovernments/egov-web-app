@@ -48,7 +48,7 @@ class IncompleteAssessments extends Component {
 
   onListItemClick = (item) => {
     const { route } = item;
-    localStorage.setItem("draftId", "");
+    
     this.props.history.push(route);
   };
 

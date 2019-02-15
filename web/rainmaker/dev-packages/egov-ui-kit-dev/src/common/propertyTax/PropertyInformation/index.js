@@ -10,6 +10,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import isEqual from "lodash/isEqual";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -82,7 +83,7 @@ class Property extends Component {
       "PropertyType",
     ]);
     const { pathname } = location;
-    if (!(localStorage.getItem("path") === pathname)) {
+    if (!(localStorageGet("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
     renderCustomTitleForPt(customTitle);
@@ -153,8 +154,8 @@ class Property extends Component {
     const { urls, location, history } = this.props;
     let urlArray = [];
     const { pathname } = location;
-    if (urls.length === 0 && localStorage.getItem("path") === pathname) {
-      urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
+    if (urls.length === 0 && localStorageGet("path") === pathname) {
+      urlArray = JSON.parse(localStorageGet("breadCrumbObject"));
     }
 
     return (

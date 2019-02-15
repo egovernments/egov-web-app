@@ -5,6 +5,10 @@ import {
 } from "egov-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
+import {
+  getAccessToken,
+  getTenantId
+} from "egov-ui-kit/utils/localStorageUtils";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -14,7 +18,7 @@ const instance = axios.create({
 });
 
 const wrapRequestBody = (requestBody, action, customRequestInfo) => {
-  const authToken = fetchFromLocalStorage("token");
+  const authToken = getAccessToken();
   let RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",

@@ -13,7 +13,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
-
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   getDateFromEpoch,
   mapCompIDToName,
@@ -197,7 +197,7 @@ class ComplaintDetails extends Component {
     const { sendMessage } = this.props;
 
     const shareMetaData = {
-      tenantId: localStorage.getItem("tenant-id"),
+      tenantId: getTenantId(),
       shareSource: "WEB",
       shareMedia: "SMS",
       shareContent: [

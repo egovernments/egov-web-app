@@ -14,6 +14,12 @@ import { httpRequest } from "../../../../ui-utils/api";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
+import {
+  getTenantId,
+  getUserInfo,
+  localStorageGet
+} from "egov-ui-kit/utils/localStorageUtils";
+
 export const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -687,9 +693,7 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.address.tenantId",
       ""
     );
-    const tenantId = ifUserRoleExists("CITIZEN")
-      ? cityId
-      : localStorage.getItem("tenant-id");
+    const tenantId = ifUserRoleExists("CITIZEN") ? cityId : getTenantId();
     if (!tenantId) {
       dispatch(
         toggleSnackbar(
@@ -1049,7 +1053,7 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
 
 const isApplicationPaid = currentStatus => {
   const buisnessSeviceStates = JSON.parse(
-    localStorage.getItem("businessServiceData")
+    localStorageGet("businessServiceData")
   )[0].states;
 
   let isPAID = false;
@@ -1436,7 +1440,7 @@ export const setValidToFromVisibilityForApply = (state, value) => {
 };
 
 export const ifUserRoleExists = role => {
-  let userInfo = JSON.parse(localStorage.getItem("user-info"));
+  let userInfo = JSON.parse(getUserInfo());
   const roles = get(userInfo, "roles");
   const roleCodes = roles ? roles.map(role => role.code) : [];
   if (roleCodes.indexOf(role) > -1) {

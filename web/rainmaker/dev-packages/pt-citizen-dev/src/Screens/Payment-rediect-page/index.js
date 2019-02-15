@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import get from "lodash/get";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 class PaymentRedirect extends React.Component {
   componentWillMount() {
@@ -12,7 +13,12 @@ class PaymentRedirect extends React.Component {
     let { history } = this.props;
     let { search } = this.props.location;
     try {
-      let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
+      let pgUpdateResponse = await httpRequest(
+        "pg-service/transaction/v1/_update" + search,
+        "_update",
+        [],
+        {}
+      );
       let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       let txnAmount = get(pgUpdateResponse, "Transaction[0].txnAmount");
@@ -26,14 +32,21 @@ class PaymentRedirect extends React.Component {
             "/" +
             moduleId.split(":")[1] +
             "/" +
-            localStorage.getItem("assessmentYear") +
+            localStorageGet("assessmentYear") +
             "/" +
             txnAmount
         );
       } else {
         //let transactionId = get(pgUpdateResponse, "Transaction[0].receipt[0].transactionId");
         this.props.toggleSpinner();
-        history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1]);
+        history.push(
+          "/property-tax/payment-success/" +
+            moduleId.split(":")[0] +
+            "/" +
+            tenantId +
+            "/" +
+            moduleId.split(":")[1]
+        );
       }
     } catch (e) {
       this.props.toggleSpinner();
@@ -46,9 +59,9 @@ class PaymentRedirect extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    toggleSpinner: () => dispatch(toggleSpinner()),
+    toggleSpinner: () => dispatch(toggleSpinner())
   };
 };
 

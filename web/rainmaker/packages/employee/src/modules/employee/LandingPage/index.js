@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dashboard } from "modules/common";
 import { connect } from "react-redux";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
@@ -16,7 +17,7 @@ class LandingPage extends Component {
 
   getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getTenantId();
     const modulesToShow = Object.keys(moduleData);
 
     return (

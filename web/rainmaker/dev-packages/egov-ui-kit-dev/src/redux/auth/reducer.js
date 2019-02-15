@@ -1,10 +1,10 @@
 import * as actionTypes from "./actionTypes";
-import { getUserInfo } from "egov-ui-kit/utils/commons";
+import { getTenantId, getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const userInfo = getUserInfo();
 const authenticated = userInfo ? true : false;
-const tenantId = localStorage.getItem("tenant-id");
-const token = localStorage.getItem("token");
+const tenantId = getTenantId();
+const token = getAccessToken();
 
 const intialState = {
   authenticating: false,

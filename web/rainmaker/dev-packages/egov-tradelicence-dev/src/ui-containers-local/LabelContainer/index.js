@@ -6,6 +6,7 @@ import {
   getTranslatedLabel,
   transformById
 } from "../../ui-config/screens/specs/utils/index";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -20,9 +21,7 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   }
 };
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 class LabelContainer extends React.Component {
   render() {

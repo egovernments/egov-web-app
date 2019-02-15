@@ -4,6 +4,7 @@ import { LabelContainer } from "egov-ui-framework/ui-containers";
 import { ActionDialog } from "../";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import "./index.css";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const buttonStyle = {
   minWidth: "200px",
@@ -28,7 +29,7 @@ class Footer extends React.Component {
       return;
     }
     if (item.showEmployeeList) {
-      const tenantId = localStorage.getItem("tenant-id");
+      const tenantId = getTenantId();
       const queryObj = [
         {
           key: "roleCodes",

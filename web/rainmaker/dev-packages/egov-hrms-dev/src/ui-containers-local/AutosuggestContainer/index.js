@@ -8,17 +8,15 @@ import {
   getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 const transfomedKeys = transformById(localizationLabels, "code");
 
 class AutoSuggestor extends Component {
   onSelect = value => {
     const { onChange } = this.props;
     //Storing multiSelect values not handled yet
-    console.log("============", value);
     onChange({ target: { value: value } });
   };
 
@@ -91,12 +89,14 @@ const mapStateToProps = (state, ownprops) => {
     : get(state.screenConfiguration.preparedFinalObject, jsonPath);
   //To fetch corresponding labels from localisation for the suggestions, if needed.
   // console.log("========>", value, suggestions);
-  value = value && value.map(item => {
-    return {
-      label: get(item, labelName) == null ? item.label : get(item, labelName),
-      value: get(item, valueName) == null ? item.value : get(item, valueName)
-    };
-  });
+  value =
+    value &&
+    value.map(item => {
+      return {
+        label: get(item, labelName) == null ? item.label : get(item, labelName),
+        value: get(item, valueName) == null ? item.value : get(item, valueName)
+      };
+    });
   // value = { label: "Emmm", value: "EMP" };
   if (labelsFromLocalisation) {
     suggestions = getLocalisedSuggestions(

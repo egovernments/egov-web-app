@@ -2,6 +2,8 @@ import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg, hasTokenExpired } from "./commons";
 import some from "lodash/some";
 import commonConfig from "egov-ui-kit/config/common.js";
+import { getTenantId, getAccessToken, setTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { setLocale, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 axios.interceptors.response.use(
   (response) => {
@@ -24,7 +26,7 @@ const instance = axios.create({
 });
 
 const wrapRequestBody = (requestBody, action, customRequestInfo) => {
-  const authToken = fetchFromLocalStorage("token");
+  const authToken = getAccessToken();
 
   let RequestInfo = {
     apiId: "Rainmaker",
@@ -56,7 +58,7 @@ export const httpRequest = async (
   customRequestInfo = {},
   ignoreTenantId = false
 ) => {
-  const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
+  const tenantId = getTenantId() || commonConfig.tenantId;
   let apiError = "Api Error";
 
   if (headers)
@@ -97,11 +99,7 @@ export const httpRequest = async (
 
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
-  const tenantId = fetchFromLocalStorage("tenant-id")
-    ? ulbLevel
-      ? fetchFromLocalStorage("tenant-id")
-      : fetchFromLocalStorage("tenant-id").split(".")[0]
-    : "";
+  const tenantId = getTenantId() ? (ulbLevel ? getTenantId() : getTenantId().split(".")[0]) : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
@@ -204,21 +202,9 @@ export const commonApiPost = (
   if (url && url[url.length - 1] === "/") url = url.substring(0, url.length - 1);
   if (!doNotOverride) {
     if (url.split("?").length > 1) {
-      url +=
-        "&tenantId=" +
-        (localStorage.getItem("tenant-id")
-          ? isStateLevel
-            ? localStorage.getItem("tenant-id").split(".")[0]
-            : localStorage.getItem("tenant-id")
-          : "default");
+      url += "&tenantId=" + (getTenantId() ? (isStateLevel ? getTenantId().split(".")[0] : getTenantId()) : "default");
     } else {
-      url +=
-        "?tenantId=" +
-        (localStorage.getItem("tenant-id")
-          ? isStateLevel
-            ? localStorage.getItem("tenant-id").split(".")[0]
-            : localStorage.getItem("tenant-id")
-          : "default");
+      url += "?tenantId=" + (getTenantId() ? (isStateLevel ? getTenantId().split(".")[0] : getTenantId()) : "default");
     }
   } else {
     url += "?";
@@ -237,7 +223,7 @@ export const commonApiPost = (
 
   url += "&offset=" + offset;
 
-  RequestInfo.authToken = localStorage.getItem("token");
+  RequestInfo.authToken = getAccessToken();
   if (isTimeLong) {
     RequestInfo.ts = new Date().getTime();
   }
@@ -301,13 +287,13 @@ export const commonApiPost = (
         } else if (response && response.response && !response.response.data && response.response.status === 400) {
           if (counter == 0) {
             document.title = "eGovernments";
-            var locale = localStorage.getItem("locale");
-            var _tntId = localStorage.getItem("tenant-id") || "default";
-            var lang_response = localStorage.getItem("lang_response");
+            var locale = getLocale();
+            var _tntId = getTenantId() || "default";
+            var lang_response = localStorageGet("lang_response");
             localStorage.clear();
-            localStorage.setItem("locale", locale);
-            localStorage.setItem("tenant-id", _tntId);
-            localStorage.setItem("lang_response", lang_response);
+            setLocale(locale);
+            setTenantId(_tntId);
+            localStorageSet("lang_response", lang_response);
             alert("Session expired. Please login again.");
             //localStorage.reload = true;
             throw new Error("");

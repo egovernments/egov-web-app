@@ -16,6 +16,7 @@ import {
   showHideAdhocPopup,
   validateFields
 } from "../../utils";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 // SET ALL SIMPLE DATES IN YMD FORMAT
 const setDateInYmdFormat = (obj, values) => {
@@ -131,7 +132,7 @@ export const handleCreateUpdateEmployee = (state, dispatch) => {
 };
 
 export const createUpdateEmployee = async (state, dispatch, action) => {
-  const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+  const tenantId = JSON.parse(getUserInfo()).tenantId;
   let queryObject = [
     {
       key: "tenantId",

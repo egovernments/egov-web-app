@@ -5,7 +5,8 @@ import SearchForm from "./searchForm";
 import ReportResult from "./reportResult";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
 import commonConfig from "config/common.js";
-import {Screen} from "modules/common";
+import { Screen } from "modules/common";
+import { getTenantId, setReturnUrl, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 class Report extends Component {
   constructor(props) {
@@ -22,14 +23,14 @@ class Report extends Component {
   }
 
   componentDidMount() {
-    // localStorage.setItem("searchCriteria", "{}");
+    // localStorageSet("searchCriteria", "{}");
     this.initData(this.props.match.params.moduleName, this.props.match.params.reportName);
     this.hasReturnUrl();
   }
 
   hasReturnUrl() {
-    if (localStorage.getItem("returnUrl")) {
-      window.localStorage.setItem("returnUrl", "");
+    if (localStorageGet("returnUrl")) {
+      setReturnUrl("");
     }
   }
 
@@ -37,7 +38,7 @@ class Report extends Component {
     var _this = this;
     let { setMetaData, setFlag, showTable, setForm, setReportResult } = this.props;
 
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
+    var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
 
     // setFlag(1);
     // showTable(false);
@@ -71,9 +72,9 @@ class Report extends Component {
     let needDefaultSearch = options[this.props.match.params.moduleName] ? options[this.props.match.params.moduleName][0].needDefaultSearch : false;
     return (
       <Screen>
-        <div style={{margin:"8px"}}>
-        <SearchForm match={match} needDefaultSearch={needDefaultSearch} updateTabLabel={this.updateTabLabel} />
-        <ReportResult match={match} tabLabel={this.state.tabLabel} />
+        <div style={{ margin: "8px" }}>
+          <SearchForm match={match} needDefaultSearch={needDefaultSearch} updateTabLabel={this.updateTabLabel} />
+          <ReportResult match={match} tabLabel={this.state.tabLabel} />
         </div>
       </Screen>
     );

@@ -6,7 +6,7 @@ import remoteComponents from "../../ui-config/commonConfig/remote-component-path
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import find from "lodash/find";
-
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 class ComponentInterface extends React.Component {
   constructor(props) {
     super(props);
@@ -136,7 +136,7 @@ class ComponentInterface extends React.Component {
 
     if (visible && !isEmpty(roleDefination)) {
       const splitList = get(roleDefination, "rolePath").split(".");
-      const localdata = JSON.parse(localStorage.getItem(splitList[0]));
+      const localdata = JSON.parse(localStorageGet(splitList[0]));
       const localRoles = get(
         localdata,
         splitList.slice(1).join("."),

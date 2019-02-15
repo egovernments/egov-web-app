@@ -1,4 +1,6 @@
 import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);
@@ -98,7 +100,7 @@ const transformer = (formKey, form = {}, state = {}) => {
           permanentCity: {
             jsonPath: "User.permanentCity",
             value: fields.city.value,
-          }
+          },
         };
       } else if (previousRoute.endsWith("login")) {
         fields = state.form["login"].fields;
@@ -126,13 +128,13 @@ const transformer = (formKey, form = {}, state = {}) => {
     },
     employeeChangePassword: () => {
       const formData = prepareFormData(form);
-      const tenantId = localStorage.getItem("tenant-id");
+      const tenantId = getTenantId();
       formData.tenantId = tenantId;
       return formData;
     },
     complaint: async () => {
       const formData = prepareFormData(form);
-      const userInfo = localStorage.getItem("user-info");
+      const userInfo = getUserInfo();
       let userPhone = null;
       try {
         userPhone = JSON.parse(userInfo).mobileNumber;

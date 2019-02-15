@@ -5,6 +5,7 @@ import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 export const getDeptName = (state, codes) => {
   let deptMdmsData = get(
@@ -35,7 +36,7 @@ export const searchApiCall = async (state, dispatch) => {
   let queryObject = [
     {
       key: "tenantId",
-      value: JSON.parse(localStorage.getItem("user-info")).tenantId
+      value: JSON.parse(getUserInfo()).tenantId
     }
   ];
   let searchScreenObject = get(

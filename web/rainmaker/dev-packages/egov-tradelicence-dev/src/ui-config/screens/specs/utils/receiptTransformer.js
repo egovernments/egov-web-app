@@ -8,6 +8,7 @@ import {
   getUserDataFromUuid,
   getFinancialYearDates
 } from "../utils";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -36,11 +37,11 @@ const epochToDate = et => {
 };
 
 const getMessageFromLocalization = code => {
-  let messageObject = JSON.parse(
-    localStorage.getItem("localization_en_IN")
-  ).find(item => {
-    return item.code == "TL_" + code;
-  });
+  let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
+    item => {
+      return item.code == "TL_" + code;
+    }
+  );
   return messageObject ? messageObject.message : code;
 };
 

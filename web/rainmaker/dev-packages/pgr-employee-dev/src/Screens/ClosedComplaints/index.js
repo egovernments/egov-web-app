@@ -3,9 +3,14 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
-import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
+import {
+  transformComplaintForComponent,
+  fetchFromLocalStorage
+} from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+
 import "./index.css";
 
 class ClosedComplaints extends Component {
@@ -13,14 +18,22 @@ class ClosedComplaints extends Component {
     let { fetchComplaints, renderCustomTitle } = this.props;
     fetchComplaints([{ key: "status", value: "rejected,resolved,closed" }]);
     const complaintCountRequest = [
-      { key: "tenantId", value: fetchFromLocalStorage("tenant-id") },
-      { key: "status", value: "closed,resolved,rejected" },
+      { key: "tenantId", value: getTenantId() },
+      { key: "status", value: "closed,resolved,rejected" }
     ]; // getting tenantId from localStorage
-    let payloadCount = await httpRequest("rainmaker-pgr/v1/requests/_count", "_search", complaintCountRequest);
-    payloadCount ? (payloadCount.count ? renderCustomTitle(payloadCount.count) : renderCustomTitle("0")) : renderCustomTitle("0");
+    let payloadCount = await httpRequest(
+      "rainmaker-pgr/v1/requests/_count",
+      "_search",
+      complaintCountRequest
+    );
+    payloadCount
+      ? payloadCount.count
+        ? renderCustomTitle(payloadCount.count)
+        : renderCustomTitle("0")
+      : renderCustomTitle("0");
   };
 
-  onComplaintClick = (complaintNo) => {
+  onComplaintClick = complaintNo => {
     this.props.history.push(`/complaint-details/${complaintNo}`);
   };
 
@@ -44,7 +57,7 @@ class ClosedComplaints extends Component {
   }
 }
 
-const isAssigningOfficer = (roles) => {
+const isAssigningOfficer = roles => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
   });
@@ -53,7 +66,10 @@ const isAssigningOfficer = (roles) => {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  if (status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
+  if (
+    status.toLowerCase() == "rejected" ||
+    status.toLowerCase() == "resolved"
+  ) {
     statusObj.status = `CS_COMMON_${status.toUpperCase()}_UCASE`;
   } else {
     statusObj.status = status;
@@ -67,7 +83,7 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { complaints, common } = state;
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
@@ -75,15 +91,28 @@ const mapStateToProps = (state) => {
   const { fetchSuccess } = complaints;
   const loading = fetchSuccess ? false : true;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
-  const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
-  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
+  const transformedComplaints = transformComplaintForComponent(
+    complaints,
+    role,
+    employeeById,
+    citizenById,
+    categoriesById,
+    displayStatus
+  );
+  const closedComplaints = orderby(
+    transformedComplaints.filter(
+      complaint => complaint.complaintStatus === "CLOSED"
+    ),
+    "latestActionTime",
+    "desc"
+  );
   const numClosedComplaints = closedComplaints.length;
   return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    fetchComplaints: criteria => dispatch(fetchComplaints(criteria))
   };
 };
 

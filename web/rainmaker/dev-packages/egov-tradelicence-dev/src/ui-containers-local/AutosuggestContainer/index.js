@@ -8,10 +8,9 @@ import {
   getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 const transfomedKeys = transformById(localizationLabels, "code");
 
 class AutoSuggestor extends Component {

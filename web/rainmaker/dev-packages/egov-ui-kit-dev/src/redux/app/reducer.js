@@ -1,8 +1,9 @@
 import * as actionTypes from "./actionTypes";
 import { initLocalizationLabels } from "./utils";
 import { stat } from "fs";
+import { getLocale, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 
-const locale = window.localStorage.getItem("locale") || "en_IN";
+const locale = getLocale() || "en_IN";
 const localizationLabels = initLocalizationLabels(locale);
 
 const initialState = {
@@ -59,7 +60,7 @@ const appReducer = (state = initialState, action) => {
         action.url.path = action.url.path && action.url.path.split("/citizen").pop();
       }
 
-      localStorage.setItem("path", action.url.path);
+      localStorageSet("path", action.url.path);
       const index = state.urls.findIndex((url) => {
         return url.title === action.url.title;
       });
@@ -69,7 +70,7 @@ const appReducer = (state = initialState, action) => {
           : index > -1
           ? state.urls.splice(index, 1)
           : [...state.urls, action.url];
-      localStorage.setItem("breadCrumbObject", JSON.stringify(url));
+      localStorageSet("breadCrumbObject", JSON.stringify(url));
       return { ...state, urls: url };
     case actionTypes.FETCH_UI_COMMON_CONFIG: {
       return { ...state, uiCommonConfig: action.payload };

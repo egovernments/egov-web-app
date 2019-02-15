@@ -3,6 +3,7 @@ import { Label } from "../../ui-atoms";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { getTranslatedLabel, transformById } from "../../ui-utils/commons";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -17,9 +18,7 @@ const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   }
 };
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 class LabelContainer extends React.Component {
   render() {

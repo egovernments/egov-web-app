@@ -57,6 +57,7 @@ import {
   renderPlotAndFloorDetails
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -71,7 +72,7 @@ class FormWizard extends Component {
     estimation: [],
     draftRequest: {
       draft: {
-        userId: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+        userId: get(JSON.parse(getUserInfo()), "uuid"),
         draftRecord: {}
       }
     },
@@ -156,10 +157,17 @@ class FormWizard extends Component {
             }
           ]
         );
-        if(searchPropertyResponse.Properties[0].propertyDetails && searchPropertyResponse.Properties[0].propertyDetails.length>0){
-          searchPropertyResponse.Properties[0].propertyDetails.map((item)=>{
-             return item.units = item.units && item.units.length && sortBy( item.units,["floorNo"]) || []
-          })
+        if (
+          searchPropertyResponse.Properties[0].propertyDetails &&
+          searchPropertyResponse.Properties[0].propertyDetails.length > 0
+        ) {
+          searchPropertyResponse.Properties[0].propertyDetails.map(item => {
+            return (item.units =
+              (item.units &&
+                item.units.length &&
+                sortBy(item.units, ["floorNo"])) ||
+              []);
+          });
         }
         let propertyResponse = {
           ...searchPropertyResponse,
@@ -824,7 +832,7 @@ class FormWizard extends Component {
             goToPaymentGateway,
             "Transaction.redirectUrl"
           );
-          localStorage.setItem("assessmentYear", assessmentYear);
+          localStorageSet("assessmentYear", assessmentYear);
           window.location = redirectionUrl;
         } else {
           toggleSpinner();
@@ -1148,10 +1156,7 @@ class FormWizard extends Component {
     const { formValidIndexArray, selected, propertyUUID } = this.state;
     const { location } = this.props;
     let { search } = location;
-    let currentUUID = get(
-      JSON.parse(localStorage.getItem("user-info")),
-      "uuid"
-    );
+    let currentUUID = get(JSON.parse(getUserInfo()), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {

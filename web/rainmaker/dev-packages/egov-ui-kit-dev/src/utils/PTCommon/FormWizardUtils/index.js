@@ -10,7 +10,7 @@ import { trimObj } from "../../../utils/commons";
 import { MDMS } from "../../../utils/endPoints";
 
 export const updateDraftinLocalStorage = async (draftInfo, assessmentNumber, self) => {
-  localStorage.setItem("draftId", draftInfo.id);
+  // localStorageSet("draftId", draftInfo.id);
   self.setState(
     {
       draftRequest: { draft: draftInfo },

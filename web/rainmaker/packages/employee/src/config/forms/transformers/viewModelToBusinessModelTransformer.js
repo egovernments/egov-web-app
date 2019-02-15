@@ -1,5 +1,6 @@
 import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);
@@ -127,7 +128,7 @@ const transformer = (formKey, form = {}, state = {}) => {
       const { auth } = state;
       const username = get(auth, "userInfo.userName");
       const type = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
-      const tenantId = localStorage.getItem("tenant-id");
+      const tenantId = getTenantId();
       formData.tenantId = tenantId;
       formData.username = username;
       formData.type = type;
@@ -135,7 +136,7 @@ const transformer = (formKey, form = {}, state = {}) => {
     },
     complaint: async () => {
       const formData = prepareFormData(form);
-      const userInfo = localStorage.getItem("user-info");
+      const userInfo = getUserInfo();
       let userRole = null;
       try {
         const { phone } = form.fields;

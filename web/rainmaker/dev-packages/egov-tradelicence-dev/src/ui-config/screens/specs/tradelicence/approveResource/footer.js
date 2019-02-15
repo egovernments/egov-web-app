@@ -12,10 +12,10 @@ import {
 import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { updateTradeDetails } from "../../../../../ui-utils/commons";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 
-const userName = JSON.parse(window.localStorage.getItem("user-info")).name;
+const userName = JSON.parse(window.getUserInfo()).name;
 
 const onNextButtonClick = async (state, dispatch) => {
   const { screenConfiguration } = state;

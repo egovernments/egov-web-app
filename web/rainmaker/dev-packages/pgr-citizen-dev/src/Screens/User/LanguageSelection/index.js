@@ -3,27 +3,28 @@ import { connect } from "react-redux";
 import { Banner } from "modules/common";
 import { LanguageSelectionForm } from "modules/common";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 class LanguageSelection extends Component {
   state = {
-    value: localStorage.getItem("locale"),
+    value: getLocale(),
     items: [
       {
         label: "ENGLISH",
-        value: "en_IN",
+        value: "en_IN"
       },
       {
         label: "हिंदी",
-        value: "hi_IN",
+        value: "hi_IN"
       },
       {
         label: "ਪੰਜਾਬੀ",
-        value: "pn_IN",
-      },
-    ],
+        value: "pn_IN"
+      }
+    ]
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
     this.props.fetchLocalizationLabel(value);
   };
@@ -38,15 +39,20 @@ class LanguageSelection extends Component {
 
     return (
       <Banner className="language-selection">
-        <LanguageSelectionForm items={items} value={value} onLanguageSelect={onLanguageSelect} onClick={onClick} />
+        <LanguageSelectionForm
+          items={items}
+          value={value}
+          onLanguageSelect={onLanguageSelect}
+          onClick={onClick}
+        />
       </Banner>
     );
   }
 }
 
-const dispatchToProps = (dispatch) => {
+const dispatchToProps = dispatch => {
   return {
-    fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
+    fetchLocalizationLabel: locale => dispatch(fetchLocalizationLabel(locale))
   };
 };
 

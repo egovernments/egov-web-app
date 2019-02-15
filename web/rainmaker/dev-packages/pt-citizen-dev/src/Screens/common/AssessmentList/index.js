@@ -49,7 +49,7 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
-            localStorage.setItem("draftId", "");
+            
             history &&
               history.push(`/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&tenantId=${item.tenantId}`);
           }}
@@ -68,7 +68,7 @@ const getItemStatus = (item, history) => {
             label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
             primary={true}
             onClick={(e) => {
-              localStorage.setItem("draftId", "");
+              
               history.push(
                 `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
                   item.propertyId

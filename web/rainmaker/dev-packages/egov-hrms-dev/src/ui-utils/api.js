@@ -6,6 +6,10 @@ import {
 import store from "../ui-redux/store";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  getAccessToken,
+  getTenantId
+} from "egov-ui-kit/utils/localStorageUtils";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -15,7 +19,7 @@ const instance = axios.create({
 });
 
 const wrapRequestBody = (requestBody, action, customRequestInfo) => {
-  const authToken = fetchFromLocalStorage("token");
+  const authToken = getAccessToken();
   let RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
@@ -132,10 +136,10 @@ export const prepareForm = params => {
 
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
-  const tenantId = fetchFromLocalStorage("tenant-id")
+  const tenantId = getTenantId()
     ? ulbLevel
-      ? fetchFromLocalStorage("tenant-id").split(".")[0]
-      : fetchFromLocalStorage("tenant-id").split(".")[0]
+      ? getTenantId().split(".")[0]
+      : getTenantId().split(".")[0]
     : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,

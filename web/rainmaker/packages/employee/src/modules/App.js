@@ -9,7 +9,7 @@ import Router from "./Router";
 import commonConfig from "config/common";
 // import logoMseva from "egov-ui-kit/assets/images/logo-white.png";
 import routes from "./Routes";
-//import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import { LoadingIndicator, CommonShareContainer } from "components";
 
 class App extends Component {
@@ -42,7 +42,7 @@ class App extends Component {
                 name: "Designation",
               },
               {
-                name: "StateInfo"
+                name: "StateInfo",
               },
             ],
           },
@@ -61,7 +61,7 @@ class App extends Component {
       },
     };
     // can be combined into one mdms call
-    fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
+    fetchLocalizationLabel(getLocale() || "en_IN");
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);

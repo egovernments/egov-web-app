@@ -14,6 +14,8 @@ import jp from "jsonpath";
 import _ from "lodash";
 import { getResultUrl } from "./commons/url";
 import commonConfig from "config/common.js";
+import { getTenantId, setReturnUrl, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+
 class ShowForm extends Component {
   state = {
     searchBtnText: "APPLY",
@@ -213,7 +215,7 @@ class ShowForm extends Component {
       }
       setForm(required);
       clearReportHistory();
-      if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
+      if (!_.isEmpty(JSON.parse(localStorageGet("searchCriteria")))) {
         this.search(null, true, nextProps.metaData.reportDetails.reportName);
       } else if (needDefaultSearch) {
         this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName, nextProps.match.params.moduleName);
@@ -272,7 +274,7 @@ class ShowForm extends Component {
     let tabLabel = `Showing data upto : ${date}`;
     this.props.updateTabLabel(tabLabel);
 
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
+    var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
     let self = this;
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
@@ -319,7 +321,7 @@ class ShowForm extends Component {
       decreaseReportIndex,
     } = this.props;
     let searchParams = [];
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
+    var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
     let self = this;
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
@@ -392,7 +394,7 @@ class ShowForm extends Component {
           }
         );
     } else {
-      if (_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
+      if (_.isEmpty(JSON.parse(localStorageGet("searchCriteria")))) {
         let reportData = reportHistory[reportIndex - 1 - 1];
         let resulturl = getResultUrl(this.state.moduleName);
         let response =
@@ -411,15 +413,15 @@ class ShowForm extends Component {
             }
           );
       } else {
-        var reportData = JSON.parse(localStorage.getItem("searchCriteria"));
-        let resulturl = getResultUrl(localStorage.getItem("moduleName"));
+        var reportData = JSON.parse(localStorageGet("searchCriteria"));
+        let resulturl = getResultUrl(localStorageGet("moduleName"));
         let response =
           resulturl &&
           commonApiPost(resulturl, {}, { ...reportData }).then(
             function(response) {
-              localStorage.setItem("returnUrl", "");
-              localStorage.setItem("searchCriteria", JSON.stringify({}));
-              localStorage.setItem("moduleName", "");
+              setReturnUrl("");
+              localStorageSet("searchCriteria", JSON.stringify({}));
+              localStorageSet("moduleName", "");
               for (var i = 0; i < reportData.searchParams.length; i++) {
                 self.handleChange({ target: { value: reportData.searchParams[i].name } }, reportData.searchParams[i].input, false, false);
               }
@@ -445,70 +447,65 @@ class ShowForm extends Component {
     let { search } = this;
     return (
       <div className="">
-        {metaData &&
-          metaData.reportDetails && (
-            <form
-              onSubmit={(e) => {
-                let fromDate;
-                let toDate;
-                if (searchForm && searchForm.fromDate && searchForm.toDate) {
-                  fromDate = new Date(searchForm.fromDate);
-                  toDate = new Date(searchForm.toDate);
+        {metaData && metaData.reportDetails && (
+          <form
+            onSubmit={(e) => {
+              let fromDate;
+              let toDate;
+              if (searchForm && searchForm.fromDate && searchForm.toDate) {
+                fromDate = new Date(searchForm.fromDate);
+                toDate = new Date(searchForm.toDate);
+              }
+
+              let tabLabel = "";
+              if (fromDate && toDate) {
+                tabLabel = `Showing data for : ${fromDate.getDate() +
+                  "/" +
+                  (fromDate.getMonth() + 1) +
+                  "/" +
+                  fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
+              }
+
+              /** Zone wise selection show in header */
+              if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
+                if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
+                  tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
                 }
-
-                let tabLabel = "";
-                if (fromDate && toDate) {
-                  tabLabel = `Showing data for : ${fromDate.getDate() +
-                    "/" +
-                    (fromDate.getMonth() + 1) +
-                    "/" +
-                    fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
+                if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
+                  tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
                 }
-
-                /** Zone wise selection show in header */
-                if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
-                  if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
-                    tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
-                  }
-                  if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
-                    tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
-                  }
-                  if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
-                    tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
-                  }
+                if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
+                  tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
                 }
-                /** END Zone wise ... */
+              }
+              /** END Zone wise ... */
 
-                this.props.updateTabLabel(tabLabel);
-                search(e);
-              }}
-            >
-              <Card
-                style={{ padding:"16px" }}
-                textChildren={
-                  <div>
-                    <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
-                    <Row>
-                      {this.handleFormFields()}
-                    </Row>
-                    <Row>
-
-                      <div style={{ marginTop: "16px",textAlign:"center" }} className="col-xs-12">
-                        <RaisedButton
-                          // style={{ height: "48px",borderRadius: "2px", width: "80%", backgroundColor: "rgba(0, 0, 0, 0.6)" }}
-                          type="submit"
-                          //disabled={!isFormValid}
-                          primary={true}
-                          label={buttonText}
-
-                        />
-                      </div>
-                    </Row>
-                  </div>
-                }
-              />
-            </form>
-          )}
+              this.props.updateTabLabel(tabLabel);
+              search(e);
+            }}
+          >
+            <Card
+              style={{ padding: "16px" }}
+              textChildren={
+                <div>
+                  <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
+                  <Row>{this.handleFormFields()}</Row>
+                  <Row>
+                    <div style={{ marginTop: "16px", textAlign: "center" }} className="col-xs-12">
+                      <RaisedButton
+                        // style={{ height: "48px",borderRadius: "2px", width: "80%", backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+                        type="submit"
+                        //disabled={!isFormValid}
+                        primary={true}
+                        label={buttonText}
+                      />
+                    </div>
+                  </Row>
+                </div>
+              }
+            />
+          </form>
+        )}
 
         {reportIndex > 1 && (
           <div
@@ -525,7 +522,6 @@ class ShowForm extends Component {
               }}
               primary={true}
               label={"Back"}
-
             />
             <br />
             <br />

@@ -3,6 +3,8 @@ import { handleFieldChange, setFieldProperty } from "egov-ui-kit/redux/form/acti
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
@@ -137,8 +139,8 @@ const formConfig = {
     },
   },
   afterInitForm: (action, store, dispatch) => {
-    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
-    let city = JSON.parse(localStorage.getItem("user-info")).permanentAddress;
+    let tenantId = JSON.parse(getUserInfo()).tenantId;
+    let city = JSON.parse(getUserInfo()).permanentAddress;
     let state = store.getState();
     const { citiesByModule } = state.common;
     const { PT } = citiesByModule || {};

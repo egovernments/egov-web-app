@@ -6,6 +6,7 @@ import generateReceipt from "../../../PaymentStatus/Components/receiptsPDF";
 import React, { Component } from "react";
 import get from "lodash/get";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 const styles = {
   customWidth: {
@@ -62,7 +63,6 @@ class DropDown extends Component {
     const { downloadReceipt } = this;
     switch (payload) {
       case "Re-Assess":
-        localStorage.setItem("draftId", "");
         history &&
           history.push(
             `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.latestAssessmentNumber}&isReassesment=true&propertyId=${
@@ -83,7 +83,6 @@ class DropDown extends Component {
         downloadReceipt(item, generalMDMSDataById, true, imageUrl);
         break;
       case "Complete Payment":
-        localStorage.setItem("draftId", "");
         history &&
           history.push(
             `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${
@@ -139,7 +138,7 @@ class DropDown extends Component {
   render() {
     const { item } = this.props;
     const { imageUrl } = this.state;
-    const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
+    const userType = getUserInfo() && JSON.parse(getUserInfo()).type;
     return (
       <div>
         <SelectField

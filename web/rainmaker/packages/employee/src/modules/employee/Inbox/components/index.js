@@ -13,6 +13,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { Card } from "components";
 import orderBy from "lodash/orderBy";
 import React from "react";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 class InboxData extends React.Component {
@@ -22,7 +23,7 @@ class InboxData extends React.Component {
   };
 
   getProcessIntanceData = async (pid) => {
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getTenantId();
     const queryObject = [{ key: "businessIds", value: pid }, { key: "history", value: true }, { key: "tenantId", value: tenantId }];
     const payload = await httpRequest("egov-workflow-v2/egov-wf/process/_search?", "", queryObject);
     const processInstances =
@@ -53,7 +54,7 @@ class InboxData extends React.Component {
     const { prepareFinalObject } = this.props;
     const status = row[2].text;
     const taskId = index === 1 && item.text;
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getTenantId();
     const processInstances = await this.getProcessIntanceData(row[1].text);
 
     if (processInstances && processInstances.length > 0) {

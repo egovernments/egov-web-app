@@ -12,300 +12,307 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { showHideMapPopup, getDetailsFromProperty } from "../../utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-export const tradeLocationDetails = getCommonCard({
-  header: getCommonTitle(
-    {
-      labelName: "Trade Location Details",
-      labelKey: "TL_NEW_TRADE_DETAILS_HEADER_TRADE_LOC_DETAILS"
-    },
-    {
-      style: {
-        marginBottom: 18
-      }
-    }
-  ),
-  tradeDetailsConatiner: getCommonContainer({
-    tradeLocCity: {
-      ...getSelectField({
-        label: { labelName: "City" },
-        optionLabel: "name",
-        placeholder: { labelName: "Select City" },
-        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
-        required: true,
-        props: {
-          required: true,
-          disabled: true
+export const tradeLocationDetails = getCommonCard(
+  {
+    header: getCommonTitle(
+      {
+        labelName: "Trade Location Details",
+        labelKey: "TL_NEW_TRADE_DETAILS_HEADER_TRADE_LOC_DETAILS"
+      },
+      {
+        style: {
+          marginBottom: 18
         }
-      }),
-      beforeFieldChange: async (action, state, dispatch) => {
-        //Below only runs for citizen - not required here in employee
-        dispatch(
-          prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.city",
-            action.value
-          )
-        );
-        try {
-          let payload = await httpRequest(
-            "post",
-            "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-            "_search",
-            [{ key: "tenantId", value: action.value }],
-            {}
-          );
+      }
+    ),
+
+    tradeDetailsConatiner: getCommonContainer({
+      tradeLocCity: {
+        ...getSelectField({
+          label: { labelName: "City" },
+          optionLabel: "name",
+          placeholder: { labelName: "Select City" },
+          sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+          jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+          required: true,
+          props: {
+            required: true,
+            disabled: true
+          }
+        }),
+        beforeFieldChange: async (action, state, dispatch) => {
+          //Below only runs for citizen - not required here in employee
           dispatch(
             prepareFinalObject(
-              "applyScreenMdmsData.tenant.localities",
-              payload.TenantBoundary && payload.TenantBoundary[0].boundary
+              "Licenses[0].tradeLicenseDetail.address.city",
+              action.value
             )
           );
-          // console.log(payload.TenantBoundary[0].boundary);
-          dispatch(
-            handleField(
-              "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-              "props.suggestions",
-              payload.TenantBoundary && payload.TenantBoundary[0].boundary
-            )
-          );
+          try {
+            let payload = await httpRequest(
+              "post",
+              "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
+              "_search",
+              [{ key: "tenantId", value: action.value }],
+              {}
+            );
+            dispatch(
+              prepareFinalObject(
+                "applyScreenMdmsData.tenant.localities",
+                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+              )
+            );
+            // console.log(payload.TenantBoundary[0].boundary);
+            dispatch(
+              handleField(
+                "apply",
+                "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+                "props.suggestions",
+                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+              )
+            );
+            // dispatch(
+            //   handleField(
+            //     "apply",
+            //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+            //     "props.value",
+            //     ""
+            //   )
+            // );
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      },
+      tradeLocPropertyID:
+        //  {
+        //   uiFramework: "custom-atoms",
+        //   componentPath: "Container",
+        //   children: {
+        //     txt:
+        getTextField({
+          label: {
+            labelName: "Property ID",
+            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Property ID",
+            labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
+          },
+
+          // pattern: getPattern("PropertyID"),
+          iconObj: {
+            iconName: "search",
+            position: "end",
+            color: "#FE7A51",
+            onClickDefination: {
+              action: "condition",
+              callBack: (state, dispatch) => {
+                getDetailsFromProperty(state, dispatch);
+              }
+            }
+          },
+          title: {
+            value:
+              "If you have already assessed your property, then please search your property by your PAID",
+            key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+          },
+          infoIcon: "info_circle",
+
+          // gridDefination: {
+          //   xs: 11,
+          //   sm: 11
+          // },
+          jsonPath: "Licenses[0].propertyId"
+        }),
+      // ico: {
+      //   uiFramework: "custom-molecules-local",
+      // moduleName: "egov-tradelicence",
+      //   componentPath: "Tooltip",
+      //   props: {
+      //     val: {
+      //       value:
+      //         "If you have already assessed your property, then please search your property by your PAID",
+      //       key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+      //     },
+      //     style: getIconStyle("textfieldIcon")
+      //   },
+      //   gridDefination: { xs: 1 }
+      // }
+      // },
+      // gridDefination: {
+      //   xs: 12,
+      //   sm: 6
+      // }
+      //}
+      tradeLocDoorHouseNo: getTextField({
+        label: {
+          labelName: "Door/House No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Door/House No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_PLACEHOLDER"
+        },
+        pattern: getPattern("DoorHouseNo"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.doorNo"
+      }),
+      tradeLocBuilidingName: getTextField({
+        label: {
+          labelName: "Building/Colony Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Building/Colony Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_PLACEHOLDER"
+        },
+        pattern: getPattern("BuildingStreet"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName"
+      }),
+      tradeLocStreetName: getTextField({
+        label: {
+          labelName: "Street Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Street Name",
+          labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_PLACEHOLDER"
+        },
+        pattern: getPattern("BuildingStreet"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
+      }),
+      tradeLocMohalla: {
+        uiFramework: "custom-containers-local",
+        moduleName: "egov-tradelicence",
+        componentPath: "AutosuggestContainer",
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+        required: true,
+        props: {
+          style: {
+            width: "100%",
+            cursor: "pointer"
+          },
+          label: {
+            labelName: "Mohalla",
+            labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Mohalla",
+            labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
+          },
+          jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
+          sourceJsonPath: "applyScreenMdmsData.tenant.localities",
+          labelsFromLocalisation: false,
+          suggestions: [],
+          fullwidth: true,
+          required: true,
+          inputLabelProps: {
+            shrink: true
+          },
+          className: "tradelicense-mohalla-apply"
+        },
+        beforeFieldChange: async (action, state, dispatch) => {
           // dispatch(
-          //   handleField(
-          //     "apply",
-          //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-          //     "props.value",
-          //     ""
+          //   prepareFinalObject(
+          //     "Licenses[0].tradeLicenseDetail.address.locality.name",
+          //     action.value && action.value.label
           //   )
           // );
-        } catch (e) {
-          console.log(e);
+        },
+        gridDefination: {
+          xs: 12,
+          sm: 6
         }
-      }
-    },
-    tradeLocPropertyID:
-      //  {
-      //   uiFramework: "custom-atoms",
-      //   componentPath: "Container",
-      //   children: {
-      //     txt:
-      getTextField({
+      },
+      tradeLocPincode: getTextField({
         label: {
-          labelName: "Property ID",
-          labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_LABEL"
+          labelName: "Pincode",
+          labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
         },
         placeholder: {
-          labelName: "Enter Property ID",
-          labelKey: "TL_NEW_TRADE_DETAILS_PT_ID_PLACEHOLDER"
+          labelName: "Enter Pincode",
+          labelKey: "TL_NEW_TRADE_DETAILS_PIN_PLACEHOLDER"
         },
-
-        // pattern: getPattern("PropertyID"),
-        iconObj: {
-          iconName: "search",
-          position: "end",
-          color: "#FE7A51",
-          onClickDefination: {
-            action: "condition",
-            callBack: (state, dispatch) => {
-              getDetailsFromProperty(state, dispatch);
-            }
+        pattern: getPattern("Pincode"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode"
+      }),
+      tradeLocGISCoord: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        props: {
+          className: "gis-div-css",
+          style: {
+            width: "100%",
+            cursor: "pointer"
           }
         },
-        title: {
-          value:
-            "If you have already assessed your property, then please search your property by your PAID",
-          key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
+        jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
+        onClickDefination: {
+          action: "condition",
+          callBack: showHideMapPopup
         },
-        infoIcon: "info_circle",
-
-        // gridDefination: {
-        //   xs: 11,
-        //   sm: 11
-        // },
-        jsonPath: "Licenses[0].propertyId"
-      }),
-    // ico: {
-    //   uiFramework: "custom-molecules-local",
-    // moduleName: "egov-tradelicence",
-    //   componentPath: "Tooltip",
-    //   props: {
-    //     val: {
-    //       value:
-    //         "If you have already assessed your property, then please search your property by your PAID",
-    //       key: "TL_PROPERTY_ID_TOOLTIP_MESSAGE"
-    //     },
-    //     style: getIconStyle("textfieldIcon")
-    //   },
-    //   gridDefination: { xs: 1 }
-    // }
-    // },
-    // gridDefination: {
-    //   xs: 12,
-    //   sm: 6
-    // }
-    //}
-    tradeLocDoorHouseNo: getTextField({
-      label: {
-        labelName: "Door/House No.",
-        labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Door/House No.",
-        labelKey: "TL_NEW_TRADE_DETAILS_DOOR_NO_PLACEHOLDER"
-      },
-      pattern: getPattern("DoorHouseNo"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.doorNo"
-    }),
-    tradeLocBuilidingName: getTextField({
-      label: {
-        labelName: "Building/Colony Name",
-        labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Building/Colony Name",
-        labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_PLACEHOLDER"
-      },
-      pattern: getPattern("BuildingStreet"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName"
-    }),
-    tradeLocStreetName: getTextField({
-      label: {
-        labelName: "Street Name",
-        labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Street Name",
-        labelKey: "TL_NEW_TRADE_DETAILS_SRT_NAME_PLACEHOLDER"
-      },
-      pattern: getPattern("BuildingStreet"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
-    }),
-    tradeLocMohalla: {
-      uiFramework: "custom-containers-local",
-      moduleName: "egov-tradelicence",
-      componentPath: "AutosuggestContainer",
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-      required: true,
-      props: {
-        style: {
-          width: "100%",
-          cursor: "pointer"
+        gridDefination: {
+          xs: 12,
+          sm: 6
         },
+        children: {
+          gisTextField: {
+            ...getTextField({
+              label: {
+                labelName: "GIS Coordinates",
+                labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_LABEL"
+              },
+              placeholder: {
+                labelName: "Select your trade location on map",
+                labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
+              },
+              jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
+              iconObj: {
+                iconName: "gps_fixed",
+                position: "end"
+              },
+              gridDefination: {
+                xs: 12,
+                sm: 12
+              },
+              props: {
+                disabled: true,
+                cursor: "pointer"
+              }
+            })
+          }
+        }
+      },
+      tradeLocElectricity: getTextField({
         label: {
-          labelName: "Mohalla",
-          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
+          labelName: "Electricity Connection No.",
+          labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
         },
         placeholder: {
-          labelName: "Select Mohalla",
-          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
+          labelName: "Enter Electricity Connection No. of Trade Loaction",
+          labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_PLACEHOLDER"
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-        sourceJsonPath: "applyScreenMdmsData.tenant.localities",
-        labelsFromLocalisation: false,
-        suggestions: [],
-        fullwidth: true,
-        required: true,
-        inputLabelProps: {
-          shrink: true
-        }
-      },
-      beforeFieldChange: async (action, state, dispatch) => {
-        // dispatch(
-        //   prepareFinalObject(
-        //     "Licenses[0].tradeLicenseDetail.address.locality.name",
-        //     action.value && action.value.label
-        //   )
-        // );
-      },
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      }
-    },
-    tradeLocPincode: getTextField({
-      label: {
-        labelName: "Pincode",
-        labelKey: "TL_NEW_TRADE_DETAILS_PIN_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Pincode",
-        labelKey: "TL_NEW_TRADE_DETAILS_PIN_PLACEHOLDER"
-      },
-      pattern: getPattern("Pincode"),
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode"
+        // pattern: getPattern("ElectricityConnNo"),
+        jsonPath:
+          "Licenses[0].tradeLicenseDetail.additionalDetail.electricityConnectionNo"
+      })
     }),
-    tradeLocGISCoord: {
-      uiFramework: "custom-atoms",
-      componentPath: "Div",
+    mapsDialog: {
+      componentPath: "Dialog",
       props: {
-        className: "gis-div-css",
-        style: {
-          width: "100%",
-          cursor: "pointer"
-        }
-      },
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
-      onClickDefination: {
-        action: "condition",
-        callBack: showHideMapPopup
-      },
-      gridDefination: {
-        xs: 12,
-        sm: 6
+        open: false
       },
       children: {
-        gisTextField: {
-          ...getTextField({
-            label: {
-              labelName: "GIS Coordinates",
-              labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_LABEL"
-            },
-            placeholder: {
-              labelName: "Select your trade location on map",
-              labelKey: "TL_NEW_TRADE_DETAILS_GIS_CORD_PLACEHOLDER"
-            },
-            jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
-            iconObj: {
-              iconName: "gps_fixed",
-              position: "end"
-            },
-            gridDefination: {
-              xs: 12,
-              sm: 12
-            },
-            props: {
-              disabled: true,
-              cursor: "pointer"
-            }
-          })
-        }
-      }
-    },
-    tradeLocElectricity: getTextField({
-      label: {
-        labelName: "Electricity Connection No.",
-        labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Electricity Connection No. of Trade Loaction",
-        labelKey: "TL_NEW_TRADE_DETAILS_ELEC_CON_NO_PLACEHOLDER"
-      },
-      // pattern: getPattern("ElectricityConnNo"),
-      jsonPath:
-        "Licenses[0].tradeLicenseDetail.additionalDetail.electricityConnectionNo"
-    })
-  }),
-  mapsDialog: {
-    componentPath: "Dialog",
-    props: {
-      open: false
-    },
-    children: {
-      dialogContent: {
-        componentPath: "DialogContent",
-        children: {
-          popup: getMapLocator()
+        dialogContent: {
+          componentPath: "DialogContent",
+          children: {
+            popup: getMapLocator()
+          }
         }
       }
     }
+  },
+  {
+    style: { overflow: "visible" }
   }
-});
+);

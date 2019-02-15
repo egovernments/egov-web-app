@@ -6,6 +6,7 @@ import OTPForm from "./components/OTPForm";
 import { handleFieldChange, submitForm } from "egov-ui-kit/redux/form/actions";
 import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 import { Screen } from "modules/common";
+import { localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 
 const OTPFormHOC = formHoc({ formKey: "otp" })(OTPForm);
 
@@ -20,8 +21,8 @@ class OTP extends Component {
   componentDidMount() {
     const { submitForm, handleFieldChange, previousRoute } = this.props;
     const otpElement = document.getElementById("otp");
-    otpElement.addEventListener("smsReceived", (e) => {
-      localStorage.setItem("isNative", true);
+    otpElement.addEventListener("smsReceived", e => {
+      localStorageSet("isNative", true);
       const { otp } = e.detail;
       handleFieldChange("otp", "otp", otp);
       if (previousRoute === "/citizen/user/register") {
@@ -56,10 +57,14 @@ class OTP extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { authenticating } = state.auth;
   const { previousRoute } = state.app;
-  const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
+  const intent = previousRoute.endsWith("register")
+    ? "register"
+    : previousRoute.endsWith("login")
+    ? "login"
+    : null;
   let phoneNumber = null;
   if (intent) {
     phoneNumber = state.form[intent].fields.phone.value;
@@ -67,11 +72,12 @@ const mapStateToProps = (state) => {
   return { previousRoute, intent, phoneNumber, loading: authenticating };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    handleFieldChange: (formKey, fieldKey, value) =>
+      dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
-    sendOTP: (otp) => dispatch(sendOTP(otp)),
+    sendOTP: otp => dispatch(sendOTP(otp))
   };
 };
 

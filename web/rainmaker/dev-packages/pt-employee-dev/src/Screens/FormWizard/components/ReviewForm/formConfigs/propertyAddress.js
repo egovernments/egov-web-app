@@ -1,4 +1,5 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 // const formConfig = {
 //   name: "propertyAddress",
 //   fields: {
@@ -72,7 +73,7 @@ const formConfig = {
       floatingLabelText: "Door/Plot No.",
       hintText: "Enter Door/Plot No.",
       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
-      value: "101, Egovernments foundation",
+      value: "101, Egovernments foundation"
     },
     colony: {
       id: "property-colony",
@@ -82,7 +83,7 @@ const formConfig = {
       floatingLabelText: "Colony",
       hintText: "Enter buiding/colony name",
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
-      value: "ramakrishan colony",
+      value: "ramakrishan colony"
     },
     street: {
       id: "property-street",
@@ -91,7 +92,7 @@ const formConfig = {
       floatingLabelText: "Street Name",
       hintText: "Enter street name",
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
-      value: "church street",
+      value: "church street"
     },
     mohalla: {
       id: "mohalla",
@@ -100,13 +101,13 @@ const formConfig = {
       floatingLabelText: "Locality/Mohalla",
       hintText: "Select locality",
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      value: "bellandur",
+      value: "bellandur"
     },
     city: {
       id: "city",
       jsonPath: "",
       required: true,
-      value: localStorage.getItem("tenant-id"),
+      value: getTenantId(),
       type: "textfield",
       floatingLabelText: "City",
       hintText: "Enter City",
@@ -122,15 +123,15 @@ const formConfig = {
                 moduleName: "tenant",
                 masterDetails: [
                   {
-                    name: "tenants",
-                  },
-                ],
-              },
-            ],
-          },
+                    name: "tenants"
+                  }
+                ]
+              }
+            ]
+          }
         },
-        dataPath: [`MdmsRes.tenant.tenants`],
-      },
+        dataPath: [`MdmsRes.tenant.tenants`]
+      }
     },
     pincode: {
       id: "pincode",
@@ -139,14 +140,14 @@ const formConfig = {
       floatingLabelText: "Pincode",
       hintText: "Enter area pincode",
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
-      value: "560066",
-    },
+      value: "560066"
+    }
   },
 
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false,
+  isFormValid: false
 };
 
 export default formConfig;

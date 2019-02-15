@@ -12,7 +12,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Tooltip from "@material-ui/core/Tooltip";
 import Label from "egov-ui-kit/utils/translationNode";
-
+import { localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 const styles = {
@@ -234,7 +234,7 @@ class ActionMenuComp extends Component {
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
     let menuTitle = path.split(".");
-    let activeItmem = localStorage.getItem("menuName");
+    let activeItmem = localStorageGet("menuName");
     const showMenuItem = () => {
       const navigationURL = window.location.href.split("/").pop();
       if (searchText.length == 0) {
@@ -291,7 +291,7 @@ class ActionMenuComp extends Component {
                         style={{ whiteSpace: "initial" }}
                         key={index}
                         onClick={() => {
-                          //  localStorage.setItem("menuPath", item.path);
+                          //  localStorageSet("menuPath", item.path);
                           updateActiveRoute(item.path, item.name);
                           document.title = item.name;
                           toggleDrawer && toggleDrawer();
@@ -316,7 +316,7 @@ class ActionMenuComp extends Component {
                         style={{ whiteSpace: "initial" }}
                         key={index}
                         onClick={() => {
-                          localStorage.setItem("menuPath", item.path);
+                          localStorageSet("menuPath", item.path);
                           document.title = item.name;
                         }}
                         leftIcon={this.renderLeftIcon(iconLeft, item)}

@@ -13,10 +13,11 @@ import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
+import { getUserInfo, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 import "./index.css";
 
-const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
+const userType = getUserInfo() && JSON.parse(getUserInfo()).type;
 
 const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(SearchPropertyForm);
 
@@ -34,7 +35,7 @@ class SearchProperty extends Component {
   componentDidMount = () => {
     const { location, addBreadCrumbs, title } = this.props;
     const pathname = location && location.pathname;
-    if (userType === "CITIZEN" && !(localStorage.getItem("path") === pathname)) {
+    if (userType === "CITIZEN" && !(localStorageGet("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
   };
@@ -82,14 +83,14 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? () => {
-                  localStorage.setItem("draftId", "")
+                  // localStorageSet("draftId", "")
                   this.setState({
                     dialogueOpen: true,
                     urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
-                  localStorage.setItem("draftId", "")
+                  // localStorageSet("draftId", "")
                   history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
                 }
           }
@@ -127,30 +128,29 @@ class SearchProperty extends Component {
     let urlArray = [];
     const pathname = location && location.pathname;
     const tableData = this.extractTableData(propertiesFound);
-    if (userType === "CITIZEN" && urls.length == 0 && localStorage.getItem("path") === pathname) {
-      urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
+    if (userType === "CITIZEN" && urls.length == 0 && localStorageGet("path") === pathname) {
+      urlArray = JSON.parse(localStorageGet("breadCrumbObject"));
     }
     return (
       <Screen loading={loading}>
         {userType === "CITIZEN" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
-        {showTable &&
-          tableData.length === 0 && (
-            <div className="search-no-property-found">
-              <div className="no-search-text">No property records found</div>
-              <div className="new-assess-btn">
-                <Button
-                  label={"New Property Assessment"}
-                  labelStyle={{ fontSize: 12 }}
-                  className="new-property-assessment"
-                  onClick={() => history.push("/property-tax")}
-                  primary={true}
-                  fullWidth={true}
-                />
-              </div>
+        {showTable && tableData.length === 0 && (
+          <div className="search-no-property-found">
+            <div className="no-search-text">No property records found</div>
+            <div className="new-assess-btn">
+              <Button
+                label={"New Property Assessment"}
+                labelStyle={{ fontSize: 12 }}
+                className="new-property-assessment"
+                onClick={() => history.push("/property-tax")}
+                primary={true}
+                fullWidth={true}
+              />
             </div>
-          )}
+          </div>
+        )}
         <YearDialogue open={this.state.dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );

@@ -13,6 +13,7 @@ import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
 import routes from "./Routes";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 class App extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class App extends Component {
       }
     };
     // can be combined into one mdms call
-    fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
+    fetchLocalizationLabel(getLocale() || "en_IN");
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);

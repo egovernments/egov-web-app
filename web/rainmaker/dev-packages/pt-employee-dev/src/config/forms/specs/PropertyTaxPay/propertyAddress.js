@@ -1,8 +1,22 @@
-import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
-import { handleFieldChange, setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import {
+  pincode,
+  mohalla,
+  street,
+  colony,
+  houseNumber,
+  dummy
+} from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
+import {
+  handleFieldChange,
+  setFieldProperty
+} from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
-import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import {
+  prepareFormData,
+  fetchGeneralMDMSData
+} from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
@@ -32,19 +46,19 @@ const formConfig = {
                 moduleName: "tenant",
                 masterDetails: [
                   {
-                    name: "tenants",
-                  },
-                ],
-              },
-            ],
-          },
+                    name: "tenants"
+                  }
+                ]
+              }
+            ]
+          }
         },
         dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [
           {
-            fieldKey: "mohalla",
-          },
-        ],
+            fieldKey: "mohalla"
+          }
+        ]
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
@@ -57,42 +71,42 @@ const formConfig = {
                 moduleName: "PropertyTax",
                 masterDetails: [
                   {
-                    name: "Floor",
+                    name: "Floor"
                   },
                   {
-                    name: "OccupancyType",
+                    name: "OccupancyType"
                   },
                   {
-                    name: "OwnerShipCategory",
+                    name: "OwnerShipCategory"
                   },
                   {
-                    name: "OwnerType",
+                    name: "OwnerType"
                   },
                   {
-                    name: "PropertySubType",
+                    name: "PropertySubType"
                   },
                   {
-                    name: "PropertyType",
+                    name: "PropertyType"
                   },
                   {
-                    name: "SubOwnerShipCategory",
+                    name: "SubOwnerShipCategory"
                   },
                   {
-                    name: "UsageCategoryDetail",
+                    name: "UsageCategoryDetail"
                   },
                   {
-                    name: "UsageCategoryMajor",
+                    name: "UsageCategoryMajor"
                   },
                   {
-                    name: "UsageCategoryMinor",
+                    name: "UsageCategoryMinor"
                   },
                   {
-                    name: "UsageCategorySubMinor",
-                  },
-                ],
-              },
-            ],
-          },
+                    name: "UsageCategorySubMinor"
+                  }
+                ]
+              }
+            ]
+          }
         };
 
         dispatch(
@@ -107,10 +121,10 @@ const formConfig = {
             "UsageCategoryDetail",
             "UsageCategoryMajor",
             "UsageCategoryMinor",
-            "UsageCategorySubMinor",
+            "UsageCategorySubMinor"
           ])
         );
-      },
+      }
     },
     ...dummy,
     ...houseNumber,
@@ -133,18 +147,18 @@ const formConfig = {
       toolTip: true,
       pattern: /^[a-zA-Z0-9\:\#\/\-\s]{1,64}$/i,
       toolTipMessage: "PT_OLDPID_TOOLTIP_MESSAGE",
-      maxLength: 64,
-    },
+      maxLength: 64
+    }
   },
   afterInitForm: (action, store, dispatch) => {
-    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
-    let city = JSON.parse(localStorage.getItem("user-info")).permanentAddress;
+    let tenantId = JSON.parse(getUserInfo()).tenantId;
+    let city = JSON.parse(getUserInfo()).permanentAddress;
     let state = store.getState();
     const { citiesByModule } = state.common;
     const { PT } = citiesByModule || {};
     if (PT) {
       const tenants = PT.tenants;
-      let found = tenants.find((city) => {
+      let found = tenants.find(city => {
         return city.code === tenantId;
       });
       if (found) {
@@ -159,7 +173,7 @@ const formConfig = {
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false,
+  isFormValid: false
 };
 
 export default formConfig;

@@ -1,6 +1,10 @@
 import isEmpty from "lodash/isEmpty";
 import { httpRequest, uploadFile } from "./api.js";
 import cloneDeep from "lodash/cloneDeep";
+import {
+  localStorageSet,
+  localStorageGet
+} from "egov-ui-kit/utils/localStorageUtils";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -65,12 +69,12 @@ export const slugify = term => {
 export const persistInLocalStorage = obj => {
   Object.keys(obj).forEach(objKey => {
     const objValue = obj[objKey];
-    window.localStorage.setItem(objKey, objValue);
+    localStorageSet(objKey, objValue);
   }, this);
 };
 
 export const fetchFromLocalStorage = key => {
-  return window.localStorage.getItem(key) || null;
+  return localStorageGet(key) || null;
 };
 
 export const trimObj = obj => {
@@ -241,7 +245,7 @@ export const setBusinessServiceDataToLocalStorage = async queryObject => {
     "_search",
     queryObject
   );
-  localStorage.setItem(
+  localStorageSet(
     "businessServiceData",
     JSON.stringify(_.get(payload, "BusinessServices"))
   );

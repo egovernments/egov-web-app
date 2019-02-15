@@ -5,13 +5,14 @@ import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
   let queryObject = [
     {
       key: "tenantId",
-      value: JSON.parse(localStorage.getItem("user-info")).tenantId
+      value: JSON.parse(getUserInfo()).tenantId
     },
     { key: "limit", value: "10" },
     { key: "offset", value: "0" }

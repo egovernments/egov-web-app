@@ -4,11 +4,13 @@ import { searchUser } from "egov-ui-kit/redux/auth/actions";
 import { fetchComplaintCategories } from "egov-ui-kit/redux/complaints/actions";
 import { fetchpgrConstants } from "egov-ui-kit/redux/common/actions";
 import { fetchUiCommonConfig, fetchUiCommonConstants } from "egov-ui-kit/redux/app/actions";
+import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+
 const withData = (Component) => {
   class Wrapper extends React.Component {
     componentDidMount() {
       const { searchUser, fetchComplaintCategories, authenticated, fetchpgrConstants, fetchUiCommonConfig, fetchUiCommonConstants } = this.props;
-      if (localStorage.getItem("token")) {
+      if (getAccessToken()) {
         fetchComplaintCategories();
         searchUser();
         fetchpgrConstants();

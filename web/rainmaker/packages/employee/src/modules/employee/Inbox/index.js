@@ -10,6 +10,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 const prepareInboxDataRows = (data) => {
@@ -43,13 +44,13 @@ class Inbox extends Component {
 
   setBusinessServiceDataToLocalStorage = async (queryObject) => {
     const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
-    localStorage.setItem("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
+    localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
   };
 
   componentDidMount = async () => {
     const { toggleSnackbar, prepareFinalObject } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
-    const tenantId = localStorage.getItem("tenant-id");
+    const tenantId = getTenantId();
 
     const taskboardData = [];
     const tabData = [];
@@ -82,10 +83,7 @@ class Inbox extends Component {
       toggleSnackbar(true, "Workflow search error !", "error");
     }
     prepareFinalObject("InboxData", inboxData);
-    this.setBusinessServiceDataToLocalStorage([
-      { key: "tenantId", value: localStorage.getItem("tenant-id") },
-      { key: "businessService", value: "newTL" },
-    ]);
+    this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: getTenantId() }, { key: "businessService", value: "newTL" }]);
   };
 
   onModuleFilter = (event) => {

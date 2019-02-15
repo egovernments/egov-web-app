@@ -21,6 +21,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const updateTradeDetails = async requestBody => {
   try {
@@ -93,7 +94,7 @@ export const updatePFOforSearchResults = async (
   let queryObject = [
     {
       key: "tenantId",
-      value: tenantId ? tenantId : localStorage.getItem("tenant-id")
+      value: tenantId ? tenantId : getTenantId()
     },
     { key: "applicationNumber", value: queryValue }
   ];
@@ -290,9 +291,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       "tradeLicenseDetail.address.tenantId",
       ""
     );
-    const tenantId = ifUserRoleExists("CITIZEN")
-      ? cityId
-      : localStorage.getItem("tenant-id");
+    const tenantId = ifUserRoleExists("CITIZEN") ? cityId : getTenantId();
 
     set(queryObject[0], "tenantId", tenantId);
 

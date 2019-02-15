@@ -7,6 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import { getUserInfo, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -98,12 +99,12 @@ export const slugify = (term) => {
 export const persistInLocalStorage = (obj) => {
   Object.keys(obj).forEach((objKey) => {
     const objValue = obj[objKey];
-    window.localStorage.setItem(objKey, objValue);
+    localStorageSet(objKey, objValue);
   }, this);
 };
 
 export const fetchFromLocalStorage = (key) => {
-  return window.localStorage.getItem(key) || null;
+  return localStorageGet(key) || null;
 };
 
 export const getRequestUrl = (url, params) => {
@@ -248,15 +249,15 @@ export const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : [];
 };
 
-export const getUserInfo = () => {
-  let userInfo = localStorage.getItem("user-info");
-  try {
-    userInfo = JSON.parse(userInfo);
-  } catch (error) {
-    userInfo = null;
-  }
-  return userInfo;
-};
+// export const getUserInfo = () => {
+//   let userInfo = getUserInfo();
+//   try {
+//     userInfo = JSON.parse(userInfo);
+//   } catch (error) {
+//     userInfo = null;
+//   }
+//   return userInfo;
+// };
 
 export const getCityNameByCode = (code, cities) => {
   const city = (cities || []).filter((city) => city.key === code);

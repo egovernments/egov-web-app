@@ -12,6 +12,7 @@ import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import find from "lodash/find";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 import orderBy from "lodash/orderBy";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
@@ -163,7 +164,7 @@ class WorkFlowContainer extends React.Component {
 
   getEmployeeRoles = (nextAction, currentAction) => {
     const businessServiceData = JSON.parse(
-      localStorage.getItem("businessServiceData")
+      localStorageGet("businessServiceData")
     );
     const data = find(businessServiceData, { businessService: "NewTL" });
     let roles = [];
@@ -191,7 +192,7 @@ class WorkFlowContainer extends React.Component {
 
   checkIfTerminatedState = nextStateUUID => {
     const businessServiceData = JSON.parse(
-      localStorage.getItem("businessServiceData")
+      localStorageGet("businessServiceData")
     );
     const data = find(businessServiceData, { businessService: "NewTL" });
     const nextState = find(data.states, { uuid: nextStateUUID });

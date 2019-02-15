@@ -4,10 +4,9 @@ import Icon from "@material-ui/core/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
 import { getLocaleLabelsforTL } from "../../ui-utils/commons";
 import { transformById } from "../../ui-config/screens/specs/utils";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const localizationLabels = JSON.parse(
-  window.localStorage.getItem("localization_en_IN")
-);
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 function SimpleTooltips(props) {
   const { val, ...rest } = props;

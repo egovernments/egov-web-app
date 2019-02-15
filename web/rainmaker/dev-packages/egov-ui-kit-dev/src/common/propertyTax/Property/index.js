@@ -15,6 +15,7 @@ import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/Tra
 import isEqual from "lodash/isEqual";
 import orderby from "lodash/orderBy";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
+import { getLocale, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 const innerDivStyle = {
   padding: "0",
@@ -38,7 +39,7 @@ const listItemStyle = {
 
 const appName = process.env.REACT_APP_NAME;
 
-const locale = window.localStorage.getItem("locale") || "en_IN";
+const locale = getLocale() || "en_IN";
 const localizationLabelsData = initLocalizationLabels(locale);
 
 class Property extends Component {
@@ -113,7 +114,7 @@ class Property extends Component {
       { key: "tenantId", value: this.props.match.params.tenantId },
     ]);
     const { pathname } = location;
-    if (appName === "Citizen" && !(localStorage.getItem("path") === pathname)) {
+    if (appName === "Citizen" && !(localStorageGet("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
     renderCustomTitleForPt(customTitle);
@@ -201,8 +202,8 @@ class Property extends Component {
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
     const { pathname } = location;
-    if (urls.length === 0 && localStorage.getItem("path") === pathname) {
-      urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
+    if (urls.length === 0 && localStorageGet("path") === pathname) {
+      urlArray = JSON.parse(localStorageGet("breadCrumbObject"));
     }
     //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
     let clsName = appName === "Citizen" ? "screen-with-bredcrumb" : "";
