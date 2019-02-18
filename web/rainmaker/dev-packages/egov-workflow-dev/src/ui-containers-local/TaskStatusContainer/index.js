@@ -39,20 +39,10 @@ class TastStatusContainer extends React.Component {
     });
   };
 
-  // getLatestObjectbyTime = object => {
-  //   const sortedArray = orderBy(
-  //     object,
-  //     ["auditDetails.lastModifiedTime"],
-  //     ["desc"]
-  //   );
-  //   return sortedArray[0];
-  // };
-
   render() {
     const { classes, ProcessInstances } = this.props;
     const currentObj =
       ProcessInstances && ProcessInstances[ProcessInstances.length - 1];
-    //ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
     return (
       <div>
         <Card className="">

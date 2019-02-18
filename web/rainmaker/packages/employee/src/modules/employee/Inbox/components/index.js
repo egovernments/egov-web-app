@@ -123,7 +123,7 @@ class InboxData extends React.Component {
                       return (
                         <TableCell className="inbox-data-table-bodycell">
                           <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
-                            {index === 1 ? <a> {item.text} </a> : item.text}
+                            {index === 1 ? <a>{item.text} </a> : item.text}
                           </div>
                         </TableCell>
                       );

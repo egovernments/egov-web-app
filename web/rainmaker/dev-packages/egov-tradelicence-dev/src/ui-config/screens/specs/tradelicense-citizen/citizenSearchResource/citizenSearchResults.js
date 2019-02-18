@@ -87,6 +87,7 @@ const onRowClick = rowData => {
       }&tenantId=${rowData["tenantId"]}`;
 
     case get(textToLocalMapping, "PAID"):
+    case get(textToLocalMapping, "PENDINGAPPROVAL"):
       return `/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;

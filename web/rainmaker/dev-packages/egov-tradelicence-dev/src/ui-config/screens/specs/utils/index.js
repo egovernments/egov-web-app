@@ -622,11 +622,11 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   switch (status) {
     case "PAID":
     case "PENDINGAPPROVAL":
-      return { word1: "Status: ", word2: "Pending Approval" };
+      return { word1: "Status: ", word2: "PENDINGAPPROVAL" };
     case "APPLIED":
-      return { word1: "Status: ", word2: "Pending Payment" };
+      return { word1: "Status: ", word2: "APPLIED" };
     case "REJECTED":
-      return { word1: "Status: ", word2: "Application Rejected" };
+      return { word1: "Status: ", word2: "REJECTED" };
     case "CANCELLED":
       return { word1: `Trade License No: `, word2: `${licenseNo}` };
     case "APPROVED":
@@ -635,36 +635,6 @@ export const getHeaderSideText = (status, licenseNo = null) => {
       return { word1: "", word2: "" };
   }
 };
-
-//const nestedLevelScheama = ["Major", "Minor", "Subminor", "Details"];
-//applyScreenMdmsData.MdmsRes.TradeLicense.TradeType
-// const reTrasnformerForNestedDropDown = (
-//   originaJsonPath,
-//   value,
-//   state,
-//   dispatch
-// ) => {
-//   let nestedValues = value.split(".");
-//   while (nestedValues.length > 1) {
-//     const originalNestedValues = value.split(".");
-//     const originalObject = get(state, `${originaJsonPath}`);
-//     nestedValues = value.split(".");
-//     const targetLevel = nestedValues.pop();
-//     const targetpath = nestedValues.join(".");
-//     let targetValues = get(originalObject, `${targetpath}`, []);
-//     targetValues =
-//       targetValues.length && targetValues.length >= 0
-//         ? targetValues
-//         : objectToDropdown(targetValues);
-
-//     dispatch(
-//       prepareFinalObject(
-//         `${targetpath}.${nestedLevelScheama[nestedValues.length + 1]}`,
-//         targetValues
-//       )
-//     );
-//   }
-// };
 
 export const getMdmsData = async queryObject => {
   try {

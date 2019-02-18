@@ -9,6 +9,23 @@ import { convertEpochToDate } from "egov-ui-framework/ui-config/screens/specs/ut
 import get from "lodash/get";
 import "./index.css";
 
+export const getCurrentStatus = status => {
+  switch (status) {
+    case "INITIATED":
+      return "Initiated";
+    case "APPLIED":
+      return "Pending for Document verification";
+    case "FIELDINSPECTION":
+      return "Pending for Field inspection";
+    case "PENDINGPAYMENT":
+      return "Pending payment";
+    case "PENDINGAPPROVAL":
+      return "Pending approval";
+    case "APPROVED":
+      return "Approved";
+  }
+};
+
 const TaskStatusComponents = ({ currentObj, index }) => {
   return (
     <Grid container={true} sm={12} style={{ paddingLeft: 10 }}>
@@ -48,7 +65,17 @@ const TaskStatusComponents = ({ currentObj, index }) => {
             body2: "body2-word-wrap"
           }}
         >
-          <LabelContainer labelName={get(currentObj, "state.state")} />
+          <LabelContainer
+            labelName={getCurrentStatus(get(currentObj, "state.state"))}
+            labelKey={
+              currentObj.businessService
+                ? `WF_${currentObj.businessService.toUpperCase()}_${get(
+                    currentObj,
+                    "state.state"
+                  )}`
+                : ""
+            }
+          />
         </Typography>
       </Grid>
       <Grid item sm={3} style={{ paddingRight: 20 }}>
@@ -64,7 +91,13 @@ const TaskStatusComponents = ({ currentObj, index }) => {
             body2: "body2-word-wrap"
           }}
         >
-          <LabelContainer labelName={get(currentObj, "assignee.name")} />
+          <LabelContainer
+            labelName={
+              get(currentObj, "assignee.name")
+                ? get(currentObj, "assignee.name")
+                : "NA"
+            }
+          />
         </Typography>
       </Grid>
       <Grid item sm={3} style={{ marginTop: 15 }}>

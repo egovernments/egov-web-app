@@ -217,7 +217,12 @@ class WorkFlowContainer extends React.Component {
       getEmployeeRoles
     } = this;
     let businessId = get(data[data.length - 1], "businessId");
-    let actions = get(data[data.length - 1], "nextActions", []);
+    let actions = orderBy(
+      get(data[data.length - 1], "nextActions", []),
+      ["action"],
+      ["desc"]
+    );
+
     return actions.map(item => {
       return {
         buttonLabel: item.action,

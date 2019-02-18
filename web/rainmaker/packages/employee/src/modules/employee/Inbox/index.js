@@ -8,6 +8,7 @@ import Tab from "@material-ui/core/Tab";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { getCurrentStatus } from "egov-workflow/ui-molecules-local/TaskStatusComponents";
 import _ from "lodash";
 import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
@@ -21,8 +22,8 @@ const prepareInboxDataRows = (data) => {
       { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       { text: item.state && item.state.state },
-      { text: item.assigner ? item.assigner.name : "" },
-      { text: item.assignee ? item.assignee.name : "" },
+      { text: item.assigner ? item.assigner.name : "NA" },
+      { text: item.assignee ? item.assignee.name : "NA" },
       { text: Math.round(sla), badge: true },
       { historyButton: true },
     ];

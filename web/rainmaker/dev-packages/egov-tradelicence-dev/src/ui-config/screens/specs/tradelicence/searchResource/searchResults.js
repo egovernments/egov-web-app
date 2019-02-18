@@ -47,6 +47,11 @@ export const textToLocalMapping = {
   APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message", "APPROVED"),
   REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message", "REJECTED"),
   CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message", "CANCELLED"),
+  PENDINGAPPROVAL: get(
+    getLocalTextFromCode("TL_PAID"),
+    "message",
+    "Pending for Approval"
+  ),
   "Search Results for Trade License Applications": get(
     getLocalTextFromCode("TL_HOME_SEARCH_RESULTS_TABLE_HEADING"),
     "message",
@@ -125,6 +130,7 @@ const onRowClick = rowData => {
       }&tenantId=${rowData["tenantId"]}`;
 
     case get(textToLocalMapping, "PAID"):
+    case get(textToLocalMapping, "PENDINGAPPROVAL"):
       return `/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
