@@ -22,12 +22,12 @@ const styles = theme => ({
 const fieldConfig = {
   approverName: {
     label: {
-      labelName: "Approver Name",
-      labelKey: "TL_APPROVER_NAME_LABEL"
+      labelName: "Assignee Name",
+      labelKey: "TL_ASSIGNEE_NAME_LABEL"
     },
     placeholder: {
-      labelName: "Select approver Name",
-      labelKey: "TL_APROVER_NAME_PLACEHOLDER"
+      labelName: "Select assignee Name",
+      labelKey: "TL_ASSIGNEE_NAME_PLACEHOLDER"
     }
   },
   comments: {
@@ -75,6 +75,8 @@ class ActionDialog extends React.Component {
         return "purpose=application&status=cancelled";
       case "APPROVE":
         return "APPROVE";
+      case "PAY":
+        return "Pay";
     }
   };
 

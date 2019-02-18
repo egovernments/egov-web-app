@@ -71,6 +71,8 @@ class Footer extends React.Component {
         return "purpose=application&status=cancelled";
       case "APPROVE":
         return "APPROVE";
+      case "PAY":
+        return "Pay";
     }
   };
 

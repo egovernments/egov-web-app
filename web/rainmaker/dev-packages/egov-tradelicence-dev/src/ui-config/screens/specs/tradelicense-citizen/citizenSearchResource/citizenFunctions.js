@@ -116,6 +116,11 @@ export const textToLocalMapping = {
   INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message", "INITIATED"),
   APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message", "APPLIED"),
   PAID: get(getLocalTextFromCode("TL_PAID"), "message", "PAID"),
+  PENDINGAPPROVAL: get(
+    getLocalTextFromCode("TL_PAID"),
+    "message",
+    "Pending for Approval"
+  ),
   APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message", "APPROVED"),
   REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message", "REJECTED"),
   CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message", "CANCELLED"),

@@ -7,6 +7,8 @@ import StepLabel from "@material-ui/core/StepLabel";
 import StepContent from "@material-ui/core/StepContent";
 import TaskStatusComponents from "../TaskStatusComponents";
 import Divider from "@material-ui/core/Divider";
+import { getCurrentStatus } from "../TaskStatusComponents";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 import "./index.css";
 
 const styles = theme => ({
@@ -28,7 +30,16 @@ class VerticalLinearStepper extends React.Component {
               item && (
                 <Step key={index} active={true}>
                   <StepLabel classes={{ label: "stepper-label" }}>
-                    {item.state.applicationStatus}
+                    <LabelContainer
+                      labelName={getCurrentStatus(item.state.applicationStatus)}
+                      labelKey={
+                        item.businessService
+                          ? `WF_${item.businessService.toUpperCase()}_${
+                              item.state.applicationStatus
+                            }`
+                          : ""
+                      }
+                    />
                   </StepLabel>
                   <StepContent>
                     <TaskStatusComponents currentObj={item} index={index} />

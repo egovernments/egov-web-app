@@ -21,19 +21,12 @@ class SwitchWithLabel extends Component {
     if (compJPath) {
       if (multiItems.length > 0) {
         for (var i = 0; i < multiItems.length; i++) {
-          if (
-            get(
-              screenConfig[screenKey],
-              `${compJPath}[${i}].item${i}.children.cardContent.children.asmtDetailsCardContainer.children.currentAssignment.props.value`
-            ) === true
-          ) {
-            handleField(
-              screenKey,
-              `${compJPath}[${i}].item${i}.children.cardContent.children.asmtDetailsCardContainer.children.currentAssignment`,
-              "props.value",
-              false
-            );
-          }
+          handleField(
+            screenKey,
+            `${compJPath}[${i}].item${i}.children.cardContent.children.asmtDetailsCardContainer.children.currentAssignment`,
+            "props.value",
+            false
+          );
         }
       }
     }
@@ -42,7 +35,13 @@ class SwitchWithLabel extends Component {
   };
 
   render() {
-    const { items, FormControlProps, SwitchProps, value } = this.props;
+    const {
+      items,
+      FormControlProps,
+      SwitchProps,
+      value,
+      valueFromAPI
+    } = this.props;
     return (
       <FormGroup>
         {items.map((item, index) => {
@@ -52,8 +51,8 @@ class SwitchWithLabel extends Component {
               key={`form-${index}`}
               control={
                 <Switch
-                  checked={value || false}
-                  value={value || false}
+                  checked={value || valueFromAPI || false}
+                  value={value || valueFromAPI || false}
                   onChange={event => this.onSwitchChange(event)}
                   {...SwitchProps}
                 />
@@ -70,10 +69,11 @@ class SwitchWithLabel extends Component {
 
 const mapStateToProps = (state, ownprops) => {
   const { screenConfiguration } = state;
-  const { screenConfig } = screenConfiguration;
-  const { value, screenKey, compJPath } = ownprops;
+  const { screenConfig, preparedFinalObject } = screenConfiguration;
+  const { value, screenKey, compJPath, jsonPath } = ownprops;
+  const valueFromAPI = get(preparedFinalObject, jsonPath);
   const multiItems = get(screenConfig[screenKey], compJPath, []);
-  return { checked: value, multiItems, screenConfig };
+  return { multiItems, screenConfig, valueFromAPI };
 };
 
 const mapDispatchToProps = dispatch => {
