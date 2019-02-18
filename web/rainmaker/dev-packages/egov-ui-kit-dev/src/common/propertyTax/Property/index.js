@@ -130,7 +130,7 @@ class Property extends Component {
     const { latestPropertyDetails, propertyId, tenantId } = this.props;
     const assessmentNo = latestPropertyDetails && latestPropertyDetails.assessmentNumber;
     //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
-    localStorage.removeItem("draftId");
+    // localStorage.removeItem("draftId");
     this.setState({
       dialogueOpen: true,
       urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,

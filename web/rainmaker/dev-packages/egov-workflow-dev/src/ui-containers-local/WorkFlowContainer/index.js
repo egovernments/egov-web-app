@@ -201,7 +201,7 @@ class WorkFlowContainer extends React.Component {
 
   checkIfDocumentRequired = nextStateUUID => {
     const businessServiceData = JSON.parse(
-      localStorage.getItem("businessServiceData")
+      localStorageGet("businessServiceData")
     );
     const data = find(businessServiceData, { businessService: "NewTL" });
     const nextState = find(data.states, { uuid: nextStateUUID });

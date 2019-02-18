@@ -59,3 +59,8 @@ export const localStorageSet = (key, data, path) => {
     window.localStorage.setItem(appName + "." + key, data);
   }
 };
+//Remove Item
+export const lSRemoveItem = (key) => {
+  const appName = process.env.REACT_APP_NAME;
+  window.localStorage.removeItem(appName + "." + key);
+};

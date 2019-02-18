@@ -119,7 +119,7 @@ class ComponentInterface extends React.Component {
 
     // if (visible && !isEmpty(roleDefination)) {
     //   const splitList = get(roleDefination, "rolePath").split(".");
-    //   const localdata = JSON.parse(localStorage.getItem(splitList[0]));
+    //   const localdata = JSON.parse(localStorageGet(splitList[0]));
     //   const localRoles = get(
     //     localdata,
     //     splitList.slice(1).join("."),
@@ -151,7 +151,7 @@ class ComponentInterface extends React.Component {
         visible = found;
       } else if (get(roleDefination, "action")) {
         const businessServiceData = JSON.parse(
-          localStorage.getItem("businessServiceData")
+          localStorageGet("businessServiceData")
         );
         const data = find(businessServiceData, { businessService: "NewTL" });
         const filteredData =

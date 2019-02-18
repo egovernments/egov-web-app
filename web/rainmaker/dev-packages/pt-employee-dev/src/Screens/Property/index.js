@@ -7,7 +7,10 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import { fetchProperties, getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import {
+  fetchProperties,
+  getSingleAssesmentandStatus
+} from "egov-ui-kit/redux/properties/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/TransformedAssessments";
 import isEqual from "lodash/isEqual";
@@ -17,7 +20,7 @@ import get from "lodash/get";
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
   borderBottom: "1px solid #e0e0e0",
-  marginLeft: 0,
+  marginLeft: 0
 };
 
 const IconStyle = {
@@ -26,12 +29,12 @@ const IconStyle = {
   bottom: 0,
   display: "flex",
   alignItems: "center",
-  height: "inherit",
+  height: "inherit"
 };
 
 const listItemStyle = {
   padding: "0px 20px",
-  borderWidth: "10px 10px 0px",
+  borderWidth: "10px 10px 0px"
 };
 
 class Property extends Component {
@@ -41,12 +44,17 @@ class Property extends Component {
     this.state = {
       pathName: null,
       dialogueOpen: false,
-      urlToAppend: "",
+      urlToAppend: ""
     };
   }
 
   componentDidMount = () => {
-    const { fetchProperties, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
+    const {
+      fetchProperties,
+      fetchGeneralMDMSData,
+      renderCustomTitleForPt,
+      customTitle
+    } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -55,39 +63,39 @@ class Property extends Component {
             moduleName: "PropertyTax",
             masterDetails: [
               {
-                name: "Floor",
+                name: "Floor"
               },
               {
-                name: "UsageCategoryMajor",
+                name: "UsageCategoryMajor"
               },
               {
-                name: "UsageCategoryMinor",
+                name: "UsageCategoryMinor"
               },
               {
-                name: "UsageCategorySubMinor",
+                name: "UsageCategorySubMinor"
               },
               {
-                name: "OccupancyType",
+                name: "OccupancyType"
               },
               {
-                name: "PropertyType",
+                name: "PropertyType"
               },
               {
-                name: "PropertySubType",
+                name: "PropertySubType"
               },
               {
-                name: "OwnerType",
+                name: "OwnerType"
               },
               {
-                name: "UsageCategoryDetail",
+                name: "UsageCategoryDetail"
               },
               {
-                name: "SubOwnerShipCategory",
-              },
-            ],
-          },
-        ],
-      },
+                name: "SubOwnerShipCategory"
+              }
+            ]
+          }
+        ]
+      }
     };
     fetchGeneralMDMSData(requestBody, "PropertyTax", [
       "Floor",
@@ -99,13 +107,16 @@ class Property extends Component {
       "PropertySubType",
       "OwnerType",
       "UsageCategoryDetail",
-      "SubOwnerShipCategory",
+      "SubOwnerShipCategory"
     ]);
-    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
+    fetchProperties([
+      { key: "ids", value: this.props.match.params.propertyId },
+      { key: "tenantId", value: this.props.match.params.tenantId }
+    ]);
     renderCustomTitleForPt(customTitle);
   };
 
-  onListItemClick = (item) => {
+  onListItemClick = item => {
     const { getSingleAssesmentandStatus } = this.props;
     const { route } = item;
     console.log(item);
@@ -114,19 +125,34 @@ class Property extends Component {
 
   onAssessPayClick = () => {
     const { latestPropertyDetails, propertyId, tenantId } = this.props;
-    const assessmentNo = latestPropertyDetails && latestPropertyDetails.assessmentNumber;
+    const assessmentNo =
+      latestPropertyDetails && latestPropertyDetails.assessmentNumber;
     const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
-    localStorage.removeItem("draftId");
+    // localStorage.removeItem("draftId");
     this.setState({
       dialogueOpen: true,
-      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`
     });
   };
-  getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, tenantId, history, sortedAssessments, selPropertyDetails } = props;
+  getAssessmentListItems = props => {
+    const {
+      propertyItems,
+      propertyId,
+      tenantId,
+      history,
+      sortedAssessments,
+      selPropertyDetails
+    } = props;
     return [
       {
-        primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: (
+          <Label
+            label="PT_PROPERTY_INFORMATION"
+            fontSize="16px"
+            color="#484848"
+            labelStyle={{ fontWeight: 500 }}
+          />
+        ),
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -142,35 +168,55 @@ class Property extends Component {
                 tenantId={tenantId}
                 onButtonClick={this.onAssessPayClick}
               />
-            ),
-          },
+            )
+          }
         ],
         rightIcon: (
           <div style={IconStyle}>
-            <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+            <Icon
+              action="hardware"
+              name="keyboard-arrow-right"
+              color="#484848"
+            />
           </div>
         ),
-        initiallyOpen: true,
+        initiallyOpen: true
       },
       {
-        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: (
+          <Label
+            label="PT_PROPERTY_ASSESSMENT_HISTORY"
+            fontSize="16px"
+            color="#484848"
+            labelStyle={{ fontWeight: 500 }}
+          />
+        ),
         leftIcon: (
           <div style={IconStyle}>
-            <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
+            <Icon
+              action="action"
+              name="receipt"
+              color="#484848"
+              style={IconStyle}
+            />
           </div>
         ),
         route: selPropertyDetails,
         nestedItems: sortedAssessments && sortedAssessments,
         rightIcon: (
           <div style={IconStyle}>
-            <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+            <Icon
+              action="hardware"
+              name="keyboard-arrow-right"
+              color="#484848"
+            />
           </div>
-        ),
-      },
+        )
+      }
     ];
   };
 
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps = nextProps => {
     const { customTitle, renderCustomTitleForPt } = this.props;
     if (!isEqual(customTitle, nextProps.customTitle)) {
       renderCustomTitleForPt(nextProps.customTitle);
@@ -199,7 +245,14 @@ class Property extends Component {
           citizenUserId={uuid}
         />
 
-        {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
+        {dialogueOpen && (
+          <YearDialogue
+            open={dialogueOpen}
+            history={history}
+            urlToAppend={urlToAppend}
+            closeDialogue={closeYearRangeDialogue}
+          />
+        )}
       </Screen>
     );
   }
@@ -215,31 +268,31 @@ const getAddressInfo = (addressObj, extraItems) => {
         items: [
           {
             key: " House No:",
-            value: addressObj.doorNo || "NA",
+            value: addressObj.doorNo || "NA"
           },
           {
             key: "Street Name:",
-            value: addressObj.street || "NA",
+            value: addressObj.street || "NA"
           },
           {
             key: "Pincode:",
-            value: addressObj.pincode || "NA",
+            value: addressObj.pincode || "NA"
           },
           {
             key: "Colony Name:",
-            value: addressObj.buildingName || "NA",
+            value: addressObj.buildingName || "NA"
           },
           {
             key: "Mohalla:",
-            value: addressObj.locality.name || "NA",
+            value: addressObj.locality.name || "NA"
           },
           {
             key: "City:",
-            value: addressObj.city || "NA",
+            value: addressObj.city || "NA"
           },
-          ...extraItems,
-        ],
-      },
+          ...extraItems
+        ]
+      }
     ]
   );
 };
@@ -247,21 +300,29 @@ const getAddressInfo = (addressObj, extraItems) => {
 const transform = (floor, key, generalMDMSDataById) => {
   const { masterName, dataKey } = key;
   if (!masterName) {
-    return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${floor[dataKey]} sq yards`;
+    return floor["occupancyType"] === "RENTED"
+      ? `INR ${floor["arv"]}`
+      : `${floor[dataKey]} sq yards`;
   } else {
     if (floor[dataKey]) {
       if (floor[dataKey] === "NONRESIDENTIAL") {
-        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
+        return generalMDMSDataById["UsageCategoryMinor"]
+          ? generalMDMSDataById["UsageCategoryMinor"][
+              floor["usageCategoryMinor"]
+            ].name
+          : "NA";
       } else {
-        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
+        return generalMDMSDataById[masterName]
+          ? generalMDMSDataById[masterName][floor[dataKey]].name
+          : "NA";
       }
     } else {
       if (dataKey === "usageCategoryDetail") {
         return generalMDMSDataById["usageCategoryDetail"]
           ? generalMDMSDataById["usageCategoryDetail"][floor[dataKey]].name
           : generalMDMSDataById["usageCategorySubMinor"]
-            ? generalMDMSDataById["usageCategorySubMinor"][floor[dataKey]].name
-            : "NA";
+          ? generalMDMSDataById["usageCategorySubMinor"][floor[dataKey]].name
+          : "NA";
       }
       return "NA";
     }
@@ -279,40 +340,55 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
       tableHeaderItems: [
         {
           key: "Plot Size:",
-          value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
+          value: propertyDetails.uom
+            ? `${propertyDetails.landArea} ${propertyDetails.uom}`
+            : `${propertyDetails.landArea} sq yards`
         },
         {
           key: "Type of Building:",
           value: generalMDMSDataById
             ? propertyDetails.propertySubType
               ? generalMDMSDataById["PropertySubType"]
-                ? generalMDMSDataById["PropertySubType"][propertyDetails.propertySubType].name
+                ? generalMDMSDataById["PropertySubType"][
+                    propertyDetails.propertySubType
+                  ].name
                 : "NA"
               : generalMDMSDataById["PropertyType"]
-                ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
-                : "NA"
-            : "NA",
-        },
+              ? generalMDMSDataById["PropertyType"][
+                  propertyDetails.propertyType
+                ].name
+              : "NA"
+            : "NA"
+        }
       ],
       items: {
-        header: units ? ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"] : [],
+        header: units
+          ? [
+              "Floor",
+              "Usage Type",
+              "Sub Usage Type",
+              "Occupancy",
+              "Built Area/Total Annual Rent"
+            ]
+          : [],
         values: units
-          ? units.map((floor) => {
+          ? units.map(floor => {
               return {
-                value: keys.map((key) => {
+                value: keys.map(key => {
                   return transform(floor, key, generalMDMSDataById);
-                }),
+                })
               };
             })
-          : [],
-      },
-    },
+          : []
+      }
+    }
   ];
 };
 
 const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
   const isInstitution =
-    latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
+    latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" ||
+    latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const { institution, owners: ownerDetails } = latestPropertyDetails || {};
   return (
     ownerDetails && [
@@ -321,17 +397,17 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
         iconAction: "social",
         iconName: "person",
         nestedItems: true,
-        items: ownerDetails.map((owner) => {
+        items: ownerDetails.map(owner => {
           return {
             items: [
               isInstitution
                 ? {
                     key: "Name of Institution",
-                    value: institution.name || "NA",
+                    value: institution.name || "NA"
                   }
                 : {
                     key: "Name",
-                    value: owner.name || "NA",
+                    value: owner.name || "NA"
                   },
               isInstitution
                 ? {
@@ -341,35 +417,37 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
                         institution.type &&
                         generalMDMSDataById &&
                         generalMDMSDataById["SubOwnerShipCategory"] &&
-                        generalMDMSDataById["SubOwnerShipCategory"][institution.type].name) ||
-                      "NA",
+                        generalMDMSDataById["SubOwnerShipCategory"][
+                          institution.type
+                        ].name) ||
+                      "NA"
                   }
                 : {
                     key: "Gender:",
-                    value: owner.gender || "NA",
+                    value: owner.gender || "NA"
                   },
               isInstitution
                 ? {
                     key: "Name of Authorised Person",
-                    value: owner.name || "NA",
+                    value: owner.name || "NA"
                   }
                 : {
                     key: "Mobile No:",
-                    value: owner.mobileNumber || "NA",
+                    value: owner.mobileNumber || "NA"
                   },
               isInstitution
                 ? {
                     key: "Designation:",
-                    value: institution.designation || "NA",
+                    value: institution.designation || "NA"
                   }
                 : {
                     key: "Father's/Husband's Name:",
-                    value: owner.fatherOrHusbandName || "NA",
+                    value: owner.fatherOrHusbandName || "NA"
                   },
               isInstitution
                 ? {
                     key: "Mobile Number:",
-                    value: owner.mobileNumber || "NA",
+                    value: owner.mobileNumber || "NA"
                   }
                 : {
                     key: "User Category:",
@@ -378,31 +456,32 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
                         owner.ownerType &&
                         generalMDMSDataById &&
                         generalMDMSDataById["OwnerType"] &&
-                        generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
-                      "NA",
+                        generalMDMSDataById["OwnerType"][owner.ownerType]
+                          .name) ||
+                      "NA"
                   },
               isInstitution
                 ? {
                     key: "Telephone Number:",
-                    value: owner.altContactNumber || "NA",
+                    value: owner.altContactNumber || "NA"
                   }
                 : {
                     key: "Email ID:",
-                    value: owner.emailId || "NA",
+                    value: owner.emailId || "NA"
                   },
               {
                 key: "Correspondence Address:",
-                value: owner.permanentAddress || "NA",
-              },
-            ],
+                value: owner.permanentAddress || "NA"
+              }
+            ]
           };
-        }),
-      },
+        })
+      }
     ]
   );
 };
 
-const getLatestPropertyDetails = (propertyDetailsArray) => {
+const getLatestPropertyDetails = propertyDetailsArray => {
   if (propertyDetailsArray) {
     if (propertyDetailsArray.length > 1) {
       return propertyDetailsArray.reduce((acc, curr) => {
@@ -425,31 +504,55 @@ const mapStateToProps = (state, ownProps) => {
   const propertyId = ownProps.match.params.propertyId;
   const tenantId = ownProps.match.params.tenantId;
   const selPropertyDetails = propertiesById[propertyId] || {};
-  const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
+  const latestPropertyDetails = getLatestPropertyDetails(
+    selPropertyDetails.propertyDetails
+  );
   const propertyCity =
-    cities && selPropertyDetails && selPropertyDetails.address && cities.filter((item) => item.key === selPropertyDetails.address.city);
+    cities &&
+    selPropertyDetails &&
+    selPropertyDetails.address &&
+    cities.filter(item => item.key === selPropertyDetails.address.city);
   const addressInfo =
     getAddressInfo(selPropertyDetails.address, [
-      { key: "City:", value: (propertyCity && propertyCity[0] && propertyCity[0].name) || "NA" },
-      { key: "Property ID:", value: selPropertyDetails.propertyId },
+      {
+        key: "City:",
+        value: (propertyCity && propertyCity[0] && propertyCity[0].name) || "NA"
+      },
+      { key: "Property ID:", value: selPropertyDetails.propertyId }
     ]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
     { masterName: "UsageCategoryDetail", dataKey: "usageCategoryDetail" },
     { masterName: "OccupancyType", dataKey: "occupancyType" },
-    { masterName: "", dataKey: "unitArea" },
+    { masterName: "", dataKey: "unitArea" }
   ];
   const assessmentInfo = generalMDMSDataById
     ? latestPropertyDetails
-      ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
+      ? getAssessmentInfo(
+          latestPropertyDetails,
+          assessmentInfoKeys,
+          generalMDMSDataById
+        )
       : []
     : [];
-  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails, generalMDMSDataById)) || [];
+  const ownerInfo =
+    (latestPropertyDetails &&
+      getOwnerInfo(latestPropertyDetails, generalMDMSDataById)) ||
+    [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
-  const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
-  const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  const customTitle =
+    selPropertyDetails &&
+    selPropertyDetails.address &&
+    getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  const completedAssessments = getCompletedTransformedItems(
+    singleAssessmentByStatus,
+    cities,
+    localizationLabels
+  );
+  const sortedAssessments =
+    completedAssessments &&
+    orderby(completedAssessments, ["epocDate"], ["desc"]);
   return {
     urls,
     propertyItems,
@@ -459,16 +562,19 @@ const mapStateToProps = (state, ownProps) => {
     latestPropertyDetails,
     customTitle,
     selPropertyDetails,
-    sortedAssessments,
+    sortedAssessments
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     // addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
-    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
-    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) =>
+      dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchProperties: queryObjectProperty =>
+      dispatch(fetchProperties(queryObjectProperty)),
+    getSingleAssesmentandStatus: queryObj =>
+      dispatch(getSingleAssesmentandStatus(queryObj))
   };
 };
 
