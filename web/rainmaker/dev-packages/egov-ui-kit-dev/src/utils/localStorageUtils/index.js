@@ -60,7 +60,6 @@ export const localStorageGet = (key, path) => {
 export const localStorageSet = (key, data, path) => {
   const appName = process.env.REACT_APP_NAME;
   const storedData = window.localStorage.getItem(appName + "." + key);
-  console.log(storedData);
 
   if (path) {
     set(storedData, path, data);
