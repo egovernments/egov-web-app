@@ -12,6 +12,7 @@ import {
   setRefreshToken,
   localStorageSet,
   localStorageGet,
+  clearUserDetails,
 } from "../../utils/localStorageUtils";
 
 // temp fix
@@ -135,11 +136,7 @@ export const logout = () => {
       if (authToken) {
         const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
       } else {
-        Object.keys(localStorage).forEach((key) => {
-          if (!key.startsWith("localization")) {
-            localStorage.removeItem(key);
-          }
-        });
+        clearUserDetails();
         process.env.REACT_APP_NAME === "Citizen"
           ? window.location.replace(`${window.basename}/user/register`)
           : window.location.replace(`${window.basename}/user/login`);
@@ -147,21 +144,12 @@ export const logout = () => {
       }
     } catch (error) {
       console.log(error);
-      Object.keys(localStorage).forEach((key) => {
-        if (!key.startsWith("localization")) {
-          localStorage.removeItem(key);
-        }
-      });
+      clearUserDetails();
     }
     // whatever happens the client should clear the user details
     // let userInfo=getUserInfo();
     // let userRole=get(userInfo,"roles[0].code");
-
-    Object.keys(localStorage).forEach((key) => {
-      if (!key.startsWith("localization")) {
-        localStorage.removeItem(key);
-      }
-    });
+    clearUserDetails();
     // window.location.replace(`${window.basename}/user/login`)
     window.location.replace(`${window.basename}/user/login`);
   };

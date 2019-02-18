@@ -1,3 +1,5 @@
+const appName = process.env.REACT_APP_NAME;
+
 //GET methods
 export const getAccessToken = () => {
   return localStorageGet(`token`);
@@ -35,6 +37,14 @@ export const setReturnUrl = (url) => {
   localStorageSet("returnUrl", url);
 };
 
+//Remove Items (LOGOUT)
+export const clearUserDetails = () => {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith(appName)) {
+      window.localStorage.removeItem(key);
+    }
+  });
+};
 //Role specific get-set Methods
 export const localStorageGet = (key, path) => {
   const appName = process.env.REACT_APP_NAME;
