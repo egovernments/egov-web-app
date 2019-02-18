@@ -180,17 +180,17 @@ class ShowField extends Component {
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
-      paging: false,
+      paging: true,
       // bInfo: false,
       // order: [[3, "desc"]],
       ordering: true,
       // bDestroy: true,
       columnDefs: [
         {
-          targets: 0,
-          orderable: false,
-        },
+          width:"50px"
+        }
       ],
+      fixedColumns: true,
       fnDrawCallback: function() {
         let tableId = "reportTable";
         let tableRows = document.getElementById(tableId).rows;
@@ -559,7 +559,7 @@ class ShowField extends Component {
               </tr>
             );
           })}
-        {this.renderFooter()}
+          {/*this.renderFooter()*/}
       </tbody>
     );
   };
@@ -629,11 +629,13 @@ class ShowField extends Component {
 
     if (footerexist) {
       return (
-        <tr className="total">
-          {sumColumn.map((columnObj, index) => {
-            return <td key={index}>{index === 0 ? "Total" : total[index - 1]}</td>;
-          })}
-        </tr>
+          <tfoot>
+            <tr className="total">
+              {sumColumn.map((columnObj, index) => {
+                return <th key={index}>{index === 0 ? "Total" : total[index - 1]}</th>;
+              })}
+            </tr>
+          </tfoot>
       );
     }
   };
@@ -692,12 +694,14 @@ class ShowField extends Component {
               width: "100%",
             }}
             // className="mdl-data-table"
-            className="display responsive nowrap"
+            className="table table-striped table-bordered display responsive bordered nowrap"
             // style={{ width: "100%" }}
-            responsive
           >
             {self.renderHeader()}
             {self.renderBody()}
+
+              {this.renderFooter()}
+
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
