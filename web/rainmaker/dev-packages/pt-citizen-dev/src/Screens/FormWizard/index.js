@@ -57,7 +57,10 @@ import {
   renderPlotAndFloorDetails
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
-import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getUserInfo,
+  localStorageSet
+} from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 class FormWizard extends Component {
