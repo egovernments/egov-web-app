@@ -11,6 +11,8 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import jp from "jsonpath";
 import { withRouter } from "react-router";
 import Label from "egov-ui-kit/utils/translationNode";
+// import AutoComplete from "material-ui/AutoComplete";
+
 
 class UiBoundary extends Component {
   constructor(props) {
@@ -305,6 +307,7 @@ class UiBoundary extends Component {
   };
 
   renderFields = (level) => {
+    // const dataSourceConfig = { text: "label", value: "value" };
     let { dropDownDataVal, dropDownData } = this.state;
     let labelProperty = {
       floatingLabelFixed: true,
@@ -338,6 +341,7 @@ class UiBoundary extends Component {
       >
         {dropDownData[level] && dropDownData[level].map((dd, index) => <MenuItem value={dd.key} key={index} primaryText={dd.value} />)}
       </SelectField>
+
     );
   };
 
@@ -415,3 +419,36 @@ export default withRouter(
     null
   )(UiBoundary)
 );
+
+
+
+
+
+// <AutoComplete
+//   // className="custom-form-control-for-textfield"
+//   // floatingLabelStyle={{ fontSize: "20px"}}
+//   fullWidth={true}
+//   // style={{ display: "inline-block" }}
+//   filter={(searchText, key) => {
+//     return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+//   }}
+//   // listStyle={{ maxHeight: 100, overflow: "auto" }}
+//   onNewRequest={(value) => {
+//     this.props.handler(value,level);
+//   }}
+//   onUpdateInput={(searchText,dataSource,params)=>{
+//      this.handler(searchText, level);
+//   }}
+//   dataSource={dropDownData[level]}
+//   dataSourceConfig={dataSourceConfig}
+//   openOnFocus={true}
+//   {...labelProperty}
+//   disabled={this.props.item.isDisabled}
+//     maxHeight={200}
+//     style={{ display: "inline-block" }}
+//     errorStyle={{ float: "left" }}
+//     id={this.props.item.jsonPath.split(".").join("-") + "-" + level}
+//     dropDownMenuProps={{
+//       targetOrigin: { horizontal: "left", vertical: "bottom" },
+//     }}
+// />

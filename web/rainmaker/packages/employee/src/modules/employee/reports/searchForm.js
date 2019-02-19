@@ -371,8 +371,9 @@ class ShowForm extends Component {
             input = searchForm[variable];
           }
         }
-
-        searchParams.push({ name: variable, input });
+        if (input) {
+          searchParams.push({ name: variable, input });
+        }
       }
 
       setSearchParams(searchParams);
@@ -498,6 +499,16 @@ class ShowForm extends Component {
                         //disabled={!isFormValid}
                         primary={true}
                         label={buttonText}
+                      />
+                      <RaisedButton
+                          style={{ marginLeft:"8px" }}
+                          type="reset"
+                          //disabled={!isFormValid}
+                          // primary={true}
+                          onClick={(e)=>{
+                            
+                          }}
+                          label={"RESET"}
                       />
                     </div>
                   </Row>

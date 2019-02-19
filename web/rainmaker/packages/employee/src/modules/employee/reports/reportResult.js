@@ -176,6 +176,7 @@ class ShowField extends Component {
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       order: [],
+      responsive: true,
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
@@ -187,7 +188,8 @@ class ShowField extends Component {
       // bDestroy: true,
       columnDefs: [
         {
-          width:"50px"
+          ordering: false,
+          targets:0
         }
       ],
       fixedColumns: true,
@@ -237,6 +239,7 @@ class ShowField extends Component {
       // scrollResize: true,
       // scrollY: 100,
       // scrollCollapse: true,
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });
     showTabLabel();
   }
@@ -686,21 +689,21 @@ class ShowField extends Component {
           <table
             id="reportTable"
             style={{
-              color: "#484848",
-              fontWeight: "normal",
-              padding: "0 !important",
-              backgroundColor: "#ffffff",
-              overflowY: "auto",
+              // color: "#484848",
+              // fontWeight: "normal",
+              // padding: "0 !important",
+              // backgroundColor: "#ffffff",
+              // overflowY: "auto",
               width: "100%",
             }}
             // className="mdl-data-table"
-            className="table table-striped table-bordered display responsive bordered nowrap"
+            className="table table-responsive table-striped table-bordered display nowrap dataTable"
             // style={{ width: "100%" }}
           >
             {self.renderHeader()}
             {self.renderBody()}
 
-              {this.renderFooter()}
+            {this.renderFooter()}
 
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
