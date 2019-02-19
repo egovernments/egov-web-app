@@ -187,8 +187,8 @@ class ShowField extends Component {
       // bDestroy: true,
       columnDefs: [
         {
-          width:"50px"
-        }
+          width: "50px",
+        },
       ],
       fixedColumns: true,
       fnDrawCallback: function() {
@@ -333,6 +333,27 @@ class ShowField extends Component {
     }
   };
 
+  addCommas = (num) => {
+    if (isNaN(num)) {
+      return num;
+    }
+    let value = num.toString().trim();
+    const decLoc = value.indexOf(".") > -1 ? value.indexOf(".") : value.length;
+    let i = decLoc - 3;
+    if (i >= 1 && value.charAt(i - 1) !== "-") {
+      value = value.substr(0, i) + "," + value.substr(i, value.length);
+      i -= 2;
+      while (i >= 1) {
+        if (value.charAt(i - 1) == "-")
+          // Handle for negatives
+          break;
+        value = value.substr(0, i) + "," + value.substr(i, value.length);
+        i -= 2;
+      }
+    }
+    return value;
+  };
+
   checkIfDate = (val, i) => {
     let { reportResult } = this.props;
     if (
@@ -345,7 +366,17 @@ class ShowField extends Component {
       var _date = new Date(Number(val));
       return ("0" + _date.getDate()).slice(-2) + "/" + ("0" + (_date.getMonth() + 1)).slice(-2) + "/" + _date.getFullYear();
     } else {
-      return val;
+      if (
+        reportResult &&
+        reportResult.reportHeader &&
+        reportResult.reportHeader.length &&
+        reportResult.reportHeader[i] &&
+        reportResult.reportHeader[i].type == "currency"
+      ) {
+        return this.addCommas(val);
+      } else {
+        return val;
+      }
     }
   };
 
@@ -486,6 +517,20 @@ class ShowField extends Component {
     }
   }
 
+  getStyleForCell = (i) => {
+    let { reportResult } = this.props;
+    if (
+      reportResult &&
+      reportResult.reportHeader &&
+      reportResult.reportHeader.length &&
+      reportResult.reportHeader[i] &&
+      reportResult.reportHeader[i].type == "currency"
+    ) {
+      return { textAlign: "right" };
+    } else {
+      return { textAlign: "left" };
+    }
+  };
   renderBody = () => {
     sumColumn = [];
     let { reportResult, metaData } = this.props;
@@ -535,6 +580,7 @@ class ShowField extends Component {
                     return (
                       <td
                         key={itemIndex}
+                        style={this.getStyleForCell(itemIndex)}
                         onClick={(e) => {
                           drillDown(e, dataIndex, itemIndex, dataItem, item);
                         }}
@@ -559,7 +605,7 @@ class ShowField extends Component {
               </tr>
             );
           })}
-          {/*this.renderFooter()*/}
+        {/*this.renderFooter()*/}
       </tbody>
     );
   };
@@ -629,13 +675,17 @@ class ShowField extends Component {
 
     if (footerexist) {
       return (
-          <tfoot>
-            <tr className="total">
-              {sumColumn.map((columnObj, index) => {
-                return <th key={index}>{index === 0 ? "Total" : total[index - 1]}</th>;
-              })}
-            </tr>
-          </tfoot>
+        <tfoot>
+          <tr className="total">
+            {sumColumn.map((columnObj, index) => {
+              return (
+                <th style={index !== 0 ? { textAlign: "right" } : {}} key={index}>
+                  {index === 0 ? "Total" : this.addCommas(total[index - 1])}
+                </th>
+              );
+            })}
+          </tr>
+        </tfoot>
       );
     }
   };
@@ -700,8 +750,7 @@ class ShowField extends Component {
             {self.renderHeader()}
             {self.renderBody()}
 
-              {this.renderFooter()}
-
+            {this.renderFooter()}
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
