@@ -129,7 +129,8 @@ const getMdmsData = async (state, dispatch, tenantId) => {
           moduleName: "ACCESSCONTROL-ROLES",
           masterDetails: [
             {
-              name: "roles"
+              name: "roles",
+              filter: "$.[?(@.code!='CITIZEN')]"
             }
           ]
         },

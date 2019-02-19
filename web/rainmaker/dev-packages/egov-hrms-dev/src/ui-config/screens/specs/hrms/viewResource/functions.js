@@ -98,6 +98,33 @@ const setRolesList = (state, dispatch) => {
   );
 };
 
+const setDeactivationDocuments = (state, dispatch) => {
+  // GET THE DEACTIVATION DOCUMENTS FROM UPLOAD FILE COMPONENT
+  let deactivationDocuments = get(
+    state.screenConfiguration.preparedFinalObject,
+    `deactivationDocuments`,
+    []
+  );
+  // FORMAT THE NEW DOCUMENTS ARRAY ACCORDING TO THE REQUIRED STRUCTURE
+  let addedDocuments = deactivationDocuments.map(document => {
+    return {
+      documentName: get(document, "fileName", ""),
+      documentId: get(document, "fileStoreId", ""),
+      referenceType: "DEACTIVATION"
+    };
+  });
+  // GET THE PREVIOUS DOCUMENTS FROM EMPLOYEE OBJECT
+  let documents = get(
+    state.screenConfiguration.preparedFinalObject,
+    `Employee[0].documents`,
+    []
+  );
+  // ADD THE NEW DOCUMENTS TO PREVIOUS DOCUMENTS
+  documents = [...documents, ...addedDocuments];
+  // SAVE THE DOCUMENTS BACK TO EMPLOYEE
+  dispatch(prepareFinalObject("Employee[0].documents", documents));
+};
+
 export const furnishEmployeeData = (state, dispatch) => {
   let employeeObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -298,6 +325,7 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
           get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
         )
       );
+      setDeactivationDocuments(state, dispatch);
       let response = await updateEmployee(queryObject, employeeObject);
       let employeeId = response && get(response, "Employees[0].code");
       showHideAdhocPopup(state, dispatch);
