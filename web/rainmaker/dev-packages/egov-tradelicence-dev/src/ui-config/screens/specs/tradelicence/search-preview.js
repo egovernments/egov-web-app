@@ -7,6 +7,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
+import { footer } from "./payResource/footer";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getQueryArg,
@@ -32,7 +33,6 @@ import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
 import { getApprovalDetails } from "./applyResource/approval-rejection-details";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -352,6 +352,9 @@ export const tradeReviewDetails = getCommonCard({
   reviewDocumentDetails
 });
 
+export const getCitizenFooter =
+  process.env.REACT_APP_NAME === "Citizen" ? footer : {};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
@@ -376,7 +379,7 @@ const screenConfig = {
       { key: "tenantId", value: tenantId },
       { key: "businessService", value: "newTL" }
     ];
-    setBusinessServiceDataToLocalStorage(queryObject);
+    setBusinessServiceDataToLocalStorage(queryObject, dispatch);
     beforeInitFn(action, state, dispatch, applicationNumber);
     return action;
   },
@@ -450,9 +453,8 @@ const screenConfig = {
           moduleName: "egov-workflow",
           visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
         },
-        tradeReviewDetails
-
-        //footer
+        tradeReviewDetails,
+        getCitizenFooter
       }
     },
     breakUpDialog: {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
-import { Taskboard } from "./components";
+import { Taskboard, Boxboard } from "./components";
 import InboxData from "./components";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -13,6 +13,7 @@ import _ from "lodash";
 import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
+import Icon from "egov-ui-kit/components/Icon";
 
 const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
@@ -29,6 +30,49 @@ const prepareInboxDataRows = (data) => {
     ];
   });
 };
+
+const iconStyle={
+  width: "48px",
+  height: "46.02px",
+  //paddingtop: "10px"
+  //margintop: "10px"
+}
+const labelStyle = {
+ fontSize: "16px",
+  // fontweight: 400,
+  // letterspacing: "0.67px",
+  // lineheight: "19px",
+//  paddingtop: "10px"
+}
+const boxes =  [
+  {
+  head: <Icon action = "action" name = "announcement" style ={iconStyle}/> ,
+  body: <Label label = "Complaints" containerStyle = {labelStyle}/>,
+  route: "/all-complaints"
+  },
+  {
+    head: <Icon action="action" name="store" style={iconStyle}/>,
+    body: <Label label="Property tax" containerStyle={labelStyle}/>,
+    route: "/property-tax"
+  },
+  {
+    head: <Icon action="places" name="business-center" style={iconStyle}/>,
+    body: <Label label="Trade license" containerStyle={labelStyle}/>,
+    route: process.env.NODE_ENV === "production"
+      ? "/employee/tradelicence/search"
+      : "/tradelicence/search"   
+  },
+  {
+    head: <Icon action="action" name="announcement" style={iconStyle}/>,
+    body: <Label label="Water and sewerage" containerStyle={labelStyle} />,
+    route: "/dashboard/ws-financialindicators" 
+  },
+  {
+    head: <Icon action="action" name="description" style={iconStyle} />,
+    body: <Label label="Fire NOC" containerStyle ={labelStyle}/>,
+    route: "/dashboard/ws-financialindicators" 
+  }
+];
 
 class Inbox extends Component {
   state = {
@@ -112,36 +156,46 @@ class Inbox extends Component {
     const { name, classes } = this.props;
     const { value, taskboardData, tabData, inboxData } = this.state;
     return (
-      <div className="col-sm-12">
-        <Label className="landingPageUser" label={` Welcome ${name}, `} />
-        <Taskboard data={taskboardData} />
+      <div>
+        <div>
+          <Label className="landingPageUser" label={` Welcome ${name}, `} containerStyle={{paddingLeft:"15px"}} />
+        </div>
+          
+          <Boxboard data={boxes} />
+        
         <div className="col-sm-12">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            className=""
-            indicatorColor="primary"
-            textColor="primary"
-            style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
-          >
-            {tabData.map((item) => {
-              return <Tab className="inbox-tab" label={item} />;
-            })}
+         
+          <Label className="landingPageUser" label={"My worklist"} />
+          <Taskboard data={taskboardData} />
+          <div className="col-sm-12">
+            <Tabs
+              value={value}
+              onChange={this.handleChange}
+              className=""
+              indicatorColor="primary"
+              textColor="primary"
+              style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
+            >
+              {tabData.map((item) => {
+                return <Tab className="inbox-tab" label={item} />;
+              })}
 
-            <div style={{ position: "absolute", right: 0, top: "10px" }}>
-              <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
-                <MenuItem value="" disabled>
-                  Module-All
+              <div style={{ position: "absolute", right: 0, top: "10px" }}>
+                <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
+                  <MenuItem value="" disabled>
+                    Module-All
                 </MenuItem>
-                <MenuItem value={"NewTL"}>NewTL</MenuItem>
-                <MenuItem value={"PGR"}>PGR</MenuItem>
-                <MenuItem value={"PT"}>PT</MenuItem>
-              </Select>
-            </div>
-          </Tabs>
-          <InboxData data={inboxData[value]} />
+                  <MenuItem value={"NewTL"}>NewTL</MenuItem>
+                  <MenuItem value={"PGR"}>PGR</MenuItem>
+                  <MenuItem value={"PT"}>PT</MenuItem>
+                </Select>
+              </div>
+            </Tabs>
+            <InboxData data={inboxData[value]} />
+          </div>
         </div>
       </div>
+      
     );
   }
 }

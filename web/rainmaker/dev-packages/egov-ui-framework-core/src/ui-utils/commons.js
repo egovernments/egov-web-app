@@ -5,6 +5,7 @@ import {
   localStorageSet,
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -238,17 +239,26 @@ export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
   prepareFinalObject("workflow.ProcessInstances", processInstances);
 };
 
-export const setBusinessServiceDataToLocalStorage = async queryObject => {
-  const payload = await httpRequest(
-    "post",
-    "egov-workflow-v2/egov-wf/businessservice/_search",
-    "_search",
-    queryObject
-  );
-  localStorageSet(
-    "businessServiceData",
-    JSON.stringify(_.get(payload, "BusinessServices"))
-  );
+export const setBusinessServiceDataToLocalStorage = async (
+  queryObject,
+  dispatch
+) => {
+  try {
+    const payload = await httpRequest(
+      "post",
+      "egov-workflow-v2/egov-wf/businessservice/_search",
+      "_search",
+      queryObject
+    );
+    localStorageSet(
+      "businessServiceData",
+      JSON.stringify(_.get(payload, "BusinessServices"))
+    );
+  } catch (e) {
+    dispatch(
+      toggleSnackbar(true, "Not authorized to access Business Service!")
+    );
+  }
 };
 
 export const acceptedFiles = acceptedExt => {
