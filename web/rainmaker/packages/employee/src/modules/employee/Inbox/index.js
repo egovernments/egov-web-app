@@ -46,31 +46,32 @@ const labelStyle = {
 }
 const boxes =  [
   {
-  head: <Icon action = "action" name = "announcement" style ={iconStyle}/> ,
-  body: <Label label = "Complaints" containerStyle = {labelStyle}/>,
-  route: "/all-complaints"
+    head: <Icon action = "action" name = "announcement" style ={iconStyle}/> ,
+    body: <Label label = "Complaints" containerStyle = {labelStyle}/>,
+    route: `/${window.basename}/all-complaints`
   },
   {
     head: <Icon action="action" name="store" style={iconStyle}/>,
     body: <Label label="Property tax" containerStyle={labelStyle}/>,
-    route: "/property-tax"
+    route: `${window.basename}//property-tax`
   },
   {
     head: <Icon action="places" name="business-center" style={iconStyle}/>,
     body: <Label label="Trade license" containerStyle={labelStyle}/>,
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/tradelicence/search"
-      : "/tradelicence/search"   
+    route: `/${window.basename}/tradelicence/search`
+    // route: process.env.NODE_ENV === "production"
+    //   ? "/employee/tradelicence/search"
+    //   : "/tradelicence/search"   
   },
   {
     head: <Icon action="action" name="announcement" style={iconStyle}/>,
     body: <Label label="Water and sewerage" containerStyle={labelStyle} />,
-    route: "/dashboard/ws-financialindicators" 
+    route: `/${window.basename}/dashboard/ws-financialindicators`
   },
   {
     head: <Icon action="action" name="description" style={iconStyle} />,
     body: <Label label="Fire NOC" containerStyle ={labelStyle}/>,
-    route: "/dashboard/ws-financialindicators" 
+    route: `/${window.basename}/dashboard/ws-financialindicators` 
   }
 ];
 
