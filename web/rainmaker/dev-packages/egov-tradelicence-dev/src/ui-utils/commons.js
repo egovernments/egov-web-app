@@ -22,6 +22,7 @@ import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
 
 export const updateTradeDetails = async requestBody => {
   try {
@@ -292,11 +293,19 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       ""
     );
     const tenantId = ifUserRoleExists("CITIZEN") ? cityId : getTenantId();
+    const BSqueryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "businessService", value: "newTL" }
+    ];
+    if (process.env.REACT_APP_NAME === "Citizen") {
+      setBusinessServiceDataToLocalStorage(BSqueryObject, dispatch);
+    }
 
     set(queryObject[0], "tenantId", tenantId);
 
     if (queryObject[0].applicationNumber) {
       //call update
+
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
       let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
       set(

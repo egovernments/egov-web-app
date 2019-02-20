@@ -201,7 +201,7 @@ export const applicationSuccessFooter = (
           );
         }
       }
-    },
+    }
     // collectPaymentButton: {
     //   componentPath: "Button",
     //   props: {
@@ -228,31 +228,32 @@ export const applicationSuccessFooter = (
     //     roles: ["TL_CEMP"]
     //   }
     // },
-    proceedToPay: {
-      componentPath: "Button",
-      props: {
-        variant: "contained",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "40px"
-        }
-      },
-      children: {
-        collectPaymentButtonLabel: getLabel({
-          labelName: "PROCEED TO PAYMENT",
-          labelKey: "TL_PROCEED_PAYMENT"
-        })
-      },
-      onClickDefination: {
-        action: "page_change",
-        path: `/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
-      },
-      roleDefination: {
-        rolePath: "user-info.roles",
-        roles: ["CITIZEN"]
-      }
-    }
+    // proceedToPay: {
+    //   componentPath: "Button",
+    //   props: {
+    //     variant: "contained",
+    //     color: "primary",
+    //     style: {
+    //       minWidth: "200px",
+    //       height: "48px",
+    //       marginRight: "40px"
+    //     }
+    //   },
+    //   children: {
+    //     collectPaymentButtonLabel: getLabel({
+    //       labelName: "PROCEED TO PAYMENT",
+    //       labelKey: "TL_PROCEED_PAYMENT"
+    //     })
+    //   },
+    //   onClickDefination: {
+    //     action: "page_change",
+    //     path: `/tradelicense-citizen/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+    //   },
+    //   roleDefination: {
+    //     rolePath: "user-info.roles",
+    //     action: "PAY",
+    //     roles: ["TL_CEMP"]
+    //   }
+    // }
   });
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import LinearProgress from "../../ui-atoms/LinearSpinner";
 import Loadable from "react-loadable";
 import Item from "../../ui-atoms/Layout/Item";
@@ -92,15 +93,6 @@ class ComponentInterface extends React.Component {
           loading: () => <LinearProgress />
         });
         break;
-      // case "remote-component":
-      //   LoadableComponent = Loadable({
-      //     loader: () =>
-      //       import("egov-workflow/ui-containers").then(
-      //         module => module[componentPath]
-      //       ),
-      //     loading: () => <LinearProgress />
-      //   });
-      // break;
     }
     this.setState({ module: LoadableComponent });
   }
@@ -114,8 +106,10 @@ class ComponentInterface extends React.Component {
       children,
       gridDefination,
       visible = true,
-      roleDefination = {}
+      roleDefination = {},
+      applicationStatus
     } = this.props;
+    //console.log("props applicationStatus is....", applicationStatus);
 
     // if (visible && !isEmpty(roleDefination)) {
     //   const splitList = get(roleDefination, "rolePath").split(".");
@@ -154,27 +148,33 @@ class ComponentInterface extends React.Component {
           localStorageGet("businessServiceData")
         );
         const data = find(businessServiceData, { businessService: "NewTL" });
+        //let found = actions.some(item => roleCodes.includes(item));
+
         const filteredData =
           data &&
+          data.states &&
           data.states.reduce((res, curr) => {
             if (
               curr &&
               curr.actions &&
-              curr.actions.filter(
-                item => item.action === get(roleDefination, "action")
+              curr.applicationStatus === applicationStatus &&
+              curr.actions.filter(item =>
+                item.roles.some(elem => roleCodes.includes(elem))
               ).length > 0
             ) {
-              const filteredAction = curr.actions.filter(
-                item => item.action === get(roleDefination, "action")
+              const filteredAction = curr.actions.filter(item =>
+                item.roles.some(elem => roleCodes.includes(elem))
               );
 
-              filteredAction.forEach(item => res.push(item.roles));
+              filteredAction.forEach(item => res.push(item.action));
             }
-
             return res;
           }, []);
-        const roles = filteredData[0];
-        let found = roles.some(elem => roleCodes.includes(elem));
+        const actions = filteredData;
+        let found =
+          actions && actions.length > 0
+            ? actions.includes(get(roleDefination, "action"))
+            : false;
         visible = found;
       }
     }
@@ -203,4 +203,14 @@ class ComponentInterface extends React.Component {
   }
 }
 
-export default ComponentInterface;
+const mapStateToProps = state => {
+  const { screenConfiguration } = state;
+  const { preparedFinalObject } = screenConfiguration;
+  const applicationStatus = get(preparedFinalObject, "Licenses[0].status");
+  return { applicationStatus };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(ComponentInterface);

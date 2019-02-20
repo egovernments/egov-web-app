@@ -52,6 +52,16 @@ export const textToLocalMapping = {
     "message",
     "Pending for Approval"
   ),
+  PENDINGPAYMENT: get(
+    getLocalTextFromCode("TL_PENDINGPAYMENT"),
+    "message",
+    "Pending payment"
+  ),
+  FIELDINSPECTION: get(
+    getLocalTextFromCode("TL_FIELDINSPECTION"),
+    "message",
+    "Pending for Field Inspection"
+  ),
   "Search Results for Trade License Applications": get(
     getLocalTextFromCode("TL_HOME_SEARCH_RESULTS_TABLE_HEADING"),
     "message",
@@ -121,6 +131,7 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
+    case get(textToLocalMapping, "PENDINGPAYMENT"):
       return `/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
@@ -131,6 +142,7 @@ const onRowClick = rowData => {
 
     case get(textToLocalMapping, "PAID"):
     case get(textToLocalMapping, "PENDINGAPPROVAL"):
+    case get(textToLocalMapping, "FIELDINSPECTION"):
       return `/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;

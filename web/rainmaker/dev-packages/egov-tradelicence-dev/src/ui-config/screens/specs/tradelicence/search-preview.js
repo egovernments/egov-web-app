@@ -7,7 +7,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
-import { footer } from "./payResource/footer";
+//import { footer } from "./payResource/footer";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getQueryArg,
@@ -24,6 +24,8 @@ import {
   setValidToFromVisibilityForSV,
   getDialogButton
 } from "../utils";
+
+import { footerReview } from "./applyResource/footer";
 import {
   getFeesEstimateCard,
   getHeaderSideText,
@@ -173,12 +175,13 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
     let data = get(state, "screenConfiguration.preparedFinalObject");
 
     const obj = setStatusBasedValue(status);
-    let approvalDetails = getApprovalDetails(status);
-    set(
-      action,
-      "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails",
-      approvalDetails
-    ); // Get approval details based on status and set it in screenconfig
+    //let approvalDetails = getApprovalDetails(status);
+    // set(
+    //   action,
+    //   "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails",
+    //   approvalDetails
+    // );
+    // Get approval details based on status and set it in screenconfig
 
     if (
       status === "approved" ||
@@ -216,15 +219,17 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
     }
 
-    // const footer = footerReview(
-    //   action,
-    //   state,
-    //   dispatch,
-    //   status,
-    //   applicationNumber,
-    //   tenantId
-    // );
-    // set(action, "screenConfig.components.div.children.footer", footer);
+    const footer = footerReview(
+      action,
+      state,
+      dispatch,
+      status,
+      applicationNumber,
+      tenantId
+    );
+    process.env.REACT_APP_NAME === "Citizen"
+      ? set(action, "screenConfig.components.div.children.footer", footer)
+      : set(action, "screenConfig.components.div.children.footer", {});
 
     if (status === "cancelled")
       set(
@@ -352,8 +357,8 @@ export const tradeReviewDetails = getCommonCard({
   reviewDocumentDetails
 });
 
-export const getCitizenFooter =
-  process.env.REACT_APP_NAME === "Citizen" ? footer : {};
+// export const getCitizenFooter =
+//   process.env.REACT_APP_NAME === "Citizen" ? footer : {};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -415,35 +420,38 @@ const screenConfig = {
                 sm: 4,
                 align: "right"
               },
-              children: {
-                word1: {
-                  ...getCommonTitle(
-                    {
-                      jsonPath: "Licenses[0].headerSideText.word1"
-                    },
-                    {
-                      style: {
-                        marginRight: "10px",
-                        color: "rgba(0, 0, 0, 0.6000000238418579)"
+              children:
+                process.env.REACT_APP_NAME === "Employee"
+                  ? {}
+                  : {
+                      word1: {
+                        ...getCommonTitle(
+                          {
+                            jsonPath: "Licenses[0].headerSideText.word1"
+                          },
+                          {
+                            style: {
+                              marginRight: "10px",
+                              color: "rgba(0, 0, 0, 0.6000000238418579)"
+                            }
+                          }
+                        )
+                      },
+                      word2: {
+                        ...getCommonTitle({
+                          jsonPath: "Licenses[0].headerSideText.word2"
+                        })
+                      },
+                      cancelledLabel: {
+                        ...getCommonHeader(
+                          {
+                            labelName: "Cancelled"
+                          },
+                          { variant: "body1", style: { color: "#E54D42" } }
+                        ),
+                        visible: false
                       }
                     }
-                  )
-                },
-                word2: {
-                  ...getCommonTitle({
-                    jsonPath: "Licenses[0].headerSideText.word2"
-                  })
-                },
-                cancelledLabel: {
-                  ...getCommonHeader(
-                    {
-                      labelName: "Cancelled"
-                    },
-                    { variant: "body1", style: { color: "#E54D42" } }
-                  ),
-                  visible: false
-                }
-              }
             }
           }
         },
@@ -453,8 +461,10 @@ const screenConfig = {
           moduleName: "egov-workflow",
           visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
         },
-        tradeReviewDetails,
-        getCitizenFooter
+        tradeReviewDetails
+        //footer
+
+        //getCitizenFooter
       }
     },
     breakUpDialog: {

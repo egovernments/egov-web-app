@@ -623,6 +623,10 @@ export const getHeaderSideText = (status, licenseNo = null) => {
     case "PAID":
     case "PENDINGAPPROVAL":
       return { word1: "Status: ", word2: "PENDINGAPPROVAL" };
+    case "PENDINGPAYMENT":
+      return { word1: "Status: ", word2: "PENDINGPAYMENT" };
+    case "FIELDINSPECTION":
+      return { word1: "Status: ", word2: "FIELDINSPECTION" };
     case "APPLIED":
       return { word1: "Status: ", word2: "APPLIED" };
     case "REJECTED":

@@ -78,6 +78,7 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
+    case get(textToLocalMapping, "PENDINGPAYMENT"):
       return `/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
@@ -88,6 +89,7 @@ const onRowClick = rowData => {
 
     case get(textToLocalMapping, "PAID"):
     case get(textToLocalMapping, "PENDINGAPPROVAL"):
+    case get(textToLocalMapping, "FIELDINSPECTION"):
       return `/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;

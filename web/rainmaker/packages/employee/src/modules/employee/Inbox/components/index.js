@@ -17,10 +17,10 @@ import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 class InboxData extends React.Component {
-	state = {
-		dialogOpen: false,
-		workflowHistory: [],
-	};
+  state = {
+    dialogOpen: false,
+    workflowHistory: [],
+  };
 
   getProcessIntanceData = async (pid) => {
     const tenantId = getTenantId();
@@ -31,24 +31,24 @@ class InboxData extends React.Component {
     return processInstances;
   };
 
-	onHistoryClick = async (moduleNumber) => {
-		const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
-		const processInstances = await this.getProcessIntanceData(moduleNumber.text);
-		if (processInstances && processInstances.length > 0) {
-			await addWflowFileUrl(processInstances, prepareFinalObject);
-			this.setState({
-				dialogOpen: true,
-			});
-		} else {
-			toggleSnackbarAndSetText(true, "API error");
-		}
-	};
+  onHistoryClick = async (moduleNumber) => {
+    const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
+    const processInstances = await this.getProcessIntanceData(moduleNumber.text);
+    if (processInstances && processInstances.length > 0) {
+      await addWflowFileUrl(processInstances, prepareFinalObject);
+      this.setState({
+        dialogOpen: true,
+      });
+    } else {
+      toggleSnackbarAndSetText(true, "API error");
+    }
+  };
 
-	onDialogClose = () => {
-		this.setState({
-			dialogOpen: false,
-		});
-	};
+  onDialogClose = () => {
+    this.setState({
+      dialogOpen: false,
+    });
+  };
 
   getModuleLink = async (item, row, index) => {
     const { prepareFinalObject } = this.props;
@@ -57,24 +57,24 @@ class InboxData extends React.Component {
     const tenantId = getTenantId();
     const processInstances = await this.getProcessIntanceData(row[1].text);
 
-		if (processInstances && processInstances.length > 0) {
-			await addWflowFileUrl(processInstances, prepareFinalObject);
-		}
+    if (processInstances && processInstances.length > 0) {
+      await addWflowFileUrl(processInstances, prepareFinalObject);
+    }
 
-		let baseUrl = window.origin;
-		//let baseUrl = "http://localhost:3000/";
-		let contextPath =
-			status === "INITIATED"
-				? process.env.NODE_ENV === "production"
-					? "/employee/tradelicence/apply"
-					: "/tradelicence/apply"
-				: process.env.NODE_ENV === "production"
-				? "/employee/tradelicence/search-preview"
-				: "/tradelicence/search-preview";
-		//let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
-		let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
-		window.location.href = `${baseUrl}${contextPath}?${queryParams}`;
-	};
+    let baseUrl = window.origin;
+    //let baseUrl = "http://localhost:3000/";
+    let contextPath =
+      status === "INITIATED"
+        ? process.env.NODE_ENV === "production"
+          ? "/employee/tradelicence/apply"
+          : "/tradelicence/apply"
+        : process.env.NODE_ENV === "production"
+        ? "/employee/tradelicence/search-preview"
+        : "/tradelicence/search-preview";
+    //let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
+    let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
+    window.location.href = `${baseUrl}${contextPath}?${queryParams}`;
+  };
 
   render() {
     const { data, ProcessInstances } = this.props;
@@ -108,7 +108,11 @@ class InboxData extends React.Component {
                     } else if (item.badge) {
                       return (
                         <TableCell className="inbox-data-table-bodycell">
-                          <span class="inbox-cell-badge-primary ">{item.text}</span>
+                          <span
+                            class={item.text >= 1 ? "inbox-cell-badge-primary sla--positive-value" : "inbox-cell-badge-primary sla--negative-value"}
+                          >
+                            {item.text}
+                          </span>
                         </TableCell>
                       );
                     } else if (item.historyButton) {
@@ -123,7 +127,7 @@ class InboxData extends React.Component {
                       return (
                         <TableCell className="inbox-data-table-bodycell">
                           <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
-                            {index === 1 ? <a>{item.text} </a> : item.text}
+                            {index === 1 ? <a>{item.text} </a> : <Label label={item.text} />}
                           </div>
                         </TableCell>
                       );
@@ -141,74 +145,83 @@ class InboxData extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const { screenConfiguration } = state;
-	const { preparedFinalObject } = screenConfiguration;
-	const { workflow } = preparedFinalObject;
-	const { ProcessInstances } = workflow || [];
-	return { ProcessInstances };
+  const { screenConfiguration } = state;
+  const { preparedFinalObject } = screenConfiguration;
+  const { workflow } = preparedFinalObject;
+  const { ProcessInstances } = workflow || [];
+  return { ProcessInstances };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		toggleSnackbarAndSetText: (open, message) => dispatch(toggleSnackbarAndSetText(open, message)),
-		prepareFinalObject: (path, value) => dispatch(prepareFinalObject(path, value)),
-	};
+  return {
+    toggleSnackbarAndSetText: (open, message) => dispatch(toggleSnackbarAndSetText(open, message)),
+    prepareFinalObject: (path, value) => dispatch(prepareFinalObject(path, value)),
+  };
 };
 
 export default connect(
-	mapStateToProps,
-	mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(InboxData);
 
 export const Taskboard = ({ data }) => {
-	return (
-		<div>
-			{data.map((item, i) => (
-				<div className="col-sm-4">
-					<Card
-						className="inbox-card inbox-worklist-card"
-						key={i}
-						textChildren={
-							<div>
-								<div className="head">{item.head}</div>
-								<div className="body">{item.body}</div>
-							</div>
-						}
-					/>
-				</div>
-			))}
-		</div>
-	);
+  return (
+    <div>
+      {data.map((item, i) => (
+        <div className="col-sm-4">
+          <Card
+            className="inbox-card inbox-worklist-card"
+            key={i}
+            textChildren={
+              <div>
+                <div className="head">{item.head}</div>
+                <div className="body">{item.body}</div>
+              </div>
+            }
+          />
+        </div>
+      ))}
+    </div>
+  );
 };
 
- const onModuleCardClick = (route) => {
-	window.location.href = window.origin + route
-}
+const onModuleCardClick = (route) => {
+  window.location.href = window.origin + route;
+};
 
-export const Boxboard = ({data}) => {
-	return(
-		<div className = "inbox-module-container"> 
-			
-			{data.map((item, i) => {
-				return <div className = "inbox-module-card"
-					onClick={() => onModuleCardClick(item.route)}
-				 >
-				 
-					<Card
-						className="inbox-card inbox-card-top"
-						 key={i}
-						 textChildren={
-							<div>
-								<div className="head">{item.head}</div>
-								<div className="body">{item.body}</div>
-							</div>
-							}
-						/>
-				</div>
-				})
-			}
-		
-		</div>
-	)
-}
-
+export const Boxboard = ({ data }) => {
+  return (
+    <div className="inbox-module-container">
+      {data.map((item, i) => {
+        return (
+          <div className="inbox-module-card" onClick={() => onModuleCardClick(item.route)}>
+            <Card
+              className="inbox-card inbox-card-top"
+              key={i}
+              textChildren={
+                <div>
+                  <div
+                    style={{
+                      marginTop: 20,
+                    }}
+                    className="head"
+                  >
+                    {item.head}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 20,
+                    }}
+                    className="body"
+                  >
+                    {item.body}
+                  </div>
+                </div>
+              }
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};

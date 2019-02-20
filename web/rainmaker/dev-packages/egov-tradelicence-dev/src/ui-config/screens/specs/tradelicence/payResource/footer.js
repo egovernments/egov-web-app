@@ -332,8 +332,7 @@ export const footer = getCommonApplyFooter({
     roleDefination: {
       rolePath: "user-info.roles",
       roles: ["CITIZEN"]
-    },
-    visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
+    }
   },
   printConfirmationform: {
     componentPath: "Button",
@@ -359,8 +358,7 @@ export const footer = getCommonApplyFooter({
     roleDefination: {
       rolePath: "user-info.roles",
       roles: ["CITIZEN"]
-    },
-    visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
+    }
   },
   makePayment: {
     componentPath: "Button",
@@ -385,7 +383,8 @@ export const footer = getCommonApplyFooter({
     },
     roleDefination: {
       rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
+      // roles: ["CITIZEN"]
+      action: "PAY"
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? true : false
   }

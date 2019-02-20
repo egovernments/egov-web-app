@@ -48,6 +48,11 @@ const themeObject = {
         flexWrap: "inherit",
       },
     },
+    MuiTableCell: {
+      body: {
+        fontSize: "14px",
+      },
+    },
     MuiTypography: {
       title: {
         color: "rgba(0, 0, 0, 0.87)",
@@ -80,7 +85,7 @@ const themeObject = {
         letterSpacing: "0.75px",
         fontWeight: 400,
         lineHeight: "20px",
-      }
+      },
     },
   },
 };

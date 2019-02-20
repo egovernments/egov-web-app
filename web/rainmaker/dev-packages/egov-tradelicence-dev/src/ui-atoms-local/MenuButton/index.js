@@ -8,7 +8,8 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+//import Icon from "@material-ui/core/Icon";
+import Icon from "egov-ui-framework/ui-atoms/Icon";
 
 const styles = theme => ({
   root: {
@@ -63,9 +64,9 @@ class MenuListComposition extends React.Component {
             onClick={this.handleToggle}
             {...data.props}
           >
-            <Icon className={classes.leftIcon}>{data.leftIcon}</Icon>
+            <Icon className={classes.leftIcon} iconName={data.leftIcon} />
             {data.label}
-            <Icon className={classes.rightIcon}>{data.rightIcon}</Icon>
+            <Icon className={classes.rightIcon} iconName={data.rightIcon} />
           </Button>
           <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
             {({ TransitionProps, placement }) => (
@@ -83,13 +84,15 @@ class MenuListComposition extends React.Component {
                       {data.menu.map((item, key) => {
                         return (
                           <MenuItem key={key} onClick={item.link}>
-                            <Icon className={classes.leftIcon}>
-                              {item.leftIcon}
-                            </Icon>
+                            <Icon
+                              className={classes.leftIcon}
+                              iconName={item.leftIcon}
+                            />
                             {item.label}
-                            <Icon className={classes.leftIcon}>
-                              {item.rightIcon}
-                            </Icon>
+                            <Icon
+                              className={classes.leftIcon}
+                              iconName={item.rightIcon}
+                            />
                           </MenuItem>
                         );
                       })}

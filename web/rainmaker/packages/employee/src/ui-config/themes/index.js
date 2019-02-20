@@ -39,6 +39,11 @@ const themeObject = {
         width: "80% !important",
       },
     },
+    MuiTableCell: {
+      body: {
+        fontSize: "14px",
+      },
+    },
     MuiTypography: {
       title: {
         color: "rgba(0, 0, 0, 0.87)",

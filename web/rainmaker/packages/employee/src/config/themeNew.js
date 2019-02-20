@@ -29,10 +29,10 @@ const themeObject = {
         paddingBottom: "0px",
       },
     },
-    MuiStepIcon:{
-      text:{
-        fontSize: "12px"
-      }
+    MuiStepIcon: {
+      text: {
+        fontSize: "12px",
+      },
     },
     MuiCard: {
       root: {
@@ -46,6 +46,11 @@ const themeObject = {
       },
       fullWidth: {
         width: "80% !important",
+      },
+    },
+    MuiTableCell: {
+      body: {
+        fontSize: "14px",
       },
     },
     MuiTypography: {
@@ -109,7 +114,7 @@ const themeObject = {
         fontSize: "14px",
       },
     },
-  }
+  },
 };
 
 export default themeObject;

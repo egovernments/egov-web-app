@@ -8,12 +8,28 @@ import Tab from "@material-ui/core/Tab";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { getCurrentStatus } from "egov-workflow/ui-molecules-local/TaskStatusComponents";
 import _ from "lodash";
 import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 import Icon from "egov-ui-kit/components/Icon";
+
+const getWFstatus = (status) => {
+  switch (status) {
+    case "INITIATED":
+      return "Initiated";
+    case "APPLIED":
+      return "Pending for Document verification";
+    case "FIELDINSPECTION":
+      return "Pending for Field inspection";
+    case "PENDINGPAYMENT":
+      return "Pending payment";
+    case "PENDINGAPPROVAL":
+      return "Pending approval";
+    case "APPROVED":
+      return "Approved";
+  }
+};
 
 const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
@@ -22,7 +38,8 @@ const prepareInboxDataRows = (data) => {
     return [
       { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
-      { text: item.state && item.state.state },
+      //{ text: item.state ? `WF_${item.businessService}_${item.state.state}` : "NA" },
+      { text: item.state ? getWFstatus(item.state.state) : "NA" },
       { text: item.assigner ? item.assigner.name : "NA" },
       { text: item.assignee ? item.assignee.name : "NA" },
       { text: Math.round(sla), badge: true },
@@ -31,60 +48,37 @@ const prepareInboxDataRows = (data) => {
   });
 };
 
-const iconStyle={
+const iconStyle = {
   width: "48px",
   height: "46.02px",
-  //paddingtop: "10px"
-  //margintop: "10px"
-}
-const labelStyle = {
- fontSize: "16px",
-  // fontweight: 400,
-  // letterspacing: "0.67px",
-  // lineheight: "19px",
-//  paddingtop: "10px"
-}
-const boxes =  [
+};
+
+const boxes = [
   {
-    head: <Icon action = "action" name = "announcement" style ={iconStyle}/> ,
-    body: <Label label = "Complaints" containerStyle = {labelStyle}/>,
-   // route: `${window.basename}/all-complaints`
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/all-complaints"
-      : "/all-complaints"   
+    head: <Icon action="action" name="announcement" style={iconStyle} />,
+    body: <Label label="Complaints" fontSize="16px" color="rgba(0, 0, 0, 0.87)" />,
+    route: process.env.NODE_ENV === "production" ? "/employee/all-complaints" : "/all-complaints",
   },
   {
-    head: <Icon action="action" name="store" style={iconStyle}/>,
-    body: <Label label="Property tax" containerStyle={labelStyle}/>,
-    //route: `${window.basename}/property-tax`
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/property-tax"
-      : "/property-tax"   
+    head: <Icon action="action" name="store" style={iconStyle} />,
+    body: <Label label="Property tax" fontSize="16px" color="rgba(0, 0, 0, 0.87)" />,
+    route: process.env.NODE_ENV === "production" ? "/employee/property-tax" : "/property-tax",
   },
   {
-    head: <Icon action="places" name="business-center" style={iconStyle}/>,
-    body: <Label label="Trade license" containerStyle={labelStyle}/>,
-    //route: `${window.basename}/tradelicence/search`
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/tradelicence/search"
-      : "/tradelicence/search"   
+    head: <Icon action="places" name="business-center" style={iconStyle} />,
+    body: <Label label="Trade license" fontSize="16px" color="rgba(0, 0, 0, 0.87)" />,
+    route: process.env.NODE_ENV === "production" ? "/employee/tradelicence/search" : "/tradelicence/search",
   },
   {
-    head: <Icon action="action" name="announcement" style={iconStyle}/>,
-    body: <Label label="Water and sewerage" containerStyle={labelStyle} />,
-    //route: `${window.basename}/dashboard/ws-financialindicators`
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/dashboard/ws-financialindicators"
-      : "/dashboard/ws-financialindicators"   
+    head: <Icon action="action" name="announcement" style={iconStyle} />,
+    body: <Label label="Water and sewerage" fontSize="16px" color="rgba(0, 0, 0, 0.87)" />,
+    route: process.env.NODE_ENV === "production" ? "/employee/dashboard/ws-financialindicators" : "/dashboard/ws-financialindicators",
   },
   {
     head: <Icon action="action" name="description" style={iconStyle} />,
-    body: <Label label="Fire NOC" containerStyle ={labelStyle}/>,
-    //route: `${window.basename}/dashboard/ws-financialindicators` 
-    route: process.env.NODE_ENV === "production"
-      ? "/employee/dashboard/ws-financialindicators"
-      : "dashboard/ws-financialindicators"   
-  }
+    body: <Label label="Fire NOC" fontSize="16px" color="rgba(0, 0, 0, 0.87)" />,
+    route: process.env.NODE_ENV === "production" ? "/employee/dashboard/ws-financialindicators" : "dashboard/ws-financialindicators",
+  },
 ];
 
 class Inbox extends Component {
@@ -171,13 +165,12 @@ class Inbox extends Component {
     return (
       <div>
         <div>
-          <Label className="landingPageUser" label={` Welcome ${name}, `} containerStyle={{paddingLeft:"15px"}} />
+          <Label className="landingPageUser" label={` Welcome ${name}, `} containerStyle={{ paddingLeft: "15px" }} />
         </div>
-          
-          <Boxboard data={boxes} />
-        
+
+        <Boxboard data={boxes} />
+
         <div className="col-sm-12">
-         
           <Label className="landingPageUser" label={"My worklist"} />
           <Taskboard data={taskboardData} />
           <div className="col-sm-12">
@@ -197,7 +190,7 @@ class Inbox extends Component {
                 <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
                   <MenuItem value="" disabled>
                     Module-All
-                </MenuItem>
+                  </MenuItem>
                   <MenuItem value={"NewTL"}>NewTL</MenuItem>
                   <MenuItem value={"PGR"}>PGR</MenuItem>
                   <MenuItem value={"PT"}>PT</MenuItem>
@@ -208,7 +201,6 @@ class Inbox extends Component {
           </div>
         </div>
       </div>
-      
     );
   }
 }

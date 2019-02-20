@@ -755,10 +755,11 @@ export const footerReview = (
                 action: "page_change",
                 path: `${redirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenantId}&businessService=TL`
               },
-              visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
+              //visible: getButtonVisibility(status, "PROCEED TO PAYMENT"),
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["TL_CEMP", "CITIZEN"]
+                //roles: ["TL_CEMP", "CITIZEN"]
+                action: "PAY"
               }
             },
             cancelButton: {
