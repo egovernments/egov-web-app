@@ -182,10 +182,7 @@ export const Taskboard = ({ data }) => {
 };
 
  const onModuleCardClick = (route) => {
-	console.log(window.basename)
-	console.log(window.origin + route)
 	window.location.href = window.origin + route
-	
 }
 
 export const Boxboard = ({data}) => {
@@ -193,14 +190,12 @@ export const Boxboard = ({data}) => {
 		<div className = "inbox-module-container"> 
 			
 			{data.map((item, i) => {
-				console.log(item)
 				return <div className = "inbox-module-card"
 					onClick={() => onModuleCardClick(item.route)}
 				 >
 				 
 					<Card
 						className="inbox-card inbox-card-top"
-					   	//sytle={{ padding-top: 10px}} 
 						 key={i}
 						 textChildren={
 							<div>
