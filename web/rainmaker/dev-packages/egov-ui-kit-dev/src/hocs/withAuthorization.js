@@ -245,7 +245,7 @@ const withAuthorization = (options = {}) => (Component) => {
 
   const mapStateToProps = (state) => {
     let { authenticated, userInfo } = state.auth;
-    userInfo = typeof userInfo === "string" ? JSON.parse(userInfo) : userInfo;
+    // userInfo = typeof userInfo === "string" ? JSON.parse(userInfo) : userInfo;
     const { complaints } = state || {};
     return { authenticated, userInfo };
   };
