@@ -182,8 +182,10 @@ export const Taskboard = ({ data }) => {
 };
 
  const onModuleCardClick = (route) => {
-	 console.log(window.origin + route)
+	console.log(window.basename)
+	console.log(window.origin + route)
 	window.location.href = window.origin + route
+	
 }
 
 export const Boxboard = ({data}) => {
