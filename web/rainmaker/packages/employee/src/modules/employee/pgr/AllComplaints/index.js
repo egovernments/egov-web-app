@@ -11,12 +11,8 @@ import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 import "./index.css";
-
-const iconButtonStyle = {
-  padding: 0,
-  width: 50,
-};
 
 class AllComplaints extends Component {
   state = {
@@ -62,13 +58,13 @@ class AllComplaints extends Component {
     }
   };
 
-  // componentWillReceiveProps = (nextProps) => {
-  //   const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
-  //   if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
-  //     const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
-  //     renderCustomTitle(numberOfComplaints);
-  //   }
-  // };
+  componentWillReceiveProps = (nextProps) => {
+    const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
+    if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
+      const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
+      renderCustomTitle(numberOfComplaints);
+    }
+  };
 
   closeSortDialog = () => {
     this.setState({
