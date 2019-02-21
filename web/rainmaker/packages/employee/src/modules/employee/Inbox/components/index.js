@@ -52,7 +52,7 @@ class InboxData extends React.Component {
 
   getModuleLink = async (item, row, index) => {
     const { prepareFinalObject } = this.props;
-    const status = row[2].text;
+    const status = row[2].text && row[2].text.props.defaultLabel;
     const taskId = index === 1 && item.text;
     const tenantId = getTenantId();
     const processInstances = await this.getProcessIntanceData(row[1].text);
@@ -62,16 +62,15 @@ class InboxData extends React.Component {
     }
 
     let baseUrl = window.origin;
-    //let baseUrl = "http://localhost:3000/";
     let contextPath =
-      status === "INITIATED"
+      status === "Initiated"
         ? process.env.NODE_ENV === "production"
           ? "/employee/tradelicence/apply"
           : "/tradelicence/apply"
         : process.env.NODE_ENV === "production"
         ? "/employee/tradelicence/search-preview"
         : "/tradelicence/search-preview";
-    //let contextPath = status === "INITIATED" ? "egov-ui-framework/tradelicence/apply" : "egov-ui-framework/tradelicence/search-preview";
+
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     window.location.href = `${baseUrl}${contextPath}?${queryParams}`;
   };
@@ -127,7 +126,7 @@ class InboxData extends React.Component {
                       return (
                         <TableCell className="inbox-data-table-bodycell">
                           <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
-                            {index === 1 ? <a>{item.text} </a> : <Label label={item.text} />}
+                            {index === 1 ? <a>{item.text} </a> : item.text}
                           </div>
                         </TableCell>
                       );

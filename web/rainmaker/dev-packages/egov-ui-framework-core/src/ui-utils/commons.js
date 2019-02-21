@@ -256,7 +256,11 @@ export const setBusinessServiceDataToLocalStorage = async (
     );
   } catch (e) {
     dispatch(
-      toggleSnackbar(true, "Not authorized to access Business Service!")
+      toggleSnackbar(
+        true,
+        "Not authorized to access Business Service!",
+        "error"
+      )
     );
   }
 };

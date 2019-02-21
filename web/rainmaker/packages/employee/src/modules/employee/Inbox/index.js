@@ -9,7 +9,8 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
-import { toggleSnackbar, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 import Icon from "egov-ui-kit/components/Icon";
@@ -19,13 +20,13 @@ const getWFstatus = (status) => {
     case "INITIATED":
       return "Initiated";
     case "APPLIED":
-      return "Pending for Document verification";
+      return "Pending for Document Verification";
     case "FIELDINSPECTION":
-      return "Pending for Field inspection";
+      return "Pending for Field Inspection";
     case "PENDINGPAYMENT":
-      return "Pending payment";
+      return "Pending for Payment";
     case "PENDINGAPPROVAL":
-      return "Pending approval";
+      return "Pending for Approval";
     case "APPROVED":
       return "Approved";
   }
@@ -38,8 +39,13 @@ const prepareInboxDataRows = (data) => {
     return [
       { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
-      //{ text: item.state ? `WF_${item.businessService}_${item.state.state}` : "NA" },
-      { text: item.state ? getWFstatus(item.state.state) : "NA" },
+      {
+        text: item.state ? (
+          <Label label={`WF_${item.businessService.toUpperCase()}_${item.state.state}`} defaultLabel={getWFstatus(item.state.state)} />
+        ) : (
+          "NA"
+        ),
+      },
       { text: item.assigner ? item.assigner.name : "NA" },
       { text: item.assignee ? item.assignee.name : "NA" },
       { text: Math.round(sla), badge: true },
@@ -95,12 +101,17 @@ class Inbox extends Component {
   };
 
   setBusinessServiceDataToLocalStorage = async (queryObject) => {
-    const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
-    localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
+    const { toggleSnackbarAndSetText } = this.props;
+    try {
+      const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
+      localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
+    } catch (e) {
+      toggleSnackbarAndSetText(true, "Not authorized to access Business Service!", true);
+    }
   };
 
   componentDidMount = async () => {
-    const { toggleSnackbar, prepareFinalObject } = this.props;
+    const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
     const tenantId = getTenantId();
 
@@ -132,9 +143,11 @@ class Inbox extends Component {
       inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
       this.setState({ inboxData, taskboardData, tabData });
     } catch (e) {
-      toggleSnackbar(true, "Workflow search error !", "error");
+      //toggleSnackbarA(true, "Workflow search error !", "error");
+      toggleSnackbarAndSetText(true, "Workflow search error !", true);
     }
     prepareFinalObject("InboxData", inboxData);
+
     this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: getTenantId() }, { key: "businessService", value: "newTL" }]);
   };
 
@@ -217,8 +230,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleSnackbar: (open, message, variant) => dispatch(toggleSnackbar(open, message, variant)),
     prepareFinalObject: (jsonPath, value) => dispatch(prepareFinalObject(jsonPath, value)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 

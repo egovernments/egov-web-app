@@ -12,7 +12,8 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers, tenantId) => {
     let employeeIds = [],
       userIds = [];
     actionHistory.forEach((actions) => {
-      actions.actions &&
+      actions &&
+        actions.actions &&
         actions.actions.forEach((action) => {
           if (action.by) {
             let { userId, employeeId } = getUserEmployeeId(action.by);
