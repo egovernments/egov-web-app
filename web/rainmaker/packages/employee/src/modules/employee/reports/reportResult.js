@@ -163,7 +163,9 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
-    let { reportResult, tabLabel } = this.props;
+    let { reportResult, tabLabel,metaData } = this.props;
+    let {reportDetails={}} = metaData;
+    let {additionalConfig={}}=reportDetails;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -174,9 +176,10 @@ class ShowField extends Component {
     };
     rTable = $("#reportTable").DataTable({
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      dom:"<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
       order: [],
-      responsive: true,
+      // responsive: true,
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
@@ -193,53 +196,77 @@ class ShowField extends Component {
         }
       ],
       fixedColumns: true,
-      fnDrawCallback: function() {
-        let tableId = "reportTable";
-        let tableRows = document.getElementById(tableId).rows;
-        let rowCount = tableRows.length;
-        let cellCount = tableRows[0].cells.length;
-        let totalsRowIndex = -1;
-        let totalValues = [];
-        let i;
-        let j;
-
-        for (i = 0; i < rowCount; i++) {
-          if (tableRows[i].className.indexOf("total") !== -1) {
-            totalsRowIndex = i;
-            for (j = 0; j < cellCount; j++) {
-              totalValues[j] = tableRows[i].cells[j].innerText;
-            }
-            tableRows[i].classList.remove("total");
-            break;
-          }
-        }
-
-        if (totalsRowIndex === -1) {
-          return;
-        }
-
-        for (i = totalsRowIndex; i < rowCount - 1; i++) {
-          for (j = 0; j < cellCount; j++) {
-            tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
-          }
-        }
-
-        for (i = 0; i < cellCount; i++) {
-          tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
-        }
-        tableRows[rowCount - 1].classList.add("total");
-
-        for (i = 0; i < rowCount; i++) {
-          $("#" + tableId)
-            .DataTable()
-            .row(tableRows[i])
-            .invalidate();
-        }
-      },
       // scrollResize: true,
-      // scrollY: 100,
+      scrollY: 400,
       // scrollCollapse: true,
-      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+      // fnDrawCallback: function() {
+      //   let tableId = "reportTable";
+      //   let tableRows = document.getElementById(tableId).rows;
+      //   let rowCount = tableRows.length;
+      //   let cellCount = tableRows[0].cells.length;
+      //   let totalsRowIndex = -1;
+      //   let totalValues = [];
+      //   let i;
+      //   let j;
+      //
+      //   for (i = 0; i < rowCount; i++) {
+      //     if (tableRows[i].className.indexOf("total") !== -1) {
+      //       totalsRowIndex = i;
+      //       for (j = 0; j < cellCount; j++) {
+      //         totalValues[j] = tableRows[i].cells[j].innerText;
+      //       }
+      //       tableRows[i].classList.remove("total");
+      //       break;
+      //     }
+      //   }
+      //
+      //   if (totalsRowIndex === -1) {
+      //     return;
+      //   }
+      //
+      //   for (i = totalsRowIndex; i < rowCount - 1; i++) {
+      //     for (j = 0; j < cellCount; j++) {
+      //       tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
+      //     }
+      //   }
+      //
+      //   for (i = 0; i < cellCount; i++) {
+      //     tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
+      //   }
+      //   tableRows[rowCount - 1].classList.add("total");
+      //
+      //   for (i = 0; i < rowCount; i++) {
+      //     $("#" + tableId)
+      //       .DataTable()
+      //       .row(tableRows[i])
+      //       .invalidate();
+      //   }
+      // },
+      // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      // "iDisplayLength": -1,
+        "bPaginate": true,
+        "iCookieDuration": 60,
+        // "bStateSave": false,
+        "bAutoWidth": true,
+        //true
+        "bScrollAutoCss": true,
+        // "bProcessing": true,
+        "bRetrieve": true,
+        "bJQueryUI": true,
+        // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
+        "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "All"]],
+        "sScrollX": "100%",
+        // "sScrollXInner": "110%",
+        "bScrollCollapse": true,
+        "fnInitComplete": function() {
+            this.css("visibility", "visible");
+            $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+        },
+        renderer: "bootstrap",
+        "drawCallback": function( settings ) {
+          $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+        },
+        ...additionalConfig
     });
     showTabLabel();
   }
