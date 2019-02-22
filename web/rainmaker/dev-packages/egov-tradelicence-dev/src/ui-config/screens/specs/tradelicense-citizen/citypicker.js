@@ -43,11 +43,6 @@ export const cityPicker = getCommonContainer({
     div: {
       uiFramework: "custom-atoms",
       componentPath: "Div",
-      props: {
-        style: {
-          marginTop: "16px"
-        }
-      },
       children: {
         selectButton: {
           componentPath: "Button",
@@ -57,7 +52,8 @@ export const cityPicker = getCommonContainer({
             style: {
               width: "40px",
               height: "20px",
-              marginRight: "4px"
+              marginRight: "4px",
+              marginTop: "16px"
             }
           },
           children: {
@@ -79,7 +75,8 @@ export const cityPicker = getCommonContainer({
             style: {
               width: "40px",
               height: "20px",
-              marginRight: "4px"
+              marginRight: "4px",
+              marginTop: "16px"
             }
           },
           children: {
