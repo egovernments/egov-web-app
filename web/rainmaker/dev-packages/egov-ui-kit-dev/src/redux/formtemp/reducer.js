@@ -507,7 +507,7 @@ export default (state = defaultState, action) => {
     case "SET_FORM":
       return {
         ...state,
-        form: action.data,
+        form: { ...state.form, ...action.data },
         files: action.files || [],
         fieldErrors: action.fieldErrors,
         validationData: action.validationData,

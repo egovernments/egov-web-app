@@ -255,13 +255,6 @@ class UiBoundary extends Component {
     this.props.handleFieldChange({ target: { value: newDropDownDataVal.dropDownDataVal } }, "ZonalSelection", true, "");
     /** END Add local... */
 
-    // this.setState({
-    //   levelSearchString:{
-    //     ...this.state.levelSearchString,
-    //     [property]:key
-    //   }
-    // })
-    console.log(key, property);
   };
 
   setFirstDropDownData = (cityBdry) => {
@@ -396,7 +389,6 @@ class UiBoundary extends Component {
   };
 
   render() {
-    console.log(this.state);
     return this.renderBoundary(this.props.item);
     // (
     //   {/*<div style={this.props.item.style && this.props.item.style}>*/}
@@ -412,7 +404,7 @@ class UiBoundary extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formData: state.frameworkForm.form,
+  formData: state.formtemp.form,
 });
 
 const mapDispatchToProps = (dispatch) => ({
