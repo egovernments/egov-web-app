@@ -141,6 +141,7 @@ var SearchProperty = function (_Component) {
 
         var latestAssessment = (0, _PTCommon.getLatestPropertyDetails)(propertyDetails);
         var name = latestAssessment.owners[0].name;
+        var fatherOrHusbandName = latestAssessment.owners[0].fatherOrHusbandName || "";
         var assessmentNo = latestAssessment.assessmentNumber;
         var uuid = (0, _get2.default)(latestAssessment, "citizenInfo.uuid");
         var button = _react2.default.createElement(_components.Button, {
@@ -159,7 +160,7 @@ var SearchProperty = function (_Component) {
           primary: true,
           style: { height: 20, lineHeight: "auto", minWidth: "inherit" }
         });
-        var item = { index: index + 1, name: name, propertyId: propertyId, oldPropertyId: oldPropertyId, address: displayAddress, action: button };
+        var item = { index: index + 1, name: name, fatherOrHusbandName: fatherOrHusbandName, propertyId: propertyId, oldPropertyId: oldPropertyId, address: displayAddress, action: button };
         tableData.push(item);
         return tableData;
       }, []);
