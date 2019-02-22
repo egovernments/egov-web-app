@@ -111,7 +111,7 @@ export default class ShowField extends Component {
               required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
+                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }}/>
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
@@ -168,10 +168,10 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
               // className="custom-form-control-for-textfield"
-              floatingLabelStyle={{ fontSize: "20px"}}
+              // floatingLabelStyle={{ fontSize: "20px"}}
               floatingLabelText={
                         <div className="rainmaker-displayInline">
-                          <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
+                          <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }}  style={{fontSize:"16px !important"}}/>
                           <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                         </div>
               }

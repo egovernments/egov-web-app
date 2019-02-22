@@ -22,6 +22,9 @@ class UiBoundary extends Component {
       labelArr: [],
       viewLabels: [],
       localityArray: [],
+      levelSearchString:{
+
+      }
     };
   }
 
@@ -198,7 +201,7 @@ class UiBoundary extends Component {
     return labelArr;
   };
   handler = (key, property) => {
-    let { dropDownDataVal, dropDownData } = this.state;
+    let { dropDownDataVal, dropDownData,labelArr } = this.state;
 
     let newDropDownDataVal = { dropDownDataVal: {} };
     for (let i = 0; i < this.state.labelArr.length; i++) {
@@ -213,6 +216,18 @@ class UiBoundary extends Component {
 
     //below runs for create & update only
     this.populateNextDropDown(key, property);
+
+    // if (labelArr.length>0) {
+    //   var arrayToDotTransformation=labelArr.join('.');
+    //   var splittedArray=arrayToDotTransformation.split(`${property}.`);
+    //   if (splittedArray[1]) {
+    //     var restDropDowns=splittedArray[1].split(".");
+    //     for (var i = 0; i < restDropDowns.length; i++) {
+    //       var documentObject=document.getElementById(`boundary-${property}`);
+    //       documentObject.value=null;
+    //     }
+    //   }
+    // }
 
     // if (property == this.state.labelArr[this.state.labelArr.length - 1]) {
     //   this.props.handler(
@@ -240,6 +255,12 @@ class UiBoundary extends Component {
     this.props.handleFieldChange({ target: { value: newDropDownDataVal.dropDownDataVal } }, "ZonalSelection", true, "");
     /** END Add local... */
 
+    // this.setState({
+    //   levelSearchString:{
+    //     ...this.state.levelSearchString,
+    //     [property]:key
+    //   }
+    // })
     console.log(key, property);
   };
 
@@ -306,7 +327,7 @@ class UiBoundary extends Component {
 
   renderFields = (level) => {
     // const dataSourceConfig = { text: "label", value: "value" };
-    let { dropDownData, dropDownDataVal, searchText } = this.state;
+    let { dropDownData, dropDownDataVal, levelSearchString={} } = this.state;
     let data = dropDownData[level]
       ? dropDownData[level].map((dd, index) => {
           return { value: dd.key, text: dd.value };
@@ -316,10 +337,10 @@ class UiBoundary extends Component {
     return (
       <div>
         <AutoComplete
-          floatingLabelStyle={{ fontSize: "20px" }}
+          id={`boundary-${level}`}
           floatingLabelText={
             <div className="rainmaker-displayInline">
-              <Label className="show-field-label" label={level} containerStyle={{ marginRight: "5px" }} />
+              <Label className="show-field-label" label={level} containerStyle={{ marginRight: "5px"}}  style={{fontSize:"16px !important"}}/>
             </div>
           }
           floatingLabelFixed={true}
@@ -328,9 +349,12 @@ class UiBoundary extends Component {
           filter={(searchText, key) => {
             return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
           }}
+          // searchText={levelSearchString[level]}
           onNewRequest={(data, index) => {
-            const e = { target: { value: data.value } };
             this.handler(data.value, level);
+          }}
+          onUpdateInput={(searchText,dataSource,params)=>{
+            this.handler(searchText, level);
           }}
           dataSource={data}
           dataSourceConfig={dataSourceConfig}
