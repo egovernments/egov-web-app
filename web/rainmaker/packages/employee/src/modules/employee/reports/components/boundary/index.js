@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import Label from "egov-ui-kit/utils/translationNode";
+import jp from "jsonpath";
 // import UiSelectField from './UiSelectField';
 // import { translate, validate_fileupload } from '../../common/common';
 // import RaisedButton from 'material-ui/RaisedButton';
 // import { DropDown} from "components";
-import { SelectField, MenuItem } from "material-ui";
-import { Row, Col } from "react-bootstrap";
-import _ from "lodash";
-import { httpRequest } from "egov-ui-kit/utils/api";
-import jp from "jsonpath";
+import { AutoComplete } from "material-ui";
+import React, { Component } from "react";
+import { Col } from "react-bootstrap";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import Label from "egov-ui-kit/utils/translationNode";
+// import AutoComplete from "material-ui/AutoComplete";
 
 class UiBoundary extends Component {
   constructor(props) {
@@ -305,39 +305,39 @@ class UiBoundary extends Component {
   };
 
   renderFields = (level) => {
-    let { dropDownDataVal, dropDownData } = this.state;
-    let labelProperty = {
-      floatingLabelFixed: true,
-      floatingLabelText: (
-        <div className="rainmaker-displayInline">
-          <Label className="show-field-label" label={level} fontSize="18px" containerStyle={{ marginRight: "5px" }} />
-          <span style={{ color: "#FF0000" }}>{this.props.item.isRequired ? " *" : ""}</span>
-        </div>
-      ),
-      hintText: "PT_COMMON_PLEASE_SELECT",
-    };
+    // const dataSourceConfig = { text: "label", value: "value" };
+    let { dropDownData, dropDownDataVal, searchText } = this.state;
+    let data = dropDownData[level]
+      ? dropDownData[level].map((dd, index) => {
+          return { value: dd.key, text: dd.value };
+        })
+      : [];
+    const dataSourceConfig = { text: "text", value: "value" };
     return (
-      <SelectField
-        // className="custom-form-control-for-select"
-        id={this.props.item.jsonPath.split(".").join("-") + "-" + level}
-        dropDownMenuProps={{
-          targetOrigin: { horizontal: "left", vertical: "bottom" },
-        }}
-        style={{ display: "inline-block" }}
-        errorStyle={{ float: "left" }}
-        fullWidth={true}
-        // underlineDisabledStyle={{ backgroundColor: "#eee!important" }}
-        // {...labelProperty}
-        maxHeight={200}
-        {...labelProperty}
-        disabled={this.props.item.isDisabled}
-        value={!_.isEmpty(dropDownDataVal) && dropDownDataVal.hasOwnProperty(level) && dropDownDataVal[level]}
-        onChange={(event, key, value) => {
-          this.handler(value, level);
-        }}
-      >
-        {dropDownData[level] && dropDownData[level].map((dd, index) => <MenuItem value={dd.key} key={index} primaryText={dd.value} />)}
-      </SelectField>
+      <div>
+        <AutoComplete
+          floatingLabelStyle={{ fontSize: "20px" }}
+          floatingLabelText={
+            <div className="rainmaker-displayInline">
+              <Label className="show-field-label" label={level} containerStyle={{ marginRight: "5px" }} />
+            </div>
+          }
+          floatingLabelFixed={true}
+          fullWidth={true}
+          style={{ display: "inline-block" }}
+          filter={(searchText, key) => {
+            return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+          }}
+          onNewRequest={(data, index) => {
+            const e = { target: { value: data.value } };
+            this.handler(data.value, level);
+          }}
+          dataSource={data}
+          dataSourceConfig={dataSourceConfig}
+          openOnFocus={true}
+          maxSearchResults={5}
+        />
+      </div>
     );
   };
 
@@ -415,3 +415,32 @@ export default withRouter(
     null
   )(UiBoundary)
 );
+
+// <AutoComplete
+//   // className="custom-form-control-for-textfield"
+//   // floatingLabelStyle={{ fontSize: "20px"}}
+//   fullWidth={true}
+//   // style={{ display: "inline-block" }}
+//   filter={(searchText, key) => {
+//     return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+//   }}
+//   // listStyle={{ maxHeight: 100, overflow: "auto" }}
+//   onNewRequest={(value) => {
+//     this.props.handler(value,level);
+//   }}
+//   onUpdateInput={(searchText,dataSource,params)=>{
+//      this.handler(searchText, level);
+//   }}
+//   dataSource={dropDownData[level]}
+//   dataSourceConfig={dataSourceConfig}
+//   openOnFocus={true}
+//   {...labelProperty}
+//   disabled={this.props.item.isDisabled}
+//     maxHeight={200}
+//     style={{ display: "inline-block" }}
+//     errorStyle={{ float: "left" }}
+//     id={this.props.item.jsonPath.split(".").join("-") + "-" + level}
+//     dropDownMenuProps={{
+//       targetOrigin: { horizontal: "left", vertical: "bottom" },
+//     }}
+// />

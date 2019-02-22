@@ -63,6 +63,16 @@
   margin-right: 10px;
 }
 
+// table.dataTable td {
+//   word-break: break-word;
+// }
+
+.dataTable th, td {
+  word-break: break-all; /* IE supports this */
+  word-break: break-word; /* IE doesn't support, and will ignore */
+  /* http://caniuse.com/#feat=word-break */
+}
+
 @media only screen and (max-width: 704px) {
   #reportTable_wrapper {
     overflow: scroll;

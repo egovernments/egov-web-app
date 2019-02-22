@@ -163,7 +163,9 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
-    let { reportResult, tabLabel } = this.props;
+    let { reportResult, tabLabel,metaData } = this.props;
+    let {reportDetails={}} = metaData;
+    let {additionalConfig={}}=reportDetails;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -174,69 +176,97 @@ class ShowField extends Component {
     };
     rTable = $("#reportTable").DataTable({
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
+      dom:"<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
       order: [],
+      // responsive: true,
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
-      paging: false,
+      paging: true,
       // bInfo: false,
       // order: [[3, "desc"]],
       ordering: true,
       // bDestroy: true,
       columnDefs: [
         {
-          targets: 0,
-          orderable: false,
-        },
+          ordering: false,
+          targets:0
+        }
       ],
-      fnDrawCallback: function() {
-        let tableId = "reportTable";
-        let tableRows = document.getElementById(tableId).rows;
-        let rowCount = tableRows.length;
-        let cellCount = tableRows[0].cells.length;
-        let totalsRowIndex = -1;
-        let totalValues = [];
-        let i;
-        let j;
-
-        for (i = 0; i < rowCount; i++) {
-          if (tableRows[i].className.indexOf("total") !== -1) {
-            totalsRowIndex = i;
-            for (j = 0; j < cellCount; j++) {
-              totalValues[j] = tableRows[i].cells[j].innerText;
-            }
-            tableRows[i].classList.remove("total");
-            break;
-          }
-        }
-
-        if (totalsRowIndex === -1) {
-          return;
-        }
-
-        for (i = totalsRowIndex; i < rowCount - 1; i++) {
-          for (j = 0; j < cellCount; j++) {
-            tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
-          }
-        }
-
-        for (i = 0; i < cellCount; i++) {
-          tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
-        }
-        tableRows[rowCount - 1].classList.add("total");
-
-        for (i = 0; i < rowCount; i++) {
-          $("#" + tableId)
-            .DataTable()
-            .row(tableRows[i])
-            .invalidate();
-        }
-      },
+      fixedColumns: true,
       // scrollResize: true,
-      // scrollY: 100,
+      scrollY: 400,
       // scrollCollapse: true,
+      // fnDrawCallback: function() {
+      //   let tableId = "reportTable";
+      //   let tableRows = document.getElementById(tableId).rows;
+      //   let rowCount = tableRows.length;
+      //   let cellCount = tableRows[0].cells.length;
+      //   let totalsRowIndex = -1;
+      //   let totalValues = [];
+      //   let i;
+      //   let j;
+      //
+      //   for (i = 0; i < rowCount; i++) {
+      //     if (tableRows[i].className.indexOf("total") !== -1) {
+      //       totalsRowIndex = i;
+      //       for (j = 0; j < cellCount; j++) {
+      //         totalValues[j] = tableRows[i].cells[j].innerText;
+      //       }
+      //       tableRows[i].classList.remove("total");
+      //       break;
+      //     }
+      //   }
+      //
+      //   if (totalsRowIndex === -1) {
+      //     return;
+      //   }
+      //
+      //   for (i = totalsRowIndex; i < rowCount - 1; i++) {
+      //     for (j = 0; j < cellCount; j++) {
+      //       tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
+      //     }
+      //   }
+      //
+      //   for (i = 0; i < cellCount; i++) {
+      //     tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
+      //   }
+      //   tableRows[rowCount - 1].classList.add("total");
+      //
+      //   for (i = 0; i < rowCount; i++) {
+      //     $("#" + tableId)
+      //       .DataTable()
+      //       .row(tableRows[i])
+      //       .invalidate();
+      //   }
+      // },
+      // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      // "iDisplayLength": -1,
+        "bPaginate": true,
+        "iCookieDuration": 60,
+        // "bStateSave": false,
+        "bAutoWidth": true,
+        //true
+        "bScrollAutoCss": true,
+        // "bProcessing": true,
+        "bRetrieve": true,
+        "bJQueryUI": true,
+        // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
+        "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "All"]],
+        "sScrollX": "100%",
+        // "sScrollXInner": "110%",
+        "bScrollCollapse": true,
+        "fnInitComplete": function() {
+            this.css("visibility", "visible");
+            $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+        },
+        renderer: "bootstrap",
+        "drawCallback": function( settings ) {
+          $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+        },
+        ...additionalConfig
     });
     showTabLabel();
   }
@@ -333,6 +363,27 @@ class ShowField extends Component {
     }
   };
 
+  addCommas = (num) => {
+    if (isNaN(num)) {
+      return num;
+    }
+    let value = num.toString().trim();
+    const decLoc = value.indexOf(".") > -1 ? value.indexOf(".") : value.length;
+    let i = decLoc - 3;
+    if (i >= 1 && value.charAt(i - 1) !== "-") {
+      value = value.substr(0, i) + "," + value.substr(i, value.length);
+      i -= 2;
+      while (i >= 1) {
+        if (value.charAt(i - 1) == "-")
+          // Handle for negatives
+          break;
+        value = value.substr(0, i) + "," + value.substr(i, value.length);
+        i -= 2;
+      }
+    }
+    return value;
+  };
+
   checkIfDate = (val, i) => {
     let { reportResult } = this.props;
     if (
@@ -345,7 +396,17 @@ class ShowField extends Component {
       var _date = new Date(Number(val));
       return ("0" + _date.getDate()).slice(-2) + "/" + ("0" + (_date.getMonth() + 1)).slice(-2) + "/" + _date.getFullYear();
     } else {
-      return val;
+      if (
+        reportResult &&
+        reportResult.reportHeader &&
+        reportResult.reportHeader.length &&
+        reportResult.reportHeader[i] &&
+        reportResult.reportHeader[i].type == "currency"
+      ) {
+        return this.addCommas(val);
+      } else {
+        return val;
+      }
     }
   };
 
@@ -486,6 +547,20 @@ class ShowField extends Component {
     }
   }
 
+  getStyleForCell = (i) => {
+    let { reportResult } = this.props;
+    if (
+      reportResult &&
+      reportResult.reportHeader &&
+      reportResult.reportHeader.length &&
+      reportResult.reportHeader[i] &&
+      reportResult.reportHeader[i].type == "currency"
+    ) {
+      return { textAlign: "right" };
+    } else {
+      return { textAlign: "left" };
+    }
+  };
   renderBody = () => {
     sumColumn = [];
     let { reportResult, metaData } = this.props;
@@ -535,6 +610,7 @@ class ShowField extends Component {
                     return (
                       <td
                         key={itemIndex}
+                        style={this.getStyleForCell(itemIndex)}
                         onClick={(e) => {
                           drillDown(e, dataIndex, itemIndex, dataItem, item);
                         }}
@@ -559,7 +635,7 @@ class ShowField extends Component {
               </tr>
             );
           })}
-        {this.renderFooter()}
+        {/*this.renderFooter()*/}
       </tbody>
     );
   };
@@ -629,11 +705,17 @@ class ShowField extends Component {
 
     if (footerexist) {
       return (
-        <tr className="total">
-          {sumColumn.map((columnObj, index) => {
-            return <td key={index}>{index === 0 ? "Total" : total[index - 1]}</td>;
-          })}
-        </tr>
+        <tfoot>
+          <tr className="total">
+            {sumColumn.map((columnObj, index) => {
+              return (
+                <th style={index !== 0 ? { textAlign: "right" } : {}} key={index}>
+                  {index === 0 ? "Total" : this.addCommas(total[index - 1])}
+                </th>
+              );
+            })}
+          </tr>
+        </tfoot>
       );
     }
   };
@@ -684,20 +766,22 @@ class ShowField extends Component {
           <table
             id="reportTable"
             style={{
-              color: "#484848",
-              fontWeight: "normal",
-              padding: "0 !important",
-              backgroundColor: "#ffffff",
-              overflowY: "auto",
+              // color: "#484848",
+              // fontWeight: "normal",
+              // padding: "0 !important",
+              // backgroundColor: "#ffffff",
+              // overflowY: "auto",
               width: "100%",
             }}
             // className="mdl-data-table"
-            className="display responsive nowrap"
+            className="table table-responsive table-striped table-bordered display nowrap dataTable"
             // style={{ width: "100%" }}
-            responsive
           >
             {self.renderHeader()}
             {self.renderBody()}
+
+            {this.renderFooter()}
+
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
