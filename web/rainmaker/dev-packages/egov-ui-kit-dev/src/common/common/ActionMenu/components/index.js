@@ -124,10 +124,10 @@ class ActionMenuComp extends Component {
       searchText: e.target.value,
     });
   };
-  addMenuItems = (path, splitArray, menuItems, index) => {
+  addMenuItems = (path, splitArray, menuItems, index, leftIcon) => {
     let { role, actionListArr } = this.props;
     let actionList = actionListArr;
-
+    //Check if this is last level menu
     if (splitArray.length > 1) {
       if (!some(menuItems, { name: splitArray[0] })) {
         menuItems.push({
@@ -137,18 +137,18 @@ class ActionMenuComp extends Component {
           queryParams: actionList[index].queryParams,
           orderNumber: actionList[index].orderNumber,
           navigationURL: actionList[index].navigationURL,
-          leftIcon: actionList[index].leftIcon,
+          leftIcon,
         });
       }
     } else {
       menuItems.push({
         path: path != "" ? path + "." + splitArray[0] : "",
-        name: actionList[index].displayName,
+        name: actionList[index].displayName, // Displayname in last level menuItem
         url: actionList[index].url,
         queryParams: actionList[index].queryParams,
         orderNumber: actionList[index].orderNumber,
         navigationURL: actionList[index].navigationURL,
-        leftIcon: actionList[index].leftIcon,
+        leftIcon,
       });
     }
     menuItems = orderBy(menuItems, ["orderNumber"], ["asc"]);
@@ -162,15 +162,24 @@ class ActionMenuComp extends Component {
     let { role, actionListArr } = this.props;
     let actionList = actionListArr;
     let menuItems = [];
-
     for (var i = 0; i < (actionList && actionList.length); i++) {
       if (actionList[i].path !== "") {
         if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
           let splitArray = actionList[i].path.split(path + ".")[1].split(".");
-          this.addMenuItems(path, splitArray, menuItems, i);
+          let leftIconArray = actionList[i].leftIcon.split(".");
+          let leftIcon =
+            leftIconArray &&
+            (leftIconArray.length > path.split(".").length
+              ? leftIconArray[path.split(".").length]
+              : leftIconArray.length >= 1
+              ? leftIconArray[leftIconArray.length - 1]
+              : null);
+          this.addMenuItems(path, splitArray, menuItems, i, leftIcon);
         } else if (pathParam && pathParam.parentMenu && actionList[i].navigationURL) {
           let splitArray = actionList[i].path.split(".");
-          this.addMenuItems(path, splitArray, menuItems, i);
+          let leftIconArray = actionList[i].leftIcon.split(".");
+          let leftIcon = leftIconArray && leftIconArray.length >= 1 ? leftIconArray[0] : null;
+          this.addMenuItems(path, splitArray, menuItems, i, leftIcon);
         }
       }
     }
