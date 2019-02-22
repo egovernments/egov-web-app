@@ -500,16 +500,16 @@ class ShowForm extends Component {
                         primary={true}
                         label={buttonText}
                       />
-                      <RaisedButton
+                      {/*<RaisedButton
                           style={{ marginLeft:"8px" }}
                           type="reset"
                           //disabled={!isFormValid}
                           // primary={true}
                           onClick={(e)=>{
-                            
+
                           }}
                           label={"RESET"}
-                      />
+                      />*/}
                     </div>
                   </Row>
                 </div>
