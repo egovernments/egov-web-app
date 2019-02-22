@@ -134,61 +134,67 @@ export default class ShowField extends Component {
             />
           </Col>
         );
-      case "singlevaluelist":
-        return (
-          <Col xs={12} sm={4} md={4} lg={4}>
-            <DropDown
-              // className="custom-form-control-for-select"
-              hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
-              disabled={obj.disabled ? true : false}
-              id={obj.label.split(".").join("-")}
-              fullWidth={true}
-              dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
-              floatingLabelFixed={true}
-              floatingLabelText={
-                <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
-                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </div>
-              }
-              value={typeof obj.value == "undefined" ? "" : obj.value}
-              onChange={(event, key, value) => {
-                let e = { target: { value } };
-                this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
-              }}
-              maxHeight={200}
-              dropDownData={dropDownData}
-            />
-          </Col>
-        );
+      // case "singlevaluelist":
+      //   return (
+      //     <Col xs={12} sm={4} md={4} lg={4}>
+      //       <DropDown
+      //         // className="custom-form-control-for-select"
+      //         hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
+      //         disabled={obj.disabled ? true : false}
+      //         id={obj.label.split(".").join("-")}
+      //         fullWidth={true}
+      //         dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
+      //         floatingLabelFixed={true}
+      //         floatingLabelText={
+      //           <div className="rainmaker-displayInline">
+      //             <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
+      //             <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+      //           </div>
+      //         }
+      //         value={typeof obj.value == "undefined" ? "" : obj.value}
+      //         onChange={(event, key, value) => {
+      //           let e = { target: { value } };
+      //           this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
+      //         }}
+      //         maxHeight={200}
+      //         dropDownData={dropDownData}
+      //       />
+      //     </Col>
+      //   );
 
-      case "singlevaluelistac":
-        const dataSourceConfig = { text: "value", value: "key" };
+      case "singlevaluelist":
+        const dataSourceConfig = { text: "label", value: "value" };
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
               // className="custom-form-control-for-textfield"
-              floatingLabelStyle={{ color: obj.disabled ? "#A9A9A9" : "#696969", fontSize: "20px", whiteSpace: "nowrap" }}
-              inputStyle={{ color: "#5F5C57" }}
+              floatingLabelStyle={{ fontSize: "20px"}}
+              floatingLabelText={
+                        <div className="rainmaker-displayInline">
+                          <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
+                          <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                        </div>
+              }
+              // inputStyle={{ color: "#5F5C57" }}
               floatingLabelFixed={true}
               fullWidth={true}
-              style={{ display: "inline-block" }}
+              // style={{ display: "inline-block" }}
               filter={(searchText, key) => {
                 return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
               }}
-              floatingLabelText={
-                <span>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
-              }
-              listStyle={{ maxHeight: 100, overflow: "auto" }}
+              // listStyle={{ maxHeight: 100, overflow: "auto" }}
               onNewRequest={(value) => {
-                const e = { target: { value: value.key } };
+                const e = { target: { value: value.value } };
+                this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
+              }}
+              onUpdateInput={(searchText,dataSource,params)=>{
+                const e = { target: { value: searchText } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
               }}
               dataSource={dropDownData}
               dataSourceConfig={dataSourceConfig}
               openOnFocus={true}
+              maxSearchResults={200}
             />
           </Col>
         );
