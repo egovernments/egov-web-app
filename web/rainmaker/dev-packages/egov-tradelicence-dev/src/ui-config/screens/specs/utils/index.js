@@ -622,15 +622,15 @@ export const getHeaderSideText = (status, licenseNo = null) => {
   switch (status) {
     case "PAID":
     case "PENDINGAPPROVAL":
-      return { word1: "Status: ", word2: "PENDINGAPPROVAL" };
+      return { word1: "Status: ", word2: "WF_NEWTL_PENDINGAPPROVAL" };
     case "PENDINGPAYMENT":
-      return { word1: "Status: ", word2: "PENDINGPAYMENT" };
+      return { word1: "Status: ", word2: "WF_NEWTL_PENDINGPAYMENT" };
     case "FIELDINSPECTION":
-      return { word1: "Status: ", word2: "FIELDINSPECTION" };
+      return { word1: "Status: ", word2: "WF_NEWTL_FIELDINSPECTION" };
     case "APPLIED":
-      return { word1: "Status: ", word2: "APPLIED" };
+      return { word1: "Status: ", word2: "TL_APPLIED" };
     case "REJECTED":
-      return { word1: "Status: ", word2: "REJECTED" };
+      return { word1: "Status: ", word2: "TL_REJECTED" };
     case "CANCELLED":
       return { word1: `Trade License No: `, word2: `${licenseNo}` };
     case "APPROVED":

@@ -115,19 +115,23 @@ export const textToLocalMapping = {
   ),
   INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message", "INITIATED"),
   APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message", "APPLIED"),
-  PAID: get(getLocalTextFromCode("TL_PAID"), "message", "PAID"),
+  PAID: get(
+    getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
+    "message",
+    "PAID"
+  ),
   PENDINGAPPROVAL: get(
-    getLocalTextFromCode("TL_PAID"),
+    getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
     "message",
     "Pending for Approval"
   ),
   PENDINGPAYMENT: get(
-    getLocalTextFromCode("TL_PENDINGPAYMENT"),
+    getLocalTextFromCode("WF_NEWTL_PENDINGPAYMENT"),
     "message",
     "Pending payment"
   ),
   FIELDINSPECTION: get(
-    getLocalTextFromCode("TL_FIELDINSPECTION"),
+    getLocalTextFromCode("WF_NEWTL_FIELDINSPECTION"),
     "message",
     "Pending for Field Inspection"
   ),
