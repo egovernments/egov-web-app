@@ -492,7 +492,7 @@ var getTab = exports.getTab = function getTab(label) {
 var getPattern = exports.getPattern = function getPattern(type) {
   switch (type) {
     case "Name":
-      return (/^[a-zA-Z\s]{1,50}$/i
+      return (/^[a-zA-Z&)(\\-\s,]{1,50}$/i
       );
     case "MobileNo":
       return (/^[6789][0-9]{9}$/i
