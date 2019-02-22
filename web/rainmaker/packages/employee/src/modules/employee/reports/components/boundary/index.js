@@ -239,8 +239,6 @@ class UiBoundary extends Component {
     // this.props.handleFieldChange({ target: { value: dropDownData[property].find(o => o.key == key).value } }, property, true, "");
     this.props.handleFieldChange({ target: { value: newDropDownDataVal.dropDownDataVal } }, "ZonalSelection", true, "");
     /** END Add local... */
-
-    console.log(key, property);
   };
 
   setFirstDropDownData = (cityBdry) => {
@@ -307,6 +305,7 @@ class UiBoundary extends Component {
   renderFields = (level) => {
     // const dataSourceConfig = { text: "label", value: "value" };
     let { dropDownData, dropDownDataVal, searchText } = this.state;
+    const { localityArray } = this.props.formData;
     let data = dropDownData[level]
       ? dropDownData[level].map((dd, index) => {
           return { value: dd.key, text: dd.value };
@@ -372,7 +371,6 @@ class UiBoundary extends Component {
   };
 
   render() {
-    console.log(this.state);
     return this.renderBoundary(this.props.item);
     // (
     //   {/*<div style={this.props.item.style && this.props.item.style}>*/}
@@ -388,7 +386,7 @@ class UiBoundary extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formData: state.frameworkForm.form,
+  formData: state.formtemp.form,
 });
 
 const mapDispatchToProps = (dispatch) => ({

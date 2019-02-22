@@ -22,6 +22,16 @@ class ShowForm extends Component {
     filterApplied: false,
   };
 
+  toDateObj = (dateStr) => {
+    var parts = dateStr.match(/(\d{4})\-(\d{2})\-(\d{2})/);
+    return new Date(Date.UTC(+parts[1], parts[2] - 1, +parts[3]));
+  };
+
+  resetFields = () => {
+    const { metaData, setMetaData, handleChange, searchForm, resetForm } = this.props;
+    resetForm();
+  };
+
   checkForDependentSource = async (fieldIndex, field, selectedValue) => {
     const { pattern: fieldPattern, mapping, type: fieldType, name: targetProperty, isMandatory, displayOnly } = field;
     const { metaData, setMetaData, handleChange } = this.props;
@@ -175,8 +185,14 @@ class ShowForm extends Component {
     let { metaData, searchForm } = this.props;
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
-        item["value"] = _.isEmpty(searchForm) ? "" : searchForm[item.name];
-
+        item["value"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
+        if (item.type === "epoch" && item.minValue && item.maxValue && typeof item.minValue !== "object" && typeof item.maxValue !== "object") {
+          item.minValue = this.toDateObj(item.minValue);
+          item.maxValue = this.toDateObj(item.maxValue);
+        }
+        if (item.type === "singlevaluelist") {
+          item["searchText"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
+        }
         return (
           item.name !== "tenantId" && (
             <ShowField
@@ -211,6 +227,23 @@ class ShowForm extends Component {
       for (var i = 0; i < searchParams.length; i++) {
         if (searchParams[i].name !== "tenantId" && searchParams[i].isMandatory) {
           required.push(searchParams[i].name);
+        }
+        if (searchParams[i].initialValue) {
+          if (searchParams[i].type === "epoch") {
+            this.handleChange(
+              { target: { value: this.toDateObj(searchParams[i].initialValue) } },
+              searchParams[i].name,
+              searchParams[i].isMandatory ? true : false,
+              ""
+            );
+          } else {
+            this.handleChange(
+              { target: { value: searchParams[i].initialValue } },
+              searchParams[i].name,
+              searchParams[i].isMandatory ? true : false,
+              ""
+            );
+          }
         }
       }
       setForm(required);
@@ -500,16 +533,16 @@ class ShowForm extends Component {
                         primary={true}
                         label={buttonText}
                       />
-                      {/*<RaisedButton
-                          style={{ marginLeft:"8px" }}
-                          type="reset"
-                          //disabled={!isFormValid}
-                          // primary={true}
-                          onClick={(e)=>{
-
-                          }}
-                          label={"RESET"}
-                      />*/}
+                      <RaisedButton
+                        style={{ marginLeft: "8px" }}
+                        type="button"
+                        //disabled={!isFormValid}
+                        // primary={true}
+                        onClick={(e) => {
+                          this.resetFields();
+                        }}
+                        label={"RESET"}
+                      />
                     </div>
                   </Row>
                 </div>
@@ -583,6 +616,9 @@ const mapDispatchToProps = (dispatch) => ({
       isRequired,
       pattern,
     });
+  },
+  resetForm: () => {
+    dispatch({ type: "RESET_FORM" });
   },
   showTable: (state) => {
     dispatch({ type: "SHOW_TABLE", state });

@@ -131,6 +131,8 @@ export default class ShowField extends Component {
                 let e = { target: { value: object } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
               }}
+              minDate={obj.minValue}
+              maxDate={obj.maxValue}
             />
           </Col>
         );
@@ -168,12 +170,12 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
               // className="custom-form-control-for-textfield"
-              floatingLabelStyle={{ fontSize: "20px"}}
+              floatingLabelStyle={{ fontSize: "20px" }}
               floatingLabelText={
-                        <div className="rainmaker-displayInline">
-                          <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
-                          <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                        </div>
+                <div className="rainmaker-displayInline">
+                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               // inputStyle={{ color: "#5F5C57" }}
               floatingLabelFixed={true}
@@ -187,7 +189,7 @@ export default class ShowField extends Component {
                 const e = { target: { value: value.value } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
               }}
-              onUpdateInput={(searchText,dataSource,params)=>{
+              onUpdateInput={(searchText, dataSource, params) => {
                 const e = { target: { value: searchText } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
               }}
@@ -195,6 +197,7 @@ export default class ShowField extends Component {
               dataSourceConfig={dataSourceConfig}
               openOnFocus={true}
               maxSearchResults={200}
+              searchText={obj.searchText}
             />
           </Col>
         );
