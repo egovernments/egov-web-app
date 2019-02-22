@@ -11,7 +11,6 @@ import "./webview/sms";
 import App from "modules/App";
 import store from "redux/store";
 import theme from "./config/theme";
-import injectTapEventPlugin from "react-tap-event-plugin";
 //Web font loader
 import WebFont from "webfontloader";
 // styles
@@ -23,7 +22,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 const muiTheme = getMuiTheme(theme);
 
 // to eliminate the click delay
-injectTapEventPlugin();
+// injectTapEventPlugin();
 
 // load material icons
 WebFont.load({

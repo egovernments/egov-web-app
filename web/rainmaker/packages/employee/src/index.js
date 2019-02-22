@@ -12,7 +12,7 @@ import "./webview/sms";
 import App from "modules/App";
 import store from "redux/store";
 import theme from "./config/theme";
-// import injectTapEventPlugin from "react-tap-event-plugin";
+
 //Web font loader
 import WebFont from "webfontloader";
 // styles
