@@ -47,11 +47,10 @@ const styles = theme => ({
     color: "rgba(162, 162, 162, 0.77)"
   },
   ac_paper: {
-    position: "absolute",
-    zIndex: 1105,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0
+    width: "80%",
+    maxHeight: "200px",
+    overflowY: "scroll",
+    marginTop: theme.spacing.unit
   },
   ac_divider: {
     height: theme.spacing.unit * 2
@@ -147,9 +146,9 @@ function Menu(props) {
       square
       className={props.selectProps.classes.ac_paper}
       {...props.innerProps}
-      style={{ overflowX: "scroll" }}
+      style={{}}
     >
-      <div style={{ width: 800 }}>{props.children}</div>
+      <div style={{}}>{props.children}</div>
     </Paper>
   );
 }
