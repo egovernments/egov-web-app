@@ -305,7 +305,6 @@ class UiBoundary extends Component {
   renderFields = (level) => {
     // const dataSourceConfig = { text: "label", value: "value" };
     let { dropDownData, dropDownDataVal, searchText } = this.state;
-    const { localityArray } = this.props.formData;
     let data = dropDownData[level]
       ? dropDownData[level].map((dd, index) => {
           return { value: dd.key, text: dd.value };
