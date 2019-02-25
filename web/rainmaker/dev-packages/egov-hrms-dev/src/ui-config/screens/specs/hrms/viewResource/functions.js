@@ -81,7 +81,7 @@ const returnEmptyArrayIfNull = value => {
   }
 };
 
-const setRolesList = (state, dispatch) => {
+export const setRolesList = (state, dispatch) => {
   let rolesList = get(
     state.screenConfiguration.preparedFinalObject,
     `Employee[0].user.roles`,
