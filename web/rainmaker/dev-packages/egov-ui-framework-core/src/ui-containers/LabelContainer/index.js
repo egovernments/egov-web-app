@@ -37,14 +37,18 @@ class LabelContainer extends React.Component {
     if (typeof fieldValue === "boolean") {
       fieldValue = fieldValue ? "Yes" : "No";
     }
-    let fieldLabel = getLocaleLabelsforTL(
-      fieldValue,
-      fieldValue &&
-        (fieldValue.startsWith("TL_") || fieldValue.startsWith("WF_"))
-        ? fieldValue
-        : `TL_${fieldValue}`,
-      transfomedKeys
-    );
+
+    let fieldLabel =
+      typeof fieldValue === "string"
+        ? getLocaleLabelsforTL(
+            fieldValue,
+            fieldValue &&
+              (fieldValue.startsWith("TL_") || fieldValue.startsWith("WF_"))
+              ? fieldValue
+              : `TL_${fieldValue}`,
+            transfomedKeys
+          )
+        : fieldValue;
     return (
       <Label
         data-localization={
