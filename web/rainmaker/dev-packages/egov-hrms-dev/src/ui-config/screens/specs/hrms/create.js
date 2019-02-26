@@ -45,7 +45,7 @@ export const stepper = getStepperObject(
 export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Create New Employee`,
-    labelKey: "HR_COMMON_APPL_NEW_HEADER"
+    labelKey: "HR_COMMON_CREATE_EMPLOYEE_HEADER"
   })
 });
 
