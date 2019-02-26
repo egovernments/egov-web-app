@@ -14,7 +14,6 @@ import store from "redux/store";
 import theme from "./config/theme";
 import themeNew from "./config/themeNew";
 
-// import injectTapEventPlugin from "react-tap-event-plugin";
 //Web font loader
 import WebFont from "webfontloader";
 // styles
