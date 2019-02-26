@@ -13,15 +13,14 @@ import store from "redux/store";
 import theme from "./config/theme";
 import themeNew from "./config/themeNew";
 
-import injectTapEventPlugin from "react-tap-event-plugin";
 //Web font loader
 import WebFont from "webfontloader";
 // styles
 import "egov-ui-kit/assets/styles/bootstrap-customized.css";
 import "egov-ui-kit/assets/styles/app.css";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; // v1.x
-import { MuiThemeProvider as V0MuiThemeProvider} from 'material-ui';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"; // v1.x
+import { MuiThemeProvider as V0MuiThemeProvider } from "material-ui";
 
 const muiThemeV0 = getMuiTheme(theme);
 const themeVX = createMuiTheme(themeNew);
