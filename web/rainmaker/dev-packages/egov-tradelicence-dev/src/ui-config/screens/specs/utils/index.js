@@ -1482,24 +1482,24 @@ export const updateDropDowns = async (
     }
   }
 
-  const tradeTypes = get(
-    state.screenConfiguration.preparedFinalObject,
-    "applyScreenMdmsData.TradeLicense.TradeType",
-    []
-  );
-  // debugger;
-  const tradeTypeDropdownData =
-    tradeTypes &&
-    Object.keys(tradeTypes).map(item => {
-      return { code: item, active: true };
-    });
-  tradeTypeDropdownData &&
-    dispatch(
-      prepareFinalObject(
-        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
-        tradeTypeDropdownData
-      )
-    );
+  // const tradeTypes = get(
+  //   state.screenConfiguration.preparedFinalObject,
+  //   "applyScreenMdmsData.TradeLicense.TradeType",
+  //   []
+  // );
+  // // debugger;
+  // const tradeTypeDropdownData =
+  //   tradeTypes &&
+  //   Object.keys(tradeTypes).map(item => {
+  //     return { code: item, active: true };
+  //   });
+  // tradeTypeDropdownData &&
+  //   dispatch(
+  //     prepareFinalObject(
+  //       "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+  //       tradeTypeDropdownData
+  //     )
+  //   );
   const tradeSubTypes = get(
     payload,
     "Licenses[0].tradeLicenseDetail.tradeUnits"
@@ -1519,7 +1519,7 @@ export const updateDropDowns = async (
             objectToDropdown(
               get(
                 state.screenConfiguration.preparedFinalObject,
-                `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+                `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCat}`,
                 []
               )
             )
@@ -1531,7 +1531,7 @@ export const updateDropDowns = async (
             "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
             get(
               state.screenConfiguration.preparedFinalObject,
-              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+              `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCat}.${tradeType}`,
               []
             )
           )
