@@ -17,6 +17,7 @@ import {
   validateFields
 } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 // SET ALL SIMPLE DATES IN YMD FORMAT
 const setDateInYmdFormat = (obj, values) => {
@@ -349,5 +350,16 @@ export const getEmployeeData = async (state, dispatch, employeeId) => {
   ];
   let response = await getSearchResults(queryObject);
   dispatch(prepareFinalObject("Employee", get(response, "Employees")));
+  dispatch(
+    handleField(
+      "create",
+      "components.div.children.headerDiv.children.header.children.header.children.key",
+      "props",
+      {
+        labelName: "Edit Employee",
+        labelKey: "HR_COMMON_EDIT_EMPLOYEE_HEADER"
+      }
+    )
+  );
   furnishEmployeeData(state, dispatch);
 };
