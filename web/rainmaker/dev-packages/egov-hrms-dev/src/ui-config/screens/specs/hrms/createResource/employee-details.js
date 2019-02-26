@@ -103,6 +103,7 @@ export const employeeDetails = getCommonCard({
           labelName: "Enter Date of Birth",
           labelKey: "HR_BIRTH_DATE_PLACEHOLDER"
         },
+        required: true,
         pattern: getPattern("Date"),
         jsonPath: "Employee[0].user.dob",
         props: {
@@ -181,7 +182,6 @@ export const professionalDetails = getCommonCard(
             labelName: "Enter Date of Appointment",
             labelKey: "HR_APPOINTMENT_DATE_PLACEHOLDER"
           },
-          required: true,
           pattern: getPattern("Date"),
           jsonPath: "Employee[0].dateOfAppointment"
         })
