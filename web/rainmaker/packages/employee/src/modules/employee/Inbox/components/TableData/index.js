@@ -139,10 +139,10 @@ class TableData extends Component {
   };
 
   render() {
-    const { value, taskboardData, tabData, inboxData } = this.state;
+    const { value, taskboardData, tabData, inboxData, moduleName } = this.state;
     return (
       <div className="col-sm-12">
-        <Label className="landingPageUser" label={"My worklist"} />
+        <Label className="landingPageUser" label={"WF_MY_WORKLIST"} />
         <Taskboard data={taskboardData} />
         <div className="col-sm-12">
           <Tabs
@@ -160,7 +160,7 @@ class TableData extends Component {
             <div style={{ position: "absolute", right: 0, top: "10px" }}>
               <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
                 <MenuItem value="" disabled>
-                  Module-All
+                  Module All
                 </MenuItem>
                 <MenuItem value={"NewTL"}>NewTL</MenuItem>
                 <MenuItem value={"PGR"}>PGR</MenuItem>
@@ -176,11 +176,12 @@ class TableData extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { screenConfiguration } = state;
+  const { screenConfiguration, auth } = state;
+  const { userInfo } = auth;
   const { preparedFinalObject } = screenConfiguration;
   const { InboxData } = preparedFinalObject;
 
-  return { InboxData };
+  return { InboxData, userInfo };
 };
 
 const mapDispatchToProps = (dispatch) => {
