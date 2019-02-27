@@ -133,6 +133,11 @@ const UploadMultipleFiles = Loadable({
   loading: () => <Loading />
 });
 
+const Table = Loadable({
+  loader: () => import("./Table"),
+  loading: () => <Loading />
+});
+
 export {
   RenderRoutes,
   Map,
@@ -159,6 +164,7 @@ export {
   RadioGroup,
   CustomTab,
   Tooltip,
+  Table,
   TaskDialog,
   TaskStatusComponents,
   UploadMultipleFiles
