@@ -12,11 +12,6 @@ const RadioButtonsGroup = Loadable({
   loading: () => <Loading />
 });
 
-const Table = Loadable({
-  loader: () => import("./Table"),
-  loading: () => <Loading />
-});
-
 const Tooltip = Loadable({
   loader: () => import("./Tooltip"),
   loading: () => <Loading />

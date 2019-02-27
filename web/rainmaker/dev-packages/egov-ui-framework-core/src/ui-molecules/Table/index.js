@@ -64,7 +64,7 @@ class Table extends React.Component {
 
   render() {
     const { data, columns } = this.state;
-    const { options, title } = this.props;
+    const { options, title, customSortDate } = this.props;
     return (
       <MUIDataTable
         title={title}

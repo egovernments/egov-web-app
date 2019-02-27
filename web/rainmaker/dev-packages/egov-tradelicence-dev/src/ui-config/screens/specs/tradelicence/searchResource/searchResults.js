@@ -74,12 +74,12 @@ export const textToLocalMapping = {
 };
 
 export const searchResults = {
-  uiFramework: "custom-molecules-local",
-  moduleName: "egov-tradelicence",
+  uiFramework: "custom-molecules",
+  // moduleName: "egov-tradelicence",
   componentPath: "Table",
   visible: false,
   props: {
-    data: [],
+    // data: [],
     columns: {
       [get(textToLocalMapping, "Application No")]: {
         format: rowData => {

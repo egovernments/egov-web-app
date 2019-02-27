@@ -5,10 +5,10 @@ import { textToLocalMapping } from "./citizenFunctions";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 
 export const searchResults = {
-  uiFramework: "custom-molecules-local",
+  uiFramework: "custom-molecules",
   componentPath: "Table",
   visible: true,
-  moduleName: "egov-tradelicence",
+  // moduleName: "egov-tradelicence",
   props: {
     data: [],
     columns: {
