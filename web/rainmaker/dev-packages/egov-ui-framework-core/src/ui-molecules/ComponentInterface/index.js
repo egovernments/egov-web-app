@@ -42,6 +42,13 @@ class ComponentInterface extends React.Component {
           loading: () => <LinearProgress />
         });
         break;
+      case "custom-containers":
+        LoadableComponent = Loadable({
+          loader: () =>
+            import("../../ui-containers").then(module => module[componentPath]),
+          loading: () => <LinearProgress />
+        });
+        break;
       case "custom-atoms-local":
         LoadableComponent = Loadable({
           loader: () =>
@@ -66,13 +73,7 @@ class ComponentInterface extends React.Component {
           loading: () => <LinearProgress />
         });
         break;
-      case "custom-containers":
-        LoadableComponent = Loadable({
-          loader: () =>
-            import("../../ui-containers").then(module => module[componentPath]),
-          loading: () => <LinearProgress />
-        });
-        break;
+
       case "custom-containers-local":
         LoadableComponent = Loadable({
           loader: () =>
