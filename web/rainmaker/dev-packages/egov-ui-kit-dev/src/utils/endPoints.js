@@ -59,14 +59,14 @@ export const OTP = {
 
 export const EMPLOYEE = {
   GET: {
-    URL: "/hr-employee-v2/employees/_search",
+    URL: "/egov-hrms/employees/_search",
     ACTION: "_search",
   },
 };
 
 export const EMPLOYEE_ASSIGN = {
   GET: {
-    URL: "/hr-employee-v2/employees/_search",
+    URL: "/egov-hrms/employees/_search",
     ACTION: "_search",
   },
 };
