@@ -37,7 +37,7 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers, tenantId) => {
         uniq(difference(employeeIds, cachedEmployeeIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type !== "CITIZEN"
           ? [...uniq(difference(employeeIds, cachedEmployeeIds)), auth.userInfo.id].join(",")
           : [...uniq(difference(employeeIds, cachedEmployeeIds))].join(",");
-      const queryObject = tenantId ? [{ key: "tenantId", value: tenantId }, { key: "id", value }] : [{ key: "id", value }];
+      const queryObject = tenantId ? [{ key: "tenantId", value: tenantId }, { key: "ids", value }] : [{ key: "ids", value }];
       if (value.length) dispatch(commonActions.fetchEmployees(queryObject));
     }
     if (userIds.length > 0) {

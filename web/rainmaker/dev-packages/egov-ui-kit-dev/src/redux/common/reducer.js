@@ -1,11 +1,7 @@
 import * as commonTypes from "./actionTypes";
-import {
-  transformById
-} from "egov-ui-kit/utils/commons";
+import { transformById } from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
-import {
-  commonActions
-} from "egov-ui-kit/utils/commons";
+import { commonActions } from "egov-ui-kit/utils/commons";
 
 const intialState = {
   dropDownData: {},
@@ -32,7 +28,7 @@ const commonReducer = (state = intialState, action) => {
         errorMessage: "",
       };
     case commonTypes.EMPLOYEE_FETCH_SUCCESS:
-      let employeeById = transformById(action.payload.Employee, "id");
+      let employeeById = transformById(action.payload.Employees, "id");
       return {
         ...state,
         loading: false,
@@ -61,7 +57,7 @@ const commonReducer = (state = intialState, action) => {
       };
 
     case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS:
-      let employeeToAssignById = transformById(action.payload.Employee, "id");
+      let employeeToAssignById = transformById(action.payload.Employees, "id");
       return {
         ...state,
         loading: false,
@@ -141,10 +137,7 @@ const commonReducer = (state = intialState, action) => {
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
-      const {
-        masterArray,
-        key
-      } = action;
+      const { masterArray, key } = action;
       const generalMDMSDataById = masterArray.reduce((result, masterName) => {
         result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], key ? key : "code");
         return result;
@@ -188,7 +181,7 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         pgrContants: action.data,
-      }
+      };
     default:
       return state;
   }
