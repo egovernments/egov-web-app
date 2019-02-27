@@ -1036,6 +1036,7 @@ const isApplicationPaid = currentStatus => {
       break;
     }
     if (
+      buisnessSeviceStates[i].actions &&
       buisnessSeviceStates[i].actions.filter(item => item.action === "PAY")
         .length > 0
     ) {
