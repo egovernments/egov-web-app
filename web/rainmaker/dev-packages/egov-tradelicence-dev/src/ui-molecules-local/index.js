@@ -49,7 +49,6 @@ const FeesEstimateCard = Loadable({
 
 export {
   TestMolecules,
-  Table,
   RadioButtonsGroup,
   Tooltip,
   CustomTab,
