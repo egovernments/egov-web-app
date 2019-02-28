@@ -341,6 +341,23 @@ export const getRadiobuttonGroup = (
   };
 };
 
+export const getRadioButton = (buttons, jsonPath, defaultValue) => {
+  return {
+    uiFramework: "custom-containers",
+    componentPath: "RadioGroupContainer",
+    gridDefination: {
+              xs: 12,
+              sm: 4
+            },
+            
+    props: {
+      buttons,
+      jsonPath,
+      defaultValue
+    }
+  };
+};
+
 export const getCommonContainer = (children, props = {}) => {
   return {
     componentPath: "Grid",

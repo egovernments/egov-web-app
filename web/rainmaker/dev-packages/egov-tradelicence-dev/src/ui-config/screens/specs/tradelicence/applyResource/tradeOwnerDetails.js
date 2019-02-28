@@ -9,10 +9,11 @@ import {
   getDateField,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getDetailsForOwner, getTodaysDateInYMD } from "../../utils";
+import { getDetailsForOwner, getTodaysDateInYMD, getRadioGroupWithLabel } from "../../utils";
 import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {getRadioButton} from "egov-ui-framework/ui-config/screens/specs/utils"
 
 export const getOwnerMobNoField = getTextField({
   label: {
@@ -104,6 +105,18 @@ export const getFatherNameField = getTextField({
   pattern: getPattern("Name"),
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
 });
+// export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
+//   return {
+//     uiFramework: "custom-containers-local",
+//     componentPath: "RadioGroupContainer",
+//     props: {
+//       buttons,
+//       jsonPath,
+//       defaultValue
+//     }
+//   };
+// };
+export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "Father");
 
 export const ownerInfoInstitutional = {
   ...getCommonGrayCard({
@@ -162,8 +175,8 @@ export const ownerInfoInstitutional = {
         jsonPath: "Licenses[0].tradeLicenseDetail.institution.designation"
       }),
       getFatherNameField,
+      getRelationshipRadioButton,
       getOwnerGenderField,
-      //getOwnerDOBField,
       ownerDOB: {
         ...getDateField({
           label: { labelName: "Date of Birth" },
@@ -231,6 +244,7 @@ const OwnerInfoCard = {
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].name"
         }),
         getFatherNameField,
+        getRelationshipRadioButton,
         getOwnerGenderField,
         ownerDOB: {
           ...getDateField({

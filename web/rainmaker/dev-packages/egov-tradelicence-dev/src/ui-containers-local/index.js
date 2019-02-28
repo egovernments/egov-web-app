@@ -12,10 +12,7 @@ const LabelContainer = Loadable({
   loader: () => import("./LabelContainer"),
   loading: () => <Loading />
 });
-const RadioGroupContainer = Loadable({
-  loader: () => import("./RadioGroupContainer"),
-  loading: () => <Loading />
-});
+
 const CheckboxContainer = Loadable({
   loader: () => import("./CheckboxContainer"),
   loading: () => <Loading />
@@ -54,7 +51,6 @@ const ViewBreakupContainer = Loadable({
 export {
   CustomTabContainer,
   LabelContainer,
-  RadioGroupContainer,
   CheckboxContainer,
   DownloadFileContainer,
   EstimateCardContainer,
