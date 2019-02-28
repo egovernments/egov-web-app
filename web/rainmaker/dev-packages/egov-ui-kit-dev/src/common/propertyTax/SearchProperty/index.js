@@ -76,6 +76,7 @@ class SearchProperty extends Component {
 
       const latestAssessment = getLatestPropertyDetails(propertyDetails);
       let name = latestAssessment.owners[0].name;
+      let fatherOrHusbandName = latestAssessment.owners[0].fatherOrHusbandName || "";
       let assessmentNo = latestAssessment.assessmentNumber;
       const uuid = get(latestAssessment, "citizenInfo.uuid");
       let button = (
@@ -100,7 +101,15 @@ class SearchProperty extends Component {
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
         />
       );
-      let item = { index: index + 1, name: name, propertyId: propertyId, oldPropertyId: oldPropertyId, address: displayAddress, action: button };
+      let item = {
+        index: index + 1,
+        name: name,
+        fatherOrHusbandName: fatherOrHusbandName,
+        propertyId: propertyId,
+        oldPropertyId: oldPropertyId,
+        address: displayAddress,
+        action: button,
+      };
       tableData.push(item);
       return tableData;
     }, []);
