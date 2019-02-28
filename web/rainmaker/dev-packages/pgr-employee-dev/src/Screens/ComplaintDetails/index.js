@@ -14,6 +14,7 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+
 import {
   getDateFromEpoch,
   mapCompIDToName,
@@ -258,7 +259,7 @@ class ComplaintDetails extends Component {
       serviceRequestId,
       history,
       isAssignedToEmployee,
-      xyz
+      reopenValidChecker
     } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
@@ -324,6 +325,7 @@ class ComplaintDetails extends Component {
                   filedUserMobileNumber={
                     complaint ? complaint.filedUserMobileNumber : ""
                   }
+                  reopenValidChecker={reopenValidChecker}
                 />
                 <Comments
                   comments={comments}
@@ -432,6 +434,11 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common, auth, form } = state;
   const { id } = auth.userInfo;
   const { citizenById } = common || {};
+  const reopenValidChecker = get(
+    state,
+    "common.pgrContants.RAINMAKER-PGR.UIConstants[0].REOPENSLA",
+    4232000000
+  );
   const { employeeById, departmentById, designationsById, cities } =
     common || {};
   const { categoriesById } = complaints;
@@ -594,7 +601,8 @@ const mapStateToProps = (state, ownProps) => {
       role,
       serviceRequestId,
       isAssignedToEmployee,
-      complaintTypeLocalised
+      complaintTypeLocalised,
+      reopenValidChecker
     };
   } else {
     return {
@@ -602,7 +610,8 @@ const mapStateToProps = (state, ownProps) => {
       transformedComplaint: {},
       role,
       serviceRequestId,
-      isAssignedToEmployee
+      isAssignedToEmployee,
+      reopenValidChecker
     };
   }
 };
