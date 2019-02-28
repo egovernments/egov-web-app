@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import { Screen, Complaints, SortDialog } from "modules/common";
+import { Complaints, SortDialog, Screen } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import {
-  transformComplaintForComponent,
-  fetchFromLocalStorage
-} from "egov-ui-kit/utils/commons";
+import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
-
-const iconButtonStyle = {
-  padding: 0,
-  width: 50
-};
 
 class AllComplaints extends Component {
   state = {
@@ -89,13 +82,28 @@ class AllComplaints extends Component {
     }
   };
 
-  // componentWillReceiveProps = (nextProps) => {
-  //   const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
-  //   if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
-  //     const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
-  //     renderCustomTitle(numberOfComplaints);
-  //   }
-  // };
+  componentWillReceiveProps = nextProps => {
+    const {
+      role,
+      numCSRComplaint,
+      numEmpComplaint,
+      renderCustomTitle
+    } = this.props;
+    if (
+      !isEqual(
+        this.props.transformedComplaints,
+        nextProps.transformedComplaints
+      )
+    ) {
+      const numberOfComplaints =
+        role === "employee"
+          ? nextProps.numEmpComplaint
+          : role === "csr"
+          ? nextProps.numCSRComplaint
+          : 0;
+      renderCustomTitle(numberOfComplaints);
+    }
+  };
 
   closeSortDialog = () => {
     this.setState({
@@ -145,7 +153,7 @@ class AllComplaints extends Component {
     //   fetchComplaints(queryObj, true, true);
     // }
 
-    if (complaintNo && complaintNo.length > 0) {
+    if (complaintNo) {
       if (complaintNo.length >= 6) {
         fetchComplaints(queryObj, true, true);
       } else {
@@ -157,15 +165,8 @@ class AllComplaints extends Component {
       }
     } else if (mobileNo) {
       fetchComplaints(queryObj, true, true);
-    } else {
-      fetchComplaints([], true, true);
     }
     this.setState({ search: true });
-    // if (complaintNo || mobileNo) {
-    //   this.setState({ search: true });
-    // } else {
-    //   this.setState({ search: false });
-    // }
   };
 
   clearSearch = () => {
