@@ -8,8 +8,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-import "./index.css";
-
 const styles = theme => ({
   root: {
     display: "flex"
