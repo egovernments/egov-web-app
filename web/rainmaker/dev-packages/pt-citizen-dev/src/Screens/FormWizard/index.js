@@ -164,12 +164,8 @@ class FormWizard extends Component {
           searchPropertyResponse.Properties[0].propertyDetails &&
           searchPropertyResponse.Properties[0].propertyDetails.length > 0
         ) {
-          searchPropertyResponse.Properties[0].propertyDetails.map(item => {
-            return (item.units =
-              (item.units &&
-                item.units.length &&
-                sortBy(item.units, ["floorNo"])) ||
-              []);
+          searchPropertyResponse.Properties[0].propertyDetails.forEach(item => {
+            sortBy(item.units, [unit => unit.floorNo || -99999]);
           });
         }
         let propertyResponse = {
