@@ -118,8 +118,6 @@ export const getFatherNameField = getTextField({
 // };
 export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "Father");
 
-export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "Father");
-
 export const ownerInfoInstitutional = {
   ...getCommonGrayCard({
     header: getCommonSubHeader(
