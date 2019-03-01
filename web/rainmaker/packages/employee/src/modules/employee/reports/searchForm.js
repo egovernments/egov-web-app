@@ -404,7 +404,7 @@ class ShowForm extends Component {
             input = searchForm[variable];
           }
         }
-        if (input) {
+        if (input && input!="All") {
           searchParams.push({ name: variable, input });
         }
       }

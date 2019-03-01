@@ -9,6 +9,7 @@ import AutoComplete from "material-ui/AutoComplete";
 import Label from "egov-ui-kit/utils/translationNode";
 import UiBoundary from "./components/boundary";
 import boundaryConfig from "./commons/config";
+import isEmpty from "lodash/isEmpty";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -29,6 +30,13 @@ export default class ShowField extends Component {
 
     let dropDownData = [];
 
+    if (!isEmpty(obj.defaultValue)) {
+      dropDownData.push({
+        value: "All",
+        label: "All",
+      });
+    }
+
     if (typeof obj.defaultValue == "object") {
       for (var variable in obj.defaultValue) {
         dropDownData.push({
@@ -37,6 +45,8 @@ export default class ShowField extends Component {
         });
       }
     }
+
+
 
     switch (obj.type) {
       case "string":
