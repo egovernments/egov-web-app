@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
-import { toggleSpinner } from "../ui-redux/screen-configuration/actions";
-import store from "redux/store";
+import { toggleSpinner } from "../ui-redux/app/actions";
+import store from "../ui-redux/store";
 import {
   getAccessToken,
   getTenantId
