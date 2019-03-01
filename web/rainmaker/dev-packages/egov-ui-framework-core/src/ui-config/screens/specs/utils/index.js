@@ -445,7 +445,7 @@ export const getTab = (label, props = {}) => {
 export const getPattern = type => {
   switch (type) {
     case "Name":
-      return /^[a-zA-Z&)(\\\/-\s,]{1,50}$/i;
+      return /[a-zA-Z'\s\u0900-\u097F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F]{1,50}/i;
     case "MobileNo":
       return /^[6789][0-9]{9}$/i;
     case "Email":
@@ -470,6 +470,8 @@ export const getPattern = type => {
       return /^[a-zA-Z0-9&)(\\\/-\s,#]{1,50}$/i;
     case "BuildingStreet":
       return /^[a-zA-Z0-9\s()-@#&.,?/]{1,100}$/i;
+    case "StreetName":
+        return /[a-zA-Z0-9\s()-@#&.,?/\u0900-\u097F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F]{1,100}/i
     case "Pincode":
       return /^[1-9][0-9]{5}$/i;
     case "PropertyID":

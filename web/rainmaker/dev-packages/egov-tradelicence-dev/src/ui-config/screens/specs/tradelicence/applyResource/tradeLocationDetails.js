@@ -1,16 +1,7 @@
-import {
-  getCommonCard,
-  getCommonTitle,
-  getTextField,
-  getSelectField,
-  getCommonContainer,
-  getPattern
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCommonCard, getCommonContainer, getCommonTitle, getPattern, getSelectField, getTextField } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../../ui-utils/api";
-import { getMapLocator } from "../../utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { showHideMapPopup, getDetailsFromProperty } from "../../utils";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getDetailsFromProperty, getMapLocator, showHideMapPopup } from "../../utils";
 
 export const tradeLocationDetails = getCommonCard(
   {
@@ -166,7 +157,7 @@ export const tradeLocationDetails = getCommonCard(
           labelName: "Enter Building/Colony Name",
           labelKey: "TL_NEW_TRADE_DETAILS_BLDG_NAME_PLACEHOLDER"
         },
-        pattern: getPattern("BuildingStreet"),
+        pattern: getPattern("StreetName"),
         jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName"
       }),
       tradeLocStreetName: getTextField({
