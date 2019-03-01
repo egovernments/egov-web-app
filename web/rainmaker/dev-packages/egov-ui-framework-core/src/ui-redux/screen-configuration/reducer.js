@@ -4,6 +4,7 @@ import { updateObjectWithComponentJsonPath, prepareFinalObject } from "./utils";
 const intialState = {
   screenConfig: {},
   preparedFinalObject: {},
+  spinner: false,
   toastObject: {
     message: "",
     open: false,
@@ -59,7 +60,11 @@ const screenConfiguration = (state = intialState, action) => {
           error: action.error
         }
       };
-
+    case screenActionTypes.TOGGLE_LOADER:
+      return {
+        ...state,
+        spinner: !state.spinner
+      };
     default:
       return state;
   }
