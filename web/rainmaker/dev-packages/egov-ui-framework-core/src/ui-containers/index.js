@@ -33,8 +33,14 @@ const DownloadFileContainer = Loadable({
   loading: () => <Loading />
 });
 
+const RadioGroupContainer = Loadable({
+  loader: () => import("./RadioGroupContainer"),
+  loading: () => <Loading />
+});
+
 export {
   TextFieldContainer,
+  RadioGroupContainer,
   LabelContainer,
   MultiItem,
   SnackbarContainer,

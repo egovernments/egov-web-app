@@ -1,9 +1,27 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { EMPLOYEE, CITIZEN, MDMS, EMPLOYEE_ASSIGN } from "egov-ui-kit/utils/endPoints";
+import cloneDeep from "lodash/cloneDeep";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
+};
+
+const normaliseEmployeeResponse = (payload) => {
+  let response = cloneDeep(payload);
+  const employeeNormalized = response.Employees.reduce((res, curr) => {
+    res.push({ ...curr.user, ...curr });
+    return res;
+  }, []);
+
+  /* Delete User */
+  employeeNormalized.forEach((item) => {
+    delete item["user"];
+  });
+
+  //Overwrite any property in both reponse as well as user object, response takes precedence;
+  //If some property required from user object --> Comment "Delete User"
+  return { ...response, Employees: [...employeeNormalized] };
 };
 
 const employeeFetchPending = () => {
@@ -15,7 +33,7 @@ const employeeFetchPending = () => {
 const employeeFetchSuccess = (payload) => {
   return {
     type: actionTypes.EMPLOYEE_FETCH_SUCCESS,
-    payload,
+    payload: normaliseEmployeeResponse(payload),
   };
 };
 
@@ -29,7 +47,7 @@ const employeeFetchError = (error) => {
 const employeeToAssignFetchSuccess = (payload) => {
   return {
     type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS,
-    payload,
+    payload: normaliseEmployeeResponse(payload),
   };
 };
 

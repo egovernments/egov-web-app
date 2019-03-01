@@ -1,13 +1,11 @@
 import React from "react";
-import CommonView from "egov-ui-framework/ui-molecules/CommonView";
-import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
 import themeObject from "../../ui-config/themes";
-// import Label from "egov-ui-kit/utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import get from "lodash/get";
 import { connect } from "react-redux";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { fetchUiCommonConstants } from "egov-ui-kit/redux/app/actions";
 const theme = createMuiTheme(themeObject);
 
@@ -35,7 +33,7 @@ class IFrameInterface extends React.Component {
     //   tradelicense: {
     //     routes: {
     //       search: {
-    //         routePath: "/employee-tradelicence/egov-ui-framework/tradelicence/search",
+    //         routePath: "/employee-tradelicence/mihy-ui-framework/tradelicence/search",
     //         isOrigin: false,
     //         domain: "https://egov-micro-dev.egovernments.org",
     //       },
@@ -53,11 +51,14 @@ class IFrameInterface extends React.Component {
 
     const contextPath = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.routePath`, "");
     const title = get(uiCommonConstants, `${moduleName}.iframe-routes.${pageName}.title`, "");
-
-    const queryParams = props.location.search;
-
-    let url = `${domain}${contextPath}${queryParams}`;
-    this.setState({ url, title });
+    let url = `${domain}${contextPath}`;
+    if (this.props.common && this.props.common.cities) {
+      let tenantid = getTenantId();
+      let tenant_info = this.props.common.cities.filter((key) => key.code == tenantid)[0];
+      let tenant_name = tenant_info.name;
+      url = url.replace(/__tenantid__/g, tenantid).replace(/__tenantname__/g, tenant_name);
+      this.setState({ url, title });
+    }
   };
 
   componentWillReceiveProps(nextProps) {
@@ -81,8 +82,8 @@ class IFrameInterface extends React.Component {
       <MuiThemeProvider theme={theme}>
         {title && (
           <div className="row">
-            <div className="col-sm-12">
-              <LabelContainer style={headerStyle} labelKey={title} />
+            <div className="col-sm-12" style={{ margin: "24px" }}>
+              <Label className="screen-title-label" label={title} dark={true} bold={true} fontSize={20} />
             </div>
           </div>
         )}
@@ -101,10 +102,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-  const { app } = state;
+  const { app, common } = state;
   const { uiCommonConstants } = app;
-  return { uiCommonConstants };
+  return { uiCommonConstants, common };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -98,66 +98,6 @@ export const getUploadFilesMultiple = jsonPath => {
   };
 };
 
-export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
-  return {
-    uiFramework: "custom-containers-local",
-    componentPath: "RadioGroupContainer",
-    props: {
-      buttons,
-      jsonPath,
-      defaultValue
-    }
-  };
-};
-export const getRadioGroupWithLabel = (
-  label,
-  labelKey,
-  buttons,
-  jsonPath,
-  defaultValue
-) => {
-  return {
-    uiFramework: "custom-atoms",
-    componentPath: "Container",
-    props: {
-      alignItems: "center"
-    },
-
-    children: {
-      div1: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 4
-        },
-        children: {
-          div: getLabel({
-            labelName: label,
-            labelKey,
-
-            style: {
-              fontSize: "14px"
-            }
-          }),
-          asteric: getAsteric()
-        }
-      },
-      div2: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 8
-        },
-        children: {
-          div: getRadioButtonGroup(buttons, jsonPath, defaultValue)
-        }
-      }
-    }
-  };
-};
-
 export const getApplicationNoContainer = number => {
   return {
     uiFramework: "custom-atoms-local",

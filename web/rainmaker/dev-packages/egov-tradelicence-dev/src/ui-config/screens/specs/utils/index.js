@@ -102,10 +102,9 @@ export const getUploadFilesMultiple = jsonPath => {
   };
 };
 
-export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
+export const getRadioButton = (buttons, jsonPath, defaultValue) => {
   return {
-    uiFramework: "custom-containers-local",
-    moduleName: "egov-tradelicence",
+    uiFramework: "custom-containers",
     componentPath: "RadioGroupContainer",
     props: {
       buttons,
@@ -114,6 +113,7 @@ export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
     }
   };
 };
+
 export const getRadioGroupWithLabel = (
   label,
   labelKey,

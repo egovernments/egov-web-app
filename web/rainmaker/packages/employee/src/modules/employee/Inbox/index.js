@@ -4,6 +4,7 @@ import TableData from "./components/TableData";
 import Label from "egov-ui-kit/utils/translationNode";
 import Icon from "egov-ui-kit/components/Icon";
 import { Boxboard } from "./components/actionItems";
+import howtovoteIcon from "@material-ui/icons/HowToVote";
 
 const iconStyle = {
   width: "48px",
@@ -23,13 +24,17 @@ const boxes = {
     head: <Icon action="places" name="business-center" style={iconStyle} />,
     route: process.env.NODE_ENV === "production" ? "/employee/tradelicence/search" : "/tradelicence/search",
   },
-  Waterandsewerage: {
-    head: <Icon action="action" name="announcement" style={iconStyle} />,
-    route: process.env.NODE_ENV === "production" ? "/employee/dashboard/ws-financialindicators" : "/dashboard/ws-financialindicators",
+  "Trade License": {
+    head: <Icon action="places" name="business-center" style={iconStyle} />,
+    route: process.env.NODE_ENV === "production" ? "/employee/tradelicence/search" : "/tradelicence/search",
   },
-  FireNOC: {
-    head: <Icon action="action" name="description" style={iconStyle} />,
-    route: process.env.NODE_ENV === "production" ? "/employee/dashboard/ws-financialindicators" : "dashboard/ws-financialindicators",
+  Finance: {
+    head: <Icon action="editor" name="insert-chart" style={iconStyle} />,
+    route: process.env.NODE_ENV === "production" ? "/employee/services/EGF/inbox" : "/services/EGF/inbox",
+  },
+  Collections: {
+    head: <Icon action="image" name="collections" style={iconStyle} />,
+    route: process.env.NODE_ENV === "production" ? "" : "",
   },
 };
 
@@ -41,6 +46,15 @@ class Inbox extends Component {
   componentWillReceiveProps(nextProps) {
     const { menu } = nextProps;
     const workflowList = menu && menu.filter((item) => item.name === "rainmaker-common-workflow");
+    if (workflowList && workflowList.length > 0) {
+      this.setState({
+        hasWorkflow: true,
+      });
+    } else {
+      this.setState({
+        hasWorkflow: false,
+      });
+    }
     const list = menu && menu.filter((item) => item.url === "url");
     const finalList =
       list &&
@@ -61,7 +75,7 @@ class Inbox extends Component {
   }
   render() {
     const { name } = this.props;
-    const { actionList } = this.state;
+    const { actionList, hasWorkflow } = this.state;
     return (
       <div>
         <div>
@@ -69,7 +83,7 @@ class Inbox extends Component {
         </div>
 
         {actionList && <Boxboard data={actionList} />}
-        <TableData />
+        {hasWorkflow && <TableData />}
       </div>
     );
   }
