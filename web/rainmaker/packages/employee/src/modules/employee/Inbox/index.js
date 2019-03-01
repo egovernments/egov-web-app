@@ -24,6 +24,10 @@ const boxes = {
     head: <Icon action="places" name="business-center" style={iconStyle} />,
     route: process.env.NODE_ENV === "production" ? "/employee/tradelicence/search" : "/tradelicence/search",
   },
+  "Trade License": {
+    head: <Icon action="places" name="business-center" style={iconStyle} />,
+    route: process.env.NODE_ENV === "production" ? "/employee/tradelicence/search" : "/tradelicence/search",
+  },
   Finance: {
     head: <Icon action="editor" name="insert-chart" style={iconStyle} />,
     route: process.env.NODE_ENV === "production" ? "/employee/services/EGF/inbox" : "/services/EGF/inbox",
