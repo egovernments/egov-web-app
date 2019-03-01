@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { DocumentList } from "../../ui-molecules-local";
+import DocumentList from "../../ui-molecules-local/DocumentList";
 import { connect } from "react-redux";
 import get from "lodash/get";
 
