@@ -67,6 +67,11 @@
 //   word-break: break-word;
 // }
 
+.dropdown-menu > .active > a
+{
+    background-color: rgb(254, 122, 81) !important;
+}
+
 .report_filters {
   margin-bottom: 8px;
 }
