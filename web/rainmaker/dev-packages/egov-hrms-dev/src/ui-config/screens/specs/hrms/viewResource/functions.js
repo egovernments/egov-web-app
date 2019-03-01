@@ -126,6 +126,23 @@ const setDeactivationDocuments = (state, dispatch) => {
   dispatch(prepareFinalObject("Employee[0].documents", documents));
 };
 
+// Remove objects from Arrays not having the specified key (eg. "id")
+// and add the key-value active:false in those objects having the key
+// so as to deactivate them after the API call
+const handleDeletedCards = (jsonObject, jsonPath, key) => {
+  let originalArray = get(jsonObject, jsonPath, []);
+  let modifiedArray = originalArray.filter(element => {
+    return element.hasOwnProperty(key) || !element.hasOwnProperty("isDeleted");
+  });
+  modifiedArray = modifiedArray.map(element => {
+    if (element.hasOwnProperty("isDeleted")) {
+      element["active"] = false;
+    }
+    return element;
+  });
+  set(jsonObject, jsonPath, modifiedArray);
+};
+
 export const furnishEmployeeData = (state, dispatch) => {
   let employeeObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -172,6 +189,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     "Employee",
     []
   );
+
+  handleDeletedCards(employeeObject[0], "jurisdictions", "id");
+  handleDeletedCards(employeeObject[0], "assignments", "id");
+  handleDeletedCards(employeeObject[0], "serviceHistory", "id");
+  handleDeletedCards(employeeObject[0], "education", "id");
+  handleDeletedCards(employeeObject[0], "tests", "id");
 
   // DEACTIVATE EMPLOYEE VALIDATIONS
   if (action === "DEACTIVATE") {
