@@ -67,6 +67,10 @@
 //   word-break: break-word;
 // }
 
+.report_filters {
+  margin-bottom: 8px;
+}
+
 .dataTable th, td {
   word-break: break-all; /* IE supports this */
   word-break: break-word; /* IE doesn't support, and will ignore */
