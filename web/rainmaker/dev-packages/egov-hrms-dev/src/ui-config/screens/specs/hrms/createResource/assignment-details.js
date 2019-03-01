@@ -170,7 +170,8 @@ const assignmentDetailsCard = {
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Employee[0].assignments",
     prefixSourceJsonPath:
-      "children.cardContent.children.asmtDetailsCardContainer.children"
+      "children.cardContent.children.asmtDetailsCardContainer.children",
+    disableDeleteIfKeyExists: "id"
   },
   type: "array"
 };
