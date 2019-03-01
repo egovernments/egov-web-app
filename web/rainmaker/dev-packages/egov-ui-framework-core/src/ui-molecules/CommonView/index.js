@@ -1,7 +1,7 @@
 import React from "react";
 import RenderScreen from "../RenderScreen";
 import { SnackbarContainer } from "../../ui-containers";
-import LoadingIndicator from "../../ui-molecules/LoadingIndicator";
+import { LoadingIndicator } from "../../ui-molecules";
 import "./index.css";
 
 class CommonView extends React.Component {
@@ -30,7 +30,7 @@ class CommonView extends React.Component {
         {open && (
           <SnackbarContainer variant={error} message={message} open={open} />
         )}
-        {spinner && <LoadingIndicator />}
+        {spinner && <LoadingIndicator status={"loading"} />}
       </div>
     );
   }
