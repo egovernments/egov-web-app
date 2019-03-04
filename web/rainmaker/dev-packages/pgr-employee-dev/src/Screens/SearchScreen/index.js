@@ -3,17 +3,22 @@ import { Card, TextField, Button } from "components";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Complaints, Screen } from "modules/common";
-import { transformComplaintForComponent, fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
-import isEmpty from "lodash/isEmpty";
+import {
+  transformComplaintForComponent,
+  fetchFromLocalStorage
+} from "egov-ui-kit/utils/commons";
+import isEqual from "lodash/isEqual";
 import { connect } from "react-redux";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
 const roleFromUserInfo = (roles = [], role) => {
-  const roleCodes = roles.map((role) => {
+  const roleCodes = roles.map(role => {
     return role.code;
   });
-  return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
+  return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1
+    ? true
+    : false;
 };
 
 const displayStatus = (status = "") => {
@@ -37,34 +42,44 @@ class SearchScreen extends Component {
     search: false,
     value: 0,
     errorText: "",
-    noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED",
+    noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"
   };
 
   componentDidMount = async () => {
     // let { fetchComplaints } = this.props;
     // fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested,closed,rejected,resolved" }], true, true);
     this.setState({
-      noComplaintMessage: "",
+      noComplaintMessage: ""
     });
+    let inputType = document.getElementsByTagName("input");
+    for (let input in inputType) {
+      if (inputType[input].type === "number") {
+        inputType[input].addEventListener("mousewheel", function() {
+          this.blur();
+        });
+      }
+    }
   };
 
-  onComplaintClick = (complaintNo) => {
+  onComplaintClick = complaintNo => {
     this.props.history.push(`/complaint-details/${complaintNo}`);
   };
 
-  onComplaintChange = (e) => {
+  onComplaintChange = e => {
     // const inputValue = e.target.value;
     // this.setState({ complaintNo: inputValue });
     const complaintNo = e.target.value;
     this.setState({ complaintNo });
     if (complaintNo.length < 6) {
-      this.setState({ errorText: "Enter at least last 6 digit of complaint No" });
+      this.setState({
+        errorText: "Enter at least last 6 digit of complaint No"
+      });
     } else {
       this.setState({ errorText: "" });
     }
   };
 
-  onMobileChange = (e) => {
+  onMobileChange = e => {
     const inputValue = e.target.value;
     this.setState({ mobileNo: inputValue });
   };
@@ -84,7 +99,11 @@ class SearchScreen extends Component {
       if (complaintNo.length >= 6) {
         fetchComplaints(queryObj, true, true);
       } else {
-        toggleSnackbarAndSetText(true, `Entered value is less than 6 characters in length.`, true);
+        toggleSnackbarAndSetText(
+          true,
+          `Entered value is less than 6 characters in length.`,
+          true
+        );
       }
     } else if (mobileNo) {
       fetchComplaints(queryObj, true, true);
@@ -92,16 +111,24 @@ class SearchScreen extends Component {
     // if (complaintNo || mobileNo) {
     //   fetchComplaints(queryObj, true, true);
     // }
-    this.setState({ search: true, noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED" });
+    this.setState({
+      search: true,
+      noComplaintMessage: "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"
+    });
   };
 
   clearSearch = () => {
     const { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: null }]);
-    this.setState({ mobileNo: "", complaintNo: "", search: false, noComplaintMessage: "" });
+    this.setState({
+      mobileNo: "",
+      complaintNo: "",
+      search: false,
+      noComplaintMessage: ""
+    });
   };
 
-  onChange = (value) => {
+  onChange = value => {
     this.setState({ value });
   };
 
@@ -111,10 +138,16 @@ class SearchScreen extends Component {
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
       width: "90%",
-      overflow: "hidden",
+      overflow: "hidden"
     };
     const { loading, history, transformedComplaints, role } = this.props;
-    const { mobileNo, complaintNo, search, errorText, noComplaintMessage } = this.state;
+    const {
+      mobileNo,
+      complaintNo,
+      search,
+      errorText,
+      noComplaintMessage
+    } = this.state;
     const { onComplaintClick } = this;
     return (
       <Screen loading={loading}>
@@ -125,9 +158,17 @@ class SearchScreen extends Component {
             textChildren={
               <div className="complaint-search-cont clearfix">
                 <div className="col-xs-12" style={{ paddingLeft: 8 }}>
-                  <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
+                  <Label
+                    label="Search Complaint"
+                    fontSize={16}
+                    dark={true}
+                    bold={true}
+                  />
                 </div>
-                <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8, paddingRight: 40 }}>
+                <div
+                  className="col-sm-3 col-xs-12"
+                  style={{ paddingLeft: 8, paddingRight: 40 }}
+                >
                   <TextField
                     id="mobile-no"
                     name="mobile-no"
@@ -141,7 +182,14 @@ class SearchScreen extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
-                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="rgba(0,0,0,0.60)" fontSize="12px" />}
+                    floatingLabelText={
+                      <Label
+                        key={0}
+                        label="ES_CREATECOMPLAINT_MOBILE_NUMBER"
+                        color="rgba(0,0,0,0.60)"
+                        fontSize="12px"
+                      />
+                    }
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
@@ -162,25 +210,54 @@ class SearchScreen extends Component {
                       />
                     }
                     errorText={errorText}
-                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="rgba(0,0,0,0.60)" fontSize="12px" />}
+                    floatingLabelText={
+                      <Label
+                        key={1}
+                        label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO"
+                        color="rgba(0,0,0,0.60)"
+                        fontSize="12px"
+                      />
+                    }
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
                     hintStyle={{ width: "100%" }}
                   />
                 </div>
-                <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
+                <div
+                  className="col-sm-6 col-xs-12 csr-action-buttons"
+                  style={{ marginTop: 10, paddingRight: 8 }}
+                >
                   <Button
-                    label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
+                    label={
+                      <Label
+                        buttonLabel={true}
+                        label="ES_MYCOMPLAINTS_SEARCH_BUTTON"
+                      />
+                    }
                     style={{ marginRight: 28, width: "36%" }}
                     backgroundColor="#fe7a51"
-                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
+                    labelStyle={{
+                      letterSpacing: 0.7,
+                      padding: 0,
+                      color: "#fff"
+                    }}
                     buttonStyle={{ border: 0 }}
                     onClick={() => this.onSearch()}
                   />
                   <Button
-                    label={<Label buttonLabel={true} color="#fe7a51" label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON" />}
-                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+                    label={
+                      <Label
+                        buttonLabel={true}
+                        color="#fe7a51"
+                        label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON"
+                      />
+                    }
+                    labelStyle={{
+                      letterSpacing: 0.7,
+                      padding: 0,
+                      color: "#fe7a51"
+                    }}
                     buttonStyle={{ border: "1px solid #fe7a51" }}
                     style={{ width: "36%" }}
                     onClick={() => this.clearSearch()}
@@ -204,7 +281,7 @@ class SearchScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { complaints, common } = state || {};
   const { categoriesById, byId } = complaints;
   const { fetchSuccess, loading } = complaints;
@@ -212,20 +289,30 @@ const mapStateToProps = (state) => {
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role =
-    roleFromUserInfo(userInfo.roles, "GRO") || roleFromUserInfo(userInfo.roles, "DGRO")
+    roleFromUserInfo(userInfo.roles, "GRO") ||
+    roleFromUserInfo(userInfo.roles, "DGRO")
       ? "ao"
       : roleFromUserInfo(userInfo.roles, "CSR")
       ? "csr"
       : "employee";
-  let transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
+  let transformedComplaints = transformComplaintForComponent(
+    complaints,
+    role,
+    employeeById,
+    citizenById,
+    categoriesById,
+    displayStatus
+  );
 
   return { role, loading, transformedComplaints };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchComplaints: (criteria, hasUsers, overWrite) => dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
-    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    fetchComplaints: (criteria, hasUsers, overWrite) =>
+      dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
+    toggleSnackbarAndSetText: (open, message, error) =>
+      dispatch(toggleSnackbarAndSetText(open, message, error))
   };
 };
 

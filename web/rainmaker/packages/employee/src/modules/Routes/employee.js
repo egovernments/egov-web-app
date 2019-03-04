@@ -1,6 +1,6 @@
 import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
-// import LanguageSelection from "modules/employee/User/LanguageSelection";
+import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
 import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
@@ -37,6 +37,12 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/inbox",
   },
+  // {
+  //   path: "user/language-selection",
+  //   component: LanguageSelection,
+  //   needsAuthentication: false,
+  //   redirectionUrl: "/all-complaints",
+  // },
   {
     path: "privacy-policy",
     component: PrivacyPolicy,
