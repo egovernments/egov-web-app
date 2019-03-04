@@ -5,6 +5,7 @@ import { ActionDialog } from "../";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import "./index.css";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
 
 const buttonStyle = {
   minWidth: "200px",
@@ -32,7 +33,7 @@ class Footer extends React.Component {
       const tenantId = getTenantId();
       const queryObj = [
         {
-          key: "roleCodes",
+          key: "roles",
           value: item.roles
         },
         {
@@ -42,16 +43,17 @@ class Footer extends React.Component {
       ];
       const payload = await httpRequest(
         "post",
-        "/hr-employee-v2/employees/_search",
+        "/egov-hrms/employees/_search",
         "",
         queryObj
       );
       employeeList =
         payload &&
-        payload.Employee.map((item, index) => {
+        payload.Employees.map((item, index) => {
+          const name = get(item, "user.name");
           return {
             value: item.uuid,
-            label: item.name
+            label: name
           };
         });
     }
