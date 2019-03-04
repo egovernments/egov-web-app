@@ -442,7 +442,7 @@ class ShowField extends Component {
     let { reportResult, metaData } = this.props;
     let { checkAllRows } = this;
     return (
-      <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
+      <thead>
         <tr className="report-table-header">
           <th key={"S. No."} className="report-header-cell">
             {"S. No."}
