@@ -80,15 +80,18 @@ class AllComplaints extends Component {
           : renderCustomTitle("0")
         : renderCustomTitle("0");
     }
+    let inputType = document.getElementsByTagName("input");
+    for (let input in inputType) {
+      if (inputType[input].type === "number") {
+        inputType[input].addEventListener("mousewheel", function() {
+          this.blur();
+        });
+      }
+    }
   };
 
   componentWillReceiveProps = nextProps => {
-    const {
-      role,
-      numCSRComplaint,
-      numEmpComplaint,
-      renderCustomTitle
-    } = this.props;
+    const { role, renderCustomTitle } = this.props;
     if (
       !isEqual(
         this.props.transformedComplaints,
