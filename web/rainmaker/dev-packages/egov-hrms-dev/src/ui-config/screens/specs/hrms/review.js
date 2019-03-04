@@ -8,7 +8,7 @@ import { setRolesList } from "./viewResource/functions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Create New Employee - Summary`,
+    labelName: "Employee - Summary",
     labelKey: "HR_SUMMARY_HEADER"
   })
 });
