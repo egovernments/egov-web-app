@@ -8,7 +8,7 @@ import {
 
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const onIconClick = (state, dispatch, index) => {

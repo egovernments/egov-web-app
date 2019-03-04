@@ -183,7 +183,8 @@ const serviceDetailsCard = {
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Employee[0].serviceHistory",
     prefixSourceJsonPath:
-      "children.cardContent.children.serviceDetailsCardContainer.children"
+      "children.cardContent.children.serviceDetailsCardContainer.children",
+    disableDeleteIfKeyExists: "id"
   },
   type: "array"
 };

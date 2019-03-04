@@ -242,6 +242,27 @@ class MultiItem extends React.Component {
     removeItem(screenKey, componentJsonpath, `props.items`, items);
   };
 
+  // Check if the key exists in the object and then return false
+  // which disables the delete functionality of the card by not
+  // showing the delete icon
+  checkDisableDelete = (
+    disableDeleteIfKeyExists,
+    preparedFinalObject,
+    sourceJsonPath,
+    key
+  ) => {
+    if (
+      disableDeleteIfKeyExists &&
+      get(
+        preparedFinalObject,
+        `${sourceJsonPath}[${key}].${disableDeleteIfKeyExists}`
+      )
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   render() {
     const {
       items,
@@ -253,9 +274,12 @@ class MultiItem extends React.Component {
       onComponentClick,
       hasAddItem,
       screenKey,
-      isReviewPage
+      isReviewPage,
+      disableDeleteIfKeyExists,
+      preparedFinalObject,
+      sourceJsonPath
     } = this.props;
-    const { addItem, removeItem } = this;
+    const { addItem, removeItem, checkDisableDelete } = this;
     return (
       <Div>
         {items.length > 0 &&
@@ -263,23 +287,30 @@ class MultiItem extends React.Component {
             if (checkActiveItem(item)) {
               return (
                 <Div key={key}>
-                  {checkActiveItems(items) > 1 && !isReviewPage && (
-                    <Container>
-                      <Item xs={12} align="right">
-                        <IconButton
-                          style={{
-                            marginBottom: "-105px",
-                            width: "40px",
-                            height: "40px"
-                          }}
-                          onClick={e => removeItem(key)}
-                          aria-label="Remove"
-                        >
-                          <Icon iconName="clear" />
-                        </IconButton>
-                      </Item>
-                    </Container>
-                  )}
+                  {checkActiveItems(items) > 1 &&
+                    !isReviewPage &&
+                    checkDisableDelete(
+                      disableDeleteIfKeyExists,
+                      preparedFinalObject,
+                      sourceJsonPath,
+                      key
+                    ) && (
+                      <Container>
+                        <Item xs={12} align="right">
+                          <IconButton
+                            style={{
+                              marginBottom: "-105px",
+                              width: "40px",
+                              height: "40px"
+                            }}
+                            onClick={e => removeItem(key)}
+                            aria-label="Remove"
+                          >
+                            <Icon iconName="clear" />
+                          </IconButton>
+                        </Item>
+                      </Container>
+                    )}
                   <RenderScreen
                     screenKey={screenKey}
                     components={item}
