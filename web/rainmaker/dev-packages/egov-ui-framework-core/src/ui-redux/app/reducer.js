@@ -3,13 +3,7 @@ import * as actionTypes from "./actionTypes";
 const initialState = {
   name: "MIHY",
   route: "",
-  previousRoute: "",
-  // toastObject: {
-  //   message: "",
-  //   open: false,
-  //   errorType: ""
-  // },
-  spinner: false
+  previousRoute: ""
 };
 
 const appReducer = (state = initialState, action) => {

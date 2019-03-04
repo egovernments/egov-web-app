@@ -27,6 +27,7 @@ class AutoSuggestor extends Component {
       label,
       placeholder,
       suggestions,
+      className,
       ...rest
     } = this.props;
     let translatedLabel = getLocaleLabels(
@@ -46,6 +47,7 @@ class AutoSuggestor extends Component {
           onSelect={this.onSelect}
           suggestions={suggestions}
           value={value}
+          className={className}
           label={translatedLabel}
           placeholder={translatedPlaceholder}
           {...rest}

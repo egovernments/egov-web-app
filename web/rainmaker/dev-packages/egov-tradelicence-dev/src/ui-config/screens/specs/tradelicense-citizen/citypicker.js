@@ -27,6 +27,7 @@ export const cityPicker = getCommonContainer({
           width: "100%",
           cursor: "pointer"
         },
+        className: "citizen-city-picker",
         label: { labelName: "City" },
         placeholder: { labelName: "Select City" },
         jsonPath: "citiesByModule.citizenTenantId",

@@ -199,7 +199,7 @@ const getUlbGradeLabel = (ulbGrade) => {
     if (ulbWiseHeaderName.indexOf(" ") > 0) {
       ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
     }
-    return "ULB" + "_" + ulbWiseHeaderName;
+    return "ULBGRADE" + "_" + ulbWiseHeaderName;
   }
 };
 

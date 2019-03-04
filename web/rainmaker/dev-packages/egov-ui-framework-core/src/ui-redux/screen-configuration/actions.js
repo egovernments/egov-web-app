@@ -5,7 +5,7 @@ import {
   validateForm
 } from "./utils";
 import { httpRequest, loginRequest } from "../../ui-utils";
-import { toggleSpinner, setRoute } from "../app/actions";
+import { setRoute } from "../app/actions";
 
 export const initScreen = (screenKey, screenConfig) => {
   return {
@@ -21,6 +21,12 @@ export const toggleSnackbar = (open, message, error) => {
     open,
     message,
     error
+  };
+};
+
+export const toggleSpinner = () => {
+  return {
+    type: screenActionTypes.TOGGLE_LOADER
   };
 };
 
