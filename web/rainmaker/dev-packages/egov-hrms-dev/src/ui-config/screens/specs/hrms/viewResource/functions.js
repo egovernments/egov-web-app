@@ -127,7 +127,7 @@ const setDeactivationDocuments = (state, dispatch) => {
 };
 
 // Remove objects from Arrays not having the specified key (eg. "id")
-// and add the key-value active:false in those objects having the key
+// and add the key-value isActive:false in those objects having the key
 // so as to deactivate them after the API call
 const handleDeletedCards = (jsonObject, jsonPath, key) => {
   let originalArray = get(jsonObject, jsonPath, []);
@@ -136,7 +136,7 @@ const handleDeletedCards = (jsonObject, jsonPath, key) => {
   });
   modifiedArray = modifiedArray.map(element => {
     if (element.hasOwnProperty("isDeleted")) {
-      element["active"] = false;
+      element["isActive"] = false;
     }
     return element;
   });
