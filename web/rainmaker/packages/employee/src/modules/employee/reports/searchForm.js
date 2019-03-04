@@ -28,7 +28,8 @@ class ShowForm extends Component {
   };
 
   resetFields = () => {
-    const { metaData, setMetaData, handleChange, searchForm, resetForm } = this.props;
+    const { metaData, setMetaData, handleChange, searchForm, resetForm ,showTable} = this.props;
+    showTable(false);
     resetForm();
   };
 
