@@ -133,6 +133,38 @@ const getReceiptData = (transformedData, ulbLogo) => {
           {
             text: [
               {
+                text: "Application Type ",
+                bold: true
+              },
+              {
+                text: transformedData.applicationType,
+                bold: false
+              }
+            ],
+
+            alignment: "left"
+          },
+          {
+            text: [
+              {
+                text: "Old License No. ",
+                bold: true
+              },
+              {
+                text: transformedData.oldLicenseNumber,
+                bold: false
+              }
+            ],
+            alignment: "right"
+          }
+        ]
+      },
+      {
+        style: "pt-reciept-citizen-header",
+        columns: [
+          {
+            text: [
+              {
                 text: "Financial Year ",
                 bold: true
               },

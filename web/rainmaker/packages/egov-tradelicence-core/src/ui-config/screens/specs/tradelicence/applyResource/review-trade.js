@@ -173,6 +173,23 @@ export const getReviewTrade = (isEditable = true) => {
       }
     },
     viewOne: getCommonContainer({
+      reviewApplicationType: getLabelWithValue(
+        {
+          labelName: "Application Type",
+          labelKey: "TL_APPLICATION_TYPE"
+        },
+        {
+          jsonPath:
+            "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType"
+        }
+      ),
+      reviewOldLicenseNo: getLabelWithValue(
+        {
+          labelName: "Old License Number",
+          labelKey: "TL_OLD_LICENSE_NO"
+        },
+        { jsonPath: "Licenses[0].oldLicenseNumber" }
+      ),
       reviewLicenceType: getLabelWithValue(
         {
           labelName: "Licence Type",

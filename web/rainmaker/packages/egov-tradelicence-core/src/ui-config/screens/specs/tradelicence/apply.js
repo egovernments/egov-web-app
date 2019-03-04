@@ -89,7 +89,8 @@ export const getMdmsData = async (action, state, dispatch) => {
           moduleName: "TradeLicense",
           masterDetails: [
             { name: "TradeType" },
-            { name: "AccessoriesCategory" }
+            { name: "AccessoriesCategory" },
+            { name: "ApplicationType" }
           ]
         },
         {
@@ -155,11 +156,20 @@ export const getMdmsData = async (action, state, dispatch) => {
 
 export const getData = async (action, state, dispatch) => {
   const queryValue = getQueryArg(window.location.href, "applicationNumber");
+  const applicationNo = queryValue
+    ? queryValue
+    : get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].oldLicenseNumber",
+        null
+      );
   await getMdmsData(action, state, dispatch);
   await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
 
-  if (queryValue) {
-    await updatePFOforSearchResults(action, state, dispatch, queryValue);
+  if (applicationNo) {
+    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    dispatch(prepareFinalObject("LicensesTemp", []));
+    await updatePFOforSearchResults(action, state, dispatch, applicationNo);
   } else {
     //hardcoding license type to permanent
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
@@ -220,8 +230,6 @@ const screenConfig = {
   name: "apply",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
-    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-    dispatch(prepareFinalObject("LicensesTemp", []));
     // getData(action, state, dispatch);
     getData(action, state, dispatch).then(responseAction => {
       const tenantId = localStorage.getItem("tenant-id");

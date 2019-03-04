@@ -71,6 +71,18 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.applicationNumber = nullToNa(
       get(response, "Licenses[0].applicationNumber", "NA")
     );
+    data.oldLicenseNumber = nullToNa(
+      get(response, "Licenses[0].oldLicenseNumber", "NA")
+    );
+    data.applicationType = getMessageFromLocalization(
+      nullToNa(
+        get(
+          response,
+          "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+          "NA"
+        )
+      )
+    );
     data.licenseNumber = nullToNa(
       get(response, "Licenses[0].licenseNumber", "NA")
     );

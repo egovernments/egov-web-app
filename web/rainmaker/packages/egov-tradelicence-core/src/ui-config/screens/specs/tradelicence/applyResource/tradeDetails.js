@@ -17,6 +17,7 @@ import {
   getNextMonthDateInYMD,
   setFilteredTradeTypes,
   getUniqueItemsFromArray
+  // getOldLicenseData
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -620,6 +621,70 @@ export const tradeDetails = getCommonCard({
     }
   ),
   tradeDetailsConatiner: getCommonContainer({
+    applicationType: {
+      ...getSelectField({
+        label: { labelName: "Application Type" },
+        placeholder: { labelName: "Select Application Type" },
+        required: true,
+        jsonPath:
+          "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+        props: {
+          jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
+        },
+        sourceJsonPath: "applyScreenMdmsData.TradeLicense.ApplicationType",
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      })
+    },
+    oldLicenseNo: getTextField({
+      label: {
+        labelName: "Old License No",
+        labelKey: "TL_OLD_LICENSE_NO"
+      },
+      placeholder: {
+        labelName: "Enter Old License No",
+        labelKey: ""
+      },
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      required: false,
+      jsonPath: "Licenses[0].oldLicenseNumber"
+    }),
+    // oldLicenseNo: getTextField({
+    //   label: {
+    //     labelName: "Old License No",
+    //     labelKey: "TL_OLD_LICENSE_NO"
+    //   },
+    //   placeholder: {
+    //     labelName: "Enter Old License No",
+    //     labelKey: ""
+    //   },
+    //   gridDefination: {
+    //     xs: 12,
+    //     sm: 6
+    //   },
+    //   iconObj: {
+    //     iconName: "search",
+    //     position: "end",
+    //     color: "#FE7A51",
+    //     onClickDefination: {
+    //       action: "condition",
+    //       callBack: (state, dispatch) => {
+    //         // getOldLicenseData(state, dispatch);
+    //       }
+    //     }
+    //   },
+    //   title: {
+    //     value: "Fill the form by searching your old approved trade license",
+    //     key: "TL_OLD_TL_NO"
+    //   },
+    //   infoIcon: "info_circle",
+    //   jsonPath: "Licenses[0].oldLicenseNumber"
+    // }),
     tradeLicenseType: {
       ...getSelectField({
         label: { labelName: "License Type" },
