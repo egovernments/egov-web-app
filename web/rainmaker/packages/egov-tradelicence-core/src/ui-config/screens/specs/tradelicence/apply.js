@@ -167,8 +167,6 @@ export const getData = async (action, state, dispatch) => {
   await getAllDataFromBillingSlab(localStorage.getItem("tenant-id"), dispatch);
 
   if (applicationNo) {
-    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-    dispatch(prepareFinalObject("LicensesTemp", []));
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
   } else {
     //hardcoding license type to permanent
@@ -231,6 +229,8 @@ const screenConfig = {
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
     // getData(action, state, dispatch);
+    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    dispatch(prepareFinalObject("LicensesTemp", []));
     getData(action, state, dispatch).then(responseAction => {
       const tenantId = localStorage.getItem("tenant-id");
       const queryObj = [{ key: "tenantId", value: tenantId }];
