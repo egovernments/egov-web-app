@@ -121,19 +121,20 @@ export const deactivateEmployee = getCommonContainer({
             width: "100%"
           }
         },
-        data: [
-          {
-            code: "Others"
-          },
-          {
-            code: "Order by commissioner"
-          }
-        ],
+        // data: [
+        //   {
+        //     code: "Others"
+        //   },
+        //   {
+        //     code: "Order by commissioner"
+        //   }
+        // ],
         jsonPath: "Employee[0].deactivationDetails[0].reasonForDeactivation",
         gridDefination: {
           xs: 12,
           sm: 12
-        }
+        },
+        sourceJsonPath: "viewScreenMdmsData.egov-hrms.DeactivationReason"
       }),
       effectiveDate: getDateField({
         label: {

@@ -47,7 +47,7 @@ const serviceDetailsCard = {
                 // ],
                 optionValue: "code",
                 optionLabel: "status",
-                hasLocalization: false
+                // hasLocalization: false
               }
             })
           },
