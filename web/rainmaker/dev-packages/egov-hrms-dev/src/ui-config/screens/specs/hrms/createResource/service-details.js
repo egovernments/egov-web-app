@@ -8,6 +8,7 @@ import {
   getCommonContainer,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const serviceDetailsCard = {
   uiFramework: "custom-containers",
@@ -46,7 +47,7 @@ const serviceDetailsCard = {
                 //   }
                 // ],
                 optionValue: "code",
-                optionLabel: "status",
+                optionLabel: "status"
                 // hasLocalization: false
               }
             })
@@ -166,6 +167,39 @@ const serviceDetailsCard = {
                 color: "primary"
               },
               jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
+            },
+            beforeFieldChange: (action, state, dispatch) => {
+              let assignToComponentPath = action.componentJsonpath.replace(
+                ".currentlyWorkingHere",
+                ".serviceToDate"
+              );
+              if (action.value) {
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.value",
+                    null
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    true
+                  )
+                );
+              } else {
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    false
+                  )
+                );
+              }
             }
           }
         },

@@ -203,7 +203,7 @@ export const professionalDetails = getCommonCard(
             optionLabel: "status",
             optionValue: "code",
             // hasLocalization: false,
-            jsonPath: "Employee[0].employeeType"
+            // jsonPath: "Employee[0].employeeType"
           }
         })
       },
@@ -221,7 +221,7 @@ export const professionalDetails = getCommonCard(
             optionLabel: "status",
             optionValue: "code",
             // hasLocalization: false,
-            jsonPath: "Employee[0].employeeStatus"
+            // jsonPath: "Employee[0].employeeStatus"
           }
         })
       },
