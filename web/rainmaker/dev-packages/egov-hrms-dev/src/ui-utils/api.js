@@ -4,8 +4,10 @@ import {
   addQueryArg
 } from "egov-ui-framework/ui-utils/commons";
 import store from "redux/store";
-import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  toggleSnackbar,
+  toggleSpinner
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getAccessToken,
   getTenantId

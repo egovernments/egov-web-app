@@ -32,10 +32,12 @@ const UploadSingleFile = ({
             documents.map((document, documentIndex) => {
               return (
                 <div key={documentIndex}>
-                  <UploadedDocument
-                    document={document}
-                    removeDocument={removeDocument}
-                  />
+                  {document && (
+                    <UploadedDocument
+                      document={document}
+                      removeDocument={removeDocument}
+                    />
+                  )}
                 </div>
               );
             })}
