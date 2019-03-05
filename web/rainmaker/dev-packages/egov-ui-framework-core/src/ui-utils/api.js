@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
-import { toggleSpinner } from "../ui-redux/screen-configuration/actions";
-import store from "../ui-redux/store";
+import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import store from "redux/store";
 import {
   getAccessToken,
   getTenantId
@@ -66,10 +66,10 @@ export const httpRequest = async (
         response = await instance.get(endPoint);
     }
     const responseStatus = parseInt(response.status, 10);
+    store.dispatch(toggleSpinner());
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
     }
-    store.dispatch(toggleSpinner());
   } catch (error) {
     const { data, status } = error.response;
     if (status === 400 && data === "") {
@@ -87,6 +87,7 @@ export const httpRequest = async (
         (data.hasOwnProperty("error_description") && data.error_description) ||
         apiError;
     }
+
     store.dispatch(toggleSpinner());
   }
   // unhandled error
@@ -130,6 +131,7 @@ export const prepareForm = params => {
 
 export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
+  store.dispatch(toggleSpinner());
   const tenantId = getTenantId()
     ? ulbLevel
       ? getTenantId().split(".")[0]
@@ -153,7 +155,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
     const response = await uploadInstance.post(endPoint, requestBody);
     const responseStatus = parseInt(response.status, 10);
     let fileStoreIds = [];
-
+    store.dispatch(toggleSpinner());
     if (responseStatus === 201) {
       const responseData = response.data;
       const files = responseData.files || [];
@@ -161,6 +163,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
       return fileStoreIds[0];
     }
   } catch (error) {
+    store.dispatch(toggleSpinner());
     throw new Error(error);
   }
 };
