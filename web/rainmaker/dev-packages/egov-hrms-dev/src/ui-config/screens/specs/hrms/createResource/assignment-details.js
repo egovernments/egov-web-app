@@ -8,6 +8,7 @@ import {
   getCommonContainer,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const assignmentDetailsCard = {
   uiFramework: "custom-containers",
@@ -47,7 +48,7 @@ const assignmentDetailsCard = {
                 labelName: "Assigned To Date",
                 labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
               },
-              required: true,
+              // required: true,
               pattern: getPattern("Date"),
               jsonPath: "Employee[0].assignments[0].toDate",
               props: {
@@ -84,6 +85,66 @@ const assignmentDetailsCard = {
               compJPath:
                 "components.div.children.formwizardThirdStep.children.assignmentDetails.children.cardContent.children.assignmentDetailsCard.props.items",
               screenKey: "create"
+            },
+            beforeFieldChange: (action, state, dispatch) => {
+              let assignToComponentPath = action.componentJsonpath.replace(
+                ".currentAssignment",
+                ".assignToDate"
+              );
+              if (action.value) {
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.value",
+                    null
+                  )
+                );
+                // dispatch(
+                //   handleField(
+                //     "create",
+                //     assignToComponentPath,
+                //     "required",
+                //     false
+                //   )
+                // );
+                // dispatch(
+                //   handleField(
+                //     "create",
+                //     assignToComponentPath,
+                //     "props.required",
+                //     false
+                //   )
+                // );
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    true
+                  )
+                );
+              } else {
+                // dispatch(
+                //   handleField("create", assignToComponentPath, "required", true)
+                // );
+                // dispatch(
+                //   handleField(
+                //     "create",
+                //     assignToComponentPath,
+                //     "props.required",
+                //     true
+                //   )
+                // );
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    false
+                  )
+                );
+              }
             }
           },
           department: {
