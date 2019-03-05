@@ -103,7 +103,7 @@ const serviceDetailsCard = {
             })
           },
           location: {
-            ...getSelectField({
+            ...getTextField({
               label: {
                 labelName: "Location",
                 labelKey: "HR_LOCATION_LABEL"
@@ -118,16 +118,16 @@ const serviceDetailsCard = {
                 sm: 4
               },
               props: {
-                className: "hr-generic-selectfield",
+              //   className: "hr-generic-selectfield",
                 jsonPath: "Employee[0].serviceHistory[0].location",
-                data: [
-                  {
-                    value: "pb.amritsar",
-                    label: "Amritsar"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+              //   data: [
+              //     {
+              //       value: "pb.amritsar",
+              //       label: "Amritsar"
+              //     }
+              //   ],
+              //   optionValue: "value",
+              //   optionLabel: "label"
               }
             })
           },
