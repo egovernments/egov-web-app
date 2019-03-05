@@ -17,6 +17,38 @@ import {
 } from "../tradelicence/apply";
 import { getAllDataFromBillingSlab } from "../utils";
 
+const getData = async (action, state, dispatch, tenantId) => {
+  await getMdmsData(action, state, dispatch);
+  await getAllDataFromBillingSlab(tenantId, dispatch);
+  await getBoundaryData(action, state, dispatch, [
+    { key: "tenantId", value: tenantId }
+  ]);
+  dispatch(
+    prepareFinalObject(
+      "Licenses[0].tradeLicenseDetail.address.tenantId",
+      tenantId
+    )
+  );
+};
+
+const updateSearchResults = async (
+  action,
+  state,
+  dispatch,
+  queryValue,
+  tenantId
+) => {
+  await getData(action, state, dispatch, tenantId);
+  await updatePFOforSearchResults(
+    action,
+    state,
+    dispatch,
+    queryValue,
+    "",
+    tenantId
+  );
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -24,26 +56,10 @@ const screenConfig = {
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
     const tenantId = getQueryArg(window.location.href, "tenantId");
     if (queryValue) {
-      updatePFOforSearchResults(
-        action,
-        state,
-        dispatch,
-        queryValue,
-        "",
-        tenantId
-      );
+      updateSearchResults(action, state, dispatch, queryValue, tenantId);
+    } else {
+      getData(action, state, dispatch, tenantId);
     }
-    getMdmsData(action, state, dispatch);
-    getAllDataFromBillingSlab(tenantId, dispatch);
-    getBoundaryData(action, state, dispatch, [
-      { key: "tenantId", value: tenantId }
-    ]);
-    dispatch(
-      prepareFinalObject(
-        "Licenses[0].tradeLicenseDetail.address.tenantId",
-        tenantId
-      )
-    );
     return action;
   },
   components: {
