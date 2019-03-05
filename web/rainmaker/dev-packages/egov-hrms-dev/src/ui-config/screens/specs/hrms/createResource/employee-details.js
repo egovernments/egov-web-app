@@ -202,7 +202,7 @@ export const professionalDetails = getCommonCard(
           props: {
             optionLabel: "status",
             optionValue: "code",
-            hasLocalization: false,
+            // hasLocalization: false,
             jsonPath: "Employee[0].employeeType"
           }
         })
@@ -220,7 +220,7 @@ export const professionalDetails = getCommonCard(
           props: {
             optionLabel: "status",
             optionValue: "code",
-            hasLocalization: false,
+            // hasLocalization: false,
             jsonPath: "Employee[0].employeeStatus"
           }
         })

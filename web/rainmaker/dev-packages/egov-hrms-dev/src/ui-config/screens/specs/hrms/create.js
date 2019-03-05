@@ -154,6 +154,15 @@ const getMdmsData = async (state, dispatch, tenantId) => {
             },
             {
               name: "EmployeeType"
+            },
+            {
+              name: "DeactivationReason"
+            },
+            {
+              name: "EmploymentTest"
+            },
+            {
+              name: "Specalization"
             }
           ]
         }
