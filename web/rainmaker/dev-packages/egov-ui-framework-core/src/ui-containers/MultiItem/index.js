@@ -214,7 +214,7 @@ class MultiItem extends React.Component {
         }
       }
       if (onMultiItemAdd) {
-        onMultiItemAdd(this.props.state, multiItemContent);
+        multiItemContent = onMultiItemAdd(this.props.state, multiItemContent);
       }
       set(scheama, prefixSourceJsonPath, multiItemContent);
     }
