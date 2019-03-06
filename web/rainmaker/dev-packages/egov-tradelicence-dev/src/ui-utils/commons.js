@@ -19,7 +19,7 @@ import {
   ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "../ui-redux/store";
+import store from "redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
@@ -50,24 +50,6 @@ export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
     }
   } else {
     return label;
-  }
-};
-
-export const getFileUrlFromAPI = async fileStoreId => {
-  const queryObject = [
-    { key: "tenantId", value: "pb" },
-    { key: "fileStoreIds", value: fileStoreId }
-  ];
-  try {
-    const fileUrl = await httpRequest(
-      "get",
-      "/filestore/v1/files/url",
-      "",
-      queryObject
-    );
-    return fileUrl;
-  } catch (e) {
-    console.log(e);
   }
 };
 

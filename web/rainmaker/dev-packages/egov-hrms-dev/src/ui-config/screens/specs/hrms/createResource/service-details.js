@@ -8,6 +8,7 @@ import {
   getCommonContainer,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const serviceDetailsCard = {
   uiFramework: "custom-containers",
@@ -46,8 +47,8 @@ const serviceDetailsCard = {
                 //   }
                 // ],
                 optionValue: "code",
-                optionLabel: "status",
-                hasLocalization: false
+                optionLabel: "status"
+                // hasLocalization: false
               }
             })
           },
@@ -102,7 +103,7 @@ const serviceDetailsCard = {
             })
           },
           location: {
-            ...getSelectField({
+            ...getTextField({
               label: {
                 labelName: "Location",
                 labelKey: "HR_LOCATION_LABEL"
@@ -117,16 +118,16 @@ const serviceDetailsCard = {
                 sm: 4
               },
               props: {
-                className: "hr-generic-selectfield",
+              //   className: "hr-generic-selectfield",
                 jsonPath: "Employee[0].serviceHistory[0].location",
-                data: [
-                  {
-                    value: "pb.amritsar",
-                    label: "Amritsar"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+              //   data: [
+              //     {
+              //       value: "pb.amritsar",
+              //       label: "Amritsar"
+              //     }
+              //   ],
+              //   optionValue: "value",
+              //   optionLabel: "label"
               }
             })
           },
@@ -166,6 +167,39 @@ const serviceDetailsCard = {
                 color: "primary"
               },
               jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
+            },
+            beforeFieldChange: (action, state, dispatch) => {
+              let assignToComponentPath = action.componentJsonpath.replace(
+                ".currentlyWorkingHere",
+                ".serviceToDate"
+              );
+              if (action.value) {
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.value",
+                    null
+                  )
+                );
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    true
+                  )
+                );
+              } else {
+                dispatch(
+                  handleField(
+                    "create",
+                    assignToComponentPath,
+                    "props.disabled",
+                    false
+                  )
+                );
+              }
             }
           }
         },

@@ -4,8 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import { getFileUrlFromAPI } from "../../ui-utils/commons";
-import { handleFileUpload } from "egov-ui-framework/ui-utils/commons";
+import {
+  handleFileUpload,
+  getFileUrlFromAPI
+} from "egov-ui-framework/ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { UploadSingleFile } from "../../ui-molecules-local";
@@ -75,9 +77,15 @@ class DocumentList extends Component {
       uploadedDocsInRedux: uploadedDocuments
     } = this.props;
     if (uploadedDocuments) {
-      const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
-        return parseInt(item); //returns string so convert to integer
-      });
+      const uploadedIndex = Object.keys(uploadedDocuments).reduce(
+        (res, curr) => {
+          if (uploadedDocuments[curr].length > 0) {
+            res.push(parseInt(curr)); //returns string so convert to integer
+          }
+          return res;
+        },
+        []
+      );
       this.setState({ uploadedDocuments, uploadedIndex });
     }
     Object.values(uploadedDocuments).forEach((item, index) => {
@@ -129,8 +137,12 @@ class DocumentList extends Component {
     let { uploadedDocuments } = this.state;
     const { prepareFinalObject, documents } = this.props;
     const jsonPath = documents[remDocIndex].jsonPath;
-    uploadedDocuments[remDocIndex] = {};
+    uploadedDocuments[remDocIndex] = [];
     prepareFinalObject(jsonPath, uploadedDocuments[remDocIndex]);
+    prepareFinalObject(
+      "LicensesTemp[0].uploadedDocsInRedux",
+      uploadedDocuments
+    );
     this.setState({ uploadedDocuments });
     this.getFileUploadStatus(false, remDocIndex);
   };

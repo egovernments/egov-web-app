@@ -61,8 +61,8 @@ export const otherDetails = getCommonCard({
                 props: {
                   jsonPath: "Employee[0].education[0].qualification",
                   optionLabel: "status",
-                  optionValue: "code",
-                  hasLocalization: false
+                  optionValue: "code"
+                  // hasLocalization: false
                 }
               })
             },
@@ -131,20 +131,21 @@ export const otherDetails = getCommonCard({
                   xs: 12,
                   sm: 4
                 },
+                sourceJsonPath: "createScreenMdmsData.egov-hrms.Specalization",
                 props: {
                   className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Arts",
-                      label: "Arts"
-                    },
-                    {
-                      value: "Science",
-                      label: "Science"
-                    }
-                  ],
-                  optionValue: "value",
-                  optionLabel: "label"
+                  // data: [
+                  //   {
+                  //     value: "Arts",
+                  //     label: "Arts"
+                  //   },
+                  //   {
+                  //     value: "Science",
+                  //     label: "Science"
+                  //   }
+                  // ],
+                  // optionValue: "code",
+                  // optionLabel: "label"
                 }
               })
             },
@@ -218,20 +219,21 @@ export const otherDetails = getCommonCard({
                   xs: 12,
                   sm: 4
                 },
+                sourceJsonPath: "createScreenMdmsData.egov-hrms.EmploymentTest",
                 props: {
                   className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Arts",
-                      label: "Arts"
-                    },
-                    {
-                      value: "Science",
-                      label: "Science"
-                    }
-                  ],
-                  optionValue: "value",
-                  optionLabel: "label"
+                  // data: [
+                  //   {
+                  //     value: "Arts",
+                  //     label: "Arts"
+                  //   },
+                  //   {
+                  //     value: "Science",
+                  //     label: "Science"
+                  //   }
+                  // ],
+                  // optionValue: "code",
+                  // optionLabel: "label"
                 }
               })
             },

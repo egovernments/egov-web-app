@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import Icon from "egov-ui-kit/components/Icon";
 
 export const Taskboard = ({ data }) => {
   return (
@@ -24,7 +25,13 @@ export const Taskboard = ({ data }) => {
 };
 
 const onModuleCardClick = (route) => {
-  window.location.href = window.origin + route;
+  const url = process.env.NODE_ENV === "production" ? `employee/${route}` : route;
+  window.location.href = window.origin + "/" + route;
+};
+
+const iconStyle = {
+  width: "48px",
+  height: "46.02px",
 };
 
 export const Boxboard = ({ data }) => {
@@ -32,7 +39,7 @@ export const Boxboard = ({ data }) => {
     <div className="inbox-module-container">
       {data.map((item, i) => {
         return (
-          <div className="inbox-module-card" onClick={() => onModuleCardClick(item.route)}>
+          <div className="inbox-module-card" onClick={() => onModuleCardClick(item.navigationURL)}>
             <Card
               className="inbox-card inbox-card-top"
               key={i}
@@ -44,7 +51,7 @@ export const Boxboard = ({ data }) => {
                     }}
                     className="head"
                   >
-                    {item.head}
+                    <Icon action={item.leftIcon.split(":")[0]} name={item.leftIcon.split(":")[1]} style={iconStyle} />
                   </div>
                   <div
                     style={{
@@ -52,7 +59,7 @@ export const Boxboard = ({ data }) => {
                     }}
                     className="body"
                   >
-                    <Label label={item.body} fontSize="16px" color="rgba(0, 0, 0, 0.87)" />
+                    <Label label={item.displayName} fontSize="16px" color="rgba(0, 0, 0, 0.87)" />
                   </div>
                 </div>
               }
