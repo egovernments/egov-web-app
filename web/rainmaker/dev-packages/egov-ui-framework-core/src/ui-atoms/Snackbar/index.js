@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import Button from "@material-ui/core/Button";
+import LabelContainer from "../../ui-containers/LabelContainer";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import InfoIcon from "@material-ui/icons/Info";
@@ -59,7 +59,7 @@ const MySnackbarContent = props => {
       message={
         <span id="client-snackbar" className={classes.message}>
           <Icon className={classNames(classes.icon, classes.iconVariant)} />
-          {message}
+          <LabelContainer labelName={message} labelKey={message} />
         </span>
       }
       action={[
