@@ -597,7 +597,9 @@ const accessoriesCard = {
         }
       })
     }),
-
+    onMultiItemAdd: (state, muliItemContent) => {
+      console.log("multi item component ", muliItemContent);
+    },
     items: [],
     addItemLabel: "ADD ACCESSORIES",
     headerName: "Accessory",
