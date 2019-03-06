@@ -402,7 +402,10 @@ const tradeUnitCard = {
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits",
     prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer.children"
+      "children.cardContent.children.tradeUnitCardContainer.children",
+    onMultiItemAdd: (state, muliItemContent) => {
+      return setFieldsOnAddItem(state, muliItemContent);
+    }
   },
   type: "array"
 };
@@ -598,7 +601,7 @@ const accessoriesCard = {
       })
     }),
     onMultiItemAdd: (state, muliItemContent) => {
-      console.log("multi item component ", muliItemContent);
+      return setFieldsOnAddItem(state, muliItemContent);
     },
     items: [],
     addItemLabel: "ADD ACCESSORIES",
@@ -842,3 +845,79 @@ export const tradeDetails = getCommonCard({
   tradeUnitCard,
   accessoriesCard
 });
+
+const setFieldsOnAddItem = (state, multiItemContent) => {
+  const preparedFinalObject = JSON.parse(
+    JSON.stringify(state.screenConfiguration.preparedFinalObject)
+  );
+  for (var variable in multiItemContent) {
+    const value = get(
+      preparedFinalObject,
+      multiItemContent[variable].props.jsonPath
+    );
+    if (multiItemContent[variable].props.setDataInField && value) {
+      if (
+        multiItemContent[variable].props.jsonPath.split(".")[0] ===
+          "LicensesTemp" &&
+        multiItemContent[variable].props.jsonPath.split(".").pop() ===
+          "tradeType"
+      ) {
+        const tradeTypeData = get(
+          preparedFinalObject,
+          `applyScreenMdmsData.TradeLicense.TradeType`,
+          []
+        );
+        const tradeTypeDropdownData =
+          tradeTypeData &&
+          tradeTypeData.TradeType &&
+          Object.keys(tradeTypeData.TradeType).map(item => {
+            return { code: item, active: true };
+          });
+        multiItemContent[variable].props.data = tradeTypeDropdownData;
+        const data = tradeTypeData[value];
+        if (data) {
+          multiItemContent["tradeType"].props.data = this.objectToDropdown(
+            data
+          );
+        }
+      } else if (
+        multiItemContent[variable].props.jsonPath.split(".").pop() ===
+        "tradeType"
+      ) {
+        const data = get(
+          preparedFinalObject,
+          `applyScreenMdmsData.TradeLicense.TradeType.${value.split(".")[0]}.${
+            value.split(".")[1]
+          }`
+        );
+        if (data) {
+          multiItemContent[variable].props.data = data;
+        }
+      } else if (
+        multiItemContent[variable].props.jsonPath.split(".").pop() ===
+          "uomValue" &&
+        value > 0
+      ) {
+        multiItemContent[variable].props.disabled = false;
+        multiItemContent[variable].props.required = true;
+      }
+    }
+    if (
+      multiItemContent[variable].props.setDataInField &&
+      multiItemContent[variable].props.disabled
+    ) {
+      if (
+        multiItemContent[variable].props.jsonPath.split(".").pop() ===
+        "uomValue"
+      ) {
+        const disabledValue = get(
+          state.screenConfiguration.screenConfig["apply"],
+          `${multiItemContent[variable].componentJsonpath}.props.disabled`,
+          true
+        );
+        multiItemContent[variable].props.disabled = disabledValue;
+      }
+    }
+  }
+  return multiItemContent;
+};
