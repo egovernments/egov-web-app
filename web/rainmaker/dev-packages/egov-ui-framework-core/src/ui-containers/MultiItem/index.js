@@ -82,7 +82,8 @@ class MultiItem extends React.Component {
       headerName,
       headerJsonPath,
       screenConfig,
-      preparedFinalObject
+      preparedFinalObject,
+      onMultiItemAdd
     } = this.props;
     const items = isNew
       ? []
@@ -211,6 +212,9 @@ class MultiItem extends React.Component {
             }
           }
         }
+      }
+      if (onMultiItemAdd) {
+        onMultiItemAdd(this.props.state, multiItemContent);
       }
       set(scheama, prefixSourceJsonPath, multiItemContent);
     }
