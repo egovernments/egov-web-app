@@ -157,7 +157,7 @@ export const searchForm = getCommonCard({
         },
         children: {
           buttonLabel: getLabel({
-            labelName: "Clear Form",
+            labelName: "Reset",
             labelKey: "HRMS_SEARCH_RESET_BUTTON"
           })
         },
