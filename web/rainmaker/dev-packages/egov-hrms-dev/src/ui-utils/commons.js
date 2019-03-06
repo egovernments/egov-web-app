@@ -16,26 +16,9 @@ import {
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-
-export const updateTradeDetails = async requestBody => {
-  try {
-    const payload = await httpRequest(
-      "post",
-      "/tl-services/v1/_update",
-      "",
-      [],
-      requestBody
-    );
-    return payload;
-  } catch (error) {
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
-    throw error;
-  }
-};
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -69,7 +52,7 @@ export const getFileUrlFromAPI = async fileStoreId => {
 };
 
 // HRMS Search API
-export const getSearchResults = async queryObject => {
+export const getSearchResults = async (queryObject, dispatch) => {
   try {
     const response = await httpRequest(
       "post",
@@ -79,12 +62,12 @@ export const getSearchResults = async queryObject => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, error.message, "error"));
   }
 };
 
-// HRMS Search API
-export const createEmployee = async (queryObject, payload) => {
+// HRMS Create API
+export const createEmployee = async (queryObject, payload, dispatch) => {
   try {
     const response = await httpRequest(
       "post",
@@ -95,13 +78,13 @@ export const createEmployee = async (queryObject, payload) => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, error.message, "error"));
     throw error;
   }
 };
 
 // HRMS Update API
-export const updateEmployee = async (queryObject, payload) => {
+export const updateEmployee = async (queryObject, payload, dispatch) => {
   try {
     const response = await httpRequest(
       "post",
@@ -112,7 +95,7 @@ export const updateEmployee = async (queryObject, payload) => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, error.message, "error"));
     throw error;
   }
 };
@@ -132,7 +115,7 @@ export const updatePFOforSearchResults = async (
     },
     { key: "applicationNumber", value: queryValue }
   ];
-  const payload = await getSearchResults(queryObject);
+  const payload = await getSearchResults(queryObject, dispatch);
   if (payload) {
     dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   }
@@ -374,7 +357,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         { key: "tenantId", value: queryObject[0].tenantId },
         { key: "applicationNumber", value: queryObject[0].applicationNumber }
       ];
-      let searchResponse = await getSearchResults(searchQueryObject);
+      let searchResponse = await getSearchResults(searchQueryObject, dispatch);
       dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
       const updatedtradeUnits = get(
         searchResponse,
@@ -491,7 +474,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
       const fileValid = isFileValid(file, acceptedFiles(inputProps.accept));
       const isSizeValid = getFileSize(file) <= maxFileSize;
       if (!fileValid) {
-        // store.dispatch(
+        // dispatch(
         //   toggleSnackbar(
         //     true,
         //     `Only image or pdf files can be uploaded`,
@@ -502,7 +485,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
         uploadDocument = false;
       }
       if (!isSizeValid) {
-        // store.dispatch(
+        // dispatch(
         //   toggleSnackbar(
         //     true,
         //     `Maximum file size can be ${Math.round(maxFileSize / 1000)} MB`,
