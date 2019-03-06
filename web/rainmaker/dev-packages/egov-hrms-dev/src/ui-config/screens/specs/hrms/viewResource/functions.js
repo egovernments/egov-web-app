@@ -317,7 +317,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
 
   if (action === "CREATE") {
     try {
-      let response = await createEmployee(queryObject, employeeObject);
+      let response = await createEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -329,7 +333,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     }
   } else if (action === "UPDATE") {
     try {
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -350,7 +358,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
         )
       );
       setDeactivationDocuments(state, dispatch);
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       showHideAdhocPopup(state, dispatch);
       const acknowledgementUrl =
@@ -371,7 +383,7 @@ export const getEmployeeData = async (state, dispatch, employeeId) => {
       value: employeeId
     }
   ];
-  let response = await getSearchResults(queryObject);
+  let response = await getSearchResults(queryObject, dispatch);
   dispatch(prepareFinalObject("Employee", get(response, "Employees")));
   dispatch(
     handleField(

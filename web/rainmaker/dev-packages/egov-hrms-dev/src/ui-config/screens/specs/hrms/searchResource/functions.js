@@ -80,53 +80,7 @@ export const searchApiCall = async (state, dispatch) => {
         queryObject.push({ key: key, value: searchScreenObject[key].trim() });
       }
     }
-    let response = await getSearchResults(queryObject);
-    // response = {
-    //   Licenses: [
-    //     {
-    //       employeeID: "EMP-JAL-12345",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     },
-    //     {
-    //       employeeID: "EMP-JAL-1234",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     },
-    //     {
-    //       employeeID: "EMP-JAL-1234",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     },
-    //     {
-    //       employeeID: "EMP-JAL-1234",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     },
-    //     {
-    //       employeeID: "EMP-JAL-1234",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     },
-    //     {
-    //       employeeID: "EMP-JAL-1234",
-    //       name: "Ravinder Pal Singh",
-    //       role: "Accountant",
-    //       designation: "Junior Accountant",
-    //       department: "Administration"
-    //     }
-    //   ]
-    // };
+    let response = await getSearchResults(queryObject, dispatch);
     try {
       let data = response.Employees.map(item => {
         // GET ALL CURRENT DESIGNATIONS OF EMPLOYEE
