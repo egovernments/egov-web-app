@@ -14,10 +14,8 @@ import {
   setBusinessServiceDataToLocalStorage
 } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import {
-  getSearchResults,
-  getFileUrlFromAPI
-} from "../../../../ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
+import { getFileUrlFromAPI } from "egov-ui-framework/ui-utils/commons";
 import {
   createEstimateData,
   setMultiOwnerForSV,
