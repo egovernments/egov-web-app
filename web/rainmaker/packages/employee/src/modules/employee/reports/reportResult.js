@@ -163,9 +163,9 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
-    let { reportResult, tabLabel,metaData } = this.props;
-    let {reportDetails={}} = metaData;
-    let {additionalConfig={}}=reportDetails;
+    let { reportResult, tabLabel, metaData } = this.props;
+    let { reportDetails = {} } = metaData;
+    let { additionalConfig = {} } = reportDetails;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -177,7 +177,8 @@ class ShowField extends Component {
     rTable = $("#reportTable").DataTable({
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      dom:"<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
+      dom:
+        "<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
       order: [],
       // responsive: true,
       select: true,
@@ -192,8 +193,8 @@ class ShowField extends Component {
       columnDefs: [
         {
           ordering: false,
-          targets:0
-        }
+          targets: 0,
+        },
       ],
       fixedColumns: true,
       // scrollResize: true,
@@ -244,29 +245,29 @@ class ShowField extends Component {
       // },
       // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
       // "iDisplayLength": -1,
-        "bPaginate": true,
-        "iCookieDuration": 60,
-        // "bStateSave": false,
-        "bAutoWidth": true,
-        //true
-        "bScrollAutoCss": true,
-        // "bProcessing": true,
-        "bRetrieve": true,
-        "bJQueryUI": true,
-        // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
-        "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "All"]],
-        "sScrollX": "100%",
-        // "sScrollXInner": "110%",
-        "bScrollCollapse": true,
-        "fnInitComplete": function() {
-            this.css("visibility", "visible");
-            $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-        },
-        renderer: "bootstrap",
-        "drawCallback": function( settings ) {
-          $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-        },
-        ...additionalConfig
+      bPaginate: true,
+      iCookieDuration: 60,
+      // "bStateSave": false,
+      bAutoWidth: true,
+      //true
+      bScrollAutoCss: true,
+      // "bProcessing": true,
+      bRetrieve: true,
+      bJQueryUI: true,
+      // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
+      aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      sScrollX: "100%",
+      // "sScrollXInner": "110%",
+      bScrollCollapse: true,
+      fnInitComplete: function() {
+        this.css("visibility", "visible");
+        $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
+      },
+      renderer: "bootstrap",
+      drawCallback: function(settings) {
+        $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
+      },
+      ...additionalConfig,
     });
     showTabLabel();
   }
@@ -403,7 +404,7 @@ class ShowField extends Component {
         reportResult.reportHeader[i] &&
         reportResult.reportHeader[i].type == "currency"
       ) {
-        return this.addCommas(val);
+        return this.addCommas(Number(val).toFixed(2));
       } else {
         return val;
       }
@@ -710,7 +711,7 @@ class ShowField extends Component {
             {sumColumn.map((columnObj, index) => {
               return (
                 <th style={index !== 0 ? { textAlign: "right" } : {}} key={index}>
-                  {index === 0 ? "Total" : this.addCommas(total[index - 1])}
+                  {index === 0 ? "Total" : this.addCommas(Number(total[index - 1])).toFixed(2)}
                 </th>
               );
             })}
@@ -781,7 +782,6 @@ class ShowField extends Component {
             {self.renderBody()}
 
             {this.renderFooter()}
-
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
