@@ -259,6 +259,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     }
   }
 
+  // Set employee id null in case of blank
+  if (get(employeeObject[0], "code") === "") {
+    set(employeeObject[0], "code", null);
+  }
+
   let serviceHistory = returnEmptyArrayIfNull(
     get(employeeObject[0], "serviceHistory", [])
   );

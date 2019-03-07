@@ -176,6 +176,7 @@ export const professionalDetails = getCommonCard(
             labelName: "Enter Employee ID",
             labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
           },
+          pattern: /^[a-zA-Z0-9-_]*$/i,
           jsonPath: "Employee[0].code"
         })
       },
