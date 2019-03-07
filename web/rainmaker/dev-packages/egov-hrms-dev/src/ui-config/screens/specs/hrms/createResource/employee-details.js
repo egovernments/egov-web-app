@@ -47,6 +47,13 @@ export const employeeDetails = getCommonCard({
           labelName: "Enter Mobile No.",
           labelKey: "HR_MOB_NO_PLACEHOLDER"
         },
+        title: {
+          value:
+            "Please re-check Mobile no. added as the password will be sent to this number",
+          key: "HR_MOB_NO_TOOLTIP_MESSAGE"
+        },
+        infoIcon: "info_circle",
+
         required: true,
         pattern: getPattern("MobileNo"),
         jsonPath: "Employee[0].user.mobileNumber"

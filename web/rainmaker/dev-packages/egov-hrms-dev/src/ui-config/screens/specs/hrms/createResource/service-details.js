@@ -6,7 +6,8 @@ import {
   getDateField,
   getSelectField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
@@ -118,16 +119,16 @@ const serviceDetailsCard = {
                 sm: 4
               },
               props: {
-              //   className: "hr-generic-selectfield",
-                jsonPath: "Employee[0].serviceHistory[0].location",
-              //   data: [
-              //     {
-              //       value: "pb.amritsar",
-              //       label: "Amritsar"
-              //     }
-              //   ],
-              //   optionValue: "value",
-              //   optionLabel: "label"
+                //   className: "hr-generic-selectfield",
+                jsonPath: "Employee[0].serviceHistory[0].location"
+                //   data: [
+                //     {
+                //       value: "pb.amritsar",
+                //       label: "Amritsar"
+                //     }
+                //   ],
+                //   optionValue: "value",
+                //   optionLabel: "label"
               }
             })
           },
@@ -235,5 +236,10 @@ export const serviceDetails = getCommonCard({
       }
     }
   ),
+  subheader: getCommonSubHeader({
+    labelName: "Please note that service details cannot be edited once saved.",
+    labelKey: "HR_SER_DET_SUB_HEADER"
+  }),
+
   serviceDetailsCard
 });

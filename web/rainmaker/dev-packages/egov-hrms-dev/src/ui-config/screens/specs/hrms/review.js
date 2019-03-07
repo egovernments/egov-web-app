@@ -1,6 +1,7 @@
 import {
   getCommonHeader,
-  getCommonContainer
+  getCommonContainer,
+  getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { employeeReviewDetails } from "./viewResource/employee-review";
 import { setRolesList } from "./viewResource/functions";
@@ -10,6 +11,13 @@ export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: "Employee - Summary",
     labelKey: "HR_SUMMARY_HEADER"
+  })
+});
+
+export const subHeader = getCommonContainer({
+  subHeader: getCommonSubHeader({
+    labelName: "Please verify entered details before you submit.",
+    labelKey: "HR_SER_DET_SUB_HEADER"
   })
 });
 
@@ -86,6 +94,13 @@ const screenConfig = {
                 sm: 10
               },
               ...header
+            },
+            subHeader: {
+              gridDefination: {
+                xs: 12,
+                sm: 10
+              },
+              ...subHeader
             }
           }
         },
