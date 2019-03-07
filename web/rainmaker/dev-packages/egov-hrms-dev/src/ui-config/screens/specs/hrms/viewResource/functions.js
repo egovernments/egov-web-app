@@ -251,6 +251,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       `assignments[${i}].toDate`,
       convertDateToEpoch(get(employeeObject[0], `assignments[${i}].toDate`))
     );
+
+    // Set isCurrentAssignment to false if key not present
+    let assignmentObject = get(employeeObject[0], `assignments[${i}]`);
+    if (!assignmentObject.hasOwnProperty("isCurrentAssignment")) {
+      set(employeeObject[0], `assignments[${i}]["isCurrentAssignment"]`, false);
+    }
   }
 
   let serviceHistory = returnEmptyArrayIfNull(
