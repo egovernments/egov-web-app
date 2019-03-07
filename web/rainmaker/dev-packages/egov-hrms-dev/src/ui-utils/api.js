@@ -3,7 +3,7 @@ import {
   fetchFromLocalStorage,
   addQueryArg
 } from "egov-ui-framework/ui-utils/commons";
-import store from "redux/store";
+import store from "ui-redux/store";
 import {
   toggleSnackbar,
   toggleSpinner
