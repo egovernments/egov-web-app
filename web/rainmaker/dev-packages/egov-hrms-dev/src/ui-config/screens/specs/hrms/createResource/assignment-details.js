@@ -6,7 +6,8 @@ import {
   getDateField,
   getSelectField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
@@ -266,5 +267,10 @@ export const assignmentDetails = getCommonCard({
       }
     }
   ),
+  subheader: getCommonSubHeader({
+    labelName:
+      "Please note that assignment details cannot be edited once saved.",
+    labelKey: "HR_ASSIGN_DET_SUB_HEADER"
+  }),
   assignmentDetailsCard
 });
