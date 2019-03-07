@@ -16,7 +16,8 @@ export const header = getCommonContainer({
 
 export const subHeader = getCommonContainer({
   subHeader: getCommonSubHeader({
-    labelName: "Please verify entered details before you submit.",
+    labelName:
+      "Verify entered details before submission. Details cannot be edited once submitted.",
     labelKey: "HR_SER_DET_SUB_HEADER"
   })
 });

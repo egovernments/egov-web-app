@@ -49,7 +49,7 @@ export const employeeDetails = getCommonCard({
         },
         title: {
           value:
-            "Please re-check Mobile no. added as the password will be sent to this number",
+            "Password/OTP will be sent to this number",
           key: "HR_MOB_NO_TOOLTIP_MESSAGE"
         },
         infoIcon: "info_circle",
