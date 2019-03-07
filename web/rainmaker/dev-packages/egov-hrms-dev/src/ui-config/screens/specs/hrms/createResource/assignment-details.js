@@ -269,7 +269,7 @@ export const assignmentDetails = getCommonCard({
   ),
   subheader: getCommonSubHeader({
     labelName:
-      "Please note that assignment details cannot be edited once saved.",
+      "Verify entered details before submission. Assignment details cannot be edited once submitted.",
     labelKey: "HR_ASSIGN_DET_SUB_HEADER"
   }),
   assignmentDetailsCard

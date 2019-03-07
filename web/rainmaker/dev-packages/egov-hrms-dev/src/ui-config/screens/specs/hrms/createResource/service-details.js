@@ -237,7 +237,7 @@ export const serviceDetails = getCommonCard({
     }
   ),
   subheader: getCommonSubHeader({
-    labelName: "Please note that service details cannot be edited once saved.",
+    labelName: "Verify entered details before submission. Service details cannot be edited once submitted.",
     labelKey: "HR_SER_DET_SUB_HEADER"
   }),
 
