@@ -39,6 +39,7 @@ class SwitchWithLabel extends Component {
       items,
       FormControlProps,
       SwitchProps,
+      disabled = false,
       value,
       valueFromAPI
     } = this.props;
@@ -54,6 +55,7 @@ class SwitchWithLabel extends Component {
                   checked={value || valueFromAPI || false}
                   value={value || valueFromAPI || false}
                   onChange={event => this.onSwitchChange(event)}
+                  disabled={disabled}
                   {...SwitchProps}
                 />
               }

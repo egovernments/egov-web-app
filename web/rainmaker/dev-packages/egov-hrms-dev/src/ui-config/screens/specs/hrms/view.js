@@ -9,6 +9,9 @@ import { getEmployeeData } from "./viewResource/functions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { deactivateEmployee } from "./viewResource/deactivate-employee";
 import { showHideAdhocPopup } from "../utils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { httpRequest } from "../../../../ui-utils";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -19,6 +22,37 @@ export const header = getCommonContainer({
 
 const tradeView = employeeReviewDetails(false);
 
+const getMdmsData = async (action, state, dispatch) => {
+  const tenantId = getTenantId();
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: "egov-hrms",
+          masterDetails: [
+            {
+              name: "DeactivationReason"
+            }
+          ]
+        }
+      ]
+    }
+  };
+  try {
+    const payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    dispatch(prepareFinalObject("viewScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "view",
@@ -26,6 +60,7 @@ const screenConfig = {
     let employeeCode = getQueryArg(window.location.href, "employeeID");
     getEmployeeData(state, dispatch, employeeCode);
     showHideAdhocPopup(state, dispatch);
+    getMdmsData(action, state, dispatch);
     return action;
   },
   components: {

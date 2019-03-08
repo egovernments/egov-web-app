@@ -3,9 +3,11 @@ import {
   fetchFromLocalStorage,
   addQueryArg
 } from "egov-ui-framework/ui-utils/commons";
-import store from "../ui-redux/store";
-import { toggleSpinner } from "egov-ui-framework/ui-redux/app/actions";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import store from "ui-redux/store";
+import {
+  toggleSnackbar,
+  toggleSpinner
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getAccessToken,
   getTenantId

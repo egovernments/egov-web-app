@@ -154,6 +154,15 @@ const getMdmsData = async (state, dispatch, tenantId) => {
             },
             {
               name: "EmployeeType"
+            },
+            {
+              name: "DeactivationReason"
+            },
+            {
+              name: "EmploymentTest"
+            },
+            {
+              name: "Specalization"
             }
           ]
         }
@@ -220,6 +229,16 @@ const setHierarchyList = (state, dispatch) => {
   );
 };
 
+const freezeEmployedStatus = (state, dispatch) => {
+  let employeeStatus = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Employee[0].employeeStatus"
+  );
+  if (!employeeStatus) {
+    dispatch(prepareFinalObject("Employee[0].employeeStatus", "EMPLOYED"));
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
@@ -230,6 +249,7 @@ const screenConfig = {
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
     employeeCode && getEmployeeData(state, dispatch, employeeCode);
     getYearsList(1950, state, dispatch);
+    freezeEmployedStatus(state, dispatch);
     // if (mdmsDataStatus) {
     //   setHierarchyList(state, dispatch);
     // }

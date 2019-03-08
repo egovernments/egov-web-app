@@ -9,10 +9,17 @@ import {
   epochToYmd,
   getLocaleLabels
 } from "../../ui-utils/commons";
-import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+
+const appendModulePrefix = value => {
+  if (window.location.pathname.includes("hrms")) {
+    return `HR_${value}`;
+  } else {
+    return `TL_${value}`;
+  }
+};
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {
@@ -90,7 +97,7 @@ class TextFieldContainer extends React.Component {
                 <MenuItem key={key} value={option.value}>
                   {getLocaleLabels(
                     option.value,
-                    `TL_${option.value}`,
+                    appendModulePrefix(option.value),
                     transfomedKeys
                   )}
                 </MenuItem>

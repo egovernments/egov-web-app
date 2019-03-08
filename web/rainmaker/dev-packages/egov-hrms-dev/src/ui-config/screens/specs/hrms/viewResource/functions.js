@@ -127,7 +127,7 @@ const setDeactivationDocuments = (state, dispatch) => {
 };
 
 // Remove objects from Arrays not having the specified key (eg. "id")
-// and add the key-value active:false in those objects having the key
+// and add the key-value isActive:false in those objects having the key
 // so as to deactivate them after the API call
 const handleDeletedCards = (jsonObject, jsonPath, key) => {
   let originalArray = get(jsonObject, jsonPath, []);
@@ -136,7 +136,7 @@ const handleDeletedCards = (jsonObject, jsonPath, key) => {
   });
   modifiedArray = modifiedArray.map(element => {
     if (element.hasOwnProperty("isDeleted")) {
-      element["active"] = false;
+      element["isActive"] = false;
     }
     return element;
   });
@@ -229,12 +229,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   set(
     employeeObject[0],
     "dateOfAppointment",
-    convertDateToEpoch(get(employeeObject[0], "dateOfAppointment"))
+    convertDateToEpoch(get(employeeObject[0], "dateOfAppointment"), "dayStart")
   );
   set(
     employeeObject[0],
     "user.dob",
-    convertDateToEpoch(get(employeeObject[0], "user.dob"))
+    convertDateToEpoch(get(employeeObject[0], "user.dob"), "dayStart")
   );
 
   let assignments = returnEmptyArrayIfNull(
@@ -244,13 +244,30 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     set(
       employeeObject[0],
       `assignments[${i}].fromDate`,
-      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].fromDate`))
+      convertDateToEpoch(
+        get(employeeObject[0], `assignments[${i}].fromDate`),
+        "dayStart"
+      )
     );
     set(
       employeeObject[0],
       `assignments[${i}].toDate`,
-      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].toDate`))
+      convertDateToEpoch(
+        get(employeeObject[0], `assignments[${i}].toDate`),
+        "dayStart"
+      )
     );
+
+    // Set isCurrentAssignment to false if key not present
+    let assignmentObject = get(employeeObject[0], `assignments[${i}]`);
+    if (!assignmentObject.hasOwnProperty("isCurrentAssignment")) {
+      set(employeeObject[0], `assignments[${i}]["isCurrentAssignment"]`, false);
+    }
+  }
+
+  // Set employee id null in case of blank
+  if (get(employeeObject[0], "code") === "") {
+    set(employeeObject[0], "code", null);
   }
 
   let serviceHistory = returnEmptyArrayIfNull(
@@ -261,14 +278,16 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       employeeObject[0],
       `serviceHistory[${i}].serviceFrom`,
       convertDateToEpoch(
-        get(employeeObject[0], `serviceHistory[${i}].serviceFrom`)
+        get(employeeObject[0], `serviceHistory[${i}].serviceFrom`),
+        "dayStart"
       )
     );
     set(
       employeeObject[0],
       `serviceHistory[${i}].serviceTo`,
       convertDateToEpoch(
-        get(employeeObject[0], `serviceHistory[${i}].serviceTo`)
+        get(employeeObject[0], `serviceHistory[${i}].serviceTo`),
+        "dayStart"
       )
     );
   }
@@ -286,7 +305,8 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       set(
         employeeObject[0],
         `education[${i}].yearOfPassing`,
-        convertDateToEpoch(`${educationYearOfPassing}-01-01`)
+        convertDateToEpoch(`${educationYearOfPassing}-01-01`),
+        "dayStart"
       );
   }
 
@@ -301,7 +321,8 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       set(
         employeeObject[0],
         `tests[${i}].yearOfPassing`,
-        convertDateToEpoch(`${testsYearOfPassing}-01-01`)
+        convertDateToEpoch(`${testsYearOfPassing}-01-01`),
+        "dayStart"
       );
   }
 
@@ -317,7 +338,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
 
   if (action === "CREATE") {
     try {
-      let response = await createEmployee(queryObject, employeeObject);
+      let response = await createEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -329,7 +354,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     }
   } else if (action === "UPDATE") {
     try {
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -346,11 +375,16 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
         employeeObject[0],
         `deactivationDetails[0].effectiveFrom`,
         convertDateToEpoch(
-          get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
+          get(employeeObject[0], `deactivationDetails[0].effectiveFrom`),
+          "dayStart"
         )
       );
       setDeactivationDocuments(state, dispatch);
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       showHideAdhocPopup(state, dispatch);
       const acknowledgementUrl =
@@ -371,7 +405,7 @@ export const getEmployeeData = async (state, dispatch, employeeId) => {
       value: employeeId
     }
   ];
-  let response = await getSearchResults(queryObject);
+  let response = await getSearchResults(queryObject, dispatch);
   dispatch(prepareFinalObject("Employee", get(response, "Employees")));
   dispatch(
     handleField(

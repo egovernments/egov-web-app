@@ -89,7 +89,7 @@ export const searchForm = getCommonCard({
         sm: 4
       },
       required: false,
-      pattern: /^[a-zA-Z0-9-]*$/i,
+      pattern: /^[a-zA-Z0-9-_]*$/i,
       errorMessage: "HR_EMP_ID_ERR_MSG",
       jsonPath: "searchScreen.codes"
     }),
@@ -157,7 +157,7 @@ export const searchForm = getCommonCard({
         },
         children: {
           buttonLabel: getLabel({
-            labelName: "Clear Form",
+            labelName: "Reset",
             labelKey: "HRMS_SEARCH_RESET_BUTTON"
           })
         },

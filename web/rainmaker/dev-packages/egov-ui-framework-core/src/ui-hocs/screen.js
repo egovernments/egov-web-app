@@ -130,12 +130,12 @@ const screenHoc = ({
   }
 
   const mapStateToProps = state => {
-    const { screenConfiguration, app } = state;
-    const { spinner } = app;
+    const { screenConfiguration } = state;
     const {
       screenConfig,
       preparedFinalObject,
-      toastObject
+      toastObject,
+      spinner
     } = screenConfiguration;
     return { screenConfig, preparedFinalObject, state, toastObject, spinner };
   };

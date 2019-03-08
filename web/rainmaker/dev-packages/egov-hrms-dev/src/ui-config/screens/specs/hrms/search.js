@@ -11,6 +11,7 @@ import { httpRequest } from "../../../../ui-utils";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchForm } from "./searchResource/searchForm";
 import { searchResults } from "./searchResource/searchResults";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -24,13 +25,37 @@ const header = getCommonHeader({
 });
 
 const getMDMSData = async (action, state, dispatch) => {
+  const tenantId = getTenantId();
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: "pb", // Why hardcoded?
+      tenantId: tenantId,
       moduleDetails: [
         {
           moduleName: "common-masters",
           masterDetails: [{ name: "Department" }, { name: "Designation" }]
+        },
+        {
+          moduleName: "egov-hrms",
+          masterDetails: [
+            {
+              name: "Degree"
+            },
+            {
+              name: "EmployeeStatus"
+            },
+            {
+              name: "EmployeeType"
+            },
+            {
+              name: "DeactivationReason"
+            },
+            {
+              name: "EmploymentTest"
+            },
+            {
+              name: "Specalization"
+            }
+          ]
         }
       ]
     }
@@ -128,7 +153,7 @@ const employeeSearchAndResult = {
                 },
 
                 buttonLabel: getLabel({
-                  labelName: "ADD NEW EMPLOYEE",
+                  labelName: "Add Employee",
                   labelKey: "HR_ADD_NEW_EMPLOYEE_BUTTON"
                 })
               },

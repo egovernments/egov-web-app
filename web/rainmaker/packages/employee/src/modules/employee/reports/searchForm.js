@@ -20,6 +20,7 @@ class ShowForm extends Component {
   state = {
     searchBtnText: "APPLY",
     filterApplied: false,
+    getResults: false,
   };
 
   toDateObj = (dateStr) => {
@@ -182,7 +183,6 @@ class ShowForm extends Component {
 
   // set the value here, introduce the disabled
   handleFormFields = () => {
-    let { currentThis } = this;
     let { metaData, searchForm } = this.props;
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
@@ -213,6 +213,12 @@ class ShowForm extends Component {
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
 
+    if (!_.isEqual(this.props.searchForm, nextProps.searchForm)) {
+      if (this.state.getResults) {
+        this.search(null, false, nextProps.searchForm);
+        this.setState({ getResults: false });
+      }
+    }
     if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("APPLY");
       this.setState({
@@ -335,7 +341,7 @@ class ShowForm extends Component {
 
     changeButtonText("APPLY");
   };
-  search = (e = null, isDrilldown = false) => {
+  search = (e = null, isDrilldown = false, searchForm) => {
     if (e) {
       e.preventDefault();
     }
@@ -344,7 +350,6 @@ class ShowForm extends Component {
       showTable,
       changeButtonText,
       setReportResult,
-      searchForm,
       metaData,
       setFlag,
       setSearchParams,
@@ -477,46 +482,51 @@ class ShowForm extends Component {
     changeButtonText("APPLY");
   };
 
+  fetchResults = (e, searchForm) => {
+    let { search } = this;
+    let fromDate;
+    let toDate;
+    if (searchForm && searchForm.fromDate && searchForm.toDate) {
+      fromDate = new Date(searchForm.fromDate);
+      toDate = new Date(searchForm.toDate);
+    }
+
+    let tabLabel = "";
+    if (fromDate && toDate) {
+      tabLabel = `Showing data for : ${fromDate.getDate() + "/" + (fromDate.getMonth() + 1) + "/" + fromDate.getFullYear()} to ${toDate.getDate() +
+        "/" +
+        (toDate.getMonth() + 1) +
+        "/" +
+        toDate.getFullYear()}`;
+    }
+
+    /** Zone wise selection show in header */
+    if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
+      if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
+        tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
+      }
+      if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
+        tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
+      }
+      if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
+        tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
+      }
+    }
+    /** END Zone wise ... */
+
+    this.props.updateTabLabel(tabLabel);
+    search(e, false, searchForm);
+  };
+
   render() {
-    let { searchForm, fieldErrors, isFormValid, isTableShow, handleChange, buttonText, metaData, reportHistory, reportIndex } = this.props;
+    let { buttonText, metaData, reportIndex, searchForm } = this.props;
     let { search } = this;
     return (
       <div className="">
         {metaData && metaData.reportDetails && (
           <form
             onSubmit={(e) => {
-              let fromDate;
-              let toDate;
-              if (searchForm && searchForm.fromDate && searchForm.toDate) {
-                fromDate = new Date(searchForm.fromDate);
-                toDate = new Date(searchForm.toDate);
-              }
-
-              let tabLabel = "";
-              if (fromDate && toDate) {
-                tabLabel = `Showing data for : ${fromDate.getDate() +
-                  "/" +
-                  (fromDate.getMonth() + 1) +
-                  "/" +
-                  fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
-              }
-
-              /** Zone wise selection show in header */
-              if (searchForm && searchForm.hasOwnProperty("ZonalSelection")) {
-                if (searchForm.ZonalSelection.hasOwnProperty("Zone")) {
-                  tabLabel += ` <b>Zone:</b> ${searchForm.ZonalSelection.Zone}`;
-                }
-                if (searchForm.ZonalSelection.hasOwnProperty("Block")) {
-                  tabLabel += ` <b>Block:</b> ${searchForm.ZonalSelection.Block}`;
-                }
-                if (searchForm.ZonalSelection.hasOwnProperty("Locality")) {
-                  tabLabel += ` <b>Locality:</b> ${searchForm.ZonalSelection.Locality}`;
-                }
-              }
-              /** END Zone wise ... */
-
-              this.props.updateTabLabel(tabLabel);
-              search(e);
+              this.fetchResults(e, searchForm);
             }}
           >
             <Card

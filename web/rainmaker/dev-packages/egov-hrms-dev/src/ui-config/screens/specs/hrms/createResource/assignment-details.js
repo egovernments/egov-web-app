@@ -6,8 +6,12 @@ import {
   getDateField,
   getSelectField,
   getCommonContainer,
-  getPattern
+  getPattern,
+  getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
+import set from "lodash/set";
 
 const assignmentDetailsCard = {
   uiFramework: "custom-containers",
@@ -47,7 +51,7 @@ const assignmentDetailsCard = {
                 labelName: "Assigned To Date",
                 labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
               },
-              required: true,
+              // required: true,
               pattern: getPattern("Date"),
               jsonPath: "Employee[0].assignments[0].toDate",
               props: {
@@ -65,7 +69,9 @@ const assignmentDetailsCard = {
               xs: 12,
               sm: 6
             },
-            children: {}
+            props: {
+              disabled: true
+            }
           },
           currentAssignment: {
             uiFramework: "custom-molecules-local",
@@ -84,6 +90,45 @@ const assignmentDetailsCard = {
               compJPath:
                 "components.div.children.formwizardThirdStep.children.assignmentDetails.children.cardContent.children.assignmentDetailsCard.props.items",
               screenKey: "create"
+            },
+            beforeFieldChange: (action, state, dispatch) => {
+              let assignToComponentPath = action.componentJsonpath.replace(
+                ".currentAssignment",
+                ".assignToDate"
+              );
+              let isDisabled = get(
+                state.screenConfiguration.screenConfig.create,
+                `${action.componentJsonpath}.props.disabled`
+              );
+              if (!isDisabled) {
+                if (action.value) {
+                  dispatch(
+                    handleField(
+                      "create",
+                      assignToComponentPath,
+                      "props.value",
+                      null
+                    )
+                  );
+                  dispatch(
+                    handleField(
+                      "create",
+                      assignToComponentPath,
+                      "props.disabled",
+                      true
+                    )
+                  );
+                } else {
+                  dispatch(
+                    handleField(
+                      "create",
+                      assignToComponentPath,
+                      "props.disabled",
+                      false
+                    )
+                  );
+                }
+              }
             }
           },
           department: {
@@ -163,6 +208,40 @@ const assignmentDetailsCard = {
         }
       )
     }),
+    onMultiItemAdd: (state, muliItemContent) => {
+      let preparedFinalObject = get(
+        state,
+        "screenConfiguration.preparedFinalObject",
+        {}
+      );
+      let cardIndex = get(muliItemContent, "assignFromDate.index");
+      let cardId = get(
+        preparedFinalObject,
+        `Employee[0].assignments[${cardIndex}].id`
+      );
+      if (cardId) {
+        let isCurrentAssignment = get(
+          preparedFinalObject,
+          `Employee[0].assignments[${cardIndex}].isCurrentAssignment`
+        );
+        Object.keys(muliItemContent).forEach(key => {
+          if (isCurrentAssignment && key === "currentAssignment") {
+            set(muliItemContent[key], "props.disabled", false);
+          } else {
+            set(muliItemContent[key], "props.disabled", true);
+          }
+        });
+      } else {
+        Object.keys(muliItemContent).forEach(key => {
+          if (key === "dummyDiv") {
+            set(muliItemContent[key], "props.disabled", true);
+          } else {
+            set(muliItemContent[key], "props.disabled", false);
+          }
+        });
+      }
+      return muliItemContent;
+    },
     items: [],
     addItemLabel: "ADD ASSIGNMENT",
     headerName: "Assignment",
@@ -188,5 +267,10 @@ export const assignmentDetails = getCommonCard({
       }
     }
   ),
+  subheader: getCommonSubHeader({
+    labelName:
+      "Verify entered details before submission. Assignment details cannot be edited once submitted.",
+    labelKey: "HR_ASSIGN_DET_SUB_HEADER"
+  }),
   assignmentDetailsCard
 });
