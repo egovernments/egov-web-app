@@ -251,6 +251,17 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       `assignments[${i}].toDate`,
       convertDateToEpoch(get(employeeObject[0], `assignments[${i}].toDate`))
     );
+
+    // Set isCurrentAssignment to false if key not present
+    let assignmentObject = get(employeeObject[0], `assignments[${i}]`);
+    if (!assignmentObject.hasOwnProperty("isCurrentAssignment")) {
+      set(employeeObject[0], `assignments[${i}]["isCurrentAssignment"]`, false);
+    }
+  }
+
+  // Set employee id null in case of blank
+  if (get(employeeObject[0], "code") === "") {
+    set(employeeObject[0], "code", null);
   }
 
   let serviceHistory = returnEmptyArrayIfNull(
@@ -317,7 +328,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
 
   if (action === "CREATE") {
     try {
-      let response = await createEmployee(queryObject, employeeObject);
+      let response = await createEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -329,7 +344,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     }
   } else if (action === "UPDATE") {
     try {
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       const acknowledgementUrl =
         process.env.REACT_APP_SELF_RUNNING === "true"
@@ -350,7 +369,11 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
         )
       );
       setDeactivationDocuments(state, dispatch);
-      let response = await updateEmployee(queryObject, employeeObject);
+      let response = await updateEmployee(
+        queryObject,
+        employeeObject,
+        dispatch
+      );
       let employeeId = response && get(response, "Employees[0].code");
       showHideAdhocPopup(state, dispatch);
       const acknowledgementUrl =
@@ -371,7 +394,7 @@ export const getEmployeeData = async (state, dispatch, employeeId) => {
       value: employeeId
     }
   ];
-  let response = await getSearchResults(queryObject);
+  let response = await getSearchResults(queryObject, dispatch);
   dispatch(prepareFinalObject("Employee", get(response, "Employees")));
   dispatch(
     handleField(

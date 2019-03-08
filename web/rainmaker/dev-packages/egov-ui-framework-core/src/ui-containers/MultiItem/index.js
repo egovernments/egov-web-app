@@ -82,7 +82,8 @@ class MultiItem extends React.Component {
       headerName,
       headerJsonPath,
       screenConfig,
-      preparedFinalObject
+      preparedFinalObject,
+      onMultiItemAdd
     } = this.props;
     const items = isNew
       ? []
@@ -117,76 +118,6 @@ class MultiItem extends React.Component {
               multiItemContent[variable].index = itemsLength;
             }
           }
-          //Temporary fix - For setting trade type - should be generalised
-          const value = get(
-            preparedFinalObject,
-            multiItemContent[variable].props.jsonPath
-          );
-          if (multiItemContent[variable].props.setDataInField && value) {
-            if (
-              multiItemContent[variable].props.jsonPath.split(".")[0] ===
-                "LicensesTemp" &&
-              multiItemContent[variable].props.jsonPath.split(".").pop() ===
-                "tradeType"
-            ) {
-              const tradeTypeData = get(
-                preparedFinalObject,
-                `applyScreenMdmsData.TradeLicense.TradeType`,
-                []
-              );
-              const tradeTypeDropdownData =
-                tradeTypeData &&
-                tradeTypeData.TradeType &&
-                Object.keys(tradeTypeData.TradeType).map(item => {
-                  return { code: item, active: true };
-                });
-              multiItemContent[variable].props.data = tradeTypeDropdownData;
-              const data = tradeTypeData[value];
-              if (data) {
-                multiItemContent[
-                  "tradeType"
-                ].props.data = this.objectToDropdown(data);
-              }
-            } else if (
-              multiItemContent[variable].props.jsonPath.split(".").pop() ===
-              "tradeType"
-            ) {
-              const data = get(
-                preparedFinalObject,
-                `applyScreenMdmsData.TradeLicense.TradeType.${
-                  value.split(".")[0]
-                }.${value.split(".")[1]}`
-              );
-              if (data) {
-                multiItemContent[variable].props.data = data;
-              }
-            } else if (
-              multiItemContent[variable].props.jsonPath.split(".").pop() ===
-                "uomValue" &&
-              value > 0
-            ) {
-              multiItemContent[variable].props.disabled = false;
-              multiItemContent[variable].props.required = true;
-            }
-          }
-          if (
-            multiItemContent[variable].props.setDataInField &&
-            multiItemContent[variable].props.disabled
-          ) {
-            if (
-              multiItemContent[variable].props.jsonPath.split(".").pop() ===
-              "uomValue"
-            ) {
-              const disabledValue = get(
-                screenConfig[screenKey],
-                `${
-                  multiItemContent[variable].componentJsonpath
-                }.props.disabled`,
-                true
-              );
-              multiItemContent[variable].props.disabled = disabledValue;
-            }
-          }
         } else if (
           afterPrefixJsonPath &&
           multiItemContent.hasOwnProperty(variable) &&
@@ -211,6 +142,9 @@ class MultiItem extends React.Component {
             }
           }
         }
+      }
+      if (onMultiItemAdd) {
+        multiItemContent = onMultiItemAdd(this.props.state, multiItemContent);
       }
       set(scheama, prefixSourceJsonPath, multiItemContent);
     }

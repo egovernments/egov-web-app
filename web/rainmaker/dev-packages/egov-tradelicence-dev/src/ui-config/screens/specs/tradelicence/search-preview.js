@@ -11,13 +11,11 @@ import set from "lodash/set";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getQueryArg,
-  setBusinessServiceDataToLocalStorage
+  setBusinessServiceDataToLocalStorage,
+  getFileUrlFromAPI
 } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import {
-  getSearchResults,
-  getFileUrlFromAPI
-} from "../../../../ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
 import {
   createEstimateData,
   setMultiOwnerForSV,
@@ -34,7 +32,7 @@ import {
 import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
-import { getApprovalDetails } from "./applyResource/approval-rejection-details";
+// import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");

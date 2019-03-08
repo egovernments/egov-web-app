@@ -2,34 +2,54 @@ import React from "react";
 import { Label } from "../../ui-atoms";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import { getTranslatedLabel, transformById } from "../../ui-utils/commons";
+import {
+  getTranslatedLabel,
+  transformById,
+  getLocaleLabels
+} from "../../ui-utils/commons";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-  if (labelKey) {
-    let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-    if (!translatedLabel || labelKey === translatedLabel) {
-      return label;
-    } else {
-      return translatedLabel;
-    }
+// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
+//   if (labelKey) {
+//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
+//     if (!translatedLabel || labelKey === translatedLabel) {
+//       return label;
+//     } else {
+//       return translatedLabel;
+//     }
+//   } else {
+//     return label;
+//   }
+// };
+
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+
+const appendModulePrefix = value => {
+  if (window.location.pathname.includes("hrms")) {
+    return `HR_${value}`;
   } else {
-    return label;
+    return `TL_${value}`;
   }
 };
 
-const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+const hasModulePrefix = label => {
+  return (
+    label.startsWith("TL_") ||
+    label.startsWith("WF_") ||
+    label.startsWith("HR_")
+  );
+};
 
 class LabelContainer extends React.Component {
   render() {
     let { labelName, labelKey, fieldValue, ...rest } = this.props;
     let transfomedKeys = transformById(localizationLabels, "code");
-    let translatedLabel = getLocaleLabelsforTL(
+    let translatedLabel = getLocaleLabels(
       labelName,
       labelKey && typeof labelKey === "string"
-        ? labelKey.startsWith("TL_") || labelKey.startsWith("WF_")
+        ? hasModulePrefix(labelKey)
           ? labelKey
-          : `TL_${labelKey}`
+          : appendModulePrefix(labelKey)
         : labelKey,
       transfomedKeys
     );
@@ -40,12 +60,11 @@ class LabelContainer extends React.Component {
 
     let fieldLabel =
       typeof fieldValue === "string"
-        ? getLocaleLabelsforTL(
+        ? getLocaleLabels(
             fieldValue,
-            fieldValue &&
-              (fieldValue.startsWith("TL_") || fieldValue.startsWith("WF_"))
+            fieldValue && hasModulePrefix(fieldValue)
               ? fieldValue
-              : `TL_${fieldValue}`,
+              : appendModulePrefix(fieldValue),
             transfomedKeys
           )
         : fieldValue;

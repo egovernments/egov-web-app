@@ -153,7 +153,7 @@ const employeeSearchAndResult = {
                 },
 
                 buttonLabel: getLabel({
-                  labelName: "ADD NEW EMPLOYEE",
+                  labelName: "Add Employee",
                   labelKey: "HR_ADD_NEW_EMPLOYEE_BUTTON"
                 })
               },

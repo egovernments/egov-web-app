@@ -431,20 +431,6 @@ export const objectArrayToDropdown = (objectArray, labelName) => {
 };
 
 // Search API call
-export const getSearchResults = async queryObject => {
-  try {
-    const response = await httpRequest(
-      "post",
-      "/tl-services/v1/_search",
-      "",
-      queryObject
-    );
-    return response;
-  } catch (error) {
-    console.log(error);
-    return {};
-  }
-};
 
 export const getBill = async queryObject => {
   try {
@@ -1165,81 +1151,6 @@ export const getBaseURL = () => {
   } else {
     return "/egov-ui-framework/tradelicense-citizen";
   }
-};
-
-export const fetchBill = async (action, state, dispatch) => {
-  //For Adhoc
-  // Search License
-  let queryObject = [
-    { key: "tenantId", value: getQueryArg(window.location.href, "tenantId") },
-    {
-      key: "applicationNumber",
-      value: getQueryArg(window.location.href, "applicationNumber")
-    }
-  ];
-  const LicensesPayload = await getSearchResults(queryObject);
-  //get bill and populate estimate card
-  const payload =
-    LicensesPayload &&
-    LicensesPayload.Licenses &&
-    (await createEstimateData(
-      LicensesPayload.Licenses[0],
-      "LicensesTemp[0].estimateCardData",
-      dispatch,
-      window.location.href
-    ));
-  //set in redux to be used for adhoc
-  LicensesPayload &&
-    LicensesPayload.Licenses &&
-    dispatch(prepareFinalObject("Licenses[0]", LicensesPayload.Licenses[0]));
-
-  //initiate receipt object
-  payload &&
-    payload.billResponse &&
-    dispatch(
-      prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
-    );
-
-  //set amount paid as total amount from bill
-  payload &&
-    payload.billResponse &&
-    dispatch(
-      prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        payload.billResponse.Bill[0].billDetails[0].totalAmount
-      )
-    );
-
-  //set total amount in instrument
-  payload &&
-    payload.billResponse &&
-    dispatch(
-      prepareFinalObject(
-        "ReceiptTemp[0].instrument.amount",
-        payload.billResponse.Bill[0].billDetails[0].totalAmount
-      )
-    );
-
-  //Initially select instrument type as Cash
-  dispatch(
-    prepareFinalObject("ReceiptTemp[0].instrument.instrumentType.name", "Cash")
-  );
-
-  //set tenantId
-  dispatch(
-    prepareFinalObject(
-      "ReceiptTemp[0].tenantId",
-      getQueryArg(window.location.href, "tenantId")
-    )
-  );
-
-  //set tenantId in instrument
-  dispatch(
-    prepareFinalObject(
-      "ReceiptTemp[0].instrument.tenantId",
-      getQueryArg(window.location.href, "tenantId")
-    )
-  );
 };
 
 export const setMultiOwnerForSV = (action, isIndividual) => {

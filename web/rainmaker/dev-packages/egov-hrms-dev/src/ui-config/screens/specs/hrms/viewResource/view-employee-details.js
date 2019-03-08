@@ -117,7 +117,7 @@ export const getEmployeeDetailsView = (isReview = true) => {
       reviewEmail: getLabelWithValue(
         { labelName: "Email", labelKey: "HR_EMAIL_LABEL" },
         {
-          jsonPath: "Employee[0].user.email"
+          jsonPath: "Employee[0].user.emailId"
         }
       ),
       reviewAddress: getLabelWithValue(

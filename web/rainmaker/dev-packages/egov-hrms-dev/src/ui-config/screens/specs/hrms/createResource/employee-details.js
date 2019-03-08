@@ -47,6 +47,13 @@ export const employeeDetails = getCommonCard({
           labelName: "Enter Mobile No.",
           labelKey: "HR_MOB_NO_PLACEHOLDER"
         },
+        title: {
+          value:
+            "Password/OTP will be sent to this number",
+          key: "HR_MOB_NO_TOOLTIP_MESSAGE"
+        },
+        infoIcon: "info_circle",
+
         required: true,
         pattern: getPattern("MobileNo"),
         jsonPath: "Employee[0].user.mobileNumber"
@@ -169,6 +176,7 @@ export const professionalDetails = getCommonCard(
             labelName: "Enter Employee ID",
             labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
           },
+          pattern: /^[a-zA-Z0-9-_]*$/i,
           jsonPath: "Employee[0].code"
         })
       },
@@ -201,7 +209,7 @@ export const professionalDetails = getCommonCard(
           sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeType",
           props: {
             optionLabel: "status",
-            optionValue: "code",
+            optionValue: "code"
             // hasLocalization: false,
             // jsonPath: "Employee[0].employeeType"
           }
@@ -220,6 +228,8 @@ export const professionalDetails = getCommonCard(
           props: {
             optionLabel: "status",
             optionValue: "code",
+            disabled: true,
+            value: "EMPLOYED"
             // hasLocalization: false,
             // jsonPath: "Employee[0].employeeStatus"
           }

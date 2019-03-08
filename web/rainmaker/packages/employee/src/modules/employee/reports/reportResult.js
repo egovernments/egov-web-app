@@ -40,9 +40,6 @@ class ShowField extends Component {
       ck: {},
       rows: {},
       showPrintBtn: false,
-      // logopath:""
-      // logoBase64: "",
-      // ulbname: "",
     };
   }
 
@@ -53,7 +50,6 @@ class ShowField extends Component {
   }
 
   componentWillUpdate() {
-    // console.log('will update');
     let { flag } = this.props;
     if (flag == 1) {
       flag = 0;
@@ -128,20 +124,13 @@ class ShowField extends Component {
       },
       {
         extend: "pdf",
-        // exportOptions: {
-        //             columns: [ 0, 1, 2, 5,6,7 ]
-        // },
-        // exportOptions,
         filename: _this.state.reportName,
-        //title: reportTitle,
         messageTop: tabLabel,
         text: "PDF",
         orientation: orientation,
         pageSize: "LEGAL",
         footer: true,
         customize: function(doc) {
-          // _this.PrintingCutomize(doc);
-          console.log(doc.content);
           doc.content[0].text = [];
           doc.content[0].text.push({ text: "mSeva System Reports\n\n", bold: true, fontSize: 20 });
           doc.content[0].text.push({ text: reportTitle, fontSize: 18 });
@@ -163,9 +152,9 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
-    let { reportResult, tabLabel,metaData } = this.props;
-    let {reportDetails={}} = metaData;
-    let {additionalConfig={}}=reportDetails;
+    let { reportResult, tabLabel, metaData } = this.props;
+    let { reportDetails = {} } = metaData;
+    let { additionalConfig = {} } = reportDetails;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -177,7 +166,8 @@ class ShowField extends Component {
     rTable = $("#reportTable").DataTable({
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      dom:"<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
+      dom:
+        "<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
       order: [],
       // responsive: true,
       select: true,
@@ -192,8 +182,8 @@ class ShowField extends Component {
       columnDefs: [
         {
           ordering: false,
-          targets:0
-        }
+          targets: 0,
+        },
       ],
       fixedColumns: true,
       // scrollResize: true,
@@ -244,29 +234,29 @@ class ShowField extends Component {
       // },
       // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
       // "iDisplayLength": -1,
-        "bPaginate": true,
-        "iCookieDuration": 60,
-        // "bStateSave": false,
-        "bAutoWidth": true,
-        //true
-        "bScrollAutoCss": true,
-        // "bProcessing": true,
-        "bRetrieve": true,
-        "bJQueryUI": true,
-        // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
-        "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "All"]],
-        "sScrollX": "100%",
-        // "sScrollXInner": "110%",
-        "bScrollCollapse": true,
-        "fnInitComplete": function() {
-            this.css("visibility", "visible");
-            $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-        },
-        renderer: "bootstrap",
-        "drawCallback": function( settings ) {
-          $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-        },
-        ...additionalConfig
+      bPaginate: true,
+      iCookieDuration: 60,
+      // "bStateSave": false,
+      bAutoWidth: true,
+      //true
+      bScrollAutoCss: true,
+      // "bProcessing": true,
+      bRetrieve: true,
+      bJQueryUI: true,
+      // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
+      aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      sScrollX: "100%",
+      // "sScrollXInner": "110%",
+      bScrollCollapse: true,
+      fnInitComplete: function() {
+        this.css("visibility", "visible");
+        $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
+      },
+      renderer: "bootstrap",
+      drawCallback: function(settings) {
+        $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
+      },
+      ...additionalConfig,
     });
     showTabLabel();
   }
@@ -403,7 +393,7 @@ class ShowField extends Component {
         reportResult.reportHeader[i] &&
         reportResult.reportHeader[i].type == "currency"
       ) {
-        return this.addCommas(val);
+        return this.addCommas(val % 1 === 0 ? val : Number(val).toFixed(2));
       } else {
         return val;
       }
@@ -710,7 +700,9 @@ class ShowField extends Component {
             {sumColumn.map((columnObj, index) => {
               return (
                 <th style={index !== 0 ? { textAlign: "right" } : {}} key={index}>
-                  {index === 0 ? "Total" : this.addCommas(total[index - 1])}
+                  {index === 0
+                    ? "Total"
+                    : this.addCommas(Number(total[index - 1] % 0 === 0 ? total[index - 1] : Number(total[index - 1]).toFixed(2)))}
                 </th>
               );
             })}
@@ -781,7 +773,6 @@ class ShowField extends Component {
             {self.renderBody()}
 
             {this.renderFooter()}
-
           </table>
           {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
             <div style={{ textAlign: "center" }}>
@@ -797,102 +788,7 @@ class ShowField extends Component {
           ) : (
             ""
           )}
-          {/* </CardText> */}
-          {/* </Card> */}
           <br />
-          {/* {metaData.reportDetails.summary == "Cash Collection Report" && (
-            <Grid>
-              <Row>
-                <Col xs={12} md={8} mdOffset={2}>
-                  <Card>
-                    <CardHeader title={<strong>{"Denomination Report"} </strong>} />
-                    <CardText>
-                      <Table
-                        style={{
-                          color: "black",
-                          fontWeight: "normal",
-                          padding: "0 !important",
-                        }}
-                        bordered
-                        responsive
-                      >
-                        <thead>
-                          <tr>
-                            <th>{translate("Denomination")}</th>
-                            <th>{translate("*")}</th>
-                            <th>{translate("Number")}</th>
-                            <th>{translate("Total")}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>2000</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>500</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>200</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>100</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>50</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>20</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>*</td>
-                            <td />
-                            <td />
-                          </tr>
-                          <tr>
-                            <td colSpan={3} style={{ textAlign: "center" }}>
-                              <strong>{translate("Total Amount Collected")}</strong>
-                            </td>
-                            <td style={{ textAlign: "right" }} />
-                          </tr>
-                        </tbody>
-                      </Table>
-                    </CardText>
-                  </Card>
-                </Col>
-              </Row>
-            </Grid>
-          )} */}
         </div>
       );
     };
