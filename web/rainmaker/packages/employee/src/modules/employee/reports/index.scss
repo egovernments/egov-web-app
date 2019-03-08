@@ -67,6 +67,15 @@
 //   word-break: break-word;
 // }
 
+.dropdown-menu > .active > a
+{
+    background-color: rgb(254, 122, 81) !important;
+}
+
+.report_filters {
+  margin-bottom: 8px;
+}
+
 .dataTable th, td {
   word-break: break-all; /* IE supports this */
   word-break: break-word; /* IE doesn't support, and will ignore */

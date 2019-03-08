@@ -21,6 +21,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
+import "datatables.net-buttons/js/buttons.colVis.min.js"
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
 import commonConfig from "config/common.js";
@@ -147,6 +148,7 @@ class ShowField extends Component {
         className: "report-excel-button",
         // exportOptions,
       },
+      'colvis'
     ];
     return buttons;
   };
@@ -166,8 +168,7 @@ class ShowField extends Component {
     rTable = $("#reportTable").DataTable({
       // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      dom:
-        "<'&nbsp''row'<'col-sm-3 col-xs-6 text-left'l><'col-sm-5 col-xs-6 text-right'f><'col-sm-4 col-xs-12 text-center'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
+      dom:"<'&nbsp''row'<'col-sm-2 col-xs-6 text-left'l><'col-sm-4 col-xs-6 text-right'f><'col-sm-6 col-xs-12 text-right'B>><'row'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
       order: [],
       // responsive: true,
       select: true,
@@ -430,7 +431,7 @@ class ShowField extends Component {
     let { reportResult, metaData } = this.props;
     let { checkAllRows } = this;
     return (
-      <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
+      <thead>
         <tr className="report-table-header">
           <th key={"S. No."} className="report-header-cell">
             {"S. No."}
