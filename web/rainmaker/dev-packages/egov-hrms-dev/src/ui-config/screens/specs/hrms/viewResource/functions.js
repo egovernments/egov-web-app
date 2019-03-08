@@ -229,12 +229,12 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   set(
     employeeObject[0],
     "dateOfAppointment",
-    convertDateToEpoch(get(employeeObject[0], "dateOfAppointment"))
+    convertDateToEpoch(get(employeeObject[0], "dateOfAppointment"), "dayStart")
   );
   set(
     employeeObject[0],
     "user.dob",
-    convertDateToEpoch(get(employeeObject[0], "user.dob"))
+    convertDateToEpoch(get(employeeObject[0], "user.dob"), "dayStart")
   );
 
   let assignments = returnEmptyArrayIfNull(
@@ -244,12 +244,18 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     set(
       employeeObject[0],
       `assignments[${i}].fromDate`,
-      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].fromDate`))
+      convertDateToEpoch(
+        get(employeeObject[0], `assignments[${i}].fromDate`),
+        "dayStart"
+      )
     );
     set(
       employeeObject[0],
       `assignments[${i}].toDate`,
-      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].toDate`))
+      convertDateToEpoch(
+        get(employeeObject[0], `assignments[${i}].toDate`),
+        "dayStart"
+      )
     );
 
     // Set isCurrentAssignment to false if key not present
@@ -272,14 +278,16 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       employeeObject[0],
       `serviceHistory[${i}].serviceFrom`,
       convertDateToEpoch(
-        get(employeeObject[0], `serviceHistory[${i}].serviceFrom`)
+        get(employeeObject[0], `serviceHistory[${i}].serviceFrom`),
+        "dayStart"
       )
     );
     set(
       employeeObject[0],
       `serviceHistory[${i}].serviceTo`,
       convertDateToEpoch(
-        get(employeeObject[0], `serviceHistory[${i}].serviceTo`)
+        get(employeeObject[0], `serviceHistory[${i}].serviceTo`),
+        "dayStart"
       )
     );
   }
@@ -297,7 +305,8 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       set(
         employeeObject[0],
         `education[${i}].yearOfPassing`,
-        convertDateToEpoch(`${educationYearOfPassing}-01-01`)
+        convertDateToEpoch(`${educationYearOfPassing}-01-01`),
+        "dayStart"
       );
   }
 
@@ -312,7 +321,8 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       set(
         employeeObject[0],
         `tests[${i}].yearOfPassing`,
-        convertDateToEpoch(`${testsYearOfPassing}-01-01`)
+        convertDateToEpoch(`${testsYearOfPassing}-01-01`),
+        "dayStart"
       );
   }
 
@@ -365,7 +375,8 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
         employeeObject[0],
         `deactivationDetails[0].effectiveFrom`,
         convertDateToEpoch(
-          get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
+          get(employeeObject[0], `deactivationDetails[0].effectiveFrom`),
+          "dayStart"
         )
       );
       setDeactivationDocuments(state, dispatch);
