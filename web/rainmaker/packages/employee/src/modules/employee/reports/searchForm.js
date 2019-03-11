@@ -29,9 +29,16 @@ class ShowForm extends Component {
   };
 
   resetFields = () => {
-    const { metaData, setMetaData, handleChange, searchForm, resetForm ,showTable} = this.props;
-    showTable(false);
-    resetForm();
+    const { resetForm, searchForm } = this.props;
+    if (!searchForm) {
+      //showTable(false); // Hard and elegant
+      console.log("Search Form Empty");
+      return;
+    } else {
+      this.setState({ getResults: true }, () => {
+        resetForm();
+      });
+    }
   };
 
   checkForDependentSource = async (fieldIndex, field, selectedValue) => {
@@ -410,7 +417,7 @@ class ShowForm extends Component {
             input = searchForm[variable];
           }
         }
-        if (input && input!="All") {
+        if (input && input != "All") {
           searchParams.push({ name: variable, input });
         }
       }
