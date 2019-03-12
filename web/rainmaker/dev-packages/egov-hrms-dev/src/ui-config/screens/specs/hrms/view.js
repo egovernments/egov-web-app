@@ -33,7 +33,7 @@ const getMdmsData = async (action, state, dispatch) => {
           masterDetails: [
             {
               name: "DeactivationReason",
-              filter: "[?(@.active == true)].code"
+              filter: "[?(@.active == true)]"
             }
           ]
         }
