@@ -118,10 +118,12 @@ const getMdmsData = async (state, dispatch, tenantId) => {
           moduleName: "common-masters",
           masterDetails: [
             {
-              name: "Department"
+              name: "Department",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "Designation"
+              name: "Designation",
+              filter: "[?(@.active == true)]"
             }
           ]
         },
@@ -147,22 +149,28 @@ const getMdmsData = async (state, dispatch, tenantId) => {
           moduleName: "egov-hrms",
           masterDetails: [
             {
-              name: "Degree"
+              name: "Degree",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "EmployeeStatus"
+              name: "EmployeeStatus",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "EmployeeType"
+              name: "EmployeeType",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "DeactivationReason"
+              name: "DeactivationReason",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "EmploymentTest"
+              name: "EmploymentTest",
+              filter: "[?(@.active == true)]"
             },
             {
-              name: "Specalization"
+              name: "Specalization",
+              filter: "[?(@.active == true)]"
             }
           ]
         }
