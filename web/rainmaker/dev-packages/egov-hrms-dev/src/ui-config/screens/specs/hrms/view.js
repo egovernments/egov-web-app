@@ -32,7 +32,8 @@ const getMdmsData = async (action, state, dispatch) => {
           moduleName: "egov-hrms",
           masterDetails: [
             {
-              name: "DeactivationReason"
+              name: "DeactivationReason",
+              filter: "[?(@.active == true)].code"
             }
           ]
         }
