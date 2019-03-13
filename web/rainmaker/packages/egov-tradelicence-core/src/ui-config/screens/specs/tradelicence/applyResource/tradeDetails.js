@@ -16,7 +16,8 @@ import {
   getFinancialYearDates,
   getNextMonthDateInYMD,
   setFilteredTradeTypes,
-  getUniqueItemsFromArray
+  getUniqueItemsFromArray,
+  getTradeTypeDropdownData
   // getOldLicenseData
 } from "../../utils";
 import { prepareFinalObject as pFO } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -67,7 +68,7 @@ const tradeUnitCard = {
                     objectToDropdown(
                       get(
                         state.screenConfiguration.preparedFinalObject,
-                        `applyScreenMdmsData.TradeLicense.TradeType.${
+                        `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${
                           action.value
                         }`,
                         []
@@ -87,7 +88,7 @@ const tradeUnitCard = {
                     objectToDropdown(
                       get(
                         state.screenConfiguration.preparedFinalObject,
-                        `applyScreenMdmsData.TradeLicense.TradeType.${
+                        `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${
                           action.value
                         }`,
                         []
@@ -131,7 +132,7 @@ const tradeUnitCard = {
                     "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
                     get(
                       state.screenConfiguration.preparedFinalObject,
-                      `applyScreenMdmsData.TradeLicense.TradeType.${tradeCategory}.${
+                      `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCategory}.${
                         action.value
                       }`,
                       []
@@ -149,7 +150,7 @@ const tradeUnitCard = {
                     "props.data",
                     get(
                       state.screenConfiguration.preparedFinalObject,
-                      `applyScreenMdmsData.TradeLicense.TradeType.${tradeCategory}.${
+                      `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCategory}.${
                         action.value
                       }`,
                       []
@@ -223,7 +224,7 @@ const tradeUnitCard = {
                   );
                   let tradeSubCategories = get(
                     state.screenConfiguration.preparedFinalObject,
-                    `applyScreenMdmsData.TradeLicense.TradeType.${tradeType}.${tradeCategory}`,
+                    `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeType}.${tradeCategory}`,
                     []
                   );
                   tradeSubCategories = getUniqueItemsFromArray(
@@ -845,12 +846,7 @@ export const tradeDetails = getCommonCard({
           ),
           action.value
         );
-        const tradeTypeDropdownData =
-          tradeTypes &&
-          tradeTypes.TradeType &&
-          Object.keys(tradeTypes.TradeType).map(item => {
-            return { code: item, active: true };
-          });
+        const tradeTypeDropdownData = getTradeTypeDropdownData(tradeTypes);
         tradeTypeDropdownData &&
           dispatch(
             pFO(

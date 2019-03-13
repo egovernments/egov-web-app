@@ -6,7 +6,8 @@ import {
   getSafetyNormsJson,
   getHygeneLevelJson,
   getLocalityHarmedJson,
-  setFilteredTradeTypes
+  setFilteredTradeTypes,
+  getTradeTypeDropdownData
 } from "../ui-config/screens/specs/utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import {
@@ -102,7 +103,20 @@ export const updatePFOforSearchResults = async (
   const licenseType = payload && get(payload, "Licenses[0].licenseType");
   const structureSubtype =
     payload && get(payload, "Licenses[0].tradeLicenseDetail.structureType");
-  setFilteredTradeTypes(state, dispatch, licenseType, structureSubtype);
+  const tradeTypes = setFilteredTradeTypes(
+    state,
+    dispatch,
+    licenseType,
+    structureSubtype
+  );
+  const tradeTypeDdData = getTradeTypeDropdownData(tradeTypes);
+  tradeTypeDdData &&
+    dispatch(
+      pFO(
+        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+        tradeTypeDdData
+      )
+    );
   updateDropDowns(payload, action, state, dispatch, queryValue);
 
   if (queryValuePurpose !== "cancel") {

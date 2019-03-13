@@ -1464,27 +1464,28 @@ export const updateDropDowns = async (
     }
   }
 
-  const tradeTypes = get(
-    state.screenConfiguration.preparedFinalObject,
-    "applyScreenMdmsData.TradeLicense.TradeType",
-    []
-  );
-  // debugger;
-  const tradeTypeDropdownData =
-    tradeTypes &&
-    Object.keys(tradeTypes).map(item => {
-      return { code: item, active: true };
-    });
-  tradeTypeDropdownData &&
-    dispatch(
-      prepareFinalObject(
-        "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
-        tradeTypeDropdownData
-      )
-    );
+  // const tradeTypes = get(
+  //   state.screenConfiguration.preparedFinalObject,
+  //   "applyScreenMdmsData.TradeLicense.TradeType",
+  //   []
+  // );
+  // // debugger;
+  // const tradeTypeDropdownData =
+  //   tradeTypes &&
+  //   Object.keys(tradeTypes).map(item => {
+  //     return { code: item, active: true };
+  //   });
+  // tradeTypeDropdownData &&
+  //   dispatch(
+  //     prepareFinalObject(
+  //       "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
+  //       tradeTypeDropdownData
+  //     )
+  //   );
   const tradeSubTypes = get(
     payload,
-    "Licenses[0].tradeLicenseDetail.tradeUnits"
+    "Licenses[0].tradeLicenseDetail.tradeUnits",
+    []
   );
 
   if (tradeSubTypes.length > 0) {
@@ -1501,7 +1502,7 @@ export const updateDropDowns = async (
             objectToDropdown(
               get(
                 state.screenConfiguration.preparedFinalObject,
-                `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}`,
+                `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCat}`,
                 []
               )
             )
@@ -1513,7 +1514,7 @@ export const updateDropDowns = async (
             "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
             get(
               state.screenConfiguration.preparedFinalObject,
-              `applyScreenMdmsData.TradeLicense.TradeType.${tradeCat}.${tradeType}`,
+              `applyScreenMdmsData.TradeLicense.filteredTradeTypeTree.${tradeCat}.${tradeType}`,
               []
             )
           )
@@ -1908,12 +1909,6 @@ export const setFilteredTradeTypes = (
           }
         });
       if (tradeTypeList && tradeTypeList.length > 0) {
-        dispatch(
-          prepareFinalObject(
-            "applyScreenMdmsData.TradeLicense.TradeType",
-            tradeTypeList
-          )
-        );
         let filteredList =
           tradeTypeList &&
           tradeTypeList.length > 0 &&
@@ -1928,13 +1923,19 @@ export const setFilteredTradeTypes = (
           { TradeType: [...filteredList] },
           "TradeType"
         );
-        tradeTypeTransformed.TradeType &&
-          dispatch(
-            prepareFinalObject(
-              "applyScreenMdmsData.TradeLicense.TradeType",
-              tradeTypeTransformed.TradeType
-            )
-          );
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.TradeLicense.filteredTradeTypeTree",
+            tradeTypeTransformed.TradeType
+          )
+        );
+        // tradeTypeTransformed.TradeType &&
+        //   dispatch(
+        //     prepareFinalObject(
+        //       "applyScreenMdmsData.TradeLicense.TradeType",
+        //       tradeTypeTransformed.TradeType
+        //     )
+        //   );
         return tradeTypeTransformed;
       }
     }
@@ -1989,4 +1990,14 @@ export const sortByEpoch = (data, order) => {
 export const getEpochForDate = date => {
   const dateSplit = date.split("/");
   return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
+};
+
+export const getTradeTypeDropdownData = tradeTypes => {
+  return (
+    tradeTypes &&
+    tradeTypes.TradeType &&
+    Object.keys(tradeTypes.TradeType).map(item => {
+      return { code: item, active: true };
+    })
+  );
 };
