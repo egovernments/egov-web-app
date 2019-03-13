@@ -181,8 +181,6 @@ export const getData = async (action, state, dispatch) => {
         "Licenses[0].oldLicenseNumber",
         null
       );
-  dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-  dispatch(prepareFinalObject("LicensesTemp", []));
   await getMdmsData(action, state, dispatch);
   await getAllDataFromBillingSlab(getTenantId(), dispatch);
 
@@ -229,10 +227,6 @@ export const getData = async (action, state, dispatch) => {
         )
       );
     }
-  } else {
-    //hardcoding license type to permanent
-    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-    dispatch(prepareFinalObject("LicensesTemp", []));
   }
 };
 
