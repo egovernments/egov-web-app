@@ -47,8 +47,12 @@ export const stepper = getStepperObject(
 
 export const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
-    labelKey: "TL_COMMON_APPL_NEW_LICe"
+    labelName: `Apply for New Trade License ${
+      process.env.REACT_APP_NAME === "Citizen"
+        ? "(" + getCurrentFinancialYear() + ")"
+        : ""
+    }`
+    // labelKey: "TL_COMMON_APPL_NEW_LICe"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -110,6 +114,10 @@ export const getMdmsData = async (action, state, dispatch) => {
               name: "tenants"
             }
           ]
+        },
+        {
+          moduleName: "egf-master",
+          masterDetails: [{ name: "FinancialYear" }]
         }
       ]
     }
@@ -149,6 +157,12 @@ export const getMdmsData = async (action, state, dispatch) => {
       payload.MdmsRes.tenant.localities = localities;
     }
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+    let financialYearData = get(
+      payload,
+      "MdmsRes.egf-master.FinancialYear",
+      []
+    ).filter(item => item.module === "TL");
+    set(payload, "MdmsRes.egf-master.FinancialYear", financialYearData);
   } catch (e) {
     console.log(e);
   }
