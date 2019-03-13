@@ -11,7 +11,10 @@ import get from "lodash/get";
 import set from "lodash/set";
 import filter from "lodash/filter";
 import { httpRequest } from "../../../../ui-utils/api";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  initScreen
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
 import {
@@ -1503,7 +1506,8 @@ export const updateDropDowns = async (
   //   );
   const tradeSubTypes = get(
     payload,
-    "Licenses[0].tradeLicenseDetail.tradeUnits"
+    "Licenses[0].tradeLicenseDetail.tradeUnits",
+    []
   );
 
   if (tradeSubTypes.length > 0) {
@@ -2020,5 +2024,14 @@ export const getTradeTypeDropdownData = tradeTypes => {
     Object.keys(tradeTypes.TradeType).map(item => {
       return { code: item, active: true };
     })
+  );
+};
+
+export const fillOldLicenseData = async (state, dispatch) => {
+  dispatch(
+    initScreen(
+      "apply",
+      get(state.screenConfiguration, "screenConfig.apply", {})
+    )
   );
 };
