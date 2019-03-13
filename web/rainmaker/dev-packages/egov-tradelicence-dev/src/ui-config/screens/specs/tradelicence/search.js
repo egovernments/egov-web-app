@@ -4,9 +4,10 @@ import {
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
-
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 // import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
 
@@ -15,6 +16,12 @@ const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
 //enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
+
+const pageResetAndChange = (state, dispatch) => {
+  dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+  dispatch(prepareFinalObject("LicensesTemp", []));
+  dispatch(setRoute("/tradelicence/apply"));
+};
 
 const header = getCommonHeader({
   labelName: "Trade License",
@@ -81,8 +88,10 @@ const tradeLicenseSearchAndResult = {
                 })
               },
               onClickDefination: {
-                action: "page_change",
-                path: "/tradelicence/apply"
+                action: "condition",
+                callBack: (state, dispatch) => {
+                  pageResetAndChange(state, dispatch);
+                }
               },
               roleDefination: {
                 rolePath: "user-info.roles",
