@@ -16,7 +16,10 @@ import {
   getCurrentFinancialYear,
   getAllDataFromBillingSlab
 } from "../utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { footer } from "./applyResource/footer";
 import { tradeReviewDetails } from "./applyResource/tradeReviewDetails";
@@ -48,8 +51,12 @@ export const stepper = getStepperObject(
 
 export const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Apply for New Trade License (${getCurrentFinancialYear()})`,
-    labelKey: "TL_COMMON_APPL_NEW_LICe"
+    labelName: `Apply for New Trade License ${
+      process.env.REACT_APP_NAME === "Citizen"
+        ? "(" + getCurrentFinancialYear() + ")"
+        : ""
+    }`
+    // labelKey: "TL_COMMON_APPL_NEW_LICe"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -91,7 +98,8 @@ export const getMdmsData = async (action, state, dispatch) => {
           moduleName: "TradeLicense",
           masterDetails: [
             { name: "TradeType" },
-            { name: "AccessoriesCategory" }
+            { name: "AccessoriesCategory" },
+            { name: "ApplicationType" }
           ]
         },
         {
@@ -110,6 +118,10 @@ export const getMdmsData = async (action, state, dispatch) => {
               name: "tenants"
             }
           ]
+        },
+        {
+          moduleName: "egf-master",
+          masterDetails: [{ name: "FinancialYear" }]
         }
       ]
     }
@@ -149,6 +161,12 @@ export const getMdmsData = async (action, state, dispatch) => {
       payload.MdmsRes.tenant.localities = localities;
     }
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+    let financialYearData = get(
+      payload,
+      "MdmsRes.egf-master.FinancialYear",
+      []
+    ).filter(item => item.module === "TL");
+    set(payload, "MdmsRes.egf-master.FinancialYear", financialYearData);
   } catch (e) {
     console.log(e);
   }
@@ -156,11 +174,61 @@ export const getMdmsData = async (action, state, dispatch) => {
 
 export const getData = async (action, state, dispatch) => {
   const queryValue = getQueryArg(window.location.href, "applicationNumber");
+  const applicationNo = queryValue
+    ? queryValue
+    : get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].oldLicenseNumber",
+        null
+      );
+  dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+  dispatch(prepareFinalObject("LicensesTemp", []));
   await getMdmsData(action, state, dispatch);
   await getAllDataFromBillingSlab(getTenantId(), dispatch);
 
-  if (queryValue) {
-    await updatePFOforSearchResults(action, state, dispatch, queryValue);
+  if (applicationNo) {
+    //Edit/Update Flow ----
+    const applicationType = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+      null
+    );
+    dispatch(
+      prepareFinalObject("Licenses", [
+        {
+          licenseType: "PERMANENT",
+          oldLicenseNumber: queryValue ? "" : applicationNo,
+          tradeLicenseDetail: {
+            additionalDetail: {
+              applicationType: applicationType ? applicationType : "NEW"
+            }
+          }
+        }
+      ])
+    );
+    // dispatch(prepareFinalObject("LicensesTemp", []));
+    await updatePFOforSearchResults(action, state, dispatch, applicationNo);
+    if (!queryValue) {
+      dispatch(
+        prepareFinalObject(
+          "Licenses[0].oldLicenseNumber",
+          get(
+            state.screenConfiguration.preparedFinalObject,
+            "Licenses[0].applicationNumber",
+            ""
+          )
+        )
+      );
+      dispatch(prepareFinalObject("Licenses[0].applicationNumber", ""));
+      dispatch(
+        handleField(
+          "apply",
+          "components.div.children.headerDiv.children.header.children.applicationNumber",
+          "visible",
+          false
+        )
+      );
+    }
   } else {
     //hardcoding license type to permanent
     dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
@@ -221,9 +289,6 @@ const screenConfig = {
   name: "apply",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
-    dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-    dispatch(prepareFinalObject("LicensesTemp", []));
-    // getData(action, state, dispatch);
     getData(action, state, dispatch).then(responseAction => {
       const tenantId = getTenantId();
       const queryObj = [{ key: "tenantId", value: tenantId }];
