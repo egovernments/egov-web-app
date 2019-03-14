@@ -1,5 +1,11 @@
 ## Rainmaker
 
+Rainmaker Structural Diagram:
+
+![alt text](https://raw.githubusercontent.com/egovernments/egov-web-app/rainmaker-v1/web/rainmaker/packages/assets/Rainmaker_structural_diagram.PNG)
+
+---
+
 Below are the steps to run project in dev and production, first time user should install lerna as global dependency, below is the command.
 
 ```
@@ -57,12 +63,26 @@ $ npm run prod:employee
 
 ```
 
+Tech stack used in Rainmaker App:-
+
+- React JS - https://reactjs.org/
+- Redux - https://redux.js.org/
+- Material UI - https://material-ui.com/
+- Javascript
+- CSS/SASS
+
+Dev tools:-
+
+- Lerna - https://lernajs.io/
+- Babel - https://babeljs.io/
+- Webpack - https://webpack.js.org/
+
 ### by
 
 ## Murali M
 
+
+updated by
+Gyan
+
 ---
-
-Rainmaker Structural Diagram:
-
-![alt text](https://raw.githubusercontent.com/egovernments/egov-web-app/rainmaker-v1/web/rainmaker/packages/assets/Rainmaker_structural_diagram.PNG)
