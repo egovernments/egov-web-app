@@ -48,7 +48,7 @@ const EgovAppBar = ({
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
               <img
-                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
+                src={role && role.toLowerCase() === "citizen" ? pbLogo : (ulbLogo ? ulbLogo : pbLogo)}
                 onError={(event) => event.target.setAttribute("src", pbLogo)}
               />
             </div>
