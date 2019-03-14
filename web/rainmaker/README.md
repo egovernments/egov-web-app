@@ -8,10 +8,10 @@ $ npm install --global lerna
 
 
 ### Steps for development
-+ Step 1 - lerna bootstrap will link dependencies in the repo together
++ Step 1 - go command will transpile all the dependent modules from /dev-packages to /packages and link them to the respective packages in the repo. It will also take care of installing all the required npm packages inside each module including citizen and employee.
 
 ```
-$ lerna bootstrap
+$ npm run go
 
 ```
 
