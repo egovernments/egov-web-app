@@ -79,25 +79,6 @@ class ShowField extends Component {
     // }
   }
 
-  convertImgToBase64URL = (url, callback) => {
-    var img = new Image();
-    var dar;
-    img.crossOrigin = "Anonymous";
-    img.onload = function() {
-      var canvas = document.createElement("CANVAS"),
-        ctx = canvas.getContext("2d"),
-        dataURL;
-      canvas.height = this.height;
-      canvas.width = this.width;
-      ctx.drawImage(this, 0, 0);
-      dataURL = canvas.toDataURL();
-      callback(dataURL);
-      canvas = null;
-      dar = dataURL;
-    };
-    img.src = url;
-  };
-
   getExportOptions = () => {
     let _this = this;
     let flag = false;
@@ -556,6 +537,7 @@ class ShowField extends Component {
       return { textAlign: "left" };
     }
   };
+
   renderBody = () => {
     sumColumn = [];
     let { reportResult, metaData } = this.props;
@@ -728,6 +710,7 @@ class ShowField extends Component {
 
     this.setState({ reportSubTitle: result });
   };
+
   getReportTitle = (rptName) => {
     // let { reportName } = this.state;
     let reportName = rptName || this.state.reportName;
@@ -745,6 +728,7 @@ class ShowField extends Component {
     }
     return reportTitle;
   };
+
   render() {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult, tabLabel } = this.props;
