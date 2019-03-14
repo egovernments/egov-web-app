@@ -3,6 +3,7 @@ import { Button, Card, TextField, Image } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
+import { CityPicker } from "modules/common";
 
 const ForgotPasswd = ({ form, handleFieldChange }) => {
   const fields = form.fields || {};
@@ -30,6 +31,8 @@ const ForgotPasswd = ({ form, handleFieldChange }) => {
             prefixStyle={{ top: 21 }}
             {...fields.username}
           />
+          <CityPicker onChange={handleFieldChange} fieldKey="tenantId" field={fields.tenantId} />
+
           <Button id="login-submit-action" primary={true} label="CONTINUE" fullWidth={true} {...submit} />
         </div>
       }
