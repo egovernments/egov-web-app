@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
-import "./index.css";
+import "./index.scss";
 // import Icon from "../Icon";
 // import commonConfig from "config/common";
 import { MAP_API_KEY } from "../../ui-config/noc-app-config";

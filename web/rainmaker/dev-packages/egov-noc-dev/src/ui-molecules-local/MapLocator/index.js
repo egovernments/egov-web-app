@@ -7,7 +7,7 @@ import { Button, Icon } from "egov-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import "./index.css";
+import "./index.scss";
 
 const pickBtn = {
   display: "block"

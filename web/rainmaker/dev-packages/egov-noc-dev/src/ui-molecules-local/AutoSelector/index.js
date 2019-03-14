@@ -3,7 +3,7 @@
 // import { AutoSuggest } from "../../ui-atoms-local";
 // import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-// // import "./index.css";
+// // import "./index.scss";
 
 // class AutoSuggestor extends Component {
 //   onSelect = value => {
