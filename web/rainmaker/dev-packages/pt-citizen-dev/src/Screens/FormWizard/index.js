@@ -543,7 +543,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -568,7 +571,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -630,7 +636,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -991,7 +1000,10 @@ class FormWizard extends Component {
       } else
         this.props.toggleSnackbarAndSetText(
           true,
-          "Error calculating tax",
+          {
+            labelName: "Error calculating tax!",
+            labelKey: "ERR_ERROR_CALCULATING_TAX"
+          },
           true
         );
     }

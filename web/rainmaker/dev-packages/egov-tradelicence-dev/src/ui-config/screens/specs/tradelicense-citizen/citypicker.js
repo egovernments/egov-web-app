@@ -3,7 +3,6 @@ import {
   getCommonContainer,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-
 import { showCityPicker, applyForm } from "../utils";
 
 export const cityPicker = getCommonContainer({
@@ -28,8 +27,11 @@ export const cityPicker = getCommonContainer({
           cursor: "pointer"
         },
         className: "citizen-city-picker",
-        label: { labelName: "City" },
-        placeholder: { labelName: "Select City" },
+        label: {
+          labelName: "City",
+          labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
+        },
+        placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
         jsonPath: "citiesByModule.citizenTenantId",
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.citiesByModule.TL.tenants",

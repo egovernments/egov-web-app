@@ -27,7 +27,10 @@ class ComplaintResolved extends Component {
       e.preventDefault();
       this.props.toggleSnackbarAndSetText(
         true,
-        "Please upload photo or write comments",
+        {
+          labelName: "Please upload photo or write comments",
+          labelKey: "ERR_PLEASE_UPLOAD_PHOTO"
+        },
         true
       );
     }

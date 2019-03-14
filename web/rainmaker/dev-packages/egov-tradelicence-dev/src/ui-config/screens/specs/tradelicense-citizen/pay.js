@@ -62,9 +62,6 @@ const screenConfig = {
                 labelName: "Please review your fee and proceed to payment",
                 labelKey: "TL_CITIZEN_PAYMENT_HEAD"
               }),
-              // paragraph: getCommonParagraph({
-              //   labelName: ""
-              // }),
               estimateDetails
             })
           }

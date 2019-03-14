@@ -212,7 +212,10 @@ const serviceDetailsCard = {
       )
     }),
     items: [],
-    addItemLabel: "ADD SERVICE ENTRY",
+    addItemLabel: {
+      labelName: "ADD SERVICE ENTRY",
+      labelKey: "TL_ADD_SERVICE_ENTRY"
+    },
     headerName: "Service",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
@@ -237,7 +240,8 @@ export const serviceDetails = getCommonCard({
     }
   ),
   subheader: getCommonSubHeader({
-    labelName: "Verify entered details before submission. Service details cannot be edited once submitted.",
+    labelName:
+      "Verify entered details before submission. Service details cannot be edited once submitted.",
     labelKey: "HR_SER_DET_SUB_HEADER"
   }),
 

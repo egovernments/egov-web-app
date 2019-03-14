@@ -76,14 +76,20 @@ class RequestReAssign extends Component {
       e.preventDefault();
       this.props.toggleSnackbarAndSetText(
         true,
-        "Please mention the reason",
+        {
+          labelName: "Please mention your reason",
+          labelKey: "ERR_PLEASE_MENSION_YOUR_REASON"
+        },
         true
       );
     } else if (valueSelected === "Other" && !commentValue) {
       e.preventDefault();
       this.props.toggleSnackbarAndSetText(
         true,
-        "Please type your comments",
+        {
+          labelName: "Please type your comments",
+          labelKey: "ERR_TYPE_YOUR_COMMENTS"
+        },
         true
       );
     }

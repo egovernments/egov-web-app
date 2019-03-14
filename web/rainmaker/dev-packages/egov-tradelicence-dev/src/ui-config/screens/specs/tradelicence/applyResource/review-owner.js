@@ -23,8 +23,8 @@ export const reviewownershipType = getLabelWithValue(
 );
 export const reviewsubOwnership = getLabelWithValue(
   {
-    labelName: "Type of sub-ownership"
-    // labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+    labelName: "Type of sub-ownership",
+    labelKey: "TL_NEW_OWNER_DETAILS_TYPE_OF_OWNERSHIP"
   },
   {
     jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"

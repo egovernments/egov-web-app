@@ -59,7 +59,7 @@ const tradeLicenseSearchAndResult = {
                   children: {
                     header: getCommonHeader({
                       labelName: "Apply for New Trade License",
-                      labelKey: "TL_COMMON_APPL_NEW_LICe"
+                      labelKey: "TL_COMMON_APPL_NEW_LIC"
                     }),
                     break: getBreak(),
                     applyButton: {
@@ -79,10 +79,6 @@ const tradeLicenseSearchAndResult = {
                           labelKey: "TL_APPLY"
                         })
                       },
-                      // onClickDefination: {
-                      //   action: "page_change",
-                      //   path: "/tradelicense-citizen/apply"
-                      // },
                       onClickDefination: {
                         action: "condition",
                         callBack: showCityPicker

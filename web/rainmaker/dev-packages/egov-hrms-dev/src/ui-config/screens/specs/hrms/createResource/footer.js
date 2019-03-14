@@ -104,7 +104,10 @@ export const callBackForNext = async (state, dispatch) => {
       }
     );
     if (!atLeastOneCurrentAssignmentSelected) {
-      const errorMessage = "Please select at least one current assignment";
+      const errorMessage = {
+        labelName: "Please select at least one current assignment",
+        labelKey: "ERR_SELECT_CURRENT_ASSIGNMENT"
+      };
       dispatch(toggleSnackbar(true, errorMessage, "warning"));
       return;
     }
@@ -119,7 +122,10 @@ export const callBackForNext = async (state, dispatch) => {
     if (isFormValid) {
       changeStep(state, dispatch);
     } else {
-      const errorMessage = "Please fill all fields";
+      const errorMessage = {
+        labelName: "Please fill all fields",
+        labelKey: "ERR_FILL_ALL_FIELDS"
+      };
       dispatch(toggleSnackbar(true, errorMessage, "warning"));
     }
   }

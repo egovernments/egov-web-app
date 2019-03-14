@@ -257,10 +257,14 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: { labelName: "Payment has failed!" },
+            header: {
+              labelName: "Payment has failed!",
+              labelKey: "TL_PAYMENT_FAILED"
+            },
             body: {
               labelName:
-                "A notification regarding payment failure has been sent to the trade owner and applicant."
+                "A notification regarding payment failure has been sent to the trade owner and applicant.",
+              labelKey: "TL_PAYMENT_NOTIFICATION"
             }
           })
         }

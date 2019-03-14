@@ -55,7 +55,10 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch(
       toggleSnackbar(
         true,
-        "Please fill valid fields to start search",
+        {
+          labelName: "Please fill valid fields to start search",
+          labelKey: "ERR_FILL_VALID_FIELDS"
+        },
         "warning"
       )
     );
@@ -66,7 +69,10 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch(
       toggleSnackbar(
         true,
-        "Please fill at least one field to start search",
+        {
+          labelName: "Please fill at least one field to start search",
+          labelKey: "ERR_FILL_ONE_FIELDS"
+        },
         "warning"
       )
     );

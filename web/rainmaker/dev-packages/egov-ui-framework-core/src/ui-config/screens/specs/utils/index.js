@@ -207,6 +207,7 @@ export const getTextField = textScheama => {
   const {
     label = {},
     placeholder = {},
+    localePrefix = {},
     required = false,
     pattern,
     jsonPath = "",
@@ -239,6 +240,7 @@ export const getTextField = textScheama => {
         shrink: true
       },
       placeholder,
+      localePrefix,
       fullWidth: true,
       required,
       data,
@@ -346,10 +348,10 @@ export const getRadioButton = (buttons, jsonPath, defaultValue) => {
     uiFramework: "custom-containers",
     componentPath: "RadioGroupContainer",
     gridDefination: {
-              xs: 12,
-              sm: 4
-            },
-            
+      xs: 12,
+      sm: 4
+    },
+
     props: {
       buttons,
       jsonPath,

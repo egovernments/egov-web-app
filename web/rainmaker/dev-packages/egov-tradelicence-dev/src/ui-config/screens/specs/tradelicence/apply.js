@@ -44,10 +44,6 @@ export const stepper = getStepperObject(
   { props: { activeStep: 0 } },
   stepsData
 );
-// export const queryValue = getQueryArg(
-//   window.location.href,
-//   "applicationNumber"
-// );
 
 export const header = getCommonContainer({
   header: getCommonHeader({

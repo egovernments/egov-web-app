@@ -133,7 +133,7 @@ export const otherDetails = getCommonCard({
                 },
                 sourceJsonPath: "createScreenMdmsData.egov-hrms.Specalization",
                 props: {
-                  className: "hr-generic-selectfield",
+                  className: "hr-generic-selectfield"
                   // data: [
                   //   {
                   //     value: "Arts",
@@ -176,7 +176,10 @@ export const otherDetails = getCommonCard({
         )
       }),
       items: [],
-      addItemLabel: "ADD QUALIFICATIONS",
+      addItemLabel: {
+        LabelName: "ADD QUALIFICATIONS",
+        labelKey: "TL_ADD_QUALIFICATIONS"
+      },
       headerName: "Education Qualification",
       headerJsonPath:
         "children.cardContent.children.header.children.head.children.Accessories.props.label",
@@ -221,7 +224,7 @@ export const otherDetails = getCommonCard({
                 },
                 sourceJsonPath: "createScreenMdmsData.egov-hrms.EmploymentTest",
                 props: {
-                  className: "hr-generic-selectfield",
+                  className: "hr-generic-selectfield"
                   // data: [
                   //   {
                   //     value: "Arts",
@@ -300,7 +303,7 @@ export const otherDetails = getCommonCard({
         )
       }),
       items: [],
-      addItemLabel: "ADD TEST",
+      addItemLabel: { labelName: "ADD TEST", labelKey: "TL_ADD_TEST" },
       headerName: "Department Test Details",
       headerJsonPath:
         "children.cardContent.children.header.children.head.children.Accessories.props.label",

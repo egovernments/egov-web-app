@@ -40,7 +40,7 @@ class InboxData extends React.Component {
         dialogOpen: true,
       });
     } else {
-      toggleSnackbarAndSetText(true, "API error");
+      toggleSnackbarAndSetText(true, { labelName: "API error", labelKey: "ERR_API_ERROR" });
     }
   };
 

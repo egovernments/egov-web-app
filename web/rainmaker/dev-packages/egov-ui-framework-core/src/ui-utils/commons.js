@@ -259,7 +259,10 @@ export const setBusinessServiceDataToLocalStorage = async (
     dispatch(
       toggleSnackbar(
         true,
-        "Not authorized to access Business Service!",
+        {
+          labelName: "Not authorized to access Business Service!",
+          labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE"
+        },
         "error"
       )
     );

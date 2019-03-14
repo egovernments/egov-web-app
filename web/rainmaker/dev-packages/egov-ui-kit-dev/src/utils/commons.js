@@ -530,7 +530,13 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
   } catch (error) {
     const { message } = error;
     if (fieldKey === "mohalla") {
-      dispatch(toggleSnackbarAndSetText(true, "There is no admin boundary data available for this tenant", true));
+      dispatch(
+        toggleSnackbarAndSetText(
+          true,
+          { labelName: "There is no admin boundary data available for this tenant", labelKey: "ERR_NO_ADMIN_BOUNDARY_FOR_TENANT" },
+          true
+        )
+      );
     } else {
       dispatch(toggleSnackbarAndSetText(true, message, true));
     }

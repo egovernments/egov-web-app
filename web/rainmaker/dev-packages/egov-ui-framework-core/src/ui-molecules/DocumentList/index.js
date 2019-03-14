@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import LabelContainer from "../../ui-containers/LabelContainer";
 
 const styles = theme => ({
   documentContainer: {
@@ -69,7 +70,10 @@ const DocumentList = props => {
                   )}
                 </Typography>
                 <Typography variant="caption">
-                  Only .jpg and .pdf files. 500kb max file size.
+                  <LabelContainer
+                    labelName="Only .jpg and .pdf files. 500kb max file size."
+                    labelKey="TL_APPROVAL_UPLOAD_SUBHEAD"
+                  />
                 </Typography>
               </Grid>
               <Grid item={true} xs={12} sm={5} align="right">

@@ -36,7 +36,7 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
-      errorMessage: "Invalid Application No.",
+      errorMessage: "ERR_INVALID_APPLICATION_NO",
       jsonPath: "searchScreen.applicationNumber"
     }),
 
@@ -55,7 +55,7 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
-      errorMessage: "Invalid Trade License No.",
+      errorMessage: "ERR_INVALID_TRADE_LICENSE_NO",
       jsonPath: "searchScreen.licenseNumber"
     }),
     ownerMobNo: getTextField({
@@ -78,64 +78,61 @@ export const tradeLicenseApplication = getCommonCard({
       required: false,
       pattern: getPattern("MobileNo"),
       jsonPath: "searchScreen.mobileNumber",
-      errorMessage: "Invalid Mobile Number"
+      errorMessage: "ERR_INVALID_MOBILE_NUMBER"
     })
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
     applicationNo: getSelectField({
-      label: { labelName: "Application status" },
-      placeholder: { labelName: "Select Application Status" },
+      label: {
+        labelName: "Application status",
+        labelKey: "TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"
+      },
+      placeholder: {
+        labelName: "Select Application Status",
+        labelKey: "TL_HOME_SEARCH_RESULTS_APP_STATUS_PLACEHOLDER"
+      },
       required: false,
+      localePrefix: {
+        moduleName: "TRADELICENSE",
+        masterName: "status"
+      },
       jsonPath: "searchScreen.status",
+      sourceJsonPath: "applyScreenMdmsData.searchScreen.status",
       gridDefination: {
         xs: 12,
         sm: 4
-      },
-      data: [
-        {
-          code: "INITIATED"
-        },
-        {
-          code: "APPLIED"
-        },
-        {
-          code: "PAID"
-        },
-        {
-          code: "APPROVED"
-        },
-        {
-          code: "REJECTED"
-        },
-        {
-          code: "CANCELLED"
-        }
-      ]
+      }
     }),
 
     fromDate: getDateField({
-      label: { labelName: "From Date" },
-      placeholder: { labelName: "From Date" },
+      label: { labelName: "From Date", labelKey: "TL_COMMON_FROM_DATE_LABEL" },
+      placeholder: {
+        labelName: "Select From Date",
+        labelKey: "TL_FROM_DATE_PLACEHOLDER"
+      },
       jsonPath: "searchScreen.fromDate",
       gridDefination: {
         xs: 12,
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage: "Invalid Date",
+      errorMessage: "ERR_INVALID_DATE",
       required: false
     }),
 
     toDate: getDateField({
-      label: { labelName: "To Date" },
-      placeholder: { labelName: "To Date" },
+      label: { labelName: "To Date", labelKey: "TL_COMMON_TO_DATE_LABEL" },
+      placeholder: {
+        labelName: "Select to Date",
+        labelKey: "TL_COMMON_TO_DATE_PLACEHOLDER"
+      },
       jsonPath: "searchScreen.toDate",
       gridDefination: {
         xs: 12,
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage: "Invalid Date",
+      errorMessage: "ERR_INVALID_DATE",
       required: false
     })
   }),
@@ -157,7 +154,6 @@ export const tradeLicenseApplication = getCommonCard({
         gridDefination: {
           xs: 12,
           sm: 4
-          // align: "center"
         },
         props: {
           variant: "contained",

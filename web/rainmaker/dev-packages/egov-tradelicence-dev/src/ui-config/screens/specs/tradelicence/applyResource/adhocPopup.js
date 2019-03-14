@@ -6,7 +6,6 @@ import {
   getCommonSubHeader,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-
 import { showHideAdhocPopup } from "../../utils";
 import get from "lodash/get";
 import { httpRequest } from "../../../../../ui-utils/api";
@@ -81,7 +80,16 @@ const updateAdhoc = (state, dispatch) => {
   if (adhocAmount || rebateAmount) {
     getEstimateDataAfterAdhoc(state, dispatch);
   } else {
-    dispatch(toggleSnackbar(true, "Enter at least one field", "warning"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Enter at least one field",
+          labelKey: "ERR_ENTER_ATLEAST_ONE_FIELD"
+        },
+        "warning"
+      )
+    );
   }
 };
 
@@ -214,16 +222,16 @@ export const adhocPopup = getCommonContainer({
           },
           data: [
             {
-              code: "Pending dues from earlier"
+              code: "TL_ADHOC_PENDING_DUES"
             },
             {
-              code: "Miscalculation of earlier assessment"
+              code: "TL_ADHOC_MISCALCULATION"
             },
             {
-              code: "One time Penalty"
+              code: "TL_ADHOC_ONE_TIME_PENALTY"
             },
             {
-              code: "Others"
+              code: "TL_ADHOC_OTHER"
             }
           ],
           jsonPath: "Licenses[0].tradeLicenseDetail.adhocPenaltyReason"
@@ -302,16 +310,16 @@ export const adhocPopup = getCommonContainer({
           },
           data: [
             {
-              code: "Advanced paid by citizen earlier"
+              code: "TL_REBATE_ADVANCED_PAID"
             },
             {
-              code: "Rebate provided by commissioner/EO"
+              code: "TL_REBATE_BY_COMMISSIONER"
             },
             {
-              code: "Additional amount charged from the citizen"
+              code: "TL_REBATE_ADDITIONAL_AMOUNT_CAHNGED"
             },
             {
-              code: "Others"
+              code: "TL_ADHOC_OTHER"
             }
           ],
           jsonPath: "Licenses[0].tradeLicenseDetail.adhocExemptionReason"

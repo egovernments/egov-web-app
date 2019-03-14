@@ -192,7 +192,10 @@ class ActionDialog extends React.Component {
                         lineHeight: "20px"
                       }}
                     >
-                      <LabelContainer labelName="Only .jpg and .pdf files. 5MB max file size." />
+                      <LabelContainer
+                        labelName="Only .jpg and .pdf files. 5MB max file size."
+                        labelKey="TL_APPROVAL_UPLOAD_SUBHEAD"
+                      />
                     </div>
                     <UploadMultipleFiles
                       maxFiles={4}
@@ -236,12 +239,4 @@ class ActionDialog extends React.Component {
     );
   }
 }
-
-// const mapDispacthToProps = dispatch => {
-//   return {
-//     toggleSnackbar: (open, message, variant) =>
-//       dispatch(toggleSnackbar(open, message, variant))
-//   };
-// };
-
 export default withStyles(styles)(ActionDialog);

@@ -8,8 +8,14 @@ import { payeeDetails } from "./payeeDetails";
 
 export const cardDetails = getCommonContainer({
   last4Digits: getSelectField({
-    label: { labelName: "Last 4 digits" },
-    placeholder: { labelName: "Enter Last 4 digits of the card" },
+    label: {
+      labelName: "Last 4 digits",
+      labelKey: "TL_CARD_LAST_DIGITS_LABEL"
+    },
+    placeholder: {
+      labelName: "Enter Last 4 digits of the card",
+      labelKey: "TL_PAYMENT_LABEL_LAST_DIGITS"
+    },
     required: true
   }),
   TrxNo: getTextField({

@@ -50,10 +50,24 @@ class WorkFlowContainer extends React.Component {
         );
         addWflowFileUrl(processInstances, prepareFinalObject);
       } else {
-        toggleSnackbar(true, "Workflow returned empty object !", "error");
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Workflow returned empty object !",
+            labelKey: "WRR_WORKFLOW_ERROR"
+          },
+          "error"
+        );
       }
     } catch (e) {
-      toggleSnackbar(true, "Workflow returned empty object !", "error");
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Workflow returned empty object !",
+          labelKey: "WRR_WORKFLOW_ERROR"
+        },
+        "error"
+      );
     }
   };
 
@@ -105,7 +119,11 @@ class WorkFlowContainer extends React.Component {
         )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${licenseNumber}`;
       }
     } catch (e) {
-      toggleSnackbar(true, "TL update error!", "error");
+      toggleSnackbar(
+        true,
+        { labelName: "TL update error!", labelKey: "ERR_TL_UPDATE_ERROR" },
+        "error"
+      );
     }
   };
 
@@ -118,7 +136,11 @@ class WorkFlowContainer extends React.Component {
       if (documents && documents.length > 0) {
         this.tlUpdate(label);
       } else {
-        toggleSnackbar(true, "Please Upload file !", "error");
+        toggleSnackbar(
+          true,
+          { labelName: "Please Upload file !", labelKey: "ERR_UPLOAD_FILE" },
+          "error"
+        );
       }
     } else {
       this.tlUpdate(label);

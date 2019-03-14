@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 import { withStyles } from "@material-ui/core/styles";
 //import Icon from "@material-ui/core/Icon";
 import Icon from "egov-ui-framework/ui-atoms/Icon";
@@ -82,13 +83,17 @@ class MenuListComposition extends React.Component {
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       {data.menu.map((item, key) => {
+                        const { labelName, labelKey } = item.label;
                         return (
                           <MenuItem key={key} onClick={item.link}>
                             <Icon
                               className={classes.leftIcon}
                               iconName={item.leftIcon}
                             />
-                            {item.label}
+                            <LabelContainer
+                              labelName={labelName}
+                              labelKey={labelKey}
+                            />
                             <Icon
                               className={classes.leftIcon}
                               iconName={item.rightIcon}

@@ -31,7 +31,14 @@ const PasswordForm = ({ handleFieldChange, toggleSnackbarAndSetText, form }) => 
           onClick={(e) => {
             if (newpassword.value !== confirmnewpassword.value) {
               e.preventDefault();
-              toggleSnackbarAndSetText(true, "Password do not match", true);
+              toggleSnackbarAndSetText(
+                true,
+                {
+                  labelName: "Password do not match",
+                  labelKey: "ERR_PASSWORD_DO_NOT_MATCH",
+                },
+                true
+              );
             }
           }}
         />

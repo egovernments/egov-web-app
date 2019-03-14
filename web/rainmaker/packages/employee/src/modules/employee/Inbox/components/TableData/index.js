@@ -72,7 +72,14 @@ class TableData extends Component {
       const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
       localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
     } catch (e) {
-      toggleSnackbarAndSetText(true, "Not authorized to access Business Service!", true);
+      toggleSnackbarAndSetText(
+        true,
+        {
+          labelName: "Not authorized to access Business Service!",
+          labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE",
+        },
+        true
+      );
     }
   };
 
@@ -110,7 +117,7 @@ class TableData extends Component {
       this.setState({ inboxData, taskboardData, tabData });
     } catch (e) {
       //toggleSnackbarA(true, "Workflow search error !", "error");
-      toggleSnackbarAndSetText(true, "Workflow search error !", true);
+      toggleSnackbarAndSetText(true, { labelName: "Workflow search error !", labelKey: "ERR_SEARCH_ERROR" }, true);
     }
     prepareFinalObject("InboxData", inboxData);
 

@@ -45,7 +45,12 @@ class SearchProperty extends Component {
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
-      this.props.toggleSnackbarAndSetText(true, "Please fill atleast one field along with city", true);
+      this.props.toggleSnackbarAndSetText(
+        true,
+        //"Please fill atleast one field along with city",
+        { labelName: "Please fill atleast one field along with city", labelKey: "ERR_FILL_ATLEAST_ONE_FIELD_WITH_CITY" },
+        true
+      );
     } else {
       const queryParams = [];
       if (city.value) {

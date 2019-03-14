@@ -13,12 +13,13 @@ import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
-const appendModulePrefix = value => {
-  if (window.location.pathname.includes("hrms")) {
-    return `HR_${value}`;
-  } else {
-    return `TL_${value}`;
-  }
+const appendModulePrefix = (value, localePrefix) => {
+  const { moduleName, masterName } = localePrefix;
+  return `${moduleName
+    .toUpperCase()
+    .replace(/-/g, "_")}_${masterName
+    .toUpperCase()
+    .replace(/-/g, "_")}_${value}`;
 };
 
 class TextFieldContainer extends React.Component {
@@ -33,6 +34,7 @@ class TextFieldContainer extends React.Component {
     let {
       label = {},
       placeholder = {},
+      localePrefix = {},
       jsonPath,
       iconObj = {},
       value,
@@ -50,7 +52,6 @@ class TextFieldContainer extends React.Component {
       title,
       ...rest
     } = this.props;
-
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
@@ -96,8 +97,13 @@ class TextFieldContainer extends React.Component {
             : dropdownData.map((option, key) => (
                 <MenuItem key={key} value={option.value}>
                   {getLocaleLabels(
-                    option.value,
-                    appendModulePrefix(option.value),
+                    // option.value,
+                    localePrefix && !isEmpty(localePrefix)
+                      ? appendModulePrefix(option.value, localePrefix)
+                      : option.value,
+                    localePrefix && !isEmpty(localePrefix)
+                      ? appendModulePrefix(option.value, localePrefix)
+                      : option.value,
                     transfomedKeys
                   )}
                 </MenuItem>

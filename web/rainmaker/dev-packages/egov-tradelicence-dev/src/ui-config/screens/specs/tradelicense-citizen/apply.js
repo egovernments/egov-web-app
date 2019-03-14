@@ -16,7 +16,6 @@ import {
   formwizardThirdStep,
   formwizardFourthStep,
   stepper,
-  // queryValue,
   getMdmsData
 } from "../tradelicence/apply";
 import { getAllDataFromBillingSlab } from "../utils";
