@@ -3,7 +3,7 @@ import {
   getLabel,
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { NOCApplication } from "./searchResource/fireNOCApplication";
+import { NOCApplication } from "./searchResource/fireNocApplication";
 
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";

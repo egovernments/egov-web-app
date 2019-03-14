@@ -9,6 +9,7 @@
     "dev-packages/egov-workflow-dev",
     "dev-packages/egov-tradelicence-dev",
     "dev-packages/egov-hrms-dev",
+    "dev-packages/egov-noc-dev",
     "packages/*"
   ],
   "version": "0.0.2"
