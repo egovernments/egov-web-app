@@ -7,9 +7,9 @@ const formConfig = {
       id: "person-phone",
       jsonPath: "otp.mobileNumber",
       required: true,
-      floatingLabelText: "CORE_LOGIN_USERNAME",
-      errorMessage: "CORE_COMMON_USERNAME_INVALIDMSG",
-      hintText: "CORE_LOGIN_USERNAME_PLACEHOLDER",
+      floatingLabelText: "CORE_LOGIN_MOBILENO",
+      errorMessage: "CORE_COMMON_MOBILENO_INVALIDMSG",
+      hintText: "CORE_LOGIN_MOBILENO_PLACEHOLDER",
       pattern: "^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$",
     },
     type: {
@@ -20,7 +20,9 @@ const formConfig = {
     tenantId: {
       id: "employee-forgot-password-tenantId",
       jsonPath: "otp.tenantId",
-      value: commonConfig.forgotPasswordTenant,
+      required: true,
+      floatingLabelText: "CORE_COMMON_CITY",
+      hintText: "CORE_COMMON_CITY_PLACEHOLDER",
     },
   },
   submit: {

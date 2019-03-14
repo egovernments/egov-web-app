@@ -7,6 +7,7 @@ import { TrackLocation } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
 import LandingPage from "modules/employee/LandingPage";
+import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Inbox from "modules/employee/Inbox";
 // Employee
 import MDMS from "modules/common/MDMS";
@@ -37,6 +38,13 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/inbox",
   },
+  {
+    path: "forgot-password",
+    component: ForgotPassword,
+    needsAuthentication: false
+    // redirectionUrl: "/inbox",
+  },
+
   // {
   //   path: "user/language-selection",
   //   component: LanguageSelection,

@@ -32,6 +32,17 @@ const formConfig = {
       pattern: "^([a-zA-Z0-9@])+$",
       value: "",
     },
+    username: {
+      id: "employee-phone",
+      jsonPath: "userName",
+      required: true,
+      floatingLabelText: "CORE_LOGIN_USERNAME",
+      errorMessage: "CORE_COMMON_USERNAME_INVALIDMSG",
+      hintText: "CORE_LOGIN_USERNAME_PLACEHOLDER",
+      pattern: "^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$",
+      value: "",
+    },
+
   },
   submit: {
     type: "submit",
