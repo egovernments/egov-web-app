@@ -208,8 +208,8 @@ export const tradeLocationDetails = getCommonCard(
           required: true,
           inputLabelProps: {
             shrink: true
-          },
-          className: "tradelicense-mohalla-apply"
+          }
+          // className: "tradelicense-mohalla-apply"
         },
         beforeFieldChange: async (action, state, dispatch) => {
           // dispatch(
