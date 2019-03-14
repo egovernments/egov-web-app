@@ -13,7 +13,7 @@ import { searchApiCall } from "./functions";
 
 export const NOCApplication = getCommonCard({
   subHeader: getCommonTitle({
-    labelName: "Search Trade License Application",
+    labelName: "Search NOC Application",
     labelKey: "NOC_HOME_SEARCH_RESULTS_HEADING"
   }),
   subParagraph: getCommonParagraph({
@@ -40,13 +40,13 @@ export const NOCApplication = getCommonCard({
       jsonPath: "searchScreen.applicationNumber"
     }),
 
-    tradeLicenseNo: getTextField({
+    NOCNo: getTextField({
       label: {
-        labelName: "Trade License No.",
+        labelName: "NOC No.",
         labelKey: "NOC_HOME_SEARCH_RESULTS_NOC_NO_LABEL"
       },
       placeholder: {
-        labelName: "Enter Trade License No.",
+        labelName: "Enter NOC No.",
         labelKey: "NOC_HOME_SEARCH_RESULTS_NOC_NO_PLACEHOLDER"
       },
       gridDefination: {
@@ -55,7 +55,7 @@ export const NOCApplication = getCommonCard({
       },
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
-      errorMessage: "Invalid NOC License No.",
+      errorMessage: "Invalid NOC No.",
       jsonPath: "searchScreen.NOCNumber"
     }),
     ownerMobNo: getTextField({
@@ -83,8 +83,8 @@ export const NOCApplication = getCommonCard({
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
     applicationNo: getSelectField({
-      label: { labelName: "Application status" },
-      placeholder: { labelName: "Select Application Status" },
+      label: { labelName: "Application status", labelKey: "NOC_APPLICATION_NOC_LABEL" },
+      placeholder: { labelName: "Select Application Status", labelKey: "NOC_APPLICATION_PLACEHOLDER" },
       required: false,
       jsonPath: "searchScreen.status",
       gridDefination: {
@@ -114,8 +114,8 @@ export const NOCApplication = getCommonCard({
     }),
 
     fromDate: getDateField({
-      label: { labelName: "From Date" },
-      placeholder: { labelName: "From Date" },
+      label: { labelName: "From Date", labelKey: "NOC_FROM_DATE_LABEL" },
+      placeholder: { labelName: "From Date", labelKey: "NOC_FROM_DATE_PLACEHOLDER" },
       jsonPath: "searchScreen.fromDate",
       gridDefination: {
         xs: 12,
@@ -127,8 +127,8 @@ export const NOCApplication = getCommonCard({
     }),
 
     toDate: getDateField({
-      label: { labelName: "To Date" },
-      placeholder: { labelName: "To Date" },
+      label: { labelName: "To Date" ,labelKey : "NOC_TO_DATE_LABEL" },
+      placeholder: { labelName: "To Date",labelKey : "NOC_TO_DATE_PLACEHOLDER" },
       jsonPath: "searchScreen.toDate",
       gridDefination: {
         xs: 12,
