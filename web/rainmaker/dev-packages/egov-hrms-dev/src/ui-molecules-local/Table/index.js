@@ -81,7 +81,11 @@ class Table extends React.Component {
           data={data}
           columns={columns}
           options={{
-            selectableRows: false
+            selectableRows: false,
+            search: false,
+            print: false,
+            download: false,
+            filter: false
           }}
         />
       </div>
