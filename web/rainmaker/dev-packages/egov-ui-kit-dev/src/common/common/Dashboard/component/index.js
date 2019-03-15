@@ -57,6 +57,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                           style={{ align: "left" }}
                           style={item.button2 ? moduleCardButtonStyle1 : moduleCardButtonStyle2}
                           buttonStyle={{ border: "1px solid #fe7a51" }}
+                          id={item.id}
                           labelStyle={{
                             padding: "0 12px 0 12px ",
                             letterSpacing: "0.6px",
