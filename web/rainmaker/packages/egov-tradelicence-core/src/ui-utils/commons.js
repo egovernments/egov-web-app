@@ -112,7 +112,7 @@ export const updatePFOforSearchResults = async (
   const tradeTypeDdData = getTradeTypeDropdownData(tradeTypes);
   tradeTypeDdData &&
     dispatch(
-      pFO(
+      prepareFinalObject(
         "applyScreenMdmsData.TradeLicense.TradeTypeTransformed",
         tradeTypeDdData
       )
