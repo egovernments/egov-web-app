@@ -1083,9 +1083,15 @@ export const validateFields = (
 export const epochToYmdDate = et => {
   if (!et) return null;
   if (typeof et === "string") return et;
-  let date = new Date(et);
-  let formattedDate = date.toISOString().match(/(\d{4}\-\d{2}\-\d{2})/);
-  return formattedDate[0];
+  let d = new Date(et),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
 };
 
 export const getTodaysDateInYMD = () => {

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/app/v2/uploader/",
-  "proxy": "https://egov-micro-dev.egovernments.org/",
+  "proxy": "https://mseva-uat.lgpunjab.gov.in/",
   "dependencies": {
     "@material-ui/core": "1.5.1",
     "@material-ui/icons": "1.1.1",

@@ -258,6 +258,7 @@ class ActionMenuComp extends Component {
                 <Tooltip id={"menu-toggle-tooltip"} title={menuDrawerOpen ? "" : item.name} placement="right">
                   <MenuItem
                     key={index}
+                    id={item.name.toUpperCase().replace(/[\s]/g, "-") + "-" + index}
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
                     leftIcon={this.renderLeftIcon(iconLeft, item)}
@@ -299,6 +300,7 @@ class ActionMenuComp extends Component {
                         innerDivStyle={styles.defaultMenuItemStyle}
                         style={{ whiteSpace: "initial" }}
                         key={index}
+                        id={item.name.toUpperCase().replace(/[\s]/g, "-") + "-" + index}
                         onClick={() => {
                           //  localStorageSet("menuPath", item.path);
                           updateActiveRoute(item.path, item.name);
@@ -323,6 +325,7 @@ class ActionMenuComp extends Component {
                       <MenuItem
                         innerDivStyle={styles.defaultMenuItemStyle}
                         style={{ whiteSpace: "initial" }}
+                        id={item.name.toUpperCase().replace(/[\s]/g, "-") + "-" + index}
                         key={index}
                         onClick={() => {
                           localStorageSet("menuPath", item.path);
@@ -359,6 +362,7 @@ class ActionMenuComp extends Component {
                         <MenuItem
                           innerDivStyle={styles.defaultMenuItemStyle}
                           style={{ whiteSpace: "initial" }}
+                          id={item.name.toUpperCase().replace(/[\s]/g, "-") + "-" + index}
                           onClick={() => {
                             document.title = item.displayName;
                             toggleDrawer && toggleDrawer();

@@ -257,12 +257,6 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
-    let currentFinancialYr = getCurrentFinancialYear();
-    //Changing the format of FY
-    let fY1 = currentFinancialYr.split("-")[1];
-    fY1 = fY1.substring(2, 4);
-    currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
-    set(queryObject[0], "financialYear", currentFinancialYr);
     set(
       queryObject[0],
       "validFrom",
@@ -294,6 +288,12 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       { key: "businessService", value: "newTL" }
     ];
     if (process.env.REACT_APP_NAME === "Citizen") {
+      let currentFinancialYr = getCurrentFinancialYear();
+      //Changing the format of FY
+      let fY1 = currentFinancialYr.split("-")[1];
+      fY1 = fY1.substring(2, 4);
+      currentFinancialYr = currentFinancialYr.split("-")[0] + "-" + fY1;
+      set(queryObject[0], "financialYear", currentFinancialYr);
       setBusinessServiceDataToLocalStorage(BSqueryObject, dispatch);
     }
 
@@ -375,6 +375,9 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       set(queryObject[0], "tradeLicenseDetail.accessories", mergedAccessories);
       set(queryObject[0], "tradeLicenseDetail.owners", mergedOwners);
       set(queryObject[0], "action", "INITIATE");
+      //Emptying application docs to "INITIATE" form in case of search and fill from old TL Id.
+      if (!queryObject[0].applicationNumber)
+        set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
       const response = await httpRequest(
         "post",
         "/tl-services/v1/_create",

@@ -25,12 +25,17 @@ class Header extends Component {
   };
 
   componentDidMount = () => {
-    const { role, updateActiveRoute } = this.props;
+    const { role, updateActiveRoute,userInfo } = this.props;
+    const tenantId = getTenantId();
+
     if (role && role.toLowerCase() !== "citizen") {
-      const tenantId = getTenantId();
       // const menupath = localStorageGet("menuPath");
       const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
       // updateActiveRoute(menupath);
+      this.setState({ ulbLogo });
+    }
+    if (tenantId) {
+      const ulbLogo = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
       this.setState({ ulbLogo });
     }
     const menupath = localStorageGet("menuPath");

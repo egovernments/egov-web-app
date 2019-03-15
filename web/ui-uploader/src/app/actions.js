@@ -10,13 +10,13 @@ export const userLoginSuccess = response => {
   const responseObj = {};
   const token = response.access_token;
   const userInfo = response.UserRequest;
-  responseObj["token"] = token;
-  responseObj["user-info"] = JSON.stringify(userInfo);
-  responseObj["type"] = response.UserRequest.type;
-  responseObj["id"] = response.UserRequest.id;
-  responseObj["tenant-id"] = response.UserRequest.tenantId;
-  responseObj["refresh-token"] = response.refresh_token;
-  responseObj["expires-in"] = response.expires_in;
+  responseObj["Employee.token"] = token;
+  responseObj["Employee.user-info"] = JSON.stringify(userInfo);
+  responseObj["Employee.type"] = response.UserRequest.type;
+  responseObj["Employee.id"] = response.UserRequest.id;
+  responseObj["Employee.tenant-id"] = response.UserRequest.tenantId;
+  responseObj["Employee.refresh-token"] = response.refresh_token;
+  responseObj["Employee.expires-in"] = response.expires_in;
 
   // persist the results in local storage
   persistInLocalStorage(responseObj);

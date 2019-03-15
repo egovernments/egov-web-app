@@ -15,7 +15,7 @@ export const Api = () => {
     }
   });
 
-  const tenantId = fetchFromLocalStorage("tenant-id");
+  const tenantId = fetchFromLocalStorage("Employee.tenant-id");
 
   const httpRequest = async (endPoint, requestBody, headers) => {
     let apiError = "Api Error";
@@ -65,7 +65,7 @@ export const Api = () => {
       startDate,
       endDate
     );
-    requestBody.RequestInfo.authToken = fetchFromLocalStorage("token");
+    requestBody.RequestInfo.authToken = fetchFromLocalStorage("Employee.token");
 
     const endPoint = apiEndpoints.SEARCH_USER_JOBS_ENDPOINT;
     try {
@@ -89,13 +89,13 @@ export const Api = () => {
       moduleName,
       defName
     );
-    requestBody.RequestInfo.authToken = fetchFromLocalStorage("token");
+    requestBody.RequestInfo.authToken = fetchFromLocalStorage("Employee.token");
     for (var i = 0; i < requestBody.UploadJobs.length; i++) {
       requestBody.UploadJobs[i].tenantId = tenantId;
     }
-    console.log(JSON.parse(fetchFromLocalStorage("user-info")));
+    console.log(JSON.parse(fetchFromLocalStorage("Employee.user-info")));
     requestBody.RequestInfo.userInfo = JSON.parse(
-      fetchFromLocalStorage("user-info")
+      fetchFromLocalStorage("Employee.user-info")
     );
     const endPoint = apiEndpoints.CREATE_JOB_ENDPOINT;
 

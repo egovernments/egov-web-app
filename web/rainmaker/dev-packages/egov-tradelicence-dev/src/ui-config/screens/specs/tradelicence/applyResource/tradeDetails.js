@@ -17,6 +17,7 @@ import {
   getNextMonthDateInYMD,
   setFilteredTradeTypes,
   getUniqueItemsFromArray,
+  fillOldLicenseData,
   getTradeTypeDropdownData
 } from "../../utils";
 import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -628,6 +629,80 @@ export const tradeDetails = getCommonCard({
     }
   ),
   tradeDetailsConatiner: getCommonContainer({
+    financialYear: {
+      ...getSelectField({
+        label: { labelName: "Financial Year" },
+        placeholder: { labelName: "Select Financial Year" },
+        required: false,
+        visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
+        jsonPath: "Licenses[0].financialYear",
+        sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      })
+    },
+    dummyDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
+      props: {
+        disabled: true
+      }
+    },
+    applicationType: {
+      ...getSelectField({
+        label: { labelName: "Application Type" },
+        placeholder: { labelName: "Select Application Type" },
+        required: true,
+        jsonPath:
+          "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+        // props: {
+        //   jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
+        // },
+        sourceJsonPath: "applyScreenMdmsData.TradeLicense.ApplicationType",
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      })
+    },
+    oldLicenseNo: getTextField({
+      label: {
+        labelName: "Old License No",
+        labelKey: "TL_OLD_LICENSE_NO"
+      },
+      placeholder: {
+        labelName: "Enter Old License No",
+        labelKey: ""
+      },
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      iconObj: {
+        iconName: "search",
+        position: "end",
+        color: "#FE7A51",
+        onClickDefination: {
+          action: "condition",
+          callBack: (state, dispatch) => {
+            fillOldLicenseData(state, dispatch);
+          }
+        }
+      },
+      title: {
+        value: "Fill the form by searching your old approved trade license",
+        key: "TL_OLD_TL_NO"
+      },
+      infoIcon: "info_circle",
+      jsonPath: "Licenses[0].oldLicenseNumber"
+    }),
     tradeLicenseType: {
       ...getSelectField({
         label: { labelName: "License Type" },
