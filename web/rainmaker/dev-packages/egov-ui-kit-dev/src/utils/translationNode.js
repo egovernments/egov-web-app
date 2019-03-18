@@ -7,8 +7,9 @@ const mapStateToProps = (state, ownProps) => {
   const { label, defaultLabel, ...rest } = ownProps;
   const { localizationLabels } = state.app;
   const localizedLabel = getTranslatedLabel(label, localizationLabels);
-  const translatedLabel =
-    localizedLabel && localizedLabel.includes("_") && localizedLabel === label ? (defaultLabel ? defaultLabel : "NA") : localizedLabel;
+  // const translatedLabel =
+  //   localizedLabel && localizedLabel.includes("_") && localizedLabel === label ? (defaultLabel ? defaultLabel : "NA") : localizedLabel;
+  const translatedLabel = defaultLabel ? defaultLabel : localizedLabel;
   return { ...rest, label: translatedLabel };
 };
 

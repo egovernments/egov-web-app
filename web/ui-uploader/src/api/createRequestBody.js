@@ -1,8 +1,8 @@
 import { fetchFromLocalStorage } from "../utils";
 
-const authToken = fetchFromLocalStorage("token");
-const tenantId = fetchFromLocalStorage("tenant-id");
-const userInfo = JSON.parse(fetchFromLocalStorage("user-info"));
+const authToken = fetchFromLocalStorage("Employee.token");
+const tenantId = fetchFromLocalStorage("Employee.tenant-id");
+const userInfo = JSON.parse(fetchFromLocalStorage("Employee.user-info"));
 
 export const requestInfo = () => {
   const RequestInfo = {

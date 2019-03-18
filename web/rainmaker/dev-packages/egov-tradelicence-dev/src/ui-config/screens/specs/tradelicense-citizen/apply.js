@@ -1,8 +1,12 @@
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   updatePFOforSearchResults,
   getBoundaryData
 } from "../../../../ui-utils/commons";
+import get from "lodash/get";
 import { footer } from "../tradelicence/applyResource/footer";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
@@ -46,6 +50,31 @@ const updateSearchResults = async (
     "",
     tenantId
   );
+  const queryValueFromUrl = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  if (!queryValueFromUrl) {
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].oldLicenseNumber",
+        get(
+          state.screenConfiguration.preparedFinalObject,
+          "Licenses[0].applicationNumber",
+          ""
+        )
+      )
+    );
+    dispatch(prepareFinalObject("Licenses[0].applicationNumber", ""));
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.headerDiv.children.header.children.applicationNumber",
+        "visible",
+        false
+      )
+    );
+  }
 };
 const screenConfig = {
   uiFramework: "material-ui",
@@ -53,8 +82,15 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const queryValue = getQueryArg(window.location.href, "applicationNumber");
     const tenantId = getQueryArg(window.location.href, "tenantId");
-    if (queryValue) {
-      updateSearchResults(action, state, dispatch, queryValue, tenantId);
+    const applicationNo = queryValue
+      ? queryValue
+      : get(
+          state.screenConfiguration.preparedFinalObject,
+          "Licenses[0].oldLicenseNumber",
+          null
+        );
+    if (applicationNo) {
+      updateSearchResults(action, state, dispatch, applicationNo, tenantId);
     } else {
       getData(action, state, dispatch, tenantId);
     }

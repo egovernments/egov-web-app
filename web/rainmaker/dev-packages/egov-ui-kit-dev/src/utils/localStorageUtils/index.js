@@ -64,8 +64,10 @@ export const localStorageSet = (key, data, path) => {
   if (path) {
     set(storedData, path, data);
     window.localStorage.setItem(appName + "." + key, storedData);
+    window.localStorage.setItem( key, storedData);
   } else {
     window.localStorage.setItem(appName + "." + key, data);
+    window.localStorage.setItem(key, data);
   }
 };
 //Remove Item
