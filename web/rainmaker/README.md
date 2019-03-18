@@ -77,12 +77,27 @@ Dev tools:-
 - Babel - https://babeljs.io/
 - Webpack - https://webpack.js.org/
 
+Links for tutorial related to get familiar with tech stack ( For new joinees/ contributors who wish to project):-
+
+1) JavaScript ES6 Tutorial - https://www.youtube.com/playlist?list=PL4cUxeGkcC9gKfw25slm4CUDUcM_sXdml&fbclid=IwAR0XIm0bvO9mUG71kP-rTK8rTJAcCRlz2VlnaKzfjbCCGyNDOa4AwmHL6Ls
+This tutorial give idea about some of the new features available to us with ES6 - generators, constants, the let keyword, template strings and more
+
+2) How to Learn React — A roadmap from beginner to advanced  - https://medium.freecodecamp.org/learning-react-roadmap-from-scratch-to-advanced-bff7735531b6
+This guide gives consise idea about react and provides roadmap to excel in react. This provide curated links to one of best materail along with prerequisites
+
+3) Getting Started With Material-UI For React (Material Design For React) - https://medium.com/codingthesmartway-com-blog/getting-started-with-material-ui-for-react-material-design-for-react-364b2688b555
+This 8 min read article gives idea about setting up material ui in your react application with deploying  sample application
+
+4) Understanding Redux: The World’s Easiest Guide to Beginning Redux - https://medium.freecodecamp.org/understanding-redux-the-worlds-easiest-guide-to-beginning-redux-c695f45546f6
+One of the best and comprehensive guide for redux beginners
+
 ### by
 
 ## Murali M
 
 
-updated by
-Gyan
+updated by  
+Gyan,  
+Sudhanshu Deshmukh
 
 ---
