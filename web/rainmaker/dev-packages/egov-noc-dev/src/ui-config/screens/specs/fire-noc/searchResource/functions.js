@@ -87,11 +87,11 @@ export const searchApiCall = async (state, dispatch) => {
 
     const response = await getSearchResults(queryObject);
     try {
-      let data = response.Licenses.map(item => ({
+      let data = response.Nocs.map(item => ({
         [get(textToLocalMapping, "Application No")]:
           item.applicationNumber || "-",
         [get(textToLocalMapping, "NOC No")]: item.nocNumber || "-",
-        //[get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
+        [get(textToLocalMapping, "Building Name")]: item.BuildingName || "-",
         [get(textToLocalMapping, "Owner Name")]:
           item.fireNOCDetail.owners[0].name || "-",
         [get(textToLocalMapping, "Application Date")]:
@@ -116,7 +116,7 @@ export const searchApiCall = async (state, dispatch) => {
           "props.title",
           `${
             textToLocalMapping["Search Results for Fire NOC Applications"]
-          } (${response.Licenses.length})`
+          } (${response.Nocs.length})`
         )
       );
       //showHideProgress(false, dispatch);

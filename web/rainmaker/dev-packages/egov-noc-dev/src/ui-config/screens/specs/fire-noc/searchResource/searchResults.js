@@ -24,7 +24,7 @@ export const textToLocalMapping = {
   "Building Name": get(
     getLocalTextFromCode("NOC_COMMON_TABLE_COL_TRD_NAME"),
     "message",
-    "Trade Name"
+    "Building Name"
   ),
   "Owner Name": get(
     getLocalTextFromCode("NOC_COMMON_TABLE_COL_OWN_NAME"),
@@ -97,7 +97,7 @@ export const searchResults = {
         }
       },
       [get(textToLocalMapping, "NOC No")]: {},
-     // [get(textToLocalMapping, "Trade Name")]: {},
+      [get(textToLocalMapping, "Building Name")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
       [get(textToLocalMapping, "Application Date")]: {},
       [get(textToLocalMapping, "Status")]: {}
@@ -136,33 +136,33 @@ const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
     case get(textToLocalMapping, "PENDINGPAYMENT"):
-      return `/fireNOC/search-preview?status=pending_payment&role=approver&applicationNumber=${
+      return `/fire-noc/search-preview?status=pending_payment&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "APPROVED"):
-      return `/fireNOC/search-preview?status=approved&role=approver&applicationNumber=${
+      return `/fire-noc/search-preview?status=approved&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
 
     case get(textToLocalMapping, "PAID"):
     case get(textToLocalMapping, "PENDINGAPPROVAL"):
     case get(textToLocalMapping, "FIELDINSPECTION"):
-      return `/fireNOC/search-preview?status=pending_approval&role=approver&applicationNumber=${
+      return `/fire-noc/search-preview?status=pending_approval&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "CANCELLED"):
-      return `/fireNOC/search-preview?status=cancelled&role=approver&applicationNumber=${
+      return `/fire-noc/search-preview?status=cancelled&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
-      return `/fireNOC/apply?applicationNumber=${
+      return `/fire-noc/apply?applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "REJECTED"):
-      return `/fireNOC/search-preview?status=rejected&role=approver&applicationNumber=${
+      return `/fire-noc/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     default:
-      return `/fireNOC/search`;
+      return `/fire-noc/search`;
   }
 };
