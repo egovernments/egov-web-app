@@ -5,10 +5,10 @@ import { getCurrentAddress } from "egov-ui-kit/utils/commons";
 import commonConfig from "config/common";
 import { debug } from "util";
 
-export const updateActiveRoute = (routePath) =>{
-  window.localStorage.setItem('menuPath',routePath);
-  return {type :actionTypes.UPDATE_ACTIVE_ROUTE_PATH,routePath}
-}
+export const updateActiveRoute = (routePath) => {
+  window.localStorage.setItem("menuPath", routePath);
+  return { type: actionTypes.UPDATE_ACTIVE_ROUTE_PATH, routePath };
+};
 
 export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
@@ -45,7 +45,9 @@ export const fetchLocalizationLabel = (locale) => {
       ]);
       //}
       dispatch(setLocalizationLabels(locale, payload.messages));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 const setActionItems = (payload) => {

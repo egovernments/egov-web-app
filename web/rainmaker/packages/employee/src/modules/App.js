@@ -26,7 +26,7 @@ class App extends Component {
     addBodyClass(currentPath);
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const { fetchLocalizationLabel, fetchCurrentLocation, fetchMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
@@ -62,7 +62,7 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
