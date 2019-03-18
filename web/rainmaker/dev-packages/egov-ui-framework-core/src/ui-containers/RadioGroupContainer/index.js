@@ -6,6 +6,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const styles = theme => ({
@@ -21,39 +22,39 @@ const styles = theme => ({
     margin: 0
   },
   radioRoot: {
-    marginBottom: 0
+    marginBottom: 12
   }
 });
 
 class RadioButtonsGroup extends React.Component {
-  state = {
-    value: ""
-  };
-  componentDidMount = () => {
-    const { defaultValue } = this.props;
-    this.setState({
-      value: defaultValue
-    });
-  };
-
   handleChange = event => {
-    const { jsonPath, approveCheck } = this.props;
-    this.setState({ value: event.target.value }, () => {
-      approveCheck(jsonPath, this.state.value);
-    });
+    const {
+      screenKey,
+      componentJsonpath,
+      jsonPath,
+      approveCheck,
+      onFieldChange
+    } = this.props;
+    onFieldChange(
+      screenKey,
+      componentJsonpath,
+      "props.value",
+      event.target.value
+    );
   };
 
   render() {
-    const { classes, buttons } = this.props;
+    const { label, classes, buttons, defaultValue, value } = this.props;
 
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">{label}</FormLabel>
           <RadioGroup
             aria-label="Gender"
             name="gender1"
             className={classes.group}
-            value={this.state.value}
+            value={value || defaultValue}
             onChange={this.handleChange}
           >
             {buttons &&
@@ -61,15 +62,9 @@ class RadioButtonsGroup extends React.Component {
                 return (
                   <FormControlLabel
                     key={index}
-                    classes={{ label: "radio-button-label" }}
                     value={button}
                     control={
-                      <Radio
-                        classes={{
-                          root: "radio-root"
-                        }}
-                        color="primary"
-                      />
+                      <Radio className={classes.radioRoot} color="primary" />
                     }
                     label={button}
                   />
