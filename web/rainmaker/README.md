@@ -92,11 +92,11 @@ This 8 min read article gives idea about setting up material ui in your react ap
 One of the best and comprehensive guide for redux beginners
 
 ### Created by  
-## Murali M
+Murali M
 
 
 ### Updated by  
-## Gyan,  
-## Sudhanshu Deshmukh
+Gyan,  
+Sudhanshu Deshmukh
 
 ---
