@@ -62,6 +62,7 @@ class App extends Component {
     };
     // can be combined into one mdms call
     fetchLocalizationLabel(getLocale() || "en_IN");
+
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);

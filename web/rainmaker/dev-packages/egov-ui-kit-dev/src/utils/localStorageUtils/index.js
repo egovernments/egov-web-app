@@ -30,7 +30,7 @@ export const setRefreshToken = (refreshToken) => {
 export const setTenantId = (tenantId) => {
   localStorageSet("tenant-id", tenantId, null);
 };
-export const setLocale = () => {
+export const setLocale = (locale) => {
   localStorageSet("locale", locale);
 };
 export const setReturnUrl = (url) => {
