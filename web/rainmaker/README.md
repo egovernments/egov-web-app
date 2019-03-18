@@ -91,13 +91,12 @@ This 8 min read article gives idea about setting up material ui in your react ap
 4) Understanding Redux: The World’s Easiest Guide to Beginning Redux - https://medium.freecodecamp.org/understanding-redux-the-worlds-easiest-guide-to-beginning-redux-c695f45546f6
 One of the best and comprehensive guide for redux beginners
 
-### by
-
+### Created by  
 ## Murali M
 
 
-updated by  
-Gyan,  
-Sudhanshu Deshmukh
+### Updated by  
+## Gyan,  
+## Sudhanshu Deshmukh
 
 ---
