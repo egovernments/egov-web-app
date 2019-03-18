@@ -63,7 +63,7 @@ export const searchApiCall = async (state, dispatch) => {
   ) {
     dispatch(toggleSnackbar(true, "Please fill From Date", "warning"));
   } else {
-  //  showHideProgress(true, dispatch);
+    //  showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
       if (
         searchScreenObject.hasOwnProperty(key) &&
@@ -85,15 +85,23 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    const response = await getSearchResults(queryObject);
+    //const response = await getSearchResults(queryObject);
+    const response = [
+      {
+        applicationNumber: "1234",
+        nocNumber: "NOC1234",
+        BuildingName: "eGov",
+        ownerName: "Nandhan",
+        status: "Pending"
+      }
+    ];
     try {
-      let data = response.Nocs.map(item => ({
+      let data = response.map(item => ({
         [get(textToLocalMapping, "Application No")]:
           item.applicationNumber || "-",
         [get(textToLocalMapping, "NOC No")]: item.nocNumber || "-",
         [get(textToLocalMapping, "Building Name")]: item.BuildingName || "-",
-        [get(textToLocalMapping, "Owner Name")]:
-          item.fireNOCDetail.owners[0].name || "-",
+        [get(textToLocalMapping, "Owner Name")]: item.ownerName || "-",
         [get(textToLocalMapping, "Application Date")]:
           convertEpochToDate(item.applicationDate) || "-",
         tenantId: item.tenantId,
@@ -114,9 +122,9 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${
-            textToLocalMapping["Search Results for Fire NOC Applications"]
-          } (${response.Nocs.length})`
+          `${textToLocalMapping["Search Results for Fire NOC Applications"]} (${
+            response.length
+          })`
         )
       );
       //showHideProgress(false, dispatch);
