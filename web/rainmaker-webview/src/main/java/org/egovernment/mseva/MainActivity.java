@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 	private GeolocationPermissions.Callback mGeoLocationCallback = null;
 	private String mGeoLocationRequestOrigin = null;
 
-	final AppJavaScriptProxy proxy = new AppJavaScriptProxy(this);
+//	final AppJavaScriptProxy proxy = new AppJavaScriptProxy(this);
 
 
 	private static final String TAG = MainActivity.class.getSimpleName();
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         //Move this to Javascript Proxy
 
 		webView = (WebView) findViewById(R.id.webview);
-		webView.addJavascriptInterface(proxy, "androidAppProxy");
+//		webView.addJavascriptInterface(proxy, "androidAppProxy");
 
 
 		WebSettings webSettings = webView.getSettings();
@@ -498,9 +498,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-		if (proxy.smsReceiverRunning()) {
-			proxy.stopSMSReceiver();
-		}
+//		if (proxy.smsReceiverRunning()) {
+//			proxy.stopSMSReceiver();
+//		}
     }
 
     @Override
