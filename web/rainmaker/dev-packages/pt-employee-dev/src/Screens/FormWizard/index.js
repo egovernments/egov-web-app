@@ -6,6 +6,7 @@ import {
   updateForms,
   handleFieldChange
 } from "egov-ui-kit/redux/form/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -415,7 +416,12 @@ class FormWizard extends Component {
           <div>
             <InstitutionHOC disabled={isReviewPage} />
             <InstitutionAuthorityHOC
-              cardTitle={<div>Details of authorised person</div>}
+              cardTitle={
+                <Label
+                  label="PT_DETAILS_OF_AUTHORISED_PERSON"
+                  defaultLabel="Details of authorised person"
+                />
+              }
               disabled={isReviewPage}
             />
           </div>

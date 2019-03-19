@@ -4,7 +4,6 @@ import Snackbar from "material-ui/Snackbar";
 import Label from "../../utils/translationNode";
 
 const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, variant }) => {
-  console.log("message is...", message);
   const { labelName, labelKey } = message;
   return (
     <Snackbar

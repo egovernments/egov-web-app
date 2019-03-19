@@ -12,6 +12,7 @@ const formConfig = {
       id: "city",
       jsonPath: "PropertiesTemp[0].address.city",
       required: true,
+      localePrefix: { moduleName: "tenant", masterName: "tenants" },
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },

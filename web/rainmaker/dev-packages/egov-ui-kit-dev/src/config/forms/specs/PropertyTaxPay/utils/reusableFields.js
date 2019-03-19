@@ -77,6 +77,7 @@ export const subUsageType = {
     id: "assessment-subUsageType",
     jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryDetail",
     type: "singleValueList",
+    localePrefix: "PROPERTY_BILLING_SLAB",
     floatingLabelText: "PT_FORM2_SUB_USAGE_TYPE",
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -100,6 +101,7 @@ export const occupancy = {
     id: "assessment-occupancy",
     jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
     type: "singleValueList",
+    localePrefix: { moduleName: "PropertyTax", masterName: "OccupancyType" },
     floatingLabelText: "PT_FORM2_OCCUPANCY",
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     required: true,
@@ -195,49 +197,14 @@ export const floorName = {
     id: "floorName",
     type: "singleValueList",
     floatingLabelText: "PT_FORM2_SELECT_FLOOR",
+    localePrefix: { moduleName: "PropertyTax", masterName: "Floor" },
     hintText: "PT_FORM2_SELECT_FLOOR",
     numcols: 4,
     errorMessage: "",
     required: true,
     jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
     hideField: true,
-    //   beforeFieldChange: ({ action, dispatch, state }) => {
-    //     const { value } = action;
-    //     const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
-    //       if (key.startsWith("customSelect_")) {
-    //         const form = state.form[key];
-    //         if (form && form.fields.floorName.value) {
-    //           floorValues.push(form.fields.floorName.value);
-    //         }
-    //       }
-    //       return floorValues;
-    //     }, []);
-    //     const valueExists = floorValues.find((floorvalue) => {
-    //       return floorvalue === value;
-    //     });
-    //     if (valueExists && get(state, `form[${action.formKey}].fields[${action.fieldKey}].value`) !== action.value) {
-    //       alert("This floor is already selected, please select another floor");
-    //       action.value = "";
-    //     }
-    //     return action;
-    //   },
-    //   updateDependentFields: ({ formKey, field, dispatch, state }) => {
-    //     var arr = formKey.split("_");
-    //     var floorIndex = parseInt(arr[1]);
-    //     const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
-    //     dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
-    //   },
   },
-  // beforeInitForm: (action, store, dispatch) => {
-  //   try {
-  //     let state = store.getState();
-  //     const { Floor } = state.common && state.common.generalMDMSDataById;
-  //     set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
-  //     return action;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // },
 };
 
 export const beforeInitForm = {
@@ -466,25 +433,6 @@ export const city = {
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     numcols: 6,
     dataFetchConfig: {
-      // url: CITY.GET.URL,
-      // action: CITY.GET.ACTION,
-      // queryParams: [],
-      // requestBody: {
-      //   MdmsCriteria: {
-      //     tenantId: "pb",
-      //     moduleDetails: [
-      //       {
-      //         moduleName: "tenant",
-      //         masterDetails: [
-      //           {
-      //             name: "tenants",
-      //           },
-      //         ],
-      //       },
-      //     ],
-      //   },
-      // },
-      // dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [
         {
           fieldKey: "mohalla",
