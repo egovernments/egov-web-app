@@ -257,11 +257,16 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         get(state.screenConfiguration.preparedFinalObject, "Licenses", [])
       )
     );
+    let documents = get(
+      queryObject[0],
+      "tradeLicenseDetail.applicationDocuments"
+    );
     set(
       queryObject[0],
       "validFrom",
       convertDateToEpoch(queryObject[0].validFrom, "dayend")
     );
+    set(queryObject[0], "wfDocuments", documents);
     set(
       queryObject[0],
       "validTo",
@@ -391,7 +396,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
     setApplicationNumberBox(state, dispatch);
     return true;
   } catch (error) {
-    dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
     console.log(error);
     return false;
   }

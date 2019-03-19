@@ -707,14 +707,21 @@ export const tradeDetails = getCommonCard({
     },
     applicationType: {
       ...getSelectField({
-        label: { labelName: "Application Type" },
-        placeholder: { labelName: "Select Application Type" },
+        label: {
+          labelName: "Application Type",
+          labelKey: "TL_APPLICATION_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Application Type",
+          labelKey: "TL_APPLICATION_TYPE_PLACEHOLDER"
+        },
         required: true,
+        localePrefix: {
+          moduleName: "TradeLicense",
+          masterName: "ApplicationType"
+        },
         jsonPath:
           "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
-        // props: {
-        //   jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
-        // },
         sourceJsonPath: "applyScreenMdmsData.TradeLicense.ApplicationType",
         gridDefination: {
           xs: 12,

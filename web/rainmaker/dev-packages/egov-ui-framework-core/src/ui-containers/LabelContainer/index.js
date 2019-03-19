@@ -5,9 +5,11 @@ import { connect } from "react-redux";
 import {
   getTranslatedLabel,
   transformById,
-  getLocaleLabels
+  getLocaleLabels,
+  appendModulePrefix
 } from "../../ui-utils/commons";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import isEmpty from "lodash/isEmpty";
 
 // const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
 //   if (labelKey) {
@@ -24,13 +26,13 @@ import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
-const appendModulePrefix = value => {
-  if (window.location.pathname.includes("hrms")) {
-    return `HR_${value}`;
-  } else {
-    return `TL_${value}`;
-  }
-};
+// const appendModulePrefix = value => {
+//   if (window.location.pathname.includes("hrms")) {
+//     return `HR_${value}`;
+//   } else {
+//     return `TL_${value}`;
+//   }
+// };
 
 const hasModulePrefix = label => {
   return (
@@ -42,15 +44,16 @@ const hasModulePrefix = label => {
 
 class LabelContainer extends React.Component {
   render() {
-    let { labelName, labelKey, fieldValue, ...rest } = this.props;
+    let { labelName, labelKey, localePrefix, fieldValue, ...rest } = this.props;
     let transfomedKeys = transformById(localizationLabels, "code");
     let translatedLabel = getLocaleLabels(
       labelName,
-      labelKey && typeof labelKey === "string"
-        ? hasModulePrefix(labelKey)
-          ? labelKey
-          : appendModulePrefix(labelKey)
-        : labelKey,
+      // labelKey && typeof labelKey === "string"
+      //   ? hasModulePrefix(labelKey)
+      //     ? labelKey
+      //     : appendModulePrefix(labelKey)
+      //   : labelKey,
+      labelKey,
       transfomedKeys
     );
 
@@ -62,9 +65,13 @@ class LabelContainer extends React.Component {
       typeof fieldValue === "string"
         ? getLocaleLabels(
             fieldValue,
-            fieldValue && hasModulePrefix(fieldValue)
-              ? fieldValue
-              : appendModulePrefix(fieldValue),
+            // fieldValue && hasModulePrefix(fieldValue)
+            //   ? fieldValue
+            //   : appendModulePrefix(fieldValue),
+
+            localePrefix && !isEmpty(localePrefix)
+              ? appendModulePrefix(fieldValue, localePrefix)
+              : fieldValue,
             transfomedKeys
           )
         : fieldValue;

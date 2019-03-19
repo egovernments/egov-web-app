@@ -62,10 +62,12 @@ export const getOwnerGenderField = getSelectField({
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
   data: [
     {
-      code: "MALE"
+      code: "MALE",
+      label: "TL_GENDER_MALE"
     },
     {
-      code: "FEMALE"
+      code: "FEMALE",
+      label: "TL_GENDER_FEMALE"
     }
   ]
 });

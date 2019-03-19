@@ -135,13 +135,14 @@ const searchResults = async (action, state, dispatch, applicationNo) => {
     dispatch
   );
   let sts = getTransformedStatus(get(payload, "Licenses[0].status"));
-  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].tradeDetailsResponse",
-      getTradeTypeSubtypeDetails(payload)
-    )
-  );
+  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  payload &&
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].tradeDetailsResponse",
+        getTradeTypeSubtypeDetails(payload)
+      )
+    );
   const LicenseData = payload.Licenses[0];
   const fetchFromReceipt = sts !== "pending_payment";
   createEstimateData(

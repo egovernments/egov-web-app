@@ -7,20 +7,12 @@ import isEmpty from "lodash/isEmpty";
 import {
   transformById,
   epochToYmd,
-  getLocaleLabels
+  getLocaleLabels,
+  appendModulePrefix
 } from "../../ui-utils/commons";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
-
-const appendModulePrefix = (value, localePrefix) => {
-  const { moduleName, masterName } = localePrefix;
-  return `${moduleName
-    .toUpperCase()
-    .replace(/-/g, "_")}_${masterName
-    .toUpperCase()
-    .replace(/-/g, "_")}_${value}`;
-};
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {
@@ -97,10 +89,7 @@ class TextFieldContainer extends React.Component {
             : dropdownData.map((option, key) => (
                 <MenuItem key={key} value={option.value}>
                   {getLocaleLabels(
-                    // option.value,
-                    localePrefix && !isEmpty(localePrefix)
-                      ? appendModulePrefix(option.value, localePrefix)
-                      : option.value,
+                    option.value,
                     localePrefix && !isEmpty(localePrefix)
                       ? appendModulePrefix(option.value, localePrefix)
                       : option.value,

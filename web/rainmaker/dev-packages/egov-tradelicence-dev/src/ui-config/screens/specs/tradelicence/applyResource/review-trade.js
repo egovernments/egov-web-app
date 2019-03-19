@@ -24,7 +24,11 @@ const accessoriesCard = {
           },
           {
             jsonPath:
-              "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory"
+              "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory",
+            localePrefix: {
+              moduleName: "TRADELICENSE",
+              masterName: "ACCESSORIESCATEGORY"
+            }
           }
         ),
         reviewAccessoryUOM: getLabelWithValue(
@@ -69,6 +73,10 @@ const tradeTypeCard = {
           },
           {
             jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+            localePrefix: {
+              moduleName: "TRADELICENSE",
+              masterName: "TRADETYPE"
+            },
             callBack: value => {
               return value.split(".")[0];
             }
@@ -81,6 +89,10 @@ const tradeTypeCard = {
           },
           {
             jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+            localePrefix: {
+              moduleName: "TRADELICENSE",
+              masterName: "TRADETYPE"
+            },
             callBack: value => {
               return value.split(".")[1];
             }
@@ -91,7 +103,13 @@ const tradeTypeCard = {
             labelName: "Trade Sub-Type",
             labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
           },
-          { jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType" }
+          {
+            jsonPath: "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+            localePrefix: {
+              moduleName: "TRADELICENSE",
+              masterName: "TRADETYPE"
+            }
+          }
         ),
 
         reviewTradeUOM: getLabelWithValue(
@@ -180,7 +198,11 @@ export const getReviewTrade = (isEditable = true) => {
         },
         {
           jsonPath:
-            "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType"
+            "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+          localePrefix: {
+            moduleName: "TradeLicense",
+            masterName: "ApplicationType"
+          }
         }
       ),
       reviewOldLicenseNo: getLabelWithValue(
@@ -222,6 +244,10 @@ export const getReviewTrade = (isEditable = true) => {
         { labelName: "Structure Type" },
         {
           jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
+          localePrefix: {
+            moduleName: "common-masters",
+            masterName: "STRUCTURETYPE"
+          },
           callBack: value => {
             return value.split(".")[0];
           }
@@ -230,7 +256,11 @@ export const getReviewTrade = (isEditable = true) => {
       reviewSubStructureType: getLabelWithValue(
         { labelName: "Structure Sub Type" },
         {
-          jsonPath: "Licenses[0].tradeLicenseDetail.structureType"
+          jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
+          localePrefix: {
+            moduleName: "common-masters",
+            masterName: "STRUCTURETYPE"
+          }
         }
       ),
       reviewCommencementDate: getLabelWithValue(

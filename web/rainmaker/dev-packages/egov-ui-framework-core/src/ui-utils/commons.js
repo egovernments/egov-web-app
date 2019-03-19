@@ -325,3 +325,16 @@ export const handleFileUpload = (event, handleDocument, props) => {
     });
   }
 };
+
+//localizations
+export const getTransformedLocale = label => {
+  return label.toUpperCase().replace(/[.:-\s\/]/g, "_");
+};
+
+export const appendModulePrefix = (value, localePrefix) => {
+  const { moduleName, masterName } = localePrefix;
+  const transformedValue = `${getTransformedLocale(
+    moduleName
+  )}_${getTransformedLocale(masterName)}_${getTransformedLocale(value)}`;
+  return transformedValue;
+};

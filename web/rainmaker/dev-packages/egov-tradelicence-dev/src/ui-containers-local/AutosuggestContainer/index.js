@@ -5,7 +5,8 @@ import { findItemInArrayOfObject } from "../../ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   transformById,
-  getLocaleLabels
+  getLocaleLabels,
+  appendModulePrefix
 } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
@@ -58,25 +59,13 @@ class AutoSuggestor extends Component {
   }
 }
 
-const appendModulePrefix = (value, localePrefix) => {
-  const { moduleName, masterName } = localePrefix;
-  return `${moduleName
-    .toUpperCase()
-    .replace(/-/g, "_")}_${masterName
-    .toUpperCase()
-    .replace(/-/g, "_")}_${value}`;
-};
-
 const getLocalisedSuggestions = (suggestions, localePrefix) => {
   return (
     suggestions &&
     suggestions.length > 0 &&
     suggestions.map((option, key) => {
       option.name = getLocaleLabels(
-        //option.code,
-        localePrefix && !isEmpty(localePrefix)
-          ? appendModulePrefix(option.code, localePrefix)
-          : option.code,
+        option.code,
         localePrefix && !isEmpty(localePrefix)
           ? appendModulePrefix(option.code, localePrefix)
           : option.code,

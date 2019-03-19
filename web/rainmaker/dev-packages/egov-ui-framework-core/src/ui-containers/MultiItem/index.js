@@ -215,7 +215,6 @@ class MultiItem extends React.Component {
       sourceJsonPath
     } = this.props;
     const { addItem, removeItem, checkDisableDelete } = this;
-    console.log("addItemLabel is...", addItemLabel);
     const { labelName, labelKey } = addItemLabel || "";
     return (
       <Div>
