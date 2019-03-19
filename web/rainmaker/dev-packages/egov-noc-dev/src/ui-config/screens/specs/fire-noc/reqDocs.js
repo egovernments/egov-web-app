@@ -7,6 +7,7 @@ import {
   getCommonParagraph
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
+import { footer } from "./requiredDocuments/footer";
 const documentsData = [
   { title: "POI", documents: ["PAN", "Passport"], note: "*NOTE SOME" },
   { title: "POI", documents: ["PAN", "Passport"], note: "*NOTE SOME" },
@@ -132,7 +133,9 @@ const NOCRequiredDocuments = {
         breakAfterbuildingPlan: getBreak(),
         fireFightingPlan,
         breakAfterfireFightingPlan: getBreak(),
-        ownerCheckList
+        ownerCheckList,
+        breakAfterownerCheckList: getBreak(),
+        footer
       }
     }
   }
