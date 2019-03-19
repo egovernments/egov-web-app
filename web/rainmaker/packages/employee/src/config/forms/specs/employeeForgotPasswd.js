@@ -10,7 +10,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
-      pattern: /^[6789][0-9]{9}$/i,
+      pattern: "^([0-9]){10}$",
     },
     type: {
       id: "otp-type",
