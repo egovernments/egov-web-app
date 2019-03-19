@@ -10,6 +10,7 @@ import commonConfig from "config/common";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import isEmpty from "lodash/isEmpty";
 
 class App extends Component {
   constructor(props) {

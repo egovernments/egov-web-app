@@ -102,18 +102,39 @@ class TableData extends Component {
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
 
-      inboxData[0].headers = ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"];
+      inboxData[0].headers = [
+        "WF_INBOX_HEADER_MODULE_SERVICE",
+        "WF_INBOX_HEADER_TASK_ID",
+        "WF_INBOX_HEADER_STATUS",
+        "WF_INBOX_HEADER_ASSIGNED_BY",
+        "WF_INBOX_HEADER_ASSIGNED_TO",
+        "WF_INBOX_HEADER_SLA_DAYS_REMAINING",
+      ];
       inboxData[0].rows = assignedDataRows;
 
       const taskCount = allDataRows.length;
       const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
 
-      taskboardData.push({ head: taskCount, body: "Total Task" }, { head: "0", body: "Nearing SLA" }, { head: overSla, body: "Over SLA" });
+      taskboardData.push(
+        { head: taskCount, body: "WF_TOTAL_TASK" },
+        { head: "0", body: "WF_TOTAL_NEARING_SLA" },
+        { head: overSla, body: "WF_TOTAL_OVER_SLA" }
+      );
 
       tabData.push(`Assigned to me (${assignedDataRows.length})`);
       tabData.push(`All (${allDataRows.length})`);
 
-      inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
+      inboxData.push({
+        headers: [
+          "WF_INBOX_HEADER_MODULE_SERVICE",
+          "WF_INBOX_HEADER_TASK_ID",
+          "WF_INBOX_HEADER_STATUS",
+          "WF_INBOX_HEADER_ASSIGNED_BY",
+          "WF_INBOX_HEADER_ASSIGNED_TO",
+          "WF_INBOX_HEADER_SLA_DAYS_REMAINING",
+        ],
+        rows: allDataRows,
+      });
       this.setState({ inboxData, taskboardData, tabData });
     } catch (e) {
       //toggleSnackbarA(true, "Workflow search error !", "error");

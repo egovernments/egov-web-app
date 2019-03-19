@@ -38,14 +38,11 @@ export const toggleSnackbarAndSetText = (open, message = {}, error) => {
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
     try {
-      //let payload = { messages: JSON.parse(localStorageGet(`localization_${locale}`)) || [] };
-      //if (!payload.messages.length) {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" },
         { key: "locale", value: locale },
         { key: "tenantId", value: commonConfig.tenantId },
       ]);
-      //}
       dispatch(setLocalizationLabels(locale, payload.messages));
     } catch (error) {
       console.log(error);

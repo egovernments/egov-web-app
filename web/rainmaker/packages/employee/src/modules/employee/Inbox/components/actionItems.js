@@ -14,7 +14,7 @@ export const Taskboard = ({ data }) => {
             textChildren={
               <div>
                 <div className="head">{item.head}</div>
-                <div className="body">{item.body}</div>
+                <Label labelClassName="body" label={item.body} />
               </div>
             }
           />

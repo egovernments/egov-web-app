@@ -41,16 +41,15 @@ const routes = [
   {
     path: "forgot-password",
     component: ForgotPassword,
-    needsAuthentication: false
+    needsAuthentication: false,
     // redirectionUrl: "/inbox",
   },
-
-  // {
-  //   path: "user/language-selection",
-  //   component: LanguageSelection,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/all-complaints",
-  // },
+  {
+    path: "language-selection",
+    component: LanguageSelection,
+    needsAuthentication: false,
+    redirectionUrl: "/user/login",
+  },
   {
     path: "privacy-policy",
     component: PrivacyPolicy,
@@ -132,7 +131,7 @@ const routes = [
     options: {
       title: "HOME",
       hideFooter: false,
-      redirectionUrl,
+      redirectionUrl: "/language-selection",
       //isHomeScreen: true,
     },
   },

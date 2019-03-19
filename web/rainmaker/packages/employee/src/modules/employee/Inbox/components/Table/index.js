@@ -83,13 +83,13 @@ class InboxData extends React.Component {
         <TableHead>
           <TableRow>
             {data.headers.map((item) => {
-              return <TableCell className="inbox-data-table-headcell">{item}</TableCell>;
+              return <TableCell className="inbox-data-table-headcell">{<Label label={item} />}</TableCell>;
             })}
           </TableRow>
         </TableHead>
         {data.rows.length === 0 ? (
           <TableBody>
-            <Label labelClassName="" label="No results found !" />
+            <Label labelClassName="" label="COMMON_INBOX_NO_DATA" />
           </TableBody>
         ) : (
           <TableBody>
