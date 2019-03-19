@@ -1,32 +1,11 @@
 import {
+  getBreak,
   getCommonCard,
-  getCommonGrayCard,
-  getCommonTitle,
-  getCommonSubHeader,
-  getTextField,
-  getDateField,
-  getSelectField,
   getCommonContainer,
-  getPattern,
-  getLabel,
-  getBreak
+  getCommonTitle,
+  getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import {
-  getIconStyle,
-  objectToDropdown,
-  getTodaysDateInYMD,
-  getFinancialYearDates,
-  getNextMonthDateInYMD,
-  setFilteredTradeTypes,
-  getUniqueItemsFromArray,
-  fillOldLicenseData,
-  getTradeTypeDropdownData
-} from "../../utils";
-import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import get from "lodash/get";
-import filter from "lodash/filter";
-import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
