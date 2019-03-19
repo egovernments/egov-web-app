@@ -1,34 +1,12 @@
 import {
-  getStepperObject,
-  getCommonHeader,
-  getCommonCard,
   getCommonContainer,
-  getCommonTitle,
-  getCommonParagraph
+  getCommonHeader,
+  getStepperObject
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCurrentFinancialYear } from "../utils";
 import { footer } from "./applyResource/footer";
-
-import get from "lodash/get";
-import set from "lodash/set";
-
-import {
-  commonTransform,
-  objectToDropdown,
-  getCurrentFinancialYear,
-  getAllDataFromBillingSlab
-} from "../utils";
-import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
-} from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { httpRequest } from "../../../../ui-utils";
-import {
-  updatePFOforSearchResults,
-  getBoundaryData
-} from "../../../../ui-utils/commons";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { nocDetails } from "./applyResource/nocDetails";
+import { propertyDetails } from "./applyResource/propertyDetails";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -64,7 +42,8 @@ export const formwizardFirstStep = {
     id: "apply_form1"
   },
   children: {
-    nocDetails
+    nocDetails,
+    propertyDetails
   }
 };
 
