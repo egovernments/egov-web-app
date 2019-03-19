@@ -38,6 +38,7 @@ const OTPForm = ({ handleFieldChange, toggleSnackbarAndSetText, form, resendOTP,
                 <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
               </span>
             </div>
+            <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
 
             <TextField onChange={(e, value) => handleFieldChange("newPassword", value)} {...fields.newPassword} />
             <TextField

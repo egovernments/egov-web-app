@@ -39,7 +39,7 @@ export const Boxboard = ({ data }) => {
     <div className="inbox-module-container">
       {data.map((item, i) => {
         return (
-          <div className="inbox-module-card" onClick={() => onModuleCardClick(item.navigationURL)}>
+          <div className="inbox-module-card" id={`emp-${item.displayName.split(" ")[0]}-card`} onClick={() => onModuleCardClick(item.navigationURL)}>
             <Card
               className="inbox-card inbox-card-top"
               key={i}

@@ -47,7 +47,9 @@ export const fetchLocalizationLabel = (locale) => {
       ]);
       //}
       dispatch(setLocalizationLabels(locale, payload.messages));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 const setActionItems = (payload) => {
