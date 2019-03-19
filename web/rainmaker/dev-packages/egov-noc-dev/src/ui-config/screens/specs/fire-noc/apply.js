@@ -6,6 +6,7 @@ import {
   getCommonTitle,
   getCommonParagraph
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { footer } from "./applyResource/footer";
 
 import get from "lodash/get";
 import set from "lodash/set";
@@ -128,7 +129,8 @@ const screenConfig = {
           }
         },
         stepper,
-        formwizardFirstStep
+        formwizardFirstStep,
+        footer
       }
     }
   }

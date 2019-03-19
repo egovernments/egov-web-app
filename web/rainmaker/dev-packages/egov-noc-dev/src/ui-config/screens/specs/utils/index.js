@@ -1,6 +1,17 @@
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import get from "lodash/get";
 
+export const getCommonApplyFooter = children => {
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    props: {
+      className: "apply-wizard-footer"
+    },
+    children
+  };
+};
+
 export const transformById = (payload, id) => {
   return (
     payload &&
