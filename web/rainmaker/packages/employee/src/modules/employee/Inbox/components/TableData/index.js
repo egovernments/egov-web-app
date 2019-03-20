@@ -8,7 +8,9 @@ import Tab from "@material-ui/core/Tab";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import _ from "lodash";
+import get from "lodash";
+import isEmpty from "lodash/isEmpty";
+import filter from "lodash/filter";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
@@ -32,11 +34,11 @@ const getWFstatus = (status) => {
 };
 
 const prepareInboxDataRows = (data) => {
-  if (_.isEmpty(data)) return [];
+  if (isEmpty(data)) return [];
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
     return [
-      { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
+      { text: get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       {
         text: item.state ? (
@@ -70,7 +72,7 @@ class TableData extends Component {
     const { toggleSnackbarAndSetText } = this.props;
     try {
       const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
-      localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
+      localStorageSet("businessServiceData", JSON.stringify(get(payload, "BusinessServices")));
     } catch (e) {
       toggleSnackbarAndSetText(
         true,
@@ -85,7 +87,7 @@ class TableData extends Component {
 
   componentDidMount = async () => {
     const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
-    const uuid = _.get(this.props, "userInfo.uuid");
+    const uuid = get(this.props, "userInfo.uuid");
     const tenantId = getTenantId();
 
     const taskboardData = [];
@@ -96,8 +98,8 @@ class TableData extends Component {
       const requestBody = [{ key: "tenantId", value: tenantId }];
       const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
 
-      const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
-      const allData = _.get(responseData, "ProcessInstances", []);
+      const assignedData = filter(responseData.ProcessInstances, (item) => get(item.assignee, "uuid") === uuid);
+      const allData = get(responseData, "ProcessInstances", []);
 
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
@@ -113,7 +115,7 @@ class TableData extends Component {
       inboxData[0].rows = assignedDataRows;
 
       const taskCount = allDataRows.length;
-      const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
+      const overSla = filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
 
       taskboardData.push(
         { head: taskCount, body: "WF_TOTAL_TASK" },
@@ -121,8 +123,11 @@ class TableData extends Component {
         { head: overSla, body: "WF_TOTAL_OVER_SLA" }
       );
 
-      tabData.push(`Assigned to me (${assignedDataRows.length})`);
-      tabData.push(`All (${allDataRows.length})`);
+      // tabData.push(`Assigned to me (${assignedDataRows.length})`);
+      // tabData.push(`All (${allDataRows.length})`);
+
+      tabData.push({ label: "Assigned to me", dynamicValue: `(${assignedDataRows.length})` });
+      tabData.push({ label: "All", dynamicValue: `(${allDataRows.length})` });
 
       inboxData.push({
         headers: [
@@ -137,7 +142,6 @@ class TableData extends Component {
       });
       this.setState({ inboxData, taskboardData, tabData });
     } catch (e) {
-      //toggleSnackbarA(true, "Workflow search error !", "error");
       toggleSnackbarAndSetText(true, { labelName: "Workflow search error !", labelKey: "ERR_SEARCH_ERROR" }, true);
     }
     prepareFinalObject("InboxData", inboxData);
@@ -157,8 +161,12 @@ class TableData extends Component {
           }),
         };
       });
-      tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
-      tabData[1] = `All (${filteredData[1].rows.length})`;
+      // tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
+      // tabData[1] = `All (${filteredData[1].rows.length})`;
+
+      tabData[0].push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
+      tabData[1].push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
+
       this.setState({
         inboxData: filteredData,
         tabData,
@@ -182,7 +190,7 @@ class TableData extends Component {
             style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
           >
             {tabData.map((item) => {
-              return <Tab className="inbox-tab" label={item} />;
+              return <Tab className="inbox-tab" label={<Label label={item.label} dynamicValue={item.dynamicValue} isConcat={true} />} />;
             })}
 
             <div style={{ position: "absolute", right: 0, top: "10px" }}>
