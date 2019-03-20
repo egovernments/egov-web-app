@@ -7,6 +7,7 @@ import { getCurrentFinancialYear } from "../utils";
 import { footer } from "./applyResource/footer";
 import { nocDetails } from "./applyResource/nocDetails";
 import { propertyDetails } from "./applyResource/propertyDetails";
+import { propertyLocationDetails } from "./applyResource/propertyLocationDetails";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -43,7 +44,8 @@ export const formwizardFirstStep = {
   },
   children: {
     nocDetails,
-    propertyDetails
+    propertyDetails,
+    propertyLocationDetails
   }
 };
 
