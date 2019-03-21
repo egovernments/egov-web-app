@@ -8,9 +8,9 @@ import Tab from "@material-ui/core/Tab";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import get from "lodash";
-import isEmpty from "lodash/isEmpty";
-import filter from "lodash/filter";
+// import get from "lodash";
+// import isEmpty from "lodash/isEmpty";
+import _ from "lodash";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId, localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
@@ -34,11 +34,11 @@ const getWFstatus = (status) => {
 };
 
 const prepareInboxDataRows = (data) => {
-  if (isEmpty(data)) return [];
+  if (_.isEmpty(data)) return [];
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
     return [
-      { text: get(item, "moduleName", "--"), subtext: item.businessService },
+      { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       {
         text: item.state ? (
@@ -72,7 +72,7 @@ class TableData extends Component {
     const { toggleSnackbarAndSetText } = this.props;
     try {
       const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
-      localStorageSet("businessServiceData", JSON.stringify(get(payload, "BusinessServices")));
+      localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
     } catch (e) {
       toggleSnackbarAndSetText(
         true,
@@ -87,7 +87,7 @@ class TableData extends Component {
 
   componentDidMount = async () => {
     const { toggleSnackbarAndSetText, prepareFinalObject } = this.props;
-    const uuid = get(this.props, "userInfo.uuid");
+    const uuid = _.get(this.props, "userInfo.uuid");
     const tenantId = getTenantId();
 
     const taskboardData = [];
@@ -98,8 +98,11 @@ class TableData extends Component {
       const requestBody = [{ key: "tenantId", value: tenantId }];
       const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
 
-      const assignedData = filter(responseData.ProcessInstances, (item) => get(item.assignee, "uuid") === uuid);
-      const allData = get(responseData, "ProcessInstances", []);
+      const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
+      const allData = _.get(responseData, "ProcessInstances", []);
+
+      console.log("assignedData is...", allDataRows);
+      console.log("allData is...", allData);
 
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
@@ -115,7 +118,9 @@ class TableData extends Component {
       inboxData[0].rows = assignedDataRows;
 
       const taskCount = allDataRows.length;
-      const overSla = filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
+      const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
+
+      console.log("allDataRows is...", allDataRows);
 
       taskboardData.push(
         { head: taskCount, body: "WF_TOTAL_TASK" },

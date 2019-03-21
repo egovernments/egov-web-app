@@ -48,7 +48,7 @@ const EgovAppBar = ({
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
               <img
-                src={role && role.toLowerCase() === "citizen" ? pbLogo : (ulbLogo ? ulbLogo : pbLogo)}
+                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
                 onError={(event) => event.target.setAttribute("src", pbLogo)}
               />
             </div>
@@ -64,7 +64,7 @@ const EgovAppBar = ({
               <Label
                 containerStyle={{ marginLeft: "10px" }}
                 className="screenHeaderLabelStyle appbar-municipal-label"
-                label={ulbName && ulbName.toUpperCase()}
+                label={ulbName && `TENANT_TENANTS_${ulbName.toUpperCase()}`}
               />
               <Label containerStyle={{ marginLeft: "4px" }} className="screenHeaderLabelStyle appbar-municipal-label" label={defaultTitle} />
             </div>

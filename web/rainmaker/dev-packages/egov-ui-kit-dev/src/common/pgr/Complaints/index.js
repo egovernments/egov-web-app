@@ -253,7 +253,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                         fontSize="16px"
                       />
                       <Label
-                        label={city}
+                        label={`TENANT_TENANTS_${city.toUpperCase().replace(/[.]/g, "_")}`}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
