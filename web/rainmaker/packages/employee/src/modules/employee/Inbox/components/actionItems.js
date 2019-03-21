@@ -59,7 +59,11 @@ export const Boxboard = ({ data }) => {
                     }}
                     className="body"
                   >
-                    <Label label={item.displayName} fontSize="16px" color="rgba(0, 0, 0, 0.87)" />
+                    <Label
+                      label={`ACTION_TEST_${item.displayName.toUpperCase().replace(/[.:-\s\/]/g, "_")}`}
+                      fontSize="16px"
+                      color="rgba(0, 0, 0, 0.87)"
+                    />
                   </div>
                 </div>
               }

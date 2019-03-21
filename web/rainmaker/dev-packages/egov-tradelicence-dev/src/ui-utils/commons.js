@@ -22,6 +22,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import store from "redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
 
@@ -132,11 +133,35 @@ export const getBoundaryData = async (
       queryObject,
       {}
     );
+    const tenantId =
+      process.env.REACT_APP_NAME === "Employee"
+        ? get(
+            state.screenConfiguration.preparedFinalObject,
+            "Licenses[0].tradeLicenseDetail.address.city"
+          )
+        : getQueryArg(window.location.href, "tenantId");
+
+    const mohallaData =
+      payload &&
+      payload.TenantBoundary[0] &&
+      payload.TenantBoundary[0].boundary &&
+      payload.TenantBoundary[0].boundary.reduce((result, item) => {
+        result.push({
+          ...item,
+          name: `${tenantId
+            .toUpperCase()
+            .replace(/[.]/g, "_")}_REVENUE_${item.code
+            .toUpperCase()
+            .replace(/[._:-\s\/]/g, "_")}`
+        });
+        return result;
+      }, []);
 
     dispatch(
       prepareFinalObject(
         "applyScreenMdmsData.tenant.localities",
-        payload.TenantBoundary && payload.TenantBoundary[0].boundary
+        // payload.TenantBoundary && payload.TenantBoundary[0].boundary,
+        mohallaData
       )
     );
 
@@ -145,7 +170,7 @@ export const getBoundaryData = async (
         "apply",
         "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
         "props.suggestions",
-        payload.TenantBoundary && payload.TenantBoundary[0].boundary
+        mohallaData
       )
     );
     if (code) {

@@ -33,6 +33,10 @@ export const tradeLocationDetails = getCommonCard(
             labelName: "City",
             labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
           },
+          labelPrefix: {
+            moduleName: "TENANT",
+            masterName: "TENANTS"
+          },
           optionLabel: "name",
           placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
           sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
@@ -45,6 +49,7 @@ export const tradeLocationDetails = getCommonCard(
         }),
         beforeFieldChange: async (action, state, dispatch) => {
           //Below only runs for citizen - not required here in employee
+
           dispatch(
             prepareFinalObject(
               "Licenses[0].tradeLicenseDetail.address.city",
@@ -59,10 +64,28 @@ export const tradeLocationDetails = getCommonCard(
               [{ key: "tenantId", value: action.value }],
               {}
             );
+            const mohallaData =
+              payload &&
+              payload.TenantBoundary[0] &&
+              payload.TenantBoundary[0].boundary &&
+              payload.TenantBoundary[0].boundary.reduce((result, item) => {
+                result.push({
+                  ...item,
+                  name: `${action.value
+                    .toUpperCase()
+                    .replace(
+                      /[.]/g,
+                      "_"
+                    )}_REVENUE_${item.code
+                    .toUpperCase()
+                    .replace(/[._:-\s\/]/g, "_")}`
+                });
+                return result;
+              }, []);
             dispatch(
               prepareFinalObject(
                 "applyScreenMdmsData.tenant.localities",
-                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+                mohallaData
               )
             );
             dispatch(
@@ -70,7 +93,8 @@ export const tradeLocationDetails = getCommonCard(
                 "apply",
                 "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
                 "props.suggestions",
-                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+                mohallaData
+                // payload.TenantBoundary && payload.TenantBoundary[0].boundary
               )
             );
           } catch (e) {
@@ -163,7 +187,7 @@ export const tradeLocationDetails = getCommonCard(
           },
           jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
           sourceJsonPath: "applyScreenMdmsData.tenant.localities",
-          labelsFromLocalisation: false,
+          labelsFromLocalisation: true,
           suggestions: [],
           fullwidth: true,
           required: true,

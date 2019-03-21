@@ -79,6 +79,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {},
         isDependent: true,
+        hierarchyType: "ADMIN",
       },
 
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -119,7 +120,7 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          dd.push({ label: selected.name, value: selected.code });
+          dd.push({ label: `TENANT_TENANTS_${selected.name.toUpperCase().replace(/[.]/g, "_")}`, value: selected.code });
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));

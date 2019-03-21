@@ -505,7 +505,7 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
 };
 
 export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
-  const { url, action, requestBody, queryParams } = dataFetchConfig;
+  const { url, action, requestBody, queryParams, hierarchyType } = dataFetchConfig;
   try {
     if (url) {
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
@@ -519,7 +519,13 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
       const ddData =
         dropdownData &&
         dropdownData.reduce((ddData, item) => {
-          let option = { label: item.name, value: item.code };
+          let option = {
+            label:
+              fieldKey === "mohalla"
+                ? `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code.toUpperCase().replace(/[._:-\s\/]/g, "_")}`
+                : item.name,
+            value: item.code,
+          };
           //Only for boundary
           item.area && (option.area = item.area);
           ddData.push(option);
