@@ -160,14 +160,14 @@ class FormWizard extends Component {
             }
           ]
         );
-        if (
-          searchPropertyResponse.Properties[0].propertyDetails &&
-          searchPropertyResponse.Properties[0].propertyDetails.length > 0
-        ) {
-          searchPropertyResponse.Properties[0].propertyDetails.forEach(item => {
-            sortBy(item.units, [unit => unit.floorNo || -99999]);
-          });
-        }
+        // if (
+        //   searchPropertyResponse.Properties[0].propertyDetails &&
+        //   searchPropertyResponse.Properties[0].propertyDetails.length > 0
+        // ) {
+        //   searchPropertyResponse.Properties[0].propertyDetails.forEach(item => {
+        //     item.units = sortBy(item.units, [unit => unit.floorNo || -99999]);
+        //   });
+        // }
         let propertyResponse = {
           ...searchPropertyResponse,
           Properties: [
