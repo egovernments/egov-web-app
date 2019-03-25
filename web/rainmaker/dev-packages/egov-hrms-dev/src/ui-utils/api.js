@@ -91,7 +91,7 @@ export const httpRequest = async (
         (data.hasOwnProperty("Errors") &&
           data.Errors &&
           data.Errors.length &&
-          data.Errors[0].message) ||
+          data.Errors[0].code) ||
         (data.hasOwnProperty("error") &&
           data.error.fields &&
           data.error.fields.length &&

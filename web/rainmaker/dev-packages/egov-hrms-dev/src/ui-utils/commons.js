@@ -42,7 +42,13 @@ export const getSearchResults = async (queryObject, dispatch) => {
     );
     return response;
   } catch (error) {
-    dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelKey: error.message },
+        "error"
+      )
+    );
   }
 };
 
@@ -58,7 +64,13 @@ export const createEmployee = async (queryObject, payload, dispatch) => {
     );
     return response;
   } catch (error) {
-    dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelKey: error.message },
+        "error"
+      )
+    );
     throw error;
   }
 };
@@ -75,7 +87,13 @@ export const updateEmployee = async (queryObject, payload, dispatch) => {
     );
     return response;
   } catch (error) {
-    dispatch(toggleSnackbar(true, error.message, "error"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelKey: error.message },
+        "error"
+      )
+    );
     throw error;
   }
 };
