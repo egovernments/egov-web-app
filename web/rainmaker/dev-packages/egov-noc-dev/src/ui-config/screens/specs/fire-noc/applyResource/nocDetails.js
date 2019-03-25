@@ -20,7 +20,7 @@ export const nocDetails = getCommonCard({
     }
   ),
   break: getBreak(),
-  nocDetailsConatiner: getCommonContainer({
+  nocDetailsContainer: getCommonContainer({
     nocRadioGroup: {
       uiFramework: "custom-containers",
       moduleName: "egov-noc",
@@ -41,7 +41,7 @@ export const nocDetails = getCommonCard({
           dispatch(
             handleField(
               "apply",
-              "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsConatiner.children.provisionalNocNumber",
+              "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber",
               "props.style",
               { visibility: "hidden" }
             )
@@ -50,7 +50,7 @@ export const nocDetails = getCommonCard({
           dispatch(
             handleField(
               "apply",
-              "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsConatiner.children.provisionalNocNumber",
+              "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber",
               "props.style",
               {}
             )
