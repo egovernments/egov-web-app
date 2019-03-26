@@ -7,6 +7,7 @@ import {
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
 import { applicantSummary } from "./summaryResource/applicantSummary";
+import { documentsSummary } from "./summaryResource/documentsSummary";
 // import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const header = getCommonContainer({
@@ -46,7 +47,8 @@ const screenConfig = {
         body: getCommonCard({
           nocSummary: nocSummary,
           propertySummary: propertySummary,
-          applicantSummary: applicantSummary
+          applicantSummary: applicantSummary,
+          documentsSummary: documentsSummary
         })
       }
     }
