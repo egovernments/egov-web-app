@@ -77,6 +77,10 @@ class ActionDialog extends React.Component {
         return "APPROVE";
       case "PAY":
         return "Pay";
+      case "SENDBACK":
+        return "Send Back";
+      default:
+        return label;
     }
   };
 

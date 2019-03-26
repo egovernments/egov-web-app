@@ -89,6 +89,8 @@ class WorkFlowContainer extends React.Component {
         return "purpose=application&status=cancelled";
       case "APPROVE":
         return "purpose=approve&status=success";
+      case "SENDBACK":
+        return "purpose=sendback&status=success";
     }
   };
 
@@ -129,6 +131,7 @@ class WorkFlowContainer extends React.Component {
 
   createWorkFLow = async (label, isDocRequired) => {
     const { Licenses, toggleSnackbar } = this.props;
+    //setting the action to send in RequestInfo
     set(Licenses[0], "action", label);
 
     if (isDocRequired) {
@@ -175,8 +178,13 @@ class WorkFlowContainer extends React.Component {
         };
       case "CANCEL":
         return {
-          labelName: "Cancel Workflow",
+          labelName: "Cancel Application",
           labelKey: "TL_WORKFLOW_CANCEL"
+        };
+      case "SENDBACK":
+        return {
+          labelName: "Send Back Application",
+          labelKey: "TL_WORKFLOW_SENDBACK"
         };
       default:
         return {
