@@ -3,6 +3,7 @@ import {
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import { getCommonApplyFooter } from "../../utils";
 import "./index.scss";
@@ -10,8 +11,8 @@ import "./index.scss";
 const moveToReview = dispatch => {
   const reviewUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/fire-noc/review`
-      : `/fire-noc/review`;
+      ? `/egov-ui-framework/fire-noc/summary`
+      : `/fire-noc/summary`;
   dispatch(setRoute(reviewUrl));
 };
 
@@ -80,8 +81,8 @@ export const changeStep = (
   }
 
   const isPreviousButtonVisible = activeStep > 0 ? true : false;
-  const isNextButtonVisible = activeStep < 3 ? true : false;
-  const isPayButtonVisible = activeStep === 3 ? true : false;
+  const isNextButtonVisible = activeStep < 4 ? true : false;
+  const isPayButtonVisible = activeStep === 4 ? true : false;
   const actionDefination = [
     {
       path: "components.div.children.stepper.props",

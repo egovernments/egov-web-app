@@ -405,13 +405,13 @@ export const applicantDetails = getCommonCard({
       }),
       afterFieldChange: (action, state, dispatch) => {
         let singleApplicantContainerJsonPath =
-          "components.div.children.formwizardFirstStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer";
+          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer";
         let multipleApplicantContainerJsonPath =
-          "components.div.children.formwizardFirstStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer";
+          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer";
         let institutionContainerJsonPath =
-          "components.div.children.formwizardFirstStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer";
+          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer";
         let applicantSubtypeJsonPath =
-          "components.div.children.formwizardFirstStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType";
+          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType";
         if (action.value === "Individual") {
           showComponent(dispatch, singleApplicantContainerJsonPath, true);
           showComponent(dispatch, multipleApplicantContainerJsonPath, false);

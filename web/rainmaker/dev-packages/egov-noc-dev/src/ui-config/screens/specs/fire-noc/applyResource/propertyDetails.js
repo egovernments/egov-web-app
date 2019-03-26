@@ -252,9 +252,9 @@ export const propertyDetails = getCommonCard({
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
         let singleBuildingContainerJsonPath =
-          "components.div.children.formwizardFirstStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer";
+          "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer";
         let multipleBuildingContainerJsonPath =
-          "components.div.children.formwizardFirstStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer";
+          "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer";
         if (action.value === "Single Building") {
           dispatch(
             handleField(

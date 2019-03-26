@@ -18,13 +18,13 @@ import { httpRequest } from "../../../../../ui-utils/api";
 const showHideMapPopup = (state, dispatch) => {
   let toggle = get(
     state.screenConfiguration.screenConfig["apply"],
-    "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog.props.open",
+    "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog.props.open",
     false
   );
   dispatch(
     handleField(
       "apply",
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
+      "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
       "props.open",
       !toggle
     )
@@ -83,7 +83,7 @@ const getDetailsFromProperty = async (state, dispatch) => {
           dispatch(
             handleField(
               "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocPropertyID",
+              "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocPropertyID",
               "props.value",
               ""
             )
@@ -92,7 +92,7 @@ const getDetailsFromProperty = async (state, dispatch) => {
           dispatch(
             handleField(
               "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+              "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
               "props.value",
               {
                 value: payload.Properties[0].address.locality.code,
@@ -109,7 +109,7 @@ const getDetailsFromProperty = async (state, dispatch) => {
           dispatch(
             handleField(
               "apply",
-              "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.children.cityDropdown",
+              "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.children.cityDropdown",
               "props.value",
               payload.Properties[0].address.tenantId
             )
@@ -207,7 +207,7 @@ export const propertyLocationDetails = getCommonCard(
             dispatch(
               handleField(
                 "apply",
-                "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+                "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
                 "props.suggestions",
                 payload.TenantBoundary && payload.TenantBoundary[0].boundary
               )
