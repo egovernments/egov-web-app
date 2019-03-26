@@ -48,12 +48,10 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_MOB_NO_PLACEHOLDER"
         },
         title: {
-          value:
-            "Password/OTP will be sent to this number",
+          value: "Password/OTP will be sent to this number",
           key: "HR_MOB_NO_TOOLTIP_MESSAGE"
         },
         infoIcon: "info_circle",
-
         required: true,
         pattern: getPattern("MobileNo"),
         jsonPath: "Employee[0].user.mobileNumber"
@@ -88,11 +86,11 @@ export const employeeDetails = getCommonCard({
           data: [
             {
               value: "MALE",
-              label: "Male"
+              label: "COMMON_GENDER_MALE"
             },
             {
               value: "FEMALE",
-              label: "Female"
+              label: "COMMON_GENDER_FEMALE"
             }
           ],
           optionValue: "value",
@@ -212,6 +210,10 @@ export const professionalDetails = getCommonCard(
             optionValue: "code"
             // hasLocalization: false,
             // jsonPath: "Employee[0].employeeType"
+          },
+          localePrefix: {
+            moduleName: "egov-hrms",
+            masterName: "EmployeeType"
           }
         })
       },
@@ -232,6 +234,10 @@ export const professionalDetails = getCommonCard(
             value: "EMPLOYED"
             // hasLocalization: false,
             // jsonPath: "Employee[0].employeeStatus"
+          },
+          localePrefix: {
+            moduleName: "egov-hrms",
+            masterName: "EmployeeStatus"
           }
         })
       },

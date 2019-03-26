@@ -63,6 +63,10 @@ export const otherDetails = getCommonCard({
                   optionLabel: "status",
                   optionValue: "code"
                   // hasLocalization: false
+                },
+                localePrefix: {
+                  moduleName: "egov-hrms",
+                  masterName: "Degree"
                 }
               })
             },
@@ -146,6 +150,10 @@ export const otherDetails = getCommonCard({
                   // ],
                   // optionValue: "code",
                   // optionLabel: "label"
+                },
+                localePrefix: {
+                  moduleName: "egov-hrms",
+                  masterName: "Specalization"
                 }
               })
             },
@@ -237,6 +245,10 @@ export const otherDetails = getCommonCard({
                   // ],
                   // optionValue: "code",
                   // optionLabel: "label"
+                },
+                localePrefix: {
+                  moduleName: "egov-hrms",
+                  masterName: "EmploymentTest"
                 }
               })
             },

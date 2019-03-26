@@ -147,8 +147,12 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name",
-                hasLocalization: false
+                optionLabel: "name"
+                // hasLocalization: false
+              },
+              localePrefix: {
+                moduleName: "common-masters",
+                masterName: "Department"
               }
             })
           },
@@ -165,8 +169,12 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name",
-                hasLocalization: false
+                optionLabel: "name"
+                // hasLocalization: false
+              },
+              localePrefix: {
+                moduleName: "common-masters",
+                masterName: "Designation"
               }
             })
           },

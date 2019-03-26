@@ -134,7 +134,11 @@ export const deactivateEmployee = getCommonContainer({
           xs: 12,
           sm: 12
         },
-        sourceJsonPath: "viewScreenMdmsData.egov-hrms.DeactivationReason"
+        sourceJsonPath: "viewScreenMdmsData.egov-hrms.DeactivationReason",
+        localePrefix: {
+          moduleName: "egov-hrms",
+          masterName: "DeactivationReason"
+        }
       }),
       effectiveDate: getDateField({
         label: {

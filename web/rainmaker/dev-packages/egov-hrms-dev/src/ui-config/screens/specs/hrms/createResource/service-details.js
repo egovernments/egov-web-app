@@ -50,6 +50,10 @@ const serviceDetailsCard = {
                 optionValue: "code",
                 optionLabel: "status"
                 // hasLocalization: false
+              },
+              localePrefix: {
+                moduleName: "egov-hrms",
+                masterName: "EmployeeStatus"
               }
             })
           },
