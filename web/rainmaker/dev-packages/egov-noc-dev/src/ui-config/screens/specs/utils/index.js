@@ -1,5 +1,6 @@
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import get from "lodash/get";
+import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -109,6 +110,15 @@ export const sortByEpoch = (data, order) => {
       return b[b.length - 1] - a[a.length - 1];
     });
   }
+};
+
+export const ifUserRoleExists = role => {
+  let userInfo = JSON.parse(getUserInfo());
+  const roles = get(userInfo, "roles");
+  const roleCodes = roles ? roles.map(role => role.code) : [];
+  if (roleCodes.indexOf(role) > -1) {
+    return true;
+  } else return false;
 };
 
 export const convertEpochToDate = dateEpoch => {
