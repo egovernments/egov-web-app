@@ -32,10 +32,10 @@ const DocumentList = Loadable({
   loading: () => <Loading />
 });
 
-// const AutoSelector = Loadable({
-//   loader: () => import("./AutoSelector"),
-//   loading: () => <Loading />
-// });
+const DividerWithLabel = Loadable({
+  loader: () => import("./DividerWithLabel"),
+  loading: () => <Loading />
+});
 
 const MapLocator = Loadable({
   loader: () => import("./MapLocator"),
@@ -55,5 +55,6 @@ export {
   UploadSingleFile,
   DocumentList,
   MapLocator,
-  FeesEstimateCard
+  FeesEstimateCard,
+  DividerWithLabel
 };
