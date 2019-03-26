@@ -8,7 +8,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 
-export const nocSummary = getCommonGrayCard({
+export const applicantSummary = getCommonGrayCard({
   header: {
     uiFramework: "custom-atoms",
     componentPath: "Container",
@@ -22,8 +22,8 @@ export const nocSummary = getCommonGrayCard({
           sm: 10
         },
         ...getCommonSubHeader({
-          labelName: "NOC Details",
-          labelKey: "NOC_NOC_DETAILS_HEADER"
+          labelName: "Applicant Details",
+          labelKey: "NOC_APPLICANT_DETAILS_HEADER"
         })
       },
       editSection: {
@@ -63,29 +63,71 @@ export const nocSummary = getCommonGrayCard({
     }
   },
   body: getCommonContainer({
-    nocType: getLabelWithValue(
+    mobileNo: getLabelWithValue(
       {
-        labelName: "NOC Type",
-        labelKey: "NOC_NOC_TYPE_LABEL"
+        labelName: "Mobile No.",
+        labelKey: "NOC_MOBILE_NO_LABEL"
       },
       {
-        jsonPath: "nocType"
+        jsonPath: "mobileNo"
         // callBack: value => {
         //   return value.split(".")[0];
         // }
       }
     ),
-    fireNocNumber: getLabelWithValue(
+    applicantName: getLabelWithValue(
       {
-        labelName: "Provisional fire NoC number",
-        labelKey: "NOC_NUMBER_LABEL"
+        labelName: "Name",
+        labelKey: "NOC_APPLICANT_NAME_LABEL"
       },
       {
-        jsonPath: "fireNocNumber"
+        jsonPath: "applicantName"
         // callBack: value => {
         //   return value.split(".")[1];
         // }
       }
+    ),
+    applicantGender: getLabelWithValue(
+      {
+        labelName: "Gender",
+        labelKey: "NOC_APPLICANT_GENDER_LABEL"
+      },
+      { jsonPath: "applicantGender" }
+    ),
+    fatherHusbandName: getLabelWithValue(
+      {
+        labelName: "Father/Husband's Name",
+        labelKey: "NOC_FATHER_HUSBAND_NAME_LABEL"
+      },
+      { jsonPath: "fatherHusbandName" }
+    ),
+    applicantDob: getLabelWithValue(
+      {
+        labelName: "Date of Birth",
+        labelKey: "NOC_APPLICANT_DOB_LABEL"
+      },
+      { jsonPath: "applicantDob" }
+    ),
+    applicantEmail: getLabelWithValue(
+      {
+        labelName: "Email",
+        labelKey: "NOC_APPLICANT_EMAIL_LABEL"
+      },
+      { jsonPath: "applicantEmail" }
+    ),
+    applicantPan: getLabelWithValue(
+      {
+        labelName: "PAN",
+        labelKey: "NOC_APPLICANT_PAN_LABEL"
+      },
+      { jsonPath: "applicantPan" }
+    ),
+    applicantAddress: getLabelWithValue(
+      {
+        labelName: "Correspondence Address",
+        labelKey: "NOC_APPLICANT_CORRESPONDENCE_ADDRESS_LABEL"
+      },
+      { jsonPath: "applicantAddress" }
     )
   })
 });
