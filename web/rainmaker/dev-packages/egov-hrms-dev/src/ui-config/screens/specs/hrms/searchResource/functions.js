@@ -147,8 +147,13 @@ export const searchApiCall = async (state, dispatch) => {
       showHideTable(true, dispatch);
     } catch (error) {
       // showHideProgress(false, dispatch);
-      dispatch(toggleSnackbar(true, error.message, "error"));
-      console.log(error);
+      dispatch(
+        toggleSnackbar(
+          true,
+          { labelName: "Unable to parse search results!" },
+          "error"
+        )
+      );
     }
   }
 };

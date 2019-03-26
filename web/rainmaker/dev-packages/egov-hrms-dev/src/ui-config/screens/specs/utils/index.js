@@ -786,7 +786,13 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       }
     }
   } catch (e) {
-    dispatch(toggleSnackbar(true, e.message, "info"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: e.message, labelKey: e.message },
+        "info"
+      )
+    );
   }
 };
 

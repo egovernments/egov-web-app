@@ -176,7 +176,13 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
     }
   } catch (error) {
     store.dispatch(toggleSpinner());
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
+    store.dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelKey: error.message },
+        "error"
+      )
+    );
     console.log(error);
   }
 };
