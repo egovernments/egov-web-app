@@ -8,6 +8,8 @@ import { footer } from "./applyResource/footer";
 import { nocDetails } from "./applyResource/nocDetails";
 import { propertyDetails } from "./applyResource/propertyDetails";
 import { propertyLocationDetails } from "./applyResource/propertyLocationDetails";
+import { applicantDetails } from "./applyResource/applicantDetails";
+import { documentDetails } from "./applyResource/documentDetails";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -43,9 +45,7 @@ export const formwizardFirstStep = {
     id: "apply_form1"
   },
   children: {
-    nocDetails,
-    propertyDetails,
-    propertyLocationDetails
+    nocDetails
   }
 };
 
@@ -55,9 +55,10 @@ export const formwizardSecondStep = {
   props: {
     id: "apply_form2"
   },
-  // children: {
-  //   tradeOwnerDetails
-  // },
+  children: {
+    propertyDetails,
+    propertyLocationDetails
+  },
   visible: false
 };
 
@@ -67,9 +68,9 @@ export const formwizardThirdStep = {
   props: {
     id: "apply_form3"
   },
-  // children: {
-  //   tradeDocumentDetails
-  // },
+  children: {
+    applicantDetails
+  },
   visible: false
 };
 
@@ -79,9 +80,9 @@ export const formwizardFourthStep = {
   props: {
     id: "apply_form4"
   },
-  // children: {
-  //   tradeReviewDetails
-  // },
+  children: {
+    documentDetails
+  },
   visible: false
 };
 
@@ -111,6 +112,9 @@ const screenConfig = {
         },
         stepper,
         formwizardFirstStep,
+        formwizardSecondStep,
+        formwizardThirdStep,
+        formwizardFourthStep,
         footer
       }
     }

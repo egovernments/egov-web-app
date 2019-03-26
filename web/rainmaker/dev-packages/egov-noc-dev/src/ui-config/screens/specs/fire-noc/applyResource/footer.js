@@ -1,10 +1,21 @@
-import { dispatchMultipleFieldChangeAction, getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  dispatchMultipleFieldChangeAction,
+  getLabel
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import { getCommonApplyFooter } from "../../utils";
 import "./index.scss";
 
-export const callBackForNext = async (state, dispatch) => {
+const moveToReview = dispatch => {
+  const reviewUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/fire-noc/review`
+      : `/fire-noc/review`;
+  dispatch(setRoute(reviewUrl));
+};
+
+const callBackForNext = async (state, dispatch) => {
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -13,6 +24,10 @@ export const callBackForNext = async (state, dispatch) => {
   // console.log(activeStep);
   let isFormValid = true;
   let hasFieldToaster = true;
+
+  if (activeStep === 3) {
+    moveToReview(dispatch);
+  }
 
   if (activeStep !== 3) {
     if (isFormValid) {
@@ -50,16 +65,16 @@ export const changeStep = (
     0
   );
   if (defaultActiveStep === -1) {
-    if (activeStep === 2 && mode === "next") {
-      const isDocsUploaded = get(
-        state.screenConfiguration.preparedFinalObject,
-        "LicensesTemp[0].reviewDocData",
-        null
-      );
-      activeStep = isDocsUploaded ? 3 : 2;
-    } else {
-      activeStep = mode === "next" ? activeStep + 1 : activeStep - 1;
-    }
+    // if (activeStep === 2 && mode === "next") {
+    //   const isDocsUploaded = get(
+    //     state.screenConfiguration.preparedFinalObject,
+    //     "LicensesTemp[0].reviewDocData",
+    //     null
+    //   );
+    //   activeStep = isDocsUploaded ? 3 : 2;
+    // } else {
+    activeStep = mode === "next" ? activeStep + 1 : activeStep - 1;
+    // }
   } else {
     activeStep = defaultActiveStep;
   }
@@ -197,7 +212,7 @@ export const footer = getCommonApplyFooter({
       },
       previousButtonLabel: getLabel({
         labelName: "Previous Step",
-        labelKey: "TL_COMMON_BUTTON_PREV_STEP"
+        labelKey: "NOC_COMMON_BUTTON_PREV_STEP"
       })
     },
     onClickDefination: {
@@ -220,7 +235,7 @@ export const footer = getCommonApplyFooter({
     children: {
       nextButtonLabel: getLabel({
         labelName: "Next Step",
-        labelKey: "TL_COMMON_BUTTON_NXT_STEP"
+        labelKey: "NOC_COMMON_BUTTON_NXT_STEP"
       }),
       nextButtonIcon: {
         uiFramework: "custom-atoms",
@@ -249,7 +264,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "Submit",
-        labelKey: "TL_COMMON_BUTTON_SUBMIT"
+        labelKey: "NOC_COMMON_BUTTON_SUBMIT"
       }),
       submitButtonIcon: {
         uiFramework: "custom-atoms",
