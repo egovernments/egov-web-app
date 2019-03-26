@@ -191,7 +191,7 @@ export const propertySummary = getCommonGrayCard({
           color: "primary",
           style: {
             marginTop: "-10px",
-            marginRight: "-20px"
+            marginRight: "-18px"
           }
         },
         gridDefination: {
