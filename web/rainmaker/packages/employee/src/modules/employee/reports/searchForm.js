@@ -35,7 +35,7 @@ class ShowForm extends Component {
       console.log("Search Form Empty");
       return;
     } else {
-      this.setState({ getResults: true }, () => {
+      this.setState({ getResults: true,dateError:"" }, () => {
         resetForm();
       });
     }
@@ -148,18 +148,27 @@ class ShowForm extends Component {
     if (name == "fromDate") {
       let startDate = value;
       if (this.props.searchForm) {
-        let endDate = this.props.searchForm.toDate;
-        this.props.handleChange(e, name, required, pattern);
-        this.validateDate(startDate, endDate, required, "fromDate"); //3rd param to denote whether field fails
+        try {
+          let endDate = this.props.searchForm.toDate;
+          this.props.handleChange(e, name, required, pattern);
+          this.validateDate(startDate, endDate, required, "fromDate"); //3rd param to denote whether field fails
+        } catch (e) {
+          console.log(e);
+        }
+
       } else {
         this.props.handleChange(e, name, required, pattern);
       }
     } else {
       let endDate = value;
       if (this.props.searchForm) {
-        let startDate = this.props.searchForm.fromDate;
-        this.props.handleChange(e, name, required, pattern);
-        this.validateDate(startDate, endDate, required, "toDate"); //3rd param to denote whether field fails
+        try {
+          let startDate = this.props.searchForm.fromDate;
+          this.props.handleChange(e, name, required, pattern);
+          this.validateDate(startDate, endDate, required, "toDate"); //3rd param to denote whether field fails
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
   };
@@ -182,7 +191,7 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-          dateError: field === "toDate" ? <Label label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label label="REPORT_SEARCHFORM_DATE_LESSER" />,
+          dateError: field === "toDate" ? <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_LESSER" />,
         });
       }
     }
@@ -406,13 +415,23 @@ class ShowForm extends Component {
           }
         } else {
           if (variable == "fromDate") {
-            input = searchForm[variable].setHours(0);
-            input = searchForm[variable].setMinutes(0);
-            input = searchForm[variable].setSeconds(0);
+            try {
+              input = searchForm[variable].setHours(0);
+              input = searchForm[variable].setMinutes(0);
+              input = searchForm[variable].setSeconds(0);
+            } catch (e) {
+              console.log(e);
+            }
+
           } else if (variable == "toDate") {
-            input = searchForm[variable].setHours(23);
-            input = searchForm[variable].setMinutes(59);
-            input = searchForm[variable].setSeconds(59);
+            try {
+              input = searchForm[variable].setHours(23);
+              input = searchForm[variable].setMinutes(59);
+              input = searchForm[variable].setSeconds(59);
+            } catch (e) {
+              console.log(e);
+            }
+
           } else {
             input = searchForm[variable];
           }

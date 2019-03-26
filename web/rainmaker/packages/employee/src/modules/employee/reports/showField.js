@@ -128,7 +128,7 @@ export default class ShowField extends Component {
               }
               hintText={<Label label="PT_DATE_HINT_TEXT" />}
               value={obj.value ? obj.value : {}}
-              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError : "") : ""}
+              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError: "") : ""}
               formatDate={(date) => {
                 let dateObj = new Date(date);
                 let year = dateObj.getFullYear();
