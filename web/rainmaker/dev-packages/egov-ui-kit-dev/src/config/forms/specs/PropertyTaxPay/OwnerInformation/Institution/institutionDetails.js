@@ -20,7 +20,7 @@ const formConfig = {
       id: "institution-type",
       jsonPath: "propertyDetails[0].institution.type",
       type: "singleValueList",
-      localePrefix: "PROPERTY_BILLING_SLAB",
+      localePrefix: "PROPERTYTAX_BILLING_SLAB",
       floatingLabelText: "PT_INSTITUTION_TYPE",
       numcols: 6,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",

@@ -13,7 +13,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].subOwnershipCategory",
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_OWNERSHIP_TYPE",
-      localePrefix: "PROPERTY_BILLING_SLAB",
+      localePrefix: "PROPERTYTAX_BILLING_SLAB",
       hintText: "PT_FORM3_OWNERSHIP_TYPE_PLACEHOLDER",
       numcols: 6,
       required: true,

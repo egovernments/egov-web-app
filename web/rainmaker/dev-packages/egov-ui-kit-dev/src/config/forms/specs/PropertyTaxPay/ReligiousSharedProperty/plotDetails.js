@@ -11,7 +11,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
       // value: "Religious",
-      value: "PROPERTY_BILLING_SLAB_RELIGIOUS",
+      value: "PROPERTYTAX_BILLING_SLAB_RELIGIOUS",
       required: true,
       disabled: true,
       numcols: 4,

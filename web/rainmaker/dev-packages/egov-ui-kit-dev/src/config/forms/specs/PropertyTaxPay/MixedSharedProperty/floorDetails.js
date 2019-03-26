@@ -25,7 +25,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "singleValueList",
-      localePrefix: "PROPERTY_BILLING_SLAB",
+      localePrefix: "PROPERTYTAX_BILLING_SLAB",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
       required: true,
       numcols: 4,

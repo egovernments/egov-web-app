@@ -10,7 +10,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
       //value: "Commercial",
-      value: "PROPERTY_BILLING_SLAB_COMMERCIAL",
+      value: "PROPERTYTAX_BILLING_SLAB_COMMERCIAL",
       required: true,
       disabled: true,
       numcols: 4,

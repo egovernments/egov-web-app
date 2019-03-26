@@ -11,7 +11,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
       //value: "Public Space",
-      value: "PROPERTY_BILLING_SLAB_PUBLIC_SPACE",
+      value: "PROPERTYTAX_BILLING_SLAB_PUBLIC_SPACE",
       required: true,
       disabled: true,
       numcols: 4,
