@@ -151,9 +151,9 @@ class ShowField extends Component {
       // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       dom:
         "<'&nbsp''row'<'col-sm-2 col-xs-6 text-left'l><'col-sm-4 col-xs-6 text-right'f><'col-sm-6 col-xs-12 text-right'B>><'row margin0'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
-      order: [],
+      // order: [],
       // responsive: true,
-      select: true,
+      // select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
@@ -217,27 +217,27 @@ class ShowField extends Component {
       // },
       // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
       // "iDisplayLength": -1,
-      bPaginate: true,
-      iCookieDuration: 60,
+      // bPaginate: true,
+      // iCookieDuration: 60,
       // "bStateSave": false,
-      bAutoWidth: true,
+      // bAutoWidth: false,
       //true
-      bScrollAutoCss: true,
+      // bScrollAutoCss: true,
       // "bProcessing": true,
-      bRetrieve: true,
-      bJQueryUI: true,
+      // bRetrieve: true,
+      // bJQueryUI: true,
       // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
       aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      sScrollX: "100%",
+      // sScrollX: "100%",
       scrollX: true,
       // "sScrollXInner": "110%",
-      bScrollCollapse: true,
+      // bScrollCollapse: true,
       fnInitComplete: function() {
         this.css("visibility", "visible");
 
         $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
       },
-      renderer: "bootstrap",
+      // renderer: "bootstrap",
       drawCallback: function(settings) {
         $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
       },
