@@ -22,13 +22,13 @@ const getHeader = label => {
   };
 };
 
-const educationCard = {
+const propertyDetails = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
   props: {
     className: "noc-summary",
     scheama: getCommonGrayCard({
-      eduCardContainer: getCommonContainer({
+      propertyContainer: getCommonContainer({
         propertyType: getLabelWithValue(
           {
             labelName: "Property Type",
@@ -44,11 +44,17 @@ const educationCard = {
           { jsonPath: "buildingName" }
         ),
         buildingUsageType: getLabelWithValue(
-          { labelName: "Building Usage Type", labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL" },
+          {
+            labelName: "Building Usage Type",
+            labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL"
+          },
           { jsonPath: "buildingUsageType" }
         ),
         buildingUsageSubType: getLabelWithValue(
-          { labelName: "Building Usage Subtype", labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL" },
+          {
+            labelName: "Building Usage Subtype",
+            labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL"
+          },
           { jsonPath: "buildingUsageSubType" }
         ),
         noOfFloors: getLabelWithValue(
@@ -56,19 +62,31 @@ const educationCard = {
           { jsonPath: "noOfFloors" }
         ),
         noOfBasement: getLabelWithValue(
-          { labelName: "No. of Basement", labelKey: "NOC_NO_OF_BASEMENT_LABEL" },
+          {
+            labelName: "No. of Basement",
+            labelKey: "NOC_NO_OF_BASEMENT_LABEL"
+          },
           { jsonPath: "noOfBasement" }
         ),
         plotSize: getLabelWithValue(
-          { labelName: "Plot Size (in sq meters)", labelKey: "NOC_PLOT_SIZE_LABEL" },
+          {
+            labelName: "Plot Size (in sq meters)",
+            labelKey: "NOC_PLOT_SIZE_LABEL"
+          },
           { jsonPath: "plotSize" }
         ),
         groundBuiltupArea: getLabelWithValue(
-          { labelName: "Ground Builtup Area (sq meters)", labelKey: "NOC_GROUND_BUILTUP_AREA_LABEL" },
+          {
+            labelName: "Ground Builtup Area (sq meters)",
+            labelKey: "NOC_GROUND_BUILTUP_AREA_LABEL"
+          },
           { jsonPath: "groundBuiltupArea" }
         ),
         heightOfBuilding: getLabelWithValue(
-          { labelName: "Height of Building (in meters)", labelKey: "NOC_BUILDING_HEIGHT_LABEL" },
+          {
+            labelName: "Height of Building (in meters)",
+            labelKey: "NOC_BUILDING_HEIGHT_LABEL"
+          },
           { jsonPath: "heightOfBuilding" }
         )
       })
@@ -83,6 +101,71 @@ const educationCard = {
   },
   type: "array"
 };
+
+const propertyLocationDetails = getCommonGrayCard({
+  propertyLocationContainer: getCommonContainer({
+    propertyId: getLabelWithValue(
+      {
+        labelName: "Property ID",
+        labelKey: "NOC_PROPERTY_ID_LABEL"
+      },
+      { jsonPath: "propertyId" }
+    ),
+    city: getLabelWithValue(
+      {
+        labelName: "City",
+        labelKey: "NOC_CITY_LABEL"
+      },
+      { jsonPath: "city" }
+    ),
+    doorHouseNo: getLabelWithValue(
+      {
+        labelName: "Door/House No.",
+        labelKey: "NOC_DOOR_HOUSE_NO_LABEL"
+      },
+      { jsonPath: "doorHouseNo" }
+    ),
+    buildingCompanyName: getLabelWithValue(
+      {
+        labelName: "Building/Company Name",
+        labelKey: "NOC_BUILDING_COMPANY_NAME_LABEL"
+      },
+      { jsonPath: "buildingCompanyName" }
+    ),
+    streetName: getLabelWithValue(
+      { labelName: "Street Name", labelKey: "NOC_STREET_NAME_LABEL" },
+      { jsonPath: "streetName" }
+    ),
+    mohalla: getLabelWithValue(
+      {
+        labelName: "Mohalla",
+        labelKey: "NOC_MOHALLA_LABEL"
+      },
+      { jsonPath: "mohalla" }
+    ),
+    pincode: getLabelWithValue(
+      {
+        labelName: "Pincode",
+        labelKey: "NOC_PINCODE_LABEL"
+      },
+      { jsonPath: "plotSize" }
+    ),
+    locationOnMap: getLabelWithValue(
+      {
+        labelName: "Location On Map",
+        labelKey: "NOC_LOCATION_ON_MAP_LABEL"
+      },
+      { jsonPath: "locationOnMap" }
+    ),
+    applicableFireStation: getLabelWithValue(
+      {
+        labelName: "Applicable Fire Station",
+        labelKey: "NOC_APPLICABLE_FIRE_STATION_LABEL"
+      },
+      { jsonPath: "applicableFireStation" }
+    )
+  })
+});
 
 export const propertySummary = getCommonGrayCard({
   header: {
@@ -140,5 +223,7 @@ export const propertySummary = getCommonGrayCard({
   },
   propertyDetailsHeader: getHeader("Property Details"),
   break: getBreak(),
-  body: educationCard
+  cardOne: propertyDetails,
+  propertyLocationDetailsHeader: getHeader("Property Location Details"),
+  cardTwo: propertyLocationDetails
 });
