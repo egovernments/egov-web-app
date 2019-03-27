@@ -10,6 +10,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import UiBoundary from "./components/boundary";
 import boundaryConfig from "./commons/config";
 import isEmpty from "lodash/isEmpty";
+import filter from "lodash/filter";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -127,7 +128,7 @@ export default class ShowField extends Component {
               }
               hintText={<Label label="PT_DATE_HINT_TEXT" />}
               value={obj.value ? obj.value : {}}
-              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError : "") : ""}
+              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError: "") : ""}
               formatDate={(date) => {
                 let dateObj = new Date(date);
                 let year = dateObj.getFullYear();
@@ -208,7 +209,7 @@ export default class ShowField extends Component {
               dataSourceConfig={dataSourceConfig}
               openOnFocus={true}
               maxSearchResults={200}
-              searchText={obj.searchText}
+              searchText={getDropdownLabel(obj.searchText,dropDownData)}
             />
           </Col>
         );
@@ -306,4 +307,13 @@ export default class ShowField extends Component {
   render() {
     return this.renderFields(this.props.obj);
   }
+}
+
+const getDropdownLabel=(value,data)=>{
+  const object=filter(data,{value});
+  let label="";
+  if (object.length>0) {
+    label=object[0].label;
+  }
+  return label;
 }

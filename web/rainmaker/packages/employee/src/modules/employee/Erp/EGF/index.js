@@ -4,7 +4,6 @@ import { getTenantId, getAccessToken } from "egov-ui-kit/utils/localStorageUtils
 class EGFFinance extends Component {
   constructor(props) {
     super(props);
-    this.onMessage = this.onMessage.bind(this);
     this.onFrameLoad = this.onFrameLoad.bind(this);
   }
   onFrameLoad() {
@@ -60,10 +59,11 @@ class EGFFinance extends Component {
     console.log("componentDidUpdate method called");
     document.forms["erp_form"].submit();
   }
-  onMessage() {
+  onMessage=(event)=> {
+    if (event.data != "close") return;
     console.log("event recieved from iframe client");
     // document.getElementById('erp_iframe').style.display='none';
-    // this.props.history.push("/landing-page");
+    this.props.history.push("/inbox");
   }
 }
 

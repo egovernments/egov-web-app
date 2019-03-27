@@ -30,7 +30,7 @@ export const setRefreshToken = (refreshToken) => {
 export const setTenantId = (tenantId) => {
   localStorageSet("tenant-id", tenantId, null);
 };
-export const setLocale = () => {
+export const setLocale = (locale) => {
   localStorageSet("locale", locale);
 };
 export const setReturnUrl = (url) => {
@@ -64,8 +64,10 @@ export const localStorageSet = (key, data, path) => {
   if (path) {
     set(storedData, path, data);
     window.localStorage.setItem(appName + "." + key, storedData);
+    window.localStorage.setItem( key, storedData);
   } else {
     window.localStorage.setItem(appName + "." + key, data);
+    window.localStorage.setItem(key, data);
   }
 };
 //Remove Item
