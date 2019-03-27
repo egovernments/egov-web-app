@@ -1,14 +1,15 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getCommonApplyFooter } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import "./index.css";
 
-// const moveToReview = dispatch => {
-//   const reviewUrl =
-//     process.env.REACT_APP_SELF_RUNNING === "true"
-//       ? `/egov-ui-framework/fire-noc/summary`
-//       : `/fire-noc/summary`;
-//   dispatch(setRoute(reviewUrl));
-// };
+const gotoAcknowledgement = (state, dispatch) => {
+  const acknowledgementUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`
+      : `fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
+  dispatch(setRoute(acknowledgementUrl));
+};
 
 export const footer = getCommonApplyFooter({
   submitButton: {
@@ -34,10 +35,10 @@ export const footer = getCommonApplyFooter({
           iconName: "keyboard_arrow_right"
         }
       }
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: gotoAcknowledgement
     }
-    // onClickDefination: {
-    //   action: "condition",
-    //   callBack: callBackForPrevious
-    // },
   }
 });
