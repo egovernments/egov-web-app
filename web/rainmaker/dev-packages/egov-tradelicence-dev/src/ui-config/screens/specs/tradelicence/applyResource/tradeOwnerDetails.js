@@ -105,8 +105,18 @@ export const getFatherNameField = getTextField({
   pattern: getPattern("Name"),
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
 });
-
-export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "Father");
+// export const getRadioButtonGroup = (buttons, jsonPath, defaultValue) => {
+//   return {
+//     uiFramework: "custom-containers-local",
+//     componentPath: "RadioGroupContainer",
+//     props: {
+//       buttons,
+//       jsonPath,
+//       defaultValue
+//     }
+//   };
+// };
+export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "");
 
 export const ownerInfoInstitutional = {
   ...getCommonGrayCard({

@@ -7,6 +7,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const styles = theme => ({
   root: {
@@ -44,7 +45,7 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { classes, buttons } = this.props;
+    const { classes, buttons, fieldValue } = this.props;
 
     return (
       <div className={classes.root}>
@@ -53,7 +54,7 @@ class RadioButtonsGroup extends React.Component {
             aria-label="Gender"
             name="gender1"
             className={classes.group}
-            value={this.state.value}
+            value={this.state.value || fieldValue}
             onChange={this.handleChange}
           >
             {buttons &&
@@ -83,10 +84,12 @@ class RadioButtonsGroup extends React.Component {
 }
 
 const mapStateToProps = (state, ownprops) => {
+  let fieldValue = "";
   const { screenConfiguration } = state;
   const { jsonPath } = ownprops;
   const { preparedFinalObject } = screenConfiguration;
-  return { preparedFinalObject, jsonPath };
+  if (jsonPath) fieldValue = get(preparedFinalObject, jsonPath);
+  return { preparedFinalObject, jsonPath, fieldValue };
 };
 
 const mapDispatchToProps = dispatch => {
