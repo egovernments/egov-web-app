@@ -8,10 +8,10 @@ import {
   gotoHomeFooter,
   approvalSuccessFooter,
   paymentFailureFooter
-} from "./acknowledgementResource/applicationSuccessFooter";
+} from "./acknowledgementResource/footers";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { loadReceiptGenerationData } from "../utils/receiptTransformer";
+// import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
 
@@ -72,7 +72,7 @@ const getAcknowledgementCard = (
       )
     };
   } else if (purpose === "pay" && status === "success") {
-    loadReceiptGenerationData(applicationNumber, tenant);
+    // loadReceiptGenerationData(applicationNumber, tenant);
     return {
       header: getCommonContainer({
         header: getCommonHeader({
@@ -115,7 +115,7 @@ const getAcknowledgementCard = (
       paymentSuccessFooter: paymentSuccessFooter()
     };
   } else if (purpose === "approve" && status === "success") {
-    loadReceiptGenerationData(applicationNumber, tenant);
+    // loadReceiptGenerationData(applicationNumber, tenant);
     return {
       header: getCommonContainer({
         header: getCommonHeader({

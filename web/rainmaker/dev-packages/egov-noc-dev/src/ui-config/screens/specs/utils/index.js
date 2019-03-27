@@ -144,3 +144,55 @@ export const getCurrentFinancialYear = () => {
   }
   return fiscalYr;
 };
+
+export const getFinancialYearDates = (format, et) => {
+  /** Return the starting date and ending date (1st April to 31st March)
+   *  of the financial year of the given date in ET. If no ET given then
+   *  return the dates for the current financial year */
+  var date = !et ? new Date() : new Date(et);
+  var curMonth = date.getMonth();
+  var financialDates = { startDate: "NA", endDate: "NA" };
+  if (curMonth > 3) {
+    switch (format) {
+      case "dd/mm/yyyy":
+        financialDates.startDate = `01/04/${date.getFullYear().toString()}`;
+        financialDates.endDate = `31/03/${(date.getFullYear() + 1).toString()}`;
+        break;
+      case "yyyy-mm-dd":
+        financialDates.startDate = `${date.getFullYear().toString()}-04-01`;
+        financialDates.endDate = `${(date.getFullYear() + 1).toString()}-03-31`;
+        break;
+    }
+  } else {
+    switch (format) {
+      case "dd/mm/yyyy":
+        financialDates.startDate = `01/04/${(
+          date.getFullYear() - 1
+        ).toString()}`;
+        financialDates.endDate = `31/03/${date.getFullYear().toString()}`;
+        break;
+      case "yyyy-mm-dd":
+        financialDates.startDate = `${(
+          date.getFullYear() - 1
+        ).toString()}-04-01`;
+        financialDates.endDate = `${date.getFullYear().toString()}-03-31`;
+        break;
+    }
+  }
+  return financialDates;
+};
+
+// export const getReceiptData = async queryObject => {
+//   try {
+//     const response = await httpRequest(
+//       "post",
+//       "collection-services/receipts/_search",
+//       "",
+//       queryObject
+//     );
+//     return response;
+//   } catch (error) {
+//     console.log(error);
+//     return {};
+//   }
+// };

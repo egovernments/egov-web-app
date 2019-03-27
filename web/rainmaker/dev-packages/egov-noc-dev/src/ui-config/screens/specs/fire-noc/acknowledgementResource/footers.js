@@ -1,6 +1,5 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getRedirectionURL, generatePdfAndDownload } from "./functions";
-import generateReceipt from "../../utils/receiptPdf";
+//import generateReceipt from "../../utils/receiptPdf";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -156,7 +155,6 @@ export const applicationSuccessFooter = (
   tenant
 ) => {
   return getCommonApplyFooter({
-    //call gotoHome
     downloadFormButton: {
       componentPath: "Button",
       props: {
@@ -173,19 +171,19 @@ export const applicationSuccessFooter = (
           labelName: "DOWNLOAD CONFIRMATION FORM",
           labelKey: "NOC_APPLICATION_BUTTON_DOWN_CONF"
         })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: () => {
-          generatePdfAndDownload(
-            state,
-            dispatch,
-            "download",
-            applicationNumber,
-            tenant
-          );
-        }
       }
+      // onClickDefination: {
+      //   action: "condition",
+      //   callBack: () => {
+      //     generatePdfAndDownload(
+      //       state,
+      //       dispatch,
+      //       "download",
+      //       applicationNumber,
+      //       tenant
+      //     );
+      //   }
+      // }
     },
     printFormButton: {
       componentPath: "Button",
@@ -203,39 +201,67 @@ export const applicationSuccessFooter = (
           labelName: "PRINT CONFIRMATION FORM",
           labelKey: "NOC_APPLICATION_BUTTON_PRINT_CONF"
         })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: () => {
-          generatePdfAndDownload(
-            state,
-            dispatch,
-            "print",
-            applicationNumber,
-            tenant
-          );
-        }
       }
+      // onClickDefination: {
+      //   action: "condition",
+      //   callBack: () => {
+      //     generatePdfAndDownload(
+      //       state,
+      //       dispatch,
+      //       "print",
+      //       applicationNumber,
+      //       tenant
+      //     );
+      //   }
+      // }
     },
+    // proceedToPaymentButton: {
+    //   componentPath: "Button",
+    //   props: {
+    //     variant: "Contained",
+    //     color: "primary",
+    //     style: {
+    //       minWidth: "200px",
+    //       height: "48px",
+    //       marginRight: "40px"
+    //     }
+    //   },
+    //   children: {
+    //     proceedToPaymentButtonLabel: getLabel({
+    //       labelName: "Proceed to Payment",
+    //       labelKey: "NOC_COMMON_BUTTON_PROCEEDTOPAYMENT"
+    //     })
+    //   },
+    //   visible: true
+    //   //Add onClickDefinition
+    // },
     proceedToPaymentButton: {
       componentPath: "Button",
       props: {
-        variant: "Contained",
+        variant: "contained",
         color: "primary",
         style: {
           minWidth: "200px",
           height: "48px",
-          marginRight: "45px"
+          marginRight: "40px"
         }
       },
       children: {
         proceedToPaymentButtonLabel: getLabel({
-          labelName: "Proceed to Payment",
-          labelKey: "NOC_COMMON_BUTTON_PROCEEDTOPAYMENT"
+          labelName: "Proceed to payment",
+          labelKey: "NOC_PROCEED_PAYMENT"
         })
       },
-      visible: true
-      //Add onClickDefinition
+      //Add onClickDefination and RoleDefination later
+      // onClickDefination: {
+      //   action: "page_change",
+      //   path: `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=NOC`
+      // },
+      // roleDefination: {
+      //   rolePath: "user-info.roles",
+      //   action: "PAY",
+      //   roles: ["NOC_CEMP"]
+      // }
     }
   });
 };
@@ -259,13 +285,13 @@ export const approvalSuccessFooter = getCommonApplyFooter({
         labelName: "DOWNLOAD FIRE-NOC",
         labelKey: "NOC_APPROVAL_CHECKLIST_BUTTON_DOWN_LIC"
       })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "certificate_download");
-      }
     }
+    // onClickDefination: {
+    //   action: "condition",
+    //   callBack: (state, dispatch) => {
+    //     generateReceipt(state, dispatch, "certificate_download");
+    //   }
+    // }
   },
   printNOCButton: {
     componentPath: "Button",
@@ -283,13 +309,13 @@ export const approvalSuccessFooter = getCommonApplyFooter({
         labelName: "PRINT FIRE-NOC",
         labelKey: "NOC_APPROVAL_CHECKLIST_PRINT_LIC"
       })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        generateReceipt(state, dispatch, "certificate_print");
-      }
     }
+    // onClickDefination: {
+    //   action: "condition",
+    //   callBack: (state, dispatch) => {
+    //     generateReceipt(state, dispatch, "certificate_print");
+    //   }
+    // }
   }
 });
 
@@ -315,10 +341,10 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
         })
       },
       //Check this onclick later again
-      onClickDefination: {
-        action: "page_change",
-        path: `${getRedirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
-      }
+      // onClickDefination: {
+      //   action: "page_change",
+      //   path: `${getRedirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+      // }
     }
   });
 };
@@ -326,7 +352,7 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
 //Function for payment success(Show buttons for download and print receipts)
 export const paymentSuccessFooter = () => {
   return getCommonApplyFooter({
-     //call gotoHome
+    //call gotoHome
     downloadReceiptButton: {
       componentPath: "Button",
       props: {
@@ -343,13 +369,13 @@ export const paymentSuccessFooter = () => {
           labelName: "DOWNLOAD RECEIPT",
           labelKey: "NOC_CONFIRMATION_BUTTON_DOWNLOAD_RECEIPT"
         })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: (state, dispatch) => {
-          generateReceipt(state, dispatch, "receipt_download");
-        }
       }
+      // onClickDefination: {
+      //   action: "condition",
+      //   callBack: (state, dispatch) => {
+      //     generateReceipt(state, dispatch, "receipt_download");
+      //   }
+      // }
     },
     printReceiptButton: {
       componentPath: "Button",
@@ -367,15 +393,15 @@ export const paymentSuccessFooter = () => {
           labelName: "PRINT RECEIPT",
           labelKey: "NOC_CONFIRMATION_BUTTON_PRINT_RECEIPT"
         })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: (state, dispatch) => {
-          generateReceipt(state, dispatch, "receipt_print");
-        }
       }
+      // onClickDefination: {
+      //   action: "condition",
+      //   callBack: (state, dispatch) => {
+      //     generateReceipt(state, dispatch, "receipt_print");
+      //   }
+      // }
     }
   });
 };
 
-//Write a function using map to return buttons 
+//Write a function using map to return buttons
