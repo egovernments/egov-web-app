@@ -1,7 +1,7 @@
 import React from "react";
 import formHoc from "../../../hocs/form";
 import { httpRequest } from "../../api";
-import { getQueryValue, getFinancialYearFromQuery, convertUnitsToSqFt, findCorrectDateObj } from "../../PTCommon";
+import { getQueryValue, getFinancialYearFromQuery, convertUnitsToSqFt, findCorrectDateObj, findCorrectDateObjPenaltyIntrest } from "../../PTCommon";
 import { Icon } from "../../../components";
 import Label from "../../../utils/translationNode";
 import { getPlotAndFloorFormConfigPath } from "../../../config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
@@ -237,10 +237,10 @@ export const getImportantDates = async (self) => {
     });
     if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
       const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
-      const intrest = findCorrectDateObj(financialYearFromQuery, Interest);
+      const intrest = findCorrectDateObjPenaltyIntrest(financialYearFromQuery, Interest);
       const fireCess = findCorrectDateObj(financialYearFromQuery, FireCess);
       const rebate = findCorrectDateObj(financialYearFromQuery, Rebate);
-      const penalty = findCorrectDateObj(financialYearFromQuery, Penalty);
+      const penalty = findCorrectDateObjPenaltyIntrest(financialYearFromQuery, Penalty);
       self.setState({
         importantDates: {
           intrest,
