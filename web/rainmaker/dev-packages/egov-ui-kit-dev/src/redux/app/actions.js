@@ -35,11 +35,12 @@ export const toggleSnackbarAndSetText = (open, message = {}, error) => {
   };
 };
 
-export const fetchLocalizationLabel = (locale) => {
+export const fetchLocalizationLabel = (locale, module) => {
   return async (dispatch) => {
+    const commonModules = "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common";
     try {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
-        { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" },
+        { key: "module", value: module ? `${commonModules},${module}`: commonModules  },
         { key: "locale", value: locale },
         { key: "tenantId", value: commonConfig.tenantId },
       ]);

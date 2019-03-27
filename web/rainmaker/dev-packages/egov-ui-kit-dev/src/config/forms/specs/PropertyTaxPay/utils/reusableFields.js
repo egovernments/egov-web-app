@@ -3,11 +3,13 @@ import { prepareFormData, fetchGeneralMDMSData, toggleSpinner } from "egov-ui-ki
 import { setDependentFields } from "./enableDependentFields";
 import { removeFormKey } from "./removeFloors";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
 import { localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 
 let floorDropDownData = [];
 
@@ -231,6 +233,7 @@ export const beforeInitForm = {
       const unitIndex = parseInt(arr[3]);
       const property = get(state, `common.prepareFormData.Properties[0].propertyDetails[0]`);
       let unitsCount = null;
+      const { localizationLabels } = state.app;
       if (state.form[formKey]) {
         unitsCount = state.form[formKey].unitsIndex;
       } else {
@@ -258,6 +261,9 @@ export const beforeInitForm = {
           dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorNo}`));
         }
       }
+      const usageTypeValue = get(form, "fields.usageType.value");
+      set(action, "form.fields.usageType.value", getTranslatedLabel(usageTypeValue, localizationLabels));
+      dispatch(setFieldProperty(formKey, "usageType", "value", getTranslatedLabel(usageTypeValue, localizationLabels)));
     }
 
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");

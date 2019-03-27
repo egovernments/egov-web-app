@@ -11,7 +11,7 @@ const formConfig = {
       jsonPath: "propertyDetails[0].institution.name",
       type: "textfield",
       floatingLabelText: "PT_INSTITUTION_NAME",
-      hintText: "PT_INSTITUTION_NAME_HINT_TEXT",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       errorMessage: "PT_NAME_ERROR_MESSAGE",
       numcols: 6,
       required: true,
