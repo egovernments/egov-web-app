@@ -43,12 +43,30 @@ const styles = {
   },
   taxStyles: {
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 400,
-    lineHeight: "19px",
+    lineHeight: "17px",
     letterSpacing: 0.67,
     fontFamily: "Roboto",
     marginBottom: 16
+  },
+  taxStylesLeft: {
+    color: "rgba(0, 0, 0, 0.6)",
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "17px",
+    letterSpacing: 0.58,
+    fontFamily: "Roboto",
+    marginBottom: 16
+  },
+  cardHeader: {
+    color: "rgba(0, 0, 0, 0.87)",
+    fontFamily: "Roboto",
+    fontSize: "18px",
+    fontWeight: 400,
+    letterSpacing: "0.75px",
+    lineHeight: "22px",
+    textAlign: "left"
   }
 };
 
@@ -65,7 +83,11 @@ function FeesEstimateCard(props) {
   return (
     <Grid container>
       <Grid xs={12} sm={7}>
-        {/* <Typography variant="subheading">{estimate.header}</Typography> */}
+        <LabelContainer
+          labelName={estimate.header.labelName}
+          labelKey={estimate.header.labelKey}
+          style={styles.cardHeader}
+        />
         <div style={{ marginTop: 48, maxWidth: 400 }}>
           <Grid container>
             {estimate.fees.map((fee, key) => {
@@ -86,7 +108,7 @@ function FeesEstimateCard(props) {
                   <LabelContainer
                     labelName={fee.name.labelName}
                     labelKey={fee.name.labelKey}
-                    style={styles.taxStyles}
+                    style={styles.taxStylesLeft}
                   />
                   {tooltip}
                 </Grid>

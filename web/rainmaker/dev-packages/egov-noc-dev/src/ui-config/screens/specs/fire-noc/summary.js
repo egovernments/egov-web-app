@@ -4,10 +4,12 @@ import {
   getCommonContainer,
   getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
 import { applicantSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
+import { footer } from "./summaryResource/footer";
 // import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const header = getCommonContainer({
@@ -45,11 +47,13 @@ const screenConfig = {
           }
         },
         body: getCommonCard({
+          estimateSummary: estimateSummary,
           nocSummary: nocSummary,
           propertySummary: propertySummary,
           applicantSummary: applicantSummary,
           documentsSummary: documentsSummary
-        })
+        }),
+        footer: footer
       }
     }
   }
