@@ -63,6 +63,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorText: "",
       dropDownData: [],
+      labelsFromLocalisation: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
       },
@@ -136,6 +137,7 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
+      const { localizationLabels } = state.app;
       const { cities, citiesByModule } = state.common;
       const { PGR } = citiesByModule || {};
       if (PGR) {
@@ -144,7 +146,8 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          dd.push({ label: `TENANT_TENANTS_${selected.name.toUpperCase().replace(/[.]/g, "_")}`, value: selected.code });
+          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));

@@ -64,7 +64,7 @@ const EgovAppBar = ({
               <Label
                 containerStyle={{ marginLeft: "10px" }}
                 className="screenHeaderLabelStyle appbar-municipal-label"
-                label={ulbName && `TENANT_TENANTS_${ulbName.toUpperCase()}`}
+                label={ulbName && `TENANT_TENANTS_${ulbName.toUpperCase().replace(/[.]/g, "_")}`}
               />
               <Label containerStyle={{ marginLeft: "4px" }} className="screenHeaderLabelStyle appbar-municipal-label" label={defaultTitle} />
             </div>
