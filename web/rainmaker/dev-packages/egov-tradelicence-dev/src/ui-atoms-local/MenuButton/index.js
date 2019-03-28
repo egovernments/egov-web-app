@@ -39,7 +39,8 @@ class MenuListComposition extends React.Component {
   };
 
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+    const { open } = this.state;
+    this.setState({ open: !open });
   };
 
   handleClose = event => {
