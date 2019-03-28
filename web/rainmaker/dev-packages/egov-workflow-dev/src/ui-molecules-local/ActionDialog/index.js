@@ -207,7 +207,7 @@ class ActionDialog extends React.Component {
                         accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
-                      jsonPath="Licenses[0].wfDocumnets"
+                      jsonPath="Licenses[0].wfDocuments"
                       maxFileSize={5000}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>

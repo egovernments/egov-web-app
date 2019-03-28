@@ -134,7 +134,7 @@ class WorkFlowContainer extends React.Component {
     set(Licenses[0], "action", label);
 
     if (isDocRequired) {
-      const documents = get(Licenses[0], "wfDocumnets");
+      const documents = get(Licenses[0], "wfDocuments");
       if (documents && documents.length > 0) {
         this.tlUpdate(label);
       } else {
