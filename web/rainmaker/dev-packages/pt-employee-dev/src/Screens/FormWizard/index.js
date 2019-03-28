@@ -838,6 +838,9 @@ class FormWizard extends Component {
       return billResponse;
     } catch (e) {
       console.log(e);
+      this.props.history.push(
+        `payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`
+      );
     }
   };
 
