@@ -38,7 +38,7 @@ const moveToSuccess = (LicenseData, dispatch) => {
   );
 };
 
-const generatePdfFromDiv = (action, applicationNumber) => {
+export const generatePdfFromDiv = (action, applicationNumber) => {
   let target = document.querySelector("#custom-atoms-div");
   html2canvas(target, {
     onclone: function(clonedDoc) {
@@ -598,14 +598,14 @@ export const footerReview = (
     leftIcon: "book"
   };
   let receiptDownloadObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_download");
     },
     leftIcon: "receipt"
   };
   let receiptPrintObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_print");
     },
@@ -626,7 +626,7 @@ export const footerReview = (
     leftIcon: "assignment"
   };
   switch (status) {
-    case "approved":
+    case "APPROVED":
       downloadMenu = [
         tlCertificateDownloadObject,
         receiptDownloadObject,
@@ -638,7 +638,8 @@ export const footerReview = (
         applicationPrintObject
       ];
       break;
-    case "pending_payment":
+    case "applied":
+    case "PENDINGPAYMENT":
       downloadMenu = [applicationDownloadObject];
       printMenu = [applicationPrintObject];
       break;
@@ -646,13 +647,13 @@ export const footerReview = (
       downloadMenu = [receiptDownloadObject, applicationDownloadObject];
       printMenu = [receiptPrintObject, applicationPrintObject];
       break;
-    case "cancelled":
-      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
-      printMenu = [receiptPrintObject, applicationPrintObject];
+    case "CANCELLED":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
       break;
-    case "rejected":
-      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
-      printMenu = [receiptPrintObject, applicationPrintObject];
+    case "REJECTED":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
       break;
     default:
       break;

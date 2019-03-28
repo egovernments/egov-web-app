@@ -166,8 +166,12 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
   if (applicationNumber) {
     await searchResults(action, state, dispatch, applicationNumber);
 
-    const status = getTransformedStatus(
-      get(state, "screenConfiguration.preparedFinalObject.Licenses[0].status")
+    // const status = getTransformedStatus(
+    //   get(state, "screenConfiguration.preparedFinalObject.Licenses[0].status")
+    // );
+    const status = get(
+      state,
+      "screenConfiguration.preparedFinalObject.Licenses[0].status"
     );
 
     let data = get(state, "screenConfiguration.preparedFinalObject");
@@ -177,9 +181,9 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
     // Get approval details based on status and set it in screenconfig
 
     if (
-      status === "approved" ||
-      status === "rejected" ||
-      status === "cancelled"
+      status === "APPROVED" ||
+      status === "REJECTED" ||
+      status === "CANCELLED"
     ) {
       set(
         action,

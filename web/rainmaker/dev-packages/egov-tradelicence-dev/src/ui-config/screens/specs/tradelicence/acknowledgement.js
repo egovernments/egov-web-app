@@ -114,7 +114,7 @@ const getAcknowledgementCard = (
       paymentSuccessFooter: paymentSuccessFooter(
         state,
         dispatch,
-        status,
+        "APPROVED",
         applicationNumber
       )
     };
@@ -367,7 +367,8 @@ const getAcknowledgementCard = (
               labelKey: "TL_FORWARD_SUCCESS_MESSAGE_MAIN"
             },
             body: {
-              labelName: "Application has been marked successfully",
+              labelName:
+                "A notification regarding above application status has been sent to trade owner at registered Mobile No.",
               labelKey: "TL_APPLICATION_FORWARD_SUCCESS"
             },
             tailText: {

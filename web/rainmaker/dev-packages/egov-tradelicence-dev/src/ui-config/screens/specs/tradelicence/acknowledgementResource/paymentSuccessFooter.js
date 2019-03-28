@@ -1,6 +1,7 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import generateReceipt from "../../utils/receiptPdf";
 import { ifUserRoleExists } from "../../utils";
+import { generatePdfFromDiv } from "../applyResource/footer";
 
 const getCommonApplyFooter = children => {
   return {
@@ -40,14 +41,14 @@ export const paymentSuccessFooter = (
     leftIcon: "book"
   };
   let receiptDownloadObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_download");
     },
     leftIcon: "receipt"
   };
   let receiptPrintObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_print");
     },
@@ -68,26 +69,23 @@ export const paymentSuccessFooter = (
     leftIcon: "assignment"
   };
   switch (status) {
-    case "approved":
-      downloadMenu = [
-        tlCertificateDownloadObject,
-        receiptDownloadObject,
-        applicationDownloadObject
-      ];
-      printMenu = [
-        tlCertificatePrintObject,
-        receiptPrintObject,
-        applicationPrintObject
-      ];
+    case "APPROVED":
+      downloadMenu = [tlCertificateDownloadObject, receiptDownloadObject];
+      printMenu = [tlCertificatePrintObject, receiptPrintObject];
       break;
-    case "pending_payment":
-      downloadMenu = [applicationDownloadObject];
-      printMenu = [applicationPrintObject];
+    case "APPLIED":
+    case "PENDINGPAYMENT":
+      downloadMenu = [applicationDownloadObject, tlCertificateDownloadObject];
+      printMenu = [applicationPrintObject, tlCertificatePrintObject];
       break;
-    case "pending_approval":
-      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
-      printMenu = [receiptPrintObject, applicationPrintObject];
-      break;
+    // case "PENDINGPAYMENT":
+    //   downloadMenu = [applicationDownloadObject];
+    //   printMenu = [applicationPrintObject];
+    //   break;
+    // case "pending_approval":
+    //   downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+    //   printMenu = [receiptPrintObject, applicationPrintObject];
+    //   break;
     case "cancelled":
       downloadMenu = [receiptDownloadObject, applicationDownloadObject];
       printMenu = [receiptPrintObject, applicationPrintObject];
