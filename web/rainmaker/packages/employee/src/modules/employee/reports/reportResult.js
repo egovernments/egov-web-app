@@ -31,6 +31,7 @@ window.JSZip = JSZip;
 var sumColumn = [];
 var footerexist = false;
 let rTable;
+let reportTitlefromConfig;
 class ShowField extends Component {
   constructor(props) {
     super(props);
@@ -133,7 +134,15 @@ class ShowField extends Component {
   componentDidUpdate() {
     let { reportResult, tabLabel, metaData } = this.props;
     let { reportDetails = {} } = metaData;
-    let { additionalConfig = {} } = reportDetails;
+    let tableConfig;
+    if (reportDetails && reportDetails.hasOwnProperty("additionalConfig")) {
+      if (reportDetails.additionalConfig && reportDetails.additionalConfig.hasOwnProperty("tableConfig")) {
+        tableConfig = reportDetails.additionalConfig.tableConfig;
+      }
+      if (reportDetails.additionalConfig && reportDetails.additionalConfig.hasOwnProperty("reportTitle")) {
+        reportTitlefromConfig = reportDetails.additionalConfig.reportTitle;
+      }
+    }
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -168,7 +177,7 @@ class ShowField extends Component {
       drawCallback: function(settings) {
         $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
       },
-      ...additionalConfig,
+      ...tableConfig,
     });
     showTabLabel();
   }
@@ -647,6 +656,17 @@ class ShowField extends Component {
     return reportTitle;
   };
 
+  getReportTitlefromTwoOptions = (metaData) => {
+    if (reportTitlefromConfig != null) {
+      return <Label label={reportTitlefromConfig} labelStyle={{ margin: "16px", color: "#484848" }} fontSize={20} />;
+    } else {
+      return (
+        metaData &&
+        metaData.reportDetails &&
+        metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
+      );
+    }
+  };
   render() {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult, tabLabel } = this.props;
@@ -690,11 +710,7 @@ class ShowField extends Component {
     };
     return isTableShow ? (
       <div>
-        {!_.isEmpty(reportResult) &&
-          reportResult.hasOwnProperty("reportData") &&
-          metaData &&
-          metaData.reportDetails &&
-          metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
+        {!_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && this.getReportTitlefromTwoOptions(metaData)}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>
@@ -702,7 +718,6 @@ class ShowField extends Component {
     ) : null;
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     isTableShow: state.formtemp.showTable,
