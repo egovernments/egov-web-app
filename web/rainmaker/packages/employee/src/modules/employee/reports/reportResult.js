@@ -14,6 +14,7 @@ import "datatables.net-buttons-bs";
 import "datatables.net-responsive";
 import "datatables.net-responsive-dt";
 import JSZip from "jszip/dist/jszip";
+import get from "lodash/get";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
@@ -31,7 +32,6 @@ window.JSZip = JSZip;
 var sumColumn = [];
 var footerexist = false;
 let rTable;
-let reportTitlefromConfig;
 class ShowField extends Component {
   constructor(props) {
     super(props);
@@ -124,7 +124,7 @@ class ShowField extends Component {
         title: reportTitle,
         messageTop: tabLabel,
         footer: true,
-        className: "report-excel-button"
+        className: "report-excel-button",
       },
       "colvis",
     ];
@@ -135,13 +135,8 @@ class ShowField extends Component {
     let { reportResult, tabLabel, metaData } = this.props;
     let { reportDetails = {} } = metaData;
     let tableConfig;
-    if (reportDetails && reportDetails.hasOwnProperty("additionalConfig")) {
-      if (reportDetails.additionalConfig && reportDetails.additionalConfig.hasOwnProperty("tableConfig")) {
-        tableConfig = reportDetails.additionalConfig.tableConfig;
-      }
-      if (reportDetails.additionalConfig && reportDetails.additionalConfig.hasOwnProperty("reportTitle")) {
-        reportTitlefromConfig = reportDetails.additionalConfig.reportTitle;
-      }
+    if (get(reportDetails, "additionalConfig.tableConfig")) {
+      tableConfig = reportDetails.additionalConfig.tableConfig;
     }
     let self = this;
     let displayStart = 0;
@@ -657,13 +652,11 @@ class ShowField extends Component {
   };
 
   getReportTitlefromTwoOptions = (metaData) => {
-    if (reportTitlefromConfig != null) {
-      return <Label label={reportTitlefromConfig} labelStyle={{ margin: "16px", color: "#484848" }} fontSize={20} />;
+    if (get(metaData,"reportDetails.additionalConfig.reportTitle")) {
+      return <Label label={metaData.reportDetails.additionalConfig.reportTitle} labelStyle={{ margin: "16px", color: "#484848" }} fontSize={20} />;
     } else {
       return (
-        metaData &&
-        metaData.reportDetails &&
-        metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
+        get(metaData,"reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
       );
     }
   };
