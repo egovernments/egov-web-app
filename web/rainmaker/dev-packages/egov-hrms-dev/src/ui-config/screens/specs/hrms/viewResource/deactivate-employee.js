@@ -134,7 +134,11 @@ export const deactivateEmployee = getCommonContainer({
           xs: 12,
           sm: 12
         },
-        sourceJsonPath: "viewScreenMdmsData.egov-hrms.DeactivationReason"
+        sourceJsonPath: "viewScreenMdmsData.egov-hrms.DeactivationReason",
+        localePrefix: {
+          moduleName: "egov-hrms",
+          masterName: "DeactivationReason"
+        }
       }),
       effectiveDate: getDateField({
         label: {
@@ -201,7 +205,8 @@ export const deactivateEmployee = getCommonContainer({
           ),
           uploadFileInfo: getCommonParagraph(
             {
-              labelName: "Only .jpg and .pdf files. 5MB max file size."
+              labelName: "Only .jpg and .pdf files. 5MB max file size.",
+              labelKey: "TL_APPROVAL_UPLOAD_SUBHEAD"
             },
             {
               style: {

@@ -31,7 +31,14 @@ const onIconClick = (state, dispatch, index) => {
             prepareFinalObject("ReceiptTemp[0].instrument.branchName", "")
           );
           dispatch(
-            toggleSnackbar(true, "Bankdetails not found for this IFSC", "error")
+            toggleSnackbar(
+              true,
+              {
+                labelName: "Bank details not found for this IFSC",
+                labelKey: "ERR_BANK_DETAILS_NOT_FOUND_FOR_IFSC"
+              },
+              "error"
+            )
           );
           dispatch(toggleSpinner());
         } else {

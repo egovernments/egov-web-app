@@ -25,7 +25,7 @@ class Header extends Component {
   };
 
   componentDidMount = () => {
-    const { role, updateActiveRoute,userInfo } = this.props;
+    const { role, updateActiveRoute, userInfo } = this.props;
     const tenantId = getTenantId();
 
     if (role && role.toLowerCase() !== "citizen") {
@@ -214,7 +214,7 @@ const mapStateToProps = (state, ownProps) => {
   const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
-  const name = userTenant && get(userTenant[0], "name");
+  const name = userTenant && get(userTenant[0], "code");
   const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
   return { cities, defaultTitle, name };
 };

@@ -5,9 +5,11 @@ import { findItemInArrayOfObject } from "../../ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   transformById,
-  getLocaleLabels
+  getLocaleLabels,
+  appendModulePrefix
 } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
@@ -57,14 +59,16 @@ class AutoSuggestor extends Component {
   }
 }
 
-const getLocalisedSuggestions = suggestions => {
+const getLocalisedSuggestions = (suggestions, localePrefix) => {
   return (
     suggestions &&
     suggestions.length > 0 &&
     suggestions.map((option, key) => {
       option.name = getLocaleLabels(
         option.code,
-        `TL_${option.code}`,
+        localePrefix && !isEmpty(localePrefix)
+          ? appendModulePrefix(option.code, localePrefix)
+          : option.name,
         transfomedKeys
       );
       return option;
@@ -78,7 +82,8 @@ const mapStateToProps = (state, ownprops) => {
     value,
     sourceJsonPath,
     labelsFromLocalisation,
-    data
+    data,
+    localePrefix
   } = ownprops;
   let suggestions =
     data && data.length > 0
@@ -90,7 +95,8 @@ const mapStateToProps = (state, ownprops) => {
   //To fetch corresponding labels from localisation for the suggestions, if needed.
   if (labelsFromLocalisation) {
     suggestions = getLocalisedSuggestions(
-      JSON.parse(JSON.stringify(suggestions))
+      JSON.parse(JSON.stringify(suggestions)),
+      localePrefix
     );
   }
   //To find correct option object as per the value (for showing the selected value).

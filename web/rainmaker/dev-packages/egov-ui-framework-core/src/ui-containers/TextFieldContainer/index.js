@@ -7,19 +7,12 @@ import isEmpty from "lodash/isEmpty";
 import {
   transformById,
   epochToYmd,
-  getLocaleLabels
+  getLocaleLabels,
+  appendModulePrefix
 } from "../../ui-utils/commons";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
-
-const appendModulePrefix = value => {
-  if (window.location.pathname.includes("hrms")) {
-    return `HR_${value}`;
-  } else {
-    return `TL_${value}`;
-  }
-};
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {
@@ -33,6 +26,7 @@ class TextFieldContainer extends React.Component {
     let {
       label = {},
       placeholder = {},
+      localePrefix = {},
       jsonPath,
       iconObj = {},
       value,
@@ -50,7 +44,6 @@ class TextFieldContainer extends React.Component {
       title,
       ...rest
     } = this.props;
-
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
@@ -97,7 +90,9 @@ class TextFieldContainer extends React.Component {
                 <MenuItem key={key} value={option.value}>
                   {getLocaleLabels(
                     option.value,
-                    appendModulePrefix(option.value),
+                    localePrefix && !isEmpty(localePrefix)
+                      ? appendModulePrefix(option.value, localePrefix)
+                      : option.value,
                     transfomedKeys
                   )}
                 </MenuItem>

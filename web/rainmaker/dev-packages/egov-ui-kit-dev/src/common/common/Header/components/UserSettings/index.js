@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { DropDown, Icon, Image, List } from "components";
 import emptyFace from "egov-ui-kit/assets/images/download.png";
 import { CommonMenuItems } from "../NavigationDrawer/commonMenuItems";
@@ -73,14 +72,15 @@ class UserSettings extends Component {
     const { onIconClick, userInfo, handleItemClick } = this.props;
     return (
       <div className="userSettingsContainer">
-        {/* <DropDown
+        <DropDown
           onChange={this.onChange}
           listStyle={style.listStyle}
           style={style.baseStyle}
           labelStyle={style.label}
           dropDownData={items}
           value={languageSelected}
-        /> */}
+          underlineStyle={{ borderBottom: "none" }}
+        />
         {/* <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} /> */}
         <div
           onClick={() => {

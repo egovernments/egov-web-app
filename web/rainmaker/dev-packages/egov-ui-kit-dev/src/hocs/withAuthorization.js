@@ -35,7 +35,7 @@ const withAuthorization = (options = {}) => (Component) => {
       const { authenticated } = this.props;
       const { redirectionUrl } = options;
       if (!authenticated) {
-        const baseUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
+        const baseUrl = process.env.REACT_APP_NAME === "Citizen" ? "/language-selection" : "/language-selection";
         this.props.history.replace(redirectionUrl || baseUrl);
       }
     }

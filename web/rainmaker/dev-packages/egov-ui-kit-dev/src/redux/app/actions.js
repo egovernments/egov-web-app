@@ -26,7 +26,7 @@ const setLocalizationLabels = (locale, localizationLabels) => {
   return { type: actionTypes.ADD_LOCALIZATION, locale, localizationLabels };
 };
 
-export const toggleSnackbarAndSetText = (open, message, error) => {
+export const toggleSnackbarAndSetText = (open, message = {}, error) => {
   return {
     type: actionTypes.SHOW_TOAST,
     open,
@@ -35,18 +35,25 @@ export const toggleSnackbarAndSetText = (open, message, error) => {
   };
 };
 
-export const fetchLocalizationLabel = (locale) => {
+export const fetchLocalizationLabel = (locale, module, tenantId) => {
   return async (dispatch) => {
+    const commonModules = "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common";
     try {
-      //let payload = { messages: JSON.parse(localStorageGet(`localization_${locale}`)) || [] };
-      //if (!payload.messages.length) {
-      const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
-        { key: "module", value: "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common" },
+      const payload1 = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
+        { key: "module", value: commonModules },
         { key: "locale", value: locale },
         { key: "tenantId", value: commonConfig.tenantId },
       ]);
-      //}
-      dispatch(setLocalizationLabels(locale, payload.messages));
+      const payload2 = module
+        ? await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
+            { key: "module", value: `rainmaker-${module}` },
+            { key: "locale", value: locale },
+            { key: "tenantId", value: tenantId ? tenantId : commonConfig.tenantId },
+          ])
+        : [];
+
+      const resultArray = [...payload1.messages, ...payload2.messages];
+      dispatch(setLocalizationLabels(locale, resultArray));
     } catch (error) {
       console.log(error);
     }

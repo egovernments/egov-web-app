@@ -10,6 +10,7 @@ import commonConfig from "config/common";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import isEmpty from "lodash/isEmpty";
 
 class App extends Component {
   constructor(props) {
@@ -81,7 +82,7 @@ class App extends Component {
     return (
       <div>
         <Router routes={routes} />
-        {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
+        {toast && toast.open && !isEmpty(toast.message) && <Toast open={toast.open} message={toast.message} error={toast.error} />}
         {loading && <LoadingIndicator />}
       </div>
     );
@@ -97,7 +98,7 @@ const mapStateToProps = (state, ownProps) => {
   if (route && route.length) {
     props.route = route;
   }
-  if (toast && toast.open && toast.message && toast.message.length) {
+  if (toast && toast.open && toast.message && !isEmpty(toast.message)) {
     props.toast = toast;
   }
   return {

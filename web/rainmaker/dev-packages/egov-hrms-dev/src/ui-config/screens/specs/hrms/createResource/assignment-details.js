@@ -147,8 +147,12 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name",
-                hasLocalization: false
+                optionLabel: "name"
+                // hasLocalization: false
+              },
+              localePrefix: {
+                moduleName: "common-masters",
+                masterName: "Department"
               }
             })
           },
@@ -165,8 +169,12 @@ const assignmentDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
-                optionLabel: "name",
-                hasLocalization: false
+                optionLabel: "name"
+                // hasLocalization: false
+              },
+              localePrefix: {
+                moduleName: "common-masters",
+                masterName: "Designation"
               }
             })
           },
@@ -243,7 +251,10 @@ const assignmentDetailsCard = {
       return muliItemContent;
     },
     items: [],
-    addItemLabel: "ADD ASSIGNMENT",
+    addItemLabel: {
+      labelName: "ADD ASSIGNMENT",
+      labelKey: "TL_ADD_ASSIGNMENT"
+    },
     headerName: "Assignment",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",

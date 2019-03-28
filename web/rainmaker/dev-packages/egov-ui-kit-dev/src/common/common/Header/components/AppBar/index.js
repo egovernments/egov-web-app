@@ -48,7 +48,7 @@ const EgovAppBar = ({
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
               <img
-                src={role && role.toLowerCase() === "citizen" ? pbLogo : (ulbLogo ? ulbLogo : pbLogo)}
+                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
                 onError={(event) => event.target.setAttribute("src", pbLogo)}
               />
             </div>
@@ -64,7 +64,7 @@ const EgovAppBar = ({
               <Label
                 containerStyle={{ marginLeft: "10px" }}
                 className="screenHeaderLabelStyle appbar-municipal-label"
-                label={ulbName && ulbName.toUpperCase()}
+                label={ulbName && `TENANT_TENANTS_${ulbName.toUpperCase().replace(/[.]/g, "_")}`}
               />
               <Label containerStyle={{ marginLeft: "4px" }} className="screenHeaderLabelStyle appbar-municipal-label" label={defaultTitle} />
             </div>
@@ -74,7 +74,12 @@ const EgovAppBar = ({
         {...rest}
       >
         <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
-          <UserSettings onIconClick={onToolBarIconClick} userInfo={userInfo} handleItemClick={handleItemClick} />
+          <UserSettings
+            fetchLocalizationLabel={fetchLocalizationLabel}
+            onIconClick={onToolBarIconClick}
+            userInfo={userInfo}
+            handleItemClick={handleItemClick}
+          />
         </Toolbar>
         <div className="appbar-right-logo">
           <img src={digitLogo} />

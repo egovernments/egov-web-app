@@ -46,7 +46,14 @@ class Feedback extends Component {
     const { rating } = this.props;
     if (!rating) {
       e.preventDefault();
-      this.props.toggleSnackbarAndSetText(true, "Please provide ratings", true);
+      this.props.toggleSnackbarAndSetText(
+        true,
+        {
+          labelName: "Please provide ratings",
+          labelKey: "ERR_PLEASE_PROVIDE_RATINGS"
+        },
+        true
+      );
     }
   };
 

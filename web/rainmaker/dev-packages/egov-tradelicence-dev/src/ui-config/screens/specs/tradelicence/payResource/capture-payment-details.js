@@ -18,28 +18,27 @@ const capturePaymentDetails = getCommonGrayCard({
     moduleName: "egov-tradelicence",
     componentPath: "CustomTabContainer",
     props: {
-      // horizontal: {
-      //   tabsGrid: { xs: 4, sm: 2, md: 2 },
-      //   contentGrid: { xs: 8, sm: 10, md: 10 }
-      // },
       tabs: [
         {
-          tabButton: "CASH",
+          tabButton: { labelName: "CASH", labelKey: "TL_PAYMENT_CASH" },
           tabIcon: "Dashboard",
           tabContent: { cash }
         },
         {
-          tabButton: "CHEQUE",
+          tabButton: { labelName: "CHEQUE", labelKey: "TL_PAYMENT_CHQ" },
           tabIcon: "Schedule",
           tabContent: { cheque }
         },
         {
-          tabButton: "DD",
+          tabButton: { labelName: "DD", labelKey: "TL_PAYMENT_DD" },
           tabIcon: "Schedule",
           tabContent: { demandDraft }
         },
         {
-          tabButton: "Credit/Debit Card",
+          tabButton: {
+            labelName: "Credit/Debit Card",
+            labelKey: "TL_PAYMENT_DEBT_CARD"
+          },
           tabIcon: "Schedule",
           tabContent: { card }
         }

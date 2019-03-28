@@ -16,6 +16,10 @@ export const reviewownershipType = getLabelWithValue(
   },
   {
     jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+    localePrefix: {
+      moduleName: "common-masters",
+      masterName: "OwnerShipCategory"
+    },
     callBack: value => {
       return value.split(".")[0];
     }
@@ -23,11 +27,15 @@ export const reviewownershipType = getLabelWithValue(
 );
 export const reviewsubOwnership = getLabelWithValue(
   {
-    labelName: "Type of sub-ownership"
-    // labelKey: "TL_NEW_OWNER_DETAILS_FATHER_NAME_LABEL"
+    labelName: "Type of sub-ownership",
+    labelKey: "TL_NEW_OWNER_DETAILS_TYPE_OF_OWNERSHIP"
   },
   {
-    jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
+    jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
+    localePrefix: {
+      moduleName: "common-masters",
+      masterName: "OwnerShipCategory"
+    }
   }
 );
 export const reviewOwnerFatherName = getLabelWithValue(
@@ -175,7 +183,11 @@ export const getReviewOwner = (isEditable = true) => {
                 labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
               },
               {
-                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType"
+                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+                localePrefix: {
+                  moduleName: "common-masters",
+                  masterName: "OwnerType"
+                }
               }
             )
           })

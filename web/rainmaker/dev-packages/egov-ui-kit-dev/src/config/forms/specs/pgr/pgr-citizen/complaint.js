@@ -1,6 +1,7 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
 
 const tenantId = JSON.parse(getUserInfo()).permanentCity;
 
@@ -56,6 +57,7 @@ const formConfig = {
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
       },
+      labelsFromLocalisation: true,
       dataFetchConfig: {
         dependants: [
           {
@@ -79,6 +81,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {},
         isDependent: true,
+        hierarchyType: "ADMIN",
       },
 
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -111,6 +114,7 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
+      const { localizationLabels } = state.app;
       const { cities, citiesByModule } = state.common;
       const { PGR } = citiesByModule || {};
       if (PGR) {
@@ -119,7 +123,8 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          dd.push({ label: selected.name, value: selected.code });
+          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));

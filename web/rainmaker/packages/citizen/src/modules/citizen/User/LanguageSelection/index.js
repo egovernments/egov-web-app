@@ -4,6 +4,7 @@ import { Banner } from "modules/common";
 import { LanguageSelectionForm } from "modules/common";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
 
 class LanguageSelection extends Component {
   state = {
@@ -36,22 +37,30 @@ class LanguageSelection extends Component {
   render() {
     const { items, value } = this.state;
     const { onLanguageSelect, onClick } = this;
+    const { bannerUrl, logoUrl } = this.props;
 
     return (
-      <Banner className="language-selection">
+      <Banner className="language-selection" bannerUrl={bannerUrl} logoUrl={logoUrl}>
         <LanguageSelectionForm items={items} value={value} onLanguageSelect={onLanguageSelect} onClick={onClick} />
       </Banner>
     );
   }
 }
 
-const dispatchToProps = (dispatch) => {
+const mapStateToProps = ({ common }) => {
+  const { stateInfoById } = common;
+  let bannerUrl = get(stateInfoById, "0.bannerUrl");
+  let logoUrl = get(stateInfoById, "0.logoUrl");
+  return { bannerUrl, logoUrl };
+};
+
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
   };
 };
 
 export default connect(
-  null,
-  dispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(LanguageSelection);

@@ -88,7 +88,8 @@ const getApproveCard = queryValuePurpose => {
     ),
     uploadFileInfo: getCommonParagraph(
       {
-        labelName: "Only .jpg and .pdf files. 5MB max file size."
+        labelName: "Only .jpg and .pdf files. 5MB max file size.",
+        labelKey: "TL_APPROVAL_UPLOAD_SUBHEAD"
       },
       {
         style: {

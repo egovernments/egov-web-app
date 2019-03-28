@@ -6,6 +6,7 @@ import {
   displayFormErrors,
   handleFieldChange
 } from "egov-ui-kit/redux/form/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -435,7 +436,13 @@ class FormWizard extends Component {
           <div>
             <InstitutionHOC disabled={isReviewPage} />
             <InstitutionAuthorityHOC
-              cardTitle={<div>Details of authorised person</div>}
+              cardTitle={
+                <Label
+                  label="PT_DETAILS_OF_AUTHORISED_PERSON"
+                  defaultLabel="Details of authorised person"
+                  label="New"
+                />
+              }
               disabled={isReviewPage}
             />
           </div>
@@ -543,7 +550,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -568,7 +578,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -630,7 +643,10 @@ class FormWizard extends Component {
         ) {
           this.props.toggleSnackbarAndSetText(
             true,
-            "ULB validations failed!",
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED"
+            },
             true
           );
           break;
@@ -991,7 +1007,10 @@ class FormWizard extends Component {
       } else
         this.props.toggleSnackbarAndSetText(
           true,
-          "Error calculating tax",
+          {
+            labelName: "Error calculating tax!",
+            labelKey: "ERR_ERROR_CALCULATING_TAX"
+          },
           true
         );
     }

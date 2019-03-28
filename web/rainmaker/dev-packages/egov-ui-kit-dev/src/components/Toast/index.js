@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Snackbar from "material-ui/Snackbar";
+import Label from "../../utils/translationNode";
 
 const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, variant }) => {
+  const { labelName, labelKey } = message;
   return (
     <Snackbar
       open={open}
       id="toast-message"
-      message={message}
+      // message={message}
+      message={<Label label={labelKey} defaultLabel={labelName} color="#fff" />}
       autoHideDuration={autoHideDuration}
       style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap", justifyContent: "center" }}
       bodyStyle={{
@@ -25,7 +28,7 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, v
 };
 
 Toast.propTypes = {
-  message: PropTypes.string.isRequired,
+  // message: PropTypes.string.isRequired,
   open: PropTypes.bool,
   error: PropTypes.bool,
   autoHideDuration: PropTypes.number,

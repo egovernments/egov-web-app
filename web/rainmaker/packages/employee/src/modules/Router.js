@@ -14,7 +14,7 @@ const Main = ({ routes }) => {
           }}
         />
         {/* <Route exact path={`image`} component={ImageModalDisplay} /> */}
-        <Redirect from="/" to="/user/login" />
+        <Redirect from="/" to="/language-selection" />
       </Switch>
     </main>
   );

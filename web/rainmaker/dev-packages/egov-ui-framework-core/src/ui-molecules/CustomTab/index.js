@@ -15,6 +15,7 @@ import GridContainer from "@material-ui/core/Grid";
 import GridItem from "@material-ui/core/Grid";
 
 import navPillsStyle from "./css.js";
+import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 
 class CustomTab extends React.Component {
   constructor(props) {
@@ -43,7 +44,12 @@ class CustomTab extends React.Component {
         {tabs.map((prop, key) => {
           return (
             <Tab
-              label={prop.tabButton}
+              label={
+                <LabelContainer
+                  labelName={prop.tabButton.labelName}
+                  labelKey={prop.tabButton.labelKey}
+                />
+              }
               key={key}
               classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
             />

@@ -72,7 +72,14 @@ class RejectComplaint extends Component {
     const { toggleSnackbarAndSetText } = this.props;
     if (valueSelected === "Other" && !commentValue) {
       e.preventDefault();
-      toggleSnackbarAndSetText(true, "Please mention your reason", true);
+      toggleSnackbarAndSetText(
+        true,
+        {
+          labelName: "Please mention your reason",
+          labelKey: "ERR_PLEASE_MENSION_YOUR_REASON"
+        },
+        true
+      );
     }
   };
 

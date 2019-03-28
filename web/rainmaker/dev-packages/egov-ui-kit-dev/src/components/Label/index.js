@@ -2,8 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-const labelText = (label, labelStyle, labelClassName, required, secondaryText) => {
-  return label && label.length ? (
+const labelText = (label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue) => {
+  return isConcat ? (
+    label && dynamicValue ? (
+      <div data-localization={`${label}${dynamicValue}`} className="rainmaker-displayInline">
+        <span style={labelStyle}>{label}</span>
+        <span style={labelStyle}>{dynamicValue}</span>
+      </div>
+    ) : (
+      ""
+    )
+  ) : label && label.length ? (
     <div data-localization={label} className={`label-text ${labelClassName}`} style={labelStyle}>
       {label} {secondaryText}
       {required && <span style={{ color: "red" }}> *</span>}
@@ -27,6 +36,8 @@ const Label = ({
   buttonLabel = false,
   id,
   required,
+  dynamicValue,
+  isConcat,
   secondaryText = "",
 }) => {
   let additionalStyles = {};
@@ -56,7 +67,7 @@ const Label = ({
 
   return (
     <div id={id} style={containerStyle} className={buttonLabel ? `button-label-container ${className}` : `label-container ${className}`}>
-      {labelText(label, labelStyle, labelClassName, required, secondaryText)}
+      {labelText(label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue)}
     </div>
   );
 };

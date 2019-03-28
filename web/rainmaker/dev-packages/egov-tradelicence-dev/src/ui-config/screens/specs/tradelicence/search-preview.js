@@ -7,7 +7,6 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import set from "lodash/set";
-//import { footer } from "./payResource/footer";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getQueryArg,
@@ -32,7 +31,6 @@ import {
 import { getReviewTrade } from "./applyResource/review-trade";
 import { getReviewOwner } from "./applyResource/review-owner";
 import { getReviewDocuments } from "./applyResource/review-documents";
-// import { getApprovalDetails } from "./applyResource/approval-rejection-details";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 const tenantId = getQueryArg(window.location.href, "tenantId");
@@ -137,13 +135,14 @@ const searchResults = async (action, state, dispatch, applicationNo) => {
     dispatch
   );
   let sts = getTransformedStatus(get(payload, "Licenses[0].status"));
-  dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
-  dispatch(
-    prepareFinalObject(
-      "LicensesTemp[0].tradeDetailsResponse",
-      getTradeTypeSubtypeDetails(payload)
-    )
-  );
+  payload && dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
+  payload &&
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].tradeDetailsResponse",
+        getTradeTypeSubtypeDetails(payload)
+      )
+    );
   const LicenseData = payload.Licenses[0];
   const fetchFromReceipt = sts !== "pending_payment";
   createEstimateData(
@@ -152,7 +151,8 @@ const searchResults = async (action, state, dispatch, applicationNo) => {
     dispatch,
     {},
     fetchFromReceipt
-  ); //Fetch Bill and populate estimate card
+  );
+  //Fetch Bill and populate estimate card
   // const code = get(
   //   payload,
   //   "Licenses[0].tradeLicenseDetail.address.locality.code"
@@ -173,12 +173,7 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
     let data = get(state, "screenConfiguration.preparedFinalObject");
 
     const obj = setStatusBasedValue(status);
-    //let approvalDetails = getApprovalDetails(status);
-    // set(
-    //   action,
-    //   "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.approvalDetails",
-    //   approvalDetails
-    // );
+
     // Get approval details based on status and set it in screenconfig
 
     if (
@@ -248,6 +243,7 @@ const setStatusBasedValue = status => {
     case "approved":
       return {
         titleText: "Review the Trade License",
+        titleKey: "TL_REVIEW_TRADE_LICENSE",
         titleVisibility: true,
         roleDefination: {
           rolePath: "user-info.roles",
@@ -257,6 +253,7 @@ const setStatusBasedValue = status => {
     case "pending_payment":
       return {
         titleText: "Review the Application and Proceed",
+        titleKey: "TL_REVIEW_APPLICATION_AND_PROCEED",
         titleVisibility: true,
         roleDefination: {
           rolePath: "user-info.roles",
@@ -266,6 +263,7 @@ const setStatusBasedValue = status => {
     case "pending_approval":
       return {
         titleText: "Review the Application and Proceed",
+        titleKey: "TL_REVIEW_APPLICATION_AND_PROCEED",
         titleVisibility: true,
         roleDefination: {
           rolePath: "user-info.roles",
@@ -328,7 +326,10 @@ const setActionItems = (action, object) => {
   set(
     action,
     "screenConfig.components.div.children.tradeReviewDetails.children.cardContent.children.title",
-    getCommonTitle({ labelName: get(object, "titleText") })
+    getCommonTitle({
+      labelName: get(object, "titleText"),
+      labelKey: get(object, "titleKey")
+    })
   );
   set(
     action,
@@ -354,9 +355,6 @@ export const tradeReviewDetails = getCommonCard({
   reviewOwnerDetails,
   reviewDocumentDetails
 });
-
-// export const getCitizenFooter =
-//   process.env.REACT_APP_NAME === "Citizen" ? footer : {};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -443,7 +441,8 @@ const screenConfig = {
                       cancelledLabel: {
                         ...getCommonHeader(
                           {
-                            labelName: "Cancelled"
+                            labelName: "Cancelled",
+                            labelKey: "TL_COMMON_STATUS_CANC"
                           },
                           { variant: "body1", style: { color: "#E54D42" } }
                         ),
@@ -461,8 +460,6 @@ const screenConfig = {
         },
         tradeReviewDetails
         //footer
-
-        //getCitizenFooter
       }
     },
     breakUpDialog: {

@@ -633,7 +633,10 @@ export const getDetailsFromProperty = async (state, dispatch) => {
       dispatch(
         toggleSnackbar(
           true,
-          "Please select city to search by property id !!",
+          {
+            labelName: "Please select city to search by property id !!",
+            labelKey: "ERR_SELECT_CITY_TO_SEARCH_PROPERTY_ID"
+          },
           "warning"
         )
       );
@@ -656,7 +659,10 @@ export const getDetailsFromProperty = async (state, dispatch) => {
           dispatch(
             toggleSnackbar(
               true,
-              "Property is not found with this Property Id",
+              {
+                labelName: "Property is not found with this Property Id",
+                labelKey: "ERR_PROPERTY_NOT_FOUND_WITH_PROPERTY_ID"
+              },
               "info"
             )
           );
@@ -722,7 +728,16 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
         item => currentNumber === item.mobileNumber
       );
       if (numbers.length > 1) {
-        dispatch(toggleSnackbar(true, "Owner already added !", "error"));
+        dispatch(
+          toggleSnackbar(
+            true,
+            {
+              labelName: "Owner already added !",
+              labelKey: "ERR_OWNER_ALREADY_ADDED"
+            },
+            "error"
+          )
+        );
         return;
       }
     }
@@ -739,7 +754,14 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     if (payload && payload.user && payload.user.hasOwnProperty("length")) {
       if (payload.user.length === 0) {
         dispatch(
-          toggleSnackbar(true, "This mobile number is not registered !", "info")
+          toggleSnackbar(
+            true,
+            {
+              labelName: "This mobile number is not registered !",
+              labelKey: "ERR_MOBILE_NUMBER_NOT_REGISTERED"
+            },
+            "info"
+          )
         );
       } else {
         const userInfo =
@@ -764,7 +786,13 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       }
     }
   } catch (e) {
-    dispatch(toggleSnackbar(true, e.message, "info"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: e.message, labelKey: e.message },
+        "info"
+      )
+    );
   }
 };
 

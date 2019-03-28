@@ -49,10 +49,24 @@ class WorkFlowContainer extends React.Component {
         );
         addWflowFileUrl(processInstances, prepareFinalObject);
       } else {
-        toggleSnackbar(true, "Workflow returned empty object !", "error");
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Workflow returned empty object !",
+            labelKey: "WRR_WORKFLOW_ERROR"
+          },
+          "error"
+        );
       }
     } catch (e) {
-      toggleSnackbar(true, "Workflow returned empty object !", "error");
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Workflow returned empty object !",
+          labelKey: "WRR_WORKFLOW_ERROR"
+        },
+        "error"
+      );
     }
   };
 
@@ -74,6 +88,8 @@ class WorkFlowContainer extends React.Component {
         return "purpose=application&status=cancelled";
       case "APPROVE":
         return "purpose=approve&status=success";
+      case "SENDBACK":
+        return "purpose=sendback&status=success";
     }
   };
 
@@ -104,12 +120,17 @@ class WorkFlowContainer extends React.Component {
         )}&applicationNumber=${applicationNumber}&tenantId=${tenant}&secondNumber=${licenseNumber}`;
       }
     } catch (e) {
-      toggleSnackbar(true, "TL update error!", "error");
+      toggleSnackbar(
+        true,
+        { labelName: "TL update error!", labelKey: "ERR_TL_UPDATE_ERROR" },
+        "error"
+      );
     }
   };
 
   createWorkFLow = async (label, isDocRequired) => {
     const { Licenses, toggleSnackbar } = this.props;
+    //setting the action to send in RequestInfo
     set(Licenses[0], "action", label);
 
     if (isDocRequired) {
@@ -117,7 +138,11 @@ class WorkFlowContainer extends React.Component {
       if (documents && documents.length > 0) {
         this.tlUpdate(label);
       } else {
-        toggleSnackbar(true, "Please Upload file !", "error");
+        toggleSnackbar(
+          true,
+          { labelName: "Please Upload file !", labelKey: "ERR_UPLOAD_FILE" },
+          "error"
+        );
       }
     } else {
       this.tlUpdate(label);
@@ -152,8 +177,13 @@ class WorkFlowContainer extends React.Component {
         };
       case "CANCEL":
         return {
-          labelName: "Cancel Workflow",
+          labelName: "Cancel Application",
           labelKey: "TL_WORKFLOW_CANCEL"
+        };
+      case "SENDBACK":
+        return {
+          labelName: "Send Back Application",
+          labelKey: "TL_WORKFLOW_SENDBACK"
         };
       default:
         return {

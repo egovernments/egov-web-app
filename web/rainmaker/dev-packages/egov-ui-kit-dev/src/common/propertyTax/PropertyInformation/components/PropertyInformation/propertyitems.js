@@ -32,7 +32,7 @@ const PropertyItems = [
     ],
   },
   {
-    heading: "Assessment Information",
+    heading: "PT_ASSESMENT_INFO_SUB_HEADER",
     iconAction: "action",
     iconName: "assignment",
     showTable: true,

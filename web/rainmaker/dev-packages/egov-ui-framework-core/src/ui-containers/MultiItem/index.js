@@ -13,6 +13,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { addComponentJsonpath } from "../../ui-utils/commons";
 import { prepareFinalObject as pFO } from "../../ui-redux/screen-configuration/actions";
 import isEqual from "lodash/isEqual";
+import LabelConatiner from "../LabelContainer";
 
 const checkActiveItems = items => {
   let count = 0;
@@ -214,6 +215,7 @@ class MultiItem extends React.Component {
       sourceJsonPath
     } = this.props;
     const { addItem, removeItem, checkDisableDelete } = this;
+    const { labelName, labelKey } = addItemLabel || "";
     return (
       <Div>
         {items.length > 0 &&
@@ -261,7 +263,7 @@ class MultiItem extends React.Component {
             <Item xs={12} align="right">
               <Button onClick={e => addItem()} color="primary">
                 <Icon iconName="add" />
-                {addItemLabel}
+                <LabelConatiner labelName={labelName} labelKey={labelKey} />
               </Button>
             </Item>
           </Container>

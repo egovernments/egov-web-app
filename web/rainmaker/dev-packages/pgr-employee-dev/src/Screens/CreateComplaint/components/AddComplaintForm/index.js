@@ -1,10 +1,23 @@
 import React from "react";
-import { Card, TextField, DropDown, AutoSuggestDropdown, Button } from "components";
+import {
+  Card,
+  TextField,
+  DropDown,
+  AutoSuggestDropdown,
+  Button
+} from "components";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
 import MohallaDropdown from "../MohallaDropdown";
 
-const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories, history }) => {
+const AddComplaintForm = ({
+  formKey,
+  localizationLabels,
+  handleFieldChange,
+  form,
+  categories,
+  history
+}) => {
   const fields = form.fields || {};
   const { name, phone, mohalla, city, address, landmark, houseNo } = fields;
   const submit = form.submit;
@@ -48,23 +61,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                   additionalDetails={fields.additionalDetails}
                 />
               </div>
-              {/* <div className="col-sm-6 col-xs-12">
-                <TextField
-                  className="fix-for-layout-break"
-                  {...address}
-                  multiLine={true}
-                  rowsMax={3}
-                  name="complainant-mobile-no"
-                  onChange={(e, value) => handleFieldChange("address", value)}
-                />
-              </div> */}
               <div className="col-sm-6 col-xs-12">
-                {/* <DropDown
-                  className="fix-for-layout-break"
-                  fullWidth={true}
-                  onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
-                  {...city}
-                /> */}
                 <AutoSuggestDropdown
                   className="fix-for-layout-break"
                   fullWidth={true}
@@ -76,7 +73,10 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                 />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <MohallaDropdown handleFieldChange={handleFieldChange} mohalla={mohalla} />
+                <MohallaDropdown
+                  handleFieldChange={handleFieldChange}
+                  mohalla={mohalla}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
                 <TextField
@@ -102,7 +102,11 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
         <Button
           primary={true}
           fullWidth={true}
-          style={{ width: 230, boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
+          style={{
+            width: 230,
+            boxShadow:
+              "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)"
+          }}
           {...submit}
           className="responsive-action-button"
         />

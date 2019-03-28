@@ -37,8 +37,9 @@ class Inbox extends Component {
     const { actionList, hasWorkflow } = this.state;
     return (
       <div>
-        <div>
-          <Label className="landingPageUser" label={` Welcome ${name}, `} containerStyle={{ paddingLeft: "15px" }} />
+        <div className="rainmaker-displayInline">
+          <Label className="landingPageUser" label={"CS_LANDING_PAGE_WELCOME_TEXT"} containerStyle={{ paddingLeft: "15px" }} />
+          <Label className="landingPageUser" label={name} />
         </div>
 
         {actionList && <Boxboard data={actionList} />}
