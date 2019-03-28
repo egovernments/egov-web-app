@@ -94,7 +94,8 @@ const getAcknowledgementCard = (
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Payment has been collected successfully!",
+              labelName:
+                "Payment is collected successfully, Now you can dowload and issue Trade License Certificate to citizen",
               labelKey: "TL_CONFIRMATION_MESSAGE_MAIN"
             },
             body: {
@@ -110,7 +111,12 @@ const getAcknowledgementCard = (
           })
         }
       },
-      paymentSuccessFooter: paymentSuccessFooter()
+      paymentSuccessFooter: paymentSuccessFooter(
+        state,
+        dispatch,
+        status,
+        applicationNumber
+      )
     };
   } else if (purpose === "approve" && status === "success") {
     loadReceiptGenerationData(applicationNumber, tenant);
@@ -137,7 +143,7 @@ const getAcknowledgementCard = (
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Trade License Approved Successfully",
+              labelName: "Application is Approved Successfully",
               labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_HEAD"
             },
             body: {
@@ -180,14 +186,14 @@ const getAcknowledgementCard = (
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Application sent back Successfully",
+              labelName: "Application is sent back Successfully",
               labelKey: "TL_SENDBACK_CHECKLIST_MESSAGE_HEAD"
             },
-            body: {
-              labelName:
-                "A notification regarding above application status has been sent to trade owner at registered Mobile No.",
-              labelKey: "TL_SENDBACK_CHECKLIST_MESSAGE_SUB"
-            },
+            // body: {
+            //   labelName:
+            //     "A notification regarding above application status has been sent to trade owner at registered Mobile No.",
+            //   labelKey: "TL_SENDBACK_CHECKLIST_MESSAGE_SUB"
+            // },
             tailText: {
               labelName: "Trade License No.",
               labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"

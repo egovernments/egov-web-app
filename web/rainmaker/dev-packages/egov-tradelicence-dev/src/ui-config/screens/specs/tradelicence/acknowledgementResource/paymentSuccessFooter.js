@@ -13,80 +13,294 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const paymentSuccessFooter = () => {
+export const paymentSuccessFooter = (
+  state,
+  dispatch,
+  status,
+  applicationNumber
+) => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
 
+  /** MenuButton data based on status */
+  let downloadMenu = [];
+  let printMenu = [];
+  let tlCertificateDownloadObject = {
+    label: { labelName: "TL Certificate", labelKey: "TL_CERTIFICATE" },
+    link: () => {
+      generateReceipt(state, dispatch, "certificate_download");
+    },
+    leftIcon: "book"
+  };
+  let tlCertificatePrintObject = {
+    label: { labelName: "TL Certificate", labelKey: "TL_CERTIFICATE" },
+    link: () => {
+      generateReceipt(state, dispatch, "certificate_print");
+    },
+    leftIcon: "book"
+  };
+  let receiptDownloadObject = {
+    label: "Receipt",
+    link: () => {
+      generateReceipt(state, dispatch, "receipt_download");
+    },
+    leftIcon: "receipt"
+  };
+  let receiptPrintObject = {
+    label: "Receipt",
+    link: () => {
+      generateReceipt(state, dispatch, "receipt_print");
+    },
+    leftIcon: "receipt"
+  };
+  let applicationDownloadObject = {
+    label: { labelName: "Application", labelKey: "TL_APPLICATION" },
+    link: () => {
+      generatePdfFromDiv("download", applicationNumber);
+    },
+    leftIcon: "assignment"
+  };
+  let applicationPrintObject = {
+    label: { labelName: "Application", labelKey: "TL_APPLICATION" },
+    link: () => {
+      generatePdfFromDiv("print", applicationNumber);
+    },
+    leftIcon: "assignment"
+  };
+  switch (status) {
+    case "approved":
+      downloadMenu = [
+        tlCertificateDownloadObject,
+        receiptDownloadObject,
+        applicationDownloadObject
+      ];
+      printMenu = [
+        tlCertificatePrintObject,
+        receiptPrintObject,
+        applicationPrintObject
+      ];
+      break;
+    case "pending_payment":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
+      break;
+    case "pending_approval":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    case "cancelled":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    case "rejected":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    default:
+      break;
+  }
+  /** END */
+
   return getCommonApplyFooter({
-    gotoHome: {
-      componentPath: "Button",
-      props: {
-        variant: "outlined",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "16px"
-        }
-      },
+    container: {
+      uiFramework: "custom-atoms",
+      componentPath: "Container",
       children: {
-        downloadReceiptButtonLabel: getLabel({
-          labelName: "GO TO HOME",
-          labelKey: "TL_COMMON_BUTTON_HOME"
-        })
-      },
-      onClickDefination: {
-        action: "page_change",
-        path: redirectionURL
-      }
-    },
-    downloadReceiptButton: {
-      componentPath: "Button",
-      props: {
-        variant: "outlined",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "16px"
-        }
-      },
-      children: {
-        downloadReceiptButtonLabel: getLabel({
-          labelName: "DOWNLOAD RECEIPT",
-          labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-        })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: (state, dispatch) => {
-          generateReceipt(state, dispatch, "receipt_download");
-        }
-      }
-    },
-    printReceiptButton: {
-      componentPath: "Button",
-      props: {
-        variant: "contained",
-        color: "primary",
-        style: {
-          minWidth: "200px",
-          height: "48px",
-          marginRight: "40px"
-        }
-      },
-      children: {
-        printReceiptButtonLabel: getLabel({
-          labelName: "PRINT RECEIPT",
-          labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
-        })
-      },
-      onClickDefination: {
-        action: "condition",
-        callBack: (state, dispatch) => {
-          generateReceipt(state, dispatch, "receipt_print");
+        leftdiv: {
+          uiFramework: "custom-atoms",
+          componentPath: "Div",
+          props: {
+            style: { textAlign: "left", display: "flex" }
+          },
+          children: {
+            downloadMenu: {
+              uiFramework: "custom-atoms-local",
+              moduleName: "egov-tradelicence",
+              componentPath: "MenuButton",
+              props: {
+                data: {
+                  label: "Download",
+                  leftIcon: "cloud_download",
+                  rightIcon: "arrow_drop_down",
+                  props: { variant: "outlined", style: { marginLeft: 10 } },
+                  menu: downloadMenu
+                }
+              }
+            },
+            printMenu: {
+              uiFramework: "custom-atoms-local",
+              moduleName: "egov-tradelicence",
+              componentPath: "MenuButton",
+              props: {
+                data: {
+                  label: "Print",
+                  leftIcon: "print",
+                  rightIcon: "arrow_drop_down",
+                  props: { variant: "outlined", style: { marginLeft: 10 } },
+                  menu: printMenu
+                }
+              }
+            }
+          },
+          gridDefination: {
+            xs: 12,
+            sm: 4
+          }
+        },
+        rightdiv: {
+          uiFramework: "custom-atoms",
+          componentPath: "Div",
+          children: {
+            gotoHome: {
+              componentPath: "Button",
+              props: {
+                variant: "outlined",
+                color: "primary",
+                style: {
+                  minWidth: "200px",
+                  height: "48px",
+                  marginRight: "16px"
+                }
+              },
+              children: {
+                downloadReceiptButtonLabel: getLabel({
+                  labelName: "GO TO HOME",
+                  labelKey: "TL_COMMON_BUTTON_HOME"
+                })
+              },
+              onClickDefination: {
+                action: "page_change",
+                path: redirectionURL
+              }
+            },
+            downloadReceiptButton: {
+              componentPath: "Button",
+              props: {
+                variant: "outlined",
+                color: "primary",
+                style: {
+                  minWidth: "200px",
+                  height: "48px",
+                  marginRight: "16px"
+                }
+              },
+              children: {
+                downloadReceiptButtonLabel: getLabel({
+                  labelName: "DOWNLOAD RECEIPT",
+                  labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+                })
+              },
+              onClickDefination: {
+                action: "condition",
+                callBack: (state, dispatch) => {
+                  generateReceipt(state, dispatch, "receipt_download");
+                }
+              }
+            },
+            printReceiptButton: {
+              componentPath: "Button",
+              props: {
+                variant: "contained",
+                color: "primary",
+                style: {
+                  minWidth: "200px",
+                  height: "48px",
+                  marginRight: "40px"
+                }
+              },
+              children: {
+                printReceiptButtonLabel: getLabel({
+                  labelName: "PRINT RECEIPT",
+                  labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
+                })
+              },
+              onClickDefination: {
+                action: "condition",
+                callBack: (state, dispatch) => {
+                  generateReceipt(state, dispatch, "receipt_print");
+                }
+              }
+            }
+          },
+          gridDefination: {
+            xs: 12,
+            sm: 8
+          }
         }
       }
     }
   });
+
+  // return getCommonApplyFooter({
+  //   gotoHome: {
+  //     componentPath: "Button",
+  //     props: {
+  //       variant: "outlined",
+  //       color: "primary",
+  //       style: {
+  //         minWidth: "200px",
+  //         height: "48px",
+  //         marginRight: "16px"
+  //       }
+  //     },
+  //     children: {
+  //       downloadReceiptButtonLabel: getLabel({
+  //         labelName: "GO TO HOME",
+  //         labelKey: "TL_COMMON_BUTTON_HOME"
+  //       })
+  //     },
+  //     onClickDefination: {
+  //       action: "page_change",
+  //       path: redirectionURL
+  //     }
+  //   },
+  //   downloadReceiptButton: {
+  //     componentPath: "Button",
+  //     props: {
+  //       variant: "outlined",
+  //       color: "primary",
+  //       style: {
+  //         minWidth: "200px",
+  //         height: "48px",
+  //         marginRight: "16px"
+  //       }
+  //     },
+  //     children: {
+  //       downloadReceiptButtonLabel: getLabel({
+  //         labelName: "DOWNLOAD RECEIPT",
+  //         labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+  //       })
+  //     },
+  //     onClickDefination: {
+  //       action: "condition",
+  //       callBack: (state, dispatch) => {
+  //         generateReceipt(state, dispatch, "receipt_download");
+  //       }
+  //     }
+  //   },
+  //   printReceiptButton: {
+  //     componentPath: "Button",
+  //     props: {
+  //       variant: "contained",
+  //       color: "primary",
+  //       style: {
+  //         minWidth: "200px",
+  //         height: "48px",
+  //         marginRight: "40px"
+  //       }
+  //     },
+  //     children: {
+  //       printReceiptButtonLabel: getLabel({
+  //         labelName: "PRINT RECEIPT",
+  //         labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
+  //       })
+  //     },
+  //     onClickDefination: {
+  //       action: "condition",
+  //       callBack: (state, dispatch) => {
+  //         generateReceipt(state, dispatch, "receipt_print");
+  //       }
+  //     }
+  //   }
+  // });
 };

@@ -97,9 +97,11 @@ const acknowledgementCard = ({
           componentPath: "Div",
           children: {
             header: getCommonHeader(header),
-            paragraph: getCommonParagraph(body, {
-              style: style.bodySub
-            })
+            paragraph: body
+              ? getCommonParagraph(body, {
+                  style: style.bodySub
+                })
+              : {}
           },
           props: {
             style: style.bodyBox
