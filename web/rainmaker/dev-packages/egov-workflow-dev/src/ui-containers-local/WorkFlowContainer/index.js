@@ -4,7 +4,8 @@ import TaskStatusContainer from "../TaskStatusContainer";
 import { Footer } from "../../ui-molecules-local";
 import {
   getQueryArg,
-  addWflowFileUrl
+  addWflowFileUrl,
+  orderWfProcessInstances
 } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -43,10 +44,8 @@ class WorkFlowContainer extends React.Component {
         queryObject
       );
       if (payload && payload.ProcessInstances.length > 0) {
-        const processInstances = orderBy(
-          payload.ProcessInstances,
-          "auditDetails.lastModifiedTime",
-          "asc"
+        const processInstances = orderWfProcessInstances(
+          payload.ProcessInstances
         );
         addWflowFileUrl(processInstances, prepareFinalObject);
       } else {

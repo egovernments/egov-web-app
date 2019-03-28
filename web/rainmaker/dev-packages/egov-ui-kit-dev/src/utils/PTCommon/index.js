@@ -113,6 +113,48 @@ export const findCorrectDateObj = (financialYear, category) => {
   return chosenDateObj;
 };
 
+export const findCorrectDateObjPenaltyIntrest = (financialYear, category) => {
+  console.log("financialYear", financialYear);
+  console.log("category", category);
+  debugger;
+  category.sort((a, b) => {
+    let yearOne = a.fromFY && a.fromFY.slice(0, 4);
+    let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+    if (yearOne < yearTwo) {
+      return 1;
+    } else return -1;
+  });
+  let assessYear = financialYear && financialYear.slice(0, 4);
+  let chosenDateObj = {};
+  let categoryYear = category.reduce((categoryYear, item) => {
+    const year = item.fromFY && item.fromFY.slice(0, 4);
+    categoryYear.push(year);
+    return categoryYear;
+  }, []);
+  const index = categoryYear.indexOf(assessYear);
+  if (index > -1) {
+    chosenDateObj = category[index];
+  } else {
+    for (let i = 0; i < categoryYear.length; i++) {
+      if (assessYear > categoryYear[i]) {
+        chosenDateObj = category[i];
+        break;
+      }
+    }
+  }
+  let month = null;
+  if (chosenDateObj.startingDay) {
+    let yearDiff = assessYear - chosenDateObj.fromFY.split("-")[0];
+    let date = chosenDateObj.startingDay.split("/");
+    let yr = parseInt(date.pop()) + yearDiff;
+    let len = date.push(yr.toString());
+    chosenDateObj.startingDay = date.join("/");
+    month = getMonth(chosenDateObj.startingDay);
+  }
+  console.log("chosenDateObj", chosenDateObj);
+  return chosenDateObj;
+};
+
 const getMonth = (date) => {
   return parseInt(date.split("/")[1]);
 };
@@ -295,7 +337,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
-  units = uniqBy(units,"floorNo");
+  units = uniqBy(units, "floorNo");
   let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
     if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;

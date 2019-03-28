@@ -18,6 +18,7 @@ class Report extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.reportName !== this.props.match.params.reportName) {
+      nextProps.resetForm();
       this.initData(nextProps.match.params.moduleName, nextProps.match.params.reportName);
     }
   }
@@ -92,6 +93,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   showTable: (state) => {
     dispatch({ type: "SHOW_TABLE", state });
+  },
+  resetForm: () => {
+    dispatch({ type: "RESET_FORM" });
   },
   setReportResult: (reportResult) => {
     dispatch({ type: "SHOW_TABLE", reportResult });

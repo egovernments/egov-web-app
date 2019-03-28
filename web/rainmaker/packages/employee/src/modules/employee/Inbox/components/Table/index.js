@@ -4,7 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { TaskDialog } from "egov-workflow/ui-molecules-local";
-import { addWflowFileUrl } from "egov-ui-framework/ui-utils/commons";
+import { addWflowFileUrl, orderWfProcessInstances } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
@@ -26,8 +26,7 @@ class InboxData extends React.Component {
     const tenantId = getTenantId();
     const queryObject = [{ key: "businessIds", value: pid }, { key: "history", value: true }, { key: "tenantId", value: tenantId }];
     const payload = await httpRequest("egov-workflow-v2/egov-wf/process/_search?", "", queryObject);
-    const processInstances =
-      payload && payload.ProcessInstances.length > 0 && orderBy(payload.ProcessInstances, "auditDetails.lastModifiedTime", "asc");
+    const processInstances = payload && payload.ProcessInstances.length > 0 && orderWfProcessInstances(payload.ProcessInstances);
     return processInstances;
   };
 

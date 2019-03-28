@@ -7,6 +7,7 @@ import {
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import orderBy from "lodash/orderBy";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -337,4 +338,23 @@ export const appendModulePrefix = (value, localePrefix) => {
     moduleName
   )}_${getTransformedLocale(masterName)}_${getTransformedLocale(value)}`;
   return transformedValue;
+};
+
+export const orderWfProcessInstances = processInstances => {
+  processInstances = orderBy(
+    processInstances,
+    "auditDetails.lastModifiedTime",
+    "asc"
+  );
+  let initiatedFound = false;
+  const filteredInstances = processInstances.reverse().reduce((acc, item) => {
+    if (item.action == "INITIATE" && !initiatedFound) {
+      initiatedFound = true;
+      acc.push(item);
+    } else if (item.action !== "INITIATE") {
+      acc.push(item);
+    }
+    return acc;
+  }, []);
+  return filteredInstances.reverse();
 };
