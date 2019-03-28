@@ -114,9 +114,6 @@ export const findCorrectDateObj = (financialYear, category) => {
 };
 
 export const findCorrectDateObjPenaltyIntrest = (financialYear, category) => {
-  console.log("financialYear", financialYear);
-  console.log("category", category);
-  debugger;
   category.sort((a, b) => {
     let yearOne = a.fromFY && a.fromFY.slice(0, 4);
     let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
