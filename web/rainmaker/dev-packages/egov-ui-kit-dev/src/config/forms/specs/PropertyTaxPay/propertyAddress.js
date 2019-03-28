@@ -30,8 +30,6 @@ const formConfig = {
         ],
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        const moduleValue = field.value;
-        dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
         dispatch(
           prepareFormData(
@@ -42,7 +40,8 @@ const formConfig = {
           )
         );
         dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
-
+        const moduleValue = field.value;
+        dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,

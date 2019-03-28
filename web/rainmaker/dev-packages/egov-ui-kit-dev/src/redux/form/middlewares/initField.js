@@ -6,7 +6,7 @@ import get from "lodash/get";
 const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
-  // const state = store.getState();
+  const state = store.getState();
   if (type === INIT_FORM) {
     if (typeof get(action, "form.beforeInitForm") === "function") {
       action = action.form.beforeInitForm(action, store, dispatch);
@@ -20,7 +20,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
         if (item.dataFetchConfig && !item.dataFetchConfig.isDependent) {
           switch (item.type) {
             case "singleValueList":
-              fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key);
+              fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, state);
           }
         }
       });
