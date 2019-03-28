@@ -64,7 +64,13 @@ export const getSearchResults = async queryObject => {
     );
     return response;
   } catch (error) {
-    store.dispatch(toggleSnackbar(true, error.message, "error"));
+    store.dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelCode: error.message },
+        "error"
+      )
+    );
   }
 };
 
