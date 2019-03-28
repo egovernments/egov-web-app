@@ -16,31 +16,36 @@ const icon = <Icon action="navigation" name="close" />;
 
 class PaymentFailure extends Component {
   state = {
-    bill: []
+    bill: [],
+    failureMessage: ""
   };
 
-  failureMessages = {
-    Message1: (
-      <Label
-        containerStyle={{ paddingTop: "10px" }}
-        fontSize={16}
-        label={"PT_OOPS"}
-        labelStyle={{ color: "#484848", fontWeight: 500 }}
-      />
-    ),
-    Message2: (
-      <Label
-        containerStyle={{ paddingTop: "10px" }}
-        fontSize={16}
-        label={
-          this.state.failureMessage
-            ? this.state.failureMessage
-            : "PT_RECEIPT_FAILURE_MESSAGE"
-        }
-        labelStyle={{ color: "#484848", fontWeight: 500 }}
-      />
-    )
+  failureMessages = () => {
+    return {
+      Message1: (
+        <Label
+          containerStyle={{ paddingTop: "10px" }}
+          fontSize={16}
+          label={"PT_OOPS"}
+          labelStyle={{ color: "#484848", fontWeight: 500 }}
+        />
+      ),
+      Message2: (
+        <Label
+          containerStyle={{ paddingTop: "10px" }}
+          fontSize={16}
+          label={
+            this.state.failureMessage
+              ? this.state.failureMessage
+              : "PT_RECEIPT_FAILURE_MESSAGE"
+          }
+          labelStyle={{ color: "#484848", fontWeight: 500 }}
+        />
+      )
+    };
   };
+
+  // failureMessages = ;
 
   getBill = async (tenantId, assessmentNumber, assessmentYear, propertyId) => {
     const queryObj = [
@@ -103,7 +108,7 @@ class PaymentFailure extends Component {
           receiptUIDetails={receiptUIDetails}
           floatingButtonColor="#e74c3c"
           icon={icon}
-          messages={failureMessages}
+          messages={this.failureMessages()}
           buttons={buttons}
           primaryAction={this.redirectToReview}
         />
