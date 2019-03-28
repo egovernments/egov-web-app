@@ -302,9 +302,9 @@ class ShowField extends Component {
         reportResult.reportHeader &&
         reportResult.reportHeader.length &&
         reportResult.reportHeader[i] &&
-        reportResult.reportHeader[i].type == "currency"
+        (reportResult.reportHeader[i].type == "currency" || reportResult.reportHeader[i].total)
       ) {
-        return this.addCommas(Number(val) % 1 === 0 ? val : Number(val).toFixed(2));
+        return this.addCommas(Number(val) % 1 === 0 ? Number(val) : Number(val).toFixed(2));
       } else {
         return val;
       }
@@ -454,7 +454,7 @@ class ShowField extends Component {
       reportResult.reportHeader &&
       reportResult.reportHeader.length &&
       reportResult.reportHeader[i] &&
-      reportResult.reportHeader[i].type == "currency"
+      (reportResult.reportHeader[i].type == "currency" ||reportResult.reportHeader[i].total)
     ) {
       return { textAlign: "right" };
     } else {

@@ -21,6 +21,7 @@ class ShowForm extends Component {
     searchBtnText: "APPLY",
     filterApplied: false,
     getResults: false,
+    dateError:""
   };
 
   toDateObj = (dateStr) => {
@@ -228,12 +229,13 @@ class ShowForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
+    let {dateError}=this.state;
 
     if (!_.isEqual(this.props.searchForm, nextProps.searchForm)) {
       if (this.state.getResults) {
-        this.search(null, false, nextProps.searchForm);
-        this.setState({ getResults: false });
+        this.search(null, false, nextProps.searchForm)
       }
+      this.setState({ getResults: false,dateError:"" });
     }
     if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("APPLY");
