@@ -51,8 +51,12 @@ export const fetchLocalizationLabel = (locale, module, tenantId) => {
             { key: "tenantId", value: tenantId ? tenantId : commonConfig.tenantId },
           ])
         : [];
+      //let resultArray = [...payload1.messages, ...payload2.messages];
 
-      const resultArray = [...payload1.messages, ...payload2.messages];
+      let resultArray = [...payload1.messages];
+      if (payload2 && payload2.messages) {
+        resultArray = [...resultArray, ...payload2.messages];
+      }
       dispatch(setLocalizationLabels(locale, resultArray));
     } catch (error) {
       console.log(error);

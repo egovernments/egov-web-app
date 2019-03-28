@@ -7,8 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { getUserInfo, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
-
+import { getUserInfo, localStorageSet, localStorageGet, getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -504,10 +503,11 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
   return mergedData;
 };
 
-export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
+export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary, state) => {
   const { url, action, requestBody, queryParams, hierarchyType } = dataFetchConfig;
   try {
     if (url) {
+      const { localizationLabels } = state.app;
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
       const dropdownData = boundary
         ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
@@ -519,13 +519,29 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
       const ddData =
         dropdownData &&
         dropdownData.reduce((ddData, item) => {
-          let option = {
-            label:
-              fieldKey === "mohalla"
-                ? `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code.toUpperCase().replace(/[._:-\s\/]/g, "_")}`
-                : item.name,
-            value: item.code,
-          };
+          let option = {};
+          if (fieldKey === "mohalla") {
+            const mohallaCode = `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code
+              .toUpperCase()
+              .replace(/[._:-\s\/]/g, "_")}`;
+            option = {
+              label: getTranslatedLabel(mohallaCode, localizationLabels),
+              value: item.code,
+            };
+          } else {
+            option = {
+              label: item.name,
+              value: item.code,
+            };
+          }
+
+          // let option = {
+          //   label:
+          //     fieldKey === "mohalla"
+          //       ? `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code.toUpperCase().replace(/[._:-\s\/]/g, "_")}`
+          //       : item.name,
+          //   value: item.code,
+          // };
           //Only for boundary
           item.area && (option.area = item.area);
           ddData.push(option);
