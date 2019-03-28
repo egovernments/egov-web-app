@@ -41,14 +41,14 @@ export const paymentSuccessFooter = (
     leftIcon: "book"
   };
   let receiptDownloadObject = {
-    label: { labelName: "Receipt", labelKey: "" },
+    label: { labelName: "Receipt", labelKey: "TL_RECEIPT" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_download");
     },
     leftIcon: "receipt"
   };
   let receiptPrintObject = {
-    label: { labelName: "Receipt", labelKey: "" },
+    label: { labelName: "Receipt", labelKey: "TL_RECEIPT" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_print");
     },

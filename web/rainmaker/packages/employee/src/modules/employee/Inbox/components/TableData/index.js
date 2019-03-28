@@ -101,9 +101,6 @@ class TableData extends Component {
       const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
       const allData = _.get(responseData, "ProcessInstances", []);
 
-      console.log("assignedData is...", allDataRows);
-      console.log("allData is...", allData);
-
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
 
@@ -119,8 +116,6 @@ class TableData extends Component {
 
       const taskCount = allDataRows.length;
       const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
-
-      console.log("allDataRows is...", allDataRows);
 
       taskboardData.push(
         { head: taskCount, body: "WF_TOTAL_TASK" },
@@ -157,7 +152,7 @@ class TableData extends Component {
   onModuleFilter = (event) => {
     this.setState({ moduleName: event.target.value }, () => {
       const { InboxData } = this.props;
-      const { tabData } = this.state;
+      let { tabData } = this.state;
       const filteredData = InboxData.map((item, index) => {
         return {
           headers: item.headers,
@@ -168,9 +163,9 @@ class TableData extends Component {
       });
       // tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
       // tabData[1] = `All (${filteredData[1].rows.length})`;
-
-      tabData[0].push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
-      tabData[1].push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
+      tabData = [];
+      tabData.push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
+      tabData.push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
 
       this.setState({
         inboxData: filteredData,
