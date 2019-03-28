@@ -46,6 +46,7 @@ class YearDialog extends Component {
             masterDetails: [
               {
                 name: "FinancialYear",
+                filter: "[?(@.module == 'PT')]",
               },
             ],
           },
@@ -84,7 +85,7 @@ class YearDialog extends Component {
         bodyStyle={{ backgroundColor: "#ffffff" }}
         isClose={false}
         onRequestClose={closeDialogue}
-        contentClassName="year-dialog-content"	
+        contentClassName="year-dialog-content"
         className="year-dialog"
       />
     ) : null;
