@@ -30,13 +30,27 @@ class ShowForm extends Component {
   };
 
   resetFields = () => {
-    const { resetForm, searchForm } = this.props;
+    const { metaData, resetForm, searchForm, setSearchParams } = this.props;
     if (!searchForm) {
       //showTable(false); // Hard and elegant
       console.log("Search Form Empty");
       return;
     } else {
-      this.setState({ getResults: true,dateError:"" }, () => {
+      let searchParams = metaData.reportDetails.searchParams;
+      var i;
+      let fromDateIndex, toDateIndex;
+      for (i = 0; i < searchParams.length; i++) {
+        if (searchParams[i].name === "fromDate") {
+          fromDateIndex = i;
+        } else if (searchParams[i].name === "toDate") {
+          toDateIndex = i;
+        }
+      }
+      searchParams[fromDateIndex].maxValue = new Date();
+      searchParams[toDateIndex].minValue = undefined;
+      searchParams[toDateIndex].maxValue = undefined;
+      setSearchParams(searchParams);
+      this.setState({ getResults: true, dateError: "" }, () => {
         resetForm();
       });
     }
@@ -92,11 +106,30 @@ class ShowForm extends Component {
       //alert("Something went wrong while loading depedent");
     }
   };
-
+  handleDateSelect = (metaData, e, property) => {
+    let { setSearchParams } = this.props;
+    let searchParams = metaData.reportDetails.searchParams;
+    var i;
+    let fromDateIndex, toDateIndex;
+    for (i = 0; i < searchParams.length; i++) {
+      if (searchParams[i].name === "fromDate") {
+        fromDateIndex = i;
+      } else if (searchParams[i].name === "toDate") {
+        toDateIndex = i;
+      }
+    }
+    if (property === "fromDate") {
+      searchParams[toDateIndex].minValue = new Date(e.target.value);
+    } else if (property === "toDate") {
+      searchParams[fromDateIndex].maxValue = new Date(e.target.value);
+    }
+    setSearchParams(searchParams);
+  };
   handleChange = (e, property, isRequired, pattern) => {
     const { metaData, setMetaData, handleChange, searchForm } = this.props;
     const selectedValue = e.target.value;
     if (property === "fromDate" || property === "toDate") {
+      this.handleDateSelect(metaData, e, property);
       this.checkDate(selectedValue, property, isRequired, pattern);
     } else {
       handleChange(e, property, isRequired, pattern);
@@ -207,6 +240,8 @@ class ShowForm extends Component {
         if (item.type === "epoch" && item.minValue && item.maxValue && typeof item.minValue !== "object" && typeof item.maxValue !== "object") {
           item.minValue = this.toDateObj(item.minValue);
           item.maxValue = this.toDateObj(item.maxValue);
+        } else if (item.type === "epoch" && item.name == "fromDate" && item.maxValue === null) {
+          item.maxValue = new Date();
         }
         if (item.type === "singlevaluelist") {
           item["searchText"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
