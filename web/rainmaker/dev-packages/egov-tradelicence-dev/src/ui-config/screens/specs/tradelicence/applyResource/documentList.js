@@ -3,21 +3,6 @@ export const documentList = {
   moduleName: "egov-tradelicence",
   componentPath: "DocumentListContainer",
   props: {
-    // documents: [
-    //   {
-    //     name: "Owner’s ID Proof ",
-    //     required: true,
-    //     jsonPath: "Trade[0].ownerId"
-    //   },
-    //   {
-    //     name: "Owner’s Address Proof ",
-    //     jsonPath: "Trade[0].addressProof"
-    //   },
-    //   {
-    //     name: "Business ID Proof ",
-    //     jsonPath: "Trade[0].businessProof"
-    //   }
-    // ],
     buttonLabel: {
       labelName: "UPLOAD FILE",
       labelKey: "TL_BUTTON_UPLOAD FILE"
@@ -26,6 +11,7 @@ export const documentList = {
     inputProps: {
       accept: "image/*, .pdf, .png, .jpeg"
     },
+    documentTypePrefix: "TL_",
     maxFileSize: 6000
   }
 };

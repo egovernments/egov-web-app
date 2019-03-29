@@ -121,7 +121,6 @@ class DocumentList extends Component {
     prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", {
       ...uploadedDocuments
     });
-
     prepareFinalObject(jsonPath, {
       fileName: file.name,
       fileStoreId,
@@ -159,7 +158,7 @@ class DocumentList extends Component {
     }
   };
   render() {
-    const { classes, documents, description } = this.props;
+    const { classes, documents, documentTypePrefix, description } = this.props;
     const { uploadedIndex } = this.state;
     return (
       <div style={{ paddingTop: 10 }}>
@@ -187,8 +186,8 @@ class DocumentList extends Component {
                   </Grid>
                   <Grid item={true} xs={6} sm={6} align="left">
                     <LabelContainer
-                      labelName={document.name}
-                      labelKey={document.name}
+                      labelName={documentTypePrefix + document.name}
+                      labelKey={documentTypePrefix + document.name}
                       style={documentTitle}
                     />
                     {document.required && (

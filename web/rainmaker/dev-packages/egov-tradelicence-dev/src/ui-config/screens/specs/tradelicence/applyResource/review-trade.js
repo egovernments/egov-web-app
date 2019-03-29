@@ -217,7 +217,13 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "Licence Type",
           labelKey: "TL_COMMON_TABLE_COL_LICENSE_TYPE"
         },
-        { jsonPath: "Licenses[0].licenseType" }
+        {
+          jsonPath: "Licenses[0].licenseType",
+          localePrefix: {
+            moduleName: "TRADELICENSE",
+            masterName: "LICENSETYPE"
+          }
+        }
       ),
       reviewTradeName: getLabelWithValue(
         {

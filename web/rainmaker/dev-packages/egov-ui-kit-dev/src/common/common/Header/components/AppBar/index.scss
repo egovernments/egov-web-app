@@ -22,6 +22,10 @@
   height: 49px;
 }
 
+.appbar-municipal-label .label-text {
+  text-transform: uppercase !important;
+}
+
 @media only screen and (max-width: 768px) {
   .app-toolbar,
   .citizen-header-logo,

@@ -273,12 +273,13 @@ export const callBackForNext = async (state, dispatch) => {
         isFormValid = false;
       }
     }
+
     if (isFormValid) {
       const reviewDocData =
         uploadedDocData &&
         uploadedDocData.map(item => {
           return {
-            title: item.documentType,
+            title: `TL_${item.documentType}`,
             link: item.fileUrl && item.fileUrl.split(",")[0],
             linkText: "View",
             name: item.fileName
