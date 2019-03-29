@@ -1,6 +1,8 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 
 const tenantId = getTenantId();
 
@@ -66,6 +68,13 @@ const formConfig = {
       labelsFromLocalisation: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
+      },
+      beforeFieldChange: ({ action, dispatch, state }) => {
+        if (get(state, "common.prepareFormData.services[0].addressDetail.city") !== action.value) {
+          const moduleValue = action.value;
+          dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
+        }
+        return action;
       },
       dataFetchConfig: {
         dependants: [
