@@ -49,37 +49,40 @@ class TastStatusContainer extends React.Component {
           <CardContent>
             <Container
               children={
-                <Grid container="true" sm="12" spacing={16} marginTop={16}>
-                  <Grid
-                    style={{ alignItems: "center", display: "flex" }}
-                    item
-                    sm={10}
-                  >
-                    <Typography component="h2" variant="subheading">
-                      <LabelContainer
-                        labelName="Task Status"
-                        labelKey="TL_TASK_STATUS"
-                      />
-                    </Typography>
-                  </Grid>
-                  <Grid item sm={2}>
-                    <Button
-                      className={classes.button}
-                      onClick={this.handleViewHistory}
+                <div>
+                  <Grid container="true" spacing={12} marginTop={16}>
+                    <Grid
+                      style={{ alignItems: "center", display: "flex" }}
+                      item
+                      sm={6}
+                      xs={6}
                     >
-                      <HistoryIcon className={classes.leftIcon} />
-                      <LabelContainer
-                        labelName="VIEW HISTORY"
-                        labelKey="TL_VIEW_HISTORY"
-                        color="#FE7A51"
-                      />
-                    </Button>
+                      <Typography component="h2" variant="subheading">
+                        <LabelContainer
+                          labelName="Task Status"
+                          labelKey="TL_TASK_STATUS"
+                        />
+                      </Typography>
+                    </Grid>
+                    <Grid item sm={6} xs={6} style={{ textAlign: "right" }}>
+                      <Button
+                        className={classes.button}
+                        onClick={this.handleViewHistory}
+                      >
+                        <HistoryIcon className={classes.leftIcon} />
+                        <LabelContainer
+                          labelName="VIEW HISTORY"
+                          labelKey="TL_VIEW_HISTORY"
+                          color="#FE7A51"
+                        />
+                      </Button>
+                    </Grid>
                   </Grid>
                   <TaskStatusComponents
                     currentObj={currentObj}
                     index={ProcessInstances.length - 1}
                   />
-                </Grid>
+                </div>
               }
             />
           </CardContent>

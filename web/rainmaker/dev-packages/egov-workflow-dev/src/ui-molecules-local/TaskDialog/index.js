@@ -16,8 +16,12 @@ const styles = theme => ({
 
 const TaskDialog = props => {
   const { open, onClose, history } = props;
+  let fullscreen = false;
+  if (window.innerWidth <= 768) {
+    fullscreen = true;
+  }
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg">
+    <Dialog fullScreen={fullscreen} open={open} onClose={onClose}>
       <DialogContent
         children={
           <Container
@@ -34,14 +38,19 @@ const TaskDialog = props => {
                       labelKey="TL_TASK_STATUS"
                     />
                   </Typography>
-                </Grid>
-                <Grid
-                  item
-                  sm={2}
-                  style={{ textAlign: "right", cursor: "pointer" }}
-                  onClick={onClose}
-                >
-                  <CloseIcon />
+                  <Grid
+                    item
+                    sm={2}
+                    style={{
+                      textAlign: "right",
+                      cursor: "pointer",
+                      position: "absolute",
+                      right: "20px"
+                    }}
+                    onClick={onClose}
+                  >
+                    <CloseIcon />
+                  </Grid>
                 </Grid>
                 {/* <Grid item sm={10} style={{ margin: "10px 0 0 10px" }}>
                   <Stepper orientation="vertical">
