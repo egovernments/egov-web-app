@@ -503,11 +503,12 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
   return mergedData;
 };
 
-export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary, state) => {
+export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, state, boundary) => {
   const { url, action, requestBody, queryParams, hierarchyType } = dataFetchConfig;
   try {
     if (url) {
-      const { localizationLabels } = state.app;
+      let localizationLabels = {};
+      if (state && state.app) localizationLabels = (state.app && state.app.localizationLabels) || {};
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
       const dropdownData = boundary
         ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
@@ -518,9 +519,10 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
           }, []);
       const ddData =
         dropdownData &&
+        dropdownData.length > 0 &&
         dropdownData.reduce((ddData, item) => {
           let option = {};
-          if (fieldKey === "mohalla") {
+          if (fieldKey === "mohalla" && item.code) {
             const mohallaCode = `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code
               .toUpperCase()
               .replace(/[._:-\s\/]/g, "_")}`;
@@ -551,6 +553,7 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     }
   } catch (error) {
     const { message } = error;
+    console.log(error);
     if (fieldKey === "mohalla") {
       dispatch(
         toggleSnackbarAndSetText(

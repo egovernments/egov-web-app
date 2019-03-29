@@ -3,7 +3,9 @@ import { handleFieldChange, setFieldProperty } from "egov-ui-kit/redux/form/acti
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
-import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
+import { getUserInfo, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
@@ -112,6 +114,13 @@ const formConfig = {
             "UsageCategorySubMinor",
           ])
         );
+      },
+      beforeFieldChange: ({ action, dispatch, state }) => {
+        if (get(state, "common.prepareFormData.PropertiesTemp[0].address.city") !== action.value) {
+          const moduleValue = action.value;
+          dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
+        }
+        return action;
       },
     },
     ...dummy,

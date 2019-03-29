@@ -1,6 +1,5 @@
 import { SET_FIELD_PROPERTY } from "../actionTypes";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { fetchDropdownData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 
 const setFieldPropertyMiddleware = (store) => (next) => async (action) => {
@@ -10,9 +9,9 @@ const setFieldPropertyMiddleware = (store) => (next) => async (action) => {
   if (type === SET_FIELD_PROPERTY) {
     const { fieldKey, formKey } = action;
     try {
-      const { updateOnSetField } = get(state, `form.${formKey}.fields.${fieldKey}`, {})
+      const { updateOnSetField } = get(state, `form.${formKey}.fields.${fieldKey}`, {});
       if (updateOnSetField) {
-        action = updateOnSetField(store, action)
+        action = updateOnSetField(store, action);
       }
     } catch (error) {
       const { message } = error;
