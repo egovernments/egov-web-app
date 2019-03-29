@@ -79,9 +79,12 @@
 //   word-break: break-word;
 // }
 
-.dropdown-menu > .active > a {
-  background-color: #ddd !important;
-  color: black !important;
+.dropdown-menu > .active > a  {
+  background-color: #fe7a51!important;
+  color: #000!important;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .report_filters {
