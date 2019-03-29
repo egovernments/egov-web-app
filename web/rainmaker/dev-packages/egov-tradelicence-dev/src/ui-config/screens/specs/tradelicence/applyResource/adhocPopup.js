@@ -15,11 +15,13 @@ import {
   prepareFinalObject,
   toggleSnackbar
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import set from "lodash/set";
 
 const getEstimateDataAfterAdhoc = async (state, dispatch) => {
   const TLRequestBody = cloneDeep(
     get(state.screenConfiguration.preparedFinalObject, "Licenses")
   );
+  set(TLRequestBody[0], "action", "ADHOC");
   const TLpayload = await httpRequest(
     "post",
     "/tl-services/v1/_update",

@@ -47,14 +47,18 @@ export const reviewOwnerFatherName = getLabelWithValue(
     jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].fatherOrHusbandName"
   }
 );
-
 export const reviewOwnerGender = getLabelWithValue(
   {
     labelName: "Gender",
     labelKey: "TL_NEW_OWNER_DETAILS_GENDER_LABEL"
   },
-
-  { jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender" }
+  {
+    jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
+    localePrefix: {
+      moduleName: "COMMON",
+      masterName: "GENDER"
+    }
+  }
 );
 
 export const reviewOwnerDOB = getLabelWithValue(

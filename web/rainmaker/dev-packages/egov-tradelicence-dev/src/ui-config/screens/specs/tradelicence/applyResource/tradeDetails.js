@@ -681,9 +681,15 @@ export const tradeDetails = getCommonCard({
   tradeDetailsConatiner: getCommonContainer({
     financialYear: {
       ...getSelectField({
-        label: { labelName: "Financial Year" },
-        placeholder: { labelName: "Select Financial Year" },
-        required: false,
+        label: {
+          labelName: "Financial Year",
+          labelKey: "TL_FINANCIAL_YEAR_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Financial Year",
+          labelKey: "TL_FINANCIAL_YEAR_PLACEHOLDER"
+        },
+        required: true,
         visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
         jsonPath: "Licenses[0].financialYear",
         sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
