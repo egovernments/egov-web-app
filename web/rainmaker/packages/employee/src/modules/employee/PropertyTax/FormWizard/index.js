@@ -27,7 +27,14 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstimateFromBill, convertUnitsToSqFt } from "egov-ui-kit/utils/PTCommon";
+import {
+  getQueryValue,
+  findCorrectDateObj,
+  getFinancialYearFromQuery,
+  getEstimateFromBill,
+  convertUnitsToSqFt,
+  findCorrectDateObjPenaltyIntrest,
+} from "egov-ui-kit/utils/PTCommon";
 import { get, set, isEqual, orderBy } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
@@ -500,10 +507,10 @@ class FormWizard extends Component {
       });
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
         const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
-        const intrest = findCorrectDateObj(financialYearFromQuery, Interest);
+        const intrest = findCorrectDateObjPenaltyIntrest(financialYearFromQuery, Interest);
         const fireCess = findCorrectDateObj(financialYearFromQuery, FireCess);
         const rebate = findCorrectDateObj(financialYearFromQuery, Rebate);
-        const penalty = findCorrectDateObj(financialYearFromQuery, Penalty);
+        const penalty = findCorrectDateObjPenaltyIntrest(financialYearFromQuery, Penalty);
         this.setState({
           importantDates: {
             intrest,

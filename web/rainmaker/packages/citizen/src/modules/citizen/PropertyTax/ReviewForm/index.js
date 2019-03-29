@@ -10,7 +10,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import EditIcon from "./components/EditIcon";
-import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
+import { findCorrectDateObj, findCorrectDateObjPenaltyIntrest } from "egov-ui-kit/utils/PTCommon";
 import Label from "egov-ui-kit/utils/translationNode";
 
 import { SingleCheckbox } from "components";
@@ -85,10 +85,10 @@ class ReviewForm extends Component {
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
         const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
         const { financialYr } = this.props;
-        const intrest = findCorrectDateObj(financialYr, Interest);
+        const intrest = findCorrectDateObjPenaltyIntrest(financialYr, Interest);
         const fireCess = findCorrectDateObj(financialYr, FireCess);
         const rebate = findCorrectDateObj(financialYr, Rebate);
-        const penalty = findCorrectDateObj(financialYr, Penalty);
+        const penalty = findCorrectDateObjPenaltyIntrest(financialYr, Penalty);
         this.setState({
           importantDates: {
             intrest,

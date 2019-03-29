@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getCurrentFinancialYear = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.convertUnitsToSqFt = exports.transformPropertyDataToAssessInfo = exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObjPenaltyIntrest = exports.findCorrectDateObj = exports.getQueryValue = exports.getCurrentFinancialYear = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -125,6 +125,44 @@ var findCorrectDateObj = exports.findCorrectDateObj = function findCorrectDateOb
     } else {
       chosenDateObj.endingDay = chosenDateObj.endingDay + ("/" + assessYear);
     }
+  }
+  return chosenDateObj;
+};
+
+var findCorrectDateObjPenaltyIntrest = exports.findCorrectDateObjPenaltyIntrest = function findCorrectDateObjPenaltyIntrest(financialYear, category) {
+  category.sort(function (a, b) {
+    var yearOne = a.fromFY && a.fromFY.slice(0, 4);
+    var yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+    if (yearOne < yearTwo) {
+      return 1;
+    } else return -1;
+  });
+  var assessYear = financialYear && financialYear.slice(0, 4);
+  var chosenDateObj = {};
+  var categoryYear = category.reduce(function (categoryYear, item) {
+    var year = item.fromFY && item.fromFY.slice(0, 4);
+    categoryYear.push(year);
+    return categoryYear;
+  }, []);
+  var index = categoryYear.indexOf(assessYear);
+  if (index > -1) {
+    chosenDateObj = category[index];
+  } else {
+    for (var i = 0; i < categoryYear.length; i++) {
+      if (assessYear > categoryYear[i]) {
+        chosenDateObj = category[i];
+        break;
+      }
+    }
+  }
+  var month = null;
+  if (chosenDateObj.startingDay) {
+    var yearDiff = assessYear - chosenDateObj.fromFY.split("-")[0];
+    var date = chosenDateObj.startingDay.split("/");
+    var yr = parseInt(date.pop()) + yearDiff;
+    var len = date.push(yr.toString());
+    chosenDateObj.startingDay = date.join("/");
+    month = getMonth(chosenDateObj.startingDay);
   }
   return chosenDateObj;
 };

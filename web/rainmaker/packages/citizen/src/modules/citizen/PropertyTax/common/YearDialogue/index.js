@@ -25,6 +25,7 @@ class YearDialog extends Component {
             masterDetails: [
               {
                 name: "FinancialYear",
+                filter: "[?(@.module == 'PT')]",
               },
             ],
           },

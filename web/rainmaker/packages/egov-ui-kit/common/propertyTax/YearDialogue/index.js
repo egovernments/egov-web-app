@@ -98,7 +98,8 @@ var YearDialog = function (_Component) {
           moduleDetails: [{
             moduleName: "egf-master",
             masterDetails: [{
-              name: "FinancialYear"
+              name: "FinancialYear",
+              filter: "[?(@.module == 'PT')]"
             }]
           }]
         }
