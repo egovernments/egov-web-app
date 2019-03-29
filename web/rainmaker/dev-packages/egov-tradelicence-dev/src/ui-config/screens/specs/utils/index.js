@@ -17,6 +17,7 @@ import {
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
+import isEmpty from "lodash/isEmpty";
 import {
   getTenantId,
   getUserInfo,
@@ -1055,24 +1056,29 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
 };
 
 const isApplicationPaid = currentStatus => {
-  const buisnessSeviceStates = JSON.parse(
-    localStorageGet("businessServiceData")
-  )[0].states;
-
   let isPAID = false;
-  for (var i = 0; i < buisnessSeviceStates.length; i++) {
-    if (buisnessSeviceStates[i].state === currentStatus) {
-      break;
+
+  if (!isEmpty(JSON.parse(localStorageGet("businessServiceData")))) {
+    const buisnessSeviceStates = JSON.parse(
+      localStorageGet("businessServiceData")
+    )[0].states;
+    for (var i = 0; i < buisnessSeviceStates.length; i++) {
+      if (buisnessSeviceStates[i].state === currentStatus) {
+        break;
+      }
+      if (
+        buisnessSeviceStates[i].actions &&
+        buisnessSeviceStates[i].actions.filter(item => item.action === "PAY")
+          .length > 0
+      ) {
+        isPAID = true;
+        break;
+      }
     }
-    if (
-      buisnessSeviceStates[i].actions &&
-      buisnessSeviceStates[i].actions.filter(item => item.action === "PAY")
-        .length > 0
-    ) {
-      isPAID = true;
-      break;
-    }
+  } else {
+    isPAID = false;
   }
+
   return isPAID;
 };
 
@@ -1122,7 +1128,8 @@ export const createEstimateData = async (
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
-  payload.billingSlabIds &&
+  payload &&
+    payload.billingSlabIds &&
     getBillingSlabData(dispatch, payload.billingSlabIds, tenantId);
 
   /** Waiting for estimate to load while downloading confirmation form */

@@ -225,7 +225,7 @@ export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
     if (item.documents && item.documents.length > 0) {
       item.documents.forEach(i => {
         i.link = fileUrlPayload[i.fileStoreId].split(",")[0];
-        i.title = i.documentType;
+        i.title = `TL_${i.documentType}`;
         i.name = decodeURIComponent(
           fileUrlPayload[i.fileStoreId]
             .split(",")[0]
@@ -252,10 +252,27 @@ export const setBusinessServiceDataToLocalStorage = async (
       "_search",
       queryObject
     );
-    localStorageSet(
-      "businessServiceData",
-      JSON.stringify(_.get(payload, "BusinessServices"))
-    );
+    if (
+      payload &&
+      payload.BusinessServices &&
+      payload.BusinessServices.length > 0
+    ) {
+      localStorageSet(
+        "businessServiceData",
+        JSON.stringify(_.get(payload, "BusinessServices"))
+      );
+    } else {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Business Service returned empty object",
+            labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE"
+          },
+          "error"
+        )
+      );
+    }
   } catch (e) {
     dispatch(
       toggleSnackbar(
@@ -334,6 +351,7 @@ export const getTransformedLocale = label => {
 
 export const appendModulePrefix = (value, localePrefix) => {
   const { moduleName, masterName } = localePrefix;
+
   const transformedValue = `${getTransformedLocale(
     moduleName
   )}_${getTransformedLocale(masterName)}_${getTransformedLocale(value)}`;
