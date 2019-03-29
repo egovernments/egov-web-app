@@ -18,7 +18,7 @@
 
 .inbox-card .body {
   color: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
+  // font-size: 16px;
   font-weight: 400;
   letter-spacing: 0.67px;
   line-height: 10px;
@@ -90,9 +90,16 @@
   background-color: rgba(244, 67, 54, 0.87);
 }
 
+.inbox-taskboard {
+  display: flex;
+}
 .inbox-worklist-card {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
+  flex: 33%;
+  margin: 5px;
+  align-items: center;
+  justify-content: center;
   /* .rainmaker-card {
       -webkit-box-shadow: none !important;
       box-shadow: none !important;
@@ -100,10 +107,10 @@
   } */
 }
 .inbox-module-card {
-  width: 20%;
+  width: 100%;
   cursor: pointer;
-  padding-right: 15px;
-  /* align-content: center; */
+  padding: 0;
+  margin: 5px;
 }
 
 .inbox-card-top:hover {
@@ -115,14 +122,68 @@
   padding: 0px 30px;
 }
 
+.inbox-taskboard-subtext {
+  text-align: center;
+}
+
+.rainmaker-topHeader {
+  display: flex;
+  padding-left: 10px;
+}
+
+.inbox-filter {
+  position: absolute;
+  right: 0;
+  top: 17px;
+}
+
 @media only screen and (max-width: 768px) {
-  .inbox-module-card {
-    width: 100%;
-    cursor: pointer;
-    box-shadow: 0 1px 6px #888888;
-    padding-right: 0px;
-  }
-  .inbox-module-container {
+  .rainmaker-topHeader {
+    padding-top: 60px;
     display: block;
+  }
+  // .inbox-module-card {
+  //   width: 100%;
+  //   cursor: pointer;
+  //   padding: 0;
+  //   margin: 5px;
+  // }
+  .inbox-module-container {
+    display: flex;
+    padding: 0px 15px 0px 15px;
+  }
+  .inbox-tabs-container {
+    display: flex 1;
+  }
+  .inbox-tab {
+    flex: 50%;
+  }
+  .inbox-data-table-headcell-0,
+  .inbox-data-table-headcell-2,
+  .inbox-data-table-headcell-3,
+  .inbox-data-table-headcell-4 {
+    display: none !important;
+  }
+  .inbox-data-table-bodycell-0,
+  .inbox-data-table-bodycell-2,
+  .inbox-data-table-bodycell-3,
+  .inbox-data-table-bodycell-4 {
+    display: none !important;
+  }
+  .inbox-card-top {
+    height: 148px;
+  }
+  .inbox-card-top-label {
+    line-height: 20px;
+    margin-top: -10px;
+    font-size: 3vw;
+  }
+  .inbox-worklist-card {
+    font-size: 3vw;
+  }
+  .inbox-filter {
+    position: relative;
+    padding: 10px;
+    top: 0px;
   }
 }

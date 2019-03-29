@@ -37,7 +37,7 @@ const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
-    return [
+    let dataRows = [
       { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       {
@@ -52,6 +52,7 @@ const prepareInboxDataRows = (data) => {
       { text: Math.round(sla), badge: true },
       { historyButton: true },
     ];
+    return dataRows;
   });
 };
 
@@ -104,7 +105,7 @@ class TableData extends Component {
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
 
-      inboxData[0].headers = [
+      let headersList = [
         "WF_INBOX_HEADER_MODULE_SERVICE",
         "WF_INBOX_HEADER_TASK_ID",
         "WF_INBOX_HEADER_STATUS",
@@ -112,6 +113,7 @@ class TableData extends Component {
         "WF_INBOX_HEADER_ASSIGNED_TO",
         "WF_INBOX_HEADER_SLA_DAYS_REMAINING",
       ];
+      inboxData[0].headers = headersList;
       inboxData[0].rows = assignedDataRows;
 
       const taskCount = allDataRows.length;
@@ -130,14 +132,7 @@ class TableData extends Component {
       tabData.push({ label: "All", dynamicValue: `(${allDataRows.length})` });
 
       inboxData.push({
-        headers: [
-          "WF_INBOX_HEADER_MODULE_SERVICE",
-          "WF_INBOX_HEADER_TASK_ID",
-          "WF_INBOX_HEADER_STATUS",
-          "WF_INBOX_HEADER_ASSIGNED_BY",
-          "WF_INBOX_HEADER_ASSIGNED_TO",
-          "WF_INBOX_HEADER_SLA_DAYS_REMAINING",
-        ],
+        headers: headersList,
         rows: allDataRows,
       });
       this.setState({ inboxData, taskboardData, tabData });
@@ -161,11 +156,11 @@ class TableData extends Component {
           }),
         };
       });
-      // tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
-      // tabData[1] = `All (${filteredData[1].rows.length})`;
-      tabData = [];
-      tabData.push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
-      tabData.push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
+      tabData[0] = { label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` };
+      tabData[1] = { label: "All", dynamicValue: `(${filteredData[1].rows.length})` };
+
+      // tabData.push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
+      // tabData.push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
 
       this.setState({
         inboxData: filteredData,
@@ -184,7 +179,7 @@ class TableData extends Component {
           <Tabs
             value={value}
             onChange={this.handleChange}
-            className=""
+            className="inbox-tabs-container"
             indicatorColor="primary"
             textColor="primary"
             style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
@@ -192,18 +187,17 @@ class TableData extends Component {
             {tabData.map((item) => {
               return <Tab className="inbox-tab" label={<Label label={item.label} dynamicValue={item.dynamicValue} isConcat={true} />} />;
             })}
-
-            <div style={{ position: "absolute", right: 0, top: "10px" }}>
-              <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
-                <MenuItem value="" disabled>
-                  Module All
-                </MenuItem>
-                <MenuItem value={"NewTL"}>NewTL</MenuItem>
-                <MenuItem value={"PGR"}>PGR</MenuItem>
-                <MenuItem value={"PT"}>PT</MenuItem>
-              </Select>
-            </div>
           </Tabs>
+          <div className="inbox-filter">
+            <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
+              <MenuItem value="" disabled>
+                Module All
+              </MenuItem>
+              <MenuItem value={"NewTL"}>NewTL</MenuItem>
+              <MenuItem value={"PGR"}>PGR</MenuItem>
+              <MenuItem value={"PT"}>PT</MenuItem>
+            </Select>
+          </div>
           <InboxData data={inboxData[value]} />
         </div>
       </div>

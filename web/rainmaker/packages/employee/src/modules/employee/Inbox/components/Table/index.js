@@ -81,8 +81,9 @@ class InboxData extends React.Component {
       <Table>
         <TableHead>
           <TableRow>
-            {data.headers.map((item) => {
-              return <TableCell className="inbox-data-table-headcell">{<Label label={item} />}</TableCell>;
+            {data.headers.map((item, index) => {
+              let classNames = `inbox-data-table-headcell inbox-data-table-headcell-${index}`;
+              return <TableCell className={classNames}>{<Label label={item} />}</TableCell>;
             })}
           </TableRow>
         </TableHead>
@@ -96,16 +97,17 @@ class InboxData extends React.Component {
               return (
                 <TableRow key={i} className="inbox-data-table-bodyrow">
                   {row.map((item, index) => {
+                    let classNames = `inbox-data-table-bodycell inbox-data-table-bodycell-${index}`;
                     if (item.subtext) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div className="inbox-cell-text">{item.text}</div>
                           <div className="inbox-cell-subtext">{item.subtext}</div>
                         </TableCell>
                       );
                     } else if (item.badge) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <span
                             class={item.text >= 1 ? "inbox-cell-badge-primary sla--positive-value" : "inbox-cell-badge-primary sla--negative-value"}
                           >
@@ -115,7 +117,7 @@ class InboxData extends React.Component {
                       );
                     } else if (item.historyButton) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div onClick={() => onHistoryClick(row[1])} style={{ cursor: "pointer" }}>
                             <i class="material-icons">history</i>
                           </div>
@@ -123,7 +125,7 @@ class InboxData extends React.Component {
                       );
                     } else {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
                             {index === 1 ? <a>{item.text} </a> : item.text}
                           </div>
