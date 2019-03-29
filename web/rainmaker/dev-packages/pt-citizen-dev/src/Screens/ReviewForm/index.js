@@ -10,7 +10,10 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import EditIcon from "./components/EditIcon";
-import { findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
+import {
+  findCorrectDateObj,
+  findCorrectDateObjPenaltyIntrest
+} from "egov-ui-kit/utils/PTCommon";
 import Label from "egov-ui-kit/utils/translationNode";
 
 import { SingleCheckbox } from "components";
@@ -20,12 +23,28 @@ const defaultIconStyle = {
   width: 22,
   height: 22,
   marginLeft: 15,
-  marginRight: 10,
+  marginRight: 10
 };
 
-const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
-const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assignment" />;
-const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
+const PropAddressIcon = (
+  <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />
+);
+const AssessmentInfoIcon = (
+  <Icon
+    style={defaultIconStyle}
+    color="#ffffff"
+    action="action"
+    name="assignment"
+  />
+);
+const OwnerInfoIcon = (
+  <Icon
+    style={defaultIconStyle}
+    color="#ffffff"
+    action="social"
+    name="person"
+  />
+);
 
 class ReviewForm extends Component {
   state = {
@@ -37,7 +56,7 @@ class ReviewForm extends Component {
     minLength: 1,
     maxLength: 11,
     termsAccepted: false,
-    calculationDetails: false,
+    calculationDetails: false
   };
 
   // componentWillReceiveProps(nextProps) {
@@ -58,44 +77,54 @@ class ReviewForm extends Component {
   getImportantDates = async () => {
     const { currentTenantId } = this.props;
     try {
-      let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
-        MdmsCriteria: {
-          tenantId: currentTenantId,
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "Rebate",
-                },
-                {
-                  name: "Penalty",
-                },
-                {
-                  name: "Interest",
-                },
-                {
-                  name: "FireCess",
-                },
-              ],
-            },
-          ],
-        },
-      });
+      let ImpDatesResponse = await httpRequest(
+        MDMS.GET.URL,
+        MDMS.GET.ACTION,
+        [],
+        {
+          MdmsCriteria: {
+            tenantId: currentTenantId,
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "Rebate"
+                  },
+                  {
+                    name: "Penalty"
+                  },
+                  {
+                    name: "Interest"
+                  },
+                  {
+                    name: "FireCess"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      );
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
-        const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
+        const {
+          Interest,
+          FireCess,
+          Rebate,
+          Penalty
+        } = ImpDatesResponse.MdmsRes.PropertyTax;
         const { financialYr } = this.props;
-        const intrest = findCorrectDateObj(financialYr, Interest);
+        const intrest = findCorrectDateObjPenaltyIntrest(financialYr, Interest);
         const fireCess = findCorrectDateObj(financialYr, FireCess);
         const rebate = findCorrectDateObj(financialYr, Rebate);
-        const penalty = findCorrectDateObj(financialYr, Penalty);
+        const penalty = findCorrectDateObjPenaltyIntrest(financialYr, Penalty);
         this.setState({
           importantDates: {
             intrest,
             fireCess,
             rebate,
-            penalty,
-          },
+            penalty
+          }
         });
       }
     } catch (e) {
@@ -103,7 +132,7 @@ class ReviewForm extends Component {
     }
   };
 
-  getErrorMessage = (value) => {
+  getErrorMessage = value => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
     let errorText = `amount should be numeric`;
     if (isFinite(value) && value >= totalAmount) {
@@ -116,44 +145,71 @@ class ReviewForm extends Component {
 
   handleFieldChange = (event, value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value < 100) {
+    if (
+      isNaN(parseFloat(value)) ||
+      !isFinite(value) ||
+      value >= totalAmount ||
+      value < 100
+    ) {
       this.setState(
         {
-          errorText: this.getErrorMessage(value),
+          errorText: this.getErrorMessage(value)
         },
         () => {
-          this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+          this.props.updateTotalAmount(
+            value,
+            this.state.valueSelected === "Full_Amount",
+            this.state.errorText
+          );
         }
       );
     } else {
       this.setState(
         {
-          errorText: "",
+          errorText: ""
         },
         () => {
-          this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+          this.props.updateTotalAmount(
+            value,
+            this.state.valueSelected === "Full_Amount",
+            this.state.errorText
+          );
         }
       );
     }
   };
 
-  updateTotalAmount = (value) => this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount");
+  updateTotalAmount = value =>
+    this.props.updateTotalAmount(
+      value,
+      this.state.valueSelected === "Full_Amount"
+    );
 
-  onRadioButtonChange = (e) => {
+  onRadioButtonChange = e => {
     let { estimationDetails } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount", errorText: "" }, () => {
-        this.updateTotalAmount(this.props.totalAmountToBePaid);
-      });
+      this.setState(
+        {
+          totalAmountTobePaid: totalAmount,
+          valueSelected: "Full_Amount",
+          errorText: ""
+        },
+        () => {
+          this.updateTotalAmount(this.props.totalAmountToBePaid);
+        }
+      );
     } else {
-      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" }, () => {
-        this.updateTotalAmount(100);
-      });
+      this.setState(
+        { totalAmountTobePaid: 0, valueSelected: "Partial_Amount" },
+        () => {
+          this.updateTotalAmount(100);
+        }
+      );
     }
   };
 
-  onEditButtonClick = (index) => {
+  onEditButtonClick = index => {
     let { onTabClick } = this.props;
     onTabClick(index);
   };
@@ -166,7 +222,15 @@ class ReviewForm extends Component {
     this.setState({ calculationDetails: false });
   };
 
-  editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
+  editIcon = (
+    <Icon
+      onClick={this.handleEdit}
+      style={defaultIconStyle}
+      color="#ffffff"
+      action="image"
+      name="edit"
+    />
+  );
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
     let { valueSelected, importantDates, errorText } = this.state;
@@ -179,14 +243,26 @@ class ReviewForm extends Component {
       isPartialPaymentInValid,
       termsAccepted,
       termsError,
-      toggleTerms,
+      toggleTerms
     } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
-        <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
-        <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
-        <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
+        <PropertyAddress
+          icon={PropAddressIcon}
+          editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />}
+          component={stepZero}
+        />
+        <AssessmentInfo
+          icon={AssessmentInfoIcon}
+          editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}
+          component={stepOne}
+        />
+        <OwnerInfo
+          icon={OwnerInfoIcon}
+          editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}
+          component={stepTwo}
+        />
         <PropertyTaxDetailsCard
           estimationDetails={estimationDetails}
           importantDates={importantDates}
@@ -202,7 +278,11 @@ class ReviewForm extends Component {
         )}
         {!isPartialPaymentInValid && (
           <PaymentAmountDetails
-            value={valueSelected === "Partial_Amount" ? totalAmountToBePaid : totalAmount}
+            value={
+              valueSelected === "Partial_Amount"
+                ? totalAmountToBePaid
+                : totalAmount
+            }
             onRadioButtonChange={onRadioButtonChange}
             handleFieldChange={handleFieldChange}
             optionSelected={valueSelected}
@@ -217,14 +297,25 @@ class ReviewForm extends Component {
             id="rcpt"
             errorMessage={<Label label={termsError} />}
             errorText={<Label label={termsError} />}
-            floatingLabelText={<Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />}
+            floatingLabelText={
+              <Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />
+            }
             value={termsAccepted}
             onCheck={() => {
               toggleTerms();
             }}
           />
           {termsError && (
-            <Label label={termsError} containerStyle={{ marginTop: "-22px", color: "#f44336", "margin-left": "4px" }} fontSize="14px" color="red" />
+            <Label
+              label={termsError}
+              containerStyle={{
+                marginTop: "-22px",
+                color: "#f44336",
+                "margin-left": "4px"
+              }}
+              fontSize="14px"
+              color="red"
+            />
           )}
         </div>
       </div>
@@ -232,8 +323,8 @@ class ReviewForm extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
+const mapDispatchToProps = dispatch => ({
+  setRoute: route => dispatch({ type: "SET_ROUTE", route })
 });
 export default connect(
   null,
