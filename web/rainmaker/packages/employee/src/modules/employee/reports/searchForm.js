@@ -7,6 +7,7 @@ import { brown500, red500, white, orange800 } from "material-ui/styles/colors";
 import RaisedButton from "material-ui/RaisedButton";
 import { commonApiPost } from "egov-ui-kit/utils/api";
 import ShowField from "./showField";
+import get from "lodash/get";
 //import { translate } from "../../common/common";
 import { translate } from "./commons/common";
 import Label from "egov-ui-kit/utils/translationNode";
@@ -581,6 +582,33 @@ class ShowForm extends Component {
     search(e, false, searchForm);
   };
 
+  getReportTitle = (rptName) => {
+    let reportName = rptName || this.state.reportName;
+    let reportTitleArr = reportName && reportName.split(/(?=[A-Z])/);
+    let reportTitle = "";
+    if (reportTitleArr) {
+      reportTitle = reportTitleArr.map((char) => {
+        if (char.length == 1) {
+          reportTitle = char + "";
+        } else {
+          reportTitle = " " + char;
+        }
+        return reportTitle;
+      });
+    }
+    return reportTitle;
+  };
+
+  getReportTitlefromTwoOptions = (metaData) => {
+    if (get(metaData,"reportDetails.additionalConfig.reportTitle")) {
+      return <Label label={metaData.reportDetails.additionalConfig.reportTitle} labelStyle={{ marginLeft: "16px",marginTop: "8px", color: "#484848" }} fontSize={20} />;
+    } else {
+      return (
+        get(metaData,"reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
+      );
+    }
+  };
+
   render() {
     let { buttonText, metaData, reportIndex, searchForm } = this.props;
     let { search } = this;
@@ -592,6 +620,7 @@ class ShowForm extends Component {
               this.fetchResults(e, searchForm);
             }}
           >
+          <div>{metaData && this.getReportTitlefromTwoOptions(metaData)}</div>
             <Card
               style={{ padding: "16px" }}
               textChildren={

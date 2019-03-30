@@ -651,21 +651,12 @@ class ShowField extends Component {
     return reportTitle;
   };
 
-  getReportTitlefromTwoOptions = (metaData) => {
-    if (get(metaData,"reportDetails.additionalConfig.reportTitle")) {
-      return <Label label={metaData.reportDetails.additionalConfig.reportTitle} labelStyle={{ margin: "16px", color: "#484848" }} fontSize={20} />;
-    } else {
-      return (
-        get(metaData,"reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
-      );
-    }
-  };
   render() {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult, tabLabel } = this.props;
     let self = this;
     let { reportName } = this.state;
-
+    
     const viewTabel = () => {
       let { searchForm } = this.props;
 
@@ -703,7 +694,6 @@ class ShowField extends Component {
     };
     return isTableShow ? (
       <div>
-        {!_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && this.getReportTitlefromTwoOptions(metaData)}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>
