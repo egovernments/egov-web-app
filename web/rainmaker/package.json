@@ -10,8 +10,8 @@
     "reset": "yarn run clean && yarn i",
     "dev:citizen": "yarn run build-css-citizen && cd packages/citizen && yarn start ",
     "dev:employee": "yarn run build-css-employee && cd packages/employee && yarn start",
-    "prod:citizen": "yarn run go && cd packages/citizen && yarn run build",
-    "prod:employee": "yarn run go && cd packages/employee && yarn run build",
+    "prod:citizen": "yarn run go_citizen && cd packages/citizen && yarn run build",
+    "prod:employee": "yarn run go_employee && cd packages/employee && yarn run build",
     "transpile-citizen-modules": "run-p pgr-citizen pt-citizen",
     "transpile-employee-modules": "run-p pgr-employee pt-employee egov-hrms",
     "transpile-common-modules": "run-p egov-ui-kit egov-ui-framework egov-workflow egov-tradelicence",
@@ -50,7 +50,9 @@
     "egov-workflow": "babel dev-packages/egov-workflow-dev/src --out-dir packages/egov-workflow --copy-files",
     "egov-tradelicence": "babel dev-packages/egov-tradelicence-dev/src --out-dir packages/egov-tradelicence --copy-files",
     "egov-hrms": "babel dev-packages/egov-hrms-dev/src --out-dir packages/egov-hrms --copy-files",
-    "go": "yarn && yarn run build-css-employee && yarn run build-css-citizen && yarn run build-css-common && yarn run transpile-common-modules && yarn run transpile-citizen-modules && yarn run transpile-employee-modules && lerna bootstrap"
+    "go": "yarn && yarn run build-css-employee && yarn run build-css-citizen && yarn run build-css-common && yarn run transpile-common-modules && yarn run transpile-citizen-modules && yarn run transpile-employee-modules && lerna bootstrap",
+    "go_employee": "yarn && yarn run build-css-employee  && yarn run build-css-common && yarn run transpile-common-modules  && yarn run transpile-employee-modules && lerna bootstrap  --ignore egov-ui-transform-service --ignore RNativeApp --ignore rainmaker-citizen --ignore pgr-citizen --ignore pt-citizen",
+    "go_citizen": "yarn  && yarn run build-css-citizen && yarn run build-css-common && yarn run transpile-common-modules && yarn run transpile-citizen-modules  && lerna bootstrap  --ignore egov-ui-transform-service --ignore RNativeApp --ignore rainmaker-employee --ignore pgr-employee --ignore pt-employee"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
