@@ -5,14 +5,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import {
-  transformById,
   epochToYmd,
   getLocaleLabels,
   appendModulePrefix
 } from "../../ui-utils/commons";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-
-const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {
@@ -38,6 +34,7 @@ class TextFieldContainer extends React.Component {
       index,
       componentJsonpath,
       hasLocalization,
+      localizationLabels,
       state,
       infoIcon,
       dispatch,
@@ -54,16 +51,16 @@ class TextFieldContainer extends React.Component {
           })
       };
     }
-    let transfomedKeys = transformById(localizationLabels, "code");
+
     let translatedLabel = getLocaleLabels(
       label.labelName,
       label.labelKey,
-      transfomedKeys
+      localizationLabels
     );
     let translatedPlaceholder = getLocaleLabels(
       placeholder.labelName,
       placeholder.labelKey,
-      transfomedKeys
+      localizationLabels
     );
 
     if (dropdownData.length > 0) {
@@ -93,7 +90,7 @@ class TextFieldContainer extends React.Component {
                     localePrefix && !isEmpty(localePrefix)
                       ? appendModulePrefix(option.value, localePrefix)
                       : option.value,
-                    transfomedKeys
+                    localizationLabels
                   )}
                 </MenuItem>
               ))}
@@ -151,7 +148,8 @@ const mapStateToProps = (state, ownprops) => {
     optionLabel,
     sourceJsonPath
   } = ownprops;
-  const { screenConfiguration } = state;
+  const { screenConfiguration, app } = state;
+  const { localizationLabels } = app;
   const { preparedFinalObject } = screenConfiguration;
   let fieldValue =
     value === undefined ? get(preparedFinalObject, jsonPath) : value;
@@ -177,7 +175,7 @@ const mapStateToProps = (state, ownprops) => {
     }
   }
 
-  return { value: fieldValue, dropdownData, state };
+  return { value: fieldValue, dropdownData, state, localizationLabels };
 };
 
 export default connect(mapStateToProps)(TextFieldContainer);

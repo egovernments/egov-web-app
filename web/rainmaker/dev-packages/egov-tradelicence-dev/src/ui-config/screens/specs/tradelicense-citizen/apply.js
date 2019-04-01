@@ -34,6 +34,9 @@ const getData = async (action, state, dispatch, tenantId) => {
       tenantId
     )
   );
+  dispatch(
+    prepareFinalObject("Licenses[0].tradeLicenseDetail.address.city", tenantId)
+  );
 };
 const updateSearchResults = async (
   action,

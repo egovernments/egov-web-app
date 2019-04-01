@@ -280,8 +280,9 @@ const screenConfig = {
   name: "apply",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
+    const tenantId = getTenantId();
+    dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     getData(action, state, dispatch).then(responseAction => {
-      const tenantId = getTenantId();
       const queryObj = [{ key: "tenantId", value: tenantId }];
       getBoundaryData(action, state, dispatch, queryObj);
       let props = get(
@@ -302,13 +303,21 @@ const screenConfig = {
           tenantId
         )
       );
+      const mohallaLocalePrefix = {
+        moduleName: tenantId,
+        masterName: "REVENUE"
+      };
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla.props.localePrefix",
+        mohallaLocalePrefix
+      );
       //hardcoding license type to permanent
       set(
         action.screenConfig,
         "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
         "PERMANENT"
       );
-      dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     });
 
     return action;
