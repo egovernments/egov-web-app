@@ -114,7 +114,7 @@ const getSelectedTabIndex = paymentType => {
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
-  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
+  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath), "daystart");
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
