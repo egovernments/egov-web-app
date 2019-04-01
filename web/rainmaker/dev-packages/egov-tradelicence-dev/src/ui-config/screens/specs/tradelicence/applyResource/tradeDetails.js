@@ -820,8 +820,8 @@ export const tradeDetails = getCommonCard({
               false
             )
           );
-          dispatch(pFO("Licenses[0].validFrom", null));
-          dispatch(pFO("Licenses[0].validTo", null));
+          // dispatch(pFO("Licenses[0].validFrom", null));
+          // dispatch(pFO("Licenses[0].validTo", null));
         }
       }
     },
