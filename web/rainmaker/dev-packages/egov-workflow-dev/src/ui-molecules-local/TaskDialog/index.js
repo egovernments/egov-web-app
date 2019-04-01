@@ -21,7 +21,12 @@ const TaskDialog = props => {
     fullscreen = true;
   }
   return (
-    <Dialog fullScreen={fullscreen} open={open} onClose={onClose}>
+    <Dialog
+      fullScreen={fullscreen}
+      open={open}
+      onClose={onClose}
+      maxWidth={false}
+    >
       <DialogContent
         children={
           <Container
