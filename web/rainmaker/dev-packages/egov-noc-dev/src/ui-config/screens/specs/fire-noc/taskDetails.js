@@ -22,7 +22,7 @@ const titlebar = getCommonContainer({
 
 const screenConfig = {
   uiFramework: "material-ui",
-  name: "summary",
+  name: "taskDetails",
   beforeInitScreen: action => {
     return action;
   },
