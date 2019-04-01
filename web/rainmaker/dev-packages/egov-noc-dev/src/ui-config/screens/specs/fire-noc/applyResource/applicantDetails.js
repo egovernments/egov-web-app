@@ -6,7 +6,9 @@ import {
   getCommonSubHeader,
   getCommonTitle,
   getSelectField,
-  getTextField
+  getTextField,
+  getDateField,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
@@ -34,14 +36,31 @@ const commonApplicantInformation = () => {
       mobileNumber: getTextField({
         label: {
           labelName: "Mobile No.",
-          labelKey: "NOC_MOBILE_NO_LABEL"
+          labelKey: "NOC_APPLICANT_MOBILE_NO_LABEL"
         },
         placeholder: {
           labelName: "Enter Mobile No.",
-          labelKey: "NOC_ENTER_MOBILE_NO_PLACEHOLDER"
+          labelKey: "NOC_ENTER_APPLICANT_MOBILE_NO_PLACEHOLDER"
         },
         required: true,
+        title: {
+          value: "Please search profile linked to the mobile no.",
+          key: "NOC_APPLICANT_MOBILE_NO_TOOLTIP_MESSAGE"
+        },
+        infoIcon: "info_circle",
+        pattern: getPattern("MobileNo"),
         jsonPath: "mobileNo",
+        iconObj: {
+          iconName: "search",
+          position: "end",
+          color: "#FE7A51"
+          // onClickDefination: {
+          //   action: "condition",
+          //   callBack: (state, dispatch, fieldInfo) => {
+          //     getDetailsForOwner(state, dispatch, fieldInfo);
+          //   }
+          // }
+        },
         props: {
           style: {
             maxWidth: "450px"
@@ -62,7 +81,8 @@ const commonApplicantInformation = () => {
           labelName: "Enter Name",
           labelKey: "NOC_ENTER_APPLICANT_NAME_PLACEHOLDER"
         },
-        // required: true,
+        required: true,
+        pattern: getPattern("Name"),
         jsonPath: "applicantName",
         // props: {
         //   style: {
@@ -85,6 +105,7 @@ const commonApplicantInformation = () => {
           md: 6
         },
         jsonPath: "applicantGender",
+        required: true,
         props: {
           label: "Gender",
           buttons: ["Male", "Female", "Transgender"],
@@ -93,7 +114,7 @@ const commonApplicantInformation = () => {
         },
         type: "array"
       },
-      applicantDob: getTextField({
+      applicantDob: getDateField({
         label: {
           labelName: "Date Of Birth",
           labelKey: "NOC_APPLICANT_DOB_LABEL"
@@ -103,6 +124,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_DOB_PLACEHOLDER"
         },
         required: true,
+        pattern: getPattern("Date"),
         jsonPath: "applicantDob",
         gridDefination: {
           xs: 12,
@@ -119,7 +141,7 @@ const commonApplicantInformation = () => {
           labelName: "Enter Email",
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
-        // required: true,
+        pattern: getPattern("Email"),
         jsonPath: "applicantEmail",
         gridDefination: {
           xs: 12,
@@ -137,6 +159,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_APPLICANT_FATHER_HUSBAND_NAME_PLACEHOLDER"
         },
         required: true,
+        pattern: getPattern("Name"),
         jsonPath: "applicantFatherHusbandName",
         gridDefination: {
           xs: 12,
@@ -171,7 +194,7 @@ const commonApplicantInformation = () => {
           labelName: "Enter Applicant's PAN No.",
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
-        // required: true,
+        pattern: getPattern("PAN"),
         jsonPath: "applicantPan",
         gridDefination: {
           xs: 12,
