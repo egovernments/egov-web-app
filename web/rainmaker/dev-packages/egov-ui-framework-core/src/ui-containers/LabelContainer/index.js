@@ -2,59 +2,25 @@ import React from "react";
 import { Label } from "../../ui-atoms";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import {
-  getTranslatedLabel,
-  transformById,
-  getLocaleLabels,
-  appendModulePrefix
-} from "../../ui-utils/commons";
+import { getLocaleLabels, appendModulePrefix } from "../../ui-utils/commons";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 import isEmpty from "lodash/isEmpty";
 
-// const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
-//   if (labelKey) {
-//     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
-//     if (!translatedLabel || labelKey === translatedLabel) {
-//       return label;
-//     } else {
-//       return translatedLabel;
-//     }
-//   } else {
-//     return label;
-//   }
-// };
-
-const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
-
-// const appendModulePrefix = value => {
-//   if (window.location.pathname.includes("hrms")) {
-//     return `HR_${value}`;
-//   } else {
-//     return `TL_${value}`;
-//   }
-// };
-
-const hasModulePrefix = label => {
-  return (
-    label.startsWith("TL_") ||
-    label.startsWith("WF_") ||
-    label.startsWith("HR_")
-  );
-};
-
 class LabelContainer extends React.Component {
   render() {
-    let { labelName, labelKey, localePrefix, fieldValue, ...rest } = this.props;
-    let transfomedKeys = transformById(localizationLabels, "code");
+    let {
+      labelName,
+      labelKey,
+      localePrefix,
+      fieldValue,
+      localizationLabels,
+      ...rest
+    } = this.props;
+
     let translatedLabel = getLocaleLabels(
       labelName,
-      // labelKey && typeof labelKey === "string"
-      //   ? hasModulePrefix(labelKey)
-      //     ? labelKey
-      //     : appendModulePrefix(labelKey)
-      //   : labelKey,
       labelKey,
-      transfomedKeys
+      localizationLabels
     );
 
     if (typeof fieldValue === "boolean") {
@@ -65,14 +31,11 @@ class LabelContainer extends React.Component {
       typeof fieldValue === "string"
         ? getLocaleLabels(
             fieldValue,
-            // fieldValue && hasModulePrefix(fieldValue)
-            //   ? fieldValue
-            //   : appendModulePrefix(fieldValue),
 
             localePrefix && !isEmpty(localePrefix)
               ? appendModulePrefix(fieldValue, localePrefix)
               : fieldValue,
-            transfomedKeys
+            localizationLabels
           )
         : fieldValue;
     return (
@@ -89,6 +52,7 @@ class LabelContainer extends React.Component {
 
 const mapStateToProps = (state, ownprops) => {
   let fieldValue = "";
+  const { localizationLabels } = state.app;
   const { jsonPath, callBack } = ownprops;
   const { screenConfiguration } = state;
   const { preparedFinalObject } = screenConfiguration;
@@ -98,7 +62,7 @@ const mapStateToProps = (state, ownprops) => {
       fieldValue = callBack(fieldValue);
     }
   }
-  return { fieldValue };
+  return { fieldValue, localizationLabels };
 };
 
 export default connect(

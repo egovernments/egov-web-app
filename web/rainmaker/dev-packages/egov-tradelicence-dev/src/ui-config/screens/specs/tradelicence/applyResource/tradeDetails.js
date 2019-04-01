@@ -778,6 +778,10 @@ export const tradeDetails = getCommonCard({
         },
         required: true,
         jsonPath: "Licenses[0].licenseType",
+        localePrefix: {
+          moduleName: "TRADELICENSE",
+          masterName: "LICENSETYPE"
+        },
         props: {
           disabled: true,
           value: "PERMANENT",

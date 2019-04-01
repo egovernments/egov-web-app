@@ -97,6 +97,18 @@ export const tradeLocationDetails = getCommonCard(
                 // payload.TenantBoundary && payload.TenantBoundary[0].boundary
               )
             );
+            const mohallaLocalePrefix = {
+              moduleName: action.value,
+              masterName: "REVENUE"
+            };
+            dispatch(
+              handleField(
+                "apply",
+                "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+                "props.localePrefix",
+                mohallaLocalePrefix
+              )
+            );
           } catch (e) {
             console.log(e);
           }
