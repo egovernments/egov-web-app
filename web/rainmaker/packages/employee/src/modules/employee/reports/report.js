@@ -25,6 +25,7 @@ class Report extends Component {
 
   componentDidMount() {
     // localStorageSet("searchCriteria", "{}");
+    this.props.resetForm();
     this.initData(this.props.match.params.moduleName, this.props.match.params.reportName);
     this.hasReturnUrl();
   }

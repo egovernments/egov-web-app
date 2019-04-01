@@ -37,20 +37,24 @@ class ShowForm extends Component {
       console.log("Search Form Empty");
       return;
     } else {
-      let searchParams = metaData.reportDetails.searchParams;
-      var i;
-      let fromDateIndex, toDateIndex;
-      for (i = 0; i < searchParams.length; i++) {
-        if (searchParams[i].name === "fromDate") {
-          fromDateIndex = i;
-        } else if (searchParams[i].name === "toDate") {
-          toDateIndex = i;
+      if (get(metaData, "reportDetails.searchParams")) {
+        let searchParams = metaData.reportDetails.searchParams;
+        var i;
+        let fromDateIndex, toDateIndex;
+        for (i = 0; i < searchParams.length; i++) {
+          if (searchParams[i].name === "fromDate") {
+            fromDateIndex = i;
+          } else if (searchParams[i].name === "toDate") {
+            toDateIndex = i;
+          }
         }
+        if (fromDateIndex !== undefined) searchParams[fromDateIndex].maxValue = new Date();
+        if (toDateIndex !== undefined) {
+          searchParams[toDateIndex].minValue = undefined;
+          searchParams[toDateIndex].maxValue = undefined;
+        }
+        setSearchParams(searchParams);
       }
-      searchParams[fromDateIndex].maxValue = new Date();
-      searchParams[toDateIndex].minValue = undefined;
-      searchParams[toDateIndex].maxValue = undefined;
-      setSearchParams(searchParams);
       this.setState({ getResults: true, dateError: "" }, () => {
         resetForm();
       });
@@ -109,22 +113,24 @@ class ShowForm extends Component {
   };
   handleDateSelect = (metaData, e, property) => {
     let { setSearchParams } = this.props;
-    let searchParams = metaData.reportDetails.searchParams;
-    var i;
-    let fromDateIndex, toDateIndex;
-    for (i = 0; i < searchParams.length; i++) {
-      if (searchParams[i].name === "fromDate") {
-        fromDateIndex = i;
-      } else if (searchParams[i].name === "toDate") {
-        toDateIndex = i;
+    if (get(metaData, "reportDetails.searchParams")) {
+      let searchParams = metaData.reportDetails.searchParams;
+      var i;
+      let fromDateIndex, toDateIndex;
+      for (i = 0; i < searchParams.length; i++) {
+        if (searchParams[i].name === "fromDate") {
+          fromDateIndex = i;
+        } else if (searchParams[i].name === "toDate") {
+          toDateIndex = i;
+        }
       }
+      if ((property === "fromDate")&&(toDateIndex !== undefined)) {
+        searchParams[toDateIndex].minValue = new Date(e.target.value);
+      } else if ((property === "toDate")&&(fromDateIndex !== undefined)) {
+        searchParams[fromDateIndex].maxValue = new Date(e.target.value);
+      }
+      setSearchParams(searchParams);
     }
-    if (property === "fromDate") {
-      searchParams[toDateIndex].minValue = new Date(e.target.value);
-    } else if (property === "toDate") {
-      searchParams[fromDateIndex].maxValue = new Date(e.target.value);
-    }
-    setSearchParams(searchParams);
   };
   handleChange = (e, property, isRequired, pattern) => {
     const { metaData, setMetaData, handleChange, searchForm } = this.props;
@@ -226,7 +232,7 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-          dateError: field === "toDate" ? <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_LESSER" />,
+                  dateError: field === "toDate" ? <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_LESSER" />,
         });
       }
     }
@@ -273,7 +279,7 @@ class ShowForm extends Component {
       }
       this.setState({ getResults: false,dateError:"" });
     }
-    if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
+      if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("APPLY");
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
