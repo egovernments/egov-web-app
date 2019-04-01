@@ -5,7 +5,7 @@
   position: fixed !important;
   bottom: 0;
   left: 0;
-  width: 97vw;
+  width: 100%;
   z-index: 1000;
 }
 .stepper-footer-buttons-container button {

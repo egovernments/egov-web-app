@@ -49,7 +49,7 @@ class TastStatusContainer extends React.Component {
           <CardContent>
             <Container
               children={
-                <div>
+                <div style={{ width: "100%" }}>
                   <Grid container="true" spacing={12} marginTop={16}>
                     <Grid
                       style={{ alignItems: "center", display: "flex" }}
