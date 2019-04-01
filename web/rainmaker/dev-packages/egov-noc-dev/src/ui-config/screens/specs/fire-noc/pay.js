@@ -17,14 +17,12 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 // import { fetchBill } from "../utils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 // import store from "egov-ui-framework/ui-redux/store";
-import { getFinancialYearDates } from "../utils";
+import { getFinancialYearDates, getCurrentFinancialYear } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Payment for New Trade License (${getFinancialYearDates(
-      "YYYY-YYYY"
-    )})`,
-    labelKey: "TL_COMMON_PAYMENT_NEW_LIC"
+    labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
+    labelKey: "NOC_COMMON_APPLY_NOC"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",

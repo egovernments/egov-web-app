@@ -24,7 +24,7 @@ export const stepper = getStepperObject(
 
 export const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: `Apply for Fire NOC (${getCurrentFinancialYear()})`,
+    labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
     labelKey: "NOC_COMMON_APPLY_NOC"
   })
   // applicationNumber: {
