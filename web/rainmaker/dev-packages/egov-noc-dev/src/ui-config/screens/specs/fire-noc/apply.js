@@ -10,6 +10,7 @@ import { propertyDetails } from "./applyResource/propertyDetails";
 import { propertyLocationDetails } from "./applyResource/propertyLocationDetails";
 import { applicantDetails } from "./applyResource/applicantDetails";
 import { documentDetails } from "./applyResource/documentDetails";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -32,7 +33,7 @@ export const header = getCommonContainer({
     moduleName: "egov-noc",
     componentPath: "ApplicationNoContainer",
     props: {
-      number: "NA"
+      number: getQueryArg(window.location.href, "applicationNumber")
     },
     visible: true
   }

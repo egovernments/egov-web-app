@@ -2,8 +2,7 @@ import {
   getCommonContainer,
   getCommonHeader,
   getCommonCard,
-  getCommonTitle,
-  getLabel
+  getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "./payResource/footer";
@@ -26,7 +25,7 @@ const header = getCommonContainer({
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
-    moduleName: "egov-tradelicence",
+    moduleName: "egov-noc",
     componentPath: "ApplicationNoContainer",
     props: {
       number: getQueryArg(window.location.href, "applicationNumber")
@@ -72,7 +71,7 @@ const screenConfig = {
             paymentDetails: getCommonCard({
               header: getCommonTitle({
                 labelName: "Payment Collection Details",
-                labelKey: "TL_PAYMENT_HEAD"
+                labelKey: "NOC_PAYMENT_HEAD"
               }),
               // paragraph: getCommonParagraph({
               //   labelName: ""

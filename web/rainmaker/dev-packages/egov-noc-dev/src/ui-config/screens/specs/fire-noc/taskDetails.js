@@ -11,6 +11,7 @@ import { applicantSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
 import { footer } from "./summaryResource/footer";
 import { taskStatus } from "./taskDetailsResource/taskStatus";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 // import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const titlebar = getCommonContainer({
@@ -18,6 +19,17 @@ const titlebar = getCommonContainer({
     labelName: "Task Detials",
     labelKey: "NOC_TASK_DETAILS_HEADER"
   })
+});
+
+const subtitle = getCommonContainer({
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    moduleName: "egov-noc",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: getQueryArg(window.location.href, "applicationNumber")
+    }
+  }
 });
 
 const screenConfig = {
@@ -44,7 +56,8 @@ const screenConfig = {
                 sm: 10
               },
               ...titlebar
-            }
+            },
+            subtitle
           }
         },
         taskStatus: taskStatus,
