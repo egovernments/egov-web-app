@@ -26,16 +26,16 @@ export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
     labelKey: "NOC_COMMON_APPLY_NOC"
-  })
-  // applicationNumber: {
-  //   uiFramework: "custom-atoms-local",
-  //   moduleName: "egov-tradelicence",
-  //   componentPath: "ApplicationNoContainer",
-  //   props: {
-  //     number: "NA"
-  //   },
-  //   visible: false
-  // }
+  }),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    moduleName: "egov-noc",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: "NA"
+    },
+    visible: true
+  }
 });
 
 export const formwizardFirstStep = {
