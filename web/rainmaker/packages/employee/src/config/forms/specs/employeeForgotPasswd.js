@@ -24,6 +24,11 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "CORE_COMMON_CITY_PLACEHOLDER",
     },
+    userType: {
+      id: "user-type",
+      jsonPath: "otp.userType",
+      value: "EMPLOYEE",
+    },
   },
   submit: {
     type: "submit",
