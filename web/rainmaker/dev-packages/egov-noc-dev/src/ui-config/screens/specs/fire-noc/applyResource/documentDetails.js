@@ -33,16 +33,45 @@ export const documentDetails = getCommonCard({
     props: {
       documents: [
         {
-          name: "Owner’s ID Proof ",
+          name: "Identity Proof ",
           required: true,
-          jsonPath: "Trade[0].ownerId"
+          jsonPath: "Trade[0].ownerId",
+          selector: {
+            inputLabel: "Select Document",
+            menuItems: [
+              { value: 10, label: "Ten" },
+              { value: 20, label: "Twenty" },
+              { value: 30, label: "Thirty" }
+            ]
+          }
         },
         {
-          name: "Owner’s Address Proof ",
-          jsonPath: "Trade[0].addressProof"
+          name: "Address Proof ",
+          required: true,
+          jsonPath: "Trade[0].ownerId",
+          selector: {
+            inputLabel: "Select Document",
+            menuItems: [
+              { value: 10, label: "Ten" },
+              { value: 20, label: "Twenty" },
+              { value: 30, label: "Thirty" }
+            ]
+          }
         },
         {
-          name: "Business ID Proof ",
+          name: "Site Plan ",
+          jsonPath: "Trade[0].businessProof"
+        },
+        {
+          name: "Ground Floor Plan ",
+          jsonPath: "Trade[0].businessProof"
+        },
+        {
+          name: "Owner's Checklist as per NBC ",
+          jsonPath: "Trade[0].businessProof"
+        },
+        {
+          name: "Copy of Provisional fire NoC ",
           jsonPath: "Trade[0].businessProof"
         }
       ],

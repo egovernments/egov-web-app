@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
-import { getFileUrlFromAPI } from "../../ui-utils/commons";
-import { handleFileUpload } from "egov-ui-framework/ui-utils/commons";
-import { connect } from "react-redux";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { UploadSingleFile } from "../../ui-molecules-local";
-import { LabelContainer } from "egov-ui-framework/ui-containers";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { handleFileUpload } from "egov-ui-framework/ui-utils/commons";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { UploadSingleFile } from "../../ui-molecules-local";
+import { getFileUrlFromAPI } from "../../ui-utils/commons";
 
 const styles = theme => ({
   documentContainer: {
@@ -66,7 +66,8 @@ const styles = theme => ({
   },
   fileUploadDiv: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "flex-end"
   }
 });
 
@@ -214,22 +215,25 @@ class DocumentList extends Component {
                     <Typography variant="caption">{description}</Typography>
                   </Grid>
                   <Grid item={true} xs={12} sm={6} md={4}>
-                    <FormControl required className={classes.formControl}>
-                      <InputLabel htmlFor="age-required">
-                        Select Document
-                      </InputLabel>
-                      <Select
-                        value={document.initialValue}
-                        onChange={this.handleChange}
-                        name="selected-document"
-                        
-                        className={classes.selectEmpty}
-                      >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
+                    {document.selector && (
+                      <FormControl required className={classes.formControl}>
+                        <InputLabel>{document.selector.inputLabel}</InputLabel>
+                        <Select
+                          value={document.selector.initialValue}
+                          onChange={this.handleChange}
+                          name="selected-document"
+                        >
+                          {document.selector.menuItems &&
+                            document.selector.menuItems.map(item => {
+                              return (
+                                <MenuItem value={item.value}>
+                                  {item.label}
+                                </MenuItem>
+                              );
+                            })}
+                        </Select>
+                      </FormControl>
+                    )}
                   </Grid>
                   <Grid
                     item={true}
