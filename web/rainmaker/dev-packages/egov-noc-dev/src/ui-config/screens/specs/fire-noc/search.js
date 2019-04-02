@@ -82,7 +82,10 @@ const NOCSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/fire-noc/apply"
+                path:
+                  process.env.REACT_APP_SELF_RUNNING === "true"
+                    ? `/egov-ui-framework/fire-noc/apply`
+                    : `/fire-noc/apply`
               },
               roleDefination: {
                 rolePath: "user-info.roles",

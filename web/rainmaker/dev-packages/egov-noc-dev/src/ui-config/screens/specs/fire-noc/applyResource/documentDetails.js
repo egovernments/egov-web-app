@@ -26,30 +26,35 @@ export const documentDetails = getCommonCard({
     labelKey: "NOC_DOCUMENT_DETAILS_SUBTEXT"
   }),
   break: getBreak(),
-  upload: getCommonGrayCard({
-    asd: getCommonContainer({
-      uploadFileHeader: getCommonSubHeader({
-        labelName: "Supporting Documents",
-        labelKey: "HR_APPROVAL_UPLOAD_HEAD"
-      }),
-      uploadButton: {
-        uiFramework: "custom-molecules",
-        componentPath: "UploadMultipleFiles",
-        props: {
-          maxFiles: 4,
-          jsonPath: "deactivationDocuments",
-          inputProps: {
-            accept: "image/*, .pdf, .png, .jpeg"
-          },
-          buttonLabel: { labelName: "UPLOAD FILES" },
-          maxFileSize: 5000,
-          moduleName: "HR",
-          hasLocalization: false,
-          style: {
-            textAlign: "right"
-          }
+  documentList: {
+    uiFramework: "custom-containers-local",
+    moduleName: "egov-noc",
+    componentPath: "DocumentListContainer",
+    props: {
+      documents: [
+        {
+          name: "Owner’s ID Proof ",
+          required: true,
+          jsonPath: "Trade[0].ownerId"
+        },
+        {
+          name: "Owner’s Address Proof ",
+          jsonPath: "Trade[0].addressProof"
+        },
+        {
+          name: "Business ID Proof ",
+          jsonPath: "Trade[0].businessProof"
         }
-      }
-    })
-  })
+      ],
+      buttonLabel: {
+        labelName: "UPLOAD FILE",
+        labelKey: "TL_BUTTON_UPLOAD FILE"
+      },
+      // description: "Only .jpg and .pdf files. 6MB max file size.",
+      inputProps: {
+        accept: "image/*, .pdf, .png, .jpeg"
+      },
+      maxFileSize: 6000
+    }
+  }
 });

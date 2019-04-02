@@ -379,10 +379,13 @@ export const footer = getCommonApplyFooter({
         labelKey: "TL_COMMON_BUTTON_CITIZEN_MAKE_PAYMENT"
       })
     },
-    // onClickDefination: {
-    //   action: "condition",
-    //   callBack: callPGService
-    // },
+    onClickDefination: {
+      action: "page_change",
+      path:
+        process.env.REACT_APP_SELF_RUNNING === "true"
+          ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=pay&status=success`
+          : `/fire-noc/acknowledgement?purpose=pay&status=success`
+    }
     // roleDefination: {
     //   rolePath: "user-info.roles",
     //   // roles: ["CITIZEN"]

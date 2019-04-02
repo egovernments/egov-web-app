@@ -12,101 +12,101 @@ export const getRedirectionURL = () => {
   return redirectionURL;
 };
 
-export const generatePdfAndDownload = (
-  state,
-  dispatch,
-  action,
-  applicationNumber,
-  tenant
-) => {
-  dispatch(
-    toggleSnackbar(true, "Preparing confirmation form, please wait...", "info")
-  );
-  var iframe = document.createElement("iframe");
-  iframe.src =
-    window.origin +
-    `/fire-noc/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
-  var hasIframeLoaded = false,
-    hasEstimateLoaded = false;
-  iframe.onload = function(e) {
-    hasIframeLoaded = true;
-    if (hasEstimateLoaded) {
-      downloadConfirmationForm();
-    }
-  };
-  window.document.addEventListener("estimateLoaded", handleEvent, false);
-  function handleEvent(e) {
-    if (e.detail && iframe.contentDocument) {
-      hasEstimateLoaded = true;
-      if (hasIframeLoaded) {
-        downloadConfirmationForm();
-      }
-    }
-  }
-  function downloadConfirmationForm() {
-    let target = iframe.contentDocument.querySelector(
-      "#material-ui-NOCReviewDetails"
-    );
-    html2canvas(target).then(function(canvas) {
-      document.querySelector("#custom-atoms-iframeForPdf").removeChild(iframe);
-      var data = canvas.toDataURL("image/jpeg", 1);
-      var imgWidth = 200;
-      var pageHeight = 295;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
-      var doc = new jsPDF("p", "mm");
-      var position = 0;
+// export const generatePdfAndDownload = (
+//   state,
+//   dispatch,
+//   action,
+//   applicationNumber,
+//   tenant
+// ) => {
+//   dispatch(
+//     toggleSnackbar(true, "Preparing confirmation form, please wait...", "info")
+//   );
+//   var iframe = document.createElement("iframe");
+//   iframe.src =
+//     window.origin +
+//     `/fire-noc/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+//   var hasIframeLoaded = false,
+//     hasEstimateLoaded = false;
+//   iframe.onload = function(e) {
+//     hasIframeLoaded = true;
+//     if (hasEstimateLoaded) {
+//       downloadConfirmationForm();
+//     }
+//   };
+//   window.document.addEventListener("estimateLoaded", handleEvent, false);
+//   function handleEvent(e) {
+//     if (e.detail && iframe.contentDocument) {
+//       hasEstimateLoaded = true;
+//       if (hasIframeLoaded) {
+//         downloadConfirmationForm();
+//       }
+//     }
+//   }
+//   function downloadConfirmationForm() {
+//     let target = iframe.contentDocument.querySelector(
+//       "#material-ui-NOCReviewDetails"
+//     );
+//     html2canvas(target).then(function(canvas) {
+//       document.querySelector("#custom-atoms-iframeForPdf").removeChild(iframe);
+//       var data = canvas.toDataURL("image/jpeg", 1);
+//       var imgWidth = 200;
+//       var pageHeight = 295;
+//       var imgHeight = (canvas.height * imgWidth) / canvas.width;
+//       var heightLeft = imgHeight;
+//       var doc = new jsPDF("p", "mm");
+//       var position = 0;
 
-      doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+//       doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+//       heightLeft -= pageHeight;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        doc.addPage();
-        doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      if (action === "download") {
-        doc.save(`application_summary_${applicationNumber}.pdf`);
-      } else if (action === "print") {
-        doc.autoPrint();
-        window.open(doc.output("bloburl"), "_blank");
-      }
-    });
-  }
+//       while (heightLeft >= 0) {
+//         position = heightLeft - imgHeight;
+//         doc.addPage();
+//         doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
+//         heightLeft -= pageHeight;
+//       }
+//       if (action === "download") {
+//         doc.save(`application_summary_${applicationNumber}.pdf`);
+//       } else if (action === "print") {
+//         doc.autoPrint();
+//         window.open(doc.output("bloburl"), "_blank");
+//       }
+//     });
+//   }
 
-  // To hide the iframe
-  iframe.style.cssText =
-    "position: absolute; opacity:0; z-index: -9999; width: 900px; height: 100%";
-  document.querySelector("#custom-atoms-iframeForPdf").appendChild(iframe);
+//   // To hide the iframe
+//   iframe.style.cssText =
+//     "position: absolute; opacity:0; z-index: -9999; width: 900px; height: 100%";
+//   document.querySelector("#custom-atoms-iframeForPdf").appendChild(iframe);
 
-  // let iframe = document.querySelector("#custom-containers-local-iframe");
-  // let target = iframe.contentDocument.querySelector(
-  //   "#material-ui-tradeReviewDetails"
-  // );
-  // html2canvas(target, {
-  //   onclone: function(clonedDoc) {
-  //     clonedDoc.getElementById(
-  //       "material-ui-tradeReviewDetails"
-  //     ).style.display = "block";
-  //   }
-  // }).then(canvas => {
-  //   var data = canvas.toDataURL();
-  //   var docDefinition = {
-  //     content: [
-  //       {
-  //         image: data,
-  //         width: 500
-  //       }
-  //     ]
-  //   };
-  //   if (action === "download") {
-  //     pdfMake.createPdf(docDefinition).download("application_summary.pdf");
-  //   } else if (action === "print") {
-  //     pdfMake.createPdf(docDefinition).print();
-  //   }
-  // });
-};
+//   // let iframe = document.querySelector("#custom-containers-local-iframe");
+//   // let target = iframe.contentDocument.querySelector(
+//   //   "#material-ui-tradeReviewDetails"
+//   // );
+//   // html2canvas(target, {
+//   //   onclone: function(clonedDoc) {
+//   //     clonedDoc.getElementById(
+//   //       "material-ui-tradeReviewDetails"
+//   //     ).style.display = "block";
+//   //   }
+//   // }).then(canvas => {
+//   //   var data = canvas.toDataURL();
+//   //   var docDefinition = {
+//   //     content: [
+//   //       {
+//   //         image: data,
+//   //         width: 500
+//   //       }
+//   //     ]
+//   //   };
+//   //   if (action === "download") {
+//   //     pdfMake.createPdf(docDefinition).download("application_summary.pdf");
+//   //   } else if (action === "print") {
+//   //     pdfMake.createPdf(docDefinition).print();
+//   //   }
+//   // });
+// };
 
 const getCommonApplyFooter = children => {
   return {
@@ -253,15 +253,18 @@ export const applicationSuccessFooter = (
         })
       },
       //Add onClickDefination and RoleDefination later
-      // onClickDefination: {
-      //   action: "page_change",
-      //   path: `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=NOC`
-      // },
-      // roleDefination: {
-      //   rolePath: "user-info.roles",
-      //   action: "PAY",
-      //   roles: ["NOC_CEMP"]
-      // }
+      onClickDefination: {
+        action: "page_change",
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/pay`
+            : `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=NOC`
+      },
+      roleDefination: {
+        rolePath: "user-info.roles",
+        action: "PAY",
+        roles: ["TL_CEMP", "SUPERUSER"]
+      }
     }
   });
 };
@@ -339,7 +342,7 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
           labelName: "RETRY",
           labelKey: "NOC_PAYMENT_RETRY"
         })
-      },
+      }
       //Check this onclick later again
       // onClickDefination: {
       //   action: "page_change",
@@ -400,6 +403,33 @@ export const paymentSuccessFooter = () => {
       //     generateReceipt(state, dispatch, "receipt_print");
       //   }
       // }
+    },
+    gotoHome: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        //downloadReceiptButtonLabel: getLabel
+        goToHomeButtonLabel: getLabel({
+          labelName: "GO TO HOME",
+          labelKey: "NOC_COMMON_BUTTON_HOME"
+        })
+      },
+      // Check this onClickDefinition later again
+      onClickDefination: {
+        action: "page_change",
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/search`
+            : `/fire-noc/search`
+      }
     }
   });
 };

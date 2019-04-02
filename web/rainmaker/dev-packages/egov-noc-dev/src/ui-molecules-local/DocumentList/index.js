@@ -10,6 +10,10 @@ import { connect } from "react-redux";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { UploadSingleFile } from "../../ui-molecules-local";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   documentContainer: {
@@ -48,8 +52,24 @@ const styles = theme => ({
   },
   input: {
     display: "none"
+  },
+  iconDiv: {
+    display: "flex",
+    alignItems: "center"
+  },
+  descriptionDiv: {
+    display: "flex",
+    alignItems: "center"
+  },
+  formControl: {
+    minWidth: 250
+  },
+  fileUploadDiv: {
+    display: "flex",
+    alignItems: "center"
   }
 });
+
 const documentTitle = {
   color: "rgba(0, 0, 0, 0.87)",
   fontFamily: "Roboto",
@@ -58,9 +78,10 @@ const documentTitle = {
   letterSpacing: "0.67px",
   lineHeight: "19px"
 };
-// const S3_BUCKET = {
-//   endPoint: "filestore/v1/files"
-// };
+
+const requiredIcon = (
+  <sup style={{ color: "#E54D42", paddingLeft: "5px" }}>*</sup>
+);
 
 class DocumentList extends Component {
   state = {
@@ -160,7 +181,7 @@ class DocumentList extends Component {
                 className={classes.documentContainer}
               >
                 <Grid container={true}>
-                  <Grid item={true} xs={2} sm={1} align="center">
+                  <Grid item={true} xs={2} sm={1} className={classes.iconDiv}>
                     {uploadedIndex.indexOf(key) > -1 ? (
                       <div className={classes.documentSuccess}>
                         <Icon>
@@ -173,21 +194,50 @@ class DocumentList extends Component {
                       </div>
                     )}
                   </Grid>
-                  <Grid item={true} xs={6} sm={6} align="left">
+                  <Grid
+                    item={true}
+                    xs={10}
+                    sm={5}
+                    md={4}
+                    align="left"
+                    className={classes.descriptionDiv}
+                  >
                     <LabelContainer
                       labelName={document.name}
                       labelKey={document.name}
                       style={documentTitle}
                     />
-                    {document.required && (
-                      <sup style={{ color: "#E54D42" }}>*</sup>
-                    )}
+                    {document.required && requiredIcon}
                     <Typography variant="caption">
                       {document.statement}
                     </Typography>
                     <Typography variant="caption">{description}</Typography>
                   </Grid>
-                  <Grid item={true} xs={12} sm={5} align="right">
+                  <Grid item={true} xs={12} sm={6} md={4}>
+                    <FormControl required className={classes.formControl}>
+                      <InputLabel htmlFor="age-required">
+                        Select Document
+                      </InputLabel>
+                      <Select
+                        value={document.initialValue}
+                        onChange={this.handleChange}
+                        name="selected-document"
+                        
+                        className={classes.selectEmpty}
+                      >
+                        <MenuItem value={10}>Ten</MenuItem>
+                        <MenuItem value={20}>Twenty</MenuItem>
+                        <MenuItem value={30}>Thirty</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid
+                    item={true}
+                    xs={12}
+                    sm={12}
+                    md={3}
+                    className={classes.fileUploadDiv}
+                  >
                     <UploadSingleFile
                       classes={this.props.classes}
                       handleFileUpload={e =>
