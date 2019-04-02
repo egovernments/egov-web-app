@@ -1,15 +1,17 @@
+// User related routes
 import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
 import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
 import Profile from "modules/employee/User/Profile";
+import ForgotPassword from "modules/employee/User/ForgotPassword";
+
+// Employee specific routes
 import { TrackLocation } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
 import LandingPage from "modules/employee/LandingPage";
-import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Inbox from "modules/employee/Inbox";
-// Employee
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";

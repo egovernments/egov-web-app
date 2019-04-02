@@ -66,6 +66,11 @@ const formSubmit = (store) => (next) => (action) => {
       dispatch(resetForm(formKey));
     }
 
+    if (formKey === "employeeOTP") {
+      if (payload && payload.responseInfo && payload.responseInfo.status && payload.responseInfo.status == 200)
+        dispatch(toggleSnackbarAndSetText(true, "Password changed successfully!", false));
+    }
+
     if (formKey === "comment") {
       dispatch(fetchComplaints([{ key: "serviceRequestId", value: decodeURIComponent(window.location.href.split("/").pop()) }]));
     }
