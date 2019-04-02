@@ -93,8 +93,8 @@ export const tradeLicenseApplication = getCommonCard({
       },
       required: false,
       localePrefix: {
-        moduleName: "TRADELICENSE",
-        masterName: "status"
+        moduleName: "WF",
+        masterName: "NEWTL"
       },
       jsonPath: "searchScreen.status",
       sourceJsonPath: "applyScreenMdmsData.searchScreen.status",
