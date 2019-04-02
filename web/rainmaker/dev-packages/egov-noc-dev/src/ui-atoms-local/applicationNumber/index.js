@@ -12,9 +12,9 @@ const styles = {
   fontSize: "16px"
 };
 
-function NOCNoContainer(props) {
+function ApplicationNoContainer(props) {
   const { number } = props;
-  return <div style={styles}>NOC No. {number}</div>;
+  return <div style={styles}>Application No. {number}</div>;
 }
 
-export default NOCNoContainer;
+export default ApplicationNoContainer;

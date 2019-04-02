@@ -8,8 +8,8 @@ const TestAtoms = Loadable({
   loading: () => <Loading />
 });
 
-const NOCNoContainer = Loadable({
-  loader: () => import("./NocNumber"),
+const ApplicationNoContainer = Loadable({
+  loader: () => import("./applicationNumber"),
   loading: () => <Loading />
 });
 
@@ -40,7 +40,7 @@ const MenuButton = Loadable({
 
 export {
   TestAtoms,
-  NOCNoContainer,
+  ApplicationNoContainer,
   Checkbox,
   MapLocation,
   AutoSuggest,
