@@ -6,7 +6,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
 
-const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick,logoUrl }) => {
+const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick, logoUrl }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -15,13 +15,13 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick,logoUrl }) => 
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo employee-login-logo" source={logoUrl?logoUrl:`${logo}`} />
+            <Image className="mseva-logo employee-login-logo" source={logoUrl ? logoUrl : `${logo}`} />
           </div>
-          <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
+          <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_LOGIN" />
           <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
           <TextField onChange={(e, value) => handleFieldChange("password", value)} {...fields.password} />
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-          {/* <Link to="/user/forgot-password">
+          <Link to="/forgot-password">
             <div style={{ float: "right" }}>
               <Label
                 containerStyle={{ cursor: "pointer", position: "relative", zIndex: 10 }}
@@ -31,7 +31,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick,logoUrl }) => 
                 label="FORGOT PASSWORD?"
               />
             </div>
-          </Link> */}
+          </Link>
           <Button {...submit} fullWidth={true} primary={true} />
         </div>
       }

@@ -66,7 +66,7 @@ function FeesEstimateCard(props) {
     <Grid container>
       <Grid xs={12} sm={7}>
         {/* <Typography variant="subheading">{estimate.header}</Typography> */}
-        <div style={{ marginTop: 48, maxWidth: 400 }}>
+        <div style={{ marginTop: 48, maxWidth: 600 }}>
           <Grid container>
             {estimate.fees.map((fee, key) => {
               let tooltip = fee.info ? (

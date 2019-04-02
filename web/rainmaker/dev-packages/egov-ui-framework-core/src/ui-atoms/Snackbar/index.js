@@ -51,6 +51,7 @@ const styles1 = theme => ({
 
 const MySnackbarContent = props => {
   const { classes, className, message, onClose, variant, ...other } = props;
+  const { labelName, labelKey } = message;
   const Icon = variantIcon[variant];
   return (
     <SnackbarContent
@@ -59,7 +60,7 @@ const MySnackbarContent = props => {
       message={
         <span id="client-snackbar" className={classes.message}>
           <Icon className={classNames(classes.icon, classes.iconVariant)} />
-          <LabelContainer labelName={message} labelKey={message} />
+          <LabelContainer labelName={labelName} labelKey={labelKey} />
         </span>
       }
       action={[

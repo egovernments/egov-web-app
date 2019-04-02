@@ -16,10 +16,11 @@ import {
   formwizardThirdStep,
   formwizardFourthStep,
   stepper,
-  // queryValue,
   getMdmsData
 } from "../tradelicence/apply";
 import { getAllDataFromBillingSlab } from "../utils";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 const getData = async (action, state, dispatch, tenantId) => {
   await getMdmsData(action, state, dispatch);
@@ -94,6 +95,7 @@ const screenConfig = {
     } else {
       getData(action, state, dispatch, tenantId);
     }
+    dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     return action;
   },
   components: {

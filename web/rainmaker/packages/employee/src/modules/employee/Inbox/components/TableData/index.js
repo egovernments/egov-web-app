@@ -8,6 +8,8 @@ import Tab from "@material-ui/core/Tab";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+// import get from "lodash";
+// import isEmpty from "lodash/isEmpty";
 import _ from "lodash";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -35,7 +37,7 @@ const prepareInboxDataRows = (data) => {
   if (_.isEmpty(data)) return [];
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
-    return [
+    let dataRows = [
       { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       {
@@ -50,6 +52,7 @@ const prepareInboxDataRows = (data) => {
       { text: Math.round(sla), badge: true },
       { historyButton: true },
     ];
+    return dataRows;
   });
 };
 
@@ -72,7 +75,14 @@ class TableData extends Component {
       const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
       localStorageSet("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
     } catch (e) {
-      toggleSnackbarAndSetText(true, "Not authorized to access Business Service!", true);
+      toggleSnackbarAndSetText(
+        true,
+        {
+          labelName: "Not authorized to access Business Service!",
+          labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE",
+        },
+        true
+      );
     }
   };
 
@@ -95,22 +105,39 @@ class TableData extends Component {
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
 
-      inboxData[0].headers = ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"];
+      let headersList = [
+        "WF_INBOX_HEADER_MODULE_SERVICE",
+        "WF_INBOX_HEADER_TASK_ID",
+        "WF_INBOX_HEADER_STATUS",
+        "WF_INBOX_HEADER_ASSIGNED_BY",
+        "WF_INBOX_HEADER_ASSIGNED_TO",
+        "WF_INBOX_HEADER_SLA_DAYS_REMAINING",
+      ];
+      inboxData[0].headers = headersList;
       inboxData[0].rows = assignedDataRows;
 
       const taskCount = allDataRows.length;
       const overSla = _.filter(responseData.ProcessInstances, (item) => item.businesssServiceSla < 0).length;
 
-      taskboardData.push({ head: taskCount, body: "Total Task" }, { head: "0", body: "Nearing SLA" }, { head: overSla, body: "Over SLA" });
+      taskboardData.push(
+        { head: taskCount, body: "WF_TOTAL_TASK" },
+        { head: "0", body: "WF_TOTAL_NEARING_SLA" },
+        { head: overSla, body: "WF_TOTAL_OVER_SLA" }
+      );
 
-      tabData.push(`Assigned to me (${assignedDataRows.length})`);
-      tabData.push(`All (${allDataRows.length})`);
+      // tabData.push(`Assigned to me (${assignedDataRows.length})`);
+      // tabData.push(`All (${allDataRows.length})`);
 
-      inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
+      tabData.push({ label: "Assigned to me", dynamicValue: `(${assignedDataRows.length})` });
+      tabData.push({ label: "All", dynamicValue: `(${allDataRows.length})` });
+
+      inboxData.push({
+        headers: headersList,
+        rows: allDataRows,
+      });
       this.setState({ inboxData, taskboardData, tabData });
     } catch (e) {
-      //toggleSnackbarA(true, "Workflow search error !", "error");
-      toggleSnackbarAndSetText(true, "Workflow search error !", true);
+      toggleSnackbarAndSetText(true, { labelName: "Workflow search error !", labelKey: "ERR_SEARCH_ERROR" }, true);
     }
     prepareFinalObject("InboxData", inboxData);
 
@@ -120,7 +147,7 @@ class TableData extends Component {
   onModuleFilter = (event) => {
     this.setState({ moduleName: event.target.value }, () => {
       const { InboxData } = this.props;
-      const { tabData } = this.state;
+      let { tabData } = this.state;
       const filteredData = InboxData.map((item, index) => {
         return {
           headers: item.headers,
@@ -129,8 +156,12 @@ class TableData extends Component {
           }),
         };
       });
-      tabData[0] = `Assigned to me (${filteredData[0].rows.length})`;
-      tabData[1] = `All (${filteredData[1].rows.length})`;
+      tabData[0] = { label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` };
+      tabData[1] = { label: "All", dynamicValue: `(${filteredData[1].rows.length})` };
+
+      // tabData.push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
+      // tabData.push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
+
       this.setState({
         inboxData: filteredData,
         tabData,
@@ -148,26 +179,25 @@ class TableData extends Component {
           <Tabs
             value={value}
             onChange={this.handleChange}
-            className=""
+            className="inbox-tabs-container"
             indicatorColor="primary"
             textColor="primary"
             style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
           >
             {tabData.map((item) => {
-              return <Tab className="inbox-tab" label={item} />;
+              return <Tab className="inbox-tab" label={<Label label={item.label} dynamicValue={item.dynamicValue} isConcat={true} />} />;
             })}
-
-            <div style={{ position: "absolute", right: 0, top: "10px" }}>
-              <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
-                <MenuItem value="" disabled>
-                  Module All
-                </MenuItem>
-                <MenuItem value={"NewTL"}>NewTL</MenuItem>
-                <MenuItem value={"PGR"}>PGR</MenuItem>
-                <MenuItem value={"PT"}>PT</MenuItem>
-              </Select>
-            </div>
           </Tabs>
+          <div className="inbox-filter">
+            <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
+              <MenuItem value="" disabled>
+                Module All
+              </MenuItem>
+              <MenuItem value={"NewTL"}>NewTL</MenuItem>
+              <MenuItem value={"PGR"}>PGR</MenuItem>
+              <MenuItem value={"PT"}>PT</MenuItem>
+            </Select>
+          </div>
           <InboxData data={inboxData[value]} />
         </div>
       </div>

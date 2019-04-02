@@ -9,11 +9,15 @@ import {
   getDateField,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getDetailsForOwner, getTodaysDateInYMD, getRadioGroupWithLabel } from "../../utils";
+import {
+  getDetailsForOwner,
+  getTodaysDateInYMD,
+  getRadioGroupWithLabel
+} from "../../utils";
 import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import {getRadioButton} from "egov-ui-framework/ui-config/screens/specs/utils"
+import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const getOwnerMobNoField = getTextField({
   label: {
@@ -58,17 +62,22 @@ export const getOwnerGenderField = getSelectField({
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
   data: [
     {
-      code: "MALE"
+      code: "MALE",
+      label: "COMMON_GENDER_MALE"
     },
     {
-      code: "FEMALE"
+      code: "FEMALE",
+      label: "COMMON_GENDER_FEMALE"
     }
   ]
 });
 
 export const getOwnerDOBField = getDateField({
-  label: { labelName: "Date of Birth" },
-  placeholder: { labelName: "Enter Date of Birth" },
+  label: { labelName: "Date of Birth", labelKey: "TL_EMP_APPLICATION_DOB" },
+  placeholder: {
+    labelName: "Enter Date of Birth",
+    labelKey: "TL_NEW_OWNER_DETAILS_DOB_PLACEHOLDER"
+  },
   required: true,
   pattern: getPattern("Date"),
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].dob",
@@ -116,7 +125,11 @@ export const getFatherNameField = getTextField({
 //     }
 //   };
 // };
-export const getRelationshipRadioButton = getRadioButton(["Father", "Husband"], "Licenses[0].tradeLicenseDetail.owners[0].relationship", "Father");
+export const getRelationshipRadioButton = getRadioButton(
+  ["Father", "Husband"],
+  "Licenses[0].tradeLicenseDetail.owners[0].relationship",
+  ""
+);
 
 export const ownerInfoInstitutional = {
   ...getCommonGrayCard({
@@ -179,8 +192,14 @@ export const ownerInfoInstitutional = {
       getOwnerGenderField,
       ownerDOB: {
         ...getDateField({
-          label: { labelName: "Date of Birth" },
-          placeholder: { labelName: "Enter Date of Birth" },
+          label: {
+            labelName: "Date of Birth",
+            labelKey: "TL_EMP_APPLICATION_DOB"
+          },
+          placeholder: {
+            labelName: "Enter Date of Birth",
+            labelKey: "TL_NEW_OWNER_DETAILS_DOB_PLACEHOLDER"
+          },
           required: true,
           pattern: getPattern("Date"),
           isDOB: true,
@@ -248,8 +267,14 @@ const OwnerInfoCard = {
         getOwnerGenderField,
         ownerDOB: {
           ...getDateField({
-            label: { labelName: "Date of Birth" },
-            placeholder: { labelName: "Enter Date of Birth" },
+            label: {
+              labelName: "Date of Birth",
+              labelKey: "TL_EMP_APPLICATION_DOB"
+            },
+            placeholder: {
+              labelName: "Enter Date of Birth",
+              labelKey: "TL_NEW_OWNER_DETAILS_DOB_PLACEHOLDER"
+            },
             required: true,
             pattern: getPattern("Date"),
             isDOB: true,
@@ -261,13 +286,6 @@ const OwnerInfoCard = {
               }
             }
           })
-          // beforeFieldChange: (action, state, dispatch) => {
-          //   let currentDate = new Date().getTime();
-          //   let ownerDOB = new Date(action.value).getTime();
-          //   if (ownerDOB > currentDate) {
-          //     action.value = null;
-          //   }
-          // }
         },
         getOwnerEmailField,
         ownerPAN: getTextField({
@@ -284,11 +302,11 @@ const OwnerInfoCard = {
         }),
         ownerAddress: getTextField({
           label: {
-            labelName: "Corrospondence Address",
+            labelName: "Correspondence Address",
             labelKey: "TL_NEW_OWNER_DETAILS_ADDR_LABEL"
           },
           placeholder: {
-            labelName: "Enter Corrospondence Address",
+            labelName: "Enter Correspondence Address",
             labelKey: "TL_NEW_OWNER_DETAILS_ADDR_PLACEHOLDER"
           },
           required: true,
@@ -305,12 +323,19 @@ const OwnerInfoCard = {
             labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
           },
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-          sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType"
+          sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType",
+          localePrefix: {
+            moduleName: "common-masters",
+            masterName: "OwnerType"
+          }
         })
       })
     }),
     items: [],
-    addItemLabel: "ADD OWNER",
+    addItemLabel: {
+      labelName: "ADD OWNER",
+      labelKey: "TL_NEW_OWNER_DETAILS_ADD_OWN"
+    },
     headerName: "Owner Information",
     headerJsonPath:
       "children.cardContent.children.header.children.Owner Information.props.label",
@@ -337,18 +362,25 @@ export const tradeOwnerDetails = getCommonCard({
   ownershipType: getCommonContainer({
     ownership: {
       ...getSelectField({
-        label: { labelName: "Type of ownership" },
-        placeholder: { labelName: "Select Type of Ownership" },
+        label: {
+          labelName: "Type of ownership",
+          labelKey: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Type of Ownership",
+          labelKey: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_PLACEHOLDER"
+        },
         jsonPath: "LicensesTemp[0].tradeLicenseDetail.ownerShipCategory",
         required: true,
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "OwnerShipCategory"
+        },
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.OwnerShipCategoryTransformed"
       }),
       beforeFieldChange: (action, state, dispatch) => {
         try {
-          // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
-          // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
-          // "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownerInfoInstitutional.children.cardContent.children.tradeUnitCardContainer.children.designation"
           dispatch(
             pFO(
               "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed",
@@ -370,17 +402,6 @@ export const tradeOwnerDetails = getCommonCard({
             ) {
               dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", null));
             }
-            // if (
-            //   get(
-            //     state.screenConfiguration.preparedFinalObject,
-            //     "Licenses[0].tradeLicenseDetail.subOwnerShipCategory"
-            //   )
-            // ) {
-            //   dispatch(
-            //     pFO("Licenses[0].tradeLicenseDetail.subOwnerShipCategory", "")
-            //   );
-            // }
-            // const items = get(apply, "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.OwnerInfoCard.props.items[0].item0")
             dispatch(
               handleField(
                 "apply",
@@ -425,16 +446,24 @@ export const tradeOwnerDetails = getCommonCard({
     },
     subOwnership: {
       ...getSelectField({
-        label: { labelName: "Type of sub-ownership" },
-        placeholder: { labelName: "Select Type of Ownership" },
+        label: {
+          labelName: "Type of sub-ownership",
+          labelKey: "TL_TYPE_OF_SUB_OWNERSHIP"
+        },
+        placeholder: {
+          labelName: "Select Type of sub ownership",
+          labelKey: "TL_TYPE_OF_SUB_OWNERSHIP_PLACEHOLDER"
+        },
         jsonPath: "Licenses[0].tradeLicenseDetail.subOwnerShipCategory",
         required: true,
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "OwnerShipCategory"
+        },
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.subOwnerShipCategoryTransformed"
       }),
       beforeFieldChange: (action, state, dispatch) => {
-        // dispatch(pFO("Licenses[0].tradeLicenseDetail.owners", []));
-        // dispatch(pFO("Licenses[0].tradeLicenseDetail.institution", {}));
         if (action.value === "INDIVIDUAL.SINGLEOWNER") {
           const ownerInfoCards = get(
             state.screenConfiguration.screenConfig.apply, //hardcoded to apply screen

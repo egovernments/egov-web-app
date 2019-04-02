@@ -4,7 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { TaskDialog } from "egov-workflow/ui-molecules-local";
-import { addWflowFileUrl } from "egov-ui-framework/ui-utils/commons";
+import { addWflowFileUrl, orderWfProcessInstances } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
@@ -26,8 +26,7 @@ class InboxData extends React.Component {
     const tenantId = getTenantId();
     const queryObject = [{ key: "businessIds", value: pid }, { key: "history", value: true }, { key: "tenantId", value: tenantId }];
     const payload = await httpRequest("egov-workflow-v2/egov-wf/process/_search?", "", queryObject);
-    const processInstances =
-      payload && payload.ProcessInstances.length > 0 && orderBy(payload.ProcessInstances, "auditDetails.lastModifiedTime", "asc");
+    const processInstances = payload && payload.ProcessInstances.length > 0 && orderWfProcessInstances(payload.ProcessInstances);
     return processInstances;
   };
 
@@ -40,7 +39,7 @@ class InboxData extends React.Component {
         dialogOpen: true,
       });
     } else {
-      toggleSnackbarAndSetText(true, "API error");
+      toggleSnackbarAndSetText(true, { labelName: "API error", labelKey: "ERR_API_ERROR" });
     }
   };
 
@@ -82,14 +81,15 @@ class InboxData extends React.Component {
       <Table>
         <TableHead>
           <TableRow>
-            {data.headers.map((item) => {
-              return <TableCell className="inbox-data-table-headcell">{item}</TableCell>;
+            {data.headers.map((item, index) => {
+              let classNames = `inbox-data-table-headcell inbox-data-table-headcell-${index}`;
+              return <TableCell className={classNames}>{<Label label={item} />}</TableCell>;
             })}
           </TableRow>
         </TableHead>
         {data.rows.length === 0 ? (
           <TableBody>
-            <Label labelClassName="" label="No results found !" />
+            <Label labelClassName="" label="COMMON_INBOX_NO_DATA" />
           </TableBody>
         ) : (
           <TableBody>
@@ -97,16 +97,17 @@ class InboxData extends React.Component {
               return (
                 <TableRow key={i} className="inbox-data-table-bodyrow">
                   {row.map((item, index) => {
+                    let classNames = `inbox-data-table-bodycell inbox-data-table-bodycell-${index}`;
                     if (item.subtext) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div className="inbox-cell-text">{item.text}</div>
                           <div className="inbox-cell-subtext">{item.subtext}</div>
                         </TableCell>
                       );
                     } else if (item.badge) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <span
                             class={item.text >= 1 ? "inbox-cell-badge-primary sla--positive-value" : "inbox-cell-badge-primary sla--negative-value"}
                           >
@@ -116,7 +117,7 @@ class InboxData extends React.Component {
                       );
                     } else if (item.historyButton) {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div onClick={() => onHistoryClick(row[1])} style={{ cursor: "pointer" }}>
                             <i class="material-icons">history</i>
                           </div>
@@ -124,7 +125,7 @@ class InboxData extends React.Component {
                       );
                     } else {
                       return (
-                        <TableCell className="inbox-data-table-bodycell">
+                        <TableCell className={classNames}>
                           <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
                             {index === 1 ? <a>{item.text} </a> : item.text}
                           </div>

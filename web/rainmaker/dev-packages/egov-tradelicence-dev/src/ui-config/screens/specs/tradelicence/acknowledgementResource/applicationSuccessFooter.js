@@ -22,11 +22,19 @@ const generatePdfAndDownload = (
   tenant
 ) => {
   dispatch(
-    toggleSnackbar(true, "Preparing confirmation form, please wait...", "info")
+    toggleSnackbar(
+      true,
+      {
+        labelName: "Preparing confirmation form, please wait...",
+        labelKey: "ERR_PREPARING_CONFIRMATION_FORM"
+      },
+      "info"
+    )
   );
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
+    window.basename +
     `/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
     hasEstimateLoaded = false;

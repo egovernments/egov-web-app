@@ -7,12 +7,6 @@ import "./index.css";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 
-const buttonStyle = {
-  minWidth: "200px",
-  height: "48px",
-  marginRight: "45px"
-};
-
 class Footer extends React.Component {
   state = {
     open: false,
@@ -75,6 +69,10 @@ class Footer extends React.Component {
         return "APPROVE";
       case "PAY":
         return "Pay";
+      case "SENDBACK":
+        return "Send Back";
+      default:
+        return label;
     }
   };
 
@@ -95,9 +93,9 @@ class Footer extends React.Component {
     const { open, data, employeeList } = this.state;
     const { getButtonLabelName } = this;
     return (
-      <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
+      <div className="stepper-footer" style={{ textAlign: "right" }}>
         <div
-          className="col-xs-6"
+          className="stepper-footer-buttons-container"
           style={{ float: "right", padding: 0, width: "100%" }}
         >
           {contractData &&
@@ -107,7 +105,6 @@ class Footer extends React.Component {
                 <Button
                   color={color}
                   variant={variant}
-                  style={buttonStyle}
                   onClick={() => this.openActionDialog(item)}
                 >
                   <LabelContainer

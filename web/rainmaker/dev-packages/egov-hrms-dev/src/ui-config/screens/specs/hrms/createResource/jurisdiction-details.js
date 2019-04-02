@@ -268,7 +268,10 @@ const jurisdictionDetailsCard = {
       )
     }),
     items: [],
-    addItemLabel: "ADD JURISDICTION",
+    addItemLabel: {
+      labelName: "ADD JURISDICTION",
+      labelKey: "TL_ADD_JURISDICTION"
+    },
     headerName: "Jurisdiction",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",

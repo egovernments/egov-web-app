@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import Label from "../../utils/translationNode";
+import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
 const floatingLabelStyle = {
@@ -41,6 +43,7 @@ const DropDownUi = ({
   className,
   menuInnerDivStyle,
   errorText,
+  localePrefix,
   errorStyle = {},
   value,
   fullWidth = false,
@@ -67,9 +70,32 @@ const DropDownUi = ({
   beforeFieldChange,
   ...rest
 }) => {
+  const { moduleName, masterName } = localePrefix || "";
+
+  const getTransformedLocale = (label) => {
+    return label.toUpperCase().replace(/[.:-\s\/]/g, "_");
+  };
+
+  const getDropdownLabel = (value) => {
+    return typeof localePrefix === "string" ? (
+      <Label label={`${getTransformedLocale(localePrefix)}_${getTransformedLocale(value)}`} />
+    ) : typeof localePrefix === "object" ? (
+      <Label label={`${getTransformedLocale(moduleName)}_${getTransformedLocale(masterName)}_${getTransformedLocale(value)}`} />
+    ) : (
+      value
+    );
+  };
+
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem className="menu-class" key={index} value={option.value} primaryText={option.label} />;
+      return (
+        <MenuItem
+          className="menu-class"
+          key={index}
+          value={option.value}
+          primaryText={localePrefix ? getDropdownLabel(option.value) : option.label}
+        />
+      );
     });
   };
 

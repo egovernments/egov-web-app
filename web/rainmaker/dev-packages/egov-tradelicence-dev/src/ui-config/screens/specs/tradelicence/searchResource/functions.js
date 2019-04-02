@@ -40,7 +40,10 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch(
       toggleSnackbar(
         true,
-        "Please fill valid fields to start search",
+        {
+          labelName: "Please fill valid fields to start search",
+          labelKey: "ERR_FILL_VALID_FIELDS"
+        },
         "warning"
       )
     );
@@ -51,7 +54,10 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch(
       toggleSnackbar(
         true,
-        "Please fill at least one field to start search",
+        {
+          labelName: "Please fill at least one field to start search",
+          labelKey: "ERR_FILL_ONE_FIELDS"
+        },
         "warning"
       )
     );
@@ -61,9 +67,14 @@ export const searchApiCall = async (state, dispatch) => {
     searchScreenObject["toDate"] !== undefined &&
     searchScreenObject["toDate"].length !== 0
   ) {
-    dispatch(toggleSnackbar(true, "Please fill From Date", "warning"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: "Please fill From Date", labelKey: "ERR_FILL_FROM_DATE" },
+        "warning"
+      )
+    );
   } else {
-    // showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
       if (
         searchScreenObject.hasOwnProperty(key) &&
@@ -119,26 +130,13 @@ export const searchApiCall = async (state, dispatch) => {
           } (${response.Licenses.length})`
         )
       );
-      // showHideProgress(false, dispatch);
       showHideTable(true, dispatch);
     } catch (error) {
-      // showHideProgress(false, dispatch);
       dispatch(toggleSnackbar(true, error.message, "error"));
       console.log(error);
     }
   }
 };
-// const showHideProgress = (booleanHideOrShow, dispatch) => {
-//   dispatch(
-//     handleField(
-//       "search",
-//       "components.div.children.progressStatus",
-//       "visible",
-//       booleanHideOrShow
-//     )
-//   );
-// };
-
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
     handleField(

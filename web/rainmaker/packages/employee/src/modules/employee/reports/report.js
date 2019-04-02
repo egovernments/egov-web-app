@@ -18,12 +18,14 @@ class Report extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.reportName !== this.props.match.params.reportName) {
+      nextProps.resetForm();
       this.initData(nextProps.match.params.moduleName, nextProps.match.params.reportName);
     }
   }
 
   componentDidMount() {
     // localStorageSet("searchCriteria", "{}");
+    this.props.resetForm();
     this.initData(this.props.match.params.moduleName, this.props.match.params.reportName);
     this.hasReturnUrl();
   }
@@ -92,6 +94,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   showTable: (state) => {
     dispatch({ type: "SHOW_TABLE", state });
+  },
+  resetForm: () => {
+    dispatch({ type: "RESET_FORM" });
   },
   setReportResult: (reportResult) => {
     dispatch({ type: "SHOW_TABLE", reportResult });

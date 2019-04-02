@@ -5,20 +5,18 @@ import Icon from "egov-ui-kit/components/Icon";
 
 export const Taskboard = ({ data }) => {
   return (
-    <div>
+    <div className="inbox-taskboard">
       {data.map((item, i) => (
-        <div className="col-sm-4">
-          <Card
-            className="inbox-card inbox-worklist-card"
-            key={i}
-            textChildren={
-              <div>
-                <div className="head">{item.head}</div>
-                <div className="body">{item.body}</div>
-              </div>
-            }
-          />
-        </div>
+        <Card
+          className="inbox-card inbox-worklist-card"
+          key={i}
+          textChildren={
+            <div>
+              <div className="head">{item.head}</div>
+              <Label labelClassName="inbox-taskboard-subtext" label={item.body} />
+            </div>
+          }
+        />
       ))}
     </div>
   );
@@ -59,7 +57,12 @@ export const Boxboard = ({ data }) => {
                     }}
                     className="body"
                   >
-                    <Label label={item.displayName} fontSize="16px" color="rgba(0, 0, 0, 0.87)" />
+                    <Label
+                      label={`ACTION_TEST_${item.displayName.toUpperCase().replace(/[.:-\s\/]/g, "_")}`}
+                      defaultLabel={item.displayName}
+                      color="rgba(0, 0, 0, 0.87)"
+                      className="inbox-card-top-label"
+                    />
                   </div>
                 </div>
               }

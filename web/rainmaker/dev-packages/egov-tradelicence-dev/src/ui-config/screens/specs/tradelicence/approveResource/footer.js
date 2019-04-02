@@ -90,7 +90,16 @@ const onNextButtonClick = async (state, dispatch) => {
         );
     }
   } else {
-    dispatch(toggleSnackbar(true, "Please accept the terms !", "error"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please accept the terms !",
+          labelKey: "ERR_ACCEPT_THE_TERMS"
+        },
+        "error"
+      )
+    );
   }
 };
 

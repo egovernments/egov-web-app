@@ -64,6 +64,7 @@ const formConfig = {
       id: "ownerRelationship",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].relationship",
       type: "singleValueList",
+      localePrefix: "PT_RELATION",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
       dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
@@ -72,6 +73,7 @@ const formConfig = {
     ownerCategory: {
       id: "ownerCategory",
       required: true,
+      localePrefix: { moduleName: "PropertyTax", masterName: "OwnerType" },
       jsonPath: "Properties[0].propertyDetails[0].owners[0].ownerType",
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_SPECIAL_CATEGORY",
@@ -166,6 +168,7 @@ const formConfig = {
       id: "ownerCategoryIdType",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentType",
       required: true,
+      localePrefix: { moduleName: "PropertyTax", masterName: "OwnerTypeDocument" },
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
       fullWidth: true,

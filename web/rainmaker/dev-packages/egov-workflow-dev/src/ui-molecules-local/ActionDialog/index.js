@@ -77,6 +77,10 @@ class ActionDialog extends React.Component {
         return "APPROVE";
       case "PAY":
         return "Pay";
+      case "SENDBACK":
+        return "Send Back";
+      default:
+        return label;
     }
   };
 
@@ -192,7 +196,10 @@ class ActionDialog extends React.Component {
                         lineHeight: "20px"
                       }}
                     >
-                      <LabelContainer labelName="Only .jpg and .pdf files. 5MB max file size." />
+                      <LabelContainer
+                        labelName="Only .jpg and .pdf files. 5MB max file size."
+                        labelKey="TL_APPROVAL_UPLOAD_SUBHEAD"
+                      />
                     </div>
                     <UploadMultipleFiles
                       maxFiles={4}
@@ -200,7 +207,7 @@ class ActionDialog extends React.Component {
                         accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
-                      jsonPath="Licenses[0].wfDocumnets"
+                      jsonPath="Licenses[0].wfDocuments"
                       maxFileSize={5000}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>
@@ -236,12 +243,4 @@ class ActionDialog extends React.Component {
     );
   }
 }
-
-// const mapDispacthToProps = dispatch => {
-//   return {
-//     toggleSnackbar: (open, message, variant) =>
-//       dispatch(toggleSnackbar(open, message, variant))
-//   };
-// };
-
 export default withStyles(styles)(ActionDialog);

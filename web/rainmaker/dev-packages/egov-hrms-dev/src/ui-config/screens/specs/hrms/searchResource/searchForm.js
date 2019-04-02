@@ -109,8 +109,12 @@ export const searchForm = getCommonCard({
       sourceJsonPath: "searchScreenMdmsData.common-masters.Department",
       props: {
         optionLabel: "name",
-        optionValue: "code",
-        hasLocalization: false
+        optionValue: "code"
+        // hasLocalization: false
+      },
+      localePrefix: {
+        moduleName: "common-masters",
+        masterName: "Department"
       }
     }),
     designation: getSelectField({
@@ -128,8 +132,12 @@ export const searchForm = getCommonCard({
       sourceJsonPath: "searchScreenMdmsData.common-masters.Designation",
       props: {
         optionValue: "code",
-        optionLabel: "name",
-        hasLocalization: false
+        optionLabel: "name"
+        // hasLocalization: false
+      },
+      localePrefix: {
+        moduleName: "common-masters",
+        masterName: "Designation"
       }
     })
   }),
@@ -140,7 +148,7 @@ export const searchForm = getCommonCard({
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 6,
+          sm: 6
           // align: "center"
         },
         props: {
@@ -170,7 +178,7 @@ export const searchForm = getCommonCard({
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 6,
+          sm: 6
           // align: "center"
         },
         props: {

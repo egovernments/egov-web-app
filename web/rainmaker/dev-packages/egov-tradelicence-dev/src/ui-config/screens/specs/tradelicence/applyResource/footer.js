@@ -3,31 +3,28 @@ import {
   dispatchMultipleFieldChangeAction
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { applyTradeLicense } from "../../../../../ui-utils/commons";
-import get from "lodash/get";
-import some from "lodash/some";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
   setMultiOwnerForApply,
   setValidToFromVisibilityForApply,
   getDocList,
-  setOwnerShipDropDownFieldChange
-} from "../../utils";
-import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
-import {
+  setOwnerShipDropDownFieldChange,
   createEstimateData,
   validateFields,
   ifUserRoleExists
 } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import {
   toggleSnackbar,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 import generateReceipt from "../../utils/receiptPdf";
-
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import get from "lodash/get";
+import some from "lodash/some";
 
 const moveToSuccess = (LicenseData, dispatch) => {
   const applicationNo = get(LicenseData, "applicationNumber");
@@ -41,7 +38,7 @@ const moveToSuccess = (LicenseData, dispatch) => {
   );
 };
 
-const generatePdfFromDiv = (action, applicationNumber) => {
+export const generatePdfFromDiv = (action, applicationNumber) => {
   let target = document.querySelector("#custom-atoms-div");
   html2canvas(target, {
     onclone: function(clonedDoc) {
@@ -217,7 +214,16 @@ export const callBackForNext = async (state, dispatch) => {
         "Licenses[0].tradeLicenseDetail.owners"
       ).length <= 1
     ) {
-      dispatch(toggleSnackbar(true, "Please add multiple owners !", "error"));
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Please add multiple owners !",
+            labelKey: "ERR_ADD_MULTIPLE_OWNERS"
+          },
+          "error"
+        )
+      );
       return false; // to show the above message
     }
     if (isFormValid && isOwnerShipValid) {
@@ -267,12 +273,13 @@ export const callBackForNext = async (state, dispatch) => {
         isFormValid = false;
       }
     }
+
     if (isFormValid) {
       const reviewDocData =
         uploadedDocData &&
         uploadedDocData.map(item => {
           return {
-            title: item.documentType,
+            title: `TL_${item.documentType}`,
             link: item.fileUrl && item.fileUrl.split(",")[0],
             linkText: "View",
             name: item.fileName
@@ -302,19 +309,31 @@ export const callBackForNext = async (state, dispatch) => {
     if (isFormValid) {
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {
-      let errorMessage =
-        "Please fill all mandatory fields and upload the documents !";
+      let errorMessage = {
+        labelName:
+          "Please fill all mandatory fields and upload the documents !",
+        labelKey: "ERR_FILL_MANDATORY_FIELDS_UPLOAD_DOCS"
+      };
       switch (activeStep) {
         case 0:
-          errorMessage =
-            "Please fill all mandatory fields for Trade Details, then do next !";
+          errorMessage = {
+            labelName:
+              "Please fill all mandatory fields for Trade Details, then do next !",
+            labelKey: "ERR_FILL_TRADE_MANDATORY_FIELDS"
+          };
           break;
         case 1:
-          errorMessage =
-            "Please fill all mandatory fields for Owner Details, then do next !";
+          errorMessage = {
+            labelName:
+              "Please fill all mandatory fields for Owner Details, then do next !",
+            labelKey: "ERR_FILL_OWNERS_MANDATORY_FIELDS"
+          };
           break;
         case 2:
-          errorMessage = "Please upload all the required documents !";
+          errorMessage = {
+            labelName: "Please upload all the required documents !",
+            labelKey: "ERR_UPLOAD_REQUIRED_DOCUMENTS"
+          };
           break;
       }
       dispatch(toggleSnackbar(true, errorMessage, "warning"));
@@ -566,49 +585,49 @@ export const footerReview = (
   let downloadMenu = [];
   let printMenu = [];
   let tlCertificateDownloadObject = {
-    label: "TL Certificate",
+    label: { labelName: "TL Certificate", labelKey: "TL_CERTIFICATE" },
     link: () => {
       generateReceipt(state, dispatch, "certificate_download");
     },
     leftIcon: "book"
   };
   let tlCertificatePrintObject = {
-    label: "TL Certificate",
+    label: { labelName: "TL Certificate", labelKey: "TL_CERTIFICATE" },
     link: () => {
       generateReceipt(state, dispatch, "certificate_print");
     },
     leftIcon: "book"
   };
   let receiptDownloadObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "TL_RECEIPT" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_download");
     },
     leftIcon: "receipt"
   };
   let receiptPrintObject = {
-    label: "Receipt",
+    label: { labelName: "Receipt", labelKey: "TL_RECEIPT" },
     link: () => {
       generateReceipt(state, dispatch, "receipt_print");
     },
     leftIcon: "receipt"
   };
   let applicationDownloadObject = {
-    label: "Application",
+    label: { labelName: "Application", labelKey: "TL_APPLICATION" },
     link: () => {
       generatePdfFromDiv("download", applicationNumber);
     },
     leftIcon: "assignment"
   };
   let applicationPrintObject = {
-    label: "Application",
+    label: { labelName: "Application", labelKey: "TL_APPLICATION" },
     link: () => {
       generatePdfFromDiv("print", applicationNumber);
     },
     leftIcon: "assignment"
   };
   switch (status) {
-    case "approved":
+    case "APPROVED":
       downloadMenu = [
         tlCertificateDownloadObject,
         receiptDownloadObject,
@@ -620,7 +639,8 @@ export const footerReview = (
         applicationPrintObject
       ];
       break;
-    case "pending_payment":
+    case "APPLIED":
+    case "PENDINGPAYMENT":
       downloadMenu = [applicationDownloadObject];
       printMenu = [applicationPrintObject];
       break;
@@ -628,13 +648,13 @@ export const footerReview = (
       downloadMenu = [receiptDownloadObject, applicationDownloadObject];
       printMenu = [receiptPrintObject, applicationPrintObject];
       break;
-    case "cancelled":
-      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
-      printMenu = [receiptPrintObject, applicationPrintObject];
+    case "CANCELLED":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
       break;
-    case "rejected":
-      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
-      printMenu = [receiptPrintObject, applicationPrintObject];
+    case "REJECTED":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
       break;
     default:
       break;

@@ -11,7 +11,11 @@ import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
-const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPay", isCoreConfiguration: true })(SingleButtonForm);
+const YearDialogueHOC = formHoc({
+  formKey: "financialYear",
+  path: "PropertyTaxPay",
+  isCoreConfiguration: true
+})(SingleButtonForm);
 
 class YearDialog extends Component {
   componentDidMount = () => {
@@ -25,11 +29,12 @@ class YearDialog extends Component {
             masterDetails: [
               {
                 name: "FinancialYear",
-              },
-            ],
-          },
-        ],
-      },
+                filter: "[?(@.module == 'PT')]"
+              }
+            ]
+          }
+        ]
+      }
     };
     toggleSpinner();
     fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
@@ -50,39 +55,51 @@ class YearDialog extends Component {
         children={[
           <div key={1}>
             <div className="dialogue-question">
-              <Label label="PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS" fontSize="16px" color="#484848" />
+              <Label
+                label="PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS"
+                fontSize="16px"
+                color="#484848"
+              />
             </div>
             <div className="year-range-botton-cont">
               {Object.values(getYearList).map((item, index) => (
-                <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetForm} urlToAppend={urlToAppend} />
+                <YearDialogueHOC
+                  key={index}
+                  label={item}
+                  history={history}
+                  resetFormWizard={this.resetForm}
+                  urlToAppend={urlToAppend}
+                />
               ))}
             </div>
-          </div>,
+          </div>
         ]}
         bodyStyle={{ backgroundColor: "#ffffff" }}
         isClose={false}
         onRequestClose={closeDialogue}
-        contentClassName="year-dialog-content"	
+        contentClassName="year-dialog-content"
         // contentStyle={{ width: "20%" }}
       />
     ) : null;
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { common, form } = state;
   const { generalMDMSDataById } = common;
-  const FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
+  const FinancialYear =
+    generalMDMSDataById && generalMDMSDataById.FinancialYear;
   const getYearList = FinancialYear && Object.keys(FinancialYear);
   return { getYearList, form };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
-    removeForm: (formkey) => dispatch(removeForm(formkey)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) =>
+      dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    removeForm: formkey => dispatch(removeForm(formkey)),
     toggleSpinner: () => dispatch(toggleSpinner()),
-    prepareFormData: (path, value) => dispatch(prepareFormData(path, value)),
+    prepareFormData: (path, value) => dispatch(prepareFormData(path, value))
   };
 };
 

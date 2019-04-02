@@ -32,7 +32,8 @@ import {
   updatePFOforSearchResults,
   getBoundaryData
 } from "../../../../ui-utils/commons";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 
 export const stepsData = [
   { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
@@ -44,10 +45,6 @@ export const stepper = getStepperObject(
   { props: { activeStep: 0 } },
   stepsData
 );
-// export const queryValue = getQueryArg(
-//   window.location.href,
-//   "applicationNumber"
-// );
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -311,6 +308,7 @@ const screenConfig = {
         "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
         "PERMANENT"
       );
+      dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     });
 
     return action;

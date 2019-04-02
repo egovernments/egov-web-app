@@ -206,7 +206,14 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     );
     if (!isDeactivateEmployeeDetailsValid) {
       dispatch(
-        toggleSnackbar(true, "Please select the mandatory fields!", "warning")
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Please fill mandatory Fields!",
+            labelKey: "ERR_FILL_MANDATORY_FIELDS"
+          },
+          "warning"
+        )
       );
       return;
     }

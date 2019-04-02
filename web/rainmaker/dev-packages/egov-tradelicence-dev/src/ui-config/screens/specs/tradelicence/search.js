@@ -10,11 +10,11 @@ import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 // import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import find from "lodash/find";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
-//const hasApproval = getQueryArg(window.location.href, "hasApproval");
 let enableButton = true;
-//enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const pageResetAndChange = (state, dispatch) => {
@@ -30,6 +30,25 @@ const header = getCommonHeader({
 const tradeLicenseSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
+  beforeInitScreen: (action, state, dispatch) => {
+    const businessServiceData = JSON.parse(
+      localStorageGet("businessServiceData")
+    );
+    const data = find(businessServiceData, { businessService: "NewTL" });
+    const { states } = data;
+    const status = states.map((item, index) => {
+      return {
+        code: item.state
+      };
+    });
+    dispatch(
+      prepareFinalObject(
+        "applyScreenMdmsData.searchScreen.status",
+        status.filter(item => item.code != null)
+      )
+    );
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",
@@ -103,7 +122,6 @@ const tradeLicenseSearchAndResult = {
         pendingApprovals,
         tradeLicenseApplication,
         breakAfterSearch: getBreak(),
-        // progressStatus,
         searchResults
       }
     }

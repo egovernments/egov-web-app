@@ -1,10 +1,13 @@
 import React from "react";
 import AutoComplete from "material-ui/AutoComplete";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import filter from "lodash/filter";
 import isUndefined from "lodash/isUndefined";
 import sortBy from "lodash/sortBy";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+import Label from "../../utils/translationNode";
+import { getTranslatedLabel } from "../../utils/commons";
 import { relative } from "path";
 
 const hintBaseStyle = {
@@ -53,6 +56,11 @@ class AutoSuggestDropdown extends React.Component {
     this.setState({ searchText });
   };
 
+  getLocalizedLabel = (label) => {
+    const { localizationLabels } = this.props;
+    return getTranslatedLabel(label, localizationLabels);
+  };
+
   render() {
     let {
       onChange,
@@ -63,6 +71,7 @@ class AutoSuggestDropdown extends React.Component {
       value,
       jsonPath,
       errorMessage,
+      labelsFromLocalisation,
       boundary,
       dropDownData,
       toolTip,
@@ -70,9 +79,23 @@ class AutoSuggestDropdown extends React.Component {
       toolTipMessage,
       ...restProps
     } = this.props;
-    const { filterAutoComplete, getNameById, onChangeText } = this;
+    const { filterAutoComplete, getNameById, onChangeText, getLocalizedLabel } = this;
     const { searchText } = this.state;
-    const items = sortBy(dataSource, ["label"]);
+    let list = [];
+    if (labelsFromLocalisation) {
+      list =
+        dataSource &&
+        dataSource.reduce((result, item) => {
+          result.push({
+            ...item,
+            label: getLocalizedLabel(item.label),
+          });
+          return result;
+        }, []);
+    } else {
+      list = dataSource;
+    }
+    const items = sortBy(list, ["label"]);
     return (
       <div style={{ display: "flex", position: "relative", width: "100%" }}>
         <AutoComplete
@@ -127,7 +150,12 @@ AutoSuggestDropdown.propTypes = {
   className: PropTypes.string,
 };
 
-export default AutoSuggestDropdown;
+const mapStateToProps = (state, ownProps) => {
+  const { localizationLabels } = state.app;
+  return { localizationLabels };
+};
 
-// value={value}
-// searchKey={value}
+export default connect(
+  mapStateToProps,
+  null
+)(AutoSuggestDropdown);

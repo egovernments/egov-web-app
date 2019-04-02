@@ -94,7 +94,8 @@ const getAcknowledgementCard = (
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Payment has been collected successfully!",
+              labelName:
+                "Payment is collected successfully, Now you can dowload and issue Trade License Certificate to citizen",
               labelKey: "TL_CONFIRMATION_MESSAGE_MAIN"
             },
             body: {
@@ -110,7 +111,12 @@ const getAcknowledgementCard = (
           })
         }
       },
-      paymentSuccessFooter: paymentSuccessFooter()
+      paymentSuccessFooter: paymentSuccessFooter(
+        state,
+        dispatch,
+        "APPROVED",
+        applicationNumber
+      )
     };
   } else if (purpose === "approve" && status === "success") {
     loadReceiptGenerationData(applicationNumber, tenant);
@@ -137,7 +143,7 @@ const getAcknowledgementCard = (
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Trade License Approved Successfully",
+              labelName: "Application is Approved Successfully",
               labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_HEAD"
             },
             body: {
@@ -145,6 +151,49 @@ const getAcknowledgementCard = (
                 "A notification regarding Trade License Approval has been sent to trade owner at registered Mobile No.",
               labelKey: "TL_APPROVAL_CHECKLIST_MESSAGE_SUB"
             },
+            tailText: {
+              labelName: "Trade License No.",
+              labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
+            },
+            number: secondNumber
+          })
+        }
+      },
+      approvalSuccessFooter
+    };
+  } else if (purpose === "sendback" && status === "success") {
+    loadReceiptGenerationData(applicationNumber, tenant);
+    return {
+      header: getCommonContainer({
+        header: getCommonHeader({
+          labelName: `Trade License Application (${getCurrentFinancialYear()})`
+          // labelKey: "TL_TRADE_APPLICATION"
+        }),
+        applicationNumber: {
+          uiFramework: "custom-atoms-local",
+          moduleName: "egov-tradelicence",
+          componentPath: "ApplicationNoContainer",
+          props: {
+            number: applicationNumber
+          }
+        }
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Application is sent back Successfully",
+              labelKey: "TL_SENDBACK_CHECKLIST_MESSAGE_HEAD"
+            },
+            // body: {
+            //   labelName:
+            //     "A notification regarding above application status has been sent to trade owner at registered Mobile No.",
+            //   labelKey: "TL_SENDBACK_CHECKLIST_MESSAGE_SUB"
+            // },
             tailText: {
               labelName: "Trade License No.",
               labelKey: "TL_HOME_SEARCH_RESULTS_TL_NO_LABEL"
@@ -257,10 +306,14 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: { labelName: "Payment has failed!" },
+            header: {
+              labelName: "Payment has failed!",
+              labelKey: "TL_PAYMENT_FAILED"
+            },
             body: {
               labelName:
-                "A notification regarding payment failure has been sent to the trade owner and applicant."
+                "A notification regarding payment failure has been sent to the trade owner and applicant.",
+              labelKey: "TL_PAYMENT_NOTIFICATION"
             }
           })
         }
@@ -314,7 +367,8 @@ const getAcknowledgementCard = (
               labelKey: "TL_FORWARD_SUCCESS_MESSAGE_MAIN"
             },
             body: {
-              labelName: "Application has been marked successfully",
+              labelName:
+                "A notification regarding above application status has been sent to trade owner at registered Mobile No.",
               labelKey: "TL_APPLICATION_FORWARD_SUCCESS"
             },
             tailText: {

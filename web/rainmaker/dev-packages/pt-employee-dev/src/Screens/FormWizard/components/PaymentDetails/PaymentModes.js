@@ -4,7 +4,10 @@ import get from "lodash/get";
 import { connect } from "react-redux";
 import { Card, Icon } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
-import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import {
+  setFieldProperty,
+  handleFieldChange
+} from "egov-ui-kit/redux/form/actions";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 
 class PaymentModes extends Component {
@@ -26,7 +29,7 @@ class PaymentModes extends Component {
     );
   };
 
-  getListItems = (items) => {
+  getListItems = items => {
     const { FormDetails } = this;
     items.map((item, index) => {
       const TransactionForm = item.form;
@@ -38,24 +41,37 @@ class PaymentModes extends Component {
           {
             secondaryText: <FormDetails item={item} />,
             disabled: true,
-            listContainerStyle: { padding: 0 },
-          },
-        ],
+            listContainerStyle: { padding: 0 }
+          }
+        ]
       };
     });
   };
   onIconClick = () => {
-    const { ifscCode, setFieldProperty, formKey, toggleSnackbarAndSetText, handleFieldChange } = this.props;
+    const {
+      ifscCode,
+      setFieldProperty,
+      formKey,
+      toggleSnackbarAndSetText,
+      handleFieldChange
+    } = this.props;
     if (ifscCode) {
       fetch(`https://ifsc.razorpay.com/${ifscCode}`)
-        .then((response) => {
+        .then(response => {
           return response.json();
         })
-        .then((payload) => {
+        .then(payload => {
           if (payload === "Not Found") {
             handleFieldChange(formKey, "BankName", "");
             handleFieldChange(formKey, "BankBranch", "");
-            toggleSnackbarAndSetText(true, `Bankdetails not found for this IFSC`, true);
+            toggleSnackbarAndSetText(
+              true,
+              {
+                labelName: "Bank details not found for this IFSC",
+                labelKey: "ERR_BANK_DETAILS_NOT_FOUND_FOR_IFSC"
+              },
+              true
+            );
           } else {
             setFieldProperty(formKey, "BankName", "hideField", false);
             setFieldProperty(formKey, "BankBranch", "hideField", false);
@@ -65,15 +81,24 @@ class PaymentModes extends Component {
             handleFieldChange(formKey, "BankBranch", bankBranch);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
   };
   getPaymentDetails = () => {
     const { FormDetails } = this;
-    const { currentPaymentMode, paymentModeDetails, removeForm, form } = this.props;
-    const paymentData = paymentModeDetails.find((paymentMode) => paymentMode.primaryText.toLowerCase() === currentPaymentMode.toLowerCase());
+    const {
+      currentPaymentMode,
+      paymentModeDetails,
+      removeForm,
+      form
+    } = this.props;
+    const paymentData = paymentModeDetails.find(
+      paymentMode =>
+        paymentMode.primaryText.toLowerCase() ===
+        currentPaymentMode.toLowerCase()
+    );
     return FormDetails({ item: paymentData });
   };
   render() {
@@ -82,9 +107,18 @@ class PaymentModes extends Component {
       <Card
         textChildren={
           <div className="payment-modes">
-            <div className="payment-mode-header-cont rainmaker-displayInline" style={{ padding: "0 0 0 16px", alignItems: "center" }}>
+            <div
+              className="payment-mode-header-cont rainmaker-displayInline"
+              style={{ padding: "0 0 0 16px", alignItems: "center" }}
+            >
               <Icon name="credit-card" action="action" />
-              <Label label="Choose mode of Payment" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 8 }} />
+              <Label
+                label="Choose mode of Payment"
+                fontSize={16}
+                bold={true}
+                dark={true}
+                containerStyle={{ marginLeft: 8 }}
+              />
             </div>
             <PaymentModeSelector />
             {this.getPaymentDetails()}
@@ -95,18 +129,33 @@ class PaymentModes extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const currentPaymentMode = (state && state.form && state.form.paymentModes && state.form.paymentModes.fields.mode.value) || "cash";
-  const ifscCode = get(state, `form${currentPaymentMode === "Cheque" ? "[chequeInfo]" : "[demandInfo]"}.fields.ifscCode.value`);
+const mapStateToProps = state => {
+  const currentPaymentMode =
+    (state &&
+      state.form &&
+      state.form.paymentModes &&
+      state.form.paymentModes.fields.mode.value) ||
+    "cash";
+  const ifscCode = get(
+    state,
+    `form${
+      currentPaymentMode === "Cheque" ? "[chequeInfo]" : "[demandInfo]"
+    }.fields.ifscCode.value`
+  );
   const formKey = currentPaymentMode === "Cheque" ? "chequeInfo" : "demandInfo";
   return { currentPaymentMode, ifscCode, formKey };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    removeForm: (formKey) => dispatch(removeForm(formKey)),
-    setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) => dispatch(setFieldProperty(formKey, fieldKey, propertyName, propertyValue)),
-    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    removeForm: formKey => dispatch(removeForm(formKey)),
+    setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) =>
+      dispatch(
+        setFieldProperty(formKey, fieldKey, propertyName, propertyValue)
+      ),
+    toggleSnackbarAndSetText: (open, message, error) =>
+      dispatch(toggleSnackbarAndSetText(open, message, error)),
+    handleFieldChange: (formKey, fieldKey, value) =>
+      dispatch(handleFieldChange(formKey, fieldKey, value))
   };
 };
 

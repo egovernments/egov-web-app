@@ -7,6 +7,7 @@ import {
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import orderBy from "lodash/orderBy";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -224,7 +225,7 @@ export const addWflowFileUrl = async (ProcessInstances, prepareFinalObject) => {
     if (item.documents && item.documents.length > 0) {
       item.documents.forEach(i => {
         i.link = fileUrlPayload[i.fileStoreId].split(",")[0];
-        i.title = i.documentType;
+        i.title = `TL_${i.documentType}`;
         i.name = decodeURIComponent(
           fileUrlPayload[i.fileStoreId]
             .split(",")[0]
@@ -251,15 +252,35 @@ export const setBusinessServiceDataToLocalStorage = async (
       "_search",
       queryObject
     );
-    localStorageSet(
-      "businessServiceData",
-      JSON.stringify(_.get(payload, "BusinessServices"))
-    );
+    if (
+      payload &&
+      payload.BusinessServices &&
+      payload.BusinessServices.length > 0
+    ) {
+      localStorageSet(
+        "businessServiceData",
+        JSON.stringify(_.get(payload, "BusinessServices"))
+      );
+    } else {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Business Service returned empty object",
+            labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE"
+          },
+          "error"
+        )
+      );
+    }
   } catch (e) {
     dispatch(
       toggleSnackbar(
         true,
-        "Not authorized to access Business Service!",
+        {
+          labelName: "Not authorized to access Business Service!",
+          labelKey: "ERR_NOT_AUTHORISED_BUSINESS_SERVICE"
+        },
         "error"
       )
     );
@@ -321,4 +342,37 @@ export const handleFileUpload = (event, handleDocument, props) => {
       }
     });
   }
+};
+
+//localizations
+export const getTransformedLocale = label => {
+  return label.toUpperCase().replace(/[.:-\s\/]/g, "_");
+};
+
+export const appendModulePrefix = (value, localePrefix) => {
+  const { moduleName, masterName } = localePrefix;
+
+  const transformedValue = `${getTransformedLocale(
+    moduleName
+  )}_${getTransformedLocale(masterName)}_${getTransformedLocale(value)}`;
+  return transformedValue;
+};
+
+export const orderWfProcessInstances = processInstances => {
+  processInstances = orderBy(
+    processInstances,
+    "auditDetails.lastModifiedTime",
+    "asc"
+  );
+  let initiatedFound = false;
+  const filteredInstances = processInstances.reverse().reduce((acc, item) => {
+    if (item.action == "INITIATE" && !initiatedFound) {
+      initiatedFound = true;
+      acc.push(item);
+    } else if (item.action !== "INITIATE") {
+      acc.push(item);
+    }
+    return acc;
+  }, []);
+  return filteredInstances.reverse();
 };

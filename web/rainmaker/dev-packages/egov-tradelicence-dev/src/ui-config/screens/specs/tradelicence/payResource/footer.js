@@ -114,7 +114,7 @@ const getSelectedTabIndex = paymentType => {
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
-  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
+  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath), "daystart");
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
@@ -181,20 +181,6 @@ const callBackForPay = async (state, dispatch) => {
     "Bill[0].billDetails[0].manualReceiptDate",
     "instrument.transactionDateInput"
   ]);
-
-  // if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
-  //   convertDateFieldToEpoch(
-  //     finalReceiptData,
-  //     "Bill[0].billDetails[0].manualReceiptDate"
-  //   );
-  // }
-
-  // if (get(finalReceiptData, "instrument.transactionDateInput")) {
-  //   convertDateFieldToEpoch(
-  //     finalReceiptData,
-  //     "Bill[0].billDetails[0].manualReceiptDate"
-  //   );
-  // }
   if (get(finalReceiptData, "instrument.transactionDateInput")) {
     set(
       finalReceiptData,
@@ -218,7 +204,14 @@ const callBackForPay = async (state, dispatch) => {
       get(finalReceiptData, "instrument.transactionNumberConfirm")
     ) {
       dispatch(
-        toggleSnackbar(true, "Transaction numbers don't match !", "error")
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Transaction numbers don't match !",
+            labelKey: "ERR_TRASACTION_NUMBERS_DONT_MATCH"
+          },
+          "error"
+        )
       );
       return;
     }
@@ -231,8 +224,6 @@ const callBackForPay = async (state, dispatch) => {
   };
 
   ReceiptBody.Receipt.push(finalReceiptData);
-
-  // console.log(ReceiptBody);
 
   //---------------- Create Receipt ------------------//
   if (isFormValid) {
@@ -253,12 +244,20 @@ const callBackForPay = async (state, dispatch) => {
       );
       moveToSuccess(href, dispatch, receiptNumber);
     } catch (e) {
-      dispatch(toggleSnackbar(true, e.message, "error"));
+      dispatch(toggleSnackbar(true, { labelName: e.message }, "error"));
       console.log(e);
     }
   } else {
     dispatch(
-      toggleSnackbar(true, "Please fill all the mandatory fields", "warning")
+      toggleSnackbar(
+        true,
+        {
+          labelName:
+            "Please fill all mandatory fields and upload the documents !",
+          labelKey: "ERR_FILL_MANDATORY_FIELDS"
+        },
+        "warning"
+      )
     );
   }
 };

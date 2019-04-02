@@ -10,6 +10,7 @@ const formConfig = {
     floorName: {
       id: "floorName",
       type: "singleValueList",
+      localePrefix: { moduleName: "PropertyTax", masterName: "Floor" },
       floatingLabelText: "PT_FORM2_SELECT_FLOOR",
       hintText: "PT_FORM2_SELECT_FLOOR",
       numcols: 12,

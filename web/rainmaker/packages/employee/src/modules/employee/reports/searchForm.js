@@ -7,6 +7,7 @@ import { brown500, red500, white, orange800 } from "material-ui/styles/colors";
 import RaisedButton from "material-ui/RaisedButton";
 import { commonApiPost } from "egov-ui-kit/utils/api";
 import ShowField from "./showField";
+import get from "lodash/get";
 //import { translate } from "../../common/common";
 import { translate } from "./commons/common";
 import Label from "egov-ui-kit/utils/translationNode";
@@ -21,6 +22,7 @@ class ShowForm extends Component {
     searchBtnText: "APPLY",
     filterApplied: false,
     getResults: false,
+    dateError:""
   };
 
   toDateObj = (dateStr) => {
@@ -29,13 +31,31 @@ class ShowForm extends Component {
   };
 
   resetFields = () => {
-    const { resetForm, searchForm } = this.props;
+    const { metaData, resetForm, searchForm, setSearchParams } = this.props;
     if (!searchForm) {
       //showTable(false); // Hard and elegant
       console.log("Search Form Empty");
       return;
     } else {
-      this.setState({ getResults: true }, () => {
+      if (get(metaData, "reportDetails.searchParams")) {
+        let searchParams = metaData.reportDetails.searchParams;
+        var i;
+        let fromDateIndex, toDateIndex;
+        for (i = 0; i < searchParams.length; i++) {
+          if (searchParams[i].name === "fromDate") {
+            fromDateIndex = i;
+          } else if (searchParams[i].name === "toDate") {
+            toDateIndex = i;
+          }
+        }
+        if (fromDateIndex !== undefined) searchParams[fromDateIndex].maxValue = new Date();
+        if (toDateIndex !== undefined) {
+          searchParams[toDateIndex].minValue = undefined;
+          searchParams[toDateIndex].maxValue = undefined;
+        }
+        setSearchParams(searchParams);
+      }
+      this.setState({ getResults: true, dateError: "" }, () => {
         resetForm();
       });
     }
@@ -91,11 +111,32 @@ class ShowForm extends Component {
       //alert("Something went wrong while loading depedent");
     }
   };
-
+  handleDateSelect = (metaData, e, property) => {
+    let { setSearchParams } = this.props;
+    if (get(metaData, "reportDetails.searchParams")) {
+      let searchParams = metaData.reportDetails.searchParams;
+      var i;
+      let fromDateIndex, toDateIndex;
+      for (i = 0; i < searchParams.length; i++) {
+        if (searchParams[i].name === "fromDate") {
+          fromDateIndex = i;
+        } else if (searchParams[i].name === "toDate") {
+          toDateIndex = i;
+        }
+      }
+      if ((property === "fromDate")&&(toDateIndex !== undefined)) {
+        searchParams[toDateIndex].minValue = new Date(e.target.value);
+      } else if ((property === "toDate")&&(fromDateIndex !== undefined)) {
+        searchParams[fromDateIndex].maxValue = new Date(e.target.value);
+      }
+      setSearchParams(searchParams);
+    }
+  };
   handleChange = (e, property, isRequired, pattern) => {
     const { metaData, setMetaData, handleChange, searchForm } = this.props;
     const selectedValue = e.target.value;
     if (property === "fromDate" || property === "toDate") {
+      this.handleDateSelect(metaData, e, property);
       this.checkDate(selectedValue, property, isRequired, pattern);
     } else {
       handleChange(e, property, isRequired, pattern);
@@ -148,18 +189,27 @@ class ShowForm extends Component {
     if (name == "fromDate") {
       let startDate = value;
       if (this.props.searchForm) {
-        let endDate = this.props.searchForm.toDate;
-        this.props.handleChange(e, name, required, pattern);
-        this.validateDate(startDate, endDate, required, "fromDate"); //3rd param to denote whether field fails
+        try {
+          let endDate = this.props.searchForm.toDate;
+          this.props.handleChange(e, name, required, pattern);
+          this.validateDate(startDate, endDate, required, "fromDate"); //3rd param to denote whether field fails
+        } catch (e) {
+          console.log(e);
+        }
+
       } else {
         this.props.handleChange(e, name, required, pattern);
       }
     } else {
       let endDate = value;
       if (this.props.searchForm) {
-        let startDate = this.props.searchForm.fromDate;
-        this.props.handleChange(e, name, required, pattern);
-        this.validateDate(startDate, endDate, required, "toDate"); //3rd param to denote whether field fails
+        try {
+          let startDate = this.props.searchForm.fromDate;
+          this.props.handleChange(e, name, required, pattern);
+          this.validateDate(startDate, endDate, required, "toDate"); //3rd param to denote whether field fails
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
   };
@@ -182,7 +232,7 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-          dateError: field === "toDate" ? <Label label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label label="REPORT_SEARCHFORM_DATE_LESSER" />,
+                  dateError: field === "toDate" ? <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_LESSER" />,
         });
       }
     }
@@ -197,6 +247,8 @@ class ShowForm extends Component {
         if (item.type === "epoch" && item.minValue && item.maxValue && typeof item.minValue !== "object" && typeof item.maxValue !== "object") {
           item.minValue = this.toDateObj(item.minValue);
           item.maxValue = this.toDateObj(item.maxValue);
+        } else if (item.type === "epoch" && item.name == "fromDate" && item.maxValue === null) {
+          item.maxValue = new Date();
         }
         if (item.type === "singlevaluelist") {
           item["searchText"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
@@ -219,14 +271,15 @@ class ShowForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
+    let {dateError}=this.state;
 
     if (!_.isEqual(this.props.searchForm, nextProps.searchForm)) {
       if (this.state.getResults) {
-        this.search(null, false, nextProps.searchForm);
-        this.setState({ getResults: false });
+        this.search(null, false, nextProps.searchForm)
       }
+      this.setState({ getResults: false,dateError:"" });
     }
-    if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
+      if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("APPLY");
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
@@ -406,13 +459,23 @@ class ShowForm extends Component {
           }
         } else {
           if (variable == "fromDate") {
-            input = searchForm[variable].setHours(0);
-            input = searchForm[variable].setMinutes(0);
-            input = searchForm[variable].setSeconds(0);
+            try {
+              input = searchForm[variable].setHours(0);
+              input = searchForm[variable].setMinutes(0);
+              input = searchForm[variable].setSeconds(0);
+            } catch (e) {
+              console.log(e);
+            }
+
           } else if (variable == "toDate") {
-            input = searchForm[variable].setHours(23);
-            input = searchForm[variable].setMinutes(59);
-            input = searchForm[variable].setSeconds(59);
+            try {
+              input = searchForm[variable].setHours(23);
+              input = searchForm[variable].setMinutes(59);
+              input = searchForm[variable].setSeconds(59);
+            } catch (e) {
+              console.log(e);
+            }
+
           } else {
             input = searchForm[variable];
           }
@@ -525,6 +588,33 @@ class ShowForm extends Component {
     search(e, false, searchForm);
   };
 
+  getReportTitle = (rptName) => {
+    let reportName = rptName || this.state.reportName;
+    let reportTitleArr = reportName && reportName.split(/(?=[A-Z])/);
+    let reportTitle = "";
+    if (reportTitleArr) {
+      reportTitle = reportTitleArr.map((char) => {
+        if (char.length == 1) {
+          reportTitle = char + "";
+        } else {
+          reportTitle = " " + char;
+        }
+        return reportTitle;
+      });
+    }
+    return reportTitle;
+  };
+
+  getReportTitlefromTwoOptions = (metaData) => {
+    if (get(metaData,"reportDetails.additionalConfig.reportTitle")) {
+      return <Label label={metaData.reportDetails.additionalConfig.reportTitle} labelStyle={{ marginLeft: "16px",marginTop: "8px", color: "#484848" }} fontSize={20} />;
+    } else {
+      return (
+        get(metaData,"reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
+      );
+    }
+  };
+
   render() {
     let { buttonText, metaData, reportIndex, searchForm } = this.props;
     let { search } = this;
@@ -536,6 +626,7 @@ class ShowForm extends Component {
               this.fetchResults(e, searchForm);
             }}
           >
+          <div>{metaData && this.getReportTitlefromTwoOptions(metaData)}</div>
             <Card
               style={{ padding: "16px" }}
               textChildren={

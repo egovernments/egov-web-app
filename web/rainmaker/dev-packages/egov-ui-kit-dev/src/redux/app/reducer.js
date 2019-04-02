@@ -18,7 +18,7 @@ const initialState = {
   bottomNavigationIndex: 0,
   previousRoute: "",
   toast: {
-    message: "",
+    message: { labelName: "", labelKey: "" },
     open: false,
     error: true,
   },

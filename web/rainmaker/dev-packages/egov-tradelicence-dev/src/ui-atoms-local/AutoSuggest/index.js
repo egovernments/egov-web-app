@@ -48,9 +48,6 @@ const styles = theme => ({
     color: "rgba(162, 162, 162, 0.77)"
   },
   ac_paper: {
-    // width: "80%",
-    // maxHeight: "200px",
-    // overflowY: "scroll",
     position: "absolute",
     zIndex: 1105,
     left: 0,

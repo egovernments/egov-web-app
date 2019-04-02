@@ -4,6 +4,9 @@ import { CITY } from "egov-ui-kit/utils/endPoints";
 import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 const formConfig = {
   name: "propertyAddress",
@@ -12,6 +15,7 @@ const formConfig = {
       id: "city",
       jsonPath: "PropertiesTemp[0].address.city",
       required: true,
+      localePrefix: { moduleName: "tenant", masterName: "tenants" },
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -36,7 +40,8 @@ const formConfig = {
           )
         );
         dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
-
+        const moduleValue = field.value;
+        dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -171,6 +176,7 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
+      const { localizationLabels } = state.app;
       const { cities, citiesByModule } = state.common;
       const PT = citiesByModule && citiesByModule.PT;
       if (PT) {
@@ -179,7 +185,8 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          dd.push({ label: selected.name, value: selected.code });
+          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
           return dd;
         }, []);
         dispatch(setFieldProperty("propertyAddress", "city", "dropDownData", dd));

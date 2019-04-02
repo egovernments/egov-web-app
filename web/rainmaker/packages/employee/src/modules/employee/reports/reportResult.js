@@ -5,18 +5,16 @@ import { commonApiPost } from "egov-ui-kit/utils/api";
 import { translate } from "./commons/common";
 import $ from "jquery";
 import _ from "lodash";
-import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
-// import "egov-ui-kit/assets/styles/responsive.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
 import "datatables.net";
 import "datatables.net-buttons";
 import "datatables.net-dt";
-// import "react-jquery-datatables";
 import "datatables.net-buttons-bs";
 import "datatables.net-responsive";
 import "datatables.net-responsive-dt";
 import JSZip from "jszip/dist/jszip";
+import get from "lodash/get";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
@@ -127,7 +125,6 @@ class ShowField extends Component {
         messageTop: tabLabel,
         footer: true,
         className: "report-excel-button",
-        // exportOptions,
       },
       "colvis",
     ];
@@ -137,7 +134,10 @@ class ShowField extends Component {
   componentDidUpdate() {
     let { reportResult, tabLabel, metaData } = this.props;
     let { reportDetails = {} } = metaData;
-    let { additionalConfig = {} } = reportDetails;
+    let tableConfig;
+    if (get(reportDetails, "additionalConfig.tableConfig")) {
+      tableConfig = reportDetails.additionalConfig.tableConfig;
+    }
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -147,21 +147,13 @@ class ShowField extends Component {
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
-      // dom: "<'&nbsp''row'<'col-sm-3'l><'col-sm-5'f><'col-sm-4'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
-      // dom: "<'&nbsp''row'<'report-filter'f><'report-buttons'B>><'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>",
       dom:
-        "<'&nbsp''row'<'col-sm-2 col-xs-6 text-left'l><'col-sm-4 col-xs-6 text-right'f><'col-sm-6 col-xs-12 text-right'B>><'row margin0'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-xs-12'p>>",
-      order: [],
-      // responsive: true,
-      select: true,
+        "<'&nbsp''row'<'col-sm-2 col-xs-12 text-center'l><'col-sm-4 col-xs-12 text-center'f><'col-sm-6 col-xs-12 text-center'B>><'row margin0'<'col-sm-12't>><'&nbsp''row'<'col-sm-5 col-xs-12'i><'col-sm-7 col-xs-12'p>>",
       displayStart: displayStart,
       buttons: self.getExportOptions(),
       searching: true,
       paging: true,
-      // bInfo: false,
-      // order: [[3, "desc"]],
       ordering: true,
-      // bDestroy: true,
       columnDefs: [
         {
           ordering: false,
@@ -169,79 +161,18 @@ class ShowField extends Component {
         },
       ],
       fixedColumns: true,
-      // scrollResize: true,
       scrollY: 400,
-      // scrollCollapse: true,
-      // fnDrawCallback: function() {
-      //   let tableId = "reportTable";
-      //   let tableRows = document.getElementById(tableId).rows;
-      //   let rowCount = tableRows.length;
-      //   let cellCount = tableRows[0].cells.length;
-      //   let totalsRowIndex = -1;
-      //   let totalValues = [];
-      //   let i;
-      //   let j;
-      //
-      //   for (i = 0; i < rowCount; i++) {
-      //     if (tableRows[i].className.indexOf("total") !== -1) {
-      //       totalsRowIndex = i;
-      //       for (j = 0; j < cellCount; j++) {
-      //         totalValues[j] = tableRows[i].cells[j].innerText;
-      //       }
-      //       tableRows[i].classList.remove("total");
-      //       break;
-      //     }
-      //   }
-      //
-      //   if (totalsRowIndex === -1) {
-      //     return;
-      //   }
-      //
-      //   for (i = totalsRowIndex; i < rowCount - 1; i++) {
-      //     for (j = 0; j < cellCount; j++) {
-      //       tableRows[i].cells[j].innerText = tableRows[i + 1].cells[j].innerText;
-      //     }
-      //   }
-      //
-      //   for (i = 0; i < cellCount; i++) {
-      //     tableRows[rowCount - 1].cells[i].innerText = totalValues[i];
-      //   }
-      //   tableRows[rowCount - 1].classList.add("total");
-      //
-      //   for (i = 0; i < rowCount; i++) {
-      //     $("#" + tableId)
-      //       .DataTable()
-      //       .row(tableRows[i])
-      //       .invalidate();
-      //   }
-      // },
-      // lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      // "iDisplayLength": -1,
-      bPaginate: true,
-      iCookieDuration: 60,
-      // "bStateSave": false,
-      bAutoWidth: true,
-      //true
-      bScrollAutoCss: true,
-      // "bProcessing": true,
-      bRetrieve: true,
-      bJQueryUI: true,
-      // "sDom": "<'&nbsp''row'<'H'CTrf>t<'F'lip<'row'<'col-sm-12'tr>><'&nbsp''row'<'col-sm-5'i><'col-sm-7'p>>>",
       aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      sScrollX: "100%",
       scrollX: true,
-      // "sScrollXInner": "110%",
-      bScrollCollapse: true,
       fnInitComplete: function() {
         this.css("visibility", "visible");
 
         $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
       },
-      renderer: "bootstrap",
       drawCallback: function(settings) {
         $(".dataTables_scrollBody thead tr").css({ visibility: "collapse" });
       },
-      ...additionalConfig,
+      ...tableConfig,
     });
     showTabLabel();
   }
@@ -289,7 +220,6 @@ class ShowField extends Component {
       var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
 
       let response = commonApiPost(
-        // "/report/" + match.params.moduleName + "/_get",
         "/report/" + "pgr" + "/_get",
         {},
         {
@@ -376,9 +306,9 @@ class ShowField extends Component {
         reportResult.reportHeader &&
         reportResult.reportHeader.length &&
         reportResult.reportHeader[i] &&
-        reportResult.reportHeader[i].type == "currency"
+        (reportResult.reportHeader[i].type == "currency" || reportResult.reportHeader[i].total)
       ) {
-        return this.addCommas(Number(val) % 1 === 0 ? val : Number(val).toFixed(2));
+        return this.addCommas(Number(val) % 1 === 0 ? Number(val) : Number(val).toFixed(2));
       } else {
         return val;
       }
@@ -418,7 +348,6 @@ class ShowField extends Component {
       <thead>
         <tr className="report-table-header">
           <th key={"S. No."} className="report-header-cell">
-            {/* <Label className="report-header-row-label" labelStyle={{ wordWrap: "unset", wordBreak: "unset", fontWeight: "bold" }} label={"S. No"} /> */}
             S. No
           </th>
           {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload && (
@@ -500,7 +429,6 @@ class ShowField extends Component {
       let response =
         resulturl &&
         commonApiPost(
-          // "/report/" + match.params.moduleName + "/_get",
           resulturl,
           {},
           {
@@ -530,7 +458,7 @@ class ShowField extends Component {
       reportResult.reportHeader &&
       reportResult.reportHeader.length &&
       reportResult.reportHeader[i] &&
-      reportResult.reportHeader[i].type == "currency"
+      (reportResult.reportHeader[i].type == "currency" ||reportResult.reportHeader[i].total)
     ) {
       return { textAlign: "right" };
     } else {
@@ -631,12 +559,8 @@ class ShowField extends Component {
         if (headerObj.showColumn) {
           columnObj["showColumn"] = headerObj.showColumn;
           columnObj["total"] = null == headerObj.total ? false : headerObj.total;
-          // columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
-        // if (headerObj.total) {
-        //   footerexist = true;
-        // }
       });
       //for 1st column (Sr.No)
       let firstColObj = {};
@@ -653,7 +577,6 @@ class ShowField extends Component {
       } else if (typeof i === "number") {
         return i;
       }
-      //return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
     };
 
     let total = [];
@@ -712,7 +635,6 @@ class ShowField extends Component {
   };
 
   getReportTitle = (rptName) => {
-    // let { reportName } = this.state;
     let reportName = rptName || this.state.reportName;
     let reportTitleArr = reportName && reportName.split(/(?=[A-Z])/);
     let reportTitle = "";
@@ -734,7 +656,7 @@ class ShowField extends Component {
     let { isTableShow, metaData, reportResult, tabLabel } = this.props;
     let self = this;
     let { reportName } = this.state;
-
+    
     const viewTabel = () => {
       let { searchForm } = this.props;
 
@@ -743,16 +665,9 @@ class ShowField extends Component {
           <table
             id="reportTable"
             style={{
-              // color: "#484848",
-              // fontWeight: "normal",
-              // padding: "0 !important",
-              // backgroundColor: "#ffffff",
-              // overflowY: "auto",
               width: "100%",
             }}
-            // className="mdl-data-table"
-            className="table table-responsive table-striped table-bordered display nowrap dataTable"
-            // style={{ width: "100%" }}
+            className="table table-striped table-bordered"
           >
             {self.renderHeader()}
             {self.renderBody()}
@@ -779,11 +694,6 @@ class ShowField extends Component {
     };
     return isTableShow ? (
       <div>
-        {!_.isEmpty(reportResult) &&
-          reportResult.hasOwnProperty("reportData") &&
-          metaData &&
-          metaData.reportDetails &&
-          metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>
@@ -791,7 +701,6 @@ class ShowField extends Component {
     ) : null;
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     isTableShow: state.formtemp.showTable,

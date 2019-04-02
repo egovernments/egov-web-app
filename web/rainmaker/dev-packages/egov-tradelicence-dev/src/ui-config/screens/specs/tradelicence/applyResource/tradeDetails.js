@@ -20,7 +20,10 @@ import {
   fillOldLicenseData,
   getTradeTypeDropdownData
 } from "../../utils";
-import { prepareFinalObject as pFO } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject as pFO,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
 import filter from "lodash/filter";
@@ -45,10 +48,20 @@ const tradeUnitCard = {
         {
           tradeCategory: {
             ...getSelectField({
-              label: { labelName: "Trade Category" },
-              placeholder: { labelName: "Select Trade Category" },
+              label: {
+                labelName: "Trade Category",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL"
+              },
+              placeholder: {
+                labelName: "Select Trade Category",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_CAT_PLACEHOLDER"
+              },
               required: true,
               jsonPath: "LicensesTemp.tradeUnits[0].tradeType",
+              localePrefix: {
+                moduleName: "TRADELICENSE",
+                masterName: "TRADETYPE"
+              },
               props: {
                 jsonPathUpdatePrefix: "LicensesTemp.tradeUnits",
                 setDataInField: true
@@ -103,9 +116,19 @@ const tradeUnitCard = {
           },
           tradeType: {
             ...getSelectField({
-              label: { labelName: "Trade  Type" },
-              placeholder: { labelName: "Select Trade Type" },
+              label: {
+                labelName: "Trade Type",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL"
+              },
+              placeholder: {
+                labelName: "Select Trade Type",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_TYPE_PLACEHOLDER"
+              },
               required: true,
+              localePrefix: {
+                moduleName: "TRADELICENSE",
+                masterName: "TRADETYPE"
+              },
               jsonPath: "LicensesTemp.tradeUnits[0].tradeSubType",
               props: {
                 jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
@@ -177,14 +200,24 @@ const tradeUnitCard = {
                 width: "100%",
                 cursor: "pointer"
               },
-              label: { labelName: "Trade Sub-Type" },
-              placeholder: { labelName: "Select Trade Sub-Type" },
+              label: {
+                labelName: "Trade Sub-Type",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL"
+              },
+              placeholder: {
+                labelName: "Select Trade Sub-Type",
+                labelKey: "TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_PLACEHOLDER"
+              },
               jsonPath:
                 "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
               sourceJsonPath:
                 "applyScreenMdmsData.TradeLicense.TradeSubCategoryTransformed",
               setDataInField: true,
               labelsFromLocalisation: true,
+              localePrefix: {
+                moduleName: "TRADELICENSE",
+                masterName: "TRADETYPE"
+              },
               fullwidth: true,
               required: true,
               inputLabelProps: {
@@ -208,9 +241,18 @@ const tradeUnitCard = {
                       return true;
                   });
                 if (alreadySelected) {
-                  alert(
-                    "This trade type is already selected, Please select another"
+                  dispatch(
+                    toggleSnackbar(
+                      true,
+                      {
+                        labelName:
+                          "This trade type is already selected, Please select another",
+                        labelKey: "TL_TRADE_TYPE_ALREADY_SELECTED"
+                      },
+                      "warning"
+                    )
                   );
+
                   action.value = null;
                 } else {
                   let tradeType = get(
@@ -397,7 +439,10 @@ const tradeUnitCard = {
       )
     }),
     items: [],
-    addItemLabel: "ADD TRADE UNITS",
+    addItemLabel: {
+      labelName: "ADD TRADE UNITS",
+      labelKey: "TL_ADD_TRADE_UNITS"
+    },
     headerName: "TradeUnits",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
@@ -448,8 +493,18 @@ const accessoriesCard = {
       accessoriesCardContainer: getCommonContainer({
         accessoriesName: {
           ...getSelectField({
-            label: { labelName: "Accessories" },
-            placeholder: { labelName: "Select Accessories" },
+            label: {
+              labelName: "Accessories",
+              labelKey: "TL_NEW_TRADE_DETAILS_ACC_LABEL"
+            },
+            placeholder: {
+              labelName: "Select Accessories",
+              abelKey: "TL_NEW_TRADE_DETAILS_ACC_PLACEHOLDER"
+            },
+            localePrefix: {
+              moduleName: "TRADELICENSE",
+              masterName: "ACCESSORIESCATEGORY"
+            },
             jsonPath:
               "Licenses[0].tradeLicenseDetail.accessories[0].accessoryCategory",
             sourceJsonPath:
@@ -508,14 +563,6 @@ const accessoriesCard = {
                   )
                 );
               } else {
-                // dispatch(
-                //   handleField(
-                //     "apply",
-                //     `${currentUOMValueFieldPath}.accessoriesUOM`,
-                //     "required",
-                //     false
-                //   )
-                // );
                 dispatch(
                   handleField(
                     "apply",
@@ -605,7 +652,10 @@ const accessoriesCard = {
       return setFieldsOnAddItem(state, muliItemContent);
     },
     items: [],
-    addItemLabel: "ADD ACCESSORIES",
+    addItemLabel: {
+      labelName: "ADD ACCESSORIES",
+      labelKey: "TL_NEW_TRADE_DETAILS_BUTTON_NEW_ACC"
+    },
     headerName: "Accessory",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
@@ -631,9 +681,15 @@ export const tradeDetails = getCommonCard({
   tradeDetailsConatiner: getCommonContainer({
     financialYear: {
       ...getSelectField({
-        label: { labelName: "Financial Year" },
-        placeholder: { labelName: "Select Financial Year" },
-        required: false,
+        label: {
+          labelName: "Financial Year",
+          labelKey: "TL_FINANCIAL_YEAR_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Financial Year",
+          labelKey: "TL_FINANCIAL_YEAR_PLACEHOLDER"
+        },
+        required: true,
         visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
         jsonPath: "Licenses[0].financialYear",
         sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
@@ -657,14 +713,21 @@ export const tradeDetails = getCommonCard({
     },
     applicationType: {
       ...getSelectField({
-        label: { labelName: "Application Type" },
-        placeholder: { labelName: "Select Application Type" },
+        label: {
+          labelName: "Application Type",
+          labelKey: "TL_APPLICATION_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Application Type",
+          labelKey: "TL_APPLICATION_TYPE_PLACEHOLDER"
+        },
         required: true,
+        localePrefix: {
+          moduleName: "TradeLicense",
+          masterName: "ApplicationType"
+        },
         jsonPath:
           "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
-        // props: {
-        //   jsonPathUpdatePrefix: "LicensesTemp.tradeUnits"
-        // },
         sourceJsonPath: "applyScreenMdmsData.TradeLicense.ApplicationType",
         gridDefination: {
           xs: 12,
@@ -705,8 +768,14 @@ export const tradeDetails = getCommonCard({
     }),
     tradeLicenseType: {
       ...getSelectField({
-        label: { labelName: "License Type" },
-        placeholder: { labelName: "Select License Type" },
+        label: {
+          labelName: "License Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select License Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_LIC_TYPE_PLACEHOLDER"
+        },
         required: true,
         jsonPath: "Licenses[0].licenseType",
         props: {
@@ -751,8 +820,8 @@ export const tradeDetails = getCommonCard({
               false
             )
           );
-          dispatch(pFO("Licenses[0].validFrom", null));
-          dispatch(pFO("Licenses[0].validTo", null));
+          // dispatch(pFO("Licenses[0].validFrom", null));
+          // dispatch(pFO("Licenses[0].validTo", null));
         }
       }
     },
@@ -771,8 +840,14 @@ export const tradeDetails = getCommonCard({
     }),
     tradeFromDate: {
       ...getDateField({
-        label: { labelName: "From Date" },
-        placeholder: { labelName: "Trade License From Date" },
+        label: {
+          labelName: "From Date",
+          labelKey: "TL_COMMON_FROM_DATE_LABEL"
+        },
+        placeholder: {
+          labelName: "Trade License From Date",
+          labelName: "TL_TRADE_LICENCE_FROM_DATE"
+        },
         required: true,
         pattern: getPattern("Date"),
         jsonPath: "Licenses[0].validFrom",
@@ -787,8 +862,11 @@ export const tradeDetails = getCommonCard({
     },
     tradeToDate: {
       ...getDateField({
-        label: { labelName: "To Date" },
-        placeholder: { labelName: "Trade License From Date" },
+        label: { labelName: "To Date", labelKey: "TL_COMMON_TO_DATE_LABEL" },
+        placeholder: {
+          labelName: "Trade License From Date",
+          labelKey: "TL_TRADE_LICENCE_TO_DATE"
+        },
         required: true,
         pattern: getPattern("Date"),
         jsonPath: "Licenses[0].validTo",
@@ -803,8 +881,18 @@ export const tradeDetails = getCommonCard({
     },
     tradeStructureType: {
       ...getSelectField({
-        label: { labelName: "Structure Type" },
-        placeholder: { labelName: "Select Structure Type" },
+        label: {
+          labelName: "Structure Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Structure Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_PLACEHOLDER"
+        },
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "STRUCTURETYPE"
+        },
         required: true,
         jsonPath: "LicensesTemp[0].tradeLicenseDetail.structureType",
         sourceJsonPath:
@@ -831,9 +919,19 @@ export const tradeDetails = getCommonCard({
     },
     tradeStructureSubType: {
       ...getSelectField({
-        label: { labelName: "Structure Sub Type" },
-        placeholder: { labelName: "Select Structure Sub Type" },
+        label: {
+          labelName: "Structure Sub Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Structure Sub Type",
+          labelKey: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_PLACEHOLDER"
+        },
         required: true,
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "STRUCTURETYPE"
+        },
         jsonPath: "Licenses[0].tradeLicenseDetail.structureType",
         sourceJsonPath:
           "applyScreenMdmsData.common-masters.StructureSubTypeTransformed"
@@ -850,12 +948,6 @@ export const tradeDetails = getCommonCard({
           action.value
         );
         const tradeTypeDropdownData = getTradeTypeDropdownData(tradeTypes);
-        // const tradeTypeDropdownData =
-        //   tradeTypes &&
-        //   tradeTypes.TradeType &&
-        //   Object.keys(tradeTypes.TradeType).map(item => {
-        //     return { code: item, active: true };
-        //   });
         tradeTypeDropdownData &&
           dispatch(
             pFO(
@@ -863,8 +955,6 @@ export const tradeDetails = getCommonCard({
               tradeTypeDropdownData
             )
           );
-        // dispatch(pFO("Licenses[0].tradeLicenseDetail.tradeUnits", []));
-        // dispatch(pFO("LicensesTemp.tradeUnits", []));
       }
     },
     tradeCommencementDate: getDateField({

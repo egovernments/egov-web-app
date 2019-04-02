@@ -1,6 +1,8 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 
 const tenantId = getTenantId();
 
@@ -53,16 +55,6 @@ const formConfig = {
       id: "longitude",
       jsonPath: "services[0].addressDetail.longitude",
     },
-    // address: {
-    //   id: "address",
-    //   jsonPath: "services[0].address",
-    //   required: true,
-    //   floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
-    //   hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
-    //   errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    //   value: "",
-    //   errorText: "",
-    // },
     city: {
       id: "city",
       jsonPath: "services[0].addressDetail.city",
@@ -73,29 +65,18 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorText: "",
       dropDownData: [],
+      labelsFromLocalisation: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(setFieldProperty("complaint", "mohalla", "value", ""));
       },
+      beforeFieldChange: ({ action, dispatch, state }) => {
+        if (get(state, "common.prepareFormData.services[0].addressDetail.city") !== action.value) {
+          const moduleValue = action.value;
+          dispatch(fetchLocalizationLabel(getLocale(), moduleValue, moduleValue));
+        }
+        return action;
+      },
       dataFetchConfig: {
-        // url: CITY.GET.URL,
-        // action: CITY.GET.ACTION,
-        // queryParams: [],
-        // requestBody: {
-        //   MdmsCriteria: {
-        //     tenantId: "pb",
-        //     moduleDetails: [
-        //       {
-        //         moduleName: "tenant",
-        //         masterDetails: [
-        //           {
-        //             name: "tenants",
-        //           },
-        //         ],
-        //       },
-        //     ],
-        //   },
-        // },
-        // dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [
           {
             fieldKey: "mohalla",
@@ -107,13 +88,10 @@ const formConfig = {
       id: "mohalla",
       required: true,
       jsonPath: "services[0].addressDetail.mohalla",
-      // floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-      // hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       floatingLabelText: "CS_CREATECOMPLAINT_MOHALLA",
       hintText: "CS_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       boundary: true,
-      // dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
       dropDownData: [],
       dataFetchConfig: {
         url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=ADMIN&boundaryType=Locality",
@@ -121,6 +99,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {},
         isDependent: true,
+        hierarchyType: "ADMIN",
       },
 
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -167,6 +146,7 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
+      const { localizationLabels } = state.app;
       const { cities, citiesByModule } = state.common;
       const { PGR } = citiesByModule || {};
       if (PGR) {
@@ -175,7 +155,8 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          dd.push({ label: selected.name, value: selected.code });
+          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));

@@ -7,8 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { getUserInfo, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
-
+import { getUserInfo, localStorageSet, localStorageGet, getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -504,10 +503,12 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
   return mergedData;
 };
 
-export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
-  const { url, action, requestBody, queryParams } = dataFetchConfig;
+export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, state, boundary) => {
+  const { url, action, requestBody, queryParams, hierarchyType } = dataFetchConfig;
   try {
     if (url) {
+      let localizationLabels = {};
+      if (state && state.app) localizationLabels = (state.app && state.app.localizationLabels) || {};
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
       const dropdownData = boundary
         ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
@@ -518,8 +519,31 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
           }, []);
       const ddData =
         dropdownData &&
+        dropdownData.length > 0 &&
         dropdownData.reduce((ddData, item) => {
-          let option = { label: item.name, value: item.code };
+          let option = {};
+          if (fieldKey === "mohalla" && item.code) {
+            const mohallaCode = `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code
+              .toUpperCase()
+              .replace(/[._:-\s\/]/g, "_")}`;
+            option = {
+              label: getTranslatedLabel(mohallaCode, localizationLabels),
+              value: item.code,
+            };
+          } else {
+            option = {
+              label: item.name,
+              value: item.code,
+            };
+          }
+
+          // let option = {
+          //   label:
+          //     fieldKey === "mohalla"
+          //       ? `${queryParams[0].value.toUpperCase().replace(/[.]/g, "_")}_${hierarchyType}_${item.code.toUpperCase().replace(/[._:-\s\/]/g, "_")}`
+          //       : item.name,
+          //   value: item.code,
+          // };
           //Only for boundary
           item.area && (option.area = item.area);
           ddData.push(option);
@@ -529,8 +553,15 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     }
   } catch (error) {
     const { message } = error;
+    console.log(error);
     if (fieldKey === "mohalla") {
-      dispatch(toggleSnackbarAndSetText(true, "There is no admin boundary data available for this tenant", true));
+      dispatch(
+        toggleSnackbarAndSetText(
+          true,
+          { labelName: "There is no admin boundary data available for this tenant", labelKey: "ERR_NO_ADMIN_BOUNDARY_FOR_TENANT" },
+          true
+        )
+      );
     } else {
       dispatch(toggleSnackbarAndSetText(true, message, true));
     }
