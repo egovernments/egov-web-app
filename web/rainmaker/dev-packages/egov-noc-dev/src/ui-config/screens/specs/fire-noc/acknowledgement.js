@@ -15,6 +15,22 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
 
+export const header = getCommonContainer({
+  header: getCommonHeader({
+    labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
+    labelKey: "NOC_COMMON_APPLY_FIRE_NOC_HEADER_LABEL"
+  }),
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    moduleName: "egov-noc",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: getQueryArg(window.location.href, "applicationNumber")
+    },
+    visible: true
+  }
+});
+
 const getAcknowledgementCard = (
   state,
   dispatch,
@@ -26,10 +42,7 @@ const getAcknowledgementCard = (
 ) => {
   if (purpose === "apply" && status === "success") {
     return {
-      header: getCommonHeader({
-        labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`,
-        labelKey: "NOC_COMMON_APPL_NEW_NOC"
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -68,20 +81,7 @@ const getAcknowledgementCard = (
   } else if (purpose === "pay" && status === "success") {
     // loadReceiptGenerationData(applicationNumber, tenant);
     return {
-      header: getCommonContainer({
-        header: getCommonHeader({
-          labelName: `Payment for New Fire NOC (${getCurrentFinancialYear()})`,
-          labelKey: "NOC_COMMON_PAYMENT_NEW_FIRE_NOC"
-        }),
-        applicationNumber: {
-          uiFramework: "custom-atoms-local",
-          moduleName: "egov-noc",
-          componentPath: "ApplicationNoContainer",
-          props: {
-            number: applicationNumber
-          }
-        }
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -111,20 +111,7 @@ const getAcknowledgementCard = (
   } else if (purpose === "approve" && status === "success") {
     // loadReceiptGenerationData(applicationNumber, tenant);
     return {
-      header: getCommonContainer({
-        header: getCommonHeader({
-          labelName: `Fire NOC Application (${getCurrentFinancialYear()})`,
-          labelKey: "NOC_FIRE_APPLICATION"
-        }),
-        applicationNumber: {
-          uiFramework: "custom-atoms-local",
-          moduleName: "egov-NOC",
-          componentPath: "ApplicationNoContainer",
-          props: {
-            number: applicationNumber
-          }
-        }
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -153,20 +140,7 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "application" && status === "rejected") {
     return {
-      header: getCommonContainer({
-        header: getCommonHeader({
-          labelName: `Fire NOC Application (${getCurrentFinancialYear()})`,
-          labelKey: "Fire_NOC_APPLICATION"
-        }),
-        applicationNumber: {
-          uiFramework: "custom-atoms-local",
-          moduleName: "egov-noc",
-          componentPath: "ApplicationNoContainer",
-          props: {
-            number: applicationNumber
-          }
-        }
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -190,20 +164,7 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "application" && status === "cancelled") {
     return {
-      header: getCommonContainer({
-        header: getCommonHeader({
-          labelName: `Fire NOC Application (${getCurrentFinancialYear()})`,
-          labelKey: "FIRE_NOC_APPLICATION"
-        }),
-        applicationNumber: {
-          uiFramework: "custom-atoms-local",
-          moduleName: "egov-noc",
-          componentPath: "ApplicationNoContainer",
-          props: {
-            number: applicationNumber
-          }
-        }
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -232,20 +193,7 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "pay" && status === "failure") {
     return {
-      header: getCommonContainer({
-        header: getCommonHeader({
-          labelName: `Fire NOC Application (${getCurrentFinancialYear()})`,
-          labelKey: "Fire_NOC_APPLICATION"
-        }),
-        applicationNumber: {
-          uiFramework: "custom-atoms-local",
-          moduleName: "egov-noc",
-          componentPath: "ApplicationNoContainer",
-          props: {
-            number: applicationNumber
-          }
-        }
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -265,9 +213,7 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "mark" && status === "success") {
     return {
-      header: getCommonHeader({
-        labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -295,9 +241,7 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "forward" && status === "success") {
     return {
-      header: getCommonHeader({
-        labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`
-      }),
+      header,
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
