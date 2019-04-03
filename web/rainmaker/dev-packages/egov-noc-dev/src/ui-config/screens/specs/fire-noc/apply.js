@@ -15,6 +15,7 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import set from "lodash/set";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -124,20 +125,29 @@ const screenConfig = {
       };
       dispatch(prepareFinalObject("noc", pfo));
     }
-    // applicationNumber &&
-    //   dispatch(
-    //     handleField(
-    //       "apply",
-    //       "components.div.children.headerDiv.children.header.children.applicationNumber.props",
-    //       "visibility",
-    //       "hidden"
-    //     )
-    //   );
-    // set(
-    //   action.screenConfig,
-    //   "components.div.children.headerDiv.children.header.children.applicationNumber.props",
-    //   { visiblity: "hidden" }
-    // );
+    const step = getQueryArg(window.location.href, "step");
+    if (step && step.match(/^\d+$/)) {
+      let intStep = parseInt(step);
+      set(
+        action.screenConfig,
+        "components.div.children.stepper.props.activeStep",
+        intStep
+      );
+      let formWizardNames = [
+        "formwizardFirstStep",
+        "formwizardSecondStep",
+        "formwizardThirdStep",
+        "formwizardFourthStep"
+      ];
+      for (let i = 0; i < 4; i++) {
+        let setVisible = i == step;
+        set(
+          action.screenConfig,
+          `components.div.children.${formWizardNames[i]}.visible`,
+          setVisible
+        );
+      }
+    }
     return action;
   },
   components: {
