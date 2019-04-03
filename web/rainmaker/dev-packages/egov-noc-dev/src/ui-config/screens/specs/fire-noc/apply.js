@@ -114,7 +114,9 @@ const screenConfig = {
     if (applicationNumber) {
       let pfo = {
         nocNumber: applicationNumber,
+        nocType: "Provisional",
         buildingName: "eGov",
+        buildingType: "Multiple Building",
         buildingUsageType: "Commercial",
         buildingUsageSubType: "Commercial",
         noOfFloors: "3",
@@ -132,7 +134,6 @@ const screenConfig = {
         applicantAddress: "Asgard",
         applicantCategory: "A",
         institutionName: "Non-profit"
-
       };
       dispatch(prepareFinalObject("noc", pfo));
     }

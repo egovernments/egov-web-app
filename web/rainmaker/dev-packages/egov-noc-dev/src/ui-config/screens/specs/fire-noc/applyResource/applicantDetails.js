@@ -117,12 +117,11 @@ const commonApplicantInformation = () => {
           md: 6
         },
         jsonPath: "noc.applicantGender",
-        required: true,
         props: {
           label: "Gender",
           buttons: ["Male", "Female", "Transgender"],
-          jsonPath: "noc.applicantGender"
-          // defaultValue: "Male"
+          jsonPath: "noc.applicantGender",
+          required: true
         },
         type: "array"
       },
@@ -192,8 +191,8 @@ const commonApplicantInformation = () => {
         props: {
           label: "Relationship",
           buttons: ["Father", "Husband"],
-          jsonPath: "noc.applicantRelationship"
-          // defaultValue: "Male"
+          jsonPath: "noc.applicantRelationship",
+          required: true
         },
         type: "array"
       },

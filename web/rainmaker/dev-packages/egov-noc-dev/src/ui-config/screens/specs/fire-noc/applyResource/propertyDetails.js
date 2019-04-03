@@ -250,7 +250,8 @@ export const propertyDetails = getCommonCard({
         label: "No. of Buildings",
         buttons: ["Single Building", "Multiple Building"],
         jsonPath: "noc.buildingType",
-        defaultValue: "Single Building"
+        defaultValue: "Single Building",
+        required: true
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {

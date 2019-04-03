@@ -24,6 +24,9 @@ const styles = theme => ({
   },
   radioRoot: {
     marginBottom: 12
+  },
+  formLabel: {
+    fontSize: 12
   }
 });
 
@@ -45,17 +48,31 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { label, classes, buttons, defaultValue, value } = this.props;
+    const {
+      label,
+      classes,
+      buttons,
+      defaultValue,
+      value,
+      fieldValue,
+      required
+    } = this.props;
 
     return (
       <div className={classes.root}>
-        <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">{label}</FormLabel>
+        <FormControl
+          component="fieldset"
+          className={classes.formControl}
+          required={required}
+        >
+          <FormLabel component="legend" className={classes.formLabel}>
+            {label}
+          </FormLabel>
           <RadioGroup
             aria-label="Gender"
             name="gender1"
             className={classes.group}
-            value={value || defaultValue}
+            value={value || fieldValue || defaultValue}
             onChange={this.handleChange}
           >
             {buttons &&

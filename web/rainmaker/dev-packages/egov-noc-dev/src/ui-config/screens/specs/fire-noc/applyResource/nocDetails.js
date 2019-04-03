@@ -33,7 +33,8 @@ export const nocDetails = getCommonCard({
         label: "NOC Type",
         buttons: ["New", "Provisional"],
         jsonPath: "noc.nocType",
-        defaultValue: "New"
+        defaultValue: "New",
+        required: true
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
