@@ -6,7 +6,7 @@ import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
-    item => item.code == localCode
+    item => item.code === localCode
   );
 };
 
