@@ -131,7 +131,7 @@ const routes = [
     options: {
       title: "HOME",
       hideFooter: false,
-      redirectionUrl: "/language-selection",
+      redirectionUrl: "/user/login",
       //isHomeScreen: true,
     },
   },

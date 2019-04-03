@@ -26,8 +26,7 @@ class App extends Component {
     addBodyClass(currentPath);
   }
 
-
-  componentDidMount=async ()=> {
+  componentDidMount = async () => {
     const { fetchLocalizationLabel, fetchCurrentLocation, fetchMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
@@ -66,7 +65,7 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
@@ -78,10 +77,10 @@ class App extends Component {
   }
 
   render() {
-    const { toast, loading } = this.props;
+    const { toast, loading, defaultUrl, hasLocalisation } = this.props;
     return (
       <div>
-        <Router routes={routes} />
+        <Router routes={routes} hasLocalisation={hasLocalisation} defaultUrl={defaultUrl} />
         {toast && toast.open && !isEmpty(toast.message) && <Toast open={toast.open} message={toast.message} error={toast.error} />}
         {loading && <LoadingIndicator />}
       </div>
@@ -93,6 +92,13 @@ const mapStateToProps = (state, ownProps) => {
   const { app, common } = state;
   const { route, toast } = app;
   const { spinner } = common;
+  const { stateInfoById } = common || [];
+  let hasLocalisation = false;
+  let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
+  if (stateInfoById && stateInfoById.length > 1) {
+    hasLocalisation = stateInfoById[0].hasLocalisation;
+    defaultUrl = stateInfoById[0].defaultUrl;
+  }
   const props = {};
   const loading = ownProps.loading || spinner;
   if (route && route.length) {
@@ -104,6 +110,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...props,
     loading,
+    hasLocalisation,
+    defaultUrl,
   };
 };
 

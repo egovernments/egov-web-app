@@ -69,18 +69,20 @@ class UserSettings extends Component {
   render() {
     const { languageSelected, displayAccInfo } = this.state;
     const { items, style } = this;
-    const { onIconClick, userInfo, handleItemClick } = this.props;
+    const { onIconClick, userInfo, handleItemClick, hasLocalisation } = this.props;
     return (
       <div className="userSettingsContainer">
-        <DropDown
-          onChange={this.onChange}
-          listStyle={style.listStyle}
-          style={style.baseStyle}
-          labelStyle={style.label}
-          dropDownData={items}
-          value={languageSelected}
-          underlineStyle={{ borderBottom: "none" }}
-        />
+        {hasLocalisation && (
+          <DropDown
+            onChange={this.onChange}
+            listStyle={style.listStyle}
+            style={style.baseStyle}
+            labelStyle={style.label}
+            dropDownData={items}
+            value={languageSelected}
+            underlineStyle={{ borderBottom: "none" }}
+          />
+        )}
         {/* <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} /> */}
         <div
           onClick={() => {
