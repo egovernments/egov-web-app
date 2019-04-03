@@ -39,8 +39,10 @@ class TextFieldContainer extends React.Component {
       infoIcon,
       dispatch,
       title,
+      errorMessage,
       ...rest
     } = this.props;
+    errorMessage = getLocaleLabels("Invalid input", errorMessage);
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,

@@ -4,7 +4,9 @@ import cloneDeep from "lodash/cloneDeep";
 import store from "redux/store";
 import {
   localStorageSet,
-  localStorageGet
+  localStorageGet,
+  getLocalization,
+  getLocale
 } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import orderBy from "lodash/orderBy";
@@ -162,10 +164,11 @@ export const epochToYmd = et => {
 };
 
 export const getLocaleLabels = (label, labelKey, localizationLabels) => {
+  if (!localizationLabels) localizationLabels = getLocalization(getLocale());
   if (labelKey) {
     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
     if (!translatedLabel || labelKey === translatedLabel) {
-      return label;
+      return translatedLabel;
     } else {
       return translatedLabel;
     }
