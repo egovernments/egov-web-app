@@ -11,6 +11,10 @@ import { propertyLocationDetails } from "./applyResource/propertyLocationDetails
 import { applicantDetails } from "./applyResource/applicantDetails";
 import { documentDetails } from "./applyResource/documentDetails";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -23,20 +27,31 @@ export const stepper = getStepperObject(
   stepsData
 );
 
+const applicationNumberContainer = () => {
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  if (applicationNumber)
+    return {
+      uiFramework: "custom-atoms-local",
+      moduleName: "egov-noc",
+      componentPath: "ApplicationNoContainer",
+      props: {
+        number: `${applicationNumber}`,
+        visibility: "hidden"
+      },
+      visible: true
+    };
+  else return {};
+};
+
 export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
     labelKey: "NOC_COMMON_APPLY_NOC"
   }),
-  applicationNumber: {
-    uiFramework: "custom-atoms-local",
-    moduleName: "egov-noc",
-    componentPath: "ApplicationNoContainer",
-    props: {
-      number: getQueryArg(window.location.href, "applicationNumber")
-    },
-    visible: true
-  }
+  applicationNumber: applicationNumberContainer()
 });
 
 export const formwizardFirstStep = {
@@ -90,6 +105,27 @@ export const formwizardFourthStep = {
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
+  beforeInitScreen: (action, state, dispatch) => {
+    // const applicationNumber = getQueryArg(
+    //   window.location.href,
+    //   "applicationNumber"
+    // );
+    // applicationNumber &&
+    //   dispatch(
+    //     handleField(
+    //       "apply",
+    //       "components.div.children.headerDiv.children.header.children.applicationNumber.props",
+    //       "visibility",
+    //       "hidden"
+    //     )
+    //   );
+    // set(
+    //   action.screenConfig,
+    //   "components.div.children.headerDiv.children.header.children.applicationNumber.props",
+    //   { visiblity: "hidden" }
+    // );
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",
