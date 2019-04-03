@@ -121,7 +121,18 @@ const screenConfig = {
         noOfBasements: "1",
         plotSize: "10000",
         builtupArea: "9000",
-        heightOfBuilding: "1000"
+        heightOfBuilding: "1000",
+        mobileNo: "9133234270",
+        applicantName: "Loki",
+        applicantGender: "Male",
+        applicantEmail: "sharath.rao@egovernments.org",
+        applicantFatherHusbandName: "Odin",
+        applicantRelationship: "Father",
+        applicantPan: "ABCDE1234F",
+        applicantAddress: "Asgard",
+        applicantCategory: "A",
+        institutionName: "Non-profit"
+
       };
       dispatch(prepareFinalObject("noc", pfo));
     }

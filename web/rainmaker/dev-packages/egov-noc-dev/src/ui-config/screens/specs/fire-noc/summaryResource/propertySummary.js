@@ -41,53 +41,53 @@ const propertyDetails = {
             labelName: "Name Of Building",
             labelKey: "NOC_BUILDING_NAME_LABEL"
           },
-          { jsonPath: "buildingName" }
+          { jsonPath: "noc.buildingName" }
         ),
         buildingUsageType: getLabelWithValue(
           {
             labelName: "Building Usage Type",
             labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL"
           },
-          { jsonPath: "buildingUsageType" }
+          { jsonPath: "noc.buildingUsageType" }
         ),
         buildingUsageSubType: getLabelWithValue(
           {
             labelName: "Building Usage Subtype",
             labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL"
           },
-          { jsonPath: "buildingUsageSubType" }
+          { jsonPath: "noc.buildingUsageSubType" }
         ),
         noOfFloors: getLabelWithValue(
           { labelName: "No. of Floors", labelKey: "NOC_NO_OF_FLOORS_LABEL" },
-          { jsonPath: "noOfFloors" }
+          { jsonPath: "noc.noOfFloors" }
         ),
         noOfBasement: getLabelWithValue(
           {
             labelName: "No. of Basement",
             labelKey: "NOC_NO_OF_BASEMENT_LABEL"
           },
-          { jsonPath: "noOfBasement" }
+          { jsonPath: "noc.noOfBasement" }
         ),
         plotSize: getLabelWithValue(
           {
             labelName: "Plot Size (in sq meters)",
             labelKey: "NOC_PLOT_SIZE_LABEL"
           },
-          { jsonPath: "plotSize" }
+          { jsonPath: "noc.plotSize" }
         ),
         groundBuiltupArea: getLabelWithValue(
           {
             labelName: "Ground Builtup Area (sq meters)",
             labelKey: "NOC_GROUND_BUILTUP_AREA_LABEL"
           },
-          { jsonPath: "groundBuiltupArea" }
+          { jsonPath: "noc.BuiltupArea" }
         ),
         heightOfBuilding: getLabelWithValue(
           {
             labelName: "Height of Building (in meters)",
             labelKey: "NOC_BUILDING_HEIGHT_LABEL"
           },
-          { jsonPath: "heightOfBuilding" }
+          { jsonPath: "noc.heightOfBuilding" }
         )
       })
     }),

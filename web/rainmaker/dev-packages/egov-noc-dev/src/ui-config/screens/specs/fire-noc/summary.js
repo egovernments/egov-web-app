@@ -10,7 +10,8 @@ import { propertySummary } from "./summaryResource/propertySummary";
 import { applicantSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
 import { footer } from "./summaryResource/footer";
-// import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -23,6 +24,11 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "summary",
   beforeInitScreen: (action, state, dispatch) => {
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+    // if (applicationNumber) 
     return action;
   },
   components: {

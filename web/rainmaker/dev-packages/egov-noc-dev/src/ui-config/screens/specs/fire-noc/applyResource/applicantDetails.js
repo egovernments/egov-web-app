@@ -49,7 +49,7 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
-        jsonPath: "mobileNo",
+        jsonPath: "noc.mobileNo",
         iconObj: {
           iconName: "search",
           position: "end",
@@ -83,7 +83,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "applicantName",
+        jsonPath: "noc.applicantName",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -104,12 +104,12 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "applicantGender",
+        jsonPath: "noc.applicantGender",
         required: true,
         props: {
           label: "Gender",
           buttons: ["Male", "Female", "Transgender"],
-          jsonPath: "applicantGender"
+          jsonPath: "noc.applicantGender"
           // defaultValue: "Male"
         },
         type: "array"
@@ -125,7 +125,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "applicantDob",
+        jsonPath: "noc.applicantDob",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -142,7 +142,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
         pattern: getPattern("Email"),
-        jsonPath: "applicantEmail",
+        jsonPath: "noc.applicantEmail",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -160,7 +160,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "applicantFatherHusbandName",
+        jsonPath: "noc.applicantFatherHusbandName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -176,11 +176,11 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "applicantRelationship",
+        jsonPath: "noc.applicantRelationship",
         props: {
           label: "Relationship",
           buttons: ["Father", "Husband"],
-          jsonPath: "applicantRelationship"
+          jsonPath: "noc.applicantRelationship"
           // defaultValue: "Male"
         },
         type: "array"
@@ -195,7 +195,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
         pattern: getPattern("PAN"),
-        jsonPath: "applicantPan",
+        jsonPath: "noc.applicantPan",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -212,7 +212,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "applicantAddress",
+        jsonPath: "noc.applicantAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -228,7 +228,7 @@ const commonApplicantInformation = () => {
           labelName: "Select Special Applicant Category",
           labelKey: "NOC_SPECIAL_APPLICANT_CATEGORY_PLACEHOLDER"
         },
-        jsonPath: "applicantCategory",
+        jsonPath: "noc.applicantCategory",
         data: [
           {
             code: "A"
@@ -271,7 +271,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "institutionName",
+        jsonPath: "noc.institutionName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -288,7 +288,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_TELEPHONE_NUMBER_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "telephoneNumber",
+        jsonPath: "noc.telephoneNumber",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -305,7 +305,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_AUTHORIZED_PERSON_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "authorizedPerson",
+        jsonPath: "noc.authorizedPerson",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -322,7 +322,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "institutionDesignation",
+        jsonPath: "noc.institutionDesignation",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -339,7 +339,7 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_MOBILE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "authorizedPersonMobile",
+        jsonPath: "noc.authorizedPersonMobile",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -356,7 +356,7 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "authorizedPersonEmail",
+        jsonPath: "noc.authorizedPersonEmail",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -373,7 +373,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "officialCorrespondenceAddress",
+        jsonPath: "noc.officialCorrespondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -408,7 +408,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Type",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "applicantType",
+        jsonPath: "noc.applicantType",
         data: [
           {
             code: "Individual"
@@ -463,7 +463,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Subtype",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "applicantType",
+        jsonPath: "noc.applicantType",
         data: [
           {
             code: "Private Company"

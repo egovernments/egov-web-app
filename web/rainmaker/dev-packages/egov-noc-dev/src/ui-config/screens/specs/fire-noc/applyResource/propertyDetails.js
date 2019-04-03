@@ -82,10 +82,10 @@ const commonBuildingData = buildingType => {
         jsonPath: "noc.buildingUsageType",
         data: [
           {
-            code: "MALE"
+            code: "Commercial"
           },
           {
-            code: "FEMALE"
+            code: "Non-Commercial"
           }
         ],
         sourceJsonPath: "noc.buildingUsageType",
@@ -110,10 +110,10 @@ const commonBuildingData = buildingType => {
         jsonPath: "noc.buildingUsageSubType",
         data: [
           {
-            code: "MALE"
+            code: "Commercial"
           },
           {
-            code: "FEMALE"
+            code: "Non-Commercial"
           }
         ],
         sourceJsonPath: "noc.buildingUsageSubType",
@@ -139,10 +139,13 @@ const commonBuildingData = buildingType => {
         jsonPath: "noc.noOfFloors",
         data: [
           {
-            code: "MALE"
+            code: "1"
           },
           {
-            code: "FEMALE"
+            code: "2"
+          },
+          {
+            code: "3"
           }
         ],
         sourceJsonPath: "noc.noOfFloors",
@@ -167,10 +170,10 @@ const commonBuildingData = buildingType => {
         jsonPath: "noc.noOfBasements",
         data: [
           {
-            code: "MALE"
+            code: "1"
           },
           {
-            code: "FEMALE"
+            code: "2"
           }
         ],
         sourceJsonPath: "noc.noOfBasements",

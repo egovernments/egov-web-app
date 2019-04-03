@@ -69,7 +69,7 @@ export const applicantSummary = getCommonGrayCard({
         labelKey: "NOC_MOBILE_NO_LABEL"
       },
       {
-        jsonPath: "mobileNo"
+        jsonPath: "noc.mobileNo"
         // callBack: value => {
         //   return value.split(".")[0];
         // }
@@ -81,7 +81,7 @@ export const applicantSummary = getCommonGrayCard({
         labelKey: "NOC_APPLICANT_NAME_LABEL"
       },
       {
-        jsonPath: "applicantName"
+        jsonPath: "noc.applicantName"
         // callBack: value => {
         //   return value.split(".")[1];
         // }
@@ -92,42 +92,42 @@ export const applicantSummary = getCommonGrayCard({
         labelName: "Gender",
         labelKey: "NOC_APPLICANT_GENDER_LABEL"
       },
-      { jsonPath: "applicantGender" }
+      { jsonPath: "noc.applicantGender" }
     ),
     fatherHusbandName: getLabelWithValue(
       {
         labelName: "Father/Husband's Name",
         labelKey: "NOC_FATHER_HUSBAND_NAME_LABEL"
       },
-      { jsonPath: "fatherHusbandName" }
+      { jsonPath: "noc.fatherHusbandName" }
     ),
     applicantDob: getLabelWithValue(
       {
         labelName: "Date of Birth",
         labelKey: "NOC_APPLICANT_DOB_LABEL"
       },
-      { jsonPath: "applicantDob" }
+      { jsonPath: "noc.applicantDob" }
     ),
     applicantEmail: getLabelWithValue(
       {
         labelName: "Email",
         labelKey: "NOC_APPLICANT_EMAIL_LABEL"
       },
-      { jsonPath: "applicantEmail" }
+      { jsonPath: "noc.applicantEmail" }
     ),
     applicantPan: getLabelWithValue(
       {
         labelName: "PAN",
         labelKey: "NOC_APPLICANT_PAN_LABEL"
       },
-      { jsonPath: "applicantPan" }
+      { jsonPath: "noc.applicantPan" }
     ),
     applicantAddress: getLabelWithValue(
       {
         labelName: "Correspondence Address",
         labelKey: "NOC_APPLICANT_CORRESPONDENCE_ADDRESS_LABEL"
       },
-      { jsonPath: "applicantAddress" }
+      { jsonPath: "noc.applicantAddress" }
     )
   })
 });
