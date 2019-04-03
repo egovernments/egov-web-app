@@ -61,17 +61,29 @@ const commonApplicantInformation = () => {
           //   }
           // }
         },
-        props: {
-          style: {
-            maxWidth: "450px"
-          }
-        },
+        // props: {
+        //   style: {
+        //     maxWidth: "450px"
+        //   }
+        // },
         gridDefination: {
           xs: 12,
           sm: 12,
-          md: 12
+          md: 6
         }
       }),
+      dummyDiv: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        gridDefination: {
+          xs: 12,
+          sm: 12,
+          md: 6
+        },
+        props: {
+          disabled: true
+        }
+      },
       applicantName: getTextField({
         label: {
           labelName: "Name",
@@ -503,7 +515,10 @@ export const applicantDetails = getCommonCard({
           props: {
             scheama: commonApplicantInformation(),
             items: [],
-            addItemLabel: "Add Applicant",
+            addItemLabel: {
+              labelName: "Add Applicant",
+              labelKey: "NOC_ADD_APPLICANT_LABEL"
+            },
             prefixSourceJsonPath:
               "children.cardContent.children.buildingDataCard.multipleBuildingContainer.children"
           },

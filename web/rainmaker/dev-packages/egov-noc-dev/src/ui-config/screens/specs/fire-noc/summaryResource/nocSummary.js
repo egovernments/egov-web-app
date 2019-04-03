@@ -6,7 +6,7 @@ import {
   getLabel,
   getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { gotoApplyWithStep } from "../../utils/index";
 
 export const nocSummary = getCommonGrayCard({
   header: {
@@ -54,10 +54,10 @@ export const nocSummary = getCommonGrayCard({
           })
         },
         onClickDefination: {
-          action: "condition"
-          // callBack: (state, dispatch) => {
-          //   changeStep(state, dispatch, "", 0);
-          // }
+          action: "condition",
+          callBack: (state, dispatch) => {
+            gotoApplyWithStep(state, dispatch, 0);
+          }
         }
       }
     }

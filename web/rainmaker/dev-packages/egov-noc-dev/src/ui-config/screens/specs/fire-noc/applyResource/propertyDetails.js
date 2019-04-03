@@ -299,6 +299,9 @@ export const propertyDetails = getCommonCard({
       singleBuildingContainer: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
+        gridDefination: {
+          xs: 12
+        },
         children: {
           singleBuilding: getCommonGrayCard({
             singleBuildingCard: getCommonContainer(commonBuildingData("single"))
@@ -313,6 +316,9 @@ export const propertyDetails = getCommonCard({
             display: "none"
           }
         },
+        gridDefination: {
+          xs: 12
+        },
         children: {
           multipleBuilding: {
             uiFramework: "custom-containers",
@@ -324,7 +330,10 @@ export const propertyDetails = getCommonCard({
                 )
               }),
               items: [],
-              addItemLabel: "ADD BUILDING",
+              addItemLabel: {
+                labelKey: "NOC_ADD_BUILDING_LABEL",
+                labelName: "ADD BUILDING"
+              },
               prefixSourceJsonPath:
                 "children.cardContent.children.buildingDataCard.multipleBuildingContainer.children"
             },

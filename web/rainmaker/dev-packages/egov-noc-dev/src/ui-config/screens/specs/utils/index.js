@@ -1,6 +1,7 @@
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
-import get from "lodash/get";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -182,17 +183,10 @@ export const getFinancialYearDates = (format, et) => {
   return financialDates;
 };
 
-// export const getReceiptData = async queryObject => {
-//   try {
-//     const response = await httpRequest(
-//       "post",
-//       "collection-services/receipts/_search",
-//       "",
-//       queryObject
-//     );
-//     return response;
-//   } catch (error) {
-//     console.log(error);
-//     return {};
-//   }
-// };
+export const gotoApplyWithStep = (state, dispatch, step) => {
+  const applyUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/fire-noc/apply?step=${step}`
+      : `/fire-noc/apply?step=${step}`;
+  dispatch(setRoute(applyUrl));
+};

@@ -6,6 +6,7 @@ import {
   getLabel,
   getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { gotoApplyWithStep } from "../../utils/index";
 
 const getHeader = label => {
   return {
@@ -213,10 +214,10 @@ export const propertySummary = getCommonGrayCard({
           })
         },
         onClickDefination: {
-          action: "condition"
-          // callBack: (state, dispatch) => {
-          //   changeStep(state, dispatch, "", 0);
-          // }
+          action: "condition",
+          callBack: (state, dispatch) => {
+            gotoApplyWithStep(state, dispatch, 1);
+          }
         }
       }
     }
