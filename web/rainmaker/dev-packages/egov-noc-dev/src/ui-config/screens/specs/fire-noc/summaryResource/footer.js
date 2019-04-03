@@ -1,7 +1,7 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getCommonApplyFooter } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
-import "./index.css";
+import "./index.scss";
 
 const gotoAcknowledgement = (state, dispatch) => {
   const acknowledgementUrl =
