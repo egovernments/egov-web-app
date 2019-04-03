@@ -152,11 +152,15 @@ const screenConfig = {
         "formwizardFourthStep"
       ];
       for (let i = 0; i < 4; i++) {
-        let setVisible = i == step;
         set(
           action.screenConfig,
           `components.div.children.${formWizardNames[i]}.visible`,
-          setVisible
+          i == step
+        );
+        set(
+          action.screenConfig,
+          `components.div.children.footer.children.previousButton.visible`,
+          step != 0
         );
       }
     }
