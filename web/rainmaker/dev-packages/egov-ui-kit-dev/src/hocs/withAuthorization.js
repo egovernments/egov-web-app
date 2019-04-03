@@ -32,10 +32,10 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     componentWillMount() {
-      const { authenticated } = this.props;
+      const { authenticated, hasLocalisation, defaultUrl } = this.props;
       const { redirectionUrl } = options;
       if (!authenticated) {
-        const baseUrl = process.env.REACT_APP_NAME === "Citizen" ? "/language-selection" : "/language-selection";
+        const baseUrl = hasLocalisation ? "/language-selection" : process.env.REACT_APP_NAME === "Citizen" ? defaultUrl.citizen : defaultUrl.employee;
         this.props.history.replace(redirectionUrl || baseUrl);
       }
     }
@@ -99,7 +99,7 @@ const withAuthorization = (options = {}) => (Component) => {
         searchButton,
         showNumberOfComplaints,
       } = options;
-      const { history, authenticated, userInfo, complaints } = this.props;
+      const { history, authenticated, userInfo, complaints, hasLocalisation } = this.props;
       const { titleAddon, titleObject, menuDrawerOpen } = this.state;
       const { style } = this;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
@@ -135,6 +135,7 @@ const withAuthorization = (options = {}) => (Component) => {
               title={title}
               titleAddon={role !== hideFor && titleAddon && titleAddon}
               //titleObject={role !== hideFor && titleObject && titleObject}
+              hasLocalisation={hasLocalisation}
               userInfo={userInfo}
               role={role}
               options={options}
@@ -244,10 +245,17 @@ const withAuthorization = (options = {}) => (Component) => {
   }
 
   const mapStateToProps = (state) => {
-    let { authenticated, userInfo } = state.auth;
+    let { authenticated, userInfo, common } = state.auth;
+    let { stateInfoById } = common || [];
+    let hasLocalisation = false;
+    let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
     // userInfo = typeof userInfo === "string" ? JSON.parse(userInfo) : userInfo;
+    if (stateInfoById && stateInfoById.length > 1) {
+      hasLocalisation = stateInfoById[0].hasLocalisation;
+      defaultUrl = stateInfoById[0].defaultUrl;
+    }
     const { complaints } = state || {};
-    return { authenticated, userInfo };
+    return { authenticated, userInfo, hasLocalisation, defaultUrl };
   };
   const mapDispatchToProps = (dispatch) => {
     return {

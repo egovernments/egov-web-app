@@ -159,38 +159,44 @@ class WorkFlowContainer extends React.Component {
   };
 
   getHeaderName = action => {
-    switch (action) {
-      case "FORWARD":
-        return {
-          labelName: "Forward Application",
-          labelKey: "TL_FORWARD_APPLICATION"
-        };
-      case "MARK":
-        return {
-          labelName: "Mark Application",
-          labelKey: "TL_MARK_APPLICATION"
-        };
-      case "APPROVE":
-        return {
-          labelName: "Approve Application",
-          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
-        };
-      case "CANCEL":
-        return {
-          labelName: "Cancel Application",
-          labelKey: "TL_WORKFLOW_CANCEL"
-        };
-      case "SENDBACK":
-        return {
-          labelName: "Send Back Application",
-          labelKey: "TL_WORKFLOW_SENDBACK"
-        };
-      default:
-        return {
-          labelName: "Reject Application",
-          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
-        };
-    }
+    return {
+      labelName: `${action} Application`,
+      labelKey: `TL_${action}_APPLICATION`
+    };
+    // switch (
+    //   action
+    // case "FORWARD":
+    //   return {
+    //     labelName: "Forward Application",
+    //     labelKey: "TL_FORWARD_APPLICATION"
+    //   };
+    // case "MARK":
+    //   return {
+    //     labelName: "Mark Application",
+    //     labelKey: "TL_MARK_APPLICATION"
+    //   };
+    // case "APPROVE":
+    //   return {
+    //     labelName: "Approve Application",
+    //     labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+    //   };
+    // case "CANCEL":
+    //   return {
+    //     labelName: "Cancel Application",
+    //     labelKey: "TL_WORKFLOW_CANCEL"
+    //   };
+    // case "SENDBACK":
+    //   return {
+    //     labelName: "Send Back Application",
+    //     labelKey: "TL_WORKFLOW_SENDBACK"
+    //   };
+    // default:
+    //   return {
+    //     labelName: "Reject Application",
+    //     labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+    //   };
+    // ) {
+    // }
   };
 
   getEmployeeRoles = (nextAction, currentAction) => {

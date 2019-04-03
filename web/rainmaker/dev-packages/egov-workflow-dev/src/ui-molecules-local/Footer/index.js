@@ -55,26 +55,26 @@ class Footer extends React.Component {
     this.setState({ open: true, data: item, employeeList });
   };
 
-  getButtonLabelName = label => {
-    switch (label) {
-      case "FORWARD":
-        return "Verify and Forward";
-      case "MARK":
-        return "Mark";
-      case "REJECT":
-        return "Reject";
-      case "CANCEL":
-        return "purpose=application&status=cancelled";
-      case "APPROVE":
-        return "APPROVE";
-      case "PAY":
-        return "Pay";
-      case "SENDBACK":
-        return "Send Back";
-      default:
-        return label;
-    }
-  };
+  // getButtonLabelName = label => {
+  //   switch (label) {
+  //     case "FORWARD":
+  //       return "Verify and Forward";
+  //     case "MARK":
+  //       return "Mark";
+  //     case "REJECT":
+  //       return "Reject";
+  //     case "CANCEL":
+  //       return "Cancel";
+  //     case "APPROVE":
+  //       return "APPROVE";
+  //     case "PAY":
+  //       return "Pay";
+  //     case "SENDBACK":
+  //       return "Send Back";
+  //     default:
+  //       return label;
+  //   }
+  // };
 
   onClose = () => {
     this.setState({
@@ -108,7 +108,7 @@ class Footer extends React.Component {
                   onClick={() => this.openActionDialog(item)}
                 >
                   <LabelContainer
-                    labelName={getButtonLabelName(buttonLabel)}
+                    labelName={buttonLabel}
                     labelKey={`WF_${moduleName.toUpperCase()}_${buttonLabel}`}
                   />
                 </Button>
