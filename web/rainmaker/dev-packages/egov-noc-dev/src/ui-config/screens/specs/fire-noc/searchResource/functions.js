@@ -88,11 +88,11 @@ export const searchApiCall = async (state, dispatch) => {
     //const response = await getSearchResults(queryObject);
     const response = [
       {
-        applicationNumber: "1234",
+        applicationNumber: "NOC-JLD-2018-09-8786",
         nocNumber: "NOC1234",
         BuildingName: "eGov",
         ownerName: "Nandhan",
-        status: "Pending"
+        status: "INITIATED",
       }
     ];
     try {

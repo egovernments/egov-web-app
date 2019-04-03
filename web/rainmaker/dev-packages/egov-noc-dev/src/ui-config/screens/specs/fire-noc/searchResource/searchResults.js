@@ -155,7 +155,7 @@ const onRowClick = rowData => {
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
-      return `/fire-noc/apply?applicationNumber=${
+      return `/egov-ui-framework/fire-noc/apply?applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "REJECTED"):
