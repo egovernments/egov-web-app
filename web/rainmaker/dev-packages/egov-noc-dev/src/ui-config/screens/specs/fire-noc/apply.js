@@ -106,10 +106,24 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
-    // const applicationNumber = getQueryArg(
-    //   window.location.href,
-    //   "applicationNumber"
-    // );
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
+    if (applicationNumber) {
+      let pfo = {
+        nocNumber: applicationNumber,
+        buildingName: "eGov",
+        buildingUsageType: "Commercial",
+        buildingUsageSubType: "Commercial",
+        noOfFloors: "3",
+        noOfBasements: "1",
+        plotSize: "10000",
+        builtupArea: "9000",
+        heightOfBuilding: "1000"
+      };
+      dispatch(prepareFinalObject("noc", pfo));
+    }
     // applicationNumber &&
     //   dispatch(
     //     handleField(

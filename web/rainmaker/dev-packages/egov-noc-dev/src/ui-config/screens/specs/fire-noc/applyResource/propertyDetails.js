@@ -22,7 +22,7 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Plot Size (in Sq meters)",
           labelKey: "NOC_PLOT_SIZE_PLACEHOLDER"
         },
-        jsonPath: "plotSize",
+        jsonPath: "noc.plotSize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -43,7 +43,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_ENTER_NAME_OF_BUILDING_PLACEHOLDER"
         },
         // required: true,
-        jsonPath: "buildingName",
+        jsonPath: "noc.buildingName",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -79,7 +79,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_TYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "buildingUsageType",
+        jsonPath: "noc.buildingUsageType",
         data: [
           {
             code: "MALE"
@@ -88,7 +88,7 @@ const commonBuildingData = buildingType => {
             code: "FEMALE"
           }
         ],
-        sourceJsonPath: "buildingUsageType",
+        sourceJsonPath: "noc.buildingUsageType",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -107,7 +107,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "buildingUsageSubType",
+        jsonPath: "noc.buildingUsageSubType",
         data: [
           {
             code: "MALE"
@@ -116,7 +116,7 @@ const commonBuildingData = buildingType => {
             code: "FEMALE"
           }
         ],
-        sourceJsonPath: "buildingUsageSubType",
+        sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -136,7 +136,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_NO_OF_FLOORS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noOfFloors",
+        jsonPath: "noc.noOfFloors",
         data: [
           {
             code: "MALE"
@@ -145,7 +145,7 @@ const commonBuildingData = buildingType => {
             code: "FEMALE"
           }
         ],
-        sourceJsonPath: "noOfFloors",
+        sourceJsonPath: "noc.noOfFloors",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -164,7 +164,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_NO_OF_BASEMENTS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noOfBasements",
+        jsonPath: "noc.noOfBasements",
         data: [
           {
             code: "MALE"
@@ -173,7 +173,7 @@ const commonBuildingData = buildingType => {
             code: "FEMALE"
           }
         ],
-        sourceJsonPath: "noOfBasements",
+        sourceJsonPath: "noc.noOfBasements",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -192,7 +192,7 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Ground Floor Builtup Area in Sq meters",
           labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
         },
-        jsonPath: "builtupArea",
+        jsonPath: "noc.builtupArea",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -210,7 +210,7 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Height of the Building in meters",
           labelKey: "NOC_HEIGHT_OF_BUILDING_PLACEHOLDER"
         },
-        jsonPath: "heightOfBuilding",
+        jsonPath: "noc.heightOfBuilding",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -242,11 +242,11 @@ export const propertyDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "buildingType",
+      jsonPath: "noc.buildingType",
       props: {
         label: "No. of Buildings",
         buttons: ["Single Building", "Multiple Building"],
-        jsonPath: "buildingType",
+        jsonPath: "noc.buildingType",
         defaultValue: "Single Building"
       },
       type: "array",

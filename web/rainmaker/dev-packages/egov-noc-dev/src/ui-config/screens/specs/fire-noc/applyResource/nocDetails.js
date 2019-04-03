@@ -28,11 +28,11 @@ export const nocDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "nocType",
+      jsonPath: "noc.nocType",
       props: {
         label: "NOC Type",
         buttons: ["New", "Provisional"],
-        jsonPath: "nocType",
+        jsonPath: "noc.nocType",
         defaultValue: "New"
       },
       type: "array",
@@ -70,7 +70,7 @@ export const nocDetails = getCommonCard({
         },
         // required: true,
         // pattern: getPattern("MobileNo"),
-        jsonPath: "nocNumber",
+        jsonPath: "noc.nocNumber",
         iconObj: {
           iconName: "search",
           position: "end",
