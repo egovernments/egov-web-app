@@ -232,6 +232,43 @@ const screenConfig = {
         {}
       );
     }
+    if (get(pfo, "nocType") === "Provisional") {
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber.props.style",
+        { visibility: "hidden" }
+      );
+    }
+    if (get(pfo, "applicantDetails.applicantType") === "Multiple") {
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
+        { display: "none" }
+      );
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.props.style",
+        {}
+      );
+    } else if (
+      get(pfo, "applicantDetails.applicantType") === "Institutional-Private"
+    ) {
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
+        { display: "none" }
+      );
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer.props.style",
+        {}
+      );
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType.props.style",
+        {}
+      );
+    }
 
     return action;
   },
