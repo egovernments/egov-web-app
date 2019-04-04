@@ -3,6 +3,9 @@ import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils"
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+
+import { getCommonCard } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -197,4 +200,44 @@ export const gotoApplyWithStep = (state, dispatch, step) => {
       ? `/egov-ui-framework/fire-noc/apply?step=${step}${applicationNumberQueryString}`
       : `/fire-noc/apply?step=${step}${applicationNumberQueryString}`;
   dispatch(setRoute(applyUrl));
+};
+
+export const showHideAdhocPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["search"],
+    "components.adhocDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField("search", "components.adhocDialog", "props.open", !toggle)
+  );
+};
+
+export const getCommonGrayCard = children => {
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+    children: {
+      body: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          ch1: getCommonCard(children, {
+            style: {
+              backgroundColor: "rgb(242, 242, 242)",
+              boxShadow: "none",
+              borderRadius: 0,
+              overflow: "visible"
+            }
+          })
+        },
+        gridDefination: {
+          xs: 12
+        }
+      }
+    },
+    gridDefination: {
+      xs: 12
+    }
+  };
 };

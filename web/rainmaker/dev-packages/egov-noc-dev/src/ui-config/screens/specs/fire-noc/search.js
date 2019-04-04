@@ -4,7 +4,8 @@ import {
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { NOCApplication } from "./searchResource/fireNocApplication";
-
+import { NOCRequiredDocuments } from "./reqDocs";
+import { showHideAdhocPopup } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 // import { progressStatus } from "./searchResource/progressStatus";
@@ -81,11 +82,8 @@ const NOCSearchAndResult = {
                 })
               },
               onClickDefination: {
-                action: "page_change",
-                path:
-                  process.env.REACT_APP_SELF_RUNNING === "true"
-                    ? `/egov-ui-framework/fire-noc/apply`
-                    : `/fire-noc/apply`
+                action: "condition",
+                callBack: showHideAdhocPopup
               },
               roleDefination: {
                 rolePath: "user-info.roles",
@@ -99,6 +97,19 @@ const NOCSearchAndResult = {
         breakAfterSearch: getBreak(),
         // progressStatus,
         searchResults
+      }
+    },
+    adhocDialog: {
+      uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
+      componentPath: "DialogContainer",
+      props: {
+        open: false,
+        maxWidth: false,
+        screenKey: "search"
+      },
+      children: {
+        popup: NOCRequiredDocuments
       }
     }
   }

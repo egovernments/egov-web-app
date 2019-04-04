@@ -1,11 +1,13 @@
 import {
   getCommonHeader,
   getLabel,
-  getCommonGrayCard,
   getBreak,
   getCommonTitle,
-  getCommonParagraph
+  getCommonParagraph,
+  getCommonContainer
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+
+import { showHideAdhocPopup, getCommonGrayCard } from "../utils";
 
 import { footer } from "./requiredDocuments/footer";
 const documentsData = [
@@ -37,9 +39,7 @@ const header = getCommonHeader({
 //   );
 // };
 
-const getDetails = getLabel(
-
-);
+const getDetails = getLabel();
 const identityProof = getCommonGrayCard({
   subHeader: getCommonTitle({
     labelName: "Proof of Identity(Any 1)",
@@ -99,46 +99,33 @@ const ownerCheckList = getCommonGrayCard({
   })
 });
 
-const NOCRequiredDocuments = {
-  uiFramework: "material-ui",
-  name: "requried-documents",
-  components: {
-    div: {
-      uiFramework: "custom-atoms",
-      componentPath: "Form",
-      props: {
-        className: "common-div-css",
-        id: "req-docs"
-      },
-      children: {
-        headerDiv: {
-          uiFramework: "custom-atoms",
-          componentPath: "Container",
+export const NOCRequiredDocuments = getCommonContainer({
+  headerDiv: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
 
-          children: {
-            header: {
-              gridDefination: {
-                xs: 12,
-                sm: 6
-              },
-              ...header
-            }
-          }
+    children: {
+      header: {
+        gridDefination: {
+          xs: 12
         },
-        identityProof,
-        breakAfteridentityProof: getBreak(),
-        addressProof,
-        breakAfteraddressProof: getBreak(),
-        buildingPlan,
-        breakAfterbuildingPlan: getBreak(),
-        fireFightingPlan,
-        breakAfterfireFightingPlan: getBreak(),
-        ownerCheckList,
-        breakAfterownerCheckList: getBreak(),
-        footer
+        ...header
       }
     }
+  },
+  lowerDiv: {
+    uiFramework: "custom-atoms",
+    componentPath: "Container",
+
+    children: {
+      identityProof,
+      addressProof,
+      buildingPlan,
+      fireFightingPlan,
+      ownerCheckList,
+      footer
+    }
   }
-};
+});
 
 export default NOCRequiredDocuments;

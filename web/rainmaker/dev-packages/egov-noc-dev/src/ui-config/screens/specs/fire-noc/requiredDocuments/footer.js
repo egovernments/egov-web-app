@@ -1,17 +1,22 @@
-import {
-  getLabel
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import "./index.css";
 
 export const footer = {
   uiFramework: "custom-atoms",
   componentPath: "Div",
   props: {
-    className: "apply-wizard-footer",
     style: {
-      textAlign: "center"
+      width: "100%",
+      textAlign: "right"
     }
   },
+
+  // props: {
+  //   className: "apply-wizard-footer",
+  //   style: {
+  //     textAlign: "center"
+  //   }
+  // },
   children: {
     printButton: {
       componentPath: "Button",
@@ -50,7 +55,14 @@ export const footer = {
           labelKey: "NOC_COMMON_BUTTON_APPLY"
         })
       },
-      visible: true
+      visible: true,
+      onClickDefination: {
+        action: "page_change",
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/apply`
+            : `/fire-noc/apply`
+      }
       //Add onClickDefinition:
     }
   }
