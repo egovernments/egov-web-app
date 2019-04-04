@@ -6,7 +6,7 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import { getCommonApplyFooter } from "../../utils";
-import "./index.scss";
+import "./index.css";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 const moveToReview = dispatch => {

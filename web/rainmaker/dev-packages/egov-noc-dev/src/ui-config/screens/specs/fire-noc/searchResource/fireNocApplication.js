@@ -83,8 +83,14 @@ export const NOCApplication = getCommonCard({
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
     applicationNo: getSelectField({
-      label: { labelName: "Application status", labelKey: "NOC_APPLICATION_NOC_LABEL" },
-      placeholder: { labelName: "Select Application Status", labelKey: "NOC_APPLICATION_PLACEHOLDER" },
+      label: {
+        labelName: "Application status",
+        labelKey: "NOC_APPLICATION_NOC_LABEL"
+      },
+      placeholder: {
+        labelName: "Select Application Status",
+        labelKey: "NOC_APPLICATION_PLACEHOLDER"
+      },
       required: false,
       jsonPath: "searchScreen.status",
       gridDefination: {
@@ -115,7 +121,10 @@ export const NOCApplication = getCommonCard({
 
     fromDate: getDateField({
       label: { labelName: "From Date", labelKey: "NOC_FROM_DATE_LABEL" },
-      placeholder: { labelName: "From Date", labelKey: "NOC_FROM_DATE_PLACEHOLDER" },
+      placeholder: {
+        labelName: "From Date",
+        labelKey: "NOC_FROM_DATE_PLACEHOLDER"
+      },
       jsonPath: "searchScreen.fromDate",
       gridDefination: {
         xs: 12,
@@ -127,8 +136,11 @@ export const NOCApplication = getCommonCard({
     }),
 
     toDate: getDateField({
-      label: { labelName: "To Date" ,labelKey : "NOC_TO_DATE_LABEL" },
-      placeholder: { labelName: "To Date",labelKey : "NOC_TO_DATE_PLACEHOLDER" },
+      label: { labelName: "To Date", labelKey: "NOC_TO_DATE_LABEL" },
+      placeholder: {
+        labelName: "To Date",
+        labelKey: "NOC_TO_DATE_PLACEHOLDER"
+      },
       jsonPath: "searchScreen.toDate",
       gridDefination: {
         xs: 12,
@@ -164,7 +176,7 @@ export const NOCApplication = getCommonCard({
 
             backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
             borderRadius: "2px",
-            width: "80%",
+            width: window.innerWidth > 480 ? "80%" : "100%",
             height: "48px"
           }
         },
