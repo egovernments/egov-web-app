@@ -102,10 +102,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Application Date")]: {},
       [get(textToLocalMapping, "Status")]: {}
     },
-    title: get(
-      textToLocalMapping,
-      "Search Results for Fire NOC Applications"
-    ),
+    title: get(textToLocalMapping, "Search Results for Fire NOC Applications"),
     options: {
       filter: false,
       download: false,
@@ -155,9 +152,9 @@ const onRowClick = rowData => {
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
-      return `/egov-ui-framework/fire-noc/apply?applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
+      return process.env.REACT_APP_SELF_RUNNING === "true"
+        ? `/egov-ui-framework/fire-noc/taskDetails?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`
+        : `/fire-noc/taskDetails?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`;
     case get(textToLocalMapping, "REJECTED"):
       return `/fire-noc/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
