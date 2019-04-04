@@ -35,26 +35,26 @@ export const documentDetails = getCommonCard({
         {
           name: "Identity Proof ",
           required: true,
-          jsonPath: "Trade[0].ownerId",
+          jsonPath: "noc.documents.identityProof",
           selector: {
             inputLabel: "Select Document",
             menuItems: [
-              { value: 10, label: "Ten" },
-              { value: 20, label: "Twenty" },
-              { value: 30, label: "Thirty" }
+              { value: "AADHAAR", label: "Aadhaar Card" },
+              { value: "VOTERID", label: "Voter ID Card" },
+              { value: "DRIVING", label: "Driving License" }
             ]
           }
         },
         {
           name: "Address Proof ",
           required: true,
-          jsonPath: "Trade[0].ownerId",
+          jsonPath: "noc.documents.addressProof",
           selector: {
             inputLabel: "Select Document",
             menuItems: [
-              { value: 10, label: "Ten" },
-              { value: 20, label: "Twenty" },
-              { value: 30, label: "Thirty" }
+              { value: "ELECTRICITYBILL", label: "Electricity Bill" },
+              { value: "DL", label: "Driving License" },
+              { value: "VOTERID", label: "Voter ID Card" }
             ]
           }
         },
@@ -84,6 +84,7 @@ export const documentDetails = getCommonCard({
         accept: "image/*, .pdf, .png, .jpeg"
       },
       maxFileSize: 6000
-    }
+    },
+    type: "array"
   }
 });

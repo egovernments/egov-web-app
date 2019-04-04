@@ -8,12 +8,14 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { handleFileUpload } from "egov-ui-framework/ui-utils/commons";
+import {
+  handleFileUpload,
+  getFileUrlFromAPI
+} from "egov-ui-framework/ui-utils/commons";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { UploadSingleFile } from "../../ui-molecules-local";
-import { getFileUrlFromAPI } from "../../ui-utils/commons";
 
 const styles = theme => ({
   documentContainer: {
@@ -88,7 +90,8 @@ class DocumentList extends Component {
   state = {
     uploadedDocIndex: 0,
     uploadedIndex: [],
-    uploadedDocuments: []
+    uploadedDocuments: [],
+    selectValue: []
   };
 
   componentDidMount = () => {
@@ -103,10 +106,7 @@ class DocumentList extends Component {
       this.setState({ uploadedDocuments, uploadedIndex });
     }
     Object.values(uploadedDocuments).forEach((item, index) => {
-      prepareFinalObject(
-        `Licenses[0].tradeLicenseDetail.applicationDocuments[${index}]`,
-        { ...item[0] }
-      );
+      prepareFinalObject(`noc.documents[${index}]`, { ...item[0] });
     });
   };
 
@@ -132,7 +132,7 @@ class DocumentList extends Component {
       ]
     };
 
-    prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", {
+    prepareFinalObject("nocTemp.uploadedDocsInRedux", {
       ...uploadedDocuments
     });
 
@@ -168,6 +168,28 @@ class DocumentList extends Component {
       this.setState({ uploadedIndex });
     }
   };
+
+  handleChange = (key, event) => {
+    const {
+      screenKey,
+      componentJsonpath,
+      jsonPath,
+      approveCheck,
+      onFieldChange,
+      prepareFinalObject
+    } = this.props;
+    onFieldChange(
+      screenKey,
+      componentJsonpath,
+      `props.documents[${key}].selector.value`,
+      event.target.value
+    );
+    prepareFinalObject(
+      `noc.documents[${key}].selector.value`,
+      event.target.value
+    );
+  };
+
   render() {
     const { classes, documents, description } = this.props;
     const { uploadedIndex } = this.state;
@@ -217,10 +239,15 @@ class DocumentList extends Component {
                   <Grid item={true} xs={12} sm={6} md={4}>
                     {document.selector && (
                       <FormControl required className={classes.formControl}>
-                        <InputLabel>{document.selector.inputLabel}</InputLabel>
+                        <InputLabel shrink htmlFor="age-label-placeholder">
+                          {document.selector.inputLabel}
+                        </InputLabel>
                         <Select
-                          value={document.selector.initialValue}
-                          onChange={this.handleChange}
+                          value={
+                            document.selector.value ||
+                            document.selector.initialValue
+                          }
+                          onChange={event => this.handleChange(key, event)}
                           name="selected-document"
                         >
                           {document.selector.menuItems &&
