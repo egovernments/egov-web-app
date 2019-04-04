@@ -163,7 +163,7 @@ export const propertyLocationDetails = getCommonCard(
         //   key: "NOC_PROPERTY_ID_TOOLTIP_MESSAGE"
         // },
         // infoIcon: "info_circle",
-        jsonPath: "noc.propertyId"
+        jsonPath: "noc.address.propertyId"
       }),
       propertyCity: {
         ...getSelectField({
@@ -222,7 +222,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_PLOT_NO_PLACEHOLDER"
         },
         // pattern: getPattern("DoorHouseNo"),
-        jsonPath: "noc.address.doorNo"
+        jsonPath: "noc.address.doorHouseNo"
       }),
       propertyBuilidingName: getTextField({
         label: {

@@ -116,7 +116,8 @@ const screenConfig = {
 
     let pfo = {};
     if (applicationNumber && !step) {
-      pfo = {
+      let pfo = {
+        nocType: "Provisional",
         provisionalNocNumber: "NOC-JLD-2018-09-8786",
         buildingDetails: {
           buildingType: "Multiple Building",
@@ -127,6 +128,7 @@ const screenConfig = {
               buildingUsageSubType: "Commercial",
               noOfFloors: "3",
               noOfBasements: "1",
+              plotSize: "6000",
               builtupArea: "5000",
               heightOfBuilding: "200"
             },
@@ -136,12 +138,15 @@ const screenConfig = {
               buildingUsageSubType: "Non-Commercial",
               noOfFloors: "1",
               noOfBasements: "2",
+              plotSize: "6000",
               builtupArea: "3000",
               heightOfBuilding: "100"
             }
           ]
         },
         address: {
+          propertyId:"PROP1234",
+          doorHouseNo: "101",
           buildingName: "eGovBuilding",
           street: "Sarjapura Road",
           mohalla: "Bellandur",
@@ -158,6 +163,7 @@ const screenConfig = {
               applicantName: "Avijeet",
               applicantGender: "Male",
               applicantDob: "1991-06-28",
+              applicantEmail: "avijeet.gaikwad@egovernments.org",
               applicantFatherHusbandName: "A",
               applicantRelationship: "Father",
               applicantPan: "BNHSP1234K",
@@ -165,13 +171,16 @@ const screenConfig = {
               applicantCategory: "A"
             },
             {
-              mobileNo: "9883727261",
-              applicantName: "Sharat",
+              mobileNo: "9100879085",
+              applicantName: "Sharath",
               applicantGender: "Male",
-              applicantDob: "2000-01-01",
+              applicantDob: "1997-04-26",
+              applicantEmail: "sharath.rao@egovernments.org",
               applicantFatherHusbandName: "A",
               applicantRelationship: "Father",
-              applicantAddress: "asd"
+              applicantPan: "ABCDE1234F",
+              applicantAddress: "asd",
+              applicantCategory: "A"
             }
           ]
         }

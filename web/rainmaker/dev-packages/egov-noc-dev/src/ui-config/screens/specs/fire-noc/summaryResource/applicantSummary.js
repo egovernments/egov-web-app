@@ -69,7 +69,7 @@ export const applicantSummary = getCommonGrayCard({
         labelKey: "NOC_MOBILE_NO_LABEL"
       },
       {
-        jsonPath: "noc.mobileNo"
+        jsonPath: "noc.applicantDetails.applicant[0].mobileNo"
         // callBack: value => {
         //   return value.split(".")[0];
         // }
@@ -81,7 +81,7 @@ export const applicantSummary = getCommonGrayCard({
         labelKey: "NOC_APPLICANT_NAME_LABEL"
       },
       {
-        jsonPath: "noc.applicantName"
+        jsonPath: "noc.applicantDetails.applicant[0].applicantName"
         // callBack: value => {
         //   return value.split(".")[1];
         // }
@@ -92,42 +92,42 @@ export const applicantSummary = getCommonGrayCard({
         labelName: "Gender",
         labelKey: "NOC_APPLICANT_GENDER_LABEL"
       },
-      { jsonPath: "noc.applicantGender" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantGender" }
     ),
-    fatherHusbandName: getLabelWithValue(
+    applicantFatherHusbandName: getLabelWithValue(
       {
         labelName: "Father/Husband's Name",
         labelKey: "NOC_FATHER_HUSBAND_NAME_LABEL"
       },
-      { jsonPath: "noc.fatherHusbandName" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantFatherHusbandName" }
     ),
     applicantDob: getLabelWithValue(
       {
         labelName: "Date of Birth",
         labelKey: "NOC_APPLICANT_DOB_LABEL"
       },
-      { jsonPath: "noc.applicantDob" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantDob" }
     ),
     applicantEmail: getLabelWithValue(
       {
         labelName: "Email",
         labelKey: "NOC_APPLICANT_EMAIL_LABEL"
       },
-      { jsonPath: "noc.applicantEmail" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantEmail" }
     ),
     applicantPan: getLabelWithValue(
       {
         labelName: "PAN",
         labelKey: "NOC_APPLICANT_PAN_LABEL"
       },
-      { jsonPath: "noc.applicantPan" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantPan" }
     ),
     applicantAddress: getLabelWithValue(
       {
         labelName: "Correspondence Address",
         labelKey: "NOC_APPLICANT_CORRESPONDENCE_ADDRESS_LABEL"
       },
-      { jsonPath: "noc.applicantAddress" }
+      { jsonPath: "noc.applicantDetails.applicant[0].applicantAddress" }
     )
   })
 });
