@@ -116,7 +116,7 @@ const screenConfig = {
 
     let pfo = {};
     if (applicationNumber && !step) {
-      let pfo = {
+      pfo = {
         nocType: "Provisional",
         provisionalNocNumber: "NOC-JLD-2018-09-8786",
         buildingDetails: {
@@ -145,7 +145,7 @@ const screenConfig = {
           ]
         },
         address: {
-          propertyId:"PROP1234",
+          propertyId: "PROP1234",
           doorHouseNo: "101",
           buildingName: "eGovBuilding",
           street: "Sarjapura Road",
