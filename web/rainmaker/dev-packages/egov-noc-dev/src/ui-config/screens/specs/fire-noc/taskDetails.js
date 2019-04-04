@@ -53,15 +53,20 @@ const screenConfig = {
             }
           }
         },
-        taskStatus: taskStatus,
+        taskStatus: {
+          uiFramework: "custom-containers-local",
+          componentPath: "WorkFlowContainer",
+          moduleName: "egov-workflow",
+          visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
+        },
         body: getCommonCard({
           estimateSummary: estimateSummary,
           nocSummary: nocSummary,
           propertySummary: propertySummary,
           applicantSummary: applicantSummary,
           documentsSummary: documentsSummary
-        }),
-        footer: footer
+        })
+        // footer: footer
       }
     }
   }
