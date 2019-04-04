@@ -34,7 +34,7 @@ const showHideMapPopup = (state, dispatch) => {
 const getMapLocator = textSchema => {
   return {
     uiFramework: "custom-molecules-local",
-    moduleName: "egov-tradelicence",
+    moduleName: "egov-noc",
     componentPath: "MapLocator",
     props: {}
   };

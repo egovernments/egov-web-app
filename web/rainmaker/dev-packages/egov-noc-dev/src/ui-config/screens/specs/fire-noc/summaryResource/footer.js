@@ -7,7 +7,7 @@ const gotoAcknowledgement = (state, dispatch) => {
   const acknowledgementUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`
-      : `fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
+      : `/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
   dispatch(setRoute(acknowledgementUrl));
 };
 

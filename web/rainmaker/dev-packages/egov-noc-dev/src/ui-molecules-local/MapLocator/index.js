@@ -76,11 +76,11 @@ class MapLocator extends Component {
       `${add.lat}, ${add.lng}`
     );
     this.props.prepareFinalObject(
-      "Licenses[0].tradeLicenseDetail.address.latitude",
+      "noc.address.latitude",
       add.lat
     );
     this.props.prepareFinalObject(
-      "Licenses[0].tradeLicenseDetail.address.longitude",
+      "noc.address.longitude",
       add.lng
     );
 
