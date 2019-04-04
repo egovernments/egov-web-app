@@ -16,6 +16,7 @@ import {
   handleScreenConfigurationFieldChange as handleField
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import set from "lodash/set";
+import get from "lodash/get";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -112,8 +113,10 @@ const screenConfig = {
       "applicationNumber"
     );
     const step = getQueryArg(window.location.href, "step");
+
+    let pfo = {};
     if (applicationNumber && !step) {
-      let pfo = {
+      pfo = {
         provisionalNocNumber: "NOC-JLD-2018-09-8786",
         buildingDetails: {
           buildingType: "Multiple Building",
@@ -175,6 +178,11 @@ const screenConfig = {
       };
       dispatch(prepareFinalObject("noc", pfo));
     }
+    if (step && get(state, "screenConfiguration.preparedFinalObject")) {
+      pfo = get(state, "screenConfiguration.preparedFinalObject.noc", {});
+    }
+
+    // Code to goto a specific step through URL
     if (step && step.match(/^\d+$/)) {
       let intStep = parseInt(step);
       set(
@@ -201,6 +209,21 @@ const screenConfig = {
         );
       }
     }
+
+    // Preset multi-cards
+    if (get(pfo, "buildingDetails.buildingType") === "Multiple Building") {
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer.props.style",
+        { display: "none" }
+      );
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer.props.style",
+        {}
+      );
+    }
+
     return action;
   },
   components: {
