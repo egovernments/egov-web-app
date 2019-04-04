@@ -97,7 +97,7 @@ const propertyDetails = {
     isReviewPage: true,
     sourceJsonPath: "noc.buildingDetails.building",
     prefixSourceJsonPath:
-      "children.cardContent.children.eduCardContainer.children",
+      "children.cardContent.children.propertyContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"
