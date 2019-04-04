@@ -26,7 +26,9 @@ const styles = theme => ({
     marginBottom: 12
   },
   formLabel: {
-    fontSize: 12
+    fontSize: 12,
+    fontWeight: 400,
+    letterSpacing: 0.56
   }
 });
 
@@ -65,9 +67,7 @@ class RadioButtonsGroup extends React.Component {
           className={classes.formControl}
           required={required}
         >
-          <FormLabel component="legend" className={classes.formLabel}>
-            {label}
-          </FormLabel>
+          <FormLabel className={classes.formLabel}>{label}</FormLabel>
           <RadioGroup
             aria-label="Gender"
             name="gender1"
