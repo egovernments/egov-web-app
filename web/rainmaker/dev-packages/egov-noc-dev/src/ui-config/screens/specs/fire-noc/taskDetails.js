@@ -32,6 +32,79 @@ const titlebar = getCommonContainer({
 const screenConfig = {
   uiFramework: "material-ui",
   name: "taskDetails",
+  beforeInitScreen: (action, state, dispatch) => {
+    let pfo = {
+      nocType: "Provisional",
+      provisionalNocNumber: "NOC-JLD-2018-09-8786",
+      buildingDetails: {
+        buildingType: "Multiple Building",
+        building: [
+          {
+            buildingName: "eGov",
+            buildingUsageType: "Commercial",
+            buildingUsageSubType: "Commercial",
+            noOfFloors: "3",
+            noOfBasements: "1",
+            plotSize: "6000",
+            builtupArea: "5000",
+            heightOfBuilding: "200"
+          },
+          {
+            buildingName: "Novo Pay",
+            buildingUsageType: "Commercial",
+            buildingUsageSubType: "Non-Commercial",
+            noOfFloors: "1",
+            noOfBasements: "2",
+            plotSize: "6000",
+            builtupArea: "3000",
+            heightOfBuilding: "100"
+          }
+        ]
+      },
+      address: {
+        propertyId: "PROP1234",
+        doorHouseNo: "101",
+        buildingName: "eGovBuilding",
+        street: "Sarjapura Road",
+        mohalla: "Bellandur",
+        pincode: "123456",
+        additionalDetail: {
+          fireStation: "Sarjapur Fire Station"
+        }
+      },
+      applicantDetails: {
+        applicantType: "Multiple",
+        applicant: [
+          {
+            mobileNo: "9167765477",
+            applicantName: "Avijeet",
+            applicantGender: "Male",
+            applicantDob: "1991-06-28",
+            applicantEmail: "avi7@egov.org",
+            applicantFatherHusbandName: "A",
+            applicantRelationship: "Father",
+            applicantPan: "BNHSP1234K",
+            applicantAddress: "Corr",
+            applicantCategory: "A"
+          },
+          {
+            mobileNo: "9100879085",
+            applicantName: "Sharath",
+            applicantGender: "Male",
+            applicantDob: "1997-04-26",
+            applicantEmail: "sharath@egov.org",
+            applicantFatherHusbandName: "A",
+            applicantRelationship: "Father",
+            applicantPan: "ABCDE1234F",
+            applicantAddress: "asd",
+            applicantCategory: "A"
+          }
+        ]
+      }
+    };
+    dispatch(prepareFinalObject("noc", pfo));
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",

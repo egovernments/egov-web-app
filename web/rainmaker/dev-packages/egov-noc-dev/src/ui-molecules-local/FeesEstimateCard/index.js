@@ -31,7 +31,8 @@ const styles = {
   toolTipIcon: {
     color: "rgba(0, 0, 0, 0.3799999952316284)",
     paddingLeft: 5,
-    paddingTop: 1
+    position: "relative",
+    top: -2
   },
   bigheader: {
     color: "rgba(0, 0, 0, 0.8700000047683716)",
@@ -93,11 +94,10 @@ function FeesEstimateCard(props) {
             {estimate.fees.map((fee, key) => {
               let tooltip = fee.info ? (
                 <Tooltip title={fee.info.labelName}>
-                  <Icon
-                    className={classes.toolTipIcon}
-                    style={{ fontSize: 18 }}
-                  >
-                    info_circle
+                  <Icon className={classes.toolTipIcon}>
+                    <i class="material-icons" style={{ fontSize: 18 }}>
+                      info_circle
+                    </i>
                   </Icon>
                 </Tooltip>
               ) : (

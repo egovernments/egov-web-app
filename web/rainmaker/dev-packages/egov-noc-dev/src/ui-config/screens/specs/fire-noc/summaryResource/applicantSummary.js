@@ -18,8 +18,7 @@ export const applicantSummary = getCommonGrayCard({
     children: {
       header: {
         gridDefination: {
-          xs: 12,
-          sm: 10
+          xs: 8
         },
         ...getCommonSubHeader({
           labelName: "Applicant Details",
@@ -36,8 +35,7 @@ export const applicantSummary = getCommonGrayCard({
           }
         },
         gridDefination: {
-          xs: 12,
-          sm: 2,
+          xs: 4,
           align: "right"
         },
         children: {

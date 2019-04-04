@@ -18,8 +18,7 @@ export const nocSummary = getCommonGrayCard({
     children: {
       header: {
         gridDefination: {
-          xs: 6
-          // sm: 10
+          xs: 8
         },
         ...getCommonSubHeader({
           labelName: "NOC Details",
@@ -36,8 +35,7 @@ export const nocSummary = getCommonGrayCard({
           }
         },
         gridDefination: {
-          xs: 6,
-          // sm: 2,
+          xs: 4,
           align: "right"
         },
         children: {
