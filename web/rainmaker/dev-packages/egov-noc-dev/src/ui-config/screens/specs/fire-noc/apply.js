@@ -111,34 +111,70 @@ const screenConfig = {
       window.location.href,
       "applicationNumber"
     );
-    if (applicationNumber) {
+    const step = getQueryArg(window.location.href, "step");
+    if (applicationNumber && !step) {
       let pfo = {
-        provisionalNocNumber: "NOC-PROVISIONAL-2018-09-0012",
-        nocType: "New",
-        buildingName: "eGov",
-        buildingType: "Single Building",
-        buildingUsageType: "Commercial",
-        buildingUsageSubType: "Commercial",
-        noOfFloors: "3",
-        noOfBasements: "1",
-        plotSize: "10000",
-        builtupArea: "9000",
-        heightOfBuilding: "1000",
-        mobileNo: "9133234270",
-        applicantType: "Individual",
-        applicantName: "Loki",
-        applicantGender: "Male",
-        applicantEmail: "sharath.rao@egovernments.org",
-        applicantFatherHusbandName: "Odin",
-        applicantRelationship: "Father",
-        applicantPan: "ABCDE1234F",
-        applicantAddress: "Asgard",
-        applicantCategory: "A",
-        institutionName: "Non-profit"
+        provisionalNocNumber: "NOC-JLD-2018-09-8786",
+        buildingDetails: {
+          buildingType: "Multiple Building",
+          building: [
+            {
+              buildingName: "eGov",
+              buildingUsageType: "Commercial",
+              buildingUsageSubType: "Commercial",
+              noOfFloors: "3",
+              noOfBasements: "1",
+              builtupArea: "5000",
+              heightOfBuilding: "200"
+            },
+            {
+              buildingName: "Novo Pay",
+              buildingUsageType: "Commercial",
+              buildingUsageSubType: "Non-Commercial",
+              noOfFloors: "1",
+              noOfBasements: "2",
+              builtupArea: "3000",
+              heightOfBuilding: "100"
+            }
+          ]
+        },
+        address: {
+          buildingName: "eGovBuilding",
+          street: "Sarjapura Road",
+          mohalla: "Bellandur",
+          pincode: "123456",
+          additionalDetail: {
+            fireStation: "Sarjapur Fire Station"
+          }
+        },
+        applicantDetails: {
+          applicantType: "Multiple",
+          applicant: [
+            {
+              mobileNo: "9167765477",
+              applicantName: "Avijeet",
+              applicantGender: "Male",
+              applicantDob: "1991-06-28",
+              applicantFatherHusbandName: "A",
+              applicantRelationship: "Father",
+              applicantPan: "BNHSP1234K",
+              applicantAddress: "Corr",
+              applicantCategory: "A"
+            },
+            {
+              mobileNo: "9883727261",
+              applicantName: "Sharat",
+              applicantGender: "Male",
+              applicantDob: "2000-01-01",
+              applicantFatherHusbandName: "A",
+              applicantRelationship: "Father",
+              applicantAddress: "asd"
+            }
+          ]
+        }
       };
       dispatch(prepareFinalObject("noc", pfo));
     }
-    const step = getQueryArg(window.location.href, "step");
     if (step && step.match(/^\d+$/)) {
       let intStep = parseInt(step);
       set(

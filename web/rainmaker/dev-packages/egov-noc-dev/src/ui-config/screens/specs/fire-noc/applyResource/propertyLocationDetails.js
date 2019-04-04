@@ -331,7 +331,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
         // pattern: getPattern("ElectricityConnNo"),
-        jsonPath: "noc.additionalDetail.fireStation"
+        jsonPath: "noc.address.additionalDetail.fireStation"
       })
     }),
     mapsDialog: {

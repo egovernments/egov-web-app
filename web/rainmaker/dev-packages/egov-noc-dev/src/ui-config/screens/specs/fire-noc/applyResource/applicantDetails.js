@@ -32,7 +32,7 @@ const commonApplicantInformation = () => {
         }
       }
     ),
-    applicationCard: getCommonContainer({
+    applicantCard: getCommonContainer({
       mobileNumber: getTextField({
         label: {
           labelName: "Mobile No.",
@@ -49,7 +49,7 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
-        jsonPath: "noc.mobileNo",
+        jsonPath: "noc.applicantDetails.applicant[0].mobileNo",
         iconObj: {
           iconName: "search",
           position: "end",
@@ -95,7 +95,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "noc.applicantName",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantName",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -116,11 +116,11 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "noc.applicantGender",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
         props: {
           label: "Gender",
           buttons: ["Male", "Female", "Transgender"],
-          jsonPath: "noc.applicantGender",
+          jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
           required: true
         },
         type: "array"
@@ -136,7 +136,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "noc.applicantDob",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantDob",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -153,7 +153,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
         pattern: getPattern("Email"),
-        jsonPath: "noc.applicantEmail",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantEmail",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -171,7 +171,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "noc.applicantFatherHusbandName",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantFatherHusbandName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -187,11 +187,11 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "noc.applicantRelationship",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
         props: {
           label: "Relationship",
           buttons: ["Father", "Husband"],
-          jsonPath: "noc.applicantRelationship",
+          jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
           required: true
         },
         type: "array"
@@ -206,7 +206,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
         pattern: getPattern("PAN"),
-        jsonPath: "noc.applicantPan",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantPan",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -223,7 +223,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantAddress",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -239,7 +239,7 @@ const commonApplicantInformation = () => {
           labelName: "Select Special Applicant Category",
           labelKey: "NOC_SPECIAL_APPLICANT_CATEGORY_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantCategory",
+        jsonPath: "noc.applicantDetails.applicant[0].applicantCategory",
         data: [
           {
             code: "A"
@@ -271,7 +271,7 @@ const institutionInformation = () => {
         }
       }
     ),
-    applicationCard: getCommonContainer({
+    applicantCard: getCommonContainer({
       institutionName: getTextField({
         label: {
           labelName: "Name of Institution",
@@ -282,7 +282,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.institutionName",
+        jsonPath: "noc.applicantDetails.applicant[0].institutionName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -299,7 +299,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_TELEPHONE_NUMBER_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.telephoneNumber",
+        jsonPath: "noc.applicantDetails.applicant[0].telephoneNumber",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -316,7 +316,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_AUTHORIZED_PERSON_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.authorizedPerson",
+        jsonPath: "noc.applicantDetails.applicant[0].authorizedPerson",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -333,7 +333,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.institutionDesignation",
+        jsonPath: "noc.applicantDetails.applicant[0].institutionDesignation",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -350,7 +350,7 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_MOBILE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.authorizedPersonMobile",
+        jsonPath: "noc.applicantDetails.applicant[0].authorizedPersonMobile",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -367,7 +367,7 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.authorizedPersonEmail",
+        jsonPath: "noc.applicantDetails.applicant[0].authorizedPersonEmail",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -384,7 +384,7 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.officialCorrespondenceAddress",
+        jsonPath: "noc.applicantDetails.applicant[0].officialCorrespondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -419,7 +419,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Type",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantType",
+        jsonPath: "noc.applicantDetails.applicantType",
         data: [
           {
             code: "Individual"
@@ -474,7 +474,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Subtype",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantType",
+        jsonPath: "noc.applicantDetails.applicantSubType",
         data: [
           {
             code: "Private Company"
@@ -518,8 +518,9 @@ export const applicantDetails = getCommonCard({
               labelName: "Add Applicant",
               labelKey: "NOC_ADD_APPLICANT_LABEL"
             },
+            sourceJsonPath: "noc.applicantDetails.applicant",
             prefixSourceJsonPath:
-              "children.cardContent.children.buildingDataCard.multipleBuildingContainer.children"
+              "children.cardContent.children.applicantCard.children"
           },
           type: "array"
         }
