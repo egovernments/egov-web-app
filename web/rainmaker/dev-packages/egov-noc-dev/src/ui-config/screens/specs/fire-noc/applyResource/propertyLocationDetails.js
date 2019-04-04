@@ -18,13 +18,13 @@ import { httpRequest } from "../../../../../ui-utils/api";
 const showHideMapPopup = (state, dispatch) => {
   let toggle = get(
     state.screenConfiguration.screenConfig["apply"],
-    "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog.props.open",
+    "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.mapsDialog.props.open",
     false
   );
   dispatch(
     handleField(
       "apply",
-      "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
+      "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.mapsDialog",
       "props.open",
       !toggle
     )
@@ -163,7 +163,7 @@ export const propertyLocationDetails = getCommonCard(
         //   key: "NOC_PROPERTY_ID_TOOLTIP_MESSAGE"
         // },
         // infoIcon: "info_circle",
-        jsonPath: "Licenses[0].propertyId"
+        jsonPath: "noc.propertyId"
       }),
       propertyCity: {
         ...getSelectField({
@@ -183,12 +183,7 @@ export const propertyLocationDetails = getCommonCard(
         }),
         beforeFieldChange: async (action, state, dispatch) => {
           //Below only runs for citizen - not required here in employee
-          dispatch(
-            prepareFinalObject(
-              "Licenses[0].tradeLicenseDetail.address.city",
-              action.value
-            )
-          );
+          dispatch(prepareFinalObject("noc.address.city", action.value));
           try {
             let payload = await httpRequest(
               "post",
@@ -227,7 +222,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_PLOT_NO_PLACEHOLDER"
         },
         // pattern: getPattern("DoorHouseNo"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.doorNo"
+        jsonPath: "noc.address.doorNo"
       }),
       propertyBuilidingName: getTextField({
         label: {
@@ -239,7 +234,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_BLDG_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.buildingName"
+        jsonPath: "noc.address.buildingName"
       }),
       propertyStreetName: getTextField({
         label: {
@@ -251,7 +246,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.street"
+        jsonPath: "noc.address.street"
       }),
       propertyMohalla: getTextField({
         label: {
@@ -263,7 +258,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.street",
+        jsonPath: "noc.address.mohalla",
         required: true
       }),
       propertyPincode: getTextField({
@@ -276,7 +271,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_PIN_PLACEHOLDER"
         },
         pattern: getPattern("Pincode"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.pincode",
+        jsonPath: "noc.address.pincode",
         required: true
       }),
       propertyGisCoordinates: {
@@ -289,7 +284,7 @@ export const propertyLocationDetails = getCommonCard(
             cursor: "pointer"
           }
         },
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
+        jsonPath: "noc.address.latitude",
         onClickDefination: {
           action: "condition",
           callBack: showHideMapPopup
@@ -309,7 +304,7 @@ export const propertyLocationDetails = getCommonCard(
                 labelName: "Select your property location on map",
                 labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_PLACEHOLDER"
               },
-              jsonPath: "Licenses[0].tradeLicenseDetail.address.latitude",
+              jsonPath: "noc.address.latitude",
               iconObj: {
                 iconName: "gps_fixed",
                 position: "end"
@@ -336,8 +331,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
         // pattern: getPattern("ElectricityConnNo"),
-        jsonPath:
-          "Licenses[0].tradeLicenseDetail.additionalDetail.electricityConnectionNo"
+        jsonPath: "noc.additionalDetail.fireStation"
       })
     }),
     mapsDialog: {

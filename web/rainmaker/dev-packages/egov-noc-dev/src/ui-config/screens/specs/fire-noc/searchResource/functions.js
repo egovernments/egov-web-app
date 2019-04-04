@@ -51,7 +51,10 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch(
       toggleSnackbar(
         true,
-        "Please fill at least one field to start search",
+        {
+          labelName: "Please fill at least one field to start search",
+          labelKey: "NOC_SEARCH_SELECT_AT_LEAST_ONE_TOAST_MESSAGE"
+        },
         "warning"
       )
     );
@@ -93,6 +96,7 @@ export const searchApiCall = async (state, dispatch) => {
         BuildingName: "eGov",
         ownerName: "Nandhan",
         status: "INITIATED",
+        applicationDate: 1554332357000
       }
     ];
     try {

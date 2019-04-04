@@ -113,10 +113,10 @@ const screenConfig = {
     );
     if (applicationNumber) {
       let pfo = {
-        nocNumber: applicationNumber,
-        nocType: "Provisional",
+        provisionalNocNumber: "NOC-PROVISIONAL-2018-09-0012",
+        nocType: "New",
         buildingName: "eGov",
-        buildingType: "Multiple Building",
+        buildingType: "Single Building",
         buildingUsageType: "Commercial",
         buildingUsageSubType: "Commercial",
         noOfFloors: "3",
@@ -125,6 +125,7 @@ const screenConfig = {
         builtupArea: "9000",
         heightOfBuilding: "1000",
         mobileNo: "9133234270",
+        applicantType: "Individual",
         applicantName: "Loki",
         applicantGender: "Male",
         applicantEmail: "sharath.rao@egovernments.org",

@@ -71,7 +71,7 @@ export const nocDetails = getCommonCard({
         },
         // required: true,
         // pattern: getPattern("MobileNo"),
-        jsonPath: "noc.nocNumber",
+        jsonPath: "noc.provisionalNocNumber",
         iconObj: {
           iconName: "search",
           position: "end",

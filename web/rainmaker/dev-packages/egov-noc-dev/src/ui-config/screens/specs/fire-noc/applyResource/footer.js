@@ -7,12 +7,20 @@ import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import { getCommonApplyFooter } from "../../utils";
 import "./index.scss";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 const moveToReview = dispatch => {
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  const applicationNumberQueryString = applicationNumber
+    ? `?applicationNumber=${applicationNumber}`
+    : ``;
   const reviewUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/fire-noc/summary`
-      : `/fire-noc/summary`;
+      ? `/egov-ui-framework/fire-noc/summary${applicationNumberQueryString}`
+      : `/fire-noc/summary${applicationNumberQueryString}`;
   dispatch(setRoute(reviewUrl));
 };
 

@@ -2,6 +2,7 @@ import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -184,9 +185,16 @@ export const getFinancialYearDates = (format, et) => {
 };
 
 export const gotoApplyWithStep = (state, dispatch, step) => {
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  const applicationNumberQueryString = applicationNumber
+    ? `&applicationNumber=${applicationNumber}`
+    : ``;
   const applyUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/fire-noc/apply?step=${step}`
-      : `/fire-noc/apply?step=${step}`;
+      ? `/egov-ui-framework/fire-noc/apply?step=${step}${applicationNumberQueryString}`
+      : `/fire-noc/apply?step=${step}${applicationNumberQueryString}`;
   dispatch(setRoute(applyUrl));
 };
