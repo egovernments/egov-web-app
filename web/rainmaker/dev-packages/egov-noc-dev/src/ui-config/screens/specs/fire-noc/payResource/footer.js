@@ -383,8 +383,8 @@ export const footer = getCommonApplyFooter({
       action: "page_change",
       path:
         process.env.REACT_APP_SELF_RUNNING === "true"
-          ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=pay&status=success`
-          : `/fire-noc/acknowledgement?purpose=pay&status=success`
+          ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
+          : `/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
     }
     // roleDefination: {
     //   rolePath: "user-info.roles",
