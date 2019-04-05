@@ -5,7 +5,11 @@ import get from "lodash/get";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-import { getCommonCard } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonCard,
+  getCommonValue,
+  getCommonCaption
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -238,6 +242,26 @@ export const getCommonGrayCard = children => {
     },
     gridDefination: {
       xs: 12
+    }
+  };
+};
+
+export const getLabelOnlyValue = (value, props = {}) => {
+  return {
+    uiFramework: "custom-atoms",
+    componentPath: "Div",
+    gridDefination: {
+      xs: 6,
+      sm: 4
+    },
+    props: {
+      style: {
+        marginBottom: "16px"
+      },
+      ...props
+    },
+    children: {
+      value: getCommonCaption(value)
     }
   };
 };
