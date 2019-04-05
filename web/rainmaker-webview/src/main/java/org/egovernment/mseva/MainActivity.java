@@ -285,14 +285,16 @@ public class MainActivity extends AppCompatActivity {
 		@SuppressWarnings("deprecation")
 		@Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Toast.makeText(getApplicationContext(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
-			loadView("file:///android_asset/error.html", false);
+            Toast.makeText(getApplicationContext(), description, Toast.LENGTH_SHORT).show();
+//			loadView("file:///android_asset/error.html", false);
 		}
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            Toast.makeText(getApplicationContext(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
-			loadView("file:///android_asset/error.html", false);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+				Toast.makeText(getApplicationContext(), error.getDescription(), Toast.LENGTH_SHORT).show();
+			}
+//			loadView("file:///android_asset/error.html", false);
 		}
 
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs

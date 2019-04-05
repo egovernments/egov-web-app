@@ -63,8 +63,8 @@ android {
 			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 8
-			versionName '1.0.9'
+			versionCode 9
+			versionName '1.0.10'
 			resValue "string", "app_name", "mSeva-Punjab"
 			resValue "string", "launcher_icon", "@mipmap/ic_launcher_citizen"
 			signingConfig signingConfigs.Citizen
@@ -77,8 +77,8 @@ android {
 			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 8
-			versionName '1.0.9'
+			versionCode 9
+			versionName '1.0.10'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
 			resValue "string", "launcher_icon", "@mipmap/ic_launcher_employee"
 			signingConfig signingConfigs.Employee
@@ -91,8 +91,8 @@ android {
 			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 8
-			versionName '1.0.9'
+			versionCode 9
+			versionName '1.0.10'
 			resValue "string", "app_name", "UAT mSeva-Punjab"
 			resValue "string", "launcher_icon", "@mipmap/ic_launcher_citizen"
 			signingConfig signingConfigs.Citizen
@@ -111,8 +111,8 @@ android {
 			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 8
-			versionName '1.0.9'
+			versionCode 9
+			versionName '1.0.10'
 			resValue "string", "app_name", "UAT mSeva-Punjab Employee"
 			resValue "string", "launcher_icon", "@mipmap/ic_launcher_employee"
 			signingConfig signingConfigs.Employee
