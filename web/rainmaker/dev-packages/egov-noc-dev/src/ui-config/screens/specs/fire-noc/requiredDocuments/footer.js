@@ -5,9 +5,12 @@ export const footer = {
   uiFramework: "custom-atoms",
   componentPath: "Div",
   props: {
+    className: "apply-wizard-footer",
+
     style: {
       width: "100%",
-      textAlign: "right"
+      textAlign: "center",
+      bottom: 52
     }
   },
 

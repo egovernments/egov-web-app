@@ -99,33 +99,40 @@ const ownerCheckList = getCommonGrayCard({
   })
 });
 
-export const NOCRequiredDocuments = getCommonContainer({
-  headerDiv: {
-    uiFramework: "custom-atoms",
-    componentPath: "Container",
+export const NOCRequiredDocuments = getCommonContainer(
+  {
+    headerDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Container",
 
-    children: {
-      header: {
-        gridDefination: {
-          xs: 12
-        },
-        ...header
+      children: {
+        header: {
+          gridDefination: {
+            xs: 12
+          },
+          ...header
+        }
+      }
+    },
+    lowerDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Container",
+
+      children: {
+        identityProof,
+        addressProof,
+        buildingPlan,
+        fireFightingPlan,
+        ownerCheckList,
+        footer
       }
     }
   },
-  lowerDiv: {
-    uiFramework: "custom-atoms",
-    componentPath: "Container",
-
-    children: {
-      identityProof,
-      addressProof,
-      buildingPlan,
-      fireFightingPlan,
-      ownerCheckList,
-      footer
+  {
+    style: {
+      paddingBottom: 75
     }
   }
-});
+);
 
 export default NOCRequiredDocuments;
