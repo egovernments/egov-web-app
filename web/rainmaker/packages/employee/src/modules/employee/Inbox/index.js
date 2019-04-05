@@ -26,8 +26,28 @@ class Inbox extends Component {
         hasWorkflow: false,
       });
     }
+    //Temporary. To be removed and added to the main menu.
+    const nocCard ={
+      displayName: "Fire-NOC",
+      enabled: true,
+      id: 1779,
+      leftIcon: "action:description",
+      name:"rainmaker-common-firenoc",
+      navigationURL: "fire-noc/search",
+      url: "card",
+      moduleTitle: "NOC_COMMON_NOC",
+      button1: "NOC_COMMON_NOC",
+      // borderLeftColor: { borderLeft: "4px solid #add8e6" },
+      // iconAction: "Action",
+      // iconName: "description",
+      route: "fire-noc/search",
+     // iconStyle: { width: "50px", height: "50px", marginBottom: "10px", fill: "rgba(0, 0, 0, 0.60)" },
+    } 
 
     const list = menu && menu.filter((item) => item.url === "card");
+    console.log("Here is the list",list);
+    list.push(nocCard);
+  console.log(nocCard);
     this.setState({
       actionList: list,
     });
@@ -51,7 +71,7 @@ class Inbox extends Component {
 
 const mapStateToProps = (state) => {
   const { auth, app } = state;
-  const { menu } = app;
+  const menu = app && app.menu || [];
   const { userInfo } = auth;
   const name = auth && userInfo.name;
 
