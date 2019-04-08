@@ -766,16 +766,21 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
         item => currentNumber === item.mobileNumber
       );
       if (numbers.length > 1) {
-        dispatch(
-          toggleSnackbar(
-            true,
-            {
-              labelName: "Owner already added !",
-              labelKey: "ERR_OWNER_ALREADY_ADDED"
-            },
-            "error"
-          )
-        );
+        if (!numbers[0].userActive) {
+          alert("Inactive user exists!!");
+          // owners[cardIndex].userActive = false;
+        } else {
+          dispatch(
+            toggleSnackbar(
+              true,
+              {
+                labelName: "Owner already added !",
+                labelKey: "ERR_OWNER_ALREADY_ADDED"
+              },
+              "error"
+            )
+          );
+        }
         return;
       }
     }
@@ -815,10 +820,23 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
             userInfo.pwdExpiryDate
           );
         }
+        let currOwnersArr = get(
+          state.screenConfiguration.preparedFinalObject,
+          "Licenses[0].tradeLicenseDetail.owners",
+          []
+        );
+        const oldOwnersArr = get(
+          state.screenConfiguration.preparedFinalObject,
+          "LicensesTemp[0].tradeLicenseDetail.owners",
+          []
+        );
+        currOwnersArr[cardIndex] = userInfo;
+        oldOwnersArr.length > 0 &&
+          currOwnersArr.push({ ...oldOwnersArr[cardIndex], userActive: false });
         dispatch(
           prepareFinalObject(
-            `Licenses[0].tradeLicenseDetail.owners[${cardIndex}]`,
-            userInfo
+            `Licenses[0].tradeLicenseDetail.owners`,
+            currOwnersArr
           )
         );
       }

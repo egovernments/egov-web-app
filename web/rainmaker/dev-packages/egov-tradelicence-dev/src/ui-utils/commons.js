@@ -120,7 +120,8 @@ export const updatePFOforSearchResults = async (
   set(payload, getCheckBoxJsonpath(queryValuePurpose), true);
 
   setApplicationNumberBox(state, dispatch);
-  // return action;
+
+  createOwnersBackup(dispatch, payload);
 };
 
 export const getBoundaryData = async (
@@ -197,6 +198,18 @@ export const getBoundaryData = async (
   } catch (e) {
     console.log(e);
   }
+};
+
+const createOwnersBackup = (dispatch, payload) => {
+  const owners = get(payload, "Licenses[0].tradeLicenseDetail.owners");
+  owners &&
+    owners.length > 0 &&
+    dispatch(
+      prepareFinalObject(
+        "LicensesTemp[0].tradeLicenseDetail.owners",
+        JSON.parse(JSON.stringify(owners))
+      )
+    );
 };
 
 const getMultiUnits = multiUnits => {
@@ -394,6 +407,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         };
       });
       dispatch(prepareFinalObject("LicensesTemp.tradeUnits", tradeTemp));
+      createOwnersBackup(dispatch, searchResponse);
     } else {
       let accessories = get(queryObject[0], "tradeLicenseDetail.accessories");
       let tradeUnits = get(queryObject[0], "tradeLicenseDetail.tradeUnits");
@@ -422,6 +436,7 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         { Licenses: queryObject }
       );
       dispatch(prepareFinalObject("Licenses", response.Licenses));
+      createOwnersBackup(dispatch, response);
     }
     /** Application no. box setting */
     setApplicationNumberBox(state, dispatch);
