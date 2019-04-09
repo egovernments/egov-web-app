@@ -59,7 +59,7 @@ export const Boxboard = ({ data }) => {
                   >
                     <Label
                       label={`ACTION_TEST_${item.displayName.toUpperCase().replace(/[.:-\s\/]/g, "_")}`}
-                      defaultLabel={item.displayName}
+                      //defaultLabel={item.displayName}
                       color="rgba(0, 0, 0, 0.87)"
                       className="inbox-card-top-label"
                     />
