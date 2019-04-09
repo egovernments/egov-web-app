@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
 
 			//Opening external URLs in android default web browser
 		} else if (!getHost(url).equals(HOST)) {
-			loadView(url,true);
+			loadView(url,false);
 		} else {
 			returnValue  = false;
 		}
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
 			intent.setData(Uri.parse(url));
 			startActivity(intent);
 		} else {
-			webView.loadUrl(url+"?rid="+random_id());
+			webView.loadUrl(url);
 		}
 	}
 
