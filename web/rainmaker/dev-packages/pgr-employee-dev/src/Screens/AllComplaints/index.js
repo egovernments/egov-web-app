@@ -129,7 +129,7 @@ class AllComplaints extends Component {
     this.setState({ complaintNo });
     if (complaintNo.length < 6) {
       this.setState({
-        errorText: "Enter at least last 6 digit of complaint No"
+        errorText: "ERR_COMPLAINT_NUMBER_SEARCH"
       });
     } else {
       this.setState({ errorText: "" });
@@ -370,7 +370,7 @@ class AllComplaints extends Component {
               <div className="complaint-search-cont clearfix">
                 <div className="col-xs-12" style={{ paddingLeft: 8 }}>
                   <Label
-                    label="Search Complaint"
+                    label="CORE_COMMON_SEARCH_COMPLAINT"
                     fontSize={16}
                     dark={true}
                     bold={true}
@@ -514,7 +514,7 @@ class AllComplaints extends Component {
               <div className="complaint-search-cont clearfix">
                 <div className="col-xs-12" style={{ paddingLeft: 8 }}>
                   <Label
-                    label="Search Complaint"
+                    label="CORE_COMMON_SEARCH_COMPLAINT"
                     fontSize={16}
                     dark={true}
                     bold={true}

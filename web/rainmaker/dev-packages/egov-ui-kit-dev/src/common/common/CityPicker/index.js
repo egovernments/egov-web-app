@@ -76,7 +76,7 @@ class CityPickerDialog extends Component {
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}
           handleClose={onClose}
           bodyStyle={{ padding: "0px", overflowX: "hidden", maxHeight: "100%", minHeight: "100px" }}
-          title="Choose City"
+          title={<Label label="CS_SELECT_CITY_CHOOSE_CITY" fontSize="18px" containerStyle={{ padding: "20px 10px", backgroundColor: "#fff" }} />}
           modal={false}
           open={open}
           autoScrollBodyContent={true}
