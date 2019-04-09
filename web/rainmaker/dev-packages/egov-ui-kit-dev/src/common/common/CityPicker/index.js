@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getCityNameByCode } from "egov-ui-kit/utils/commons";
 import { List, Dialog, TextFieldIcon, AutoSuggest } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+import Label from "egov-ui-kit/utils/translationNode";
 
 class CityPickerDialog extends Component {
   state = { results: [], searchTerm: "", open: false };
