@@ -11,6 +11,7 @@
     text-align: right;
     display: flex;
     padding: initial;
+    overflow: auto;
   }
 
   .apply-wizard-footer button {
