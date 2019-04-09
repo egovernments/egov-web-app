@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, TextField, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { ProfileSection } from "modules/common";
+import "./index.css";
 
 const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }) => {
   const fields = form.fields || {};
@@ -20,7 +21,7 @@ const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }
             <TextField {...fields.email} onChange={(e, value) => handleFieldChange("email", value)} />
             <Link to="/user/change-password">
               <div style={{ marginTop: "24px", marginBottom: "24px" }}>
-                <Label label={"CHANGE PASSWORD"} color="#f89a3f" />
+                <Label className="change-password-label-style" label={"CORE_COMMON_CHANGE_PASSWORD"} color="#f89a3f" />
               </div>
             </Link>
           </div>
