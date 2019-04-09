@@ -229,7 +229,7 @@ class UiBoundary extends Component {
   };
 
   renderFields = (level) => {
-    let { dropDownData, dropDownDataVal, levelSearchString = {} } = this.state;
+    let { dropDownData, labelArr, dropDownDataVal } = this.state;
     const { boundaryFieldsText, handleFieldChange } = this.props;
     let data =
       dropDownData && dropDownData[level]
@@ -238,6 +238,9 @@ class UiBoundary extends Component {
           })
         : [];
     const dataSourceConfig = { text: "text", value: "value" };
+    let isDisabled = false;
+    const levelndex = labelArr.indexOf(level);
+    levelndex > 0 && (isDisabled = dropDownDataVal[labelArr[levelndex - 1]] ? false : true);
     return (
       <div>
         <AutoComplete
@@ -250,6 +253,7 @@ class UiBoundary extends Component {
           floatingLabelFixed={true}
           fullWidth={true}
           style={{ display: "inline-block" }}
+          disabled={isDisabled}
           filter={(searchText, key) => {
             return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
           }}
