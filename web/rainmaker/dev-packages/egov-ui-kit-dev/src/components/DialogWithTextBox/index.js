@@ -75,7 +75,7 @@ class DialogWithTextField extends Component {
           <Button
             id="logout-yes-button"
             className="logout-yes-button"
-            label={<Label buttonLabel={true} label={"SEND"} color="#FE7A51" />}
+            label={<Label buttonLabel={true} label={"CORE_POPUP_SEND"} color="#FE7A51" />}
             backgroundColor={"#fff"}
             onClick={() => {
               onSend(this.state.valueTyped);
