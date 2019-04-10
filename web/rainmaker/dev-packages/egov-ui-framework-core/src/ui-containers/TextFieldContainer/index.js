@@ -40,9 +40,12 @@ class TextFieldContainer extends React.Component {
       dispatch,
       title,
       errorMessage,
+      error,
       ...rest
     } = this.props;
-    errorMessage = getLocaleLabels("Invalid input", errorMessage);
+    errorMessage = error
+      ? getLocaleLabels("Invalid input", errorMessage, localizationLabels)
+      : "";
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
@@ -72,6 +75,8 @@ class TextFieldContainer extends React.Component {
           placeholder={translatedPlaceholder}
           iconObj={iconObj}
           value={value ? value : translatedPlaceholder}
+          error={error}
+          helperText={errorMessage}
           {...rest}
         >
           <MenuItem value={translatedPlaceholder} disabled>
@@ -106,6 +111,8 @@ class TextFieldContainer extends React.Component {
             placeholder={translatedPlaceholder}
             iconObj={iconObj}
             value={value ? value : translatedPlaceholder}
+            error={error}
+            helperText={errorMessage}
             {...rest}
           >
             <MenuItem value={translatedPlaceholder} disabled>
@@ -129,6 +136,8 @@ class TextFieldContainer extends React.Component {
                 ? translatedPlaceholder
                 : value
             }
+            error={error}
+            helperText={errorMessage}
             {...rest}
           />
           {title && !isEmpty(title) && infoIcon && (
