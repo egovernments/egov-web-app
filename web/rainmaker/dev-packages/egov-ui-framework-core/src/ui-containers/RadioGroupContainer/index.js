@@ -63,7 +63,7 @@ class RadioButtonsGroup extends React.Component {
                   <FormControlLabel
                     key={index}
                     classes={{ label: "radio-button-label" }}
-                    value={button}
+                    value={button.value}
                     control={
                       <Radio
                         classes={{
@@ -72,7 +72,7 @@ class RadioButtonsGroup extends React.Component {
                         color="primary"
                       />
                     }
-                    label={button}
+                    label={button.label}
                   />
                 );
               })}
