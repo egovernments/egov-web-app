@@ -164,7 +164,11 @@ export const epochToYmd = et => {
 };
 
 export const getLocaleLabels = (label, labelKey, localizationLabels) => {
-  if (!localizationLabels) localizationLabels = getLocalization(getLocale());
+  if (!localizationLabels)
+    localizationLabels = transformById(
+      JSON.parse(getLocalization(`localization_${getLocale()}`)),
+      "code"
+    );
   if (labelKey) {
     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
     if (!translatedLabel || labelKey === translatedLabel) {
