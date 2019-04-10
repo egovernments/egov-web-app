@@ -75,9 +75,9 @@ class TextFieldContainer extends React.Component {
           placeholder={translatedPlaceholder}
           iconObj={iconObj}
           value={value ? value : translatedPlaceholder}
+          {...rest}
           error={error}
           helperText={errorMessage}
-          {...rest}
         >
           <MenuItem value={translatedPlaceholder} disabled>
             <div className="select-field-placeholder">
@@ -111,9 +111,9 @@ class TextFieldContainer extends React.Component {
             placeholder={translatedPlaceholder}
             iconObj={iconObj}
             value={value ? value : translatedPlaceholder}
+            {...rest}
             error={error}
             helperText={errorMessage}
-            {...rest}
           >
             <MenuItem value={translatedPlaceholder} disabled>
               <div className="select-field-placeholder">
@@ -136,9 +136,9 @@ class TextFieldContainer extends React.Component {
                 ? translatedPlaceholder
                 : value
             }
+            {...rest}
             error={error}
             helperText={errorMessage}
-            {...rest}
           />
           {title && !isEmpty(title) && infoIcon && (
             <Tooltip val={title} icon={infoIcon} />
