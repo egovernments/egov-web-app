@@ -6,7 +6,14 @@ import {
   getPattern,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
+
+const hasButton = getQueryArg(window.location.href, "hasButton");
+//const hasApproval = getQueryArg(window.location.href, "hasApproval");
+let enableButton = true;
+//enableInbox = hasApproval && hasApproval === "false" ? false : true;
+enableButton = hasButton && hasButton === "false" ? false : true;
 
 export const abgSearchCard = getCommonCard({
   searchContainer: getCommonContainer({
@@ -129,3 +136,48 @@ export const abgSearchCard = getCommonCard({
     })
   })
 });
+
+export const mergeDownloadButton = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  //  gridDefination: {
+  //     xs: 12,
+  //     sm: 12
+  //     // align: ""
+  // },
+  props: {
+    className: "abg-button-container",
+    style: {
+      textAlign: "right"
+    }
+  },
+  children: {
+    mergeButton: {
+      componentPath: "Button",
+      // gridDefination: {
+      //   xs: 12,
+      //   sm: 4
+      //   // align: ""
+      // },
+      visible: enableButton,
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          color: "white",
+          borderRadius: "2px",
+          width: "250px",
+          height: "48px"
+        }
+      },
+      children: {
+        buttonLabel: getLabel({
+          labelName: "MERGE & DOWNLOAD",
+          labelKey: "ABG_GROUP_BILLS_MERGE_AND_DOWNLOAD_BUTTON"
+        })
+      }
+      //  Add onClickDefination
+      // Add roleDefination
+    }
+  }
+};
