@@ -128,10 +128,8 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.licenseExpiryDate = nullToNa(
       epochToDate(get(response, "Licenses[0].validTo", "NA"))
     );
-    data.licenseValidity = getFinancialYearDates(
-      "dd/mm/yyyy",
-      licenseIssueDate
-    );
+    let licenseValidTo = get(response, "Licenses[0].validTo", "NA");
+    data.licenseValidity = getFinancialYearDates("dd/mm/yyyy", licenseValidTo);
     /** Trade settings */
     const tradeUnitsFromResponse = get(
       response,

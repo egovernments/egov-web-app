@@ -251,6 +251,7 @@ export const getTextField = textScheama => {
       iconObj,
       title,
       infoIcon,
+      errorMessage,
       ...props
     },
     gridDefination,

@@ -4,7 +4,8 @@ import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/a
 import store from "redux/store";
 import {
   getAccessToken,
-  getTenantId
+  getTenantId,
+  getLocale
 } from "egov-ui-kit/utils/localStorageUtils";
 
 const instance = axios.create({
@@ -23,7 +24,7 @@ const wrapRequestBody = (requestBody, action) => {
     action: action,
     did: "1",
     key: "",
-    msgId: "20170310130900|en_IN",
+    msgId: `20170310130900|${getLocale()}`,
     requesterId: "",
     authToken
   };

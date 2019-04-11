@@ -28,11 +28,11 @@
   letter-spacing: 0.5px;
   color: rgba(0, 0, 0, 0.6000000238418579);
 }
-// @media only screen and (max-width: 768px) {
-//   .pt-landing-card {
-//     display: none;
-//   }
-// }
+@media only screen and (max-width: 768px) {
+  .pt-landing-card {
+    display: none;
+  }
+}
 
 @media only screen and (min-width: 600px) {
   .landing-page-button-container {

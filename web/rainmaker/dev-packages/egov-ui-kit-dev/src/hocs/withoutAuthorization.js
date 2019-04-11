@@ -14,7 +14,14 @@ const withoutAuthorization = (redirectionUrl) => (Component) => {
   }
   const mapStateToProps = (state) => {
     const { authenticated } = state.auth;
-    return { authenticated };
+    let { stateInfoById } = state.common || [];
+    let hasLocalisation = false;
+    let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
+    if (stateInfoById && stateInfoById.length > 0) {
+      hasLocalisation = stateInfoById[0].hasLocalisation;
+      defaultUrl = stateInfoById[0].defaultUrl;
+    }
+    return { authenticated, hasLocalisation, defaultUrl };
   };
   return connect(mapStateToProps)(Wrapper);
 };

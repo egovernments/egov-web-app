@@ -269,7 +269,7 @@ class ActionMenuComp extends Component {
                   primaryText={
                     <Label
                       className="menuStyle with-childs"
-                      defaultLabel={item.name}
+                      //defaultLabel={item.name}
                       label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                       color="rgba(0, 0, 0, 0.87)"
                     />
@@ -327,7 +327,7 @@ class ActionMenuComp extends Component {
                       primaryText={
                         <Label
                           className="menuStyle"
-                          defaultLabel={item.name}
+                          //defaultLabel={item.name}
                           label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                           color="rgba(0, 0, 0, 0.87)"
                         />
@@ -359,7 +359,7 @@ class ActionMenuComp extends Component {
                       primaryText={
                         <Label
                           className="menuStyle"
-                          defaultLabel={item.name}
+                          //defaultLabel={item.name}
                           label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                           color="rgba(0, 0, 0, 0.87)"
                         />
@@ -407,7 +407,7 @@ class ActionMenuComp extends Component {
                         primaryText={
                           <Label
                             className="menuStyle"
-                            defaultLabel={item.displayName}
+                            //defaultLabel={item.displayName}
                             label={item.name ? `ACTION_TEST_${item.displayName.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                             color="rgba(0, 0, 0, 0.87)"
                           />
