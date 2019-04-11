@@ -6,7 +6,7 @@ import {
   submitForm
 } from "../ui-redux/screen-configuration/actions";
 import { setRoute } from "../ui-redux/app/actions";
-import getConfig from "../ui-config/commonConfig/remote-config-paths";
+import getConfig from "ui-config/commonConfig/remote-config-paths";
 import cloneDeep from "lodash/cloneDeep";
 
 const screenHoc = ({
