@@ -82,19 +82,6 @@ export const getDownloadItems = (status, applicationNumber, state) => {
     leftIcon: "assignment"
   };
 
-  // return {
-  //   downloadMenu: [
-  //     tlCertificateDownloadObject,
-  //     receiptDownloadObject
-  //     // applicationDownloadObject
-  //   ],
-  //   printMenu: [
-  //     tlCertificatePrintObject,
-  //     receiptPrintObject
-  //     //applicationPrintObject
-  //   ]
-  // };
-
   switch (status) {
     case "APPROVED":
       return {
@@ -110,32 +97,17 @@ export const getDownloadItems = (status, applicationNumber, state) => {
         ]
       };
 
-    case "APPLIED":
-    case "PENDINGPAYMENT":
-      return {
-        downloadMenu: [applicationDownloadObject],
-        printMenu: [applicationPrintObject]
-      };
-
-    case "pending_approval":
-      return {
-        downloadMenu: [receiptDownloadObject, applicationDownloadObject],
-        printMenu: [receiptPrintObject, applicationPrintObject]
-      };
-
-    case "CANCELLED":
-      return {
-        downloadMenu: [applicationDownloadObject],
-        printMenu: [applicationPrintObject]
-      };
-
-    case "REJECTED":
-      return {
-        downloadMenu: [applicationDownloadObject],
-        printMenu: [applicationPrintObject]
-      };
+    // case "pending_approval":
+    //   return {
+    //     downloadMenu: [receiptDownloadObject, applicationDownloadObject],
+    //     printMenu: [receiptPrintObject, applicationPrintObject]
+    //   };
 
     default:
+      return {
+        downloadMenu: [applicationDownloadObject],
+        printMenu: [applicationPrintObject]
+      };
       break;
   }
 };
