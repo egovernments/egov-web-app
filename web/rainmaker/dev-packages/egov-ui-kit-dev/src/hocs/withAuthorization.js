@@ -245,12 +245,12 @@ const withAuthorization = (options = {}) => (Component) => {
   }
 
   const mapStateToProps = (state) => {
-    let { authenticated, userInfo, common } = state.auth;
-    let { stateInfoById } = common || [];
+    let { authenticated, userInfo } = state.auth;
+    let { stateInfoById } = state.common || [];
     let hasLocalisation = false;
     let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
     // userInfo = typeof userInfo === "string" ? JSON.parse(userInfo) : userInfo;
-    if (stateInfoById && stateInfoById.length > 1) {
+    if (stateInfoById && stateInfoById.length > 0) {
       hasLocalisation = stateInfoById[0].hasLocalisation;
       defaultUrl = stateInfoById[0].defaultUrl;
     }

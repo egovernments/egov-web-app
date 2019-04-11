@@ -20,7 +20,7 @@ class Footer extends React.Component {
 
   getDownloadData = () => {
     const { Licenses, state } = this.props;
-    const { status, applicationNumber } = Licenses[0];
+    const { status, applicationNumber } = Licenses && Licenses[0];
     return {
       label: "Download",
       leftIcon: "cloud_download",
