@@ -30,7 +30,7 @@ class PaymentSuccess extends Component {
 
   buttons = {
     button1: "Link previous payments",
-    button2: "Finish"
+    button2: "PT_FINISH_BUTTON"
   };
 
   successMessages = financialYear => {

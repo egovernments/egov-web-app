@@ -9,6 +9,7 @@
 .descriptionStyle a {
   text-decoration: none;
   color: #fe7a51;
+  display: "flex";
 }
 .detailTitlePTExample {
   font-size: 16px;
@@ -39,8 +40,8 @@
   font-size: 16px;
   letter-spacing: 0.7px;
 }
-@media only screen and (max-width:768px){
-  .blockBox{
-    padding-top:20px;
+@media only screen and (max-width: 768px) {
+  .blockBox {
+    padding-top: 20px;
   }
 }

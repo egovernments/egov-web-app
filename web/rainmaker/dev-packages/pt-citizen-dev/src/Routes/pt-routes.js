@@ -209,7 +209,7 @@ const routes = [
     options: {
       hideFooter: true,
       // hideBackButton: true,
-      title: "Examples"
+      title: "PT_EXAMPLES"
     }
   }
 ];
