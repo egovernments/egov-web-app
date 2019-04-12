@@ -10,6 +10,7 @@ import { paymentFailureFooter } from "./acknowledgementResource/paymentFailureFo
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { loadReceiptGenerationData } from "../utils/receiptTransformer";
+import get from "lodash/get";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
 
@@ -22,13 +23,19 @@ const getAcknowledgementCard = (
   secondNumber,
   tenant
 ) => {
+  const licenseFinancialYear = get(
+    state,
+    "screenConfiguration.preparedFinalObject.Licenses[0].financialYear"
+  );
+  const financialYearText = licenseFinancialYear
+    ? `(${licenseFinancialYear})`
+    : "";
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: `Application for New Trade License (${getCurrentFinancialYear()})`,
+        labelName: `Application for New Trade License ${financialYearText}`,
         labelKey: "TL_COMMON_APPLICATION_NEW_LICENSE",
-        dynamicArray: [getCurrentFinancialYear()]
-        // labelKey: "TL_COMMON_APPL_NEW_LIC"
+        dynamicArray: [financialYearText]
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -76,9 +83,9 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Payment for New Trade License (${getCurrentFinancialYear()})`,
+          labelName: `Payment for New Trade License ${financialYearText}`,
           labelKey: "TL_COMMON_PAYMENT_NEW_LICENSE",
-          dynamicArray: [getCurrentFinancialYear()]
+          dynamicArray: [financialYearText]
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -126,9 +133,9 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Trade License Application (${getCurrentFinancialYear()})`,
+          labelName: `Trade License Application ${financialYearText}`,
           labelKey: "TL_TRADE_APPLICATION",
-          dynamicArray: [getCurrentFinancialYear()]
+          dynamicArray: [financialYearText]
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -170,9 +177,9 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Trade License Application (${getCurrentFinancialYear()})`,
+          labelName: `Trade License Application ${financialYearText}`,
           labelKey: "TL_TRADE_APPLICATION",
-          dynamicArray: [getCurrentFinancialYear()]
+          dynamicArray: [financialYearText]
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -213,9 +220,9 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Trade License Application (${getCurrentFinancialYear()})`,
+          labelName: `Trade License Application ${financialYearText}`,
           labelKey: "TL_TRADE_APPLICATION",
-          dynamicArray: [getCurrentFinancialYear()]
+          dynamicArray: [financialYearText]
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -251,9 +258,9 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Trade License Application (${getCurrentFinancialYear()})`,
+          labelName: `Trade License Application ${financialYearText}`,
           labelKey: "TL_TRADE_APPLICATION",
-          dynamicArray: [getCurrentFinancialYear()]
+          dynamicArray: [financialYearText]
         }),
         applicationNumber: {
           uiFramework: "custom-atoms-local",
@@ -294,8 +301,8 @@ const getAcknowledgementCard = (
     return {
       header: getCommonContainer({
         header: getCommonHeader({
-          labelName: `Trade License Application (${getCurrentFinancialYear()})`,
-          dynamicArray: [getCurrentFinancialYear()],
+          labelName: `Trade License Application ${financialYearText}`,
+          dynamicArray: [financialYearText],
           labelKey: "TL_TRADE_APPLICATION"
         }),
         applicationNumber: {
@@ -331,9 +338,9 @@ const getAcknowledgementCard = (
   } else if (purpose === "mark" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: `Application for Trade License (${getCurrentFinancialYear()})`,
+        labelName: `Application for Trade License ${financialYearText}`,
         labelKey: "TL_APPLICATION_TRADE_LICENSE",
-        dynamicArray: [getCurrentFinancialYear()]
+        dynamicArray: [financialYearText]
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -363,9 +370,9 @@ const getAcknowledgementCard = (
   } else if (purpose === "forward" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: `Application for Trade License (${getCurrentFinancialYear()})`,
+        labelName: `Application for Trade License ${financialYearText}`,
         labelKey: "TL_APPLICATION_TRADE_LICENSE",
-        dynamicArray: [getCurrentFinancialYear()]
+        dynamicArray: [financialYearText]
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
