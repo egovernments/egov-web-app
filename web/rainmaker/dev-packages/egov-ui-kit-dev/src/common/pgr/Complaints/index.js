@@ -146,11 +146,11 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = `CS_MYCOMPLAINTS_RE_ASSIGNED ${assignee}`;
   }
-  if (status && status.includes(`Overdue`)) {
+  if (status && status.toLowerCase().includes(`overdue`)) {
     statusObj.style = { color: "#e74c3c" };
     statusObj.message = "";
   }
-  if (status && status.includes(`left`)) {
+  if (status && status.toLowerCase().includes(`left`)) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
   }
@@ -204,6 +204,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                       ...getStatusAndChangeColor(complaint.status.status).style,
                     }}
                     label={complaint.status.status}
+                    dynamicArray={[Math.abs(complaint.SLA)]}
                     bold={true}
                   />
                 </div>

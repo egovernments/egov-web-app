@@ -2,24 +2,56 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-const labelText = (label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue) => {
-  return isConcat ? (
-    label && dynamicValue ? (
-      <div data-localization={`${label}${dynamicValue}`} className="rainmaker-displayInline">
-        <span style={labelStyle}>{label}</span>
-        <span style={labelStyle}>{dynamicValue}</span>
-      </div>
-    ) : (
-      ""
-    )
-  ) : label && label.length ? (
-    <div data-localization={label} className={`label-text ${labelClassName}`} style={labelStyle}>
-      {label} {secondaryText}
-      {required && <span style={{ color: "red" }}> *</span>}
-    </div>
-  ) : (
-    ""
-  );
+const labelText = (label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue, dynamicArray) => {
+  //   return isConcat ? (
+  //     label && dynamicValue ? (
+  //       <div data-localization={`${label}${dynamicValue}`} className="rainmaker-displayInline">
+  //         <span style={labelStyle}>{label}</span>
+  //         <span style={labelStyle}>{dynamicValue}</span>
+  //       </div>
+  //     ) : (
+  //       ""
+  //     )
+  //   ) : label && label.length ? (
+  //     <div data-localization={label} className={`label-text ${labelClassName}`} style={labelStyle}>
+  //       {label} {secondaryText}
+  //       {required && <span style={{ color: "red" }}> *</span>}
+  //     </div>
+  //   ) : (
+  //     ""
+  //   );
+  // };
+
+  if (label && label.length) {
+    if (dynamicArray) {
+      if (label) {
+        let displayLabel = label;
+        if (dynamicArray.length > 1) {
+          dynamicArray.forEach((item, index) => {
+            displayLabel = displayLabel.replace(new RegExp("\\{" + index + "\\}", "gm"), item);
+          });
+        } else {
+          let index = 0;
+          displayLabel = displayLabel.replace(new RegExp("\\{" + index + "\\}", "gm"), dynamicArray[0]);
+        }
+
+        return (
+          <div data-localization={displayLabel} className={`label-text ${labelClassName}`} style={labelStyle}>
+            <span style={labelStyle}>{displayLabel}</span>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div data-localization={label} className={`label-text ${labelClassName}`} style={labelStyle}>
+          {label} {secondaryText}
+          {required && <span style={{ color: "red" }}> *</span>}
+        </div>
+      );
+    }
+  } else {
+    return "";
+  }
 };
 
 const Label = ({
@@ -37,6 +69,7 @@ const Label = ({
   id,
   required,
   dynamicValue,
+  dynamicArray,
   isConcat,
   secondaryText = "",
 }) => {
@@ -67,7 +100,7 @@ const Label = ({
 
   return (
     <div id={id} style={containerStyle} className={buttonLabel ? `button-label-container ${className}` : `label-container ${className}`}>
-      {labelText(label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue)}
+      {labelText(label, labelStyle, labelClassName, required, secondaryText, isConcat, dynamicValue, dynamicArray)}
     </div>
   );
 };
