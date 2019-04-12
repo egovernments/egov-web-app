@@ -113,7 +113,7 @@ class PaymentModes extends Component {
             >
               <Icon name="credit-card" action="action" />
               <Label
-                label="Choose mode of Payment"
+                label="PT_PAYMENTMODE_MODES_OF_PAYMENT"
                 fontSize={16}
                 bold={true}
                 dark={true}

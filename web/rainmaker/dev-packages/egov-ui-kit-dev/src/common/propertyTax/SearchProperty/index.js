@@ -155,7 +155,7 @@ class SearchProperty extends Component {
             <div className="no-search-text">No property records found</div>
             <div className="new-assess-btn">
               <Button
-                label={"New Property Assessment"}
+                label={<Label label="PT_SEARCH_PROPERTY_NEWPROP_ASSESSMENT" buttonLabel={true} />}
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
                 onClick={() => history.push("/property-tax")}

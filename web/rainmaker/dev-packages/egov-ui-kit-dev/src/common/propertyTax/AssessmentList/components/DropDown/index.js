@@ -151,11 +151,13 @@ class DropDown extends Component {
           hintStyle={styles.hintStyle}
           onChange={(event, key, payload) => this.onSelectFieldChange(event, key, payload, imageUrl)}
         >
-          {userType === "CITIZEN" && <MenuItem value="Download Receipt" primaryText="Download Receipt" />}
-          {userType === "EMPLOYEE" && <MenuItem value="Download Citizen Receipt" primaryText="Download Citizen Receipt" />}
-          {userType === "EMPLOYEE" && <MenuItem value="Download Employee Receipt" primaryText="Download Employee Receipt" />}
-          {(item.status === "Paid" || item.status === "Partially Paid") && <MenuItem value="Re-Assess" primaryText="Re-Assess" />}
-          {item.status === "Partially Paid" && <MenuItem value="Complete Payment" primaryText="Complete Payment" />}
+          {userType === "CITIZEN" && <MenuItem value="Download Receipt" primaryText={<Label label="PT_DOWNLOAD_RECEIPT" />} />}
+          {userType === "EMPLOYEE" && <MenuItem value="Download Citizen Receipt" primaryText={<Label label="PT_DOWNLOAD_CITIZEN_RECEIPT" />} />}
+          {userType === "EMPLOYEE" && <MenuItem value="Download Employee Receipt" primaryText={<Label label="PT_DOWNLOAD_EMPLOYEE_RECEIPT" />} />}
+          {(item.status === "Paid" || item.status === "Partially Paid") && (
+            <MenuItem value="Re-Assess" primaryText={<Label label="PT_RE_ASSESS" />} />
+          )}
+          {item.status === "Partially Paid" && <MenuItem value="Complete Payment" primaryText={<Label label="PT_COMPLETE_PAYMENT" />} />}
         </SelectField>
       </div>
     );
