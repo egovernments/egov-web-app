@@ -74,7 +74,6 @@ class App extends Component {
       history.push(nextRoute);
       setRoute("");
     }
-
     if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated) {
       nextProps.hasLocalisation && this.props.history.replace("/language-selection");
     }
