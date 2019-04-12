@@ -816,9 +816,9 @@ export const getUserDataFromUuid = async bodyObject => {
 const getStatementForDocType = docType => {
   switch (docType) {
     case "OWNERIDPROOF":
-      return "Allowed documents are Aadhar Card / Voter ID Card / Driving License";
+      return "TL_UPLOAD_STATEMENT1";
     case "OWNERSHIPPROOF":
-      return "Allowed documents are Rent Deed / Lease Doc / Property Registry / General or Special Power of Attorney";
+      return "TL_UPLOAD_STATEMENT2";
     default:
       return "";
   }

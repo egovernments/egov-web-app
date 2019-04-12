@@ -499,7 +499,7 @@ const accessoriesCard = {
             },
             placeholder: {
               labelName: "Select Accessories",
-              abelKey: "TL_NEW_TRADE_DETAILS_ACC_PLACEHOLDER"
+              labelKey: "TL_NEW_TRADE_DETAILS_ACC_PLACEHOLDER"
             },
             localePrefix: {
               moduleName: "TRADELICENSE",

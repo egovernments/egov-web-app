@@ -75,10 +75,12 @@ export const payeeDetails = getCommonContainer({
     },
     data: [
       {
-        code: "Owner"
+        code: "Owner",
+        label: "TL_PAYMENT_BY_OWNER"
       },
       {
-        code: "Others"
+        code: "Others",
+        label: "TL_PAYMENT_BY_OTHERS"
       }
     ],
     jsonPath: "ReceiptTemp[0].Bill[0].payer",
@@ -130,7 +132,7 @@ export const chequeDetails = getCommonContainer({
     required: true
   }),
   chequeDate: getDateField({
-    label: { labelName: "Cheque Date" },
+    label: { labelName: "Cheque Date", labelKey: "TL_PAYMENT_CHQ_DATE_LABEL" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"
@@ -210,7 +212,7 @@ export const demandDraftDetails = getCommonContainer({
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
   ddDate: getDateField({
-    label: { labelName: "DD Date" },
+    label: { labelName: "DD Date", labelKey: "TL_PAYMENT_DD_DATE_LABEL" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"

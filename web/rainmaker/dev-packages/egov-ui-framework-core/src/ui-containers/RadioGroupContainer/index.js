@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 import { connect } from "react-redux";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -72,7 +73,13 @@ class RadioButtonsGroup extends React.Component {
                         color="primary"
                       />
                     }
-                    label={button.label}
+                    // label={button.label}
+                    label={
+                      <LabelContainer
+                        labelName={button.labelName}
+                        labelKey={button.labelKey}
+                      />
+                    }
                   />
                 );
               })}
