@@ -85,62 +85,62 @@ export const fetchData = async (action, state, dispatch) => {
 export const textToLocalMapping = {
   "Application No": get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_NO"),
-    "message",
-    "Application No"
+    "message"
+    // "Application No"
   ),
   "License No": get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_LIC_NO"),
-    "message",
-    "License No"
+    "message"
+    // "License No"
   ),
   "Trade Name": get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_TRD_NAME"),
-    "message",
-    "Trade Name"
+    "message"
+    // "Trade Name"
   ),
   "Owner Name": get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_OWN_NAME"),
-    "message",
-    "Owner Name"
+    "message"
+    // "Owner Name"
   ),
   "Application Date": get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Application Date"
+    "message"
+    // "Application Date"
   ),
   Status: get(
     getLocalTextFromCode("TL_COMMON_TABLE_COL_STATUS"),
-    "message",
-    "Status"
+    "message"
+    // "Status"
   ),
-  INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message", "INITIATED"),
-  APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message", "APPLIED"),
+  INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message"),
+  APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message"),
   PAID: get(
     getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
-    "message",
-    "PAID"
+    "message"
+    // "PAID"
   ),
   PENDINGAPPROVAL: get(
     getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
-    "message",
-    "Pending for Approval"
+    "message"
+    // "Pending for Approval"
   ),
   PENDINGPAYMENT: get(
     getLocalTextFromCode("WF_NEWTL_PENDINGPAYMENT"),
-    "message",
-    "Pending payment"
+    "message"
+    // "Pending payment"
   ),
   FIELDINSPECTION: get(
     getLocalTextFromCode("WF_NEWTL_FIELDINSPECTION"),
-    "message",
-    "Pending for Field Inspection"
+    "message"
+    // "Pending for Field Inspection"
   ),
-  APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message", "APPROVED"),
-  REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message", "REJECTED"),
-  CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message", "CANCELLED"),
+  APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message"),
+  REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message"),
+  CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message"),
   MY_APPLICATIONS: get(
     getLocalTextFromCode("TL_MY_APPLICATIONS"),
-    "message",
-    "My Applications"
+    "message"
+    // "My Applications"
   )
 };
