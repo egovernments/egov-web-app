@@ -23,11 +23,11 @@ const roleFromUserInfo = (roles = [], role) => {
 
 const displayStatus = (status = "") => {
   let statusObj = {};
-  if (status.includes("Overdue")) {
+  if (status.toLowerCase().includes("overdue")) {
     statusObj.status = status; //Replace by localisation label
     statusObj.statusMessage = "";
   }
-  if (status.includes("left")) {
+  if (status.toLowerCase().includes("left")) {
     statusObj.status = status; //Replace by localisation label
     statusObj.statusMessage = "";
   }

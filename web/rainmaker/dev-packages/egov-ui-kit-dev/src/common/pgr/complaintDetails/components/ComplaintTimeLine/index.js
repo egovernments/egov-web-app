@@ -482,7 +482,7 @@ const DueDate = ({ duedateText }) => {
     duedateText &&
     duedateText.slaStatement && (
       <Label
-        labelStyle={duedateText.slaStatement.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
+        labelStyle={duedateText.slaStatement.toLowerCase().includes("overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
         className="Complaint-details-duedate"
         label={duedateText.slaStatement}
       />
