@@ -19,7 +19,7 @@ export const chequeDetails = getCommonContainer({
     required: true
   }),
   chequeDate: getDateField({
-    label: { labelName: "Cheque Date" },
+    label: { labelName: "Cheque Date", labelKey: "TL_PAYMENT_CHQ_DATE_LABEL" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true
   }),
