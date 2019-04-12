@@ -43,9 +43,6 @@ class TextFieldContainer extends React.Component {
       error,
       ...rest
     } = this.props;
-    errorMessage = error
-      ? getLocaleLabels("Invalid input", errorMessage, localizationLabels)
-      : "";
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
       iconObj = {
         ...iconObj,
@@ -67,7 +64,18 @@ class TextFieldContainer extends React.Component {
       placeholder.labelKey,
       localizationLabels
     );
-
+    let translateddefaultErrorMsg = getLocaleLabels(
+      "Invalid input",
+      "ERR_DEFAULT_INPUT_FIELD_MSG",
+      localizationLabels
+    );
+    errorMessage = error
+      ? getLocaleLabels(
+          translateddefaultErrorMsg,
+          errorMessage,
+          localizationLabels
+        )
+      : "";
     if (dropdownData.length > 0) {
       return (
         <TextfieldWithIcon

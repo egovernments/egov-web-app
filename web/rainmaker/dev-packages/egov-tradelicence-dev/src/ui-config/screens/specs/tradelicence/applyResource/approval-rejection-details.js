@@ -98,7 +98,7 @@ const getView = status => {
       return getDetails(
         {
           labelName: "Approval Details",
-          labelKey: ""
+          labelKey: "TL_EMP_APPROVAL_DETAILS"
         },
         getSubHeader(
           "Approved By",
