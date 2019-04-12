@@ -11,6 +11,7 @@ import UiBoundary from "./components/boundary";
 import boundaryConfig from "./commons/config";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class ShowField extends Component {
   }
 
   renderFields = (obj) => {
-    let des = translate(obj.label);
+    let des = getLocaleLabels(obj.label, obj.label);
     let { maxDate } = this.state;
     let description = des;
 
@@ -46,8 +47,6 @@ export default class ShowField extends Component {
         });
       }
     }
-
-
 
     switch (obj.type) {
       case "string":
@@ -122,13 +121,13 @@ export default class ShowField extends Component {
               required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
-                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }}/>
+                  <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }
               hintText={<Label label="PT_DATE_HINT_TEXT" />}
               value={obj.value ? obj.value : {}}
-              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError: "") : ""}
+              errorText={this.props.dateField ? (obj.name === this.props.dateField ? this.props.dateError : "") : ""}
               formatDate={(date) => {
                 let dateObj = new Date(date);
                 let year = dateObj.getFullYear();
@@ -184,10 +183,15 @@ export default class ShowField extends Component {
 
               // floatingLabelStyle={{ fontSize: "20px"}}
               floatingLabelText={
-                        <div className="rainmaker-displayInline">
-                          <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }}  style={{fontSize:"16px !important"}}/>
-                          <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                        </div>
+                <div className="rainmaker-displayInline">
+                  <Label
+                    className="show-field-label"
+                    label={description}
+                    containerStyle={{ marginRight: "5px" }}
+                    style={{ fontSize: "16px !important" }}
+                  />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               // inputStyle={{ color: "#5F5C57" }}
               floatingLabelFixed={true}
@@ -209,7 +213,7 @@ export default class ShowField extends Component {
               dataSourceConfig={dataSourceConfig}
               openOnFocus={true}
               maxSearchResults={200}
-              searchText={getDropdownLabel(obj.searchText,dropDownData)}
+              searchText={getDropdownLabel(obj.searchText, dropDownData)}
             />
           </Col>
         );
@@ -309,11 +313,11 @@ export default class ShowField extends Component {
   }
 }
 
-const getDropdownLabel=(value,data)=>{
-  const object=filter(data,{value});
-  let label="";
-  if (object.length>0) {
-    label=object[0].label;
+const getDropdownLabel = (value, data) => {
+  const object = filter(data, { value });
+  let label = "";
+  if (object.length > 0) {
+    label = object[0].label;
   }
   return label;
-}
+};
