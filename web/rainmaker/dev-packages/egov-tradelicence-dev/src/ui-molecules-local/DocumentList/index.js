@@ -194,9 +194,19 @@ class DocumentList extends Component {
                       <sup style={{ color: "#E54D42" }}>*</sup>
                     )}
                     <Typography variant="caption">
-                      {document.statement}
+                      <LabelContainer
+                        labelName={document.statement}
+                        labelKey={document.statement}
+                      />
+                      {/* {document.statement} */}
                     </Typography>
-                    <Typography variant="caption">{description}</Typography>
+                    <Typography variant="caption">
+                      <LabelContainer
+                        labelName={description.labelName}
+                        labelKey={description.labelKey}
+                      />
+                      {/* {description} */}
+                    </Typography>
                   </Grid>
                   <Grid item={true} xs={12} sm={5} align="right">
                     <UploadSingleFile

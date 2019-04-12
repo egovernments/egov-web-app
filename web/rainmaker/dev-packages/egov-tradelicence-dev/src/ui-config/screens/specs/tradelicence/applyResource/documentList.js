@@ -7,7 +7,10 @@ export const documentList = {
       labelName: "UPLOAD FILE",
       labelKey: "TL_BUTTON_UPLOAD FILE"
     },
-    description: "Only .jpg and .pdf files. 6MB max file size.",
+    description: {
+      labelName: "Only .jpg and .pdf files. 6MB max file size.",
+      labelKey: "TL_UPLOAD_RESTRICTIONS"
+    },
     inputProps: {
       accept: "image/*, .pdf, .png, .jpeg"
     },

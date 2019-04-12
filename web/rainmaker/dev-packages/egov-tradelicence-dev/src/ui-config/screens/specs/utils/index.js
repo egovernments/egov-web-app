@@ -960,7 +960,7 @@ const getToolTipInfo = (taxHead, LicenseData) => {
 
 const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   if (Bill && Bill.length) {
-    const extraData = ["Rebate", "Penalty"].map(item => {
+    const extraData = ["TL_COMMON_REBATE", "TL_COMMON_PEN"].map(item => {
       return {
         name: {
           labelName: item,

@@ -127,8 +127,16 @@ export const getFatherNameField = getTextField({
 // };
 export const getRelationshipRadioButton = getRadioButton(
   [
-    { label: "Father", value: "FATHER" },
-    { label: "Husband", value: "HUSBAND" }
+    {
+      labelName: "Father",
+      labelKey: "COMMON_RELATION_FATHER",
+      value: "FATHER"
+    },
+    {
+      label: "Husband",
+      labelKey: "COMMON_RELATION_HUSBAND",
+      value: "HUSBAND"
+    }
   ],
   "Licenses[0].tradeLicenseDetail.owners[0].relationship",
   ""

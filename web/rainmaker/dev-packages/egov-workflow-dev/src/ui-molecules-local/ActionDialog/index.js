@@ -117,7 +117,12 @@ class ActionDialog extends React.Component {
           children={
             <Container
               children={
-                <Grid container="true" spacing={12} marginTop={16} className="action-container">
+                <Grid
+                  container="true"
+                  spacing={12}
+                  marginTop={16}
+                  className="action-container"
+                >
                   <Grid
                     style={{
                       alignItems: "center",
@@ -197,7 +202,10 @@ class ActionDialog extends React.Component {
                       }}
                     >
                       <div className="rainmaker-displayInline">
-                        <LabelContainer labelName="Supporting Documents" />
+                        <LabelContainer
+                          labelName="Supporting Documents"
+                          labelKey="TL_APPROVAL_UPLOAD_HEAD"
+                        />
                         {isDocRequired && (
                           <span style={{ marginLeft: 5, color: "red" }}>*</span>
                         )}

@@ -125,11 +125,8 @@ class TableData extends Component {
         { head: overSla, body: "WF_TOTAL_OVER_SLA" }
       );
 
-      // tabData.push(`Assigned to me (${assignedDataRows.length})`);
-      // tabData.push(`All (${allDataRows.length})`);
-
-      tabData.push({ label: "Assigned to me", dynamicValue: `(${assignedDataRows.length})` });
-      tabData.push({ label: "All", dynamicValue: `(${allDataRows.length})` });
+      tabData.push({ label: "COMMON_INBOX_TAB_ASSIGNED_TO_ME", dynamicArray: [assignedDataRows.length] });
+      tabData.push({ label: "COMMON_INBOX_TAB_ALL", dynamicArray: [allDataRows.length] });
 
       inboxData.push({
         headers: headersList,
@@ -156,11 +153,9 @@ class TableData extends Component {
           }),
         };
       });
-      tabData[0] = { label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` };
-      tabData[1] = { label: "All", dynamicValue: `(${filteredData[1].rows.length})` };
 
-      // tabData.push({ label: "Assigned to me", dynamicValue: `(${filteredData[0].rows.length})` });
-      // tabData.push({ label: "All", dynamicValue: `(${filteredData[1].rows.length})` });
+      tabData[0] = { label: "COMMON_INBOX_TAB_ASSIGNED_TO_ME", dynamicArray: [filteredData[0].rows.length] };
+      tabData[1] = { label: "COMMON_INBOX_TAB_ALL", dynamicArray: [filteredData[1].rows.length] };
 
       this.setState({
         inboxData: filteredData,
@@ -185,7 +180,7 @@ class TableData extends Component {
             style={{ borderBottom: "1px rgba(0, 0, 0, 0.11999999731779099) solid" }}
           >
             {tabData.map((item) => {
-              return <Tab className="inbox-tab" label={<Label label={item.label} dynamicValue={item.dynamicValue} isConcat={true} />} />;
+              return <Tab className="inbox-tab" label={<Label label={item.label} dynamicArray={item.dynamicArray} />} />;
             })}
           </Tabs>
           <div className="inbox-filter">
