@@ -72,7 +72,6 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
     const { route: currentRoute, history, setRoute } = this.props;
-    console.log("currentRoute is....", currentRoute);
     if (nextRoute && currentRoute !== nextRoute) {
       history.push(nextRoute);
       setRoute("");
