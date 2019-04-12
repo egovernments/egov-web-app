@@ -9,44 +9,61 @@ const styles = {
   labelStyle: {
     color: "#484848",
     letterSpacing: 0.7,
-    marginLeft: 8,
+    marginLeft: 8
   },
 
   radioButtonItemStyle: {
     marginBottom: "18px",
     paddingLeft: "2px",
-    height: "16px",
+    height: "16px"
   },
   selectedLabelStyle: {
-    color: "#fe7a51",
+    color: "#fe7a51"
   },
   radioButtonLabelStyle: {
-    lineHeight: 1,
-  },
+    lineHeight: 1
+  }
 };
 const inputBaseStyle = {
   paddingBottom: 10,
   fontSize: "16px",
   color: "#484848",
-  letterSpacing: "0.7px",
+  letterSpacing: "0.7px"
 };
 const floatingLabelBaseStyle = {
   top: 30,
   fontSize: "14px",
-  letterSpacing: "0.6px",
+  letterSpacing: "0.6px"
 };
-const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonChange, value, errorText }) => {
+const AdditionalDetails = ({
+  optionSelected,
+  handleFieldChange,
+  onRadioButtonChange,
+  value,
+  errorText
+}) => {
   return (
     <Card
       className="tax-calculation-card-header"
       textChildren={
         <div>
-          <div className="rainmaker-displayInline" style={{ marginTop: 10, alignItems: "center" }}>
+          <div
+            className="rainmaker-displayInline"
+            style={{ marginTop: 10, alignItems: "center" }}
+          >
             <Icon action="custom" name="rupee" />
-            <Label label="Amount to be Paid" fontSize={16} bold={true} labelStyle={styles.labelStyle} />
+            <Label
+              label="PT_PAY_AMOUNT_TO_BE_PAID"
+              fontSize={16}
+              bold={true}
+              labelStyle={styles.labelStyle}
+            />
           </div>
           <div className="clearfix">
-            <div className="col-sm-6" style={{ paddingTop: 25, paddingLeft: 8 }}>
+            <div
+              className="col-sm-6"
+              style={{ paddingTop: 25, paddingLeft: 8 }}
+            >
               <div className="property-amount-radio">
                 <div className="amt-radio">
                   <input
@@ -57,7 +74,11 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                     value="Full_Amount"
                     name="radio"
                   />
-                  <Label label="PT_FULL_AMOUNT" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                  <Label
+                    label="PT_FULL_AMOUNT"
+                    color="#4848484"
+                    labelStyle={styles.radioButtonLabelStyle}
+                  />
                 </div>
                 <div className="amt-radio">
                   <input
@@ -68,7 +89,11 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                     value="Partial_Amount"
                     name="radio"
                   />
-                  <Label label="PT_PARTIAL_AMOUNT" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                  <Label
+                    label="PT_PARTIAL_AMOUNT"
+                    color="#4848484"
+                    labelStyle={styles.radioButtonLabelStyle}
+                  />
                 </div>
               </div>
             </div>
@@ -77,12 +102,17 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                 id="amount-to-be-paid"
                 onChange={(e, value) => handleFieldChange(e, value)}
                 value={value}
-                floatingLabelText={<Label label="PT_AMOUNT_TO_PAY_INR" color="rgba(0,0,0,0.60)" />}
+                floatingLabelText={
+                  <Label
+                    label="PT_AMOUNT_TO_PAY_INR"
+                    color="rgba(0,0,0,0.60)"
+                  />
+                }
                 floatingLabelShrinkStyle={{
                   fontSize: "12px",
                   transform: "scale(1) translate(0px, -16px)",
                   fontWeight: 500,
-                  zIndex: 0,
+                  zIndex: 0
                 }}
                 floatingLabelFixed={true}
                 inputStyle={inputBaseStyle}
@@ -103,11 +133,16 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                 backgroundColor: "#f2f2f2",
                 marginTop: 10,
                 border: "1px solid #5aaafa",
-                borderLeft: "5px solid #5aaafa",
+                borderLeft: "5px solid #5aaafa"
               }}
             >
               <Icon action="action" name="info" color="#30588c" />
-              <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="No rebate is applicable for partial payments." />
+              <Label
+                containerStyle={{ marginLeft: 16 }}
+                fontSize="14px"
+                color="#484848"
+                label="No rebate is applicable for partial payments."
+              />
             </div>
           )}
         </div>
