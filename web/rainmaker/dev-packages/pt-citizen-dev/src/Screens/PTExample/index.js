@@ -23,20 +23,26 @@ class PTExample extends Component {
             <div className="example-main-cont clearfix">
               <div className="col-sm-12 descriptionStyle">
                 <Label label="PT_EXAMPLES_DESCRIPTION" />
-                <a
-                  href={require("./PT_Corporation_Notification.pdf")}
-                  target="_blank"
-                >
-                  <Label label="PT_HERE_LABEL" />
-                </a>
-                <Label label="PT_CORPORATION_LABEL" />
-                <a
-                  href={require("./PT_Council_Notification.pdf")}
-                  target="_blank"
-                >
-                  <Label label="PT_HERE_LABEL" />
-                </a>
-                <Label label="PT_COUNCIL_LABEL" />
+                <div style={{ display: "flex" }}>
+                  <a
+                    href={require("./PT_Corporation_Notification.pdf")}
+                    target="_blank"
+                  >
+                    <Label label="PT_HERE_LABEL" color="#fe7a51" />
+                  </a>
+                  <Label
+                    label="PT_CORPORATION_LABEL"
+                    className="example-label-style"
+                  />
+
+                  <a
+                    href={require("./PT_Council_Notification.pdf")}
+                    target="_blank"
+                  >
+                    <Label label="PT_HERE_LABEL" color="#fe7a51" />
+                  </a>
+                  <Label label="PT_COUNCIL_LABEL" />
+                </div>
               </div>
               <div className="col-sm-12 dividerPTExample">
                 <Divider />
