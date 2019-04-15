@@ -100,7 +100,9 @@ class SearchProperty extends Component {
                   history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
                 }
           }
-          label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
+          label={
+            <Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "PT_SEARCHPROPERTY_TABLE_VIEW"} fontSize="12px" />
+          }
           value={propertyId}
           primary={true}
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
