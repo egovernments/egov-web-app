@@ -5,7 +5,16 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const payeeDetails = getCommonContainer({
-  paidBy: getSelectField("Paid By", "Paid By", false, ""),
+  paidBy: getSelectField({
+    label: {
+      labelName: "Paid By",
+      labelKey: "TL_EMP_APPLICATION_PAID_BY"
+    },
+    required: false,
+    jsonPath: ""
+  }),
+
+  //"Paid By", "Paid By", false, ""),
   payerName: getTextField(
     {
       labelName: "Payer Name",

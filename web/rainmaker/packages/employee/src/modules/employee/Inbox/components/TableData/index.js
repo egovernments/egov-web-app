@@ -186,11 +186,17 @@ class TableData extends Component {
           <div className="inbox-filter">
             <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
               <MenuItem value="" disabled>
-                Module All
+                <Label label="CS_COMMON_INBOX_MODULE_ALL" />
               </MenuItem>
-              <MenuItem value={"NewTL"}>NewTL</MenuItem>
-              <MenuItem value={"PGR"}>PGR</MenuItem>
-              <MenuItem value={"PT"}>PT</MenuItem>
+              <MenuItem value={"NewTL"}>
+                <Label label="CS_COMMON_INBOX_NEWTL" />
+              </MenuItem>
+              <MenuItem value={"PGR"}>
+                <Label label="CS_COMMON_INBOX_PGR" />
+              </MenuItem>
+              <MenuItem value={"PT"}>
+                <Label label="CS_COMMON_INBOX_PT" />
+              </MenuItem>
             </Select>
           </div>
           <InboxData data={inboxData[value]} />

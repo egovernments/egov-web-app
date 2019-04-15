@@ -77,7 +77,14 @@ const PaymentStatus = ({
                   receiptUIDetails.propertyInfo.map(item => {
                     return (
                       <div className="row pt-reciept-label">
-                        <Label className="col-xs-6" label={item.key} />
+                        <Label
+                          className="col-xs-6"
+                          label={item.key}
+                          dynamicArray={
+                            item.dynamicArray ? item.dynamicArray : []
+                          }
+                        />
+                        <span>:</span>
                         <Label
                           className="col-xs-6"
                           labelStyle={labelStyle}
@@ -97,6 +104,7 @@ const PaymentStatus = ({
                     return (
                       <div className="row pt-reciept-label">
                         <Label className="col-xs-6" label={item.key} />
+                        <span>:</span>
                         <Label
                           className="col-xs-6"
                           labelStyle={labelStyle}
