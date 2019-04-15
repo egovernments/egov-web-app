@@ -5,6 +5,7 @@ import jp from "jsonpath";
 import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 import AutoComplete from "material-ui/AutoComplete";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 class UiBoundary extends Component {
   constructor(props) {
@@ -230,7 +231,7 @@ class UiBoundary extends Component {
 
   renderFields = (level) => {
     let { dropDownData, labelArr, dropDownDataVal } = this.state;
-    const { boundaryFieldsText, handleFieldChange } = this.props;
+    const { boundaryFieldsText, handleFieldChange, localizationLabels } = this.props;
     let data =
       dropDownData && dropDownData[level]
         ? dropDownData[level].map((dd, index) => {
@@ -241,13 +242,22 @@ class UiBoundary extends Component {
     let isDisabled = false;
     const levelndex = labelArr.indexOf(level);
     levelndex > 0 && (isDisabled = dropDownDataVal[labelArr[levelndex - 1]] ? false : true);
+
+    // Localization of boundary labels
+    let translatedLabel = getLocaleLabels(level, `reports.${level}.label`, localizationLabels);
+
     return (
       <div>
         <AutoComplete
           id={`boundary-${level}`}
           floatingLabelText={
             <div className="rainmaker-displayInline">
-              <Label className="show-field-label" label={level} containerStyle={{ marginRight: "5px" }} style={{ fontSize: "16px !important" }} />
+              <Label
+                className="show-field-label"
+                label={translatedLabel}
+                containerStyle={{ marginRight: "5px" }}
+                style={{ fontSize: "16px !important" }}
+              />
             </div>
           }
           floatingLabelFixed={true}
@@ -285,8 +295,9 @@ class UiBoundary extends Component {
 }
 const mapStateToProps = (state) => {
   const { form } = state.formtemp || {};
+  const { localizationLabels } = state.app;
   const { boundaryFieldsText } = (form && form) || {};
-  return { boundaryFieldsText };
+  return { boundaryFieldsText, localizationLabels };
 };
 
 export default connect(
