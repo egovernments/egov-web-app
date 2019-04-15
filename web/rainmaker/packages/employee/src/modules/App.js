@@ -70,14 +70,15 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { route: nextRoute } = nextProps;
+    const { route: nextRoute, authenticated } = nextProps;
     const { route: currentRoute, history, setRoute } = this.props;
+
     if (nextRoute && currentRoute !== nextRoute) {
       history.push(nextRoute);
       setRoute("");
     }
-    if (nextProps.hasLocalisation !== this.props.hasLocalisation) {
-      if (nextProps.hasLocalisation) this.props.history.replace("/language-selection");
+    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated) {
+      nextProps.hasLocalisation && this.props.history.replace("/language-selection");
     }
   }
 
@@ -96,6 +97,8 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { route, toast } = state.app;
+  const { auth } = state;
+  const { authenticated } = auth || false;
   const props = {};
   const { spinner } = state.common;
   const { stateInfoById } = state.common || [];
@@ -117,6 +120,7 @@ const mapStateToProps = (state, ownProps) => {
     loading,
     hasLocalisation,
     defaultUrl,
+    authenticated,
   };
 };
 

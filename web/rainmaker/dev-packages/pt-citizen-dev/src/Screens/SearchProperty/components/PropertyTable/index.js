@@ -4,12 +4,42 @@ import { Card, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
 const columnData = [
-  { id: "index", numeric: true, disablePadding: false, label: "S.No" },
-  { id: "name", numeric: false, disablePadding: true, label: "Owner Name" },
-  { id: "propertyId", numeric: false, disablePadding: false, label: "Property Tax Unique ID" },
-  { id: "oldPropertyId", numeric: false, disablePadding: false, label: "Existing Property ID" },
-  { id: "address", numeric: false, disablePadding: false, label: "Address" },
-  { id: "action", numeric: false, disablePadding: false, label: "Action" },
+  {
+    id: "index",
+    numeric: true,
+    disablePadding: false,
+    label: "PT_SEARCHPROPERTY_TABEL_SNO"
+  },
+  {
+    id: "name",
+    numeric: false,
+    disablePadding: true,
+    label: "PT_SEARCHPROPERTY_TABEL_OWNERNAME"
+  },
+  {
+    id: "propertyId",
+    numeric: false,
+    disablePadding: false,
+    label: "PT_SEARCHPROPERTY_TABEL_PTUID"
+  },
+  {
+    id: "oldPropertyId",
+    numeric: false,
+    disablePadding: false,
+    label: "PT_SEARCHPROPERTY_TABEL_EPID"
+  },
+  {
+    id: "address",
+    numeric: false,
+    disablePadding: false,
+    label: "PT_SEARCHPROPERTY_TABEL_ADDRESS"
+  },
+  {
+    id: "action",
+    numeric: false,
+    disablePadding: false,
+    label: "PT_SEARCHPROPERTY_TABEL_ACTION"
+  }
 ];
 
 const PropertyTable = ({ tableData, onActionClick }) => {
@@ -27,7 +57,7 @@ const PropertyTable = ({ tableData, onActionClick }) => {
                 fontWeight: 500,
                 letterSpacing: "0px",
                 textAlign: "center",
-                color: "#484848",
+                color: "#484848"
               }}
             />
             <TableUi
@@ -35,7 +65,13 @@ const PropertyTable = ({ tableData, onActionClick }) => {
               orderby={"index"}
               columnData={columnData}
               rowData={tableData}
-              ActionOnRow={<Button className={"search-table-assess-pay-btn"} label="PT_PAYMENT_ASSESS_AND_PAY" onClick={onActionClick} />}
+              ActionOnRow={
+                <Button
+                  className={"search-table-assess-pay-btn"}
+                  label="PT_PAYMENT_ASSESS_AND_PAY"
+                  onClick={onActionClick}
+                />
+              }
             />
           </div>
         }
