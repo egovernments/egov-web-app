@@ -80,7 +80,10 @@ const assignmentDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Currently Assigned Here"
+                  label: {
+                    labelName: "Currently Assigned Here",
+                    labelKey: "HR_CURRENTLY_ASSIGNED_HERE_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
@@ -199,7 +202,10 @@ const assignmentDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Head Of Department"
+                  label: {
+                    labelName: "Head Of Department",
+                    labelKey: "HR_HOD_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
