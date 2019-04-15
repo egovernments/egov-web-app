@@ -81,7 +81,10 @@ export const getEmployeeDetailsView = (isReview = true) => {
         }
       }
     },
-    personalDetailsHeader: getHeader("Personal Details"),
+    personalDetailsHeader: getHeader({
+      labelName: "Personal Details",
+      labelKey: "HR_SUMMARY_PERSONAL_DEATILS_SUBHEADER"
+    }),
     break1: getBreak(),
     viewOne: getCommonContainer({
       reviewName: getLabelWithValue(
@@ -130,7 +133,10 @@ export const getEmployeeDetailsView = (isReview = true) => {
         }
       )
     }),
-    professionalDetailsHeader: getHeader("Professional Details"),
+    professionalDetailsHeader: getHeader({
+      labelName: "Professional Details",
+      labelKey: "HR_SUMMARY_PROFESSIONAL_DEATILS_SUBHEADER"
+    }),
     break2: getBreak(),
     viewTwo: getCommonContainer({
       reviewEmpID: getLabelWithValue(

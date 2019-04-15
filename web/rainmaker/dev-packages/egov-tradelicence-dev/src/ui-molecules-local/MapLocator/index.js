@@ -9,6 +9,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 const pickBtn = {
   display: "block"
@@ -139,12 +140,17 @@ class MapLocator extends Component {
 
   render() {
     let { currLoc } = this.state;
-    const { location } = this.props;
+    const { location, localizationLabels } = this.props;
     var _currloc = !isEmpty(currLoc)
       ? currLoc
       : isEmpty(location)
       ? defaultLocation
       : location;
+    let translatedSearchPlaceholder = getLocaleLabels(
+      "Search Address",
+      "TL_SEARCH_ADDRESS_MAP_PLACEHOLDER",
+      localizationLabels
+    );
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
         <div className="back-btn">
@@ -170,6 +176,7 @@ class MapLocator extends Component {
           hideTerrainBtn={true}
           dragInfoBox={false}
           viewLocation={false}
+          placeholder={translatedSearchPlaceholder}
         />
         <div className="responsive-action-button-cont">
           <Button
@@ -230,6 +237,12 @@ class MapLocator extends Component {
 // return { location, formKey, currentLocation };
 //};
 
+const mapSateToProps = state => {
+  const { app } = state;
+  const { localizationLabels } = app;
+  return { localizationLabels };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     handleField: (formKey, path, props, value) =>
@@ -240,6 +253,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(MapLocator);

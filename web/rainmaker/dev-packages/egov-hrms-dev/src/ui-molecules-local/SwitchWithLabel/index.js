@@ -6,6 +6,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import Switch from "../../ui-atoms-local/Switch";
 import get from "lodash/get";
 import { connect } from "react-redux";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 import "./index.css";
 
 class SwitchWithLabel extends Component {
@@ -41,8 +42,16 @@ class SwitchWithLabel extends Component {
       SwitchProps,
       disabled = false,
       value,
-      valueFromAPI
+      valueFromAPI,
+      localizationLabels
     } = this.props;
+    let translatedLabels = items.map(item => {
+      return getLocaleLabels(
+        item.label.labelName,
+        item.label.labelKey,
+        localizationLabels
+      );
+    });
     return (
       <FormGroup>
         {items.map((item, index) => {
@@ -59,7 +68,7 @@ class SwitchWithLabel extends Component {
                   {...SwitchProps}
                 />
               }
-              label={item.label}
+              label={translatedLabels[index]}
               {...FormControlProps}
             />
           );
@@ -70,12 +79,13 @@ class SwitchWithLabel extends Component {
 }
 
 const mapStateToProps = (state, ownprops) => {
-  const { screenConfiguration } = state;
+  const { screenConfiguration, app } = state;
   const { screenConfig, preparedFinalObject } = screenConfiguration;
   const { value, screenKey, compJPath, jsonPath } = ownprops;
   const valueFromAPI = get(preparedFinalObject, jsonPath);
   const multiItems = get(screenConfig[screenKey], compJPath, []);
-  return { multiItems, screenConfig, valueFromAPI };
+  const { localizationLabels } = app;
+  return { multiItems, screenConfig, valueFromAPI, localizationLabels };
 };
 
 const mapDispatchToProps = dispatch => {

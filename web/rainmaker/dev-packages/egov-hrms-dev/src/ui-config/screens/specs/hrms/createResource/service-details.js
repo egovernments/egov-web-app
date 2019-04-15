@@ -165,7 +165,10 @@ const serviceDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Currently Working Here"
+                  label: {
+                    labelName: "Currently Working Here",
+                    labelKey: "HR_CURRENTLY_WORKING_HERE_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
