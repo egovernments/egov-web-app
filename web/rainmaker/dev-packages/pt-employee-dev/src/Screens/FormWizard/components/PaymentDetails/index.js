@@ -18,10 +18,11 @@ const PaymentModeSelector = formHoc({ formKey: "paymentModes" })(
 
 const paymentModeDetails = [
   {
-    primaryText: "Cash",
+    primaryText: "PT_PAYMENT_CASH",
+    code: "Cash",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
         comp: formHoc({
           formKey: "cashInfo",
@@ -32,10 +33,11 @@ const paymentModeDetails = [
     ]
   },
   {
-    primaryText: "Cheque",
+    primaryText: "PT_PAYMENT_CHQ",
+    code: "Cheque",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
         comp: formHoc({
           formKey: "cashInfo",
@@ -44,7 +46,7 @@ const paymentModeDetails = [
         })(CashInformation)
       },
       {
-        title: "Cheque Details",
+        title: "PT_CHEQUE_DETAILS",
         className: "cheque-details",
         comp: formHoc({
           formKey: "chequeInfo",
@@ -55,10 +57,11 @@ const paymentModeDetails = [
     ]
   },
   {
-    primaryText: "DD",
+    primaryText: "PT_PAYMENT_DD",
+    code: "DD",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
         comp: formHoc({
           formKey: "cashInfo",
@@ -78,10 +81,11 @@ const paymentModeDetails = [
     ]
   },
   {
-    primaryText: "Card",
+    primaryText: "PT_PAYMENT_CARD",
+    code: "Card",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
         comp: formHoc({
           formKey: "cashInfo",

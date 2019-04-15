@@ -52,8 +52,8 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
             ? taxHeadContent[0].debitAmount
               ? `-${taxHeadContent[0].debitAmount}`
               : taxHeadContent[0].crAmountToBePaid
-                ? taxHeadContent[0].crAmountToBePaid
-                : "0"
+              ? taxHeadContent[0].crAmountToBePaid
+              : "0"
             : "NA",
         });
       return result;
@@ -138,10 +138,12 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
   const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
-    ? [{ key: "Institution Name:", value: institution.name }, { key: "Authorized Person Name:", value: ownerDetails[0].name }]
+    ? [{ key: "PT_INSTITUTION_NAME", value: institution.name }, { key: "PT_AUTHORISED_PERSON_NAME", value: ownerDetails[0].name }]
     : ownerDetails.map((item, index) => {
         return {
-          key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
+          //key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
+          key: "PT_OWNER_NAME_RECEIPT",
+          dynamicArray: [ownerDetails.length > 1 ? index + 1 : ""],
           value: item.name,
         };
       });
@@ -149,45 +151,45 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
     propertyInfo: property && [
       ...ownerInfo,
       {
-        key: "Existing Property ID:",
+        key: "PT_PROPERTY_ADDRESS_EXISTING_PID",
         value: property.oldPropertyId,
       },
       {
-        key: "Property Tax Unique ID:",
+        key: "PT_UNIQUE_ID",
         value: property.propertyId,
       },
       {
-        key: "Property Address:",
+        key: "PT_PROPERTY_ADDRESS_SUB_HEADER",
         value: getCommaSeperatedAddress(property.address, cities),
       },
     ],
     receiptInfo: [
       {
-        key: "Assessment No.: ",
+        key: "PT_ASSESSMENT_NUMBER_RECEIPT",
         value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].consumerCode" : "billDetails[0].consumerCode").split(":")[1],
       },
       {
-        key: "Receipt No:",
+        key: "PT_RECEIPT_NUMBER",
         value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].receiptNumber" : "billDetails[0].receiptNumber"),
       },
       {
-        key: "Payment Term:",
+        key: "PT_PAYMENT_TERM",
         value: financialYear,
       },
       {
-        key: "Date:",
+        key: "PT_DATE_RECEIPT_LABEL",
         value: receiptDetails && getDateFromEpoch(get(receiptDetails, success ? "Bill[0].billDetails[0].receiptDate" : "billDetails[0].billDate")),
       },
       {
-        key: "Payable Amount:",
+        key: "PT_PAYABLE_AMOUNT",
         value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString(),
       },
       {
-        key: "Amount Paid:",
+        key: "PT_AMOUNT_PAID_LABEL",
         value: receiptDetails && success ? get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString() : "0",
       },
       {
-        key: "Amount Due:",
+        key: "PT_AMOUNT_DUE",
         value: amountDue,
       },
     ],
