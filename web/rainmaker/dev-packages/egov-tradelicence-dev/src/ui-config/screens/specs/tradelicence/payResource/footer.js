@@ -114,10 +114,7 @@ const getSelectedTabIndex = paymentType => {
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
-  const dateConvertedToEpoch = convertDateToEpoch(
-    get(finalObj, jsonPath),
-    "daystart"
-  );
+  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath), "daystart");
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
@@ -233,7 +230,7 @@ const callBackForPay = async (state, dispatch) => {
     try {
       let response = await httpRequest(
         "post",
-        "collection-services-v1/receipts/_create",
+        "collection-services/receipts/_create",
         "_create",
         [],
         ReceiptBody,
