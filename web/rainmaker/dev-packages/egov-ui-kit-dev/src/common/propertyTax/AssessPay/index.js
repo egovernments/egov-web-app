@@ -66,7 +66,7 @@ class AssessPay extends Component {
         leftIcon: <div style={listIconStyle}>{list1items.icon}</div>,
       },
       {
-        primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_ASSESSPAY_SEARCHPROP" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         route: userType === "CITIZEN" ? "/assess-pay/search-property" : "/property-tax/search-property",
         leftIcon: (
           <div style={listIconStyle}>

@@ -9,102 +9,91 @@ import "../PTHome/index.css";
 import "./index.css";
 
 const genericInnerdivStyle = {
-  paddingLeft: 0,
+  paddingLeft: 0
 };
 
 const videoCardStyle = {
-  minHeight: 270,
+  minHeight: 270
 };
 
 class HowItWorks extends Component {
   listItems = [
     {
-      question: "What is a Property?",
-      answer: [{ text: "Property refers to land or buildings within the context of Property Tax." }],
+      question: "CS_HOWITWORKS_QUESTION1",
+      answer: [{ text: "CS_HOWITWORKS_ANSWER1" }]
     },
     {
-      question: "Why do I have to pay Property Tax?",
+      question: "CS_HOWITWORKS_QUESTION2",
       answer: [
         {
-          text:
-            "Property Tax is levied by your local municipal government to fund development and maintenance of your city and provide services to the city's citizens. ",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER2"
+        }
+      ]
     },
     {
-      question: "What is a Property Tax Assessment?",
+      question: "CS_HOWITWORKS_QUESTION3",
       answer: [
         {
-          text:
-            "An assessment is a declaration of the details of a particular Property to your local municipal government for a particular year. The payable Property Tax is calculated based on these details. An Assessment is completed when your Municipality receives the full payment of your Property Tax.",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER3"
+        }
+      ]
     },
     {
-      question: "What is the difference between Existing Property ID & Property Tax Unique ID?",
+      question: "CS_HOWITWORKS_QUESTION4",
       answer: [
         {
-          text:
-            "Existing Property ID has been assigned to you by your local municipal government prior to your using this platform to pay your Property Taxes. Property Tax Unique ID is a new ID being assigned to identify your property. ",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER4"
+        }
+      ]
     },
     {
-      question: "What is the difference between floor and unit?",
+      question: "CS_HOWITWORKS_QUESTION5",
       answer: [
         {
-          text:
-            "All rooms and areas in a building on the same level are said to be on the same floor. In a floor, each portion with a different usage or occupancy is an independent unit.",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER5"
+        }
+      ]
     },
     {
-      question: "What is an assessment No?",
-      answer: [{ text: "A unique ID to identify your Property Tax Assessment for a particular year." }],
+      question: "CS_HOWITWORKS_QUESTION6",
+      answer: [{ text: "CS_HOWITWORKS_ANSWER6" }]
     },
     {
-      question: "How is my Property Tax calculated?",
-      answer: [
-        { text: "Your Property Tax is calculated as per the rates stipulated by the Department of Local Government for the state of Punjab." },
-      ],
+      question: "CS_HOWITWORKS_QUESTION7",
+      answer: [{ text: "CS_HOWITWORKS_ANSWER7" }]
     },
     {
-      question: "What happens when I do not pay the complete amount?",
+      question: "CS_HOWITWORKS_QUESTION8",
       answer: [
         {
-          text:
-            "If your Property Tax for a particular year is not fully paid, you are liable to incur additional charges in the form of penalties and interest which is payable to your local municipal government.",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER8"
+        }
+      ]
     },
     {
-      question: "What should I do if i have assessed and paid with incorrect details by mistake?",
-      answer: [
-        { text: "You can re-assess your property. This option is available in your Assessment History in your list of properties (My properties). " },
-      ],
+      question: "CS_HOWITWORKS_QUESTION9",
+      answer: [{ text: "CS_HOWITWORKS_ANSWER9" }]
     },
     {
-      question: "When do I need to re-assess for my property?",
+      question: "CS_HOWITWORKS_QUESTION20",
       answer: [
         {
-          text:
-            "If any of the property details have been entered incorrectly in your assessment or if there is any change in your property details (Built area, ownership etc)",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER10"
+        }
+      ]
     },
     {
-      question: "Do I have to fill the form every year to assess and pay my Property Tax?",
+      question: "CS_HOWITWORKS_QUESTION11",
       answer: [
         {
-          text:
-            "No. The system saves a version of your property with the latest property details you have entered. If there are any changes, they can be made.",
-        },
-      ],
+          text: "CS_HOWITWORKS_ANSWER11"
+        }
+      ]
     },
     {
-      question: "Can I assess and pay property tax for a property that does not belong to me?",
-      answer: [{ text: "Yes. But keep in mind that Payment of Property tax does not serve as a proof of ownership of the property." }],
-    },
+      question: "CS_HOWITWORKS_QUESTION12",
+      answer: [{ text: "CS_HOWITWORKS_ANSWER12" }]
+    }
   ];
 
   componentDidMount() {
@@ -112,102 +101,229 @@ class HowItWorks extends Component {
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
   }
 
-  renderList = (items) => {
+  renderList = items => {
     return (
       <div>
         <div className="row">
           <div style={{ padding: "15px" }}>
-            <Label label="Help Videos (Punjabi)" color="#484848" fontSize="20px" />
+            <Label
+              label="CS_HOWITWORKS_HELP_VIDEOS_PUNJABI"
+              color="#484848"
+              fontSize="20px"
+            />
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/5GpLiCYS584?rel=0" />
-            <h4>Property Tax Payment - Full Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your full property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/5GpLiCYS584?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_TAX_PAYMENT" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_TAX_PAYMENT_DESCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/P9U3EGNxrKU?rel=0" />
-            <h4>Property Tax Payment - Partial Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your partial property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/P9U3EGNxrKU?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS__PARTIAL_PAY" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS__PARTIAL_PAY_DISCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/PKHSa33puxQ?rel=0" />
-            <h4>Your Completed Assessments</h4>
-            <p>This video explains the inbox of completed assessment on your property and actions that can be taken post completed assessment.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/PKHSa33puxQ?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_ASSESSMENTS" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_ASSESSMENTS_DISCRIPTION" />
+            </p>
           </div>
 
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/uF_G9dk_GBY?rel=0" />
-            <h4>Your Incomplete Assessments</h4>
-            <p>This video explains the inbox of incomplete assessment on your property and actions that can be taken on incomplete assessments.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/uF_G9dk_GBY?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_ASSESSMENTS_INCOMPLETE" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_ASSESSMENTS_INCOMPLETE_DISCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/8V1k-v93BRg?rel=0" />
-            <h4>Property Tax Payment - Full Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your full property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/8V1k-v93BRg?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_FULL_PAY" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_FULL_PAY_DISCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/gw7bS_-7aM8?rel=0" />
-            <h4>Property Tax Payment - Partial Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your partial property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/gw7bS_-7aM8?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_PARTIAL_PAYMENT" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_PARTIAL_PAYMENT_DISCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4" style={videoCardStyle}>
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/fVRd6ylStdY?rel=0" />
-            <h4>Your Completed Assessments</h4>
-            <p>This video explains the inbox of completed assessment on your property and actions that can be taken post completed assessment.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/fVRd6ylStdY?rel=0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_ASS" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_ASS_DISCRIPTION" />
+            </p>
           </div>
         </div>
 
         <div className="row" style={{ paddingTop: "10px" }}>
           <div style={{ padding: "15px" }}>
-            <Label label="Help Videos (English)" color="#484848" fontSize="20px" />
+            <Label
+              label="CS_HOWITWORKS_HELP_VIDEOS_ENGLISH"
+              color="#484848"
+              fontSize="20px"
+            />
           </div>
           <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/E0g26AzwRvs" />
-            <h4>Registration & Homepage</h4>
-            <p>This video will explain the registration process on mSeva Punjab portal and your Property tax login homepage.</p>
-          </div>
-          <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/G2_EA0zTiM0" />
-            <h4>Floor & Unit of a Property</h4>
-            <p>This video explains the property and unit definition as required to capture details while assessing your property</p>
-          </div>
-          <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/UbmY5LmdiQc" />
-            <h4>Assess & Pay Property Tax</h4>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/E0g26AzwRvs"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_HOMEPG_REG" />
+            </h4>
             <p>
-              This video will take your through the steps and details required to be captured for Assessing your property tax. This explains only
-              Residential type. Details need to be captured appropriately as applicable to your property type like commercial, institutional, mixed
-              etc.
+              <Label label="CS_HOWITWORKS_PROPERTY_HOMEPG_REG_DISCRIPTION" />
+            </p>
+          </div>
+          <div className="col-sm-4">
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/G2_EA0zTiM0"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_FLOOR_UNIT" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_FLOOR_UNIT_DISCRIPTION" />
+            </p>
+          </div>
+          <div className="col-sm-4">
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/UbmY5LmdiQc"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_ASS_PAY" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_ASS_PAY_DISCRIPTION" />
             </p>
           </div>
 
           <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/r6k7_J7jkYc" />
-            <h4>Property Tax Payment - Full Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your full property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/r6k7_J7jkYc"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_FULL_PAYMENT1" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_FULL_PAYMENT1_DISCRIPTION" />
+            </p>
           </div>
           <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/oQu4qDNWP7I" />
-            <h4>Property Tax Payment - Partial Payment</h4>
-            <p>This video explains the Payment process in case you want to pay your partial property tax.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/oQu4qDNWP7I"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_PARTIAL1_PAY" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_EXPLAIN" />
+            </p>
           </div>
           <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/3s6GtEWmf00" />
-            <h4>Your Completed Assessments</h4>
-            <p>This video explains the inbox of completed assessment on your property and actions that can be taken post completed assessment.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/3s6GtEWmf00"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_COMPLETE_ASS" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_COMPLETE_ASS_VIDEO" />
+            </p>
           </div>
 
           <div className="col-sm-4">
-            <iframe allowFullScreen="allowFullScreen" frameBorder="0" src="https://www.youtube.com/embed/mKLsORPO1o8" />
-            <h4>Your Incomplete Assessments</h4>
-            <p>This video explains the inbox of incomplete assessment on your property and actions that can be taken on incomplete assessments.</p>
+            <iframe
+              allowFullScreen="allowFullScreen"
+              frameBorder="0"
+              src="https://www.youtube.com/embed/mKLsORPO1o8"
+            />
+            <h4>
+              <Label label="CS_HOWITWORKS_PROPERTY_INCOMP_ASS" />
+            </h4>
+            <p>
+              <Label label="CS_HOWITWORKS_PROPERTY_INCOMP_ASS_VIDEO" />
+            </p>
           </div>
         </div>
 
         <div className="col-sm-12" style={{ padding: "15px 0px 30px 0px" }}>
-          <a href={"https://s3.ap-south-1.amazonaws.com/pb-egov-assets/pb/PT_User_Manual_Citizen.pdf"} target="_blank">
+          <a
+            href={
+              "https://s3.ap-south-1.amazonaws.com/pb-egov-assets/pb/PT_User_Manual_Citizen.pdf"
+            }
+            target="_blank"
+          >
             <Button
-              label={<Label buttonLabel={true} label="DOWNLOAD HELP DOCUMENT" fontSize="12px" />}
+              label={
+                <Label
+                  buttonLabel={true}
+                  label="PT_DOWNLOAD_HELP_DOCUMENT"
+                  fontSize="12px"
+                />
+              }
               primary={true}
               style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
             />
@@ -224,11 +340,28 @@ class HowItWorks extends Component {
           {items.map((item, index) => {
             return (
               <ListItem
-                innerDivStyle={index !== 0 ? { ...genericInnerdivStyle, borderTop: "solid 1px #e0e0e0" } : genericInnerdivStyle}
+                innerDivStyle={
+                  index !== 0
+                    ? {
+                        ...genericInnerdivStyle,
+                        borderTop: "solid 1px #e0e0e0"
+                      }
+                    : genericInnerdivStyle
+                }
                 nestedListStyle={{ padding: "0 0 16px 0" }}
-                primaryText={<Label dark={true} label={item.question} fontSize={16} />}
-                nestedItems={item.answer.map((nestedItem) => {
-                  return <ListItem hoverColor="#fff" primaryText={<Label fontSize={16} label={nestedItem.text} />} innerDivStyle={{ padding: 0 }} />;
+                primaryText={
+                  <Label dark={true} label={item.question} fontSize={16} />
+                }
+                nestedItems={item.answer.map(nestedItem => {
+                  return (
+                    <ListItem
+                      hoverColor="#fff"
+                      primaryText={
+                        <Label fontSize={16} label={nestedItem.text} />
+                      }
+                      innerDivStyle={{ padding: 0 }}
+                    />
+                  );
                 })}
                 primaryTogglesNestedList={true}
                 hoverColor="#fff"
@@ -247,22 +380,25 @@ class HowItWorks extends Component {
       <Screen className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
         <div className="form-without-button-cont-generic">
-          <Card className="how-it-works-card" textChildren={renderList(listItems)} />
+          <Card
+            className="how-it-works-card"
+            textChildren={renderList(listItems)}
+          />
         </div>
       </Screen>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { common, app } = state;
   const { urls } = app;
   return { urls };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: url => dispatch(addBreadCrumbs(url))
   };
 };
 

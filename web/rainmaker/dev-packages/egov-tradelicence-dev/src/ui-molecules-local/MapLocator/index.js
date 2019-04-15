@@ -8,6 +8,7 @@ import isEmpty from "lodash/isEmpty";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const pickBtn = {
   display: "block"
@@ -174,7 +175,12 @@ class MapLocator extends Component {
           <Button
             id="map-close-button"
             className="pick responsive-action-button"
-            children={"Close"}
+            children={
+              <LabelContainer
+                labelName={"Close"}
+                labelKey={"TL_MAP_CLOSE_LABEL"}
+              />
+            }
             style={{
               ...pickBtn,
               width: "200px",
@@ -188,7 +194,12 @@ class MapLocator extends Component {
           <Button
             id="map-pick-button"
             className="pick responsive-action-button"
-            children={"Pick"}
+            children={
+              <LabelContainer
+                labelName={"Pick"}
+                labelKey={"TL_MAP_PICK_LABEL"}
+              />
+            }
             style={{
               ...pickBtn,
               width: "200px",

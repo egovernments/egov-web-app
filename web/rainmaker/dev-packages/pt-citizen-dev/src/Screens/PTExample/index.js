@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, BreadCrumbs } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+
 import Divider from "egov-ui-kit/components/Divider";
 import { connect } from "react-redux";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
@@ -21,54 +22,91 @@ class PTExample extends Component {
           textChildren={
             <div className="example-main-cont clearfix">
               <div className="col-sm-12 descriptionStyle">
-                Property Tax is calculated based on rates stipulated by the Department of Local Government, Punjab. You can view the calculation rates{" "}
-                <a href={require("./PT_Corporation_Notification.pdf")} target="_blank">
-                  here
-                </a>{" "}
-                (Corporation) and{" "}
-                <a href={require("./PT_Council_Notification.pdf")} target="_blank">
-                  here
-                </a>{" "}
-                (Council).
+                <Label label="PT_EXAMPLES_DESCRIPTION" />
+                <div style={{ display: "flex" }}>
+                  <a
+                    href={require("./PT_Corporation_Notification.pdf")}
+                    target="_blank"
+                  >
+                    <Label label="PT_HERE_LABEL" color="#fe7a51" />
+                  </a>
+                  <Label
+                    label="PT_CORPORATION_LABEL"
+                    className="example-label-style"
+                  />
+
+                  <a
+                    href={require("./PT_Council_Notification.pdf")}
+                    target="_blank"
+                  >
+                    <Label label="PT_HERE_LABEL" color="#fe7a51" />
+                  </a>
+                  <Label label="PT_COUNCIL_LABEL" />
+                </div>
               </div>
               <div className="col-sm-12 dividerPTExample">
                 <Divider />
               </div>
               <div className="col-sm-12 descriptionPTExample">
-                <Label fontSize={16} label="These examples show how the rates are applied to the property details provided through the assessment:" />
+                <Label fontSize={16} label="CS_EXAMPLES_DESCRIPTION" />
               </div>
               <div className="col-sm-12 detailPart">
-                <div className="col-12 detailTitlePTExample">1. Residential, Independent House in Area 1</div>
+                <div className="col-12 detailTitlePTExample">
+                  <Label label="CS_EXAMPLE_AREA" />
+                </div>
                 <div className="col-12 detailContentPTExample">
                   <div className="col-sm-12 blockBox">
-                    <div className="col-sm-4 detailLeft">a. Plot Size:</div>
-                    <div className="col-sm-8">200 sq yards</div>
-                  </div>
-                  <div className="col-sm-12 blockBox">
-                    <div className="col-sm-4 detailLeft">b. Ground Floor total built-up area:</div>
-                    <div className="col-sm-8">150 sq yards (1350 sq ft)</div>
-                  </div>
-                  <div className="col-sm-12 blockBox">
-                    <div className="col-sm-4 detailLeft">c. Vacant Land (a-b):</div>
-                    <div className="col-sm-8">50 sq yards (450 sq ft)</div>
-                  </div>
-                  <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">d. 1st floor total built-up area:</div>
-                    <div className="col-sm-8">100 sq yards (900 sq ft)</div>
-                  </div>
-                  <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">Calculation of Property Tax:</div>
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_SIZE" />
+                    </div>
                     <div className="col-sm-8">
-                      150 (b) x Rs. 2/sq yard = Rs. 300
-                      <br />
-                      50 (c) x Re. 1/sq yard = Rs. 50
-                      <br />
-                      100 (d) x Re. 1/sq yard = Rs. 100
+                      <Label label="CS_EXAMPLES_SIZE_VALUE" />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 blockBox">
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_FLOOR" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_FLOOR_VALUE" />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 blockBox">
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_LAND" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_LAND_VALUE" />
                     </div>
                   </div>
                   <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">Net Property Tax:</div>
-                    <div className="col-sm-8">Rs. 450</div>
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_1ST_FLOOR" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_1ST_FLOOR_VALUE" />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 block">
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_PROPERTY_TAX" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_PROPERTY_TAX_VALUE1" />
+
+                      <br />
+                      <Label label="CS_EXAMPLES_PROPERTY_TAX_VALUE2" />
+                      <br />
+                      <Label label="CS_EXAMPLES_PROPERTY_TAX_VALUE3" />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 block">
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_NET_PROPERTY_TEX" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_NET_PROPERTY_TEX_VALUE" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -76,19 +114,35 @@ class PTExample extends Component {
                 <Divider />
               </div>
               <div className="col-sm-12 detailPart">
-                <div className="col-12 detailTitlePTExample">2. Commercial, Flat/Part of Building in Area 1</div>
+                <div className="col-12 detailTitlePTExample">
+                  <Label label="CS_EXAMPLES_FLAT" />
+                </div>
                 <div className="col-12 detailContentPTExample">
                   <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">a. Total Super Built-up area:</div>
-                    <div className="col-sm-8">150 sq yards</div>
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_BUILTUP" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_BUILTUP_VALUE" />
+                    </div>
                   </div>
                   <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">Calculation of Property Tax:</div>
-                    <div className="col-sm-8">150 (a) x Rs. 36/sq yard = Rs. 675</div>
+                    <div className="col-sm-4 detailLeft">
+                      {" "}
+                      <Label label="CS_EXAMPLES_CALCUL" />
+                    </div>
+                    <div className="col-sm-8">
+                      {" "}
+                      <Label label="CS_EXAMPLES_CALCUL_VALUE" />
+                    </div>
                   </div>
                   <div className="col-sm-12 block">
-                    <div className="col-sm-4 detailLeft">Net Property Tax:</div>
-                    <div className="col-sm-8">Rs. 5,400</div>
+                    <div className="col-sm-4 detailLeft">
+                      <Label label="CS_EXAMPLES_NET_PROPERTY_TEX1" />
+                    </div>
+                    <div className="col-sm-8">
+                      <Label label="CS_EXAMPLES_NET_PROPERTY_TEX1_VALUE" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -100,15 +154,15 @@ class PTExample extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { app } = state;
   const { urls } = app;
   return { urls };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: url => dispatch(addBreadCrumbs(url))
   };
 };
 
