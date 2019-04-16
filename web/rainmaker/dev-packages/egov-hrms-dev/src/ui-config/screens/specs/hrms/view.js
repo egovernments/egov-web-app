@@ -22,11 +22,11 @@ export const header = getCommonContainer({
 
 const tradeView = employeeReviewDetails(false);
 
-const getMdmsData = async (action, state, dispatch) => {
-  const tenantId = getTenantId();
+const getMdmsData = async (action, state, dispatch, tenantId) => {
+  const tenant = tenantId || getTenantId();
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: tenantId,
+      tenantId: tenant,
       moduleDetails: [
         {
           moduleName: "egov-hrms",
@@ -59,9 +59,10 @@ const screenConfig = {
   name: "view",
   beforeInitScreen: (action, state, dispatch) => {
     let employeeCode = getQueryArg(window.location.href, "employeeID");
-    getEmployeeData(state, dispatch, employeeCode);
+    let tenantId = getQueryArg(window.location.href, "tenantId");
+    getEmployeeData(state, dispatch, employeeCode, tenantId);
     showHideAdhocPopup(state, dispatch);
-    getMdmsData(action, state, dispatch);
+    getMdmsData(action, state, dispatch, tenantId);
     return action;
   },
   components: {
