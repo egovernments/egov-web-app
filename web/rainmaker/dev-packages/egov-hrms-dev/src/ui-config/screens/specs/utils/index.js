@@ -15,6 +15,7 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -1841,33 +1842,32 @@ export const setFilteredTradeTypes = (
 
 export const showCityPicker = (state, dispatch) => {
   let toggle = get(
-    state.screenConfiguration.screenConfig["home"],
+    state.screenConfiguration.screenConfig["search"],
     "components.cityPickerDialog.props.open",
     false
   );
   dispatch(
-    handleField("home", "components.cityPickerDialog", "props.open", !toggle)
+    handleField("search", "components.cityPickerDialog", "props.open", !toggle)
   );
 };
 
-export const applyForm = (state, dispatch) => {
+export const createEmployee = (state, dispatch) => {
   const tenantId = get(
     state.screenConfiguration.preparedFinalObject,
-    "citiesByModule.citizenTenantId"
+    "citiesByModule.tenantId.value"
   );
+  get(state.screenConfiguration.preparedFinalObject, "Employee") &&
+    dispatch(prepareFinalObject("Employee", []));
+  get(
+    state.screenConfiguration.preparedFinalObject,
+    "hrms.reviewScreen.furnishedRolesList"
+  ) && dispatch(prepareFinalObject("hrms.reviewScreen.furnishedRolesList", ""));
 
-  const isTradeDetailsValid = validateFields(
-    "components.cityPickerDialog.children.dialogContent.children.popup.children.cityPicker.children",
-    state,
-    dispatch,
-    "home"
-  );
-  if (isTradeDetailsValid) {
-    window.location.href =
-      process.env.NODE_ENV === "development"
-        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/hrms/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
-  }
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create?tenant=${tenantId}`
+      : `/hrms/create?tenant=${tenantId}`;
+  dispatch(setRoute(createUrl));
 };
 
 export const sortByEpoch = (data, order) => {

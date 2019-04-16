@@ -91,7 +91,7 @@ const mapStateToProps = (state, ownprops) => {
   // console.log("========>", value, suggestions);
   value =
     value &&
-    value.map(item => {
+    [value].map(item => {
       return {
         label: get(item, labelName) == null ? item.label : get(item, labelName),
         value: get(item, valueName) == null ? item.value : get(item, valueName)
