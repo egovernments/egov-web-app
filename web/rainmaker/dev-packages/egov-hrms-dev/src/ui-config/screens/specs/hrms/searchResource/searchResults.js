@@ -39,6 +39,11 @@ export const textToLocalMapping = {
     getLocalTextFromCode("HR_HOME_SEARCH_RESULTS_TABLE_HEADING"),
     "message",
     "Search Results for Employee"
+  ),
+  "Tenant ID": get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_TENANT_ID"),
+    "message",
+    "Tenant ID"
   )
 };
 
@@ -74,7 +79,8 @@ export const searchResults = {
       [get(textToLocalMapping, "Name")]: {},
       [get(textToLocalMapping, "Role")]: {},
       [get(textToLocalMapping, "Designation")]: {},
-      [get(textToLocalMapping, "Department")]: {}
+      [get(textToLocalMapping, "Department")]: {},
+      [get(textToLocalMapping, "Tenant ID")]: {}
     },
     title: get(textToLocalMapping, "Search Results for Employee")
     // customSortColumn: {
@@ -102,5 +108,5 @@ const onRowClick = rowData => {
       : "/hrms/view";
   return `${viewEmployeeUrl}?employeeID=${
     rowData[get(textToLocalMapping, "Employee ID")]
-  }`;
+  }&tenantId=${rowData[get(textToLocalMapping, "Tenant ID")]}`;
 };

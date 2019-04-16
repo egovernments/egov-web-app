@@ -33,10 +33,13 @@ export const getDesigName = (state, codes) => {
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
+  const tenantId =
+    get(state.screenConfiguration.preparedFinalObject, "searchScreen.ulb") ||
+    JSON.parse(getUserInfo()).tenantId;
   let queryObject = [
     {
       key: "tenantId",
-      value: JSON.parse(getUserInfo()).tenantId
+      value: tenantId
     }
   ];
   let searchScreenObject = get(
@@ -121,7 +124,9 @@ export const searchApiCall = async (state, dispatch) => {
           [get(textToLocalMapping, "Designation")]:
             getDesigName(state, currentDesignations) || "-",
           [get(textToLocalMapping, "Department")]:
-            getDeptName(state, currentDepartments) || "-"
+            getDeptName(state, currentDepartments) || "-",
+          [get(textToLocalMapping, "Tenant ID")]:
+            get(item, "tenantId", "-") || "-"
         };
       });
 

@@ -177,7 +177,7 @@ const employeeSearchAndResult = {
     cityPickerDialog: {
       componentPath: "Dialog",
       props: {
-        open: true,
+        open: false,
         className: "hrmsCityPickerDialog",
         style: { overflow: "visible" }
       },
