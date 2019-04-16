@@ -177,7 +177,11 @@ export const handleCreateUpdateEmployee = (state, dispatch) => {
 };
 
 export const createUpdateEmployee = async (state, dispatch, action) => {
-  const tenantId = JSON.parse(getUserInfo()).tenantId;
+  const pickedTenant = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Employee[0].tenantId"
+  );
+  const tenantId = pickedTenant || JSON.parse(getUserInfo()).tenantId;
   let queryObject = [
     {
       key: "tenantId",
@@ -405,11 +409,20 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   }
 };
 
-export const getEmployeeData = async (state, dispatch, employeeId) => {
+export const getEmployeeData = async (
+  state,
+  dispatch,
+  employeeId,
+  tenantId
+) => {
   let queryObject = [
     {
       key: "codes",
       value: employeeId
+    },
+    {
+      key: "tenantId",
+      value: tenantId
     }
   ];
   let response = await getSearchResults(queryObject, dispatch);

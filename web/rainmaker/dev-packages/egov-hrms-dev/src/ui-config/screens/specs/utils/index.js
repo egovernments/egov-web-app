@@ -1865,8 +1865,8 @@ export const createEmployee = (state, dispatch) => {
 
   const createUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/hrms/create?tenant=${tenantId}`
-      : `/hrms/create?tenant=${tenantId}`;
+      ? `/egov-ui-framework/hrms/create?tenantId=${tenantId}`
+      : `/hrms/create?tenantId=${tenantId}`;
   dispatch(setRoute(createUrl));
 };
 

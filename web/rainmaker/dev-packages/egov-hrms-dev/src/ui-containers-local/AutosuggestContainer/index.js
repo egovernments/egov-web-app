@@ -89,14 +89,15 @@ const mapStateToProps = (state, ownprops) => {
     : get(state.screenConfiguration.preparedFinalObject, jsonPath);
   //To fetch corresponding labels from localisation for the suggestions, if needed.
   // console.log("========>", value, suggestions);
-  value =
-    value &&
-    [value].map(item => {
+  if (value) {
+    value = Array.isArray(value) ? value : [value]; // Convert to array in case of single object
+    value.map(item => {
       return {
         label: get(item, labelName) == null ? item.label : get(item, labelName),
         value: get(item, valueName) == null ? item.value : get(item, valueName)
       };
     });
+  }
   // value = { label: "Emmm", value: "EMP" };
   if (labelsFromLocalisation) {
     suggestions = getLocalisedSuggestions(

@@ -6,10 +6,11 @@ import { handleCreateUpdateEmployee } from "./functions";
 
 const gotoCreateFlow = (state, dispatch) => {
   const employeeCode = getQueryArg(window.location.href, "employeeID");
+  const tenantId = getQueryArg(window.location.href, "tenantId");
   const createUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}`
-      : `/hrms/create?employeeCode=${employeeCode}`;
+      ? `/egov-ui-framework/hrms/create?employeeCode=${employeeCode}&tenantId=${tenantId}`
+      : `/hrms/create?employeeCode=${employeeCode}&tenantId=${tenantId}`;
   dispatch(setRoute(createUrl));
 };
 
