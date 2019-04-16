@@ -4,6 +4,7 @@ import {
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { showCityPicker, createEmployee } from "../../utils";
+import "./index.css";
 
 export const cityPicker = getCommonContainer({
   div1: {
