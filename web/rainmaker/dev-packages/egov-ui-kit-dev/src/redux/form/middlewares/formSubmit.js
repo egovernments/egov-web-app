@@ -68,7 +68,16 @@ const formSubmit = (store) => (next) => (action) => {
 
     if (formKey === "employeeOTP") {
       if (payload && payload.responseInfo && payload.responseInfo.status && payload.responseInfo.status == 200)
-        dispatch(toggleSnackbarAndSetText(true, "Password changed successfully!", false));
+        dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            {
+              labelName: "ULB validations failed!",
+              labelKey: "ERR_ULD_VALIDATIONS_FAILED",
+            },
+            true
+          )
+        );
     }
 
     if (formKey === "comment") {
