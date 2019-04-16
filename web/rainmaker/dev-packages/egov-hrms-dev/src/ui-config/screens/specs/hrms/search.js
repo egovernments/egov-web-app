@@ -3,7 +3,6 @@ import {
   getCommonHeader,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
@@ -12,6 +11,8 @@ import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchForm } from "./searchResource/searchForm";
 import { searchResults } from "./searchResource/searchResults";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { showCityPicker } from "../utils";
+import { cityPicker } from "./createResource/cityPicker";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -65,6 +66,10 @@ const getMDMSData = async (action, state, dispatch) => {
               filter: "[?(@.active == true)]"
             }
           ]
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [{ name: "tenants" }]
         }
       ]
     }
@@ -85,21 +90,6 @@ const getMDMSData = async (action, state, dispatch) => {
 
 const getData = async (action, state, dispatch) => {
   await getMDMSData(action, state, dispatch);
-};
-
-const gotoCreatePage = (state, dispatch) => {
-  get(state.screenConfiguration.preparedFinalObject, "Employee") &&
-    dispatch(prepareFinalObject("Employee", []));
-  get(
-    state.screenConfiguration.preparedFinalObject,
-    "hrms.reviewScreen.furnishedRolesList"
-  ) && dispatch(prepareFinalObject("hrms.reviewScreen.furnishedRolesList", ""));
-
-  const createUrl =
-    process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/hrms/create`
-      : `/hrms/create`;
-  dispatch(setRoute(createUrl));
 };
 
 const employeeSearchAndResult = {
@@ -168,7 +158,7 @@ const employeeSearchAndResult = {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: gotoCreatePage
+                callBack: showCityPicker
               },
               roleDefination: {
                 rolePath: "user-info.roles",
@@ -182,6 +172,29 @@ const employeeSearchAndResult = {
         breakAfterSearch: getBreak(),
         // progressStatus,
         searchResults
+      }
+    },
+    cityPickerDialog: {
+      componentPath: "Dialog",
+      props: {
+        open: true,
+        className: "hrmsCityPickerDialog",
+        style: { overflow: "visible" }
+      },
+      children: {
+        dialogContent: {
+          componentPath: "DialogContent",
+          props: {
+            style: {
+              //     minHeight: "180px",
+              //     minWidth: "365px",
+              overflow: "visible"
+            }
+          },
+          children: {
+            popup: cityPicker
+          }
+        }
       }
     }
   }

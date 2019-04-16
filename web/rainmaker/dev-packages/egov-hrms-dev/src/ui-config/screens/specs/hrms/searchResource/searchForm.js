@@ -56,6 +56,30 @@ export const searchForm = getCommonCard({
     labelKey: "HR_HOME_SEARCH_RESULTS_DESC"
   }),
   searchFormContainer: getCommonContainer({
+    ulb: getSelectField({
+      label: { labelName: "ULB", labelKey: "HR_ULB_LABEL" },
+      placeholder: {
+        labelName: "Select ULB",
+        labelKey: "HR_SELECT_ULB_PLACEHOLDER"
+      },
+      required: false,
+      jsonPath: "searchScreen.ulb",
+      gridDefination: {
+        xs: 12,
+        sm: 4
+      },
+      sourceJsonPath: "searchScreenMdmsData.tenant.tenants",
+      props: {
+        optionLabel: "name",
+        optionValue: "code"
+        // hasLocalization: false
+      },
+      localePrefix: {
+        moduleName: "common-masters",
+        masterName: "tenant"
+      }
+    }),
+
     employeeName: getTextField({
       label: {
         labelName: "Employee Name",

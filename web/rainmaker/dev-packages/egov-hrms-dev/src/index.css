@@ -125,6 +125,19 @@ input[type="date"]:valid::before {
     padding-right: 80px
 } */
 
+.hrmsCityPickerDialog > div {
+  /* width: 100%; */
+  overflow: visible;
+}
+
+.hrmsCityPickerButton {
+  padding: 20px;
+}
+
+.hrmsCityPicker > div {
+  width: 100%;
+}
+
 @media only screen and (max-width: 768px) {
   #custom-atoms-applicationSuccessFooter,
   #custom-atoms-paymentSuccessFooter {
