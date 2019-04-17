@@ -283,7 +283,7 @@ export const deactivateEmployee = getCommonContainer({
         children: {
           previousButtonLabel: getLabel({
             labelName: "DEACTIVATE EMPLOYEE",
-            labelKey: "HR_DEACTIVATE_EMPLOYEE_BUTTON_TEXT"
+            labelKey: "HR_DEACTIVATE_EMPLOYEE_LABEL"
           })
         },
         onClickDefination: {

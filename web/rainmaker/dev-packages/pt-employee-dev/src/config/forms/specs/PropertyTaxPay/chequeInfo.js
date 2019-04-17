@@ -11,7 +11,7 @@ const formConfig = {
       errorMessage: "PT_CHEQUE_NUMBER_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
-      value: "",
+      value: ""
     },
     chequeDate: {
       id: "chequeDate",
@@ -22,12 +22,12 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.transactionDateInput",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       errorMessage: "",
-      value: "",
+      value: ""
     },
     ifscCode: {
       id: "ifscCode",
       type: "textFieldIcon",
-      text: "SUBMIT",
+      text: "CS_COMMON_SUBMIT",
       className: "pt-old-pid-text-field",
       floatingLabelText: "PT_IFSC_FLOATING_LABEL",
       hintText: "PT_IFSC_HINT_TEXT",
@@ -37,7 +37,7 @@ const formConfig = {
       errorMessage: "PT_IFSC_ERROR_MESSAGE",
       jsonPath: "Receipt[0].instrument.ifscCode",
       pattern: /^[a-zA-Z0-9]{1,11}$/i,
-      value: "",
+      value: ""
     },
     BankName: {
       id: "BankName",
@@ -48,7 +48,7 @@ const formConfig = {
       floatingLabelText: "TL_PAYMENT_BANK_LABEL",
       dropDownData: [{ label: "RBI", value: "10101" }],
       jsonPath: "Receipt[0].instrument.bank.name",
-      value: "",
+      value: ""
     },
     BankBranch: {
       id: "BankBranch",
@@ -58,13 +58,13 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_BANK_BRANCH",
       jsonPath: "Receipt[0].instrument.branchName",
-      value: "",
-    },
+      value: ""
+    }
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false,
+  isFormValid: false
 };
 
 export default formConfig;

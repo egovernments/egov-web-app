@@ -221,7 +221,7 @@ const serviceDetailsCard = {
     items: [],
     addItemLabel: {
       labelName: "ADD SERVICE ENTRY",
-      labelKey: "TL_ADD_SERVICE_ENTRY"
+      labelKey: "HR_ADD_SERVICE_ENTRY"
     },
     headerName: "Service",
     headerJsonPath:
