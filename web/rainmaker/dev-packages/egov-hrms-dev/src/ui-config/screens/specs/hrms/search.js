@@ -6,12 +6,13 @@ import {
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
+import set from "lodash/set";
 import { httpRequest } from "../../../../ui-utils";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchForm } from "./searchResource/searchForm";
 import { searchResults } from "./searchResource/searchResults";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import { showCityPicker } from "../utils";
+import { showCityPicker, getAdminRole, createEmployee } from "../utils";
 import { cityPicker } from "./createResource/cityPicker";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
@@ -88,8 +89,28 @@ const getMDMSData = async (action, state, dispatch) => {
   }
 };
 
+const setUlbSelect = (action, state, dispatch) => {
+  let adminRoles = getAdminRole(state);
+  if (adminRoles.hasAdminRole) {
+    set(
+      action.screenConfig,
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.ulb.roleDefination.roles",
+      adminRoles.configAdminRoles
+    );
+  }
+};
+
 const getData = async (action, state, dispatch) => {
   await getMDMSData(action, state, dispatch);
+};
+
+const adminCityPickerCheck = (state, dispatch) => {
+  let adminRoles = getAdminRole(state);
+  if (adminRoles.hasAdminRole) {
+    showCityPicker(state, dispatch);
+  } else {
+    createEmployee(state, dispatch);
+  }
 };
 
 const employeeSearchAndResult = {
@@ -97,6 +118,7 @@ const employeeSearchAndResult = {
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
     getData(action, state, dispatch);
+    setUlbSelect(action, state, dispatch);
     return action;
   },
   components: {
@@ -158,7 +180,7 @@ const employeeSearchAndResult = {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: showCityPicker
+                callBack: adminCityPickerCheck
               },
               roleDefination: {
                 rolePath: "user-info.roles",

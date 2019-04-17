@@ -62,7 +62,7 @@ export const searchForm = getCommonCard({
         labelName: "Select ULB",
         labelKey: "HR_SELECT_ULB_PLACEHOLDER"
       },
-      required: false,
+      required: true,
       jsonPath: "searchScreen.ulb",
       gridDefination: {
         xs: 12,
@@ -77,6 +77,10 @@ export const searchForm = getCommonCard({
       localePrefix: {
         moduleName: "common-masters",
         masterName: "tenant"
+      },
+      roleDefination: {
+        rolePath: "user-info.roles",
+        roles: []
       }
     }),
 

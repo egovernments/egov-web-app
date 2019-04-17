@@ -1862,11 +1862,11 @@ export const createEmployee = (state, dispatch) => {
     state.screenConfiguration.preparedFinalObject,
     "hrms.reviewScreen.furnishedRolesList"
   ) && dispatch(prepareFinalObject("hrms.reviewScreen.furnishedRolesList", ""));
-
+  const tenantIdQueryString = tenantId ? `?tenantId=${tenantId}` : "";
   const createUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/hrms/create?tenantId=${tenantId}`
-      : `/hrms/create?tenantId=${tenantId}`;
+      ? `/egov-ui-framework/hrms/create${tenantIdQueryString}`
+      : `/hrms/create${tenantIdQueryString}`;
   dispatch(setRoute(createUrl));
 };
 
@@ -1897,4 +1897,34 @@ export const toggleDeactivateDialog = (state, dispatch) => {
   dispatch(
     handleField("view", "components.deactivateEmployee", "props.open", !toggle)
   );
+};
+
+// HRMS GET STATE ADMIN ROLE
+export const getAdminRole = state => {
+  let userInfo = JSON.parse(getUserInfo());
+  const currentUserRoles = get(userInfo, "roles");
+
+  /** REMOVE THESE 2 HARDCODES after moving StateInfo object to localStorage */
+  const configAdminRoles = JSON.parse(
+    get(
+      state,
+      "common.stateInfoById[0].roleMapping.hrmsAdmin",
+      '["HRMS_ADMIN"]'
+    )
+  );
+  const stateTenantId = get(state, "common.stateInfoById[0].code", "pb");
+  /** END */
+
+  let hasAdminRole = false;
+  Array.isArray(currentUserRoles) &&
+    currentUserRoles.forEach(role => {
+      if (
+        Array.isArray(configAdminRoles) &&
+        configAdminRoles.includes(role.code) &&
+        role.tenantId === stateTenantId
+      ) {
+        hasAdminRole = true;
+      }
+    });
+  return { hasAdminRole: hasAdminRole, configAdminRoles: configAdminRoles };
 };
