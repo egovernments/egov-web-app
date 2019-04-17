@@ -427,7 +427,9 @@ class ActionMenuComp extends Component {
     return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" />
-        <div className="menu-item-title">{menuTitle && menuTitle[menuTitle.length - 1]}</div>
+        <div className="menu-item-title">
+          <Label label={menuTitle && `ACTION_TEST_${menuTitle[menuTitle.length - 1].toUpperCase().replace(/[.:-\s\/]/g, "_")}`} />
+        </div>
         <Menu
           disableAutoFocus={true}
           desktop={true}
