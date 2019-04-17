@@ -6,7 +6,7 @@ import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headersFromAPI = billAccountDetails.map((item) => {
-    return item.accountDescription && item.accountDescription.split("-")[0];
+    return item.taxHeadCode && item.taxHeadCode;
   });
   const headers = [
     "PT_TAX",
@@ -24,6 +24,7 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     "PT_DECIMAL_CEILING_CREDIT",
     "PT_DECIMAL_CEILING_CREDIT_DEBIT",
     "PT_DECIMAL_CEILING_DEBIT",
+    "PT_ROUNDOFF",
   ];
   const negativeHeaders = [
     "PT_ADHOC_REBATE",
@@ -44,12 +45,14 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     (result, current) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
       // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
-      const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+      const taxHeadContent = billAccountDetails.filter((item) => item.taxHeadCode && item.taxHeadCode === current);
       taxHeadContent &&
         taxHeadContent[0] &&
         result[1].push({
           text: taxHeadContent[0]
-            ? taxHeadContent[0].debitAmount
+            ? taxHeadContent[0].amount
+              ? taxHeadContent[0].amount
+              : taxHeadContent[0].debitAmount
               ? `-${taxHeadContent[0].debitAmount}`
               : taxHeadContent[0].crAmountToBePaid
               ? taxHeadContent[0].crAmountToBePaid
