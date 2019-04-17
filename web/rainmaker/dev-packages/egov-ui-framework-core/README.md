@@ -1,6 +1,6 @@
-# MIHY
+# EGOV
 
-MIHY is boilerplate for creating screen by writing object configuration
+EGOV is boilerplate for creating screen by writing object configuration
 
 ### Requirements
 * Node js

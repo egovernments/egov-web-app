@@ -114,7 +114,10 @@ const getSelectedTabIndex = paymentType => {
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
-  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath), "daystart");
+  const dateConvertedToEpoch = convertDateToEpoch(
+    get(finalObj, jsonPath),
+    "daystart"
+  );
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
@@ -230,7 +233,7 @@ const callBackForPay = async (state, dispatch) => {
     try {
       let response = await httpRequest(
         "post",
-        "collection-services/receipts/_create",
+        "collection-services-v1/receipts/_create",
         "_create",
         [],
         ReceiptBody,
@@ -309,58 +312,58 @@ export const footer = getCommonApplyFooter({
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
   },
-  downloadConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "DOWNLOAD CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
-  printConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "PRINT CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
+  // downloadConfirmationform: {
+  //   componentPath: "Button",
+  //   props: {
+  //     variant: "outlined",
+  //     color: "primary",
+  //     style: {
+  //       minWidth: "200px",
+  //       height: "48px",
+  //       marginRight: "45px"
+  //     }
+  //   },
+  //   children: {
+  //     submitButtonLabel: getLabel({
+  //       labelName: "DOWNLOAD CONFIRMATION FORM",
+  //       labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
+  //     })
+  //   },
+  //   onClickDefination: {
+  //     action: "condition",
+  //     callBack: callBackForPay
+  //   },
+  //   roleDefination: {
+  //     rolePath: "user-info.roles"
+  //     roles: ["CITIZEN"]
+  //   }
+  // },
+  // printConfirmationform: {
+  //   componentPath: "Button",
+  //   props: {
+  //     variant: "outlined",
+  //     color: "primary",
+  //     style: {
+  //       minWidth: "200px",
+  //       height: "48px",
+  //       marginRight: "45px"
+  //     }
+  //   },
+  //   children: {
+  //     submitButtonLabel: getLabel({
+  //       labelName: "PRINT CONFIRMATION FORM",
+  //       labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
+  //     })
+  //   },
+  //   onClickDefination: {
+  //     action: "condition",
+  //     callBack: callBackForPay
+  //   },
+  //   roleDefination: {
+  //     rolePath: "user-info.roles"
+  //     roles: ["CITIZEN"]
+  //   }
+  // },
   makePayment: {
     componentPath: "Button",
     props: {

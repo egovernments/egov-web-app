@@ -18,15 +18,7 @@ const inputProps = {
   accept: "image/*",
   multiple: false, //for selecting single or multiple files
 };
-const galleryIconBtn = (
-  <Icon
-    className="gallery-upload-drawer"
-    id="uploadDrawerGallaryIcon"
-    style={iconStyle}
-    action="image"
-    name={"image"}
-  />
-);
+const galleryIconBtn = <Icon className="gallery-upload-drawer" id="uploadDrawerGallaryIcon" style={iconStyle} action="image" name={"image"} />;
 
 class UploadDrawer extends Component {
   onRemoveClick = () => {
@@ -51,7 +43,7 @@ class UploadDrawer extends Component {
                 <FilePicker id="photo-picker" inputProps={inputProps} handleimage={this.picUpload}>
                   {galleryIconBtn}
                 </FilePicker>
-                <Label className="galleryUploadlabel" label="Gallery" color={"#484848"} labelStyle={this.props.labelStyle} />
+                <Label className="galleryUploadlabel" label="COMMON_GALLERY_LABEL" color={"#484848"} labelStyle={this.props.labelStyle} />
               </div>
             )}
             {this.props.removeIcon && (
@@ -66,7 +58,7 @@ class UploadDrawer extends Component {
                     onClick={this.onRemoveClick}
                   />
                 </div>
-                <Label className="removeUploadlabel" label="Remove" color={"#484848"} labelStyle={this.props.labelStyle} />
+                <Label className="removeUploadlabel" label="COMMON_REMOVE_LABEL" color={"#484848"} labelStyle={this.props.labelStyle} />
               </div>
             )}
           </div>

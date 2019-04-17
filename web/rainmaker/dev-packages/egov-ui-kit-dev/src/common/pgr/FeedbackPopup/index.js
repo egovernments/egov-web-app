@@ -53,7 +53,7 @@ const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit, selecte
                   hintStyle={{ letterSpacing: "0.7px" }}
                 />,
                 <div key={"feedback-submit-button"} className="feedback-popup-button-cont">
-                  <Button label="CS_COMMON_SUBMIT" buttonLabel={true} primary={true} fullWidth={true} onClick={onSubmit} />
+                  <Button label={<Label label="CS_COMMON_SUBMIT" buttonLabel={true} />} primary={true} fullWidth={true} onClick={onSubmit} />
                 </div>,
               ]
             : [
