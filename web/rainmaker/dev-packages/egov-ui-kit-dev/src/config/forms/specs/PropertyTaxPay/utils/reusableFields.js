@@ -261,13 +261,9 @@ export const beforeInitForm = {
           dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorNo}`));
         }
       }
-      let usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
-
-      if (usageCategoryMajor !== "MIXED") {
-        const usageTypeValue = get(form, "fields.usageType.value");
-        set(action, "form.fields.usageType.value", getTranslatedLabel(usageTypeValue, localizationLabels));
-        dispatch(setFieldProperty(formKey, "usageType", "value", getTranslatedLabel(usageTypeValue, localizationLabels)));
-      }
+      const usageTypeValue = get(form, "fields.usageType.value");
+      set(action, "form.fields.usageType.value", getTranslatedLabel(usageTypeValue, localizationLabels));
+      dispatch(setFieldProperty(formKey, "usageType", "value", getTranslatedLabel(usageTypeValue, localizationLabels)));
     }
 
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
