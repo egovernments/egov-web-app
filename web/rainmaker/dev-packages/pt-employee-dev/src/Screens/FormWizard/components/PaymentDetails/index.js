@@ -70,7 +70,7 @@ const paymentModeDetails = [
         })(CashInformation)
       },
       {
-        title: "Demand Draft Details",
+        title: "PT_DEMAND_DRAFT_DETAILS",
         className: "demand-details",
         comp: formHoc({
           formKey: "demandInfo",
@@ -94,7 +94,7 @@ const paymentModeDetails = [
         })(CashInformation)
       },
       {
-        title: "Card Details",
+        title: "PT_CARD_DETAILS",
         className: "card-details",
         comp: formHoc({
           formKey: "cardInfo",

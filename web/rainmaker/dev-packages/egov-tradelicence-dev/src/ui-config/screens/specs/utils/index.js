@@ -970,8 +970,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
         },
         value: null,
         info: getToolTipInfo(item, LicenseData) && {
-          labelName: getToolTipInfo(item, LicenseData),
-          labelKey: getToolTipInfo(item, LicenseData)
+          value: getToolTipInfo(item, LicenseData),
+          key: getToolTipInfo(item, LicenseData)
         }
       };
     });
@@ -989,11 +989,11 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
               item.accountDescription.split("-")[0],
               LicenseData
             ) && {
-              labelName: getToolTipInfo(
+              value: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               ),
-              labelKey: getToolTipInfo(
+              key: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               )
@@ -1008,8 +1008,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
             },
             value: getTaxValue(item),
             info: getToolTipInfo(item.taxHeadCode, LicenseData) && {
-              labelName: getToolTipInfo(item.taxHeadCode, LicenseData),
-              labelKey: getToolTipInfo(item.taxHeadCode, LicenseData)
+              value: getToolTipInfo(item.taxHeadCode, LicenseData),
+              key: getToolTipInfo(item.taxHeadCode, LicenseData)
             }
           });
       }

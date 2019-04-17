@@ -45,7 +45,7 @@ class ClosedComplaints extends Component {
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
           <Complaints
-            noComplaintMessage={"No complaints here !!!"}
+            noComplaintMessage={"COMMON_NO_COMPLAINTS_MESSAGE"}
             onComplaintClick={onComplaintClick}
             complaints={closedComplaints}
             role={role}

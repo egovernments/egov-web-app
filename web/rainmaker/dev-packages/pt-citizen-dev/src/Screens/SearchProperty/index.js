@@ -181,7 +181,9 @@ class SearchProperty extends Component {
         ) : null}
         {showTable && tableData.length === 0 && (
           <div className="search-no-property-found">
-            <div className="no-search-text">No property records found</div>
+            <div className="no-search-text">
+              <Label label="PT_NO_PROPERTY_RECORD" />
+            </div>
             <div className="new-assess-btn">
               <Button
                 label={"New Property Assessment"}

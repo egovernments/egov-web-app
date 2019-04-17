@@ -259,7 +259,7 @@ const assignmentDetailsCard = {
     items: [],
     addItemLabel: {
       labelName: "ADD ASSIGNMENT",
-      labelKey: "TL_ADD_ASSIGNMENT"
+      labelKey: "HR_ADD_ASSIGNMENT"
     },
     headerName: "Assignment",
     headerJsonPath:
