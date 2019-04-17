@@ -184,7 +184,7 @@ const employeeSearchAndResult = {
               },
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["SUPERUSER"]
+                roles: ["SUPERUSER", "HRMS_ADMIN"]
               }
             }
           }
