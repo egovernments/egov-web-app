@@ -142,7 +142,7 @@ export const PGService = {
 
 export const RECEIPT = {
   GET: {
-    URL: "/collection-services/receipts/_search",
+    URL: "/collection-services-v1/receipts/_search",
     ACTION: "_get",
   },
 };

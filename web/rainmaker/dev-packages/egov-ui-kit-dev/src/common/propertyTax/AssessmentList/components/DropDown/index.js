@@ -98,7 +98,7 @@ class DropDown extends Component {
     const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerCode", value: item.consumerCode }];
 
     try {
-      const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
+      const payload = await httpRequest("/collection-services-v1/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
       const lastAmount = payload && payload.Receipt && get(payload.Receipt[0], "Bill[0].billDetails[0].totalAmount");
       const totalAmountBeforeLast =
         payload &&

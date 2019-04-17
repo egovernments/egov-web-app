@@ -230,7 +230,8 @@ export const getEstimateFromBill = (bill) => {
       taxHeadContent[0] &&
       taxHeadEstimates.push({
         taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
-        estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        // estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        estimateAmount: taxHeadContent[0].amount,
         category: taxHeadContent[0].purpose,
       });
     return taxHeadEstimates;
@@ -335,7 +336,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
-  units = sortBy(uniqBy(units,"floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
+  units = sortBy(uniqBy(units, "floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
   let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
     if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;
