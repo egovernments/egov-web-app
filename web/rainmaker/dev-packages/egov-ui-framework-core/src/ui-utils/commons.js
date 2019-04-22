@@ -135,6 +135,13 @@ export const transformById = (payload, id) => {
   );
 };
 
+export const getTransformedLocalStorgaeLabels = () => {
+  const localeLabels = JSON.parse(
+    getLocalization(`localization_${getLocale()}`)
+  );
+  return transformById(localeLabels, "code");
+};
+
 export const getTranslatedLabel = (labelKey, localizationLabels) => {
   let translatedLabel = null;
   if (localizationLabels && localizationLabels.hasOwnProperty(labelKey)) {
