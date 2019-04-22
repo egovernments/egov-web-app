@@ -56,8 +56,8 @@ export const header = getCommonContainer({
     dynamicArray: [getCurrentFinancialYear()],
     labelKey:
       process.env.REACT_APP_NAME === "Citizen"
-        ? "TL_COMMON_APPL_NEW_LICENSE_YEAR"
-        : "TL_COMMON_APPL_NEW_LICENSE"
+        ? "TL_COMMON_APPL_NEW_LICENSE"
+        : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
