@@ -72,8 +72,8 @@ const formSubmit = (store) => (next) => (action) => {
           toggleSnackbarAndSetText(
             true,
             {
-              labelName: "ULB validations failed!",
-              labelKey: "ERR_ULD_VALIDATIONS_FAILED",
+              labelName: "Password changed successfully!",
+              labelKey: "CS_COMMON_EMPLOYEEOTP_CHANGED_PASSWORD_SUCCESS",
             },
             true
           )
