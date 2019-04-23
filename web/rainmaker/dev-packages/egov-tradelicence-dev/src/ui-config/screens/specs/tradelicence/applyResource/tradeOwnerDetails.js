@@ -68,6 +68,11 @@ export const getOwnerGenderField = getSelectField({
     {
       code: "FEMALE",
       label: "COMMON_GENDER_FEMALE"
+    },
+    {
+      code: "OTHERS",
+      label: "COMMON_GENDER_TRANSGENDER"
+
     }
   ]
 });
