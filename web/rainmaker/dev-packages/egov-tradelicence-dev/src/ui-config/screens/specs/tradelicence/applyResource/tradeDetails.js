@@ -109,6 +109,13 @@ const tradeUnitCard = {
                     )
                   )
                 );
+                dispatch(pFO("LicensesTemp.tradeUnits[0].tradeSubType", ""));
+                dispatch(
+                  pFO(
+                    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+                    ""
+                  )
+                );
               } catch (e) {
                 console.log(e);
               }
@@ -735,7 +742,6 @@ export const tradeDetails = getCommonCard({
         }
       }),
       beforeFieldChange: (action, state, dispatch) => {
-
         if (action.value === "APPLICATIONTYPE.RENEWAL") {
           dispatch(
             handleField(
