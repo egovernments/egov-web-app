@@ -104,7 +104,7 @@ class TextFieldContainer extends React.Component {
                     option.value,
                     localePrefix && !isEmpty(localePrefix)
                       ? appendModulePrefix(option.value, localePrefix)
-                      : option.value,
+                      : option.label,
                     localizationLabels
                   )}
                 </MenuItem>

@@ -59,6 +59,8 @@ export const getOwnerGenderField = getSelectField({
     labelKey: "TL_NEW_OWNER_DETAILS_GENDER_PLACEHOLDER"
   },
   required: true,
+  optionValue: "code",
+  optionLabel: "label",
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
   data: [
     {
