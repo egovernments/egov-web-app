@@ -75,8 +75,8 @@ export const searchForm = getCommonCard({
         // hasLocalization: false
       },
       localePrefix: {
-        moduleName: "common-masters",
-        masterName: "tenant"
+        moduleName: "TENANT",
+        masterName: "TENANTS"
       },
       roleDefination: {
         rolePath: "user-info.roles",
