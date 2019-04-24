@@ -32,7 +32,7 @@ const formSubmit = (store) => (next) => (action) => {
         dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: mergeMDMSDataArray(currentMdmsData, newMdmsRow) } } }, moduleName, masterName)
       );
       if (mdmsToast && mdmsToast.length) {
-        dispatch(toggleSnackbarAndSetText(true, mdmsToast, false));
+        dispatch(toggleSnackbarAndSetText(true, { labelName: mdmsToast, labelKey: mdmsToast }, false));
       }
     }
 
@@ -72,8 +72,8 @@ const formSubmit = (store) => (next) => (action) => {
           toggleSnackbarAndSetText(
             true,
             {
-              labelName: "ULB validations failed!",
-              labelKey: "ERR_ULD_VALIDATIONS_FAILED",
+              labelName: "Password changed successfully!",
+              labelKey: "CS_COMMON_EMPLOYEEOTP_CHANGED_PASSWORD_SUCCESS",
             },
             true
           )
@@ -98,7 +98,7 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     if (toast && toast.length) {
-      dispatch(toggleSnackbarAndSetText(true, toast, false));
+      dispatch(toggleSnackbarAndSetText(true, { labelName: toast, labelKey: toast }, false));
     }
   } else {
     next(action);

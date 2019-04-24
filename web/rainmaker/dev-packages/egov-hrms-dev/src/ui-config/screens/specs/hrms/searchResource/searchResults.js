@@ -2,35 +2,40 @@ import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
 import {
-  getLocalization,
-  getLocale
-} from "egov-ui-kit/utils/localStorageUtils";
-import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
-
-const localeLabels = JSON.parse(getLocalization(`localization_${getLocale()}`));
+  getLocaleLabels,
+  getTransformedLocalStorgaeLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 export const textToLocalMapping = {
   "Employee ID": getLocaleLabels(
     "Employee ID",
     "HR_COMMON_TABLE_COL_EMP_ID",
-    localeLabels
+    getTransformedLocalStorgaeLabels()
   ),
-  Name: getLocaleLabels("Name", "HR_COMMON_TABLE_COL_NAME", localeLabels),
-  Role: getLocaleLabels("Role", "HR_COMMON_TABLE_COL_ROLE", localeLabels),
+  Name: getLocaleLabels(
+    "Name",
+    "HR_COMMON_TABLE_COL_NAME",
+    getTransformedLocalStorgaeLabels()
+  ),
+  Role: getLocaleLabels(
+    "Role",
+    "HR_COMMON_TABLE_COL_ROLE",
+    getTransformedLocalStorgaeLabels()
+  ),
   Designation: getLocaleLabels(
     "Designation",
     "HR_COMMON_TABLE_COL_DESG",
-    localeLabels
+    getTransformedLocalStorgaeLabels()
   ),
   Department: getLocaleLabels(
     "Department",
     "HR_COMMON_TABLE_COL_DEPT",
-    localeLabels
+    getTransformedLocalStorgaeLabels()
   ),
   "Search Results for Employee": getLocaleLabels(
     "Search Results for Employee",
     "HR_HOME_SEARCH_RESULTS_TABLE_HEADING",
-    localeLabels
+    getTransformedLocalStorgaeLabels()
   )
 };
 

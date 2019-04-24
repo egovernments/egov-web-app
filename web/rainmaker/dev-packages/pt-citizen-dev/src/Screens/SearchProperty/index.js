@@ -59,7 +59,10 @@ class SearchProperty extends Component {
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
       this.props.toggleSnackbarAndSetText(
         true,
-        "ERR_FILL_ATLEAST_ONE_FIELD_WITH_CITY",
+        {
+          labelName: "Please fill atleast one field along with city",
+          labelKey: "ERR_FILL_ATLEAST_ONE_FIELD_WITH_CITY"
+        },
         true
       );
     } else {

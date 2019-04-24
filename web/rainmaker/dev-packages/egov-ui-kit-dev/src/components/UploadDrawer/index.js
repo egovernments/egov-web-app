@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Icon from "../Icon";
 import FilePicker from "../FilePicker";
-import Label from "../Label";
+import Label from "../../utils/translationNode";
 import "./index.css";
 
 const iconStyle = {

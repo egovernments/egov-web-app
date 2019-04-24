@@ -44,7 +44,7 @@ const formValidation = (store) => (next) => (action) => {
       }
     } catch (error) {
       const { message } = error;
-      dispatch(toggleSnackbarAndSetText(true, message, true));
+      dispatch(toggleSnackbarAndSetText(true, { labelName: message, labelKey: message }, true));
       return;
     }
   }
