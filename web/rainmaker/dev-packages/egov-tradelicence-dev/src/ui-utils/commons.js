@@ -89,7 +89,13 @@ export const updatePFOforSearchResults = async (
     },
     { key: "applicationNumber", value: queryValue }
   ];
-  const payload = await getSearchResults(queryObject);
+  const isPreviouslyEdited = getQueryArg(window.location.href, "edited");
+  debugger;
+  const payload = !isPreviouslyEdited
+    ? await getSearchResults(queryObject)
+    : {
+        Licenses: get(state.screenConfiguration.preparedFinalObject, "Licenses")
+      };
   if (payload) {
     dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   }
@@ -372,30 +378,43 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       let action = "INITIATE";
       if (
         queryObject[0].tradeLicenseDetail &&
-        queryObject[0].tradeLicenseDetail.applicationDocuments &&
-        activeIndex === 1
-      ) {
-        set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
-      } else if (
-        queryObject[0].tradeLicenseDetail &&
         queryObject[0].tradeLicenseDetail.applicationDocuments
       ) {
-        action = "APPLY";
+        if (getQueryArg(window.location.href, "action") === "edit") {
+          // return;
+        } else if (activeIndex === 1) {
+          alert("active index 1");
+
+          set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
+        } else action = "APPLY";
       }
+      // else if (
+      //   queryObject[0].tradeLicenseDetail &&
+      //   queryObject[0].tradeLicenseDetail.applicationDocuments &&
+      //   activeIndex === 1
+      // ) {
+      // } else if (
+      //   queryObject[0].tradeLicenseDetail &&
+      //   queryObject[0].tradeLicenseDetail.applicationDocuments
+      // ) {
+      //   action = "APPLY";
+      // }
       set(queryObject[0], "action", action);
-      const updateResponse = await httpRequest(
-        "post",
-        "/tl-services/v1/_update",
-        "",
-        [],
-        { Licenses: queryObject }
-      );
+      const isEditFlow = getQueryArg(window.location.href, "action") === "edit";
+      !isEditFlow &&
+        (await httpRequest("post", "/tl-services/v1/_update", "", [], {
+          Licenses: queryObject
+        }));
       let searchQueryObject = [
         { key: "tenantId", value: queryObject[0].tenantId },
         { key: "applicationNumber", value: queryObject[0].applicationNumber }
       ];
       let searchResponse = await getSearchResults(searchQueryObject);
-      dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      if (isEditFlow) {
+        searchResponse = { Licenses: queryObject };
+      } else {
+        dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      }
       const updatedtradeUnits = get(
         searchResponse,
         "Licenses[0].tradeLicenseDetail.tradeUnits"
@@ -427,7 +446,8 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       set(queryObject[0], "action", "INITIATE");
       //Emptying application docs to "INITIATE" form in case of search and fill from old TL Id.
       if (!queryObject[0].applicationNumber)
-        set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
+        alert("application no not present");
+      set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
       const response = await httpRequest(
         "post",
         "/tl-services/v1/_create",
