@@ -192,20 +192,22 @@ export const getData = async (action, state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
       null
     );
-    dispatch(
-      prepareFinalObject("Licenses", [
-        {
-          licenseType: "PERMANENT",
-          oldLicenseNumber: queryValue ? "" : applicationNo,
-          tradeLicenseDetail: {
-            additionalDetail: {
-              applicationType: applicationType ? applicationType : "NEW"
+    !getQueryArg(window.location.href, "edited") &&
+      dispatch(
+        prepareFinalObject("Licenses", [
+          {
+            licenseType: "PERMANENT",
+            oldLicenseNumber: queryValue ? "" : applicationNo,
+            tradeLicenseDetail: {
+              additionalDetail: {
+                applicationType: applicationType ? applicationType : "NEW"
+              }
             }
           }
-        }
-      ])
-    );
+        ])
+      );
     // dispatch(prepareFinalObject("LicensesTemp", []));
+
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
     if (!queryValue) {
       dispatch(

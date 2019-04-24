@@ -15,6 +15,7 @@ import {
   ifUserRoleExists
 } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
   toggleSnackbar,
   prepareFinalObject
@@ -275,6 +276,19 @@ export const callBackForNext = async (state, dispatch) => {
     }
 
     if (isFormValid) {
+      if (getQueryArg(window.location.href, "action") === "edit") {
+        //EDIT FLOW
+        const businessId = getQueryArg(
+          window.location.href,
+          "applicationNumber"
+        );
+        const tenantId = getQueryArg(window.location.href, "tenantId");
+        dispatch(
+          setRoute(
+            `/tradelicence/search-preview?applicationNumber=${businessId}&tenantId=${tenantId}&edited=true`
+          )
+        );
+      }
       const reviewDocData =
         uploadedDocData &&
         uploadedDocData.map(item => {
