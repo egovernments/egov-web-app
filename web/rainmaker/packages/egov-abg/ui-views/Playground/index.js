@@ -56,7 +56,7 @@ var _CommonView = require("egov-ui-framework/ui-molecules/CommonView");
 
 var _CommonView2 = _interopRequireDefault(_CommonView);
 
-var _search = require("../../ui-config/screens/specs/fire-noc/search");
+var _search = require("../../ui-config/screens/specs/abg/search");
 
 var _search2 = _interopRequireDefault(_search);
 

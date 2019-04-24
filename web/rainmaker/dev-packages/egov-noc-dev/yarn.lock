@@ -150,9 +150,10 @@
     recompose "^0.28.0"
     warning "^4.0.1"
 
-"@material-ui/icons@^2.0.0":
+"@material-ui/icons@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-2.0.3.tgz#d3da9d6e31b1adfbc48efe33c7cb75b32b784096"
+  integrity sha512-wgKUB4vgCzdKseV3MHdsR7lZMyNYKykrghKX4GHuMmlZrrWMh26jO1E6xyjuCpJ/E8DX+m+YGURbBYN9CxZ+rw==
   dependencies:
     "@babel/runtime" "7.0.0-rc.1"
     recompose "^0.28.0"
@@ -5477,9 +5478,10 @@ ms@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
-mui-datatables@^2.0.0-beta-52:
-  version "2.0.0-beta-53"
-  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.0.0-beta-53.tgz#1fa774460dd511ddf6d10936e488029a0cf3270b"
+mui-datatables@^2.0.0-beta.58:
+  version "2.0.0-beta.59"
+  resolved "https://registry.yarnpkg.com/mui-datatables/-/mui-datatables-2.0.0-beta.59.tgz#22460062cd6a7afcecb7b70c657a1b3b1b98f957"
+  integrity sha512-ye9f948TMAN4YoXW66fkVgkPzM2kxT2cKn2DhjazNVnyLMlYlCP1yy8HOC0J34/Pz2W9kXK8CdRN3U/Mkmjifg==
   dependencies:
     classnames "^2.2.5"
     lodash.clonedeep "^4.5.0"
@@ -5488,7 +5490,7 @@ mui-datatables@^2.0.0-beta-52:
     lodash.memoize "^4.1.2"
     lodash.merge "^4.6.0"
     prop-types "^15.6.0"
-    react-to-print "^1.0.10"
+    react-to-print "^2.0.0-alpha.7"
 
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"
@@ -7004,12 +7006,12 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-to-print@^1.0.10:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-1.0.21.tgz#f6713c5c0ac06dc8c079937e4b7cecd6dbc8d630"
+react-to-print@^2.0.0-alpha.7:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.1.1.tgz#82dd3251a2b2407ac1ec928cd6f22c3e910f0dce"
+  integrity sha512-gaiFJ+WpdyaNQ4jHXKWDHADBDZ541hAQsg73qO2JLI9FxXyyGAJUu4t+Sa117jo9DTR8H2dhMbRohYBm6p5mlQ==
   dependencies:
-    prop-types "^15.6.0"
-    react "^16.2.0"
+    prop-types "^15.6.2"
 
 react-transition-group@^2.2.1:
   version "2.5.3"
@@ -7029,7 +7031,7 @@ react@16.4.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react@^16.2.0, react@^16.7.0:
+react@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
   dependencies:
