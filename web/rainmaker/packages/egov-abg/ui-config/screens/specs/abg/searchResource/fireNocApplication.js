@@ -3,21 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.abgSearchCard = undefined;
-
-var _regenerator = require("babel-runtime/regenerator");
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+exports.mergeDownloadButton = exports.abgSearchCard = undefined;
 
 var _utils = require("egov-ui-framework/ui-config/screens/specs/utils");
 
+var _commons = require("egov-ui-framework/ui-utils/commons");
+
 var _functions = require("./functions");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var hasButton = (0, _commons.getQueryArg)(window.location.href, "hasButton");
+//const hasApproval = getQueryArg(window.location.href, "hasApproval");
+var enableButton = true;
+//enableInbox = hasApproval && hasApproval === "false" ? false : true;
+enableButton = hasButton && hasButton === "false" ? false : true;
 
 var abgSearchCard = exports.abgSearchCard = (0, _utils.getCommonCard)({
   searchContainer: (0, _utils.getCommonContainer)({
@@ -82,58 +80,7 @@ var abgSearchCard = exports.abgSearchCard = (0, _utils.getCommonCard)({
       pattern: (0, _utils.getPattern)("PropertyID"),
       errorMessage: "Invalid Property ID",
       jsonPath: "searchScreen.propertyId"
-    }),
-    tradeLocMohalla: {
-      uiFramework: "custom-containers-local",
-      moduleName: "egov-tradelicence",
-      componentPath: "AutosuggestContainer",
-      jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-      required: true,
-      props: {
-        style: {
-          width: "100%",
-          cursor: "pointer"
-        },
-        label: {
-          labelName: "Mohalla",
-          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_LABEL"
-        },
-        placeholder: {
-          labelName: "Select Mohalla",
-          labelKey: "TL_NEW_TRADE_DETAILS_MOHALLA_PLACEHOLDER"
-        },
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.locality.code",
-        sourceJsonPath: "applyScreenMdmsData.tenant.localities",
-        labelsFromLocalisation: true,
-        suggestions: [],
-        fullwidth: true,
-        required: true,
-        inputLabelProps: {
-          shrink: true
-          // className: "tradelicense-mohalla-apply"
-        } },
-      beforeFieldChange: function () {
-        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(action, state, dispatch) {
-          return _regenerator2.default.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee, undefined);
-        }));
-
-        return function beforeFieldChange(_x, _x2, _x3) {
-          return _ref.apply(this, arguments);
-        };
-      }(),
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      }
-    }
+    })
   }),
 
   button: (0, _utils.getCommonContainer)({
@@ -157,8 +104,6 @@ var abgSearchCard = exports.abgSearchCard = (0, _utils.getCommonCard)({
           variant: "contained",
           style: {
             color: "white",
-
-            // backgroundColor: "rgba(0, 0, 0, 0.6000000238418579)",
             backgroundColor: "#FE7A51",
             borderRadius: "2px",
             width: window.innerWidth > 480 ? "80%" : "100%",
@@ -187,3 +132,47 @@ var abgSearchCard = exports.abgSearchCard = (0, _utils.getCommonCard)({
     })
   })
 });
+
+var mergeDownloadButton = exports.mergeDownloadButton = {
+  uiFramework: "custom-atoms",
+  componentPath: "Div",
+  //  gridDefination: {
+  //     xs: 12,
+  //     sm: 12
+  //     // align: ""
+  // },
+  props: {
+    className: "abg-button-container",
+    style: {
+      textAlign: "right"
+    }
+  },
+  children: {
+    mergeButton: {
+      componentPath: "Button",
+      // gridDefination: {
+      //   xs: 12,
+      //   sm: 4
+      //   // align: ""
+      // },
+      visible: enableButton,
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          color: "white",
+          borderRadius: "2px",
+          width: "250px",
+          height: "48px"
+        }
+      },
+      children: {
+        buttonLabel: (0, _utils.getLabel)({
+          labelName: "MERGE & DOWNLOAD",
+          labelKey: "ABG_GROUP_BILLS_MERGE_AND_DOWNLOAD_BUTTON"
+        })
+        //  Add onClickDefination
+        // Add roleDefination
+      } }
+  }
+};
