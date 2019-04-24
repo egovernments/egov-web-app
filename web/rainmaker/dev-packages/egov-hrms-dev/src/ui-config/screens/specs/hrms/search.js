@@ -97,6 +97,12 @@ const setUlbSelect = (action, state, dispatch) => {
       "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.ulb.roleDefination.roles",
       adminRoles.configAdminRoles
     );
+  } else {
+    set(
+      action.screenConfig,
+      "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children.ulb.required",
+      false
+    );
   }
 };
 
