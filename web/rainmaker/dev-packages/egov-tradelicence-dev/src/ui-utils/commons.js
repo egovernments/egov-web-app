@@ -22,7 +22,10 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import store from "redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  getFileUrlFromAPI
+} from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
 
@@ -74,6 +77,46 @@ export const getSearchResults = async queryObject => {
   }
 };
 
+const setDocsForEditFlow = async (state, dispatch) => {
+  const applicationDocuments = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    []
+  );
+  let uploadedDocuments = {};
+  let fileStoreIds = applicationDocuments
+    .map(item => item.fileStoreId)
+    .join(",");
+  const fileUrlPayload =
+    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+  applicationDocuments.forEach((item, index) => {
+    uploadedDocuments[index] = [
+      {
+        fileName:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            decodeURIComponent(
+              fileUrlPayload[item.fileStoreId]
+                .split(",")[0]
+                .split("?")[0]
+                .split("/")
+                .pop()
+                .slice(13)
+            )) ||
+          `Document - ${index + 1}`,
+        fileStoreId: item.fileStoreId,
+        fileUrl: Object.values(fileUrlPayload)[index],
+        documentType: item.documentType,
+        tenantId: item.tenantId,
+        id: item.id
+      }
+    ];
+  });
+  dispatch(
+    prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", uploadedDocuments)
+  );
+};
+
 export const updatePFOforSearchResults = async (
   action,
   state,
@@ -90,12 +133,13 @@ export const updatePFOforSearchResults = async (
     { key: "applicationNumber", value: queryValue }
   ];
   const isPreviouslyEdited = getQueryArg(window.location.href, "edited");
-  debugger;
   const payload = !isPreviouslyEdited
     ? await getSearchResults(queryObject)
     : {
         Licenses: get(state.screenConfiguration.preparedFinalObject, "Licenses")
       };
+  getQueryArg(window.location.href, "action") === "edit" &&
+    (await setDocsForEditFlow(state, dispatch));
   if (payload) {
     dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   }
@@ -117,7 +161,6 @@ export const updatePFOforSearchResults = async (
       )
     );
   updateDropDowns(payload, action, state, dispatch, queryValue);
-
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");
     set(payload, getHygeneLevelJson(queryValuePurpose), "yes");
@@ -381,7 +424,19 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
         queryObject[0].tradeLicenseDetail.applicationDocuments
       ) {
         if (getQueryArg(window.location.href, "action") === "edit") {
-          // return;
+          // const removedDocs = get(
+          //   state.screenConfiguration.preparedFinalObject,
+          //   "LicensesTemp[0].removedDocs",
+          //   []
+          // );
+          // set(queryObject[0], "tradeLicenseDetail.applicationDocuments", [
+          //   ...get(
+          //     state.screenConfiguration.prepareFinalObject,
+          //     "Licenses[0].tradeLicenseDetail.applicationDocuments",
+          //     []
+          //   ),
+          //   ...removedDocs
+          // ]);
         } else if (activeIndex === 1) {
           alert("active index 1");
 

@@ -192,7 +192,7 @@ export const getData = async (action, state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
       null
     );
-    !getQueryArg(window.location.href, "edited") &&
+    getQueryArg(window.location.href, "action") !== "edit" &&
       dispatch(
         prepareFinalObject("Licenses", [
           {
