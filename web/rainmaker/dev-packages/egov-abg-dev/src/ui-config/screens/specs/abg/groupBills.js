@@ -1,14 +1,10 @@
 import {
   getCommonHeader,
-  getCommonContainer,
-  getLabel,
+
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { abgSearchCard, mergeDownloadButton } from "./searchResource/fireNocApplication";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-// import { pendingApprovals } from "./searchResource/pendingApprovals";
-// import { progressStatus } from "./searchResource/progressStatus";
-import { searchResults } from "./searchResource/searchResults";
+import { abgSearchCard, mergeDownloadButton } from "./groupBillResource/groupBillSearch";
+import { searchResults } from "./groupBillResource/searchResults";
 
 const header = getCommonHeader({
   labelName: "Group Bills",
@@ -17,14 +13,14 @@ const header = getCommonHeader({
 
 const abgSearchAndResult = {
   uiFramework: "material-ui",
-  name: "search",
+  name: "groupBills",
   components: {
     div: {
       uiFramework: "custom-atoms",
       componentPath: "Form",
       props: {
         className: "common-div-css",
-        id: "search"
+        id: "groupBills"
       },
       children: {
         headerDiv: {

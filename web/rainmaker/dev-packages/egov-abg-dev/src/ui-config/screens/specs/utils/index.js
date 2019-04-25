@@ -7,7 +7,6 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 
 import {
   getCommonCard,
-  getCommonValue,
   getCommonCaption
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 

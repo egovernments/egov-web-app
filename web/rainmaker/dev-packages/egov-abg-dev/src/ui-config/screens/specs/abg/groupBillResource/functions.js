@@ -1,6 +1,5 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getSearchResults } from "../../../../..//ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
@@ -26,14 +25,14 @@ export const searchApiCall = async (state, dispatch) => {
     "components.div.children.fireNOCApplication.children.cardContent.children.searchContainer.children",
     state,
     dispatch,
-    "search"
+    "groupBills"
   );
 
   const isSearchBoxSecondRowValid = validateFields(
     "components.div.children.fireNOCApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
     state,
     dispatch,
-    "search"
+    "groupBills"
   );
 
   if (!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid)) {
@@ -110,7 +109,7 @@ export const searchApiCall = async (state, dispatch) => {
 
       dispatch(
         handleField(
-          "search",
+          "groupBills",
           "components.div.children.searchResults",
           "props.data",
           data
@@ -118,34 +117,22 @@ export const searchApiCall = async (state, dispatch) => {
       );
       dispatch(
         handleField(
-          "search",
+          "groupBills",
           "components.div.children.searchResults",
         )
       );
-      //showHideProgress(false, dispatch);
       showHideTable(true, dispatch);
     } catch (error) {
-      //showHideProgress(false, dispatch);
       dispatch(toggleSnackbar(true, error.message, "error"));
       console.log(error);
     }
   }
 };
-// const showHideProgress = (booleanHideOrShow, dispatch) => {
-//   dispatch(
-//     handleField(
-//       "search",
-//       "components.div.children.progressStatus",
-//       "visible",
-//       booleanHideOrShow
-//     )
-//   );
-// };
 
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
     handleField(
-      "search",
+      "groupBills",
       "components.div.children.searchResults",
       "visible",
       booleanHideOrShow

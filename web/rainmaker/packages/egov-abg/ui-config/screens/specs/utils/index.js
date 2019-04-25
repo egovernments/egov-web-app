@@ -17,7 +17,7 @@ var _actions = require("egov-ui-framework/ui-redux/app/actions");
 
 var _utils = require("egov-ui-framework/ui-redux/screen-configuration/utils");
 
-var _localStorageUtils = require("egov-ui-kit/utils/localStorageUtils");
+var _localStorageUtils = require("../abg/groupBillResource/node_modules/egov-ui-kit/utils/localStorageUtils");
 
 var _get = require("lodash/get");
 
@@ -25,7 +25,7 @@ var _get2 = _interopRequireDefault(_get);
 
 var _commons = require("egov-ui-framework/ui-utils/commons");
 
-var _actions2 = require("egov-ui-framework/ui-redux/screen-configuration/actions");
+var _actions2 = require("../abg/groupBillResource/node_modules/egov-ui-framework/ui-redux/screen-configuration/actions");
 
 var _utils2 = require("egov-ui-framework/ui-config/screens/specs/utils");
 
