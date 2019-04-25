@@ -149,7 +149,7 @@ export const searchForm = getCommonCard({
       label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
       placeholder: {
         labelName: "Select Designation",
-        labelKey: "HR_DEPT_PLACEHOLDER"
+        labelKey: "HR_DESIGNATION_PLACEHOLDER"
       },
       required: false,
       jsonPath: "searchScreen.designations",
