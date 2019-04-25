@@ -94,7 +94,18 @@ class WorkFlowContainer extends React.Component {
   };
 
   tlUpdate = async label => {
-    const { Licenses, toggleSnackbar } = this.props;
+    let { Licenses, toggleSnackbar, preparedFinalObject } = this.props;
+    if (getQueryArg(window.location.href, "edited")) {
+      const removedDocs = get(
+        preparedFinalObject,
+        "LicensesTemp[0].removedDocs",
+        []
+      );
+      set(Licenses[0], "tradeLicenseDetail.applicationDocuments", [
+        ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
+        ...removedDocs
+      ]);
+    }
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -342,7 +353,7 @@ const mapStateToProps = state => {
   const { preparedFinalObject } = screenConfiguration;
   const { Licenses, workflow } = preparedFinalObject;
   const { ProcessInstances } = workflow || [];
-  return { ProcessInstances, Licenses };
+  return { ProcessInstances, Licenses, preparedFinalObject };
 };
 
 const mapDispacthToProps = dispatch => {
