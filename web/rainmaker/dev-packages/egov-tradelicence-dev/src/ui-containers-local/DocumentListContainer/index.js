@@ -38,7 +38,8 @@ const mapStateToProps = state => {
     "Licenses[0].tenantId",
     ""
   );
-  return { documents, tenantId, uploadedDocuments };
+  const { preparedFinalObject } = screenConfiguration || {};
+  return { documents, tenantId, uploadedDocuments, preparedFinalObject };
 };
 
 export default withStyles(styles)(

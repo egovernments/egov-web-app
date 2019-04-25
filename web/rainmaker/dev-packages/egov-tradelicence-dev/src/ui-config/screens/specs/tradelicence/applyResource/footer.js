@@ -151,7 +151,7 @@ export const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep === 1) {
-    getDocList(state, dispatch);
+    await getDocList(state, dispatch);
 
     let isOwnerShipValid = validateFields(
       "components.div.children.formwizardSecondStep.children.tradeOwnerDetails.children.cardContent.children.ownershipType.children",
@@ -255,8 +255,8 @@ export const callBackForNext = async (state, dispatch) => {
     }
 
     const uploadedDocData = get(
-      LicenseData,
-      "tradeLicenseDetail.applicationDocuments",
+      state.screenConfiguration.preparedFinalObject,
+      "Licenses[0].tradeLicenseDetail.applicationDocuments",
       []
     );
 
