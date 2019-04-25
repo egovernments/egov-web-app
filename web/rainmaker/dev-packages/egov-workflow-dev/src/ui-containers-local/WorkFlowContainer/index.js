@@ -164,17 +164,11 @@ class WorkFlowContainer extends React.Component {
     const isAlreadyEdited = getQueryArg(window.location.href, "edited");
     switch (action) {
       case "PAY":
-        return `${
-          window.basename
-        }/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+        return `/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
       case "EDIT":
         return isAlreadyEdited
-          ? `${
-              window.basename
-            }/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit&edited=true`
-          : `${
-              window.basename
-            }/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit`;
+          ? `/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit&edited=true`
+          : `/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit`;
     }
   };
 
