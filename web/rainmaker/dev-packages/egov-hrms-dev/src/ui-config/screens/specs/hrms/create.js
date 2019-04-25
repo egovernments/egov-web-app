@@ -255,7 +255,11 @@ const screenConfig = {
     const pickedTenant = getQueryArg(window.location.href, "tenantId");
     pickedTenant &&
       dispatch(prepareFinalObject("Employee[0].tenantId", pickedTenant));
-    const tenantId = pickedTenant || getTenantId();
+    const empTenantId = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Employee[0].tenantId"
+    );
+    const tenantId = pickedTenant || empTenantId || getTenantId();
     const mdmsDataStatus = getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
     employeeCode && getEmployeeData(state, dispatch, employeeCode, tenantId);
