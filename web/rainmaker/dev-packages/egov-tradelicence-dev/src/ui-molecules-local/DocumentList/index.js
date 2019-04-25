@@ -6,12 +6,15 @@ import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import {
   handleFileUpload,
-  getFileUrlFromAPI
+  getFileUrlFromAPI,
+  getQueryArg
 } from "egov-ui-framework/ui-utils/commons";
 import { connect } from "react-redux";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { UploadSingleFile } from "../../ui-molecules-local";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
+import get from "lodash/get";
+import isUndefined from "lodash/isUndefined";
 
 const styles = theme => ({
   documentContainer: {
@@ -72,28 +75,40 @@ class DocumentList extends Component {
   };
 
   componentDidMount = () => {
-    const {
+    let {
       prepareFinalObject,
-      uploadedDocsInRedux: uploadedDocuments
+      uploadedDocsInRedux: uploadedDocuments,
+      documents
     } = this.props;
     if (uploadedDocuments) {
-      const uploadedIndex = Object.keys(uploadedDocuments).reduce(
+      let simplified = Object.values(uploadedDocuments).map(item => item[0]);
+      let uploadedDocumentsArranged = documents.reduce((acc, item, ind) => {
+        const index = simplified.findIndex(i => i.documentType === item.name);
+        !isUndefined(index) && (acc[ind] = [simplified[index]]);
+        return acc;
+      }, {});
+
+      const uploadedIndex = Object.keys(uploadedDocumentsArranged).reduce(
         (res, curr) => {
-          if (uploadedDocuments[curr].length > 0) {
+          if (uploadedDocumentsArranged[curr].length > 0) {
             res.push(parseInt(curr)); //returns string so convert to integer
           }
           return res;
         },
         []
       );
-      this.setState({ uploadedDocuments, uploadedIndex });
+      this.setState({
+        uploadedDocuments: uploadedDocumentsArranged,
+        uploadedIndex
+      });
     }
-    Object.values(uploadedDocuments).forEach((item, index) => {
-      prepareFinalObject(
-        `Licenses[0].tradeLicenseDetail.applicationDocuments[${index}]`,
-        { ...item[0] }
-      );
-    });
+    getQueryArg(window.location.href, "action") !== "edit" &&
+      Object.values(uploadedDocuments).forEach((item, index) => {
+        prepareFinalObject(
+          `Licenses[0].tradeLicenseDetail.applicationDocuments[${index}]`,
+          { ...item[0] }
+        );
+      });
   };
 
   onUploadClick = uploadedDocIndex => {
@@ -134,8 +149,16 @@ class DocumentList extends Component {
 
   removeDocument = remDocIndex => {
     let { uploadedDocuments } = this.state;
-    const { prepareFinalObject, documents } = this.props;
+    const { prepareFinalObject, documents, preparedFinalObject } = this.props;
     const jsonPath = documents[remDocIndex].jsonPath;
+    getQueryArg(window.location.href, "action") === "edit" &&
+      prepareFinalObject("LicensesTemp[0].removedDocs", [
+        ...get(preparedFinalObject, "LicensesTemp[0].removedDocs", []),
+        {
+          ...uploadedDocuments[remDocIndex][0],
+          active: false
+        }
+      ]);
     uploadedDocuments[remDocIndex] = [];
     prepareFinalObject(jsonPath, uploadedDocuments[remDocIndex]);
     prepareFinalObject(
@@ -237,17 +260,17 @@ DocumentList.propTypes = {
 
 // const mapStateToProps = state => {
 //   const { screenConfiguration } = state;
-//   const documents = get(
-//     screenConfiguration.preparedFinalObject,
-//     "LicensesTemp[0].applicationDocuments",
-//     []
-//   );
-//   const tenantId = get(
-//     screenConfiguration.preparedFinalObject,
-//     "LicensesTemp[0].tenantId",
-//     ""
-//   );
-//   return { documents, tenantId };
+// const documents = get(
+//   screenConfiguration.preparedFinalObject,
+//   "LicensesTemp[0].applicationDocuments",
+//   []
+// );
+// const tenantId = get(
+//   screenConfiguration.preparedFinalObject,
+//   "LicensesTemp[0].tenantId",
+//   ""
+// );
+//   return { screenConfiguration };
 // };
 
 const mapDispatchToProps = dispatch => {

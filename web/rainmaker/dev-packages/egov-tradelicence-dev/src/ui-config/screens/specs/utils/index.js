@@ -1700,6 +1700,23 @@ export const getDocList = (state, dispatch) => {
       applicationDocument
     )
   );
+
+  //REARRANGE APPLICATION DOCS FROM TL SEARCH IN EDIT FLOW
+  let applicationDocs = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    []
+  );
+  let applicationDocsReArranged = applicationDocument.map(item => {
+    const index = applicationDocs.findIndex(i => i.documentType === item.name);
+    return applicationDocs[index];
+  });
+  dispatch(
+    prepareFinalObject(
+      "Licenses[0].tradeLicenseDetail.applicationDocuments",
+      applicationDocsReArranged
+    )
+  );
 };
 
 export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {
