@@ -10,11 +10,9 @@ var _extends3 = _interopRequireDefault(_extends2);
 
 var _utils = require("egov-ui-framework/ui-config/screens/specs/utils");
 
-var _fireNocApplication = require("./searchResource/fireNocApplication");
+var _groupBillSearch = require("./groupBillResource/groupBillSearch");
 
-var _commons = require("egov-ui-framework/ui-utils/commons");
-
-var _searchResults = require("./searchResource/searchResults");
+var _searchResults = require("./groupBillResource/searchResults");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,9 +20,6 @@ var header = (0, _utils.getCommonHeader)({
   labelName: "Group Bills",
   labelKey: "NOC_COMMON_NOC"
 });
-// import { pendingApprovals } from "./searchResource/pendingApprovals";
-// import { progressStatus } from "./searchResource/progressStatus";
-
 
 var abgSearchAndResult = {
   uiFramework: "material-ui",
@@ -51,12 +46,12 @@ var abgSearchAndResult = {
             }, header)
           }
         },
-        abgSearchCard: _fireNocApplication.abgSearchCard,
+        abgSearchCard: _groupBillSearch.abgSearchCard,
         breakAfterSearch: (0, _utils.getBreak)(),
         // progressStatus,
         searchResults: _searchResults.searchResults,
         breakAfterSearchResults: (0, _utils.getBreak)(),
-        mergeDownloadButton: _fireNocApplication.mergeDownloadButton
+        mergeDownloadButton: _groupBillSearch.mergeDownloadButton
       }
     }
   }

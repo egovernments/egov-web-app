@@ -140,11 +140,6 @@ export const abgSearchCard = getCommonCard({
 export const mergeDownloadButton = {
   uiFramework: "custom-atoms",
   componentPath: "Div",
-  //  gridDefination: {
-  //     xs: 12,
-  //     sm: 12
-  //     // align: ""
-  // },
   props: {
     className: "abg-button-container",
     style: {
@@ -154,11 +149,6 @@ export const mergeDownloadButton = {
   children: {
     mergeButton: {
       componentPath: "Button",
-      // gridDefination: {
-      //   xs: 12,
-      //   sm: 4
-      //   // align: ""
-      // },
       visible: enableButton,
       props: {
         variant: "contained",

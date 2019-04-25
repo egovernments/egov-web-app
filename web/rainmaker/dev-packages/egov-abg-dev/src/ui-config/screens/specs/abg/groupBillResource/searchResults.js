@@ -90,6 +90,6 @@ export const searchResults = {
 const onRowClick = rowData => {
   switch (rowData[get(textToLocalMapping, "")]) {
     default:
-      return `/fire-noc/search`;
+      return `/abg/groupBills`;
   }
 };
