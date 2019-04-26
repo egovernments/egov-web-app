@@ -80,7 +80,7 @@ class DocumentList extends Component {
       uploadedDocsInRedux: uploadedDocuments,
       documents
     } = this.props;
-    if (uploadedDocuments) {
+    if (uploadedDocuments && Object.keys(uploadedDocuments).length) {
       let simplified = Object.values(uploadedDocuments).map(item => item[0]);
       let uploadedDocumentsArranged = documents.reduce((acc, item, ind) => {
         const index = simplified.findIndex(i => i.documentType === item.name);
