@@ -30,6 +30,17 @@ export const callPGService = async (state, dispatch) => {
       }
     ];
     const billPayload = await getBill(queryObj);
+    const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
+      item => {
+        if (item.businessService === "TL") {
+          item.amountPaid = get(
+            billPayload,
+            "billResponse.Bill[0].billDetails[0].totalAmount"
+          );
+        }
+        return item;
+      }
+    );
     try {
       const requestBody = {
         Transaction: {
@@ -39,8 +50,9 @@ export const callPGService = async (state, dispatch) => {
             "billResponse.Bill[0].billDetails[0].totalAmount"
           ),
           module: "TL",
+          taxAndPayments,
           billId: get(billPayload, "billResponse.Bill[0].id"),
-          moduleId: get(
+          consumerCode: get(
             billPayload,
             "billResponse.Bill[0].billDetails[0].consumerCode"
           ),
