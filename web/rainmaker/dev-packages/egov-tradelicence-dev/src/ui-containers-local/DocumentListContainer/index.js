@@ -31,7 +31,7 @@ const mapStateToProps = state => {
   const uploadedDocuments = get(
     screenConfiguration.preparedFinalObject,
     "LicensesTemp[0].uploadedDocsInRedux",
-    []
+    {}
   );
   const tenantId = get(
     screenConfiguration.preparedFinalObject,
