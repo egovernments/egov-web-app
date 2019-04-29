@@ -20,7 +20,7 @@ class App extends Component {
     props.history.listen((location, action) => {
       const { pathname: nextPath } = location;
       addBodyClass(nextPath);
-      props.toggleSnackbarAndSetText(false, "");
+      props.toggleSnackbarAndSetText(false, { labelName: "", labelKey: "" }, false);
     });
 
     addBodyClass(currentPath);
