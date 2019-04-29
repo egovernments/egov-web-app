@@ -112,18 +112,6 @@ export const searchApiCall = async (state, dispatch) => {
             return assignment.department;
           });
 
-        let tenantId =
-          `TENANT_TENANTS_${get(item, "tenantId", "-")
-            .toUpperCase()
-            .replace(/[.:-\s\/]/g, "_")}` || "-";
-
-        let translatedTenantID = getLocaleLabels(
-          get(item, "tenantId", "-"),
-          tenantId,
-          localisationLabels
-        );
-
-        // console.log(getDeptName(state, currentDepartments));
         return {
           [get(textToLocalMapping, "Employee ID")]:
             get(item, "code", "-") || "-",
@@ -138,7 +126,7 @@ export const searchApiCall = async (state, dispatch) => {
             getDesigName(state, currentDesignations) || "-",
           [get(textToLocalMapping, "Department")]:
             getDeptName(state, currentDepartments) || "-",
-          [get(textToLocalMapping, "Tenant ID")]: translatedTenantID
+          [get(textToLocalMapping, "Tenant ID")]: get(item, "tenantId", "-")
         };
       });
 
