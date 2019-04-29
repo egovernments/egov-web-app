@@ -269,7 +269,7 @@ class ActionMenuComp extends Component {
                   primaryText={
                     <Label
                       className="menuStyle with-childs"
-                      defaultLabel={item.name}
+                      //defaultLabel={item.name}
                       label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                       color="rgba(0, 0, 0, 0.87)"
                     />
@@ -327,7 +327,7 @@ class ActionMenuComp extends Component {
                       primaryText={
                         <Label
                           className="menuStyle"
-                          defaultLabel={item.name}
+                          //defaultLabel={item.name}
                           label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                           color="rgba(0, 0, 0, 0.87)"
                         />
@@ -359,7 +359,7 @@ class ActionMenuComp extends Component {
                       primaryText={
                         <Label
                           className="menuStyle"
-                          defaultLabel={item.name}
+                          //defaultLabel={item.name}
                           label={item.name ? `ACTION_TEST_${item.name.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                           color="rgba(0, 0, 0, 0.87)"
                         />
@@ -407,7 +407,7 @@ class ActionMenuComp extends Component {
                         primaryText={
                           <Label
                             className="menuStyle"
-                            defaultLabel={item.displayName}
+                            //defaultLabel={item.displayName}
                             label={item.name ? `ACTION_TEST_${item.displayName.toUpperCase().replace(/[.:-\s\/]/g, "_")}` : ""}
                             color="rgba(0, 0, 0, 0.87)"
                           />
@@ -427,7 +427,15 @@ class ActionMenuComp extends Component {
     return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" />
-        <div className="menu-item-title">{menuTitle && menuTitle[menuTitle.length - 1]}</div>
+        <div className="menu-item-title">
+          <Label
+            label={
+              menuTitle && menuTitle[menuTitle.length - 1]
+                ? `ACTION_TEST_${menuTitle[menuTitle.length - 1].toUpperCase().replace(/[.:-\s\/]/g, "_")}`
+                : ""
+            }
+          />
+        </div>
         <Menu
           disableAutoFocus={true}
           desktop={true}

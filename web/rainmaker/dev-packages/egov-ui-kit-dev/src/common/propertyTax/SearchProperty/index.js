@@ -47,7 +47,6 @@ class SearchProperty extends Component {
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
       this.props.toggleSnackbarAndSetText(
         true,
-        //"Please fill atleast one field along with city",
         { labelName: "Please fill atleast one field along with city", labelKey: "ERR_FILL_ATLEAST_ONE_FIELD_WITH_CITY" },
         true
       );
@@ -100,7 +99,9 @@ class SearchProperty extends Component {
                   history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
                 }
           }
-          label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
+          label={
+            <Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "PT_SEARCHPROPERTY_TABLE_VIEW"} fontSize="12px" />
+          }
           value={propertyId}
           primary={true}
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
@@ -152,10 +153,12 @@ class SearchProperty extends Component {
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
         {showTable && tableData.length === 0 && (
           <div className="search-no-property-found">
-            <div className="no-search-text">No property records found</div>
+            <div className="no-search-text">
+              <Label label="PT_NO_PROPERTY_RECORD" />
+            </div>
             <div className="new-assess-btn">
               <Button
-                label={"New Property Assessment"}
+                label={<Label label="PT_SEARCH_PROPERTY_NEWPROP_ASSESSMENT" buttonLabel={true} />}
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
                 onClick={() => history.push("/property-tax")}

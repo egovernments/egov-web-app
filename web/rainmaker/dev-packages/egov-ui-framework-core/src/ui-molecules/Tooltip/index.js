@@ -5,20 +5,17 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { getLocaleLabelsforTL } from "../../ui-config/screens/specs/utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 import { transformById } from "../../ui-utils/commons";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 function SimpleTooltips(props) {
   const { val, icon, ...rest } = props;
-  let transfomedKeys = transformById(localizationLabels, "code");
-  let translatedLabel = getLocaleLabelsforTL(
-    val.value,
-    val.key,
-    transfomedKeys
-  );
   return (
     <div style={{ display: "inline-flex" }} {...rest}>
-      <Tooltip title={translatedLabel}>
+      <Tooltip
+        title={<LabelContainer labelName={val.value} labelKey={val.key} />}
+      >
         <Icon
           style={{
             color: "rgba(0, 0, 0, 0.3799999952316284)",

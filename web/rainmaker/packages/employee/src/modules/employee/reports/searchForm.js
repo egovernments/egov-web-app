@@ -16,13 +16,14 @@ import _ from "lodash";
 import { getResultUrl } from "./commons/url";
 import commonConfig from "config/common.js";
 import { getTenantId, setReturnUrl, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 class ShowForm extends Component {
   state = {
-    searchBtnText: "APPLY",
+    searchBtnText: <LabelContainer labelName="APPLY" labelKey="REPORTS_SEARCH_APPLY_LABEL" />,
     filterApplied: false,
     getResults: false,
-    dateError:""
+    dateError: "",
   };
 
   toDateObj = (dateStr) => {
@@ -124,9 +125,9 @@ class ShowForm extends Component {
           toDateIndex = i;
         }
       }
-      if ((property === "fromDate")&&(toDateIndex !== undefined)) {
+      if (property === "fromDate" && toDateIndex !== undefined) {
         searchParams[toDateIndex].minValue = new Date(e.target.value);
-      } else if ((property === "toDate")&&(fromDateIndex !== undefined)) {
+      } else if (property === "toDate" && fromDateIndex !== undefined) {
         searchParams[fromDateIndex].maxValue = new Date(e.target.value);
       }
       setSearchParams(searchParams);
@@ -196,7 +197,6 @@ class ShowForm extends Component {
         } catch (e) {
           console.log(e);
         }
-
       } else {
         this.props.handleChange(e, name, required, pattern);
       }
@@ -232,7 +232,12 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-                  dateError: field === "toDate" ? <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label labelStyle={{color:"rgb(244, 67, 54)"}} label="REPORT_SEARCHFORM_DATE_LESSER" />,
+          dateError:
+            field === "toDate" ? (
+              <Label labelStyle={{ color: "rgb(244, 67, 54)" }} label="REPORT_SEARCHFORM_DATE_GREATER" />
+            ) : (
+              <Label labelStyle={{ color: "rgb(244, 67, 54)" }} label="REPORT_SEARCHFORM_DATE_LESSER" />
+            ),
         });
       }
     }
@@ -271,16 +276,16 @@ class ShowForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
-    let {dateError}=this.state;
+    let { dateError } = this.state;
 
     if (!_.isEqual(this.props.searchForm, nextProps.searchForm)) {
       if (this.state.getResults) {
-        this.search(null, false, nextProps.searchForm)
+        this.search(null, false, nextProps.searchForm);
       }
-      this.setState({ getResults: false,dateError:"" });
+      this.setState({ getResults: false, dateError: "" });
     }
-      if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
-      changeButtonText("APPLY");
+    if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
+      changeButtonText(<LabelContainer labelName="APPLY" labelKey="REPORTS_SEARCH_APPLY_LABEL" />);
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
       });
@@ -325,7 +330,7 @@ class ShowForm extends Component {
 
   componentDidMount() {
     let { metaData, setForm, changeButtonText, clearReportHistory } = this.props;
-    changeButtonText("APPLY");
+    changeButtonText(<LabelContainer labelName="APPLY" labelKey="REPORTS_SEARCH_APPLY_LABEL" />);
     let searchParams = !_.isEmpty(metaData) ? metaData.reportDetails : { searchParams: [] };
     let required = [];
     this.setState({ reportName: this.props.match.params.reportName });
@@ -399,7 +404,7 @@ class ShowForm extends Component {
         );
     }
 
-    changeButtonText("APPLY");
+    changeButtonText(<LabelContainer labelName="APPLY" labelKey="REPORTS_SEARCH_APPLY_LABEL" />);
   };
   search = (e = null, isDrilldown = false, searchForm) => {
     if (e) {
@@ -466,7 +471,6 @@ class ShowForm extends Component {
             } catch (e) {
               console.log(e);
             }
-
           } else if (variable == "toDate") {
             try {
               input = searchForm[variable].setHours(23);
@@ -475,7 +479,6 @@ class ShowForm extends Component {
             } catch (e) {
               console.log(e);
             }
-
           } else {
             input = searchForm[variable];
           }
@@ -549,7 +552,7 @@ class ShowForm extends Component {
       }
     }
 
-    changeButtonText("APPLY");
+    changeButtonText(<LabelContainer labelName="APPLY" labelKey="REPORTS_SEARCH_APPLY_LABEL" />);
   };
 
   fetchResults = (e, searchForm) => {
@@ -606,11 +609,17 @@ class ShowForm extends Component {
   };
 
   getReportTitlefromTwoOptions = (metaData) => {
-    if (get(metaData,"reportDetails.additionalConfig.reportTitle")) {
-      return <Label label={metaData.reportDetails.additionalConfig.reportTitle} labelStyle={{ marginLeft: "16px",marginTop: "8px", color: "#484848" }} fontSize={20} />;
+    if (get(metaData, "reportDetails.additionalConfig.reportTitle")) {
+      return (
+        <Label
+          label={metaData.reportDetails.additionalConfig.reportTitle}
+          labelStyle={{ marginLeft: "16px", marginTop: "8px", color: "#484848" }}
+          fontSize={20}
+        />
+      );
     } else {
       return (
-        get(metaData,"reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
+        get(metaData, "reportDetails.reportName") && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>
       );
     }
   };
@@ -626,7 +635,7 @@ class ShowForm extends Component {
               this.fetchResults(e, searchForm);
             }}
           >
-          <div>{metaData && this.getReportTitlefromTwoOptions(metaData)}</div>
+            <div>{metaData && this.getReportTitlefromTwoOptions(metaData)}</div>
             <Card
               style={{ padding: "16px" }}
               textChildren={
@@ -650,7 +659,7 @@ class ShowForm extends Component {
                         onClick={(e) => {
                           this.resetFields();
                         }}
-                        label={"RESET"}
+                        label={<LabelContainer labelName="RESET" labelKey="REPORTS_SEARCH_RESET_LABEL" />}
                       />
                     </div>
                   </Row>

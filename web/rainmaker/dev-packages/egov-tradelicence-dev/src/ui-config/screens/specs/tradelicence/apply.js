@@ -52,8 +52,12 @@ export const header = getCommonContainer({
       process.env.REACT_APP_NAME === "Citizen"
         ? "(" + getCurrentFinancialYear() + ")"
         : ""
-    }`
-    // labelKey: "TL_COMMON_APPL_NEW_LICe"
+    }`,
+    dynamicArray: [getCurrentFinancialYear()],
+    labelKey:
+      process.env.REACT_APP_NAME === "Citizen"
+        ? "TL_COMMON_APPL_NEW_LICENSE"
+        : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
   }),
   applicationNumber: {
     uiFramework: "custom-atoms-local",
@@ -188,20 +192,22 @@ export const getData = async (action, state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
       null
     );
-    dispatch(
-      prepareFinalObject("Licenses", [
-        {
-          licenseType: "PERMANENT",
-          oldLicenseNumber: queryValue ? "" : applicationNo,
-          tradeLicenseDetail: {
-            additionalDetail: {
-              applicationType: applicationType ? applicationType : "NEW"
+    getQueryArg(window.location.href, "action") !== "edit" &&
+      dispatch(
+        prepareFinalObject("Licenses", [
+          {
+            licenseType: "PERMANENT",
+            oldLicenseNumber: queryValue ? "" : applicationNo,
+            tradeLicenseDetail: {
+              additionalDetail: {
+                applicationType: applicationType ? applicationType : "NEW"
+              }
             }
           }
-        }
-      ])
-    );
+        ])
+      );
     // dispatch(prepareFinalObject("LicensesTemp", []));
+
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
     if (!queryValue) {
       dispatch(

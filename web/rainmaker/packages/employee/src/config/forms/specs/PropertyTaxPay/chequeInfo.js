@@ -27,7 +27,7 @@ const formConfig = {
     ifscCode: {
       id: "ifscCode",
       type: "textFieldIcon",
-      text: "SUBMIT",
+      text: "CS_COMMON_SUBMIT",
       className: "pt-old-pid-text-field",
       floatingLabelText: "PT_IFSC_FLOATING_LABEL",
       hintText: "PT_IFSC_HINT_TEXT",

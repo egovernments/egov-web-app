@@ -3,27 +3,38 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { Icon } from "components";
 import PaymentStatus from "egov-ui-kit/common/propertyTax/PaymentStatus";
-import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/actions";
-import { createReceiptDetails, createReceiptUIInfo } from "egov-ui-kit/common/propertyTax/PaymentStatus/Components/createReceipt";
+import {
+  fetchProperties,
+  fetchReceipts
+} from "egov-ui-kit/redux/properties/actions";
+import {
+  createReceiptDetails,
+  createReceiptUIInfo
+} from "egov-ui-kit/common/propertyTax/PaymentStatus/Components/createReceipt";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import get from "lodash/get";
 
 class PaymentSuccess extends Component {
   state = {
-    imageUrl: "",
+    imageUrl: ""
   };
 
   icon = <Icon action="navigation" name="check" />;
 
   buttons = {
     button1: "Link previous payments",
-    button2: "Finish",
+    button2: "PT_FINISH_BUTTON"
   };
 
   successMessages = {
     Message1: (
-      <Label containerStyle={{ paddingTop: "10px" }} fontSize={16} label={"PT_RECEIPT_THANKYOU"} labelStyle={{ color: "#484848", fontWeight: 500 }} />
+      <Label
+        containerStyle={{ paddingTop: "10px" }}
+        fontSize={16}
+        label={"PT_RECEIPT_THANKYOU"}
+        labelStyle={{ color: "#484848", fontWeight: 500 }}
+      />
     ),
     Message2: (
       <Label
@@ -32,11 +43,16 @@ class PaymentSuccess extends Component {
         label={"PT_RECEIPTS_SUCCESS_MESSAGE"}
         labelStyle={{ color: "#484848", fontWeight: 500 }}
       />
-    ),
+    )
   };
 
   componentDidMount = () => {
-    const { fetchProperties, fetchReceipts, match, fetchGeneralMDMSData } = this.props;
+    const {
+      fetchProperties,
+      fetchReceipts,
+      match,
+      fetchGeneralMDMSData
+    } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -45,33 +61,33 @@ class PaymentSuccess extends Component {
             moduleName: "PropertyTax",
             masterDetails: [
               {
-                name: "Floor",
+                name: "Floor"
               },
               {
-                name: "UsageCategoryMajor",
+                name: "UsageCategoryMajor"
               },
               {
-                name: "UsageCategoryMinor",
+                name: "UsageCategoryMinor"
               },
               {
-                name: "UsageCategorySubMinor",
+                name: "UsageCategorySubMinor"
               },
               {
-                name: "OccupancyType",
+                name: "OccupancyType"
               },
               {
-                name: "PropertyType",
+                name: "PropertyType"
               },
               {
-                name: "PropertySubType",
+                name: "PropertySubType"
               },
               {
-                name: "UsageCategoryDetail",
-              },
-            ],
-          },
-        ],
-      },
+                name: "UsageCategoryDetail"
+              }
+            ]
+          }
+        ]
+      }
     };
     fetchGeneralMDMSData(requestBody, "PropertyTax", [
       "Floor",
@@ -81,12 +97,18 @@ class PaymentSuccess extends Component {
       "OccupancyType",
       "PropertyType",
       "PropertySubType",
-      "UsageCategoryDetail",
+      "UsageCategoryDetail"
     ]);
-    fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
+    fetchProperties([
+      { key: "ids", value: match.params.propertyId },
+      { key: "tenantId", value: match.params.tenantId }
+    ]);
     fetchReceipts([
       { key: "tenantId", value: match.params.tenantId },
-      { key: "consumerCode", value: `${match.params.propertyId}:${match.params.assessmentId}` },
+      {
+        key: "consumerCode",
+        value: `${match.params.propertyId}:${match.params.assessmentId}`
+      }
     ]);
     this.convertImgToDataURLviaCanvas(
       this.createImageUrl(match.params.tenantId),
@@ -117,7 +139,7 @@ class PaymentSuccess extends Component {
     img.src = url;
   };
 
-  createImageUrl = (tenantId) => {
+  createImageUrl = tenantId => {
     return `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
   };
 
@@ -143,7 +165,7 @@ class PaymentSuccess extends Component {
   }
 }
 
-const getLatestPropertyDetails = (propertyDetailsArray) => {
+const getLatestPropertyDetails = propertyDetailsArray => {
   if (propertyDetailsArray.length > 1) {
     return propertyDetailsArray.reduce((acc, curr) => {
       return acc.assessmentDate > curr.assessmentDate ? acc : curr;
@@ -159,11 +181,14 @@ const mapStateToProps = (state, ownProps) => {
   const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById, receipts } = properties;
-  const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
+  const selProperty =
+    propertiesById && propertiesById[ownProps.match.params.propertyId];
   const existingPropertyId = selProperty && selProperty.oldPropertyId;
-  const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
+  const latestPropertyDetails =
+    selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const rawReceiptDetails = receipts && receipts[0];
-  const lastAmount = receipts && get(receipts[0], "Bill[0].billDetails[0].totalAmount");
+  const lastAmount =
+    receipts && get(receipts[0], "Bill[0].billDetails[0].totalAmount");
   const totalAmountBeforeLast =
     receipts &&
     receipts.reduce((acc, curr, index) => {
@@ -180,20 +205,44 @@ const mapStateToProps = (state, ownProps) => {
       return acc;
     }, 0);
   const receiptUIDetails =
-    selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true, totalAmountPaid);
+    selProperty &&
+    cities &&
+    createReceiptUIInfo(
+      selProperty,
+      rawReceiptDetails,
+      cities,
+      totalAmountToPay,
+      true,
+      totalAmountPaid
+    );
   const receiptDetails =
     selProperty &&
     rawReceiptDetails &&
     cities &&
-    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid);
-  return { receiptUIDetails, receiptDetails, cities, existingPropertyId, generalMDMSDataById };
+    createReceiptDetails(
+      selProperty,
+      latestPropertyDetails,
+      rawReceiptDetails,
+      localizationLabels,
+      cities,
+      totalAmountToPay,
+      totalAmountPaid
+    );
+  return {
+    receiptUIDetails,
+    receiptDetails,
+    cities,
+    existingPropertyId,
+    generalMDMSDataById
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
-    fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchProperties: queryObject => dispatch(fetchProperties(queryObject)),
+    fetchReceipts: queryObject => dispatch(fetchReceipts(queryObject)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) =>
+      dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName))
   };
 };
 export default connect(

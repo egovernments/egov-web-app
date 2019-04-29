@@ -10,7 +10,7 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message, v
       open={open}
       id="toast-message"
       // message={message}
-      message={<Label label={labelKey} defaultLabel={labelName} color="#fff" />}
+      message={<Label label={labelKey} color="#fff" />}
       autoHideDuration={autoHideDuration}
       style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap", justifyContent: "center" }}
       bodyStyle={{
