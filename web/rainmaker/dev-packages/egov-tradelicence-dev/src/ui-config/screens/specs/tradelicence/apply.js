@@ -47,18 +47,21 @@ export const stepper = getStepperObject(
 );
 
 export const header = getCommonContainer({
-  header: getCommonHeader({
-    labelName: `Apply for New Trade License ${
-      process.env.REACT_APP_NAME === "Citizen"
-        ? "(" + getCurrentFinancialYear() + ")"
-        : ""
-    }`,
-    dynamicArray: [getCurrentFinancialYear()],
-    labelKey:
-      process.env.REACT_APP_NAME === "Citizen"
-        ? "TL_COMMON_APPL_NEW_LICENSE"
-        : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
-  }),
+  header:
+    getQueryArg(window.location.href, "action") !== "edit"
+      ? getCommonHeader({
+          labelName: `Apply for New Trade License ${
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "(" + getCurrentFinancialYear() + ")"
+              : ""
+          }`,
+          dynamicArray: [getCurrentFinancialYear()],
+          labelKey:
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "TL_COMMON_APPL_NEW_LICENSE"
+              : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
+        })
+      : {},
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     moduleName: "egov-tradelicence",
