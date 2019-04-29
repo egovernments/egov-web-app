@@ -13,7 +13,10 @@ import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import find from "lodash/find";
-import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  localStorageGet,
+  getUserInfo
+} from "egov-ui-kit/utils/localStorageUtils";
 import orderBy from "lodash/orderBy";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
@@ -265,8 +268,17 @@ class WorkFlowContainer extends React.Component {
     );
     const data = find(businessServiceData, { businessService: "NewTL" });
     const state = find(data.states, { applicationStatus: status });
+    let actions = [];
+    state.actions.forEach(item => {
+      actions = [...actions, ...item.roles];
+    });
+    const userRoles = JSON.parse(getUserInfo()).roles;
+    const roleIndex = userRoles.findIndex(item => {
+      if (actions.indexOf(item.code) > -1) return true;
+    });
+
     let editAction = {};
-    if (state.isStateUpdatable) {
+    if (state.isStateUpdatable && actions.length > 0 && roleIndex > -1) {
       editAction = {
         buttonLabel: "EDIT",
         moduleName: "NewTL",
