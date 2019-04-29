@@ -12,10 +12,10 @@ const formConfig = {
       floatingLabelText: "PT_MODE_OF_PAYMENT",
       hintText: "PT_SELECT_PAYMENT_MODE",
       dropDownData: [
-        { label: "Cash", value: "Cash" },
-        { label: "DD", value: "DD" },
-        { label: "Cheque", value: "Cheque" },
-        { label: "Credit/Debit Card", value: "Card" },
+        { label: "PT_PAYMENT_METHOD_CASH", value: "Cash" },
+        { label: "PT_PAYMENT_METHOD_DD", value: "DD" },
+        { label: "PT_PAYMENT_METHOD_CHEQUE", value: "Cheque" },
+        { label: "PT_PAYMENT_METHOD_CARD", value: "Card" },
       ],
       value: "Cash",
       beforeFieldChange: ({ dispatch, state, action }) => {

@@ -759,68 +759,131 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       `Licenses[0].tradeLicenseDetail.owners`,
       []
     );
-
-    if (owners && owners.length > 1) {
-      const currentNumber = owners[cardIndex].mobileNumber;
-      const numbers = owners.filter(
-        item => currentNumber === item.mobileNumber
+    //owners from search call before modification.
+    const oldOwnersArr = get(
+      state.screenConfiguration.preparedFinalObject,
+      "LicensesTemp[0].tradeLicenseDetail.owners",
+      []
+    );
+    //Same no search on Same index
+    if (ownerNo === owners[cardIndex].userName) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Owner already added !",
+            labelKey: "ERR_OWNER_ALREADY_ADDED"
+          },
+          "error"
+        )
       );
-      if (numbers.length > 1) {
+      return;
+    }
+
+    //Same no search in whole array
+    const matchingOwnerIndex = owners.findIndex(
+      item => item.userName === ownerNo
+    );
+    if (matchingOwnerIndex > -1) {
+      if (
+        !isUndefined(owners[matchingOwnerIndex].userActive) &&
+        owners[matchingOwnerIndex].userActive === false
+      ) {
+        //rearrange
+        dispatch(
+          prepareFinalObject(
+            `Licenses[0].tradeLicenseDetail.owners[${matchingOwnerIndex}].userActive`,
+            true
+          )
+        );
+        dispatch(
+          prepareFinalObject(
+            `Licenses[0].tradeLicenseDetail.owners[${cardIndex}].userActive`,
+            false
+          )
+        );
+        //Delete if current card was not part of oldOwners array - no need to save.
+        if (
+          oldOwnersArr.findIndex(
+            item => owners[cardIndex].userName === item.userName
+          ) == -1
+        ) {
+          owners.splice(cardIndex, 1);
+          dispatch(
+            prepareFinalObject(`Licenses[0].tradeLicenseDetail.owners`, owners)
+          );
+        }
+      } else {
         dispatch(
           toggleSnackbar(
             true,
             {
               labelName: "Owner already added !",
-              labelKey: "ERR_OWNER_ALREADY_ADDED"
+              labelKey: "ERR_OWNER_ALREADY_ADDED_1"
             },
             "error"
           )
         );
-        return;
       }
-    }
-    let payload = await httpRequest(
-      "post",
-      "/user/_search?tenantId=pb",
-      "_search",
-      [],
-      {
-        tenantId: "pb",
-        userName: `${ownerNo}`
-      }
-    );
-    if (payload && payload.user && payload.user.hasOwnProperty("length")) {
-      if (payload.user.length === 0) {
-        dispatch(
-          toggleSnackbar(
-            true,
-            {
-              labelName: "This mobile number is not registered !",
-              labelKey: "ERR_MOBILE_NUMBER_NOT_REGISTERED"
-            },
-            "info"
-          )
-        );
-      } else {
-        const userInfo =
-          payload.user &&
-          payload.user[0] &&
-          JSON.parse(JSON.stringify(payload.user[0]));
-        if (userInfo && userInfo.createdDate) {
-          userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
-          userInfo.lastModifiedDate = convertDateTimeToEpoch(
-            userInfo.lastModifiedDate
+      return;
+    } else {
+      //New number search only
+      let payload = await httpRequest(
+        "post",
+        "/user/_search?tenantId=pb",
+        "_search",
+        [],
+        {
+          tenantId: "pb",
+          userName: `${ownerNo}`
+        }
+      );
+      if (payload && payload.user && payload.user.hasOwnProperty("length")) {
+        if (payload.user.length === 0) {
+          dispatch(
+            toggleSnackbar(
+              true,
+              {
+                labelName: "This mobile number is not registered !",
+                labelKey: "ERR_MOBILE_NUMBER_NOT_REGISTERED"
+              },
+              "info"
+            )
           );
-          userInfo.pwdExpiryDate = convertDateTimeToEpoch(
-            userInfo.pwdExpiryDate
+        } else {
+          const userInfo =
+            payload.user &&
+            payload.user[0] &&
+            JSON.parse(JSON.stringify(payload.user[0]));
+          if (userInfo && userInfo.createdDate) {
+            userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
+            userInfo.lastModifiedDate = convertDateTimeToEpoch(
+              userInfo.lastModifiedDate
+            );
+            userInfo.pwdExpiryDate = convertDateTimeToEpoch(
+              userInfo.pwdExpiryDate
+            );
+          }
+          let currOwnersArr = get(
+            state.screenConfiguration.preparedFinalObject,
+            "Licenses[0].tradeLicenseDetail.owners",
+            []
+          );
+
+          currOwnersArr[cardIndex] = userInfo;
+          if (oldOwnersArr.length > 0) {
+            currOwnersArr.push({
+              ...oldOwnersArr[cardIndex],
+              userActive: false
+            });
+          }
+          dispatch(
+            prepareFinalObject(
+              `Licenses[0].tradeLicenseDetail.owners`,
+              currOwnersArr
+            )
           );
         }
-        dispatch(
-          prepareFinalObject(
-            `Licenses[0].tradeLicenseDetail.owners[${cardIndex}]`,
-            userInfo
-          )
-        );
       }
     }
   } catch (e) {
@@ -897,7 +960,7 @@ const getToolTipInfo = (taxHead, LicenseData) => {
 
 const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   if (Bill && Bill.length) {
-    const extraData = ["Rebate", "Penalty"].map(item => {
+    const extraData = ["TL_COMMON_REBATE", "TL_COMMON_PEN"].map(item => {
       return {
         name: {
           labelName: item,
@@ -905,8 +968,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
         },
         value: null,
         info: getToolTipInfo(item, LicenseData) && {
-          labelName: getToolTipInfo(item, LicenseData),
-          labelKey: getToolTipInfo(item, LicenseData)
+          value: getToolTipInfo(item, LicenseData),
+          key: getToolTipInfo(item, LicenseData)
         }
       };
     });
@@ -924,11 +987,11 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
               item.accountDescription.split("-")[0],
               LicenseData
             ) && {
-              labelName: getToolTipInfo(
+              value: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               ),
-              labelKey: getToolTipInfo(
+              key: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               )
@@ -943,8 +1006,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
             },
             value: getTaxValue(item),
             info: getToolTipInfo(item.taxHeadCode, LicenseData) && {
-              labelName: getToolTipInfo(item.taxHeadCode, LicenseData),
-              labelKey: getToolTipInfo(item.taxHeadCode, LicenseData)
+              value: getToolTipInfo(item.taxHeadCode, LicenseData),
+              key: getToolTipInfo(item.taxHeadCode, LicenseData)
             }
           });
       }
@@ -1144,7 +1207,7 @@ export const getCurrentFinancialYear = () => {
   var today = new Date();
   var curMonth = today.getMonth();
   var fiscalYr = "";
-  if (curMonth > 3) {
+  if (curMonth > 2) {
     var nextYr1 = (today.getFullYear() + 1).toString();
     fiscalYr = today.getFullYear().toString() + "-" + nextYr1;
   } else {
@@ -1637,6 +1700,29 @@ export const getDocList = (state, dispatch) => {
       applicationDocument
     )
   );
+
+  //REARRANGE APPLICATION DOCS FROM TL SEARCH IN EDIT FLOW
+  let applicationDocs = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    []
+  );
+  let applicationDocsReArranged =
+    applicationDocs &&
+    applicationDocs.length &&
+    applicationDocument.map(item => {
+      const index = applicationDocs.findIndex(
+        i => i.documentType === item.name
+      );
+      return applicationDocs[index];
+    });
+  applicationDocsReArranged &&
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.applicationDocuments",
+        applicationDocsReArranged
+      )
+    );
 };
 
 export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {

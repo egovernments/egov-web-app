@@ -155,7 +155,10 @@ class FormWizard extends Component {
           searchPropertyResponse.Properties[0].propertyDetails.length > 0
         ) {
           searchPropertyResponse.Properties[0].propertyDetails.forEach(item => {
-            sortBy(item.units, [unit => unit.floorNo || -99999]);
+            item.units = sortBy(
+              item.units,
+              unit => parseInt(unit.floorNo) || -99999
+            );
           });
         }
         // console.log(searchPropertyResponse);
@@ -171,9 +174,7 @@ class FormWizard extends Component {
             }
           ]
         };
-        console.log(propertyResponse);
         const preparedForm = convertRawDataToFormConfig(propertyResponse); //convertRawDataToFormConfig(responseee)
-        console.log(preparedForm);
         currentDraft = {
           draftRecord: {
             ...preparedForm,

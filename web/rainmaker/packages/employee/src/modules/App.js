@@ -70,19 +70,23 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { route: nextRoute } = nextProps;
+    const { route: nextRoute, authenticated } = nextProps;
     const { route: currentRoute, history, setRoute } = this.props;
+
     if (nextRoute && currentRoute !== nextRoute) {
       history.push(nextRoute);
       setRoute("");
     }
+    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated) {
+      nextProps.hasLocalisation && this.props.history.replace("/language-selection");
+    }
   }
 
   render() {
-    const { toast, loading } = this.props;
+    const { toast, loading, defaultUrl, hasLocalisation } = this.props;
     return (
       <div>
-        <Router routes={routes} />
+        <Router routes={routes} hasLocalisation={hasLocalisation} defaultUrl={defaultUrl} />
         {toast && toast.open && !isEmpty(toast.message) && <Toast open={toast.open} message={toast.message} error={toast.error} />}
         {loading && <LoadingIndicator />}
         <CommonShareContainer componentId="rainmaker-common-share" />
@@ -93,8 +97,17 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { route, toast } = state.app;
+  const { auth } = state;
+  const { authenticated } = auth || false;
   const props = {};
   const { spinner } = state.common;
+  const { stateInfoById } = state.common || [];
+  let hasLocalisation = false;
+  let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
+  if (stateInfoById && stateInfoById.length > 0) {
+    hasLocalisation = stateInfoById[0].hasLocalisation;
+    defaultUrl = stateInfoById[0].defaultUrl;
+  }
   const loading = ownProps.loading || spinner;
   if (route && route.length) {
     props.route = route;
@@ -105,6 +118,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...props,
     loading,
+    hasLocalisation,
+    defaultUrl,
+    authenticated,
   };
 };
 

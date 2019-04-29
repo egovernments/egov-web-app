@@ -2,8 +2,15 @@ import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg, hasTokenExpired } from "./commons";
 import some from "lodash/some";
 import commonConfig from "egov-ui-kit/config/common.js";
-import { getTenantId, getAccessToken, setTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
-import { setLocale, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getTenantId,
+  getAccessToken,
+  setTenantId,
+  getLocale,
+  setLocale,
+  localStorageSet,
+  localStorageGet,
+} from "egov-ui-kit/utils/localStorageUtils";
 
 axios.interceptors.response.use(
   (response) => {
@@ -35,7 +42,7 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
     action: action,
     did: "1",
     key: "",
-    msgId: "20170310130900|en_IN",
+    msgId: `20170310130900|${getLocale()}`,
     // requesterId: "",
     authToken,
   };

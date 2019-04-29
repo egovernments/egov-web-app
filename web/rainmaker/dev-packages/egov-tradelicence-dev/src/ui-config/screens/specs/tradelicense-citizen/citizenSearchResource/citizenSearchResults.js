@@ -52,7 +52,7 @@ export const searchResults = {
     options: {
       filter: false,
       download: false,
-      responsive: "stacked",
+      responsive: "scroll",
       selectableRows: false,
       hover: true,
       rowsPerPageOptions: [10, 15, 20]

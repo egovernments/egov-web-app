@@ -28,7 +28,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick, logoUrl }) =>
                 labelStyle={{ marginBottom: "12px" }}
                 className="forgot-passwd"
                 fontSize={14}
-                label="FORGOT PASSWORD?"
+                label="CORE_COMMON_FORGOT_PASSWORD"
               />
             </div>
           </Link>

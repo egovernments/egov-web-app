@@ -19,7 +19,7 @@ export const demandDraftDetails = getCommonContainer({
     required: true
   }),
   ddDate: getDateField({
-    label: { labelName: "DD Date" },
+    label: { labelName: "DD Date", labelKey: "TL_PAYMENT_DD_DATE_LABEL" },
     placeholder: { labelName: "dd/mm/yy" },
     required: true
   }),

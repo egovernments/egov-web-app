@@ -51,7 +51,7 @@ class SortDialog extends Component {
       <Button
         id="logout-yes-button"
         className="logout-yes-button"
-        label={<Label buttonLabel={true} label={"OK"} color="#FE7A51" />}
+        label={<Label buttonLabel={true} label={"CORE_POPUP_OK"} color="#FE7A51" />}
         backgroundColor={"#fff"}
         onclick={() => {
           getComplaintDisplayOrder(this.state.valueSelected);
@@ -75,7 +75,7 @@ class SortDialog extends Component {
         open={sortPopOpen}
         title={
           <Label
-            label={"Sort By"}
+            label="ES_DIALOG_SORT_BY"
             bold={true}
             color="rgba(0, 0, 0, 0.8700000047683716)"
             fontSize="20px"
@@ -109,7 +109,7 @@ class SortDialog extends Component {
           <Button
             id="logout-yes-button"
             className="logout-yes-button"
-            label={<Label buttonLabel={true} label={"OK"} color="#FE7A51" />}
+            label={<Label buttonLabel={true} label={"CORE_POPUP_OK"} color="#FE7A51" />}
             backgroundColor={"#fff"}
             onClick={() => {
               getComplaintDisplayOrder(this.state.valueSelected);

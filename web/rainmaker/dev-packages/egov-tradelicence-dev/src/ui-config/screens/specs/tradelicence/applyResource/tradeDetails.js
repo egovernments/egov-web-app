@@ -109,6 +109,13 @@ const tradeUnitCard = {
                     )
                   )
                 );
+                dispatch(pFO("LicensesTemp.tradeUnits[0].tradeSubType", ""));
+                dispatch(
+                  pFO(
+                    "Licenses[0].tradeLicenseDetail.tradeUnits[0].tradeType",
+                    ""
+                  )
+                );
               } catch (e) {
                 console.log(e);
               }
@@ -499,7 +506,7 @@ const accessoriesCard = {
             },
             placeholder: {
               labelName: "Select Accessories",
-              abelKey: "TL_NEW_TRADE_DETAILS_ACC_PLACEHOLDER"
+              labelKey: "TL_NEW_TRADE_DETAILS_ACC_PLACEHOLDER"
             },
             localePrefix: {
               moduleName: "TRADELICENSE",
@@ -733,7 +740,28 @@ export const tradeDetails = getCommonCard({
           xs: 12,
           sm: 6
         }
-      })
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        if (action.value === "APPLICATIONTYPE.RENEWAL") {
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.oldLicenseNo",
+              "props.required",
+              true
+            )
+          );
+        } else {
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.oldLicenseNo",
+              "props.required",
+              false
+            )
+          );
+        }
+      }
     },
     oldLicenseNo: getTextField({
       label: {
@@ -778,6 +806,10 @@ export const tradeDetails = getCommonCard({
         },
         required: true,
         jsonPath: "Licenses[0].licenseType",
+        localePrefix: {
+          moduleName: "TRADELICENSE",
+          masterName: "LICENSETYPE"
+        },
         props: {
           disabled: true,
           value: "PERMANENT",

@@ -1,3 +1,5 @@
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+
 const ReceiptFromAPI = {
   tenantId: null,
   page: {
@@ -5,15 +7,15 @@ const ReceiptFromAPI = {
     totalPages: 14,
     pageSize: 10,
     currentPage: 0,
-    offset: 0,
+    offset: 0
   },
   ResponseInfo: {
     apiId: "Rainmaker",
     ver: ".01",
     ts: "Tue Jul 31 15:09:04 IST 2018",
     resMsgId: "uief87324",
-    msgId: "20170310130900|en_IN",
-    status: "200",
+    msgId: `20170310130900|${getLocale()}`,
+    status: "200"
   },
   Receipt: [
     {
@@ -63,12 +65,13 @@ const ReceiptFromAPI = {
                   billDetail: "1895",
                   glcode: "1405015",
                   order: 1,
-                  accountDescription: "PT_OWNER_EXEMPTION-1522540800000-1554076799000",
+                  accountDescription:
+                    "PT_OWNER_EXEMPTION-1522540800000-1554076799000",
                   crAmountToBePaid: 0,
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "OTHERS",
+                  purpose: "OTHERS"
                 },
                 {
                   id: "8616",
@@ -81,7 +84,7 @@ const ReceiptFromAPI = {
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "CURRENT_AMOUNT",
+                  purpose: "CURRENT_AMOUNT"
                 },
                 {
                   id: "8617",
@@ -89,12 +92,13 @@ const ReceiptFromAPI = {
                   billDetail: "1895",
                   glcode: "1405019",
                   order: 1,
-                  accountDescription: "PT_TIME_INTEREST-1522540800000-1554076799000",
+                  accountDescription:
+                    "PT_TIME_INTEREST-1522540800000-1554076799000",
                   crAmountToBePaid: 0,
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "OTHERS",
+                  purpose: "OTHERS"
                 },
                 {
                   id: "8618",
@@ -102,12 +106,13 @@ const ReceiptFromAPI = {
                   billDetail: "1895",
                   glcode: "1405013",
                   order: 1,
-                  accountDescription: "PT_TIME_PENALTY-1522540800000-1554076799000",
+                  accountDescription:
+                    "PT_TIME_PENALTY-1522540800000-1554076799000",
                   crAmountToBePaid: 0,
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "OTHERS",
+                  purpose: "OTHERS"
                 },
                 {
                   id: "8619",
@@ -115,12 +120,13 @@ const ReceiptFromAPI = {
                   billDetail: "1895",
                   glcode: "1405016",
                   order: 1,
-                  accountDescription: "PT_TIME_REBATE-1522540800000-1554076799000",
+                  accountDescription:
+                    "PT_TIME_REBATE-1522540800000-1554076799000",
                   crAmountToBePaid: -52,
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "OTHERS",
+                  purpose: "OTHERS"
                 },
                 {
                   id: "8620",
@@ -128,22 +134,23 @@ const ReceiptFromAPI = {
                   billDetail: "1895",
                   glcode: "1405019",
                   order: 1,
-                  accountDescription: "PT_UNIT_USAGE_EXEMPTION-1522540800000-1554076799000",
+                  accountDescription:
+                    "PT_UNIT_USAGE_EXEMPTION-1522540800000-1554076799000",
                   crAmountToBePaid: 0,
                   creditAmount: null,
                   debitAmount: null,
                   isActualDemand: true,
-                  purpose: "OTHERS",
-                },
+                  purpose: "OTHERS"
+                }
               ],
               manualReceiptNumber: "",
               stateId: null,
-              partPaymentAllowed: null,
-            },
+              partPaymentAllowed: null
+            }
           ],
           tenantId: "default",
-          mobileNumber: null,
-        },
+          mobileNumber: null
+        }
       ],
       auditDetails: null,
       instrument: {
@@ -157,7 +164,7 @@ const ReceiptFromAPI = {
           name: "DD",
           description: null,
           active: null,
-          instrumentTypeProperties: [],
+          instrumentTypeProperties: []
         },
         instrumentDate: null,
         instrumentNumber: null,
@@ -167,7 +174,7 @@ const ReceiptFromAPI = {
           name: null,
           description: null,
           active: null,
-          type: null,
+          type: null
         },
         branchName: "Bangalore",
         bankAccount: {
@@ -183,7 +190,7 @@ const ReceiptFromAPI = {
           createdDate: null,
           lastModifiedBy: null,
           lastModifiedDate: null,
-          tenantId: null,
+          tenantId: null
         },
         transactionType: "Debit",
         payee: null,
@@ -191,13 +198,13 @@ const ReceiptFromAPI = {
         surrendarReason: null,
         serialNo: null,
         instrumentVouchers: [],
-        tenantId: "default",
+        tenantId: "default"
       },
       onlinePayment: null,
       stateId: null,
-      WorkflowDetails: null,
-    },
-  ],
+      WorkflowDetails: null
+    }
+  ]
 };
 
 export default ReceiptFromAPI;

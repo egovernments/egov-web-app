@@ -1,51 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-
-const getLocalTextFromCode = localCode => {
-  return JSON.parse(getLocalization("localization_en_IN")).find(
-    item => item.code == localCode
-  );
-};
+import {
+  getLocaleLabels,
+  getTransformedLocalStorgaeLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 export const textToLocalMapping = {
-  "Employee ID": get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_EMP_ID"),
-    "message",
-    "Employee ID"
+  "Employee ID": getLocaleLabels(
+    "Employee ID",
+    "HR_COMMON_TABLE_COL_EMP_ID",
+    getTransformedLocalStorgaeLabels()
   ),
-  Name: get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_NAME"),
-    "message",
-    "Name"
+  Name: getLocaleLabels(
+    "Name",
+    "HR_COMMON_TABLE_COL_NAME",
+    getTransformedLocalStorgaeLabels()
   ),
-  Role: get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_ROLE"),
-    "message",
-    "Role"
+  Role: getLocaleLabels(
+    "Role",
+    "HR_COMMON_TABLE_COL_ROLE",
+    getTransformedLocalStorgaeLabels()
   ),
-  Designation: get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_DESG"),
-    "message",
-    "Designation"
+  Designation: getLocaleLabels(
+    "Designation",
+    "HR_COMMON_TABLE_COL_DESG",
+    getTransformedLocalStorgaeLabels()
   ),
-  Department: get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_DEPT"),
-    "message",
-    "Department"
+  Department: getLocaleLabels(
+    "Department",
+    "HR_COMMON_TABLE_COL_DEPT",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Search Results for Employee": get(
-    getLocalTextFromCode("HR_HOME_SEARCH_RESULTS_TABLE_HEADING"),
-    "message",
-    "Search Results for Employee"
+  "Search Results for Employee": getLocaleLabels(
+    "Search Results for Employee",
+    "HR_HOME_SEARCH_RESULTS_TABLE_HEADING",
+    getTransformedLocalStorgaeLabels()
   )
-};
-
-const selectToolbarStyle = {
-  display: "flex",
-  alignItems: "center",
-  padding: "0 10px"
 };
 
 export const searchResults = {
@@ -77,21 +68,6 @@ export const searchResults = {
       [get(textToLocalMapping, "Department")]: {}
     },
     title: get(textToLocalMapping, "Search Results for Employee")
-    // customSortColumn: {
-    //   column: "Application Date",
-    //   sortingFn: (data, i, sortDateOrder) => {
-    //     const epochDates = data.reduce((acc, curr) => {
-    //       acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
-    //       return acc;
-    //     }, []);
-    //     const order = sortDateOrder === "asc" ? true : false;
-    //     const finalData = sortByEpoch(epochDates, !order).map(item => {
-    //       item.pop();
-    //       return item;
-    //     });
-    //     return { data: finalData, currentOrder: !order ? "asc" : "desc" };
-    //   }
-    // }
   }
 };
 

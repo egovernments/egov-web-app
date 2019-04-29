@@ -3,67 +3,107 @@ import ReceiptDetails from "./ReceiptDetails";
 import TaxBreakUp from "./TaxBreakUp";
 import PaymentModes from "./PaymentModes";
 import formHoc from "egov-ui-kit/hocs/form";
-import { CashInformation, ChequeInformation, DemandDraftInformation, CardInformation, PaymentModeInformation } from "./forms";
+import {
+  CashInformation,
+  ChequeInformation,
+  DemandDraftInformation,
+  CardInformation,
+  PaymentModeInformation
+} from "./forms";
 import AdditionalDetails from "../ReviewForm/components/AdditionalDetails";
 
-const PaymentModeSelector = formHoc({ formKey: "paymentModes" })(PaymentModeInformation);
+const PaymentModeSelector = formHoc({ formKey: "paymentModes" })(
+  PaymentModeInformation
+);
 
 const paymentModeDetails = [
   {
-    primaryText: "Cash",
+    primaryText: "PT_PAYMENT_CASH",
+    code: "Cash",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation),
-      },
-    ],
+        comp: formHoc({
+          formKey: "cashInfo",
+          copyName: "cashInfo",
+          path: "PropertyTaxPay"
+        })(CashInformation)
+      }
+    ]
   },
   {
-    primaryText: "Cheque",
+    primaryText: "PT_PAYMENT_CHQ",
+    code: "Cheque",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation),
+        comp: formHoc({
+          formKey: "cashInfo",
+          copyName: "cashInfo",
+          path: "PropertyTaxPay"
+        })(CashInformation)
       },
       {
-        title: "Cheque Details",
+        title: "PT_CHEQUE_DETAILS",
         className: "cheque-details",
-        comp: formHoc({ formKey: "chequeInfo", copyName: "chequeInfo", path: "PropertyTaxPay" })(ChequeInformation),
-      },
-    ],
+        comp: formHoc({
+          formKey: "chequeInfo",
+          copyName: "chequeInfo",
+          path: "PropertyTaxPay"
+        })(ChequeInformation)
+      }
+    ]
   },
   {
-    primaryText: "DD",
+    primaryText: "PT_PAYMENT_DD",
+    code: "DD",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation),
+        comp: formHoc({
+          formKey: "cashInfo",
+          copyName: "cashInfo",
+          path: "PropertyTaxPay"
+        })(CashInformation)
       },
       {
-        title: "Demand Draft Details",
+        title: "PT_DEMAND_DRAFT_DETAILS",
         className: "demand-details",
-        comp: formHoc({ formKey: "demandInfo", copyName: "demandInfo", path: "PropertyTaxPay" })(DemandDraftInformation),
-      },
-    ],
+        comp: formHoc({
+          formKey: "demandInfo",
+          copyName: "demandInfo",
+          path: "PropertyTaxPay"
+        })(DemandDraftInformation)
+      }
+    ]
   },
   {
-    primaryText: "Card",
+    primaryText: "PT_PAYMENT_CARD",
+    code: "Card",
     forms: [
       {
-        title: "Payer Details",
+        title: "PT_PAYER_DETAILS",
         className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation),
+        comp: formHoc({
+          formKey: "cashInfo",
+          copyName: "cashInfo",
+          path: "PropertyTaxPay"
+        })(CashInformation)
       },
       {
-        title: "Card Details",
+        title: "PT_CARD_DETAILS",
         className: "card-details",
-        comp: formHoc({ formKey: "cardInfo", copyName: "cardInfo", path: "PropertyTaxPay" })(CardInformation),
-      },
-    ],
-  },
+        comp: formHoc({
+          formKey: "cardInfo",
+          copyName: "cardInfo",
+          path: "PropertyTaxPay"
+        })(CardInformation)
+      }
+    ]
+  }
 ];
 
 class PaymentDetails extends Component {
@@ -71,10 +111,10 @@ class PaymentDetails extends Component {
     paymentModeDetails,
     valueSelected: "",
     errorText: "",
-    totalAmountToBePaid: 0,
+    totalAmountToBePaid: 0
   };
 
-  getErrorMessage = (value) => {
+  getErrorMessage = value => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
     let errorText = `amount should be numeric`;
     if (isFinite(value) && value >= totalAmount) {
@@ -88,22 +128,37 @@ class PaymentDetails extends Component {
   handleFieldChange = (event, value) => {
     let { estimationDetails, updateTotalAmount } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-    if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value < 100) {
+    if (
+      isNaN(parseFloat(value)) ||
+      !isFinite(value) ||
+      value >= totalAmount ||
+      value < 100
+    ) {
       this.setState(
         {
-          errorText: this.getErrorMessage(value),
+          errorText: this.getErrorMessage(value)
         },
         () => {
-          updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+          updateTotalAmount &&
+            updateTotalAmount(
+              value,
+              this.state.valueSelected === "Full_Amount",
+              this.state.errorText
+            );
         }
       );
     } else {
       this.setState(
         {
-          errorText: "",
+          errorText: ""
         },
         () => {
-          updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+          updateTotalAmount &&
+            updateTotalAmount(
+              value,
+              this.state.valueSelected === "Full_Amount",
+              this.state.errorText
+            );
         }
       );
     }
@@ -114,14 +169,19 @@ class PaymentDetails extends Component {
   //   this.setState({ totalAmountTobePaid: inputValue });
   // };
 
-  onRadioButtonChange = (e) => {
+  onRadioButtonChange = e => {
     let { estimationDetails, updateTotalAmount } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
     if (e.target.value === "Full_Amount") {
-      updateTotalAmount && updateTotalAmount(totalAmount, this.state.valueSelected === "Full_Amount");
+      updateTotalAmount &&
+        updateTotalAmount(
+          totalAmount,
+          this.state.valueSelected === "Full_Amount"
+        );
       // this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
     } else {
-      updateTotalAmount && updateTotalAmount(100, this.state.valueSelected === "Partial_Amount");
+      updateTotalAmount &&
+        updateTotalAmount(100, this.state.valueSelected === "Partial_Amount");
       // this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
     }
   };
@@ -134,12 +194,26 @@ class PaymentDetails extends Component {
   // };
 
   render() {
-    const { paymentModeDetails, valueSelected, totalAmountTobePaid, errorText } = this.state;
-    const { estimationDetails, importantDates, partialAmountError, isPartialPaymentInValid } = this.props;
+    const {
+      paymentModeDetails,
+      valueSelected,
+      totalAmountTobePaid,
+      errorText
+    } = this.state;
+    const {
+      estimationDetails,
+      importantDates,
+      partialAmountError,
+      isPartialPaymentInValid
+    } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
     return (
       <div className="payment-details">
-        <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} optionSelected={this.props.optionSelected} />
+        <TaxBreakUp
+          estimationDetails={estimationDetails}
+          importantDates={importantDates}
+          optionSelected={this.props.optionSelected}
+        />
         {!isPartialPaymentInValid && (
           <AdditionalDetails
             value={this.props.totalAmountToBePaid}
@@ -152,7 +226,12 @@ class PaymentDetails extends Component {
             isPartialPaymentInValid={isPartialPaymentInValid}
           />
         )}
-        {totalAmount > 0 && <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />}
+        {totalAmount > 0 && (
+          <PaymentModes
+            paymentModeDetails={paymentModeDetails}
+            PaymentModeSelector={PaymentModeSelector}
+          />
+        )}
         <ReceiptDetails />
       </div>
     );
