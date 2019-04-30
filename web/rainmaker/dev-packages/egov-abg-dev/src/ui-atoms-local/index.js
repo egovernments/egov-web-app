@@ -37,6 +37,11 @@ const MenuButton = Loadable({
   loader: () => import("./MenuButton"),
   loading: () => <Loading />
 });
+const DownloadIcon = Loadable({
+  loader: () => import("./DownloadIcon"),
+  loading: () => <Loading />
+});
+
 
 export {
   TestAtoms,
@@ -45,5 +50,6 @@ export {
   MapLocation,
   AutoSuggest,
   Asteric,
-  MenuButton
+  MenuButton,
+  DownloadIcon
 };
