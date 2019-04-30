@@ -84,34 +84,35 @@ const setDocsForEditFlow = async (state, dispatch) => {
     []
   );
   let uploadedDocuments = {};
-  let fileStoreIds = applicationDocuments
-    .map(item => item.fileStoreId)
-    .join(",");
+  let fileStoreIds =
+    applicationDocuments &&
+    applicationDocuments.map(item => item.fileStoreId).join(",");
   const fileUrlPayload =
     fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-  applicationDocuments.forEach((item, index) => {
-    uploadedDocuments[index] = [
-      {
-        fileName:
-          (fileUrlPayload &&
-            fileUrlPayload[item.fileStoreId] &&
-            decodeURIComponent(
-              fileUrlPayload[item.fileStoreId]
-                .split(",")[0]
-                .split("?")[0]
-                .split("/")
-                .pop()
-                .slice(13)
-            )) ||
-          `Document - ${index + 1}`,
-        fileStoreId: item.fileStoreId,
-        fileUrl: Object.values(fileUrlPayload)[index],
-        documentType: item.documentType,
-        tenantId: item.tenantId,
-        id: item.id
-      }
-    ];
-  });
+  applicationDocuments &&
+    applicationDocuments.forEach((item, index) => {
+      uploadedDocuments[index] = [
+        {
+          fileName:
+            (fileUrlPayload &&
+              fileUrlPayload[item.fileStoreId] &&
+              decodeURIComponent(
+                fileUrlPayload[item.fileStoreId]
+                  .split(",")[0]
+                  .split("?")[0]
+                  .split("/")
+                  .pop()
+                  .slice(13)
+              )) ||
+            `Document - ${index + 1}`,
+          fileStoreId: item.fileStoreId,
+          fileUrl: Object.values(fileUrlPayload)[index],
+          documentType: item.documentType,
+          tenantId: item.tenantId,
+          id: item.id
+        }
+      ];
+    });
   dispatch(
     prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", uploadedDocuments)
   );
