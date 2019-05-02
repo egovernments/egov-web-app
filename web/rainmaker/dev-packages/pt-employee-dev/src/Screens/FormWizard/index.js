@@ -1015,7 +1015,7 @@ class FormWizard extends Component {
 
     try {
       const getReceipt = await httpRequest(
-        "collection-services-v1/receipts/_create",
+        "collection-services/receipts/_create",
         "_create",
         [],
         formData,

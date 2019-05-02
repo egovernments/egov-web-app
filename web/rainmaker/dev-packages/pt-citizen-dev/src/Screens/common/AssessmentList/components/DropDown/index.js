@@ -55,7 +55,7 @@ const downloadReceipt = async item => {
   ];
   try {
     const payload = await httpRequest(
-      "/collection-services-v1/receipts/_search",
+      "/collection-services/receipts/_search",
       "_search",
       queryObj,
       {},
