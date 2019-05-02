@@ -80,7 +80,10 @@ const assignmentDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Currently Assigned Here"
+                  label: {
+                    labelName: "Currently Assigned Here",
+                    labelKey: "HR_CURRENTLY_ASSIGNED_HERE_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
@@ -161,7 +164,7 @@ const assignmentDetailsCard = {
               label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
               placeholder: {
                 labelName: "Select Designation",
-                labelKey: "HR_DEPT_PLACEHOLDER"
+                labelKey: "HR_DESIGNATION_PLACEHOLDER"
               },
               required: true,
               jsonPath: "Employee[0].assignments[0].designation",
@@ -199,7 +202,10 @@ const assignmentDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Head Of Department"
+                  label: {
+                    labelName: "Head Of Department",
+                    labelKey: "HR_HOD_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
@@ -253,7 +259,7 @@ const assignmentDetailsCard = {
     items: [],
     addItemLabel: {
       labelName: "ADD ASSIGNMENT",
-      labelKey: "TL_ADD_ASSIGNMENT"
+      labelKey: "HR_ADD_ASSIGNMENT"
     },
     headerName: "Assignment",
     headerJsonPath:

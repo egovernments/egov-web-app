@@ -6,6 +6,7 @@ import { ActionDialog } from "../";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { Container, Item } from "egov-ui-framework/ui-atoms";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import MenuButton from "egov-ui-framework/ui-atoms/MenuButton";
 import { getDownloadItems } from "./downloadItems";
 import get from "lodash/get";
@@ -45,12 +46,13 @@ class Footer extends React.Component {
   };
 
   openActionDialog = async item => {
-    const { handleFieldChange } = this.props;
+    const { handleFieldChange, setRoute } = this.props;
     let employeeList = [];
     handleFieldChange("Licenses[0].comment", "");
     handleFieldChange("Licenses[0].assignee", "");
     if (item.isLast) {
-      window.location.href = window.origin + item.buttonUrl;
+      setRoute(item.buttonUrl);
+      // window.location.href = window.origin + item.buttonUrl;
       return;
     }
     if (item.showEmployeeList) {
@@ -163,7 +165,13 @@ const mapStateToProps = state => {
   return { Licenses, state };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setRoute: url => dispatch(setRoute(url))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Footer);

@@ -90,6 +90,10 @@ const tradeUnitCard = {
                   )
                 );
                 let componentPath = action.componentJsonpath.split(".");
+
+                let index = action.componentJsonpath
+                  .split("[")[1]
+                  .split("]")[0];
                 componentPath.pop();
                 componentPath.push("tradeType");
                 componentPath = componentPath.join(".");
@@ -109,6 +113,28 @@ const tradeUnitCard = {
                     )
                   )
                 );
+                let tradeCat = get(
+                  state.screenConfiguration.preparedFinalObject,
+                  `LicensesTemp.tradeUnits[${parseInt(index)}].tradeType`
+                );
+                if (tradeCat != action.value) {
+                  dispatch(
+                    pFO(
+                      `LicensesTemp.tradeUnits[${parseInt(
+                        index
+                      )}].tradeSubType`,
+                      ""
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${parseInt(
+                        index
+                      )}].tradeType`,
+                      ""
+                    )
+                  );
+                }
               } catch (e) {
                 console.log(e);
               }
@@ -733,7 +759,28 @@ export const tradeDetails = getCommonCard({
           xs: 12,
           sm: 6
         }
-      })
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        if (action.value === "APPLICATIONTYPE.RENEWAL") {
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.oldLicenseNo",
+              "props.required",
+              true
+            )
+          );
+        } else {
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.oldLicenseNo",
+              "props.required",
+              false
+            )
+          );
+        }
+      }
     },
     oldLicenseNo: getTextField({
       label: {

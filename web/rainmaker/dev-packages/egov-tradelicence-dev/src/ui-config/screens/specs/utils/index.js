@@ -566,7 +566,7 @@ export const getReceiptData = async queryObject => {
   try {
     const response = await httpRequest(
       "post",
-      "collection-services/receipts/_search",
+      "collection-services-v1/receipts/_search",
       "",
       queryObject
     );
@@ -939,7 +939,9 @@ export const prepareDocumentTypeObj = documents => {
 
 const getTaxValue = item => {
   return item
-    ? item.debitAmount
+    ? item.amount
+      ? item.amount
+      : item.debitAmount
       ? -Math.abs(item.debitAmount)
       : item.crAmountToBePaid
       ? item.crAmountToBePaid
@@ -968,8 +970,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
         },
         value: null,
         info: getToolTipInfo(item, LicenseData) && {
-          labelName: getToolTipInfo(item, LicenseData),
-          labelKey: getToolTipInfo(item, LicenseData)
+          value: getToolTipInfo(item, LicenseData),
+          key: getToolTipInfo(item, LicenseData)
         }
       };
     });
@@ -987,11 +989,11 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
               item.accountDescription.split("-")[0],
               LicenseData
             ) && {
-              labelName: getToolTipInfo(
+              value: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               ),
-              labelKey: getToolTipInfo(
+              key: getToolTipInfo(
                 item.accountDescription.split("-")[0],
                 LicenseData
               )
@@ -1006,8 +1008,8 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
             },
             value: getTaxValue(item),
             info: getToolTipInfo(item.taxHeadCode, LicenseData) && {
-              labelName: getToolTipInfo(item.taxHeadCode, LicenseData),
-              labelKey: getToolTipInfo(item.taxHeadCode, LicenseData)
+              value: getToolTipInfo(item.taxHeadCode, LicenseData),
+              key: getToolTipInfo(item.taxHeadCode, LicenseData)
             }
           });
       }
@@ -1207,7 +1209,7 @@ export const getCurrentFinancialYear = () => {
   var today = new Date();
   var curMonth = today.getMonth();
   var fiscalYr = "";
-  if (curMonth > 2) {
+  if (curMonth >= 3) {
     var nextYr1 = (today.getFullYear() + 1).toString();
     fiscalYr = today.getFullYear().toString() + "-" + nextYr1;
   } else {
@@ -1367,13 +1369,23 @@ export const fetchBill = async (action, state, dispatch) => {
       prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
     );
 
-  //set amount paid as total amount from bill
+  //set amount paid as total amount from bill - destination changed in CS v1.1
   payload &&
     payload.billResponse &&
     dispatch(
       prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
         payload.billResponse.Bill[0].billDetails[0].totalAmount
+      )
+    );
+
+  //Collection Type Added in CS v1.1
+  payload &&
+    payload.billResponse &&
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+        "COUNTER"
       )
     );
 
@@ -1700,6 +1712,29 @@ export const getDocList = (state, dispatch) => {
       applicationDocument
     )
   );
+
+  //REARRANGE APPLICATION DOCS FROM TL SEARCH IN EDIT FLOW
+  let applicationDocs = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    []
+  );
+  let applicationDocsReArranged =
+    applicationDocs &&
+    applicationDocs.length &&
+    applicationDocument.map(item => {
+      const index = applicationDocs.findIndex(
+        i => i.documentType === item.name
+      );
+      return applicationDocs[index];
+    });
+  applicationDocsReArranged &&
+    dispatch(
+      prepareFinalObject(
+        "Licenses[0].tradeLicenseDetail.applicationDocuments",
+        applicationDocsReArranged
+      )
+    );
 };
 
 export const setOwnerShipDropDownFieldChange = (state, dispatch, payload) => {

@@ -98,9 +98,10 @@ class TableData extends Component {
     try {
       const requestBody = [{ key: "tenantId", value: tenantId }];
       const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
-
-      const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
-      const allData = _.get(responseData, "ProcessInstances", []);
+      const assignedData = _.orderBy(_.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid), [
+        "businesssServiceSla",
+      ]);
+      const allData = _.orderBy(_.get(responseData, "ProcessInstances", []), ["businesssServiceSla"]);
 
       const assignedDataRows = prepareInboxDataRows(assignedData);
       const allDataRows = prepareInboxDataRows(allData);
@@ -186,11 +187,17 @@ class TableData extends Component {
           <div className="inbox-filter">
             <Select value={this.state.moduleName} displayEmpty onChange={this.onModuleFilter}>
               <MenuItem value="" disabled>
-                Module All
+                <Label label="CS_COMMON_INBOX_MODULE_ALL" />
               </MenuItem>
-              <MenuItem value={"NewTL"}>NewTL</MenuItem>
-              <MenuItem value={"PGR"}>PGR</MenuItem>
-              <MenuItem value={"PT"}>PT</MenuItem>
+              <MenuItem value={"NewTL"}>
+                <Label label="CS_COMMON_INBOX_NEWTL" />
+              </MenuItem>
+              <MenuItem value={"PGR"}>
+                <Label label="CS_COMMON_INBOX_PGR" />
+              </MenuItem>
+              <MenuItem value={"PT"}>
+                <Label label="CS_COMMON_INBOX_PT" />
+              </MenuItem>
             </Select>
           </div>
           <InboxData data={inboxData[value]} />

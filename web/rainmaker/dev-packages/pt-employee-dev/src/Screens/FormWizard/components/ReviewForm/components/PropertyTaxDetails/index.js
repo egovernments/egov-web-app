@@ -47,7 +47,7 @@ class PropertyTaxDetails extends React.Component {
                 className="pt-tax-calc-details-btn"
                 onClick={this.toggleExpander}
               >
-                View Details
+                <Label label="PT_VIEW_DETAILS" color="#FE7A51" />
               </div>
             </div>
           }
@@ -98,7 +98,7 @@ class PropertyTaxDetails extends React.Component {
                                   "PT_ADVANCE_CARRYFORWARD" ||
                                   item.category === "EXEMPTION" ||
                                   item.category === "REBATE")
-                                  ? "- "
+                                  ? ""
                                   : "") + `${item.estimateAmount}`
                               }
                             />

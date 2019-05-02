@@ -32,7 +32,7 @@ const formSubmit = (store) => (next) => (action) => {
         dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: mergeMDMSDataArray(currentMdmsData, newMdmsRow) } } }, moduleName, masterName)
       );
       if (mdmsToast && mdmsToast.length) {
-        dispatch(toggleSnackbarAndSetText(true, mdmsToast, false));
+        dispatch(toggleSnackbarAndSetText(true, { labelName: mdmsToast, labelKey: mdmsToast }, false));
       }
     }
 
@@ -68,7 +68,16 @@ const formSubmit = (store) => (next) => (action) => {
 
     if (formKey === "employeeOTP") {
       if (payload && payload.responseInfo && payload.responseInfo.status && payload.responseInfo.status == 200)
-        dispatch(toggleSnackbarAndSetText(true, "Password changed successfully!", false));
+        dispatch(
+          toggleSnackbarAndSetText(
+            true,
+            {
+              labelName: "Password changed successfully!",
+              labelKey: "CS_COMMON_EMPLOYEEOTP_CHANGED_PASSWORD_SUCCESS",
+            },
+            true
+          )
+        );
     }
 
     if (formKey === "comment") {
@@ -89,7 +98,7 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     if (toast && toast.length) {
-      dispatch(toggleSnackbarAndSetText(true, toast, false));
+      dispatch(toggleSnackbarAndSetText(true, { labelName: toast, labelKey: toast }, false));
     }
   } else {
     next(action);

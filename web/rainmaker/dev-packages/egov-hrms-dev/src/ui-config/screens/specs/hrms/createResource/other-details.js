@@ -186,7 +186,7 @@ export const otherDetails = getCommonCard({
       items: [],
       addItemLabel: {
         LabelName: "ADD QUALIFICATIONS",
-        labelKey: "TL_ADD_QUALIFICATIONS"
+        labelKey: "HR_ADD_QUALIFICATIONS"
       },
       headerName: "Education Qualification",
       headerJsonPath:
@@ -315,7 +315,7 @@ export const otherDetails = getCommonCard({
         )
       }),
       items: [],
-      addItemLabel: { labelName: "ADD TEST", labelKey: "TL_ADD_TEST" },
+      addItemLabel: { labelName: "ADD TEST", labelKey: "HR_ADD_TEST" },
       headerName: "Department Test Details",
       headerJsonPath:
         "children.cardContent.children.header.children.head.children.Accessories.props.label",

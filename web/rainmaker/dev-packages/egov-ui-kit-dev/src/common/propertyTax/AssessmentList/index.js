@@ -20,7 +20,7 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
       return (
         <div>
           <div className="assessment-displayInline" style={item.date ? { marginTop: "8px" } : { marginTop: "0px" }}>
-            <Label label={"Paid"} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Label label={"PT_STATUS_COMMON_PAID"} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
 
@@ -35,7 +35,7 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
       return (
         <div>
           <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="Partially Paid" labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Label label="PT_STATUS_COMMON_PARTIALLY_PAID" labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
           <div style={{ height: "30px", marginTop: "8px" }}>

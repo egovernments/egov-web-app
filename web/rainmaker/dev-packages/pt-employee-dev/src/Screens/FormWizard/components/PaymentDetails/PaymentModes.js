@@ -96,8 +96,7 @@ class PaymentModes extends Component {
     } = this.props;
     const paymentData = paymentModeDetails.find(
       paymentMode =>
-        paymentMode.primaryText.toLowerCase() ===
-        currentPaymentMode.toLowerCase()
+        paymentMode.code.toLowerCase() === currentPaymentMode.toLowerCase()
     );
     return FormDetails({ item: paymentData });
   };

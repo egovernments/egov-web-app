@@ -4,8 +4,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
-import Tooltip from "@material-ui/core/Tooltip";
-import Icon from "@material-ui/core/Icon";
+import { Tooltip } from "egov-ui-framework/ui-molecules";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
 
 const styles = {
@@ -70,14 +69,7 @@ function FeesEstimateCard(props) {
           <Grid container>
             {estimate.fees.map((fee, key) => {
               let tooltip = fee.info ? (
-                <Tooltip title={fee.info.labelName}>
-                  <Icon
-                    className={classes.toolTipIcon}
-                    style={{ fontSize: 18 }}
-                  >
-                    info_circle
-                  </Icon>
-                </Tooltip>
+                <Tooltip val={fee.info} icon={"info_circle"} />
               ) : (
                 ""
               );

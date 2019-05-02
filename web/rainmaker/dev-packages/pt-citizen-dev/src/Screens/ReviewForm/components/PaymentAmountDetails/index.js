@@ -139,7 +139,7 @@ const PaymentAmountDetails = ({
                 containerStyle={{ marginLeft: 16 }}
                 fontSize="14px"
                 color="#484848"
-                label="No rebate is applicable for partial payments."
+                label="PT_PAYMENTAMOUNT_PARTIALPAY_NOREBATE"
               />
             </div>
           )}
