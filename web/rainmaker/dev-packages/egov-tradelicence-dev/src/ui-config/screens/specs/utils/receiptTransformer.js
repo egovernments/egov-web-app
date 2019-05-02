@@ -280,11 +280,11 @@ export const loadReceiptData = async (consumerCode, tenant) => {
     response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
       let desc = item.accountDescription ? item.accountDescription : "";
       if (desc.startsWith("TL_TAX")) {
-        data.tlFee = item.crAmountToBePaid;
+        data.tlFee = item.amount;
       } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
-        tlAdhocPenalty = item.crAmountToBePaid;
+        tlAdhocPenalty = item.amount;
       } else if (desc.startsWith("TL_ADHOC_REBATE")) {
-        tlAdhocRebate = item.debitAmount;
+        tlAdhocRebate = item.amount;
       }
     });
     data.tlPenalty = "NA";
