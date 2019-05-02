@@ -3,12 +3,94 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import {Button, Icon} from "egov-ui-framework/ui-atoms";
+import{DownloadIcon} from "ui-atoms-local";
+import {httpRequest} from "egov-ui-framework/ui-utils/api.js";
+import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
     item => item.code === localCode
   );
 };
+
+const getConsumerDetail= (propertyResponse)=>{
+
+  return {
+    propertyId:get(propertyResponse, "Properties[0].propertyId", "NA"),
+    name:get(propertyResponse,"Properties[0].propertyDetails[0].owners[0].name","NA"),
+    mobileno:get(propertyResponse,"Properties[0].propertyDetails[0].owners[0].mobileNumber","NA"),
+    address:get(propertyResponse,"Properties[0].address.city","NA"),
+    locality:get(propertyResponse,"Properties[0].address.locality.name","NA"),
+  }
+  
+}
+
+// const getBillDetails=()=>
+// {
+//   return{
+
+
+
+//   }
+
+// }
+
+const onDownloadClick = async (rowData) => {
+  console.log(rowData);
+  const queryObject1 = [
+    {
+      key: "ids",
+      value:rowData["Property ID"]
+    },
+
+    {
+     key:"tenantId",
+     value:localStorageGet("tenant-id")
+    }
+  ];
+  const queryObject2 = [
+    {
+      key: "consumerCode",
+      value:rowData["Assessment number"]
+    },
+
+    {
+     key:"tenantId",
+     value:localStorageGet("tenant-id")
+    }
+  ];
+
+  const propertyendpoint="/pt-services-v2/property/_search";
+  const propertyResponse= await httpRequest(
+   "post",
+    propertyendpoint,
+    "",
+    queryObject1
+    )
+  console.log(propertyResponse); 
+
+    const billendpoint="/collection-services-v1/receipts/_search";
+    const billResponse= await httpRequest(
+   "post",
+   billendpoint,
+   "",
+   queryObject2
+
+ )
+  console.log(billResponse);
+
+ const consumerDetails = getConsumerDetail(
+    propertyResponse
+  )
+  console.log(consumerDetails);
+ }
+//   const billDetails=getBillDetails(
+//     billResponse
+
+// )
+// console.log(billDetails);
+
 
 export const textToLocalMapping = {
   "Property ID": get(
@@ -30,6 +112,11 @@ export const textToLocalMapping = {
     getLocalTextFromCode("NOC_COMMON_TABLE_COL_APP_DATE"),
     "message",
     "Date Created"
+  ),
+  "Download Button": get(
+    getLocalTextFromCode("NOC_COMMON_TABLE_COL_DN_BUTTON"),
+    "message",
+    "Download"
   ),
  //Download button
 };
@@ -60,6 +147,19 @@ export const searchResults = {
       [get(textToLocalMapping, "Assessment No")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
       [get(textToLocalMapping, "Date Created")]: {},
+      [get(textToLocalMapping, "")]: {
+        format: rowData => {
+          return (
+            <Button color= "primary"
+            primary={true} onClick = {() => onDownloadClick(rowData)}>
+            <DownloadIcon fill="#FE7A51" />
+              {get(textToLocalMapping, "Download Button")} 
+              
+            </Button>
+          );
+        }
+      },
+
     },
     options: {
       filter: false,

@@ -90,11 +90,18 @@ export const searchApiCall = async (state, dispatch) => {
     //const response = await getSearchResults(queryObject);
     const response = [
       {
-        propertyId: "TL-JLD-2018",
-        assessmentNumber: "2832383",
+        propertyId: "PT-107-016795",
+        assessmentNumber: "AS-2019-04-29-017303",
         ownerName: "Abhigyan Sharma",
         dateCreated: 1554332357000
+      },
+      {
+        propertyId: "PT-107-016796",
+        assessmentNumber: "AS-2019-04-29-017304",
+        ownerName: "Sweta Sharma",
+        dateCreated: 1554332357080
       }
+      
     ];
     try {
       let data = response.map(item => ({
