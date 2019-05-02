@@ -7,6 +7,8 @@ import {Button, Icon} from "egov-ui-framework/ui-atoms";
 import{DownloadIcon} from "ui-atoms-local";
 import {httpRequest} from "egov-ui-framework/ui-utils/api.js";
 import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { COPYFILE_EXCL } from "constants";
+import { objectOf } from "prop-types";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
@@ -26,15 +28,31 @@ const getConsumerDetail= (propertyResponse)=>{
   
 }
 
-// const getBillDetails=()=>
-// {
-//   return{
+const getBillDetails=(billResponse)=>
+{
+  const requiredData=[];
+
+  const billAccountDetails=get(billResponse,"Receipt[0].Bill[0].billDetails[0].billAccountDetails",[]);
+    for(let i=0;i<billAccountDetails.length;i++)
+    {
+       let obj = {
+
+           TaxHead:billAccountDetails[i].taxHeadCode,
+           Amount: billAccountDetails[i].amount,
+           Arrear:0,
+           Adjustmeents:0,
+           Total:0
+           
+    }
+      requiredData.push(obj);
 
 
+    }
 
-//   }
+    console.log(requiredData);
+  
 
-// }
+}
 
 const onDownloadClick = async (rowData) => {
   console.log(rowData);
@@ -52,7 +70,7 @@ const onDownloadClick = async (rowData) => {
   const queryObject2 = [
     {
       key: "consumerCode",
-      value:rowData["Assessment number"]
+      value:`${rowData["Property ID"]}:${rowData["Assessment No"]}`,
     },
 
     {
@@ -80,16 +98,11 @@ const onDownloadClick = async (rowData) => {
  )
   console.log(billResponse);
 
- const consumerDetails = getConsumerDetail(
-    propertyResponse
-  )
+  const consumerDetails = getConsumerDetail(propertyResponse);
   console.log(consumerDetails);
+  const billDetails = getBillDetails(billResponse);
+  console.log(billDetails);
  }
-//   const billDetails=getBillDetails(
-//     billResponse
-
-// )
-// console.log(billDetails);
 
 
 export const textToLocalMapping = {
