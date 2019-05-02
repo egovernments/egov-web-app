@@ -18,11 +18,6 @@ const Checkbox = Loadable({
   loading: () => <Loading />
 });
 
-const MapLocation = Loadable({
-  loader: () => import("./MapLocation"),
-  loading: () => <Loading />
-});
-
 const AutoSuggest = Loadable({
   loader: () => import("./AutoSuggest"),
   loading: () => <Loading />
@@ -42,7 +37,6 @@ export {
   TestAtoms,
   ApplicationNoContainer,
   Checkbox,
-  MapLocation,
   AutoSuggest,
   Asteric,
   MenuButton
