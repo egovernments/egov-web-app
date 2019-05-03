@@ -7,6 +7,8 @@ import {
   addWflowFileUrl,
   orderWfProcessInstances
 } from "egov-ui-framework/ui-utils/commons";
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
+
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
@@ -104,6 +106,15 @@ class WorkFlowContainer extends React.Component {
         "LicensesTemp[0].removedDocs",
         []
       );
+      if (Licenses[0] && Licenses[0].commencementDate) {
+        Licenses[0].commencementDate = convertDateToEpoch(
+          Licenses[0].commencementDate,
+          "dayend"
+        );
+      }
+      let owners = get(Licenses[0], "tradeLicenseDetail.owners");
+      owners = (owners && this.convertOwnerDobToEpoch(owners)) || [];
+      set(Licenses[0], "tradeLicenseDetail.owners", owners);
       set(Licenses[0], "tradeLicenseDetail.applicationDocuments", [
         ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
         ...removedDocs
@@ -328,6 +339,21 @@ class WorkFlowContainer extends React.Component {
     let editAction = getActionIfEditable(applicationStatus, businessId);
     editAction.buttonLabel && actions.push(editAction);
     return actions;
+  };
+
+  convertOwnerDobToEpoch = owners => {
+    let updatedOwners =
+      owners &&
+      owners
+        .map(owner => {
+          return {
+            ...owner,
+            dob:
+              owner && owner !== null && convertDateToEpoch(owner.dob, "dayend")
+          };
+        })
+        .filter(item => item && item !== null);
+    return updatedOwners;
   };
 
   render() {
