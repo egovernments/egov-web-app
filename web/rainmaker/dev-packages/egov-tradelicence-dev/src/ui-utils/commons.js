@@ -439,8 +439,6 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
           //   ...removedDocs
           // ]);
         } else if (activeIndex === 1) {
-          alert("active index 1");
-
           set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
         } else action = "APPLY";
       }
