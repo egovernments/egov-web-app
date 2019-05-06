@@ -14,17 +14,13 @@ class PaymentRedirect extends Component {
         [],
         {}
       );
-      let consumerCode = get(pgUpdateResponse, "Transaction[0].consumerCode");
+      let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-        window.location.href = `${
-          process.env.NODE_ENV === "production" ? "/citizen" : ""
-        }/tradelicence/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${consumerCode}&tenantId=${tenantId}`;
+        window.location.href = `${process.env.NODE_ENV === "production" ? "/citizen" : ""}/tradelicence/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${moduleId}&tenantId=${tenantId}`;
       } else {
         let transactionId = get(pgUpdateResponse, "Transaction[0].txnId");
-        window.location.href = `${
-          process.env.NODE_ENV === "production" ? "/citizen" : ""
-        }/tradelicence/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${consumerCode}&tenantId=${tenantId}&secondNumber=${transactionId}`;
+        window.location.href = `${process.env.NODE_ENV === "production" ? "/citizen" : ""}/tradelicence/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${moduleId}&tenantId=${tenantId}&secondNumber=${transactionId}`;
       }
     } catch (e) {
       alert(e);

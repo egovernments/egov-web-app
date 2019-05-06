@@ -805,7 +805,6 @@ class FormWizard extends Component {
         }/employee/property-tax/payment-redirect-page`;
       }
     }
-
     try {
       const getBill = !isCompletePayment
         ? await this.callGetBill(
@@ -815,16 +814,6 @@ class FormWizard extends Component {
             tenantId
           )
         : billResponse;
-      const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
-        item => {
-          if (item.businessService === "PT") {
-            item.amountPaid = isFullPayment
-              ? get(getBill, "Bill[0].billDetails[0].totalAmount")
-              : totalAmountToBePaid;
-          }
-          return item;
-        }
-      );
       try {
         const requestBody = {
           Transaction: {
@@ -833,9 +822,8 @@ class FormWizard extends Component {
               ? get(getBill, "Bill[0].billDetails[0].totalAmount")
               : totalAmountToBePaid,
             module: "PT",
-            taxAndPayments,
             billId: get(getBill, "Bill[0].id"),
-            consumerCode: get(getBill, "Bill[0].billDetails[0].consumerCode"),
+            moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
             productInfo: "Property Tax Payment",
             gateway: "AXIS",
             callbackUrl

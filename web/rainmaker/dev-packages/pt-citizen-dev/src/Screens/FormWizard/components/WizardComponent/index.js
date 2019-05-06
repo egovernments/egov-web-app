@@ -8,12 +8,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import "./index.css";
 
-const ptSteps = [
-  "PT_PROPERTY_ADDRESS_SUB_HEADER",
-  "PT_ASSESMENT_INFO_SUB_HEADER",
-  "PT_OWNER_INFORMATION_FORM_HEADING",
-  "PT_REVIEW_PAY_FORM_HEADING"
-];
+const ptSteps = ["PT_PROPERTY_ADDRESS_SUB_HEADER", "PT_ASSESMENT_INFO_SUB_HEADER", "PT_OWNER_INFORMATION_FORM_HEADING", "PT_REVIEW_PAY_FORM_HEADING"];
 
 const WizardComponent = ({
   content,
@@ -28,8 +23,9 @@ const WizardComponent = ({
   updateIndex,
   backLabel,
   nextLabel,
-  history
+  history,
 }) => {
+  console.log("selected", selected);
   return (
     <div className={`wizard-cont active-step-${selected}`}>
       {/*<BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />*/}
@@ -37,11 +33,11 @@ const WizardComponent = ({
         activeStep={selected}
         alternativeLabel
         style={{
-          background: "inherit"
+          background: "inherit",
         }}
         className="stepper-container"
       >
-        {ptSteps.map(label => {
+        {ptSteps.map((label) => {
           return (
             <Step key={label}>
               <StepLabel>
@@ -54,20 +50,12 @@ const WizardComponent = ({
       {header}
       <div className="wizard-content clearfix">{content}</div>
       {footer}
-      <div
-        id="tax-wizard-buttons"
-        className="wizard-footer col-sm-10"
-        style={{ textAlign: "right" }}
-      >
+      <div id="tax-wizard-buttons" className="wizard-footer col-sm-10" style={{ textAlign: "right" }}>
         <div className="button-container col-xs-6" style={{ float: "right" }}>
           <Button
-            label={
-              <Label buttonLabel={true} label={backLabel} color="#fe7a51" />
-            }
+            label={<Label buttonLabel={true} label={backLabel} color="#fe7a51" />}
             onClick={() => {
-              selected - 1 === -1
-                ? history.push("/property-tax")
-                : onTabClick(selected - 1);
+              selected - 1 === -1 ? history.push("/property-tax") : onTabClick(selected - 1);
             }}
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
             buttonStyle={{ border: "1px solid #fe7a51" }}
@@ -89,12 +77,7 @@ const WizardComponent = ({
           />
         </div>
       </div>
-      <Declaration
-        open={dialogueOpen}
-        closeDialogue={closeDialogue}
-        selected={selected}
-        updateIndex={updateIndex}
-      />
+      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex} />
     </div>
   );
 };

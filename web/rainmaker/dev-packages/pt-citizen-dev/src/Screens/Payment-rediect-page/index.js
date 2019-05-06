@@ -19,18 +19,18 @@ class PaymentRedirect extends React.Component {
         [],
         {}
       );
-      let consumerCode = get(pgUpdateResponse, "Transaction[0].consumerCode");
+      let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       let txnAmount = get(pgUpdateResponse, "Transaction[0].txnAmount");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
         this.props.toggleSpinner();
         history.push(
           "/property-tax/payment-failure/" +
-            consumerCode.split(":")[0] +
+            moduleId.split(":")[0] +
             "/" +
             tenantId +
             "/" +
-            consumerCode.split(":")[1] +
+            moduleId.split(":")[1] +
             "/" +
             localStorageGet("assessmentYear") +
             "/" +
@@ -41,11 +41,11 @@ class PaymentRedirect extends React.Component {
         this.props.toggleSpinner();
         history.push(
           "/property-tax/payment-success/" +
-            consumerCode.split(":")[0] +
+            moduleId.split(":")[0] +
             "/" +
             tenantId +
             "/" +
-            consumerCode.split(":")[1]
+            moduleId.split(":")[1]
         );
       }
     } catch (e) {
