@@ -47,14 +47,21 @@ export const stepper = getStepperObject(
 );
 
 export const header = getCommonContainer({
-  header: getCommonHeader({
-    labelName: `Apply for New Trade License ${
-      process.env.REACT_APP_NAME === "Citizen"
-        ? "(" + getCurrentFinancialYear() + ")"
-        : ""
-    }`
-    // labelKey: "TL_COMMON_APPL_NEW_LICe"
-  }),
+  header:
+    getQueryArg(window.location.href, "action") !== "edit"
+      ? getCommonHeader({
+          labelName: `Apply for New Trade License ${
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "(" + getCurrentFinancialYear() + ")"
+              : ""
+          }`,
+          dynamicArray: [getCurrentFinancialYear()],
+          labelKey:
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "TL_COMMON_APPL_NEW_LICENSE"
+              : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
+        })
+      : {},
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     moduleName: "egov-tradelicence",
@@ -188,20 +195,22 @@ export const getData = async (action, state, dispatch) => {
       "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
       null
     );
-    dispatch(
-      prepareFinalObject("Licenses", [
-        {
-          licenseType: "PERMANENT",
-          oldLicenseNumber: queryValue ? "" : applicationNo,
-          tradeLicenseDetail: {
-            additionalDetail: {
-              applicationType: applicationType ? applicationType : "NEW"
+    getQueryArg(window.location.href, "action") !== "edit" &&
+      dispatch(
+        prepareFinalObject("Licenses", [
+          {
+            licenseType: "PERMANENT",
+            oldLicenseNumber: queryValue ? "" : applicationNo,
+            tradeLicenseDetail: {
+              additionalDetail: {
+                applicationType: applicationType ? applicationType : "NEW"
+              }
             }
           }
-        }
-      ])
-    );
+        ])
+      );
     // dispatch(prepareFinalObject("LicensesTemp", []));
+
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
     if (!queryValue) {
       dispatch(
@@ -280,8 +289,9 @@ const screenConfig = {
   name: "apply",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
+    const tenantId = getTenantId();
+    dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     getData(action, state, dispatch).then(responseAction => {
-      const tenantId = getTenantId();
       const queryObj = [{ key: "tenantId", value: tenantId }];
       getBoundaryData(action, state, dispatch, queryObj);
       let props = get(
@@ -302,13 +312,21 @@ const screenConfig = {
           tenantId
         )
       );
+      const mohallaLocalePrefix = {
+        moduleName: tenantId,
+        masterName: "REVENUE"
+      };
+      set(
+        action.screenConfig,
+        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla.props.localePrefix",
+        mohallaLocalePrefix
+      );
       //hardcoding license type to permanent
       set(
         action.screenConfig,
         "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
         "PERMANENT"
       );
-      dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     });
 
     return action;

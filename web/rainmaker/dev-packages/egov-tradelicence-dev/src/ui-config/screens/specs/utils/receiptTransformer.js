@@ -128,10 +128,8 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.licenseExpiryDate = nullToNa(
       epochToDate(get(response, "Licenses[0].validTo", "NA"))
     );
-    data.licenseValidity = getFinancialYearDates(
-      "dd/mm/yyyy",
-      licenseIssueDate
-    );
+    let licenseValidTo = get(response, "Licenses[0].validTo", "NA");
+    data.licenseValidity = getFinancialYearDates("dd/mm/yyyy", licenseValidTo);
     /** Trade settings */
     const tradeUnitsFromResponse = get(
       response,
@@ -280,13 +278,13 @@ export const loadReceiptData = async (consumerCode, tenant) => {
     var tlAdhocPenalty = 0,
       tlAdhocRebate = 0;
     response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
-      let desc = item.accountDescription ? item.accountDescription : "";
-      if (desc.startsWith("TL_TAX")) {
-        data.tlFee = item.crAmountToBePaid;
-      } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
-        tlAdhocPenalty = item.crAmountToBePaid;
-      } else if (desc.startsWith("TL_ADHOC_REBATE")) {
-        tlAdhocRebate = item.debitAmount;
+      let desc = item.taxHeadCode ? item.taxHeadCode : "";
+      if (desc === "TL_TAX") {
+        data.tlFee = item.amount;
+      } else if (desc === "TL_ADHOC_PENALTY") {
+        tlAdhocPenalty = item.amount;
+      } else if (desc === "TL_ADHOC_REBATE") {
+        tlAdhocRebate = item.amount;
       }
     });
     data.tlPenalty = "NA";

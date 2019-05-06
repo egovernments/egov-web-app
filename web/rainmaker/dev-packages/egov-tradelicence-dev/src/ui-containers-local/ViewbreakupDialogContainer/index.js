@@ -89,8 +89,8 @@ class ViewBreakupContainer extends React.Component {
           />
         </Grid>
         <Grid sm={2}>
-          <Label
-            label={`Rs ${total}`}
+          <LabelContainer
+            labelName={`Rs ${total}`}
             style={
               style
                 ? style
@@ -147,8 +147,9 @@ class ViewBreakupContainer extends React.Component {
                 </Icon>
               </div>
               <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName="Calculation Breakup"
+                  labelKey="TL_CALCULATION_BREAKUP"
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",
@@ -180,8 +181,9 @@ class ViewBreakupContainer extends React.Component {
                 getGridItem(tradeTotal, classes)}
               {accessoriesUnitData && accessoriesUnitData.length > 0 && (
                 <div style={{ paddingBottom: "12px", marginTop: 20 }}>
-                  <Label
-                    label={"Accessory Unit"}
+                  <LabelContainer
+                    labelName="Accessory Unit"
+                    labelKey="TL_ACCESSORY_UNIT"
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",
@@ -205,8 +207,9 @@ class ViewBreakupContainer extends React.Component {
           ) : (
             <div style={{ padding: "16px", width: "500px" }}>
               <div style={{ paddingBottom: "16px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName="Calculation Breakup"
+                  labelKey="TL_CALCULATION_BREAKUP"
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",

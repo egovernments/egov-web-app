@@ -59,6 +59,8 @@ export const getOwnerGenderField = getSelectField({
     labelKey: "TL_NEW_OWNER_DETAILS_GENDER_PLACEHOLDER"
   },
   required: true,
+  optionValue: "code",
+  optionLabel: "label",
   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].gender",
   data: [
     {
@@ -68,6 +70,10 @@ export const getOwnerGenderField = getSelectField({
     {
       code: "FEMALE",
       label: "COMMON_GENDER_FEMALE"
+    },
+    {
+      code: "OTHERS",
+      label: "COMMON_GENDER_TRANSGENDER"
     }
   ]
 });
@@ -126,7 +132,18 @@ export const getFatherNameField = getTextField({
 //   };
 // };
 export const getRelationshipRadioButton = getRadioButton(
-  ["Father", "Husband"],
+  [
+    {
+      labelName: "Father",
+      labelKey: "COMMON_RELATION_FATHER",
+      value: "FATHER"
+    },
+    {
+      label: "Husband",
+      labelKey: "COMMON_RELATION_HUSBAND",
+      value: "HUSBAND"
+    }
+  ],
   "Licenses[0].tradeLicenseDetail.owners[0].relationship",
   ""
 );

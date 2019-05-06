@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Citizen from "modules/citizen";
 
-const Main = ({ routes }) => {
+const Main = ({ routes, hasLocalisation, defaultUrl }) => {
   return (
     <main>
       <Switch>
@@ -12,8 +12,8 @@ const Main = ({ routes }) => {
             return <Citizen match={props.match} routes={routes.citizen} />;
           }}
         />
-        {/* <Route exact path={`/image`} component={ImageModalDisplay} /> */}
-        <Redirect from="/" to="/user/register" />
+
+        <Redirect from="/" to={hasLocalisation ? "/language-selection" : defaultUrl.citizen} />
       </Switch>
     </main>
   );

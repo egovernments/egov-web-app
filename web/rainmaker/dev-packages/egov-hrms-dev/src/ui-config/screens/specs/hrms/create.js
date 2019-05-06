@@ -252,10 +252,17 @@ const screenConfig = {
   name: "create",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
-    const tenantId = getTenantId();
+    const pickedTenant = getQueryArg(window.location.href, "tenantId");
+    pickedTenant &&
+      dispatch(prepareFinalObject("Employee[0].tenantId", pickedTenant));
+    const empTenantId = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Employee[0].tenantId"
+    );
+    const tenantId = pickedTenant || empTenantId || getTenantId();
     const mdmsDataStatus = getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
-    employeeCode && getEmployeeData(state, dispatch, employeeCode);
+    employeeCode && getEmployeeData(state, dispatch, employeeCode, tenantId);
     getYearsList(1950, state, dispatch);
     freezeEmployedStatus(state, dispatch);
     // if (mdmsDataStatus) {

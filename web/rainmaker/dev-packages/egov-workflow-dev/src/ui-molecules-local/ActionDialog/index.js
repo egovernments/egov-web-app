@@ -11,6 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import { UploadMultipleFiles } from "egov-ui-framework/ui-molecules";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import "./index.css";
 
 const styles = theme => ({
   root: {
@@ -101,13 +102,27 @@ class ActionDialog extends React.Component {
       isDocRequired
     } = dialogData;
     const { getButtonLabelName } = this;
+    let fullscreen = false;
+    if (window.innerWidth <= 768) {
+      fullscreen = true;
+    }
     return (
-      <Dialog open={open} onClose={onClose} maxWidth="lg">
+      <Dialog
+        fullScreen={fullscreen}
+        open={open}
+        onClose={onClose}
+        maxWidth={false}
+      >
         <DialogContent
           children={
             <Container
               children={
-                <Grid container="true" sm="12" marginTop={16}>
+                <Grid
+                  container="true"
+                  spacing={12}
+                  marginTop={16}
+                  className="action-container"
+                >
                   <Grid
                     style={{
                       alignItems: "center",
@@ -123,7 +138,13 @@ class ActionDialog extends React.Component {
                   <Grid
                     item
                     sm={2}
-                    style={{ textAlign: "right", cursor: "pointer" }}
+                    style={{
+                      textAlign: "right",
+                      cursor: "pointer",
+                      position: "absolute",
+                      right: "16px",
+                      top: "16px"
+                    }}
                     onClick={onClose}
                   >
                     <CloseIcon />
@@ -181,7 +202,10 @@ class ActionDialog extends React.Component {
                       }}
                     >
                       <div className="rainmaker-displayInline">
-                        <LabelContainer labelName="Supporting Documents" />
+                        <LabelContainer
+                          labelName="Supporting Documents"
+                          labelKey="TL_APPROVAL_UPLOAD_HEAD"
+                        />
                         {isDocRequired && (
                           <span style={{ marginLeft: 5, color: "red" }}>*</span>
                         )}

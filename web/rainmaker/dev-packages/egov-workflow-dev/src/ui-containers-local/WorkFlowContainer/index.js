@@ -7,13 +7,18 @@ import {
   addWflowFileUrl,
   orderWfProcessInstances
 } from "egov-ui-framework/ui-utils/commons";
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
+
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import find from "lodash/find";
-import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  localStorageGet,
+  getUserInfo
+} from "egov-ui-kit/utils/localStorageUtils";
 import orderBy from "lodash/orderBy";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
@@ -94,7 +99,27 @@ class WorkFlowContainer extends React.Component {
   };
 
   tlUpdate = async label => {
-    const { Licenses, toggleSnackbar } = this.props;
+    let { Licenses, toggleSnackbar, preparedFinalObject } = this.props;
+    if (getQueryArg(window.location.href, "edited")) {
+      const removedDocs = get(
+        preparedFinalObject,
+        "LicensesTemp[0].removedDocs",
+        []
+      );
+      if (Licenses[0] && Licenses[0].commencementDate) {
+        Licenses[0].commencementDate = convertDateToEpoch(
+          Licenses[0].commencementDate,
+          "dayend"
+        );
+      }
+      let owners = get(Licenses[0], "tradeLicenseDetail.owners");
+      owners = (owners && this.convertOwnerDobToEpoch(owners)) || [];
+      set(Licenses[0], "tradeLicenseDetail.owners", owners);
+      set(Licenses[0], "tradeLicenseDetail.applicationDocuments", [
+        ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
+        ...removedDocs
+      ]);
+    }
     const applicationNumber = getQueryArg(
       window.location.href,
       "applicationNumber"
@@ -150,47 +175,56 @@ class WorkFlowContainer extends React.Component {
   };
 
   getRedirectUrl = (action, businessId) => {
+    const isAlreadyEdited = getQueryArg(window.location.href, "edited");
     switch (action) {
       case "PAY":
-        return `${
-          window.basename
-        }/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+        return `/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+      case "EDIT":
+        return isAlreadyEdited
+          ? `/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit&edited=true`
+          : `/tradelicence/apply?applicationNumber=${businessId}&tenantId=${tenant}&action=edit`;
     }
   };
 
   getHeaderName = action => {
-    switch (action) {
-      case "FORWARD":
-        return {
-          labelName: "Forward Application",
-          labelKey: "TL_FORWARD_APPLICATION"
-        };
-      case "MARK":
-        return {
-          labelName: "Mark Application",
-          labelKey: "TL_MARK_APPLICATION"
-        };
-      case "APPROVE":
-        return {
-          labelName: "Approve Application",
-          labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
-        };
-      case "CANCEL":
-        return {
-          labelName: "Cancel Application",
-          labelKey: "TL_WORKFLOW_CANCEL"
-        };
-      case "SENDBACK":
-        return {
-          labelName: "Send Back Application",
-          labelKey: "TL_WORKFLOW_SENDBACK"
-        };
-      default:
-        return {
-          labelName: "Reject Application",
-          labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
-        };
-    }
+    return {
+      labelName: `${action} Application`,
+      labelKey: `TL_${action}_APPLICATION`
+    };
+    // switch (
+    //   action
+    // case "FORWARD":
+    //   return {
+    //     labelName: "Forward Application",
+    //     labelKey: "TL_FORWARD_APPLICATION"
+    //   };
+    // case "MARK":
+    //   return {
+    //     labelName: "Mark Application",
+    //     labelKey: "TL_MARK_APPLICATION"
+    //   };
+    // case "APPROVE":
+    //   return {
+    //     labelName: "Approve Application",
+    //     labelKey: "TL_APPROVAL_CHECKLIST_BUTTON_APPRV_APPL"
+    //   };
+    // case "CANCEL":
+    //   return {
+    //     labelName: "Cancel Application",
+    //     labelKey: "TL_WORKFLOW_CANCEL"
+    //   };
+    // case "SENDBACK":
+    //   return {
+    //     labelName: "Send Back Application",
+    //     labelKey: "TL_WORKFLOW_SENDBACK"
+    //   };
+    // default:
+    //   return {
+    //     labelName: "Reject Application",
+    //     labelKey: "TL_REJECTION_CHECKLIST_BUTTON_REJ_APPL"
+    //   };
+    // ) {
+    // }
   };
 
   getEmployeeRoles = (nextAction, currentAction) => {
@@ -239,21 +273,58 @@ class WorkFlowContainer extends React.Component {
     return nextState.docUploadRequired;
   };
 
+  getActionIfEditable = (status, businessId) => {
+    const businessServiceData = JSON.parse(
+      localStorageGet("businessServiceData")
+    );
+    const data = find(businessServiceData, { businessService: "NewTL" });
+    const state = find(data.states, { applicationStatus: status });
+    let actions = [];
+    state.actions.forEach(item => {
+      actions = [...actions, ...item.roles];
+    });
+    const userRoles = JSON.parse(getUserInfo()).roles;
+    const roleIndex = userRoles.findIndex(item => {
+      if (actions.indexOf(item.code) > -1) return true;
+    });
+
+    let editAction = {};
+    if (state.isStateUpdatable && actions.length > 0 && roleIndex > -1) {
+      editAction = {
+        buttonLabel: "EDIT",
+        moduleName: "NewTL",
+        tenantId: state.tenantId,
+        isLast: true,
+        buttonUrl: this.getRedirectUrl("EDIT", businessId)
+      };
+    }
+    return editAction;
+  };
+
   prepareWorkflowContract = data => {
     const {
       getRedirectUrl,
       getHeaderName,
       checkIfTerminatedState,
+      getActionIfEditable,
       checkIfDocumentRequired,
       getEmployeeRoles
     } = this;
+    // const businessServiceData = JSON.parse(
+    //   localStorageGet("businessServiceData")
+    // );
+    // const bu = find(businessServiceData, { businessService: "NewTL" });
     let businessId = get(data[data.length - 1], "businessId");
     let filteredActions = get(data[data.length - 1], "nextActions", []).filter(
       item => item.action != "ADHOC"
     );
+    let applicationStatus = get(
+      data[data.length - 1],
+      "state.applicationStatus"
+    );
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
 
-    return actions.map(item => {
+    actions = actions.map(item => {
       return {
         buttonLabel: item.action,
         moduleName: data[data.length - 1].businessService,
@@ -265,6 +336,24 @@ class WorkFlowContainer extends React.Component {
         isDocRequired: checkIfDocumentRequired(item.nextState)
       };
     });
+    let editAction = getActionIfEditable(applicationStatus, businessId);
+    editAction.buttonLabel && actions.push(editAction);
+    return actions;
+  };
+
+  convertOwnerDobToEpoch = owners => {
+    let updatedOwners =
+      owners &&
+      owners
+        .map(owner => {
+          return {
+            ...owner,
+            dob:
+              owner && owner !== null && convertDateToEpoch(owner.dob, "dayend")
+          };
+        })
+        .filter(item => item && item !== null);
+    return updatedOwners;
   };
 
   render() {
@@ -296,7 +385,7 @@ const mapStateToProps = state => {
   const { preparedFinalObject } = screenConfiguration;
   const { Licenses, workflow } = preparedFinalObject;
   const { ProcessInstances } = workflow || [];
-  return { ProcessInstances, Licenses };
+  return { ProcessInstances, Licenses, preparedFinalObject };
 };
 
 const mapDispacthToProps = dispatch => {

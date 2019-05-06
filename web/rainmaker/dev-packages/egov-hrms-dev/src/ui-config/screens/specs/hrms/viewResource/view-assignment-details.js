@@ -46,13 +46,21 @@ const assignmentCard = {
         reviewDepartment: getLabelWithValue(
           { labelName: "Department", labelKey: "HR_DEPT_LABEL" },
           {
-            jsonPath: "Employee[0].assignments[0].department"
+            jsonPath: "Employee[0].assignments[0].department",
+            localePrefix: {
+              moduleName: "common-masters",
+              masterName: "Department"
+            }
           }
         ),
         reviewDesignation: getLabelWithValue(
           { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
           {
-            jsonPath: "Employee[0].assignments[0].designation"
+            jsonPath: "Employee[0].assignments[0].designation",
+            localePrefix: {
+              moduleName: "common-masters",
+              masterName: "Designation"
+            }
           }
         ),
         reviewReportTo: getLabelWithValue(

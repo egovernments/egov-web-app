@@ -5,14 +5,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import {
-  transformById,
   epochToYmd,
   getLocaleLabels,
   appendModulePrefix
 } from "../../ui-utils/commons";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-
-const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 
 class TextFieldContainer extends React.Component {
   componentDidMount() {
@@ -38,10 +34,13 @@ class TextFieldContainer extends React.Component {
       index,
       componentJsonpath,
       hasLocalization,
+      localizationLabels,
       state,
       infoIcon,
       dispatch,
       title,
+      errorMessage,
+      error,
       ...rest
     } = this.props;
     if (!isEmpty(iconObj) && iconObj.onClickDefination) {
@@ -54,18 +53,29 @@ class TextFieldContainer extends React.Component {
           })
       };
     }
-    let transfomedKeys = transformById(localizationLabels, "code");
+
     let translatedLabel = getLocaleLabels(
       label.labelName,
       label.labelKey,
-      transfomedKeys
+      localizationLabels
     );
     let translatedPlaceholder = getLocaleLabels(
       placeholder.labelName,
       placeholder.labelKey,
-      transfomedKeys
+      localizationLabels
     );
-
+    let translateddefaultErrorMsg = getLocaleLabels(
+      "Invalid input",
+      "ERR_DEFAULT_INPUT_FIELD_MSG",
+      localizationLabels
+    );
+    errorMessage = error
+      ? getLocaleLabels(
+          translateddefaultErrorMsg,
+          errorMessage,
+          localizationLabels
+        )
+      : "";
     if (dropdownData.length > 0) {
       return (
         <TextfieldWithIcon
@@ -74,6 +84,8 @@ class TextFieldContainer extends React.Component {
           iconObj={iconObj}
           value={value ? value : translatedPlaceholder}
           {...rest}
+          error={error}
+          helperText={errorMessage}
         >
           <MenuItem value={translatedPlaceholder} disabled>
             <div className="select-field-placeholder">
@@ -92,8 +104,8 @@ class TextFieldContainer extends React.Component {
                     option.value,
                     localePrefix && !isEmpty(localePrefix)
                       ? appendModulePrefix(option.value, localePrefix)
-                      : option.value,
-                    transfomedKeys
+                      : option.label,
+                    localizationLabels
                   )}
                 </MenuItem>
               ))}
@@ -108,6 +120,8 @@ class TextFieldContainer extends React.Component {
             iconObj={iconObj}
             value={value ? value : translatedPlaceholder}
             {...rest}
+            error={error}
+            helperText={errorMessage}
           >
             <MenuItem value={translatedPlaceholder} disabled>
               <div className="select-field-placeholder">
@@ -131,6 +145,8 @@ class TextFieldContainer extends React.Component {
                 : value
             }
             {...rest}
+            error={error}
+            helperText={errorMessage}
           />
           {title && !isEmpty(title) && infoIcon && (
             <Tooltip val={title} icon={infoIcon} />
@@ -151,7 +167,8 @@ const mapStateToProps = (state, ownprops) => {
     optionLabel,
     sourceJsonPath
   } = ownprops;
-  const { screenConfiguration } = state;
+  const { screenConfiguration, app } = state;
+  const { localizationLabels } = app;
   const { preparedFinalObject } = screenConfiguration;
   let fieldValue =
     value === undefined ? get(preparedFinalObject, jsonPath) : value;
@@ -177,7 +194,7 @@ const mapStateToProps = (state, ownprops) => {
     }
   }
 
-  return { value: fieldValue, dropdownData, state };
+  return { value: fieldValue, dropdownData, state, localizationLabels };
 };
 
 export default connect(mapStateToProps)(TextFieldContainer);

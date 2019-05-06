@@ -25,3 +25,16 @@
 .tl-trade-type div {
   color: rgba(0, 0, 0, 0.87);
 }
+
+.hrmsCityPickerDialog > div {
+  /* width: 100%; */
+  overflow: visible;
+}
+
+.hrmsCityPickerButton {
+  padding: 20px;
+}
+
+.hrmsCityPicker > div {
+  width: 100% !important;
+}

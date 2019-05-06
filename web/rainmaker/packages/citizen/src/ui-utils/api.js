@@ -1,6 +1,6 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "egov-ui-framework/ui-utils/commons";
-import { getAccessToken, getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getAccessToken, getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -18,7 +18,7 @@ const wrapRequestBody = (requestBody, action) => {
     action: action,
     did: "1",
     key: "",
-    msgId: "20170310130900|en_IN",
+    msgId: `20170310130900|${getLocale()}`,
     requesterId: "",
     authToken,
   };

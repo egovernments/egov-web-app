@@ -31,14 +31,15 @@ const mapStateToProps = state => {
   const uploadedDocuments = get(
     screenConfiguration.preparedFinalObject,
     "LicensesTemp[0].uploadedDocsInRedux",
-    []
+    {}
   );
   const tenantId = get(
     screenConfiguration.preparedFinalObject,
     "Licenses[0].tenantId",
     ""
   );
-  return { documents, tenantId, uploadedDocuments };
+  const { preparedFinalObject } = screenConfiguration || {};
+  return { documents, tenantId, uploadedDocuments, preparedFinalObject };
 };
 
 export default withStyles(styles)(

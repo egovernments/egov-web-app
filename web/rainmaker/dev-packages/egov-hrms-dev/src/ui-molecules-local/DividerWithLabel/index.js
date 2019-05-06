@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
+import { connect } from "react-redux";
 
 const labelStyle = {
   position: "relative",
@@ -22,15 +24,30 @@ const dividerStyle = {
 
 class DividerWithLabel extends Component {
   render() {
-    const { labelProps, label } = this.props;
+    const { labelProps, label, localizationLabels } = this.props;
+    let translatedLabel = getLocaleLabels(
+      label.labelName,
+      label.labelKey,
+      localizationLabels
+    );
     return (
       <div style={dividerStyle}>
         <div style={{ ...labelStyle, ...labelProps.style }}>
-          <span>{label}</span>
+          <span>{translatedLabel}</span>
           <div style={underlineStyle} />
         </div>
       </div>
     );
   }
 }
-export default DividerWithLabel;
+
+const mapSateToProps = state => {
+  const { app } = state;
+  const { localizationLabels } = app;
+  return { localizationLabels };
+};
+
+export default connect(
+  mapSateToProps,
+  null
+)(DividerWithLabel);
