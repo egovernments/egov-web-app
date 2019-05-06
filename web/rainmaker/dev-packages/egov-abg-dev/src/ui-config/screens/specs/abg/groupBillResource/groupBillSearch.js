@@ -8,6 +8,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
+import {generateBill} from "../../utils/receiptPdf";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -165,9 +166,11 @@ export const mergeDownloadButton = {
           labelName: "MERGE & DOWNLOAD",
           labelKey: "ABG_GROUP_BILLS_MERGE_AND_DOWNLOAD_BUTTON"
         })
+      },
+      onClickDefination:{
+        action: "condition",
+        callBack: generateBill
       }
-      //  Add onClickDefination
-      // Add roleDefination
     }
   }
 };
