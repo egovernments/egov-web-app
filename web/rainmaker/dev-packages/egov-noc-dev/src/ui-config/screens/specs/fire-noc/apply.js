@@ -15,6 +15,8 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { httpRequest } from "../../../../ui-utils";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -104,6 +106,42 @@ export const formwizardFourthStep = {
   visible: false
 };
 
+const getMdmsData = async (action, state, dispatch) => {
+  let tenantId = getTenantId();
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            // { name: "OwnerType" },
+            { name: "OwnerShipCategory" }
+            // { name: "DocumentType" }
+          ]
+        },
+        {
+          moduleName: "firenoc",
+          masterDetails: [{ name: "PropertyType" }, { name: "BuildingType" }]
+        }
+      ]
+    }
+  };
+  try {
+    let payload = null;
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -113,6 +151,30 @@ const screenConfig = {
       "applicationNumber"
     );
     const step = getQueryArg(window.location.href, "step");
+
+    // Set MDMS Data
+    getMdmsData(action, state, dispatch).then(response => {
+      // Set Dropdowns Data
+      let buildingUsageTypeData = get(
+        state,
+        "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
+        []
+      );
+      buildingUsageTypeData = buildingUsageTypeData.map(item => {
+        if (item.active) {
+          return item.code.split(".")[0];
+        }
+      });
+      buildingUsageTypeData = [...new Set(buildingUsageTypeData)].map(item => {
+        return { code: item };
+      });
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.BuildingUsageType",
+          buildingUsageTypeData
+        )
+      );
+    });
 
     let pfo = {};
     if (applicationNumber && !step) {

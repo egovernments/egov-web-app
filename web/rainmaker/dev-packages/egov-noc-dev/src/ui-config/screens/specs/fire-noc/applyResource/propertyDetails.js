@@ -8,6 +8,7 @@ import {
   getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const commonBuildingData = buildingType => {
   let plotSize = {};
@@ -81,23 +82,36 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_TYPE_PLACEHOLDER"
         },
         required: true,
+        localePrefix: {
+          moduleName: "egov-firenoc",
+          masterName: "BuildingType"
+        },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
-        data: [
-          {
-            code: "Commercial"
-          },
-          {
-            code: "Non-Commercial"
-          }
-        ],
-        sourceJsonPath: "noc.buildingUsageType",
+        sourceJsonPath: "applyScreenMdmsData.DropdownsData.BuildingUsageType",
         gridDefination: {
           xs: 12,
           sm: 12,
           md: 6
         }
-      })
+      }),
+      afterFieldChange: (action, state, dispatch) => {
+        let path = action.componentJsonpath.replace(
+          /.buildingUsageType/,
+          ".buildingSubUsageType"
+        );
+        let buildingUsageTypeData = get(
+          state,
+          "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
+          []
+        );
+        let buildingSubUsageTypeData = buildingUsageTypeData.filter(item => {
+          return item.active && item.code.startsWith(action.value);
+        });
+        dispatch(
+          handleField("apply", path, "props.data", buildingSubUsageTypeData)
+        );
+      }
     },
     buildingSubUsageType: {
       ...getSelectField({
@@ -110,6 +124,10 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
         },
         required: true,
+        localePrefix: {
+          moduleName: "egov-firenoc",
+          masterName: "BuildingType"
+        },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageSubType",
         data: [
