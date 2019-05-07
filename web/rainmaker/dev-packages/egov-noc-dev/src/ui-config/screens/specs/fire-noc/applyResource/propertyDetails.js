@@ -12,7 +12,7 @@ import get from "lodash/get";
 
 const commonBuildingData = buildingType => {
   let plotSize = {};
-  if (buildingType === "single") {
+  if (buildingType === "SINGLE") {
     plotSize = {
       ...getTextField({
         label: {
@@ -298,7 +298,7 @@ export const propertyDetails = getCommonCard({
           "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer";
         let multipleBuildingContainerJsonPath =
           "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer";
-        if (action.value === "Single Building") {
+        if (action.value === "SINGLE") {
           dispatch(
             handleField(
               "apply",
@@ -315,7 +315,7 @@ export const propertyDetails = getCommonCard({
               { display: "none" }
             )
           );
-        } else if (action.value === "Multiple Building") {
+        } else if (action.value === "MULTIPLE") {
           dispatch(
             handleField(
               "apply",
@@ -344,7 +344,7 @@ export const propertyDetails = getCommonCard({
         },
         children: {
           singleBuilding: getCommonGrayCard({
-            singleBuildingCard: getCommonContainer(commonBuildingData("single"))
+            singleBuildingCard: getCommonContainer(commonBuildingData("SINGLE"))
           })
         }
       },
@@ -366,7 +366,7 @@ export const propertyDetails = getCommonCard({
             props: {
               scheama: getCommonGrayCard({
                 multipleBuildingCard: getCommonContainer(
-                  commonBuildingData("multiple")
+                  commonBuildingData("MULTIPLE")
                 )
               }),
               items: [],

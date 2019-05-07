@@ -118,8 +118,24 @@ const commonApplicantInformation = () => {
         },
         jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
         props: {
-          label: "Gender",
-          buttons: ["Male", "Female", "Transgender"],
+          label: { name: "Gender", key: "NOC_GENDER_LABEL" },
+          buttons: [
+            {
+              labelName: "Male",
+              labelKey: "NOC_MALE_RADIOBUTTON",
+              value: "MALE"
+            },
+            {
+              labelName: "FEMALE",
+              labelKey: "NOC_FEMALE_RADIOBUTTON",
+              value: "FEMALE"
+            },
+            {
+              labelName: "Transgender",
+              labelKey: "NOC_TRANSGENDER_RADIOBUTTON",
+              value: "TRANSGENDER"
+            }
+          ],
           jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
           required: true
         },
@@ -171,7 +187,8 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "noc.applicantDetails.applicant[0].applicantFatherHusbandName",
+        jsonPath:
+          "noc.applicantDetails.applicant[0].applicantFatherHusbandName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -189,8 +206,19 @@ const commonApplicantInformation = () => {
         },
         jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
         props: {
-          label: "Relationship",
-          buttons: ["Father", "Husband"],
+          label: { name: "Relationship", key: "NOC_RELATIONSHIP_LABEL" },
+          buttons: [
+            {
+              labelName: "Father",
+              labelKey: "NOC_FATHER_RADIOBUTTON",
+              value: "FATHER"
+            },
+            {
+              label: "Husband",
+              labelKey: "NOC_HUSBAND_RADIOBUTTON",
+              value: "HUSBAND"
+            }
+          ],
           jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
           required: true
         },
@@ -384,7 +412,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].officialCorrespondenceAddress",
+        jsonPath:
+          "noc.applicantDetails.applicant[0].officialCorrespondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
