@@ -230,9 +230,8 @@ export const getEstimateFromBill = (bill) => {
     taxHeadContent &&
       taxHeadContent[0] &&
       taxHeadEstimates.push({
-        taxHeadCode: taxHeadContent[0].taxHeadCode,
-        // estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
-        estimateAmount: taxHeadContent[0].amount,
+        taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
+        estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
         category: taxHeadContent[0].purpose,
       });
     return taxHeadEstimates;
