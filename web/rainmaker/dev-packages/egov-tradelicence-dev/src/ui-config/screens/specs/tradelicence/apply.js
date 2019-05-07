@@ -213,16 +213,24 @@ export const getData = async (action, state, dispatch) => {
 
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
     if (!queryValue) {
-      dispatch(
-        prepareFinalObject(
-          "Licenses[0].oldLicenseNumber",
-          get(
-            state.screenConfiguration.preparedFinalObject,
-            "Licenses[0].applicationNumber",
-            ""
-          )
-        )
+      const oldApplicationNo = get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].applicationNumber",
+        null
       );
+      dispatch(
+        prepareFinalObject("Licenses[0].oldLicenseNumber", oldApplicationNo)
+      );
+      if (oldApplicationNo !== null) {
+        dispatch(prepareFinalObject("Licenses[0].financialYear", ""));
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+            "APPLICATIONTYPE.RENEWAL"
+          )
+        );
+      }
+
       dispatch(prepareFinalObject("Licenses[0].applicationNumber", ""));
       dispatch(
         handleField(
