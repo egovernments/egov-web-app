@@ -22,7 +22,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Plot Size (in Sq meters)",
           labelKey: "NOC_PLOT_SIZE_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].plotSize",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotSize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -43,7 +44,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_ENTER_NAME_OF_BUILDING_PLACEHOLDER"
         },
         // required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingName",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -79,7 +81,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_TYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingUsageType",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
         data: [
           {
             code: "Commercial"
@@ -107,7 +110,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingUsageSubType",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageSubType",
         data: [
           {
             code: "Commercial"
@@ -136,7 +140,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_NO_OF_FLOORS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].noOfFloors",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors",
         data: [
           {
             code: "1"
@@ -167,7 +172,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_NO_OF_BASEMENTS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].noOfBasements",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements",
         data: [
           {
             code: "1"
@@ -195,7 +201,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Ground Floor Builtup Area in Sq meters",
           labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].builtupArea",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -213,7 +220,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Height of the Building in meters",
           labelKey: "NOC_HEIGHT_OF_BUILDING_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].heightOfBuilding",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -245,11 +253,12 @@ export const propertyDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "noc.buildingDetails.buildingType",
+      // jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
       props: {
         label: "No. of Buildings",
         buttons: ["Single Building", "Multiple Building"],
-        jsonPath: "noc.buildingDetails.buildingType",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
         defaultValue: "Single Building",
         required: true
       },
@@ -335,7 +344,7 @@ export const propertyDetails = getCommonCard({
                 labelKey: "NOC_ADD_BUILDING_LABEL",
                 labelName: "ADD BUILDING"
               },
-              sourceJsonPath: "noc.buildingDetails.building",
+              sourceJsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
               prefixSourceJsonPath:
