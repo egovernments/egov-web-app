@@ -142,6 +142,18 @@ const getMdmsData = async (action, state, dispatch) => {
   }
 };
 
+const getFirstListFromDotSeparated = list => {
+  list = list.map(item => {
+    if (item.active) {
+      return item.code.split(".")[0];
+    }
+  });
+  list = [...new Set(list)].map(item => {
+    return { code: item };
+  });
+  return list;
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -160,18 +172,25 @@ const screenConfig = {
         "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
         []
       );
-      buildingUsageTypeData = buildingUsageTypeData.map(item => {
-        if (item.active) {
-          return item.code.split(".")[0];
-        }
-      });
-      buildingUsageTypeData = [...new Set(buildingUsageTypeData)].map(item => {
-        return { code: item };
-      });
+      buildingUsageTypeData = getFirstListFromDotSeparated(
+        buildingUsageTypeData
+      );
       dispatch(
         prepareFinalObject(
           "applyScreenMdmsData.DropdownsData.BuildingUsageType",
           buildingUsageTypeData
+        )
+      );
+      let ownershipCategory = get(
+        state,
+        "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
+        []
+      );
+      ownershipCategory = getFirstListFromDotSeparated(ownershipCategory);
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.OwnershipCategory",
+          ownershipCategory
         )
       );
     });

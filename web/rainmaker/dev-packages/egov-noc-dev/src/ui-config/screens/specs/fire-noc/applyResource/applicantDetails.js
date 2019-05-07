@@ -11,6 +11,7 @@ import {
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const showComponent = (dispatch, componentJsonPath, display) => {
   let displayProps = display ? {} : { display: "none" };
@@ -449,17 +450,70 @@ export const applicantDetails = getCommonCard({
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
         jsonPath: "noc.applicantDetails.applicantType",
-        data: [
-          {
-            code: "Individual"
-          },
-          {
-            code: "Multiple"
-          },
-          {
-            code: "Institutional-Private"
-          }
-        ],
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "OwnerShipCategory"
+        },
+        // data: [
+        //   {
+        //     code: "Individual"
+        //   },
+        //   {
+        //     code: "Multiple"
+        //   },
+        //   {
+        //     code: "Institutional-Private"
+        //   }
+        // ],
+        required: true,
+        sourceJsonPath: "applyScreenMdmsData.DropdownsData.OwnershipCategory",
+        gridDefination: {
+          xs: 12,
+          sm: 12,
+          md: 6
+        }
+      }),
+      afterFieldChange: (action, state, dispatch) => {
+        let path = action.componentJsonpath.replace(
+          /.applicantType$/,
+          ".applicantSubType"
+        );
+        let applicantType = get(
+          state,
+          "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
+          []
+        );
+        let applicantSubType = applicantType.filter(item => {
+          return item.active && item.code.startsWith(action.value);
+        });
+        dispatch(handleField("apply", path, "props.data", applicantSubType));
+      }
+    },
+    applicantSubType: {
+      ...getSelectField({
+        label: {
+          labelName: "Type of Applicant - Subtype",
+          labelKey: "NOC_APPLICANT_SUBTYPE_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Applicant Subtype",
+          labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
+        },
+        jsonPath: "noc.applicantDetails.applicantSubType",
+        localePrefix: {
+          moduleName: "common-masters",
+          masterName: "OwnerShipCategory"
+        },
+        // data: [
+        //   {
+        //     code: "Private Company"
+        //   }
+        // ],
+        // props: {
+        //   style: {
+        //     display: "none"
+        //   }
+        // },
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -475,51 +529,23 @@ export const applicantDetails = getCommonCard({
           "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer";
         let applicantSubtypeJsonPath =
           "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType";
-        if (action.value === "Individual") {
+        if (action.value.includes("SINGLEOWNER")) {
           showComponent(dispatch, singleApplicantContainerJsonPath, true);
           showComponent(dispatch, multipleApplicantContainerJsonPath, false);
           showComponent(dispatch, institutionContainerJsonPath, false);
-          showComponent(dispatch, applicantSubtypeJsonPath, false);
-        } else if (action.value === "Multiple") {
+          // showComponent(dispatch, applicantSubtypeJsonPath, false);
+        } else if (action.value.includes("MULTIPLEOWNERS")) {
           showComponent(dispatch, singleApplicantContainerJsonPath, false);
           showComponent(dispatch, multipleApplicantContainerJsonPath, true);
           showComponent(dispatch, institutionContainerJsonPath, false);
-          showComponent(dispatch, applicantSubtypeJsonPath, false);
-        } else if (action.value === "Institutional-Private") {
+          // showComponent(dispatch, applicantSubtypeJsonPath, false);
+        } else if (action.value.includes("INSTITUTIONAL")) {
           showComponent(dispatch, singleApplicantContainerJsonPath, false);
           showComponent(dispatch, multipleApplicantContainerJsonPath, false);
           showComponent(dispatch, institutionContainerJsonPath, true);
-          showComponent(dispatch, applicantSubtypeJsonPath, true);
+          // showComponent(dispatch, applicantSubtypeJsonPath, true);
         }
       }
-    },
-    applicantSubType: {
-      ...getSelectField({
-        label: {
-          labelName: "Type of Applicant - Subtype",
-          labelKey: "NOC_APPLICANT_SUBTYPE_LABEL"
-        },
-        placeholder: {
-          labelName: "Select Applicant Subtype",
-          labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
-        },
-        jsonPath: "noc.applicantDetails.applicantSubType",
-        data: [
-          {
-            code: "Private Company"
-          }
-        ],
-        props: {
-          style: {
-            display: "none"
-          }
-        },
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      })
     },
     singleApplicantContainer: {
       uiFramework: "custom-atoms",

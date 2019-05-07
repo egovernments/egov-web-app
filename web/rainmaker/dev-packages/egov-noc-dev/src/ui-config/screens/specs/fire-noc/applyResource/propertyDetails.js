@@ -97,7 +97,7 @@ const commonBuildingData = buildingType => {
       }),
       afterFieldChange: (action, state, dispatch) => {
         let path = action.componentJsonpath.replace(
-          /.buildingUsageType/,
+          /.buildingUsageType$/,
           ".buildingSubUsageType"
         );
         let buildingUsageTypeData = get(
@@ -130,14 +130,14 @@ const commonBuildingData = buildingType => {
         },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageSubType",
-        data: [
-          {
-            code: "Commercial"
-          },
-          {
-            code: "Non-Commercial"
-          }
-        ],
+        // data: [
+        //   {
+        //     code: "Commercial"
+        //   },
+        //   {
+        //     code: "Non-Commercial"
+        //   }
+        // ],
         sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
