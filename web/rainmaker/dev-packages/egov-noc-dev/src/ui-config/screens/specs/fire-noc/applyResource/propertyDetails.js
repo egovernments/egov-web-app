@@ -253,14 +253,26 @@ export const propertyDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      // jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
+      jsonPath:
+        "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
       props: {
-        label: "No. of Buildings",
-        buttons: ["Single Building", "Multiple Building"],
+        required: true,
+        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS" },
+        buttons: [
+          {
+            labelName: "Single Building",
+            labelKey: "NOC_SINGLE_BUILDING",
+            value: "SINGLE"
+          },
+          {
+            label: "Multiple Building",
+            labelKey: "NOC_SINGLE_BUILDING",
+            value: "MULTIPLE"
+          }
+        ],
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
-        defaultValue: "Single Building",
-        required: true
+        defaultValue: "SINGLE"
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
@@ -344,7 +356,8 @@ export const propertyDetails = getCommonCard({
                 labelKey: "NOC_ADD_BUILDING_LABEL",
                 labelName: "ADD BUILDING"
               },
-              sourceJsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings",
+              sourceJsonPath:
+                "FireNOCs[0].fireNOCDetails.buildingDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
               prefixSourceJsonPath:

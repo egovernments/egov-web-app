@@ -68,7 +68,14 @@ class RadioButtonsGroup extends React.Component {
           className={classes.formControl}
           required={required}
         >
-          <FormLabel className={classes.formLabel}>{label}</FormLabel>
+          {/* <FormLabel className={classes.formLabel}>{label}</FormLabel> */}
+          {label && label.key && (
+            <LabelContainer
+              className={classes.formLabel}
+              labelName={label.name}
+              labelKey={label.key}
+            />
+          )}
           <RadioGroup
             aria-label="Gender"
             name="gender1"

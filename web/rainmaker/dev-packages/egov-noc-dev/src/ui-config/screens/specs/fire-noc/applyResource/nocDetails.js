@@ -6,6 +6,7 @@ import {
   getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
@@ -29,12 +30,24 @@ export const nocDetails = getCommonCard({
         xs: 12
       },
       jsonPath: "noc.nocType",
+      type: "array",
       props: {
-        label: "NOC Type",
-        buttons: ["New", "Provisional"],
+        required: true,
+        label: { name: "NOC Type", key: "NOC_TYPE" },
+        buttons: [
+          {
+            labelName: "New",
+            labelKey: "NOC_TYPE_NEW",
+            value: "NEW"
+          },
+          {
+            label: "Provisional",
+            labelKey: "NOC_TYPE_PROVISIONAL",
+            value: "PROVISIONAL"
+          }
+        ],
         jsonPath: "noc.nocType",
-        defaultValue: "New",
-        required: true
+        defaultValue: "NEW"
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
