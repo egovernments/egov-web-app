@@ -208,12 +208,11 @@ export const getEstimateFromBill = (bill) => {
     "PT_ADHOC_REBATE",
     "PT_ADVANCE_CARRYFORWARD",
     "PT_DECIMAL_CEILING_DEBIT",
-    "PT_ROUNDOFF",
   ]; //Hardcoding as backend is not sending in correct order
   const { billDetails, tenantId } = bill && bill[0];
   const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
   const taxHeadsFromAPI = billAccountDetails.map((item) => {
-    return item.taxHeadCode;
+    return item.accountDescription.split("-")[0];
   });
   const transformedTaxHeads = taxHeads.reduce((result, current) => {
     if (taxHeadsFromAPI.indexOf(current) > -1) {
@@ -226,7 +225,7 @@ export const getEstimateFromBill = (bill) => {
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
   const taxHeadEstimates = transformedTaxHeads.reduce((taxHeadEstimates, current) => {
-    const taxHeadContent = billAccountDetails.filter((item) => item.taxHeadCode && item.taxHeadCode === current);
+    const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
     taxHeadContent &&
       taxHeadContent[0] &&
       taxHeadEstimates.push({

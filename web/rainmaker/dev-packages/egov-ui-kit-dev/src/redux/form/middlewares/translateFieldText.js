@@ -5,24 +5,22 @@ import { initForm } from "../actions";
 
 const translatedFormFields = (localizationLabels, form) => {
   let { fields } = form;
-  fields =
-    fields &&
-    Object.keys(fields).reduce((translatedField, fieldKey) => {
-      const field = Object.keys(fields[fieldKey]).reduce((field, fieldName) => {
-        let fieldValue = fields[fieldKey][fieldName];
-        if (fieldName === "hintText" || fieldName === "floatingLabelText" || fieldName === "errorMessage") {
-          fieldValue = getTranslatedLabel(fieldValue, localizationLabels);
-        }
-        field[fieldName] = fieldValue;
-        return field;
-      }, {});
-
-      // a bit hacky; instead of asking user to write it in config putting it here; other way to do it would be to iterate through fields which have required and add this field dynamically
-      field["requiredmessage"] = getTranslatedLabel("CORE_COMMON_REQUIRED_ERRMSG", localizationLabels);
-      translatedField[fieldKey] = field;
-
-      return translatedField;
+  fields = Object.keys(fields).reduce((translatedField, fieldKey) => {
+    const field = Object.keys(fields[fieldKey]).reduce((field, fieldName) => {
+      let fieldValue = fields[fieldKey][fieldName];
+      if (fieldName === "hintText" || fieldName === "floatingLabelText" || fieldName === "errorMessage") {
+        fieldValue = getTranslatedLabel(fieldValue, localizationLabels);
+      }
+      field[fieldName] = fieldValue;
+      return field;
     }, {});
+
+    // a bit hacky; instead of asking user to write it in config putting it here; other way to do it would be to iterate through fields which have required and add this field dynamically
+    field["requiredmessage"] = getTranslatedLabel("CORE_COMMON_REQUIRED_ERRMSG", localizationLabels);
+    translatedField[fieldKey] = field;
+
+    return translatedField;
+  }, {});
 
   let submit = {};
 
