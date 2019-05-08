@@ -1,8 +1,8 @@
 import {
   getCommonHeader,
-  getCommonCard,
-  getCommonParagraph,
-  getCommonContainer,
+  //getCommonCard,
+  //getCommonParagraph,
+  //getCommonContainer,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";

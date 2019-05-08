@@ -5,7 +5,7 @@ import {
     getCommonContainer,
     getPattern,
     getDateField,
-    getCommonTitle
+   // getCommonTitle
   } from "egov-ui-framework/ui-config/screens/specs/utils";
   import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 

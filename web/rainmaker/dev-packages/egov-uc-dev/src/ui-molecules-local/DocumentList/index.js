@@ -100,9 +100,9 @@ class DocumentList extends Component {
       uploadedDocsInRedux: uploadedDocuments
     } = this.props;
     if (uploadedDocuments) {
-      const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
-        return parseInt(item); //returns string so convert to integer
-      });
+       const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
+         return parseInt(item); //returns string so convert to integer
+       });
       this.setState({ uploadedDocuments, uploadedIndex });
     }
     Object.values(uploadedDocuments).forEach((item, index) => {
@@ -173,8 +173,8 @@ class DocumentList extends Component {
     const {
       screenKey,
       componentJsonpath,
-      jsonPath,
-      approveCheck,
+      //jsonPath,
+     // approveCheck,
       onFieldChange,
       prepareFinalObject
     } = this.props;

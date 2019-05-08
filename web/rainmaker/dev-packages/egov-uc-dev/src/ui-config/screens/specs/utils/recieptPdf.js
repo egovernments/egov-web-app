@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import _ from "lodash";
+//import _ from "lodash";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 

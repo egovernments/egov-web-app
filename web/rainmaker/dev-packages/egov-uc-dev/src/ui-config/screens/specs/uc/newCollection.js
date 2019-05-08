@@ -1,6 +1,6 @@
 import {
     getCommonHeader,
-    getBreak
+    //getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { newCollectionDetailsCard } from "./newCollectionResource/newCollectionDetails";
 import { newCollectionFooter } from "./newCollectionResource/newCollectionFooter"

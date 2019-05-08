@@ -2,9 +2,9 @@ import {
     getCommonHeader,
     getBreak
   } from "egov-ui-framework/ui-config/screens/specs/utils";
-  import {UCSearchCard} from "./universalCollectionResources/ucsearch";
+  import {UCSearchCard} from "./universalCollectionResources/ucSearch";
 //   import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-  import { searchResults } from "./universalCollectionResources/searchResult";
+  import { searchResults } from "./universalCollectionResources/searchResults";
   
   const header = getCommonHeader({
     labelName: "Universal Collection",
@@ -13,7 +13,7 @@ import {
   
   const ucSearchAndResult = {
     uiFramework: "material-ui",
-    name: "universalCollection",
+    name: "search",
     components: {
       div: {
         uiFramework: "custom-atoms",

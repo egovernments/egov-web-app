@@ -49,7 +49,11 @@ const themeObject = {
         fontSize: "14px"
       }
     },
-
+    MUIDataTableHeadCell:{
+      fixedHeader:{
+        backgroundColor:" #F2F2F2"
+      }
+    },
     MuiTypography: {
       title: {
         color: "rgba(0, 0, 0, 0.87)",

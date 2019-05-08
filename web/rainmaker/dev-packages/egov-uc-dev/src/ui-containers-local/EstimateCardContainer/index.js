@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FeesEstimateCard } from "../../ui-molecules-local";
 import { connect } from "react-redux";
-import get from "lodash/get";
+//import get from "lodash/get";
 
 class EstimateCardContainer extends Component {
   render() {
@@ -10,7 +10,7 @@ class EstimateCardContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { screenConfiguration } = state;
+  //const { screenConfiguration } = state;
   const fees = [
     {
       name: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" },
