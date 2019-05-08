@@ -82,6 +82,8 @@ export const nocDetails = getCommonCard({
           labelName: "Enter Provisional fire NoC number",
           labelKey: "NOC_PROVISIONAL_FIRE_NOC_NO_PLACEHOLDER"
         },
+        pattern: /^[a-zA-Z0-9-]*$/i,
+        errorMessage: "Invalid Fire-NOC No.",
         // required: true,
         // pattern: getPattern("MobileNo"),
         jsonPath: "noc.provisionalNocNumber",

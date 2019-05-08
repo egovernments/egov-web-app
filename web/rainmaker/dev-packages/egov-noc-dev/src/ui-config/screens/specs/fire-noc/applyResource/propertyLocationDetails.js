@@ -226,7 +226,8 @@ export const propertyLocationDetails = getCommonCard(
           labelName: "Enter Plot/Survey No.",
           labelKey: "NOC_PROPERTY_PLOT_NO_PLACEHOLDER"
         },
-        // pattern: getPattern("DoorHouseNo"),
+        pattern: getPattern("DoorHouseNo"),
+        errorMessage: "Invalid number",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo"
       }),
       propertyBuilidingName: getTextField({
@@ -239,6 +240,8 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_BLDG_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
+        errorMessage: "Invalid Name",
+
         jsonPath:
           "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
       }),
@@ -252,6 +255,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
+        errorMessage: "Invalid Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.street"
       }),
       propertyMohalla: {
@@ -321,6 +325,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_PIN_PLACEHOLDER"
         },
         pattern: getPattern("Pincode"),
+        errorMessage: "Invalid Pincode",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode",
         required: true
       }),
@@ -381,7 +386,8 @@ export const propertyLocationDetails = getCommonCard(
           labelName: "Enter Applicable Fire Station",
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
-        // pattern: getPattern("ElectricityConnNo"),
+        pattern: getPattern("Name"),
+        errorMessage:"Invalid Fire-Station Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.firestationId"
       })
     }),
