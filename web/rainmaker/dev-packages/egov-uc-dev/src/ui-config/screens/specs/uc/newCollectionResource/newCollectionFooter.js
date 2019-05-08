@@ -1,5 +1,6 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-
+import get from "lodash/get";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -35,10 +36,36 @@ export const newCollectionFooter = getCommonApplyFooter({
           iconName: "keyboard_arrow_right"
         }
       }
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        processDemand(state, dispatch);
+      }
     }
-    // onClickDefination: {
-    //     action: "page_change",
-    //     path: redirectionURL
-    // }
   }
 });
+
+const processDemand = (state, dispatch) => {
+  createDemand(state, dispatch);
+  // billGenerate(state, dispatch);
+  console.log("state:", state);
+};
+const createDemand = async (state, dispatch) => {
+  const demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
+  try {
+    const payload = await httpRequest(
+      "post",
+      "/billing-service-v1/demand/_create",
+      "",
+      [],
+      {
+        Demands: demand
+      }
+    );
+  } catch (e) {}
+  console.log("Demands:", demand);
+};
+// const billGenerate = (state, dispatch) => {
+//   console.log("state:", state);
+// };
