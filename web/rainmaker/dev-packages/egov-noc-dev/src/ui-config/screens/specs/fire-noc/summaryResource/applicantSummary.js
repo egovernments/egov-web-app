@@ -70,7 +70,7 @@ export const applicantSummary = getCommonGrayCard({
           mobileNo: getLabelWithValue(
             {
               labelName: "Mobile No.",
-              labelKey: "NOC_MOBILE_NO_LABEL"
+              labelKey: "NOC_APPLICANT_MOBILE_NO_LABEL"
             },
             {
               jsonPath: "noc.applicantDetails.applicant[0].mobileNo"
@@ -94,14 +94,14 @@ export const applicantSummary = getCommonGrayCard({
           applicantGender: getLabelWithValue(
             {
               labelName: "Gender",
-              labelKey: "NOC_APPLICANT_GENDER_LABEL"
+              labelKey: "NOC_GENDER_LABEL"
             },
             { jsonPath: "noc.applicantDetails.applicant[0].applicantGender" }
           ),
           applicantFatherHusbandName: getLabelWithValue(
             {
               labelName: "Father/Husband's Name",
-              labelKey: "NOC_FATHER_HUSBAND_NAME_LABEL"
+              labelKey: "NOC_APPLICANT_FATHER_HUSBAND_NAME_LABEL"
             },
             {
               jsonPath:

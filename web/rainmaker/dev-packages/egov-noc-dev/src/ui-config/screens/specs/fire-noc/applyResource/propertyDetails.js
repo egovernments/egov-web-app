@@ -17,11 +17,11 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Plot Size (in Sq meters)",
-          labelKey: "NOC_PLOT_SIZE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
         },
         placeholder: {
           labelName: "Enter Plot Size (in Sq meters)",
-          labelKey: "NOC_PLOT_SIZE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_PLACEHOLDER"
         },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotSize",
@@ -38,11 +38,11 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Name of the Building",
-          labelKey: "NOC_NAME_OF_BUILDING_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_LABEL"
         },
         placeholder: {
-          labelName: "Name of the Building",
-          labelKey: "NOC_ENTER_NAME_OF_BUILDING_PLACEHOLDER"
+          labelName: "Enter Name of the Building",
+          labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_PLACEHOLDER"
         },
         // required: true,
         jsonPath:
@@ -75,11 +75,11 @@ const commonBuildingData = buildingType => {
       ...getSelectField({
         label: {
           labelName: "Building Usage Type as per NBC",
-          labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_LABEL"
         },
         placeholder: {
           labelName: "Select Building Usage Type",
-          labelKey: "NOC_BUILDING_USAGE_TYPE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_PLACEHOLDER"
         },
         required: true,
         localePrefix: {
@@ -117,11 +117,11 @@ const commonBuildingData = buildingType => {
       ...getSelectField({
         label: {
           labelName: "Building Usage Subtype as per NBC",
-          labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_LABEL"
         },
         placeholder: {
           labelName: "Select Building Usage Subtype",
-          labelKey: "NOC_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
         },
         required: true,
         localePrefix: {
@@ -151,11 +151,11 @@ const commonBuildingData = buildingType => {
         label: {
           labelName:
             "No. Of Floors (Excluding Basement, Including Ground Floor)",
-          labelKey: "NOC_NO_OF_FLOORS_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_LABEL"
         },
         placeholder: {
           labelName: "Select No. of Floors",
-          labelKey: "NOC_NO_OF_FLOORS_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_PLACEHOLDER"
         },
         required: true,
         jsonPath:
@@ -183,11 +183,11 @@ const commonBuildingData = buildingType => {
       ...getSelectField({
         label: {
           labelName: "No. Of Basements",
-          labelKey: "NOC_NO_OF_BASEMENTS_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
         },
         placeholder: {
           labelName: "Select No. Of Basements",
-          labelKey: "NOC_NO_OF_BASEMENTS_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_PLACEHOLDER"
         },
         required: true,
         jsonPath:
@@ -213,11 +213,11 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Ground Floor Builtup Area (in Sq meters)",
-          labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
         },
         placeholder: {
           labelName: "Enter Ground Floor Builtup Area in Sq meters",
-          labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
         },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea",
@@ -232,11 +232,11 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Height of the Building from Ground level (in meters)",
-          labelKey: "NOC_HEIGHT_OF_BUILDING_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
         },
         placeholder: {
           labelName: "Enter Height of the Building in meters",
-          labelKey: "NOC_HEIGHT_OF_BUILDING_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_PLACEHOLDER"
         },
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding",
@@ -371,7 +371,7 @@ export const propertyDetails = getCommonCard({
               }),
               items: [],
               addItemLabel: {
-                labelKey: "NOC_ADD_BUILDING_LABEL",
+                labelKey: "NOC_PROPERTY_DETAILS_ADD_BUILDING_LABEL",
                 labelName: "ADD BUILDING"
               },
               sourceJsonPath:

@@ -289,7 +289,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "Submit",
-        labelKey: "TL_COMMON_BUTTON_SUBMIT"
+        labelKey: "NOC_COMMON_BUTTON_SUBMIT"
       }),
       submitButtonIcon: {
         uiFramework: "custom-atoms",
@@ -324,7 +324,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "DOWNLOAD CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
+        labelKey: "NOC_APPLICATION_BUTTON_DOWN_CONF"
       })
     },
     onClickDefination: {
@@ -350,7 +350,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "PRINT CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
+        labelKey: "NOC_APPLICATION_BUTTON_PRINT_CONF"
       })
     },
     onClickDefination: {
@@ -376,7 +376,7 @@ export const footer = getCommonApplyFooter({
     children: {
       submitButtonLabel: getLabel({
         labelName: "MAKE PAYMENT",
-        labelKey: "TL_COMMON_BUTTON_CITIZEN_MAKE_PAYMENT"
+        labelKey: "NOC_COMMON_BUTTON_MAKE_PAYMENT"
       })
     },
     onClickDefination: {

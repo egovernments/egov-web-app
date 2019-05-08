@@ -13,16 +13,16 @@ import {
 const contract = {
   title: {
     labelName: "Refer For opinion",
-    labelKey: "NOC_REQ_DOCS_HEADER"
+    labelKey: "NOC_REFER_OPINION_HEADER"
   },
   DropDownData: {
     label: {
       labelName: "Refer To",
-      labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_LABEL"
+      labelKey: "NOC_AUTHORIZED_REFER_PERSON__LABEL"
     },
     placeholder: {
       labelName: "Select Name of Employee",
-      labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
+      labelKey: "NOC_AUTHORIZED_REFER_PERSON_PLACEHOLDER"
     },
     jsonPath: "",
     sourceJsonPath: ""
@@ -30,19 +30,19 @@ const contract = {
   TextFieldData: {
     label: {
       labelName: "Comments",
-      labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_LABEL"
+      labelKey: "NOC_AUTHORIZED_REFER_PERSON_COMMENTS_LABEL"
     },
     placeholder: {
       labelName: "Enter Comments",
-      labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
+      labelKey: "NOC_AUTHORIZED_REFER_PERSON_COMMENTS_PLACEHOLDER"
     },
     jsonPath: ""
   },
   uploadBoxData: { jsonPath: "" },
   ButtonData: {
     buttonLabel: {
-      labelName: "Email of Authorized Person",
-      labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_LABEL"
+      labelName: "REFER FOR OPINION",
+      labelKey: "NOC_REFER_OPINION_BUTTON_LABEL"
     },
     callBack: () => {
       console.log("asd");
@@ -82,7 +82,7 @@ const getVerifyReferRejet = contract => {
         uploadFileHeader: getCommonSubHeader(
           {
             labelName: "Supporting Documents",
-            labelKey: "HR_APPROVAL_UPLOAD_HEAD"
+            labelKey: "NOC_SUPPORTING_DOCUMENTS_LABEL"
           },
           {
             style: { marginTop: 15, width: "100%" }
@@ -111,7 +111,7 @@ const getVerifyReferRejet = contract => {
             inputProps: {
               accept: "image/*, .pdf, .png, .jpeg"
             },
-            buttonLabel: { labelName: "UPLOAD FILES" },
+            buttonLabel: { labelName: "UPLOAD FILES", labelKey: "NOC_UPLOAD_BUTTON_LABEL" },
             maxFileSize: 5000,
             moduleName: "NOC",
             hasLocalization: false

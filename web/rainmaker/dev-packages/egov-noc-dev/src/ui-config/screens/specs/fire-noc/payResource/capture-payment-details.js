@@ -6,7 +6,7 @@ import { cash, demandDraft, cheque, card } from "./payment-methods";
 
 const capturePaymentDetails = getCommonGrayCard({
   header: getCommonSubHeader(
-    { labelName: "Capture Payment", labelKey: "TL_PAYMENT_CAP_PMT" },
+    { labelName: "Capture Payment", labelKey: "NOC_PAYMENT_CAP_PMT" },
     {
       style: {
         marginBottom: "8px"

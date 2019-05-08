@@ -358,7 +358,7 @@ const institutionInformation = () => {
           labelKey: "NOC_INSTITUTION_DESIGNATION_LABEL"
         },
         placeholder: {
-          labelName: "Enter Name of Institution",
+          labelName: "Enter designation of Institution",
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
@@ -409,7 +409,7 @@ const institutionInformation = () => {
           labelKey: "NOC_OFFICIAL_CORRESPONDENCE_ADDRESS_LABEL"
         },
         placeholder: {
-          labelName: "Enter Name of Institution",
+          labelName: "Enter Official Correspondence Address ",
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
