@@ -4,7 +4,10 @@ import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { httpRequest } from "../../../../ui-utils/api";
+import isUndefined from "lodash/isUndefined";
 import {
   getCommonCard,
   getCommonValue,
@@ -264,4 +267,161 @@ export const getLabelOnlyValue = (value, props = {}) => {
       value: getCommonCaption(value)
     }
   };
+};
+
+export const convertDateTimeToEpoch = dateTimeString => {
+  //example input format : "26-07-2018 17:43:21"
+  try {
+    const parts = dateTimeString.match(
+      /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+    );
+    return Date.UTC(+parts[3], parts[2] - 1, +parts[1], +parts[4], +parts[5]);
+  } catch (e) {
+    return dateTimeString;
+  }
+};
+
+export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
+  try {
+    const cardIndex = fieldInfo && fieldInfo.index ? fieldInfo.index : "0";
+    const ownerNo = get(
+      state.screenConfiguration.preparedFinalObject,
+      `FireNOCs[0].fireNOCDetails.applicantDetails.owners[${cardIndex}].mobileNumber`,
+      ""
+    );
+    const owners = get(
+      state.screenConfiguration.preparedFinalObject,
+      `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
+      []
+    );
+    //owners from search call before modification.
+    const oldOwnersArr = get(
+      state.screenConfiguration.preparedFinalObject,
+      "FireNOCs[0].fireNOCDetails.applicantDetails.owners",
+      []
+    );
+    //Same no search on Same index
+    if (ownerNo === owners[cardIndex].userName) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Owner already added !",
+            labelKey: "ERR_OWNER_ALREADY_ADDED"
+          },
+          "error"
+        )
+      );
+      return;
+    }
+
+    //Same no search in whole array
+    const matchingOwnerIndex = owners.findIndex(
+      item => item.userName === ownerNo
+    );
+    if (matchingOwnerIndex > -1) {
+      if (
+        !isUndefined(owners[matchingOwnerIndex].userActive) &&
+        owners[matchingOwnerIndex].userActive === false
+      ) {
+        //rearrange
+        dispatch(
+          prepareFinalObject(
+            `FireNOCs[0].fireNOCDetails.applicantDetails.owners[${matchingOwnerIndex}].userActive`,
+            true
+          )
+        );
+        dispatch(
+          prepareFinalObject(
+            `FireNOCs[0].fireNOCDetails.applicantDetails.owners[${cardIndex}].userActive`,
+            false
+          )
+        );
+        //Delete if current card was not part of oldOwners array - no need to save.
+        if (
+          oldOwnersArr.findIndex(
+            item => owners[cardIndex].userName === item.userName
+          ) == -1
+        ) {
+          owners.splice(cardIndex, 1);
+          dispatch(
+            prepareFinalObject(`FireNOCs[0].fireNOCDetails.applicantDetails.owners`, owners)
+          );
+        }
+      } else {
+        dispatch(
+          toggleSnackbar(
+            true,
+            {
+              labelName: "Owner already added !",
+              labelKey: "ERR_OWNER_ALREADY_ADDED_1"
+            },
+            "error"
+          )
+        );
+      }
+      return;
+    } else {
+      //New number search only
+      let payload = await httpRequest(
+        "post",
+        "/user/_search?tenantId=pb",
+        "_search",
+        [],
+        {
+          tenantId: "pb",
+          userName: `${ownerNo}`
+        }
+      );
+      if (payload && payload.user && payload.user.hasOwnProperty("length")) {
+        if (payload.user.length === 0) {
+          dispatch(
+            toggleSnackbar(
+              true,
+              {
+                labelName: "This mobile number is not registered !",
+                labelKey: "ERR_MOBILE_NUMBER_NOT_REGISTERED"
+              },
+              "info"
+            )
+          );
+        } else {
+          const userInfo =
+            payload.user &&
+            payload.user[0] &&
+            JSON.parse(JSON.stringify(payload.user[0]));
+          if (userInfo && userInfo.createdDate) {
+            userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
+            userInfo.lastModifiedDate = convertDateTimeToEpoch(
+              userInfo.lastModifiedDate
+            );
+            userInfo.pwdExpiryDate = convertDateTimeToEpoch(
+              userInfo.pwdExpiryDate
+            );
+          }
+          let currOwnersArr = get(
+            state.screenConfiguration.preparedFinalObject,
+            "FireNOCs[0].fireNOCDetails.applicantDetails.owners",
+            []
+          );
+
+          currOwnersArr[cardIndex] = userInfo;
+          // if (oldOwnersArr.length > 0) {
+          //   currOwnersArr.push({
+          //     ...oldOwnersArr[cardIndex],
+          //     userActive: false
+          //   });
+          // }
+          dispatch(
+            prepareFinalObject(
+              `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
+              currOwnersArr
+            )
+          );
+        }
+      }
+    }
+  } catch (e) {
+    dispatch(toggleSnackbar(true, e.message, "info"));
+  }
 };

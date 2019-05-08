@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocaleLabels,
+  getTransformedLocalStorgaeLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
@@ -11,65 +15,87 @@ const getLocalTextFromCode = localCode => {
 };
 
 export const textToLocalMapping = {
-  "Application No": get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_APP_NO"),
-    "message",
-    "Application No"
+  "Application No": getLocaleLabels(
+    "Application No",
+    "NOC_COMMON_TABLE_COL_APP_NO_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  "NOC No": get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_NOC_NO"),
-    "message",
-    "NOC No"
+  "NOC No": getLocaleLabels(
+    "NOC No",
+    "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Building Name": get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_TRD_NAME"),
-    "message",
-    "Building Name"
+  "Building Name": getLocaleLabels(
+    "Building Name",
+    "NOC_COMMON_TABLE_COL_BUILDING_NAME_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Owner Name": get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_OWN_NAME"),
-    "message",
-    "Owner Name"
+  "Owner Name": getLocaleLabels(
+    "Owner Name",
+    "NOC_COMMON_TABLE_COL_OWN_NAME_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Application Date": get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Application Date"
+  "Application Date": getLocaleLabels(
+    "Application Date",
+    "NOC_COMMON_TABLE_COL_APP_DATE_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  Status: get(
-    getLocalTextFromCode("NOC_COMMON_TABLE_COL_STATUS"),
-    "message",
-    "Status"
+  Status: getLocaleLabels(
+    "Status",
+    "NOC_COMMON_TABLE_COL_STATUS_LABEL",
+    getTransformedLocalStorgaeLabels()
   ),
-  INITIATED: get(getLocalTextFromCode("NOC_INITIATED"), "message", "INITIATED"),
-  APPLIED: get(getLocalTextFromCode("NOC_APPLIED"), "message", "APPLIED"),
-  PAID: get(
-    getLocalTextFromCode("WF_NEWNOC_PENDINGAPPROVAL"),
-    "message",
-    "PAID"
+  INITIATED: getLocaleLabels(
+    "Initiated,",
+    "NOC_INITIATED",
+    getTransformedLocalStorgaeLabels()
   ),
-  APPROVED: get(getLocalTextFromCode("NOC_APPROVED"), "message", "APPROVED"),
-  REJECTED: get(getLocalTextFromCode("NOC_REJECTED"), "message", "REJECTED"),
-  CANCELLED: get(getLocalTextFromCode("NOC_CANCELLED"), "message", "CANCELLED"),
-  PENDINGAPPROVAL: get(
-    getLocalTextFromCode("WF_NEWNOC_PENDINGAPPROVAL"),
-    "message",
-    "Pending for Approval"
+  APPLIED: getLocaleLabels(
+    "Applied",
+    "NOC_APPLIED",
+    getTransformedLocalStorgaeLabels()
   ),
-  PENDINGPAYMENT: get(
-    getLocalTextFromCode("WF_NEWNOC_PENDINGPAYMENT"),
-    "message",
-    "Pending payment"
+  PAID: getLocaleLabels(
+    "Paid",
+    "WF_NEWNOC_PENDINGAPPROVAL",
+    getTransformedLocalStorgaeLabels()
   ),
-  FIELDINSPECTION: get(
-    getLocalTextFromCode("WF_NEWNOC_FIELDINSPECTION"),
-    "message",
-    "Pending for Field Inspection"
+
+  APPROVED: getLocaleLabels(
+    "Approved",
+    "NOC_APPROVED",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Search Results for Fire NOC Applications": get(
-    getLocalTextFromCode("NOC_HOME_SEARCH_RESULTS_TABLE_HEADING"),
-    "message",
-    "Search Results for Fire NOC Applications"
+  REJECTED: getLocaleLabels(
+    "Rejected",
+    "NOC_REJECTED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  CANCELLED: getLocaleLabels(
+    "Cancelled",
+    "NOC_CANCELLED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGAPPROVAL: getLocaleLabels(
+    "Pending for Approval",
+    "WF_NEWNOC_PENDINGAPPROVAL",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGPAYMENT: getLocaleLabels(
+    "Pending payment",
+    "WF_NEWNOC_PENDINGPAYMENT",
+    getTransformedLocalStorgaeLabels()
+  ),
+
+  FIELDINSPECTION: getLocaleLabels(
+    "Pending for Field Inspection",
+    "WF_NEWNOC_FIELDINSPECTION",
+    getTransformedLocalStorgaeLabels()
+  ),
+  "Search Results for Fire-NOC Applications": getLocaleLabels(
+    "",
+    "NOC_HOME_SEARCH_RESULTS_TABLE_HEADING",
+    getTransformedLocalStorgaeLabels()
   )
 };
 
@@ -102,7 +128,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Application Date")]: {},
       [get(textToLocalMapping, "Status")]: {}
     },
-    title: get(textToLocalMapping, "Search Results for Fire NOC Applications"),
+    title: get(textToLocalMapping, "Search Results for Fire-NOC Applications"),
     options: {
       filter: false,
       download: false,

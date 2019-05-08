@@ -11,6 +11,7 @@ import {
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getDetailsForOwner } from "../../utils";
 import get from "lodash/get";
 
 const showComponent = (dispatch, componentJsonPath, display) => {
@@ -50,17 +51,19 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
-        jsonPath: "noc.applicantDetails.applicant[0].mobileNo",
+        errorMessage:"Invalid Mobile No.",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber",
         iconObj: {
           iconName: "search",
           position: "end",
-          color: "#FE7A51"
-          // onClickDefination: {
-          //   action: "condition",
-          //   callBack: (state, dispatch, fieldInfo) => {
-          //     getDetailsForOwner(state, dispatch, fieldInfo);
-          //   }
-          // }
+          color: "#FE7A51",
+          onClickDefination: {
+            action: "condition",
+            callBack: (state, dispatch, fieldInfo) => {
+              getDetailsForOwner(state, dispatch, fieldInfo);
+            }
+          }
         },
         // props: {
         //   style: {
@@ -96,7 +99,8 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        jsonPath: "noc.applicantDetails.applicant[0].applicantName",
+        errorMessage:"Invalid Name",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -117,27 +121,28 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender",
         props: {
           label: { name: "Gender", key: "NOC_GENDER_LABEL" },
           buttons: [
             {
               labelName: "Male",
-              labelKey: "NOC_MALE_RADIOBUTTON",
+              labelKey: "NOC_GENDER_MALE_RADIOBUTTON",
               value: "MALE"
             },
             {
               labelName: "FEMALE",
-              labelKey: "NOC_FEMALE_RADIOBUTTON",
+              labelKey: "NOC_GENDER_FEMALE_RADIOBUTTON",
               value: "FEMALE"
             },
             {
               labelName: "Transgender",
-              labelKey: "NOC_TRANSGENDER_RADIOBUTTON",
+              labelKey: "NOC_GENDER_TRANSGENDER_RADIOBUTTON",
               value: "TRANSGENDER"
             }
           ],
-          jsonPath: "noc.applicantDetails.applicant[0].applicantGender",
+          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender",
           required: true
         },
         type: "array"
@@ -153,7 +158,8 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "noc.applicantDetails.applicant[0].applicantDob",
+        errorMessage: "Invalid Date",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].dob",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -170,7 +176,9 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
         pattern: getPattern("Email"),
-        jsonPath: "noc.applicantDetails.applicant[0].applicantEmail",
+        errorMessage:"Invalid Email",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].emailId",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -188,8 +196,9 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
+        errorMessage:"Invalid Name",
         jsonPath:
-          "noc.applicantDetails.applicant[0].applicantFatherHusbandName",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].fatherOrHusbandName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -205,22 +214,24 @@ const commonApplicantInformation = () => {
           sm: 12,
           md: 6
         },
-        jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
         props: {
-          label: { name: "Relationship", key: "NOC_RELATIONSHIP_LABEL" },
+          label: { name: "Relationship", key: "NOC_APPLICANT_RELATIONSHIP_LABEL" },
           buttons: [
             {
               labelName: "Father",
-              labelKey: "NOC_FATHER_RADIOBUTTON",
+              labelKey: "NOC_APPLICANT_RELATIONSHIP_FATHER_RADIOBUTTON",
               value: "FATHER"
             },
             {
               label: "Husband",
-              labelKey: "NOC_HUSBAND_RADIOBUTTON",
+              labelKey: "NOC_APPLICANT_RELATIONSHIP_HUSBAND_RADIOBUTTON",
               value: "HUSBAND"
             }
           ],
-          jsonPath: "noc.applicantDetails.applicant[0].applicantRelationship",
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
           required: true
         },
         type: "array"
@@ -235,7 +246,8 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
         pattern: getPattern("PAN"),
-        jsonPath: "noc.applicantDetails.applicant[0].applicantPan",
+        errorMessage:"Invalid PAN",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].pan",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -252,7 +264,10 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].applicantAddress",
+        pattern: getPattern("Address"),
+        errorMessage:"Invalid Address",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].permanentAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -268,15 +283,21 @@ const commonApplicantInformation = () => {
           labelName: "Select Special Applicant Category",
           labelKey: "NOC_SPECIAL_APPLICANT_CATEGORY_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantDetails.applicant[0].applicantCategory",
-        data: [
-          {
-            code: "A"
-          },
-          {
-            code: "B"
-          }
-        ],
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].ownerType",
+        // data: [
+        //   {
+        //     code: "A"
+        //   },
+        //   {
+        //     code: "B"
+        //   }
+        // ],
+        localePrefix: {
+          moduleName: "egov-firenoc",
+          masterName: "BuildingType"
+        },
+        sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -310,8 +331,11 @@ const institutionInformation = () => {
           labelName: "Enter Name of Institution",
           labelKey: "NOC_ENTER_INSTITUTION_PLACEHOLDER"
         },
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Name",
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].institutionName",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionName",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -328,7 +352,10 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_TELEPHONE_NUMBER_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].telephoneNumber",
+        pattern:getPattern("MobileNo"),
+        errorMessage:"Invalid Number",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.telephoneNumber",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -345,7 +372,10 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_AUTHORIZED_PERSON_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].authorizedPerson",
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Name",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPerson",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -362,7 +392,10 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].institutionDesignation",
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Designation Name",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionDesignation",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -379,7 +412,11 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_MOBILE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].authorizedPersonMobile",
+        pattern:getPattern("MobileNo"),
+        errorMessage:"Invalid MobileNo.",
+
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonMobile",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -395,8 +432,11 @@ const institutionInformation = () => {
           labelName: "Enter Email of Authorized Person",
           labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
         },
+        pattern:getPattern("Email"),
+        errorMessage:"Invalid Email",
         required: true,
-        jsonPath: "noc.applicantDetails.applicant[0].authorizedPersonEmail",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonEmail",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -413,8 +453,10 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("Address"),
+        errorMessage:"Invalid Address",
         jsonPath:
-          "noc.applicantDetails.applicant[0].officialCorrespondenceAddress",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.officialCorrespondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -449,7 +491,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Type",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantDetails.applicantType",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
         localePrefix: {
           moduleName: "common-masters",
           masterName: "OwnerShipCategory"
@@ -499,7 +541,7 @@ export const applicantDetails = getCommonCard({
           labelName: "Select Applicant Subtype",
           labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
         },
-        jsonPath: "noc.applicantDetails.applicantSubType",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
         localePrefix: {
           moduleName: "common-masters",
           masterName: "OwnerShipCategory"
@@ -514,6 +556,7 @@ export const applicantDetails = getCommonCard({
         //     display: "none"
         //   }
         // },
+        required: true,
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -573,7 +616,8 @@ export const applicantDetails = getCommonCard({
               labelName: "Add Applicant",
               labelKey: "NOC_ADD_APPLICANT_LABEL"
             },
-            sourceJsonPath: "noc.applicantDetails.applicant",
+            sourceJsonPath:
+              "FireNOCs[0].fireNOCDetails.applicantDetails.owners",
             prefixSourceJsonPath:
               "children.cardContent.children.applicantCard.children"
           },

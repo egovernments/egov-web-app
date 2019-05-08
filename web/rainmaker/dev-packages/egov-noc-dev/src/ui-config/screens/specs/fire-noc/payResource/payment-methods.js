@@ -100,6 +100,7 @@ export const payeeDetails = getCommonContainer({
     },
     jsonPath: "ReceiptTemp[0].Bill[0].payerMobileNumber",
     pattern: getPattern("MobileNo"),
+    errorMessage: "Invalid Mobile No.",
     iconObj: {
       position: "start",
       label: "+91 |"
@@ -118,7 +119,7 @@ export const chequeDetails = getCommonContainer({
       labelName: "Enter Cheque  no.",
       labelKey: "NOC_PAYMENT_CHQ_NO_PLACEHOLDER"
     },
-    pattern: getPattern("CheckNo"),
+    //Pattern validation for Cheque number
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber",
     required: true
   }),
@@ -199,7 +200,7 @@ export const demandDraftDetails = getCommonContainer({
       labelKey: "NOC_PAYMENT_DD_NO_PLACEHOLDER"
     },
     required: true,
-    pattern: getPattern("DDno"),
+    //Pattern validation for DD no.
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
   ddDate: getDateField({
@@ -280,7 +281,8 @@ export const cardDetails = getCommonContainer({
     },
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.instrumentNumber",
-    pattern: "^([0-9]){4}$"
+    pattern: "^([0-9]){4}$",
+    errorMessage: "Invalid",
   }),
   TrxNo: getTextField({
     label: {
@@ -291,6 +293,7 @@ export const cardDetails = getCommonContainer({
       labelName: "Enter transaction no.",
       labelKey: "NOC_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
+    // Pattern validation for Transaction number
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionNumber"
   }),
@@ -303,6 +306,7 @@ export const cardDetails = getCommonContainer({
       labelName: "Enter transaction no.",
       labelKey: "NOC_PAYMENT_TRANS_NO_PLACEHOLDER"
     },
+    // Pattern validation for Transaction number
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionNumberConfirm"
   })

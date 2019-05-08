@@ -115,7 +115,7 @@ const getMdmsData = async (action, state, dispatch) => {
         {
           moduleName: "common-masters",
           masterDetails: [
-            // { name: "OwnerType" },
+            { name: "OwnerType" },
             { name: "OwnerShipCategory" }
             // { name: "DocumentType" }
           ]

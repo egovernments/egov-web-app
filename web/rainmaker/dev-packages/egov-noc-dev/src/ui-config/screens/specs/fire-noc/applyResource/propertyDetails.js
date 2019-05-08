@@ -5,7 +5,8 @@ import {
   getCommonGrayCard,
   getCommonTitle,
   getSelectField,
-  getTextField
+  getTextField,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
@@ -23,6 +24,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Plot Size (in Sq meters)",
           labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_PLACEHOLDER"
         },
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Plot size.",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotSize",
         gridDefination: {
@@ -45,6 +48,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_PLACEHOLDER"
         },
         // required: true,
+        pattern: getPattern("TradeName"),
+        errorMessage: "Invalid Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name",
         // props: {
@@ -138,7 +143,7 @@ const commonBuildingData = buildingType => {
         //     code: "Non-Commercial"
         //   }
         // ],
-        sourceJsonPath: "noc.buildingUsageSubType",
+        // sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -157,6 +162,8 @@ const commonBuildingData = buildingType => {
           labelName: "Select No. of Floors",
           labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_PLACEHOLDER"
         },
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid number",
         required: true,
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors",
@@ -190,6 +197,8 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_PLACEHOLDER"
         },
         required: true,
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid number",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements",
         data: [
@@ -219,6 +228,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Ground Floor Builtup Area in Sq meters",
           labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
         },
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Area",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea",
         gridDefination: {
@@ -238,6 +249,8 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Height of the Building in meters",
           labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_PLACEHOLDER"
         },
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Height",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding",
         gridDefination: {
@@ -275,16 +288,16 @@ export const propertyDetails = getCommonCard({
         "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
       props: {
         required: true,
-        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS" },
+        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS_LABEL" },
         buttons: [
           {
             labelName: "Single Building",
-            labelKey: "NOC_SINGLE_BUILDING",
+            labelKey: "NOC_NO_OF_BUILDINGS_SINGLE_RADIOBUTTON",
             value: "SINGLE"
           },
           {
             label: "Multiple Building",
-            labelKey: "NOC_SINGLE_BUILDING",
+            labelKey: "NOC_NO_OF_BUILDINGS_MULTIPLE_RADIOBUTTON",
             value: "MULTIPLE"
           }
         ],
