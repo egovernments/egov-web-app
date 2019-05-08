@@ -997,7 +997,7 @@ class FormWizard extends Component {
       set(
         prepareFormData,
         "Receipt[0].Bill[0].paidBy",
-        get(prepareFormData, "Receipt[0].Bill[0].payerName")
+        get(prepareFormData, "Receipt[0].Bill[0].payeeName")
       );
     }
 
