@@ -12,6 +12,12 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 //import { gotoApplyWithStep } from "../../utils/index";
 
+const onIconClick = (state, dispatch, index) => {
+  const ifscCode = get(
+    state.screenConfiguration.preparedFinalObject,
+    "ReceiptTemp[0].instrument.ifscCode"
+  );
+};
 export const capturePayment = getCommonGrayCard({
   header: {
     uiFramework: "custom-atoms",
@@ -126,7 +132,18 @@ export const capturePayment = getCommonGrayCard({
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].ifscnp,Code"
+        jsonPath: "Licenses[0].ifscnp,Code",
+        iconObj: {
+          iconName: "search",
+          position: "end",
+          color: "#FE7A51",
+          onClickDefination: {
+            action: "condition",
+            callBack: (state, dispatch) => {
+              onIconClick(state, dispatch, 1);
+            }
+          }
+        }
       })
     }
   }
