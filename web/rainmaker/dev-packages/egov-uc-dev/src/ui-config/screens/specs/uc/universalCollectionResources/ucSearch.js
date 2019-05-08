@@ -11,6 +11,8 @@ import {
   } from "egov-ui-framework/ui-config/screens/specs/utils";
   import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
  import { searchApiCall } from "./function";
+ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+
   
   const hasButton = getQueryArg(window.location.href, "hasButton");
   //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -18,6 +20,49 @@ import {
   //enableInbox = hasApproval && hasApproval === "false" ? false : true;
   enableButton = hasButton && hasButton === "false" ? false : true;
   
+
+  const resetFields = (state, dispatch) => {
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.receiptNo",
+        "props.value",
+        ""
+      )
+    );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.serviceType",
+        "props.value",
+        ""
+      )
+    );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.mobileNo",
+        "props.value",
+        ""
+      )
+    );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.fromDate",
+        "props.value",
+        ""
+      )
+    );
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.toDate",
+        "props.value",
+        ""
+      )
+    );
+  };
   export const UCSearchCard = getCommonCard({
     header :getCommonHeader({
       labelName: "Search Receipt",
@@ -31,7 +76,7 @@ import {
       receiptNo: getTextField({
         label: {
           labelName: "Receipt No.",
-          labelKey: "UC_USAGE_LABEL"
+          labelKey: "UC_receipt_LABEL"
         },
         placeholder: {
           labelName: "Enter Receipt NO.",
@@ -161,10 +206,10 @@ import {
               labelKey: "UC_RESET_BUTTON"
             })
           },
-          // onClickDefination: {
-          //   action: "condition",
-          //   callBack: searchApiCall
-          // }
+          onClickDefination: {
+            action: "condition",
+            callBack: resetFields
+          }
         },
 
         searchButton: {

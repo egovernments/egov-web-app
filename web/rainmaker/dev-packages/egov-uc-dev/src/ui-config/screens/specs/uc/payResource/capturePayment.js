@@ -11,7 +11,7 @@ import {
   getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 //import { gotoApplyWithStep } from "../../utils/index";
-
+import get from "lodash/get";
 const onIconClick = (state, dispatch, index) => {
   const ifscCode = get(
     state.screenConfiguration.preparedFinalObject,
