@@ -138,7 +138,7 @@ const commonBuildingData = buildingType => {
         //     code: "Non-Commercial"
         //   }
         // ],
-        sourceJsonPath: "noc.buildingUsageSubType",
+        // sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
           sm: 12,
