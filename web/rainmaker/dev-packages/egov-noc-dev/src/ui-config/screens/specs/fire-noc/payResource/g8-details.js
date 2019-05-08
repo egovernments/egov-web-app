@@ -3,7 +3,8 @@ import {
   getCommonSubHeader,
   getTextField,
   getDateField,
-  getCommonContainer
+  getCommonContainer,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 const g8Details = getCommonGrayCard({
@@ -21,6 +22,7 @@ const g8Details = getCommonGrayCard({
         labelName: "Enter GEN/G8 Receipt No.",
         labelKey: "NOC_PAYMENT_RCPT_NO_PLACEHOLDER"
       },
+      // Pattern validation for the reciept
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptNumber"
     }),
     receiptIssueDate: getDateField({
@@ -28,6 +30,8 @@ const g8Details = getCommonGrayCard({
          labelName: "GEN/G8 Receipt Issue Date",
          labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_LABEL" },
       placeholder: { labelName: "dd/mm/yy", labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_PLACEHOLDER" },
+      pattern: getPattern("Date"),
+      errorMessage: "Invalid Date Format",
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
     })
   })

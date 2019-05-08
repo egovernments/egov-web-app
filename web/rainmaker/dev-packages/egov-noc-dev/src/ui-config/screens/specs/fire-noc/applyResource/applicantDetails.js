@@ -51,6 +51,7 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
+        errorMessage:"Invalid Mobile No.",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber",
         iconObj: {
@@ -98,6 +99,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
+        errorMessage:"Invalid Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name",
         // props: {
         //   style: {
@@ -156,6 +158,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Date"),
+        errorMessage: "Invalid Date",
         jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].dob",
         gridDefination: {
           xs: 12,
@@ -173,6 +176,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
         pattern: getPattern("Email"),
+        errorMessage:"Invalid Email",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].emailId",
         gridDefination: {
@@ -192,6 +196,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
+        errorMessage:"Invalid Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].fatherOrHusbandName",
         gridDefination: {
@@ -241,6 +246,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
         pattern: getPattern("PAN"),
+        errorMessage:"Invalid PAN",
         jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].pan",
         gridDefination: {
           xs: 12,
@@ -258,6 +264,8 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
+        pattern: getPattern("Address"),
+        errorMessage:"Invalid Address",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].permanentAddress",
         gridDefination: {
@@ -323,6 +331,8 @@ const institutionInformation = () => {
           labelName: "Enter Name of Institution",
           labelKey: "NOC_ENTER_INSTITUTION_PLACEHOLDER"
         },
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Name",
         required: true,
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionName",
@@ -342,6 +352,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_TELEPHONE_NUMBER_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("MobileNo"),
+        errorMessage:"Invalid Number",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.telephoneNumber",
         gridDefination: {
@@ -360,6 +372,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_AUTHORIZED_PERSON_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPerson",
         gridDefination: {
@@ -378,6 +392,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("Name"),
+        errorMessage:"Invalid Designation Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionDesignation",
         gridDefination: {
@@ -396,6 +412,9 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_MOBILE_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("MobileNo"),
+        errorMessage:"Invalid MobileNo.",
+
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonMobile",
         gridDefination: {
@@ -413,6 +432,8 @@ const institutionInformation = () => {
           labelName: "Enter Email of Authorized Person",
           labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
         },
+        pattern:getPattern("Email"),
+        errorMessage:"Invalid Email",
         required: true,
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonEmail",
@@ -432,6 +453,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
+        pattern:getPattern("Address"),
+        errorMessage:"Invalid Address",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.officialCorrespondenceAddress",
         gridDefination: {
