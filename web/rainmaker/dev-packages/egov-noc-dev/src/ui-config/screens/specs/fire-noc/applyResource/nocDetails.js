@@ -33,16 +33,16 @@ export const nocDetails = getCommonCard({
       type: "array",
       props: {
         required: true,
-        label: { name: "NOC Type", key: "NOC_TYPE" },
+        label: { name: "NOC Type", key: "NOC_TYPE_LABEL" },
         buttons: [
           {
             labelName: "New",
-            labelKey: "NOC_TYPE_NEW",
+            labelKey: "NOC_TYPE_NEW_RADIOBUTTON",
             value: "NEW"
           },
           {
             label: "Provisional",
-            labelKey: "NOC_TYPE_PROVISIONAL",
+            labelKey: "NOC_TYPE_PROVISIONAL_RADIOBUTTON",
             value: "PROVISIONAL"
           }
         ],

@@ -126,17 +126,17 @@ const commonApplicantInformation = () => {
           buttons: [
             {
               labelName: "Male",
-              labelKey: "NOC_MALE_RADIOBUTTON",
+              labelKey: "NOC_GENDER_MALE_RADIOBUTTON",
               value: "MALE"
             },
             {
               labelName: "FEMALE",
-              labelKey: "NOC_FEMALE_RADIOBUTTON",
+              labelKey: "NOC_GENDER_FEMALE_RADIOBUTTON",
               value: "FEMALE"
             },
             {
               labelName: "Transgender",
-              labelKey: "NOC_TRANSGENDER_RADIOBUTTON",
+              labelKey: "NOC_GENDER_TRANSGENDER_RADIOBUTTON",
               value: "TRANSGENDER"
             }
           ],
@@ -212,16 +212,16 @@ const commonApplicantInformation = () => {
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
         props: {
-          label: { name: "Relationship", key: "NOC_RELATIONSHIP_LABEL" },
+          label: { name: "Relationship", key: "NOC_APPLICANT_RELATIONSHIP_LABEL" },
           buttons: [
             {
               labelName: "Father",
-              labelKey: "NOC_FATHER_RADIOBUTTON",
+              labelKey: "NOC_APPLICANT_RELATIONSHIP_FATHER_RADIOBUTTON",
               value: "FATHER"
             },
             {
               label: "Husband",
-              labelKey: "NOC_HUSBAND_RADIOBUTTON",
+              labelKey: "NOC_APPLICANT_RELATIONSHIP_HUSBAND_RADIOBUTTON",
               value: "HUSBAND"
             }
           ],

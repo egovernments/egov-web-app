@@ -275,16 +275,16 @@ export const propertyDetails = getCommonCard({
         "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
       props: {
         required: true,
-        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS" },
+        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS_LABEL" },
         buttons: [
           {
             labelName: "Single Building",
-            labelKey: "NOC_SINGLE_BUILDING",
+            labelKey: "NOC_NO_OF_BUILDINGS_SINGLE_RADIOBUTTON",
             value: "SINGLE"
           },
           {
             label: "Multiple Building",
-            labelKey: "NOC_SINGLE_BUILDING",
+            labelKey: "NOC_NO_OF_BUILDINGS_MULTIPLE_RADIOBUTTON",
             value: "MULTIPLE"
           }
         ],
