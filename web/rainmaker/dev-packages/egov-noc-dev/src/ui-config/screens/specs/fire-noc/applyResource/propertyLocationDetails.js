@@ -177,7 +177,7 @@ export const propertyLocationDetails = getCommonCard(
           jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
           required: true,
           props: {
-            required: true,
+            required: true
             // disabled: true
           }
         }),
@@ -268,7 +268,7 @@ export const propertyLocationDetails = getCommonCard(
         // required: true,
 
         uiFramework: "custom-containers-local",
-        moduleName: "egov-firenoc",
+        moduleName: "egov-noc",
         componentPath: "AutosuggestContainer",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
@@ -332,7 +332,9 @@ export const propertyLocationDetails = getCommonCard(
           style: {
             width: "100%",
             cursor: "pointer"
-          }
+          },
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
         },
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
         onClickDefination: {
@@ -366,7 +368,9 @@ export const propertyLocationDetails = getCommonCard(
               },
               props: {
                 disabled: true,
-                cursor: "pointer"
+                cursor: "pointer",
+                jsonPath:
+                  "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
               }
             })
           }
