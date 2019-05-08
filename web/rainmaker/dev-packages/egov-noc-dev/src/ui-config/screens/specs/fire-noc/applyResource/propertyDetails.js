@@ -272,7 +272,7 @@ export const propertyDetails = getCommonCard({
         xs: 12
       },
       jsonPath:
-        "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
+        "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
       props: {
         required: true,
         label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS" },
@@ -289,7 +289,7 @@ export const propertyDetails = getCommonCard({
           }
         ],
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBuildings",
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
         defaultValue: "SINGLE"
       },
       type: "array",

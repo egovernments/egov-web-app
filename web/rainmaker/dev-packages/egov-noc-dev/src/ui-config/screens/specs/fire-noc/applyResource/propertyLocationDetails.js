@@ -163,7 +163,7 @@ export const propertyLocationDetails = getCommonCard(
         //   key: "NOC_PROPERTY_ID_TOOLTIP_MESSAGE"
         // },
         // infoIcon: "info_circle",
-        jsonPath: "noc.address.propertyId"
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.propertyId"
       }),
       propertyCity: {
         ...getSelectField({
@@ -174,16 +174,21 @@ export const propertyLocationDetails = getCommonCard(
             labelKey: "NOC_PROPERTY_CITY_PLACEHOLDER"
           },
           sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-          jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+          jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
           required: true,
           props: {
             required: true,
-            disabled: true
+            // disabled: true
           }
         }),
         beforeFieldChange: async (action, state, dispatch) => {
           //Below only runs for citizen - not required here in employee
-          dispatch(prepareFinalObject("noc.address.city", action.value));
+          dispatch(
+            prepareFinalObject(
+              "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+              action.value
+            )
+          );
           try {
             let payload = await httpRequest(
               "post",
@@ -222,7 +227,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_PLOT_NO_PLACEHOLDER"
         },
         // pattern: getPattern("DoorHouseNo"),
-        jsonPath: "noc.address.doorHouseNo"
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo"
       }),
       propertyBuilidingName: getTextField({
         label: {
@@ -234,7 +239,8 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_BLDG_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        jsonPath: "noc.address.buildingName"
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
       }),
       propertyStreetName: getTextField({
         label: {
@@ -246,21 +252,65 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        jsonPath: "noc.address.street"
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.street"
       }),
-      propertyMohalla: getTextField({
-        label: {
-          labelName: "Mohalla",
-          labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
+      propertyMohalla: {
+        // label: {
+        //   labelName: "Mohalla",
+        //   labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
+        // },
+        // placeholder: {
+        //   labelName: "Enter Mohalla",
+        //   labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
+        // },
+        // pattern: getPattern("BuildingStreet"),
+        // jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+        // required: true,
+
+        uiFramework: "custom-containers-local",
+        moduleName: "egov-firenoc",
+        componentPath: "AutosuggestContainer",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+        required: true,
+        props: {
+          style: {
+            width: "100%",
+            cursor: "pointer"
+          },
+          label: {
+            labelName: "Mohalla",
+            labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Mohalla",
+            labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
+          },
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+          sourceJsonPath: "applyScreenMdmsData.tenant.localities",
+          labelsFromLocalisation: true,
+          suggestions: [],
+          fullwidth: true,
+          required: true,
+          inputLabelProps: {
+            shrink: true
+          }
+          // className: "tradelicense-mohalla-apply"
         },
-        placeholder: {
-          labelName: "Enter Mohalla",
-          labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
+        beforeFieldChange: async (action, state, dispatch) => {
+          // dispatch(
+          //   prepareFinalObject(
+          //     "Licenses[0].tradeLicenseDetail.address.locality.name",
+          //     action.value && action.value.label
+          //   )
+          // );
         },
-        pattern: getPattern("BuildingStreet"),
-        jsonPath: "noc.address.mohalla",
-        required: true
-      }),
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      },
       propertyPincode: getTextField({
         label: {
           labelName: "Pincode",
@@ -271,7 +321,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_PIN_PLACEHOLDER"
         },
         pattern: getPattern("Pincode"),
-        jsonPath: "noc.address.pincode",
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode",
         required: true
       }),
       propertyGisCoordinates: {
@@ -284,7 +334,7 @@ export const propertyLocationDetails = getCommonCard(
             cursor: "pointer"
           }
         },
-        jsonPath: "noc.address.latitude",
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
         onClickDefination: {
           action: "condition",
           callBack: showHideMapPopup
@@ -304,7 +354,8 @@ export const propertyLocationDetails = getCommonCard(
                 labelName: "Select your property location on map",
                 labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_PLACEHOLDER"
               },
-              jsonPath: "noc.address.latitude",
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
               iconObj: {
                 iconName: "gps_fixed",
                 position: "end"
@@ -331,7 +382,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
         // pattern: getPattern("ElectricityConnNo"),
-        jsonPath: "noc.address.additionalDetail.fireStation"
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.firestationId"
       })
     }),
     mapsDialog: {

@@ -123,6 +123,23 @@ const getMdmsData = async (action, state, dispatch) => {
         {
           moduleName: "firenoc",
           masterDetails: [{ name: "PropertyType" }, { name: "BuildingType" }]
+        },
+        {
+          moduleName: "egov-location",
+          masterDetails: [
+            {
+              name: "TenantBoundary"
+              // filter: "$.*.hierarchyType"
+            }
+          ]
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants"
+            }
+          ]
         }
       ]
     }
@@ -163,6 +180,14 @@ const screenConfig = {
       "applicationNumber"
     );
     const step = getQueryArg(window.location.href, "step");
+
+    // Set Property City
+    dispatch(
+      prepareFinalObject(
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+        getTenantId()
+      )
+    );
 
     // Set MDMS Data
     getMdmsData(action, state, dispatch).then(response => {
