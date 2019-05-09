@@ -84,7 +84,7 @@ class AddRebateExemption extends React.Component {
       adhocPenalty,
       additionalRebate
     } = this.props;
-    if (adhocExemption.value > 0) {
+    if (adhocExemption.value >= 0) {
       if (adhocExemption.value > totalAmount) {
         if (validateForm(additionalRebate)) {
           alert(
@@ -101,7 +101,7 @@ class AddRebateExemption extends React.Component {
         }
       }
     }
-    if (adhocPenalty.value > 0) {
+    if (adhocPenalty.value >= 0) {
       if (!validateForm(additionalRebate)) {
         displayFormErrors("additionalRebate");
       } else {
