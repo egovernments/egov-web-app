@@ -99,7 +99,58 @@ const callBackForNext = async (state, dispatch) => {
       state,
       dispatch
     );
-    if (!isApplicantTypeCardValid || !isSingleApplicantCardValid) {
+    let isInstitutionCardValid = validateFields(
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer.children.institutionInfo.children.cardContent.children.applicantCard.children",
+      state,
+      dispatch
+    );
+
+    // Multiple applicants cards validations
+    let multipleApplicantCardPath =
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items";
+    // "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items[0].item0.children.cardContent.children.applicantCard"
+    let multipleApplicantCardItems = get(
+      state.screenConfiguration.screenConfig.apply,
+      multipleApplicantCardPath,
+      []
+    );
+    let isMultipleApplicantCardValid = true;
+    for (var j = 0; j < multipleApplicantCardItems.length; j++) {
+      if (
+        (multipleApplicantCardItems[j].isDeleted === undefined ||
+          multipleApplicantCardItems[j].isDeleted !== false) &&
+        !validateFields(
+          `${multipleApplicantCardPath}[${j}].item${j}.children.cardContent.children.applicantCard.children`,
+          state,
+          dispatch,
+          "apply"
+        )
+      )
+        isMultipleApplicantCardValid = false;
+    }
+
+    let selectedApplicantType = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+      "SINGLE"
+    );
+    if (selectedApplicantType.includes("INSTITUTIONAL")) {
+      isSingleApplicantCardValid = true;
+      isMultipleApplicantCardValid = true;
+    } else if (selectedApplicantType.includes("MULTIPLEOWNERS")) {
+      isSingleApplicantCardValid = true;
+      isInstitutionCardValid = true;
+    } else {
+      isMultipleApplicantCardValid = true;
+      isInstitutionCardValid = true;
+    }
+
+    if (
+      !isApplicantTypeCardValid ||
+      !isSingleApplicantCardValid ||
+      !isInstitutionCardValid ||
+      !isMultipleApplicantCardValid
+    ) {
       isFormValid = false;
     }
   }
