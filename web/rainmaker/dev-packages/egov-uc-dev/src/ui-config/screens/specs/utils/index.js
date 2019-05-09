@@ -245,6 +245,21 @@ export const getCommonGrayCard = children => {
   };
 };
 
+export const searchApi =(state,dispatch)=>
+{
+  const searchRequest = get(state.screenConfiguration.preparedFinalObject, "searchScreen")
+  console.log(searchRequest);
+ const a = 892398;
+ const searchUrl = `https://egov-micro-dev.egovernments.org/billing-service-v1/demand/_search?tenantId=pb.amritsar&businessService=${a}&receiptNo=${searchRequest.receiptNo}&mobileNO=${searchRequest.mobileNo}&serviceType=${searchRequest.serviceType}&consumerCode=test1`
+ console.log(searchUrl);
+}
+
+
+
+
+
+
+
 export const getLabelOnlyValue = (value, props = {}) => {
   return {
     uiFramework: "custom-atoms",
