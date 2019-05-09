@@ -8,6 +8,7 @@ import {
   // getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { convertDateToEpoch } from "../../utils";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -58,7 +59,7 @@ export const newCollectionDetailsCard = getCommonCard({
       visible: true,
       pattern: getPattern("ConsumerName"),
       errorMessage: "Invalid Name.",
-      jsonPath: "searchScreen.ConsumerName"
+      jsonPath: "Demands[0].ConsumerName"
     }),
     serviceCategory: getSelectField({
       label: {
@@ -79,20 +80,20 @@ export const newCollectionDetailsCard = getCommonCard({
       },
       data: [
         {
-          code: "cydycyc"
-        },
-        {
-          code: "chdfhvugb"
-        },
-        {
-          code: "chdfhvugb"
-        },
-        {
-          code: "chdfhvugb"
-        },
-        {
-          code: "chdfhvugb"
+          code: "tradelicense"
         }
+        // {
+        //   code: "chdfhvugb"
+        // },
+        // {
+        //   code: "chdfhvugb"
+        // },
+        // {
+        //   code: "chdfhvugb"
+        // },
+        // {
+        //   code: "chdfhvugb"
+        // }
       ]
     }),
 
@@ -107,17 +108,17 @@ export const newCollectionDetailsCard = getCommonCard({
       },
       required: true,
       visible: true,
-      jsonPath: "searchscreen.serviceType",
+      jsonPath: "Demands[0].businessService",
       gridDefination: {
         xs: 12,
         sm: 6
       },
       data: [
         {
-          code: "huhuh"
+          code: "PT"
         },
         {
-          code: "tatatas"
+          code: "TL"
         }
       ]
     }),
@@ -156,20 +157,20 @@ export const newCollectionDetailsCard = getCommonCard({
       jsonPath: "Demands[0].taxPeriodTo"
     }),
 
-    amountTobeCancelled: getTextField({
+    amountTobeCollected: getTextField({
       label: {
-        labelName: "Amount To Be Cancelled",
-        labelKey: "UC_AMOUNT_TO_BE_CANCELLED_LABEL"
+        labelName: "Amount To Be Collected",
+        labelKey: "UC_AMOUNT_TO_BE_ COLLECTED_LABEL"
       },
       placeholder: {
-        labelName: "Amount To be Cancelled ",
-        labelKey: "UC_AMOUNT_TO_BE_CANCELLED_PLACEHOLDER"
+        labelName: "Amount To be Collected ",
+        labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
       },
 
       required: false,
-      pattern: getPattern("amountTobeCancelled"),
+      pattern: getPattern("amountTobeCollected"),
       errorMessage: "Invalid Amount",
-      jsonPath: "Demands[0].demandDetails[0].collectionAmount"
+      jsonPath: "Demands[0].demandDetails[0].taxAmount"
     }),
     fieldCollectionFee: getTextField({
       label: {
@@ -181,7 +182,7 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_FIELD_COLLECTION_FEE_PLACEHOLDER"
       },
 
-      jsonPath: "searchScreen.fieldCollectionFee"
+      jsonPath: "Demands[0].demandDetails[0].collectionAmount"
     }),
     comment: getTextField({
       label: {
@@ -194,7 +195,7 @@ export const newCollectionDetailsCard = getCommonCard({
       },
 
       Required: false,
-      jsonPath: "searchScreen.comment"
+      jsonPath: "Demands[0].demandDetails[0].comment"
     })
   })
 });

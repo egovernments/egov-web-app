@@ -1,6 +1,9 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
+import set from "lodash/set";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { convertDateToEpoch } from "../../utils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -46,17 +49,40 @@ export const newCollectionFooter = getCommonApplyFooter({
   }
 });
 
+const convertDateFieldToEpoch = (finalObj, jsonPath) => {
+  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
+  set(finalObj, jsonPath, dateConvertedToEpoch);
+};
+
+const allDateToEpoch = (finalObj, jsonPaths) => {
+  console.log(jsonPaths);
+  jsonPaths.forEach(jsonPath => {
+    if (get(finalObj, jsonPath)) {
+      convertDateFieldToEpoch(finalObj, jsonPath);
+    }
+  });
+};
+
 const processDemand = (state, dispatch) => {
   createDemand(state, dispatch);
+  allDateToEpoch(state.screenConfiguration.preparedFinalObject, [
+    "Demands[0].taxPeriodFrom",
+    "Demands[0].taxPeriodTo"
+  ]);
   // billGenerate(state, dispatch);
   console.log("state:", state);
 };
 const createDemand = async (state, dispatch) => {
-  const demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
+  let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
+  set(demand[0], "tenantId", "pb.amritsar");
+  set(demand[0], "consumerCode", "pt-test-new-10/apr-2");
+  set(demand[0], "payer[0].uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
+  set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
+
   try {
     const payload = await httpRequest(
       "post",
-      "/billing-service-v1/demand/_create",
+      "/billing-service/demand/_create",
       "",
       [],
       {
