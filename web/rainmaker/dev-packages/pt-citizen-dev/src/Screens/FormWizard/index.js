@@ -55,7 +55,8 @@ import {
   getHeaderLabel,
   validateUnitandPlotSize,
   normalizePropertyDetails,
-  renderPlotAndFloorDetails
+  renderPlotAndFloorDetails,
+  removeAdhocIfDifferentFY
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
 import {
@@ -218,8 +219,24 @@ class FormWizard extends Component {
         const documentTypeMdms = await getDocumentTypes();
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
-      if (isReassesment && activeModule) {
-        this.props.handleFieldChange("propertyAddress", "city", activeModule);
+      if (isReassesment) {
+        activeModule &&
+          this.props.handleFieldChange("propertyAddress", "city", activeModule);
+        let prepareFormData = get(
+          currentDraft,
+          "draftRecord.prepareFormData",
+          {}
+        );
+        let lastAssessedFY = get(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].financialYear"
+        );
+        lastAssessedFY !== financialYearFromQuery &&
+          (prepareFormData = removeAdhocIfDifferentFY(
+            prepareFormData,
+            financialYearFromQuery
+          ));
+        set(currentDraft, "draftRecord.prepareFormData", prepareFormData);
       }
       updatePrepareFormDataFromDraft(
         get(currentDraft, "draftRecord.prepareFormData", {})
