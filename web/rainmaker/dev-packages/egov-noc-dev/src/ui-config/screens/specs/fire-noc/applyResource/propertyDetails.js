@@ -5,24 +5,29 @@ import {
   getCommonGrayCard,
   getCommonTitle,
   getSelectField,
-  getTextField
+  getTextField,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const commonBuildingData = buildingType => {
   let plotSize = {};
-  if (buildingType === "single") {
+  if (buildingType === "SINGLE") {
     plotSize = {
       ...getTextField({
         label: {
           labelName: "Plot Size (in Sq meters)",
-          labelKey: "NOC_PLOT_SIZE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
         },
         placeholder: {
           labelName: "Enter Plot Size (in Sq meters)",
-          labelKey: "NOC_PLOT_SIZE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].plotSize",
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Plot size.",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotSize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -36,14 +41,17 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Name of the Building",
-          labelKey: "NOC_NAME_OF_BUILDING_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_LABEL"
         },
         placeholder: {
-          labelName: "Name of the Building",
-          labelKey: "NOC_ENTER_NAME_OF_BUILDING_PLACEHOLDER"
+          labelName: "Enter Name of the Building",
+          labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_PLACEHOLDER"
         },
         // required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingName",
+        pattern: getPattern("TradeName"),
+        errorMessage: "Invalid Name",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -72,51 +80,70 @@ const commonBuildingData = buildingType => {
       ...getSelectField({
         label: {
           labelName: "Building Usage Type as per NBC",
-          labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_LABEL"
         },
         placeholder: {
           labelName: "Select Building Usage Type",
-          labelKey: "NOC_BUILDING_USAGE_TYPE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingUsageType",
-        data: [
-          {
-            code: "Commercial"
-          },
-          {
-            code: "Non-Commercial"
-          }
-        ],
-        sourceJsonPath: "noc.buildingUsageType",
+        localePrefix: {
+          moduleName: "egov-firenoc",
+          masterName: "BuildingType"
+        },
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
+        sourceJsonPath: "applyScreenMdmsData.DropdownsData.BuildingUsageType",
         gridDefination: {
           xs: 12,
           sm: 12,
           md: 6
         }
-      })
+      }),
+      afterFieldChange: (action, state, dispatch) => {
+        let path = action.componentJsonpath.replace(
+          /.buildingUsageType$/,
+          ".buildingSubUsageType"
+        );
+        let buildingUsageTypeData = get(
+          state,
+          "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
+          []
+        );
+        let buildingSubUsageTypeData = buildingUsageTypeData.filter(item => {
+          return item.active && item.code.startsWith(action.value);
+        });
+        dispatch(
+          handleField("apply", path, "props.data", buildingSubUsageTypeData)
+        );
+      }
     },
     buildingSubUsageType: {
       ...getSelectField({
         label: {
           labelName: "Building Usage Subtype as per NBC",
-          labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_LABEL"
         },
         placeholder: {
           labelName: "Select Building Usage Subtype",
-          labelKey: "NOC_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].buildingUsageSubType",
-        data: [
-          {
-            code: "Commercial"
-          },
-          {
-            code: "Non-Commercial"
-          }
-        ],
-        sourceJsonPath: "noc.buildingUsageSubType",
+        localePrefix: {
+          moduleName: "egov-firenoc",
+          masterName: "BuildingType"
+        },
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageSubType",
+        // data: [
+        //   {
+        //     code: "Commercial"
+        //   },
+        //   {
+        //     code: "Non-Commercial"
+        //   }
+        // ],
+        // sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -129,14 +156,17 @@ const commonBuildingData = buildingType => {
         label: {
           labelName:
             "No. Of Floors (Excluding Basement, Including Ground Floor)",
-          labelKey: "NOC_NO_OF_FLOORS_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_LABEL"
         },
         placeholder: {
           labelName: "Select No. of Floors",
-          labelKey: "NOC_NO_OF_FLOORS_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_PLACEHOLDER"
         },
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid number",
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].noOfFloors",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors",
         data: [
           {
             code: "1"
@@ -160,14 +190,17 @@ const commonBuildingData = buildingType => {
       ...getSelectField({
         label: {
           labelName: "No. Of Basements",
-          labelKey: "NOC_NO_OF_BASEMENTS_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
         },
         placeholder: {
           labelName: "Select No. Of Basements",
-          labelKey: "NOC_NO_OF_BASEMENTS_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "noc.buildingDetails.building[0].noOfBasements",
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid number",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements",
         data: [
           {
             code: "1"
@@ -189,13 +222,16 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Ground Floor Builtup Area (in Sq meters)",
-          labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
         },
         placeholder: {
           labelName: "Enter Ground Floor Builtup Area in Sq meters",
-          labelKey: "NOC_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].builtupArea",
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Area",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -207,13 +243,16 @@ const commonBuildingData = buildingType => {
       ...getTextField({
         label: {
           labelName: "Height of the Building from Ground level (in meters)",
-          labelKey: "NOC_HEIGHT_OF_BUILDING_LABEL"
+          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
         },
         placeholder: {
           labelName: "Enter Height of the Building in meters",
-          labelKey: "NOC_HEIGHT_OF_BUILDING_PLACEHOLDER"
+          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_PLACEHOLDER"
         },
-        jsonPath: "noc.buildingDetails.building[0].heightOfBuilding",
+        pattern: /^[0-9]*$/i,
+        errorMessage: "Invalid Height",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -245,13 +284,26 @@ export const propertyDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "noc.buildingDetails.buildingType",
+      jsonPath:
+        "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
       props: {
-        label: "No. of Buildings",
-        buttons: ["Single Building", "Multiple Building"],
-        jsonPath: "noc.buildingDetails.buildingType",
-        defaultValue: "Single Building",
-        required: true
+        required: true,
+        label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS_LABEL" },
+        buttons: [
+          {
+            labelName: "Single Building",
+            labelKey: "NOC_NO_OF_BUILDINGS_SINGLE_RADIOBUTTON",
+            value: "SINGLE"
+          },
+          {
+            label: "Multiple Building",
+            labelKey: "NOC_NO_OF_BUILDINGS_MULTIPLE_RADIOBUTTON",
+            value: "MULTIPLE"
+          }
+        ],
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+        defaultValue: "SINGLE"
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
@@ -259,7 +311,7 @@ export const propertyDetails = getCommonCard({
           "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer";
         let multipleBuildingContainerJsonPath =
           "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer";
-        if (action.value === "Single Building") {
+        if (action.value === "SINGLE") {
           dispatch(
             handleField(
               "apply",
@@ -276,7 +328,7 @@ export const propertyDetails = getCommonCard({
               { display: "none" }
             )
           );
-        } else if (action.value === "Multiple Building") {
+        } else if (action.value === "MULTIPLE") {
           dispatch(
             handleField(
               "apply",
@@ -305,7 +357,7 @@ export const propertyDetails = getCommonCard({
         },
         children: {
           singleBuilding: getCommonGrayCard({
-            singleBuildingCard: getCommonContainer(commonBuildingData("single"))
+            singleBuildingCard: getCommonContainer(commonBuildingData("SINGLE"))
           })
         }
       },
@@ -327,15 +379,16 @@ export const propertyDetails = getCommonCard({
             props: {
               scheama: getCommonGrayCard({
                 multipleBuildingCard: getCommonContainer(
-                  commonBuildingData("multiple")
+                  commonBuildingData("MULTIPLE")
                 )
               }),
               items: [],
               addItemLabel: {
-                labelKey: "NOC_ADD_BUILDING_LABEL",
+                labelKey: "NOC_PROPERTY_DETAILS_ADD_BUILDING_LABEL",
                 labelName: "ADD BUILDING"
               },
-              sourceJsonPath: "noc.buildingDetails.building",
+              sourceJsonPath:
+                "FireNOCs[0].fireNOCDetails.buildingDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
               prefixSourceJsonPath:

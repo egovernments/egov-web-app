@@ -164,7 +164,8 @@ const searchResults = async (action, state, dispatch, applicationNo) => {
 const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
   //Search details for given application Number
   if (applicationNumber) {
-    await searchResults(action, state, dispatch, applicationNumber);
+    !getQueryArg(window.location.href, "edited") &&
+      (await searchResults(action, state, dispatch, applicationNumber));
 
     // const status = getTransformedStatus(
     //   get(state, "screenConfiguration.preparedFinalObject.Licenses[0].status")

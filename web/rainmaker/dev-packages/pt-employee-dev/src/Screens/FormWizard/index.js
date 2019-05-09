@@ -155,7 +155,10 @@ class FormWizard extends Component {
           searchPropertyResponse.Properties[0].propertyDetails.length > 0
         ) {
           searchPropertyResponse.Properties[0].propertyDetails.forEach(item => {
-            sortBy(item.units, [unit => unit.floorNo || -99999]);
+            item.units = sortBy(
+              item.units,
+              unit => parseInt(unit.floorNo) || -99999
+            );
           });
         }
         // console.log(searchPropertyResponse);
@@ -171,9 +174,7 @@ class FormWizard extends Component {
             }
           ]
         };
-        console.log(propertyResponse);
         const preparedForm = convertRawDataToFormConfig(propertyResponse); //convertRawDataToFormConfig(responseee)
-        console.log(preparedForm);
         currentDraft = {
           draftRecord: {
             ...preparedForm,
@@ -910,6 +911,18 @@ class FormWizard extends Component {
       "Receipt[0].Bill[0].billDetails[0].amountPaid",
       this.state.totalAmountToBePaid
     );
+    //CS v1.1 changes
+    set(
+      prepareFormData,
+      "Receipt[0].Bill[0].taxAndPayments[0].amountPaid",
+      this.state.totalAmountToBePaid
+    );
+    set(
+      prepareFormData,
+      "Receipt[0].Bill[0].billDetails[0].collectionType",
+      "COUNTER" // HardCoding collectionType to COUNTER - Discussed with BE
+    );
+    //----------------
     set(
       prepareFormData,
       "Receipt[0].instrument.tenantId",
@@ -1022,6 +1035,7 @@ class FormWizard extends Component {
       console.log(e);
       set(prepareFormData, "Receipt[0].Bill", []);
       set(prepareFormData, "Receipt[0].instrument", {});
+      hideSpinner();
       this.props.history.push(
         `payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`
       );

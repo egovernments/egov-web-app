@@ -15,12 +15,32 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
+            <Image
+              className="mseva-logo employee-login-logo"
+              source={`${logo}`}
+            />
           </div>
-          <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
-          <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
-          <TextField onChange={(e, value) => handleFieldChange("password", value)} {...fields.password} />
-          <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
+          <Label
+            style={{ marginBottom: "12px" }}
+            className="text-center"
+            bold={true}
+            dark={true}
+            fontSize={16}
+            label="LOGIN"
+          />
+          <TextField
+            onChange={(e, value) => handleFieldChange("username", value)}
+            {...fields.username}
+          />
+          <TextField
+            onChange={(e, value) => handleFieldChange("password", value)}
+            {...fields.password}
+          />
+          <CityPicker
+            onChange={handleFieldChange}
+            fieldKey="city"
+            field={fields.city}
+          />
           {/* <Link to="/user/forgot-password">
             <div style={{ float: "right" }}>
               <Label
@@ -28,7 +48,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
                 labelStyle={{ marginBottom: "12px" }}
                 className="forgot-passwd"
                 fontSize={14}
-                label="FORGOT PASSWORD?"
+                label="CORE_COMMON_FORGOT_PASSWORD"
               />
             </div>
           </Link> */}

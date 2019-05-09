@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Employee from "modules/employee";
 import { ImageModalDisplay } from "modules/common";
 
-const Main = ({ routes }) => {
+const Main = ({ routes, hasLocalisation, defaultUrl }) => {
   return (
     <main>
       <Switch>
@@ -13,8 +13,8 @@ const Main = ({ routes }) => {
             return <Employee match={props.match} routes={routes.employee} />;
           }}
         />
-        {/* <Route exact path={`image`} component={ImageModalDisplay} /> */}
-        <Redirect from="/" to="/language-selection" />
+
+        <Redirect from="/" to={hasLocalisation ? "/language-selection" : defaultUrl.employee} />
       </Switch>
     </main>
   );

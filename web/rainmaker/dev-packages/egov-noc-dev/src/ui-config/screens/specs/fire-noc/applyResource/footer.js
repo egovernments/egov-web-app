@@ -5,7 +5,7 @@ import {
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
-import { getCommonApplyFooter } from "../../utils";
+import { getCommonApplyFooter, validateFields } from "../../utils";
 import "./index.css";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
@@ -34,6 +34,127 @@ const callBackForNext = async (state, dispatch) => {
   let isFormValid = true;
   let hasFieldToaster = true;
 
+  if (activeStep === 1) {
+    let isPropertyLocationCardValid = validateFields(
+      "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.propertyDetailsConatiner.children",
+      state,
+      dispatch
+    );
+    let isSinglePropertyCardValid = validateFields(
+      "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer.children.singleBuilding.children.cardContent.children.singleBuildingCard.children",
+      state,
+      dispatch
+    );
+
+    // Multiple buildings cards validations
+    let multiplePropertyCardPath =
+      "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer.children.multipleBuilding.props.items";
+    let multiplePropertyCardItems = get(
+      state.screenConfiguration.screenConfig.apply,
+      multiplePropertyCardPath,
+      []
+    );
+    let isMultiplePropertyCardValid = true;
+    for (var j = 0; j < multiplePropertyCardItems.length; j++) {
+      if (
+        (multiplePropertyCardItems[j].isDeleted === undefined ||
+          multiplePropertyCardItems[j].isDeleted !== false) &&
+        !validateFields(
+          `${multiplePropertyCardPath}[${j}].item${j}.children.cardContent.children.multipleBuildingCard.children`,
+          state,
+          dispatch,
+          "apply"
+        )
+      )
+        isMultiplePropertyCardValid = false;
+    }
+
+    let noOfBuildings = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings"
+    );
+    if (noOfBuildings === "SINGLE") {
+      isMultiplePropertyCardValid = true;
+    } else {
+      isSinglePropertyCardValid = true;
+    }
+
+    if (
+      !isSinglePropertyCardValid ||
+      !isPropertyLocationCardValid ||
+      !isMultiplePropertyCardValid
+    ) {
+      isFormValid = false;
+    }
+  }
+
+  if (activeStep === 2) {
+    let isApplicantTypeCardValid = validateFields(
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantTypeSelection.children",
+      state,
+      dispatch
+    );
+    let isSingleApplicantCardValid = validateFields(
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.children.individualApplicantInfo.children.cardContent.children.applicantCard.children",
+      state,
+      dispatch
+    );
+    let isInstitutionCardValid = validateFields(
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer.children.institutionInfo.children.cardContent.children.applicantCard.children",
+      state,
+      dispatch
+    );
+
+    // Multiple applicants cards validations
+    let multipleApplicantCardPath =
+      "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items";
+    // "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items[0].item0.children.cardContent.children.applicantCard"
+    let multipleApplicantCardItems = get(
+      state.screenConfiguration.screenConfig.apply,
+      multipleApplicantCardPath,
+      []
+    );
+    let isMultipleApplicantCardValid = true;
+    for (var j = 0; j < multipleApplicantCardItems.length; j++) {
+      if (
+        (multipleApplicantCardItems[j].isDeleted === undefined ||
+          multipleApplicantCardItems[j].isDeleted !== false) &&
+        !validateFields(
+          `${multipleApplicantCardPath}[${j}].item${j}.children.cardContent.children.applicantCard.children`,
+          state,
+          dispatch,
+          "apply"
+        )
+      )
+        isMultipleApplicantCardValid = false;
+    }
+
+    let selectedApplicantType = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+      "SINGLE"
+    );
+    if (selectedApplicantType.includes("INSTITUTIONAL")) {
+      isSingleApplicantCardValid = true;
+      isMultipleApplicantCardValid = true;
+    } else if (selectedApplicantType.includes("MULTIPLEOWNERS")) {
+      isSingleApplicantCardValid = true;
+      isInstitutionCardValid = true;
+    } else {
+      isMultipleApplicantCardValid = true;
+      isInstitutionCardValid = true;
+    }
+
+    if (
+      !isApplicantTypeCardValid ||
+      !isSingleApplicantCardValid ||
+      !isInstitutionCardValid ||
+      !isMultipleApplicantCardValid
+    ) {
+      isFormValid = false;
+    }
+  }
+
   if (activeStep === 3) {
     moveToReview(dispatch);
   }
@@ -42,19 +163,24 @@ const callBackForNext = async (state, dispatch) => {
     if (isFormValid) {
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {
-      let errorMessage =
-        "Please fill all mandatory fields and upload the documents !";
+      let errorMessage = {
+        labelName: "Please fill all mandatory fields and upload the documents!",
+        labelKey: "ERR_UPLOAD_MANDATORY_DOCUMENTS_TOAST"
+      };
       switch (activeStep) {
-        case 0:
-          errorMessage =
-            "Please fill all mandatory fields for Trade Details, then do next !";
-          break;
         case 1:
-          errorMessage =
-            "Please fill all mandatory fields for Owner Details, then do next !";
+          errorMessage = {
+            labelName:
+              "Please fill all mandatory fields for Property Details, then proceed!",
+            labelKey: "ERR_FILL_ALL_MANDATORY_FIELDS_PROPERTY_TOAST"
+          };
           break;
         case 2:
-          errorMessage = "Please upload all the required documents !";
+          errorMessage = {
+            labelName:
+              "Please fill all mandatory fields for Applicant Details, then proceed!",
+            labelKey: "ERR_FILL_ALL_MANDATORY_FIELDS_APPLICANT_TOAST"
+          };
           break;
       }
       dispatch(toggleSnackbar(true, errorMessage, "warning"));

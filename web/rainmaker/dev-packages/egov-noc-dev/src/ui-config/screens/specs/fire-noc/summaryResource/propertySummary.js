@@ -40,21 +40,21 @@ const propertyDetails = {
         buildingName: getLabelWithValue(
           {
             labelName: "Name Of Building",
-            labelKey: "NOC_BUILDING_NAME_LABEL"
+            labelKey: "NOC_NO_OF_BUILDINGS_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].buildingName" }
         ),
         buildingUsageType: getLabelWithValue(
           {
             labelName: "Building Usage Type",
-            labelKey: "NOC_BUILDING_USAGE_TYPE_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].buildingUsageType" }
         ),
         buildingUsageSubType: getLabelWithValue(
           {
             labelName: "Building Usage Subtype",
-            labelKey: "NOC_BUILDING_USAGE_SUBTYPE_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].buildingUsageSubType" }
         ),
@@ -65,28 +65,28 @@ const propertyDetails = {
         noOfBasements: getLabelWithValue(
           {
             labelName: "No. of Basement",
-            labelKey: "NOC_NO_OF_BASEMENT_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].noOfBasements" }
         ),
         plotSize: getLabelWithValue(
           {
             labelName: "Plot Size (in sq meters)",
-            labelKey: "NOC_PLOT_SIZE_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].plotSize" }
         ),
         groundBuiltupArea: getLabelWithValue(
           {
             labelName: "Ground Builtup Area (sq meters)",
-            labelKey: "NOC_GROUND_BUILTUP_AREA_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].builtupArea" }
         ),
         heightOfBuilding: getLabelWithValue(
           {
             labelName: "Height of Building (in meters)",
-            labelKey: "NOC_BUILDING_HEIGHT_LABEL"
+            labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
           },
           { jsonPath: "noc.buildingDetails.building[0].heightOfBuilding" }
         )
@@ -115,53 +115,53 @@ const propertyLocationDetails = getCommonGrayCard({
     city: getLabelWithValue(
       {
         labelName: "City",
-        labelKey: "NOC_CITY_LABEL"
+        labelKey: "NOC_PROPERTY_CITY_LABEL"
       },
       { jsonPath: "noc.address.city" }
     ),
     doorHouseNo: getLabelWithValue(
       {
         labelName: "Door/House No.",
-        labelKey: "NOC_DOOR_HOUSE_NO_LABEL"
+        labelKey: "NOC_SUMMARY_PROPERTY__LOCATION_DOOR_HOUSE_NO_LABEL"
       },
       { jsonPath: "noc.address.doorHouseNo" }
     ),
     buildingCompanyName: getLabelWithValue(
       {
         labelName: "Building/Company Name",
-        labelKey: "NOC_BUILDING_COMPANY_NAME_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_LABEL"
       },
       { jsonPath: "noc.address.buildingName" }
     ),
     streetName: getLabelWithValue(
-      { labelName: "Street Name", labelKey: "NOC_STREET_NAME_LABEL" },
+      { labelName: "Street Name", labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_LABEL" },
       { jsonPath: "noc.address.street" }
     ),
     mohalla: getLabelWithValue(
       {
         labelName: "Mohalla",
-        labelKey: "NOC_MOHALLA_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
       },
       { jsonPath: "noc.address.mohalla" }
     ),
     pincode: getLabelWithValue(
       {
         labelName: "Pincode",
-        labelKey: "NOC_PINCODE_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_PIN_LABEL"
       },
       { jsonPath: "noc.address.pincode" }
     ),
     locationOnMap: getLabelWithValue(
       {
         labelName: "Location On Map",
-        labelKey: "NOC_LOCATION_ON_MAP_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_LABEL"
       },
       { jsonPath: "noc.address.latitude" }
     ),
     applicableFireStation: getLabelWithValue(
       {
         labelName: "Applicable Fire Station",
-        labelKey: "NOC_APPLICABLE_FIRE_STATION_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_LABEL"
       },
       { jsonPath: "noc.address.additionalDetail.fireStation" }
     )
@@ -182,7 +182,7 @@ export const propertySummary = getCommonGrayCard({
         },
         ...getCommonSubHeader({
           labelName: "Property Details",
-          labelKey: "NOC_PROPERTY_DETAILS_HEADER"
+          labelKey: "NOC_COMMON_PROPERTY_DETAILS"
         })
       },
       editSection: {

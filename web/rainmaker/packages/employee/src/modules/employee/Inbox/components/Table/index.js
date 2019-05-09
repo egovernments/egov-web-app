@@ -126,9 +126,16 @@ class InboxData extends React.Component {
                     } else {
                       return (
                         <TableCell className={classNames}>
-                          <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
+                          {index === 1 ? (
+                            <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
+                              <a>{item.text} </a>
+                            </div>
+                          ) : (
+                            <div>{item.text}</div>
+                          )}
+                          {/* <div onClick={() => getModuleLink(item, row, index)} style={{ cursor: "pointer" }}>
                             {index === 1 ? <a>{item.text} </a> : item.text}
-                          </div>
+                          </div> */}
                         </TableCell>
                       );
                     }

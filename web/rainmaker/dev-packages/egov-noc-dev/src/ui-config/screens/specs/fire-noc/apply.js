@@ -15,6 +15,8 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { httpRequest } from "../../../../ui-utils";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -104,6 +106,71 @@ export const formwizardFourthStep = {
   visible: false
 };
 
+const getMdmsData = async (action, state, dispatch) => {
+  let tenantId = getTenantId();
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            { name: "OwnerType" },
+            { name: "OwnerShipCategory" }
+            // { name: "DocumentType" }
+          ]
+        },
+        {
+          moduleName: "firenoc",
+          masterDetails: [{ name: "PropertyType" }, { name: "BuildingType" }]
+        },
+        {
+          moduleName: "egov-location",
+          masterDetails: [
+            {
+              name: "TenantBoundary"
+              // filter: "$.*.hierarchyType"
+            }
+          ]
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants"
+            }
+          ]
+        }
+      ]
+    }
+  };
+  try {
+    let payload = null;
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getFirstListFromDotSeparated = list => {
+  list = list.map(item => {
+    if (item.active) {
+      return item.code.split(".")[0];
+    }
+  });
+  list = [...new Set(list)].map(item => {
+    return { code: item };
+  });
+  return list;
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -113,6 +180,45 @@ const screenConfig = {
       "applicationNumber"
     );
     const step = getQueryArg(window.location.href, "step");
+
+    // Set Property City
+    dispatch(
+      prepareFinalObject(
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+        getTenantId()
+      )
+    );
+
+    // Set MDMS Data
+    getMdmsData(action, state, dispatch).then(response => {
+      // Set Dropdowns Data
+      let buildingUsageTypeData = get(
+        state,
+        "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
+        []
+      );
+      buildingUsageTypeData = getFirstListFromDotSeparated(
+        buildingUsageTypeData
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.BuildingUsageType",
+          buildingUsageTypeData
+        )
+      );
+      let ownershipCategory = get(
+        state,
+        "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
+        []
+      );
+      ownershipCategory = getFirstListFromDotSeparated(ownershipCategory);
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.OwnershipCategory",
+          ownershipCategory
+        )
+      );
+    });
 
     let pfo = {};
     if (applicationNumber && !step) {
@@ -218,6 +324,18 @@ const screenConfig = {
         );
       }
     }
+
+    // Set defaultValues of radiobuttons and selectors
+    let noOfBuildings = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      "SINGLE"
+    );
+    set(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      noOfBuildings
+    );
 
     // Preset multi-cards
     if (get(pfo, "buildingDetails.buildingType") === "Multiple Building") {

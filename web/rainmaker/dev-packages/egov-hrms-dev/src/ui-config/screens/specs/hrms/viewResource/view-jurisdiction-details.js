@@ -38,7 +38,13 @@ const jurisdictionCard = {
         ),
         reviewBoundary: getLabelWithValue(
           { labelName: "Boundary", labelKey: "HR_BOUNDARY_LABEL" },
-          { jsonPath: "Employee[0].jurisdictions[0].boundary" }
+          {
+            jsonPath: "Employee[0].jurisdictions[0].boundary",
+            localePrefix: {
+              moduleName: "TENANT",
+              masterName: "TENANTS"
+            }
+          }
         )
       })
     }),

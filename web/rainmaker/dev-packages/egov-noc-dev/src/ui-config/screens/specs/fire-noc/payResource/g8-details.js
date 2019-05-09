@@ -3,29 +3,35 @@ import {
   getCommonSubHeader,
   getTextField,
   getDateField,
-  getCommonContainer
+  getCommonContainer,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 const g8Details = getCommonGrayCard({
   header: getCommonSubHeader({
     labelName: "GEN/G8 Receipt Details (Optional)",
-    labelKey: "TL_PAYMENT_RCPT_DETAILS"
+    labelKey: "NOC_PAYMENT_RCPT_DETAILS"
   }),
   receiptDetailsCardContainer: getCommonContainer({
     receiptNo: getTextField({
       label: {
         labelName: "GEN/G8 Receipt No.",
-        labelKey: "TL_PAYMENT_RCPT_NO_LABEL"
+        labelKey: "NOC_PAYMENT_RCPT_NO_LABEL"
       },
       placeholder: {
         labelName: "Enter GEN/G8 Receipt No.",
-        labelKey: "TL_PAYMENT_RCPT_NO_PLACEHOLDER"
+        labelKey: "NOC_PAYMENT_RCPT_NO_PLACEHOLDER"
       },
+      // Pattern validation for the reciept
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptNumber"
     }),
     receiptIssueDate: getDateField({
-      label: { labelName: "GEN/G8 Receipt Issue Date" },
-      placeholder: { labelName: "dd/mm/yy" },
+      label: {
+         labelName: "GEN/G8 Receipt Issue Date",
+         labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_LABEL" },
+      placeholder: { labelName: "dd/mm/yy", labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_PLACEHOLDER" },
+      pattern: getPattern("Date"),
+      errorMessage: "Invalid Date Format",
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
     })
   })

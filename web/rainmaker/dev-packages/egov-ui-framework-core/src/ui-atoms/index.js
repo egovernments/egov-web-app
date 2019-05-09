@@ -113,6 +113,11 @@ const UploadedDocument = Loadable({
   loading: () => <Loading />
 });
 
+const MenuButton = Loadable({
+  loader: () => import("./MenuButton"),
+  loading: () => <Loading />
+});
+
 export {
   Div,
   Form,
@@ -141,5 +146,6 @@ export {
   Iframe,
   Snackbar,
   UploadFile,
-  UploadedDocument
+  UploadedDocument,
+  MenuButton
 };

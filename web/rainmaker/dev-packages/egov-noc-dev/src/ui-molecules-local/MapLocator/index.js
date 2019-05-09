@@ -71,16 +71,16 @@ class MapLocator extends Component {
   onClickPick = () => {
     this.props.handleField(
       "apply",
-      "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocGISCoord.children.gisTextField",
+      "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.propertyDetailsConatiner.children.propertyGisCoordinates.children.gisTextField",
       "props.value",
       `${add.lat}, ${add.lng}`
     );
     this.props.prepareFinalObject(
-      "noc.address.latitude",
+      "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
       add.lat
     );
     this.props.prepareFinalObject(
-      "noc.address.longitude",
+      "FireNOCs[0].fireNOCDetails.propertyDetails.address.longitude",
       add.lng
     );
 

@@ -154,6 +154,7 @@ class Header extends Component {
       sortButton,
       searchButton,
       activeRoutePath,
+      hasLocalisation,
     } = this.props;
     return (
       <div>
@@ -175,6 +176,7 @@ class Header extends Component {
           history={this.props.history}
           handleItemClick={_handleItemClick}
           activeRoutePath={activeRoutePath}
+          hasLocalisation={hasLocalisation}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}

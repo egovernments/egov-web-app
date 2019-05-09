@@ -322,7 +322,13 @@ export const getReviewTrade = (isEditable = true) => {
           labelName: "City",
           labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
         },
-        { jsonPath: "Licenses[0].tradeLicenseDetail.address.city" }
+        {
+          jsonPath: "Licenses[0].tradeLicenseDetail.address.city",
+          localePrefix: {
+            moduleName: "TENANT",
+            masterName: "TENANTS"
+          }
+        }
       ),
       reviewDoorNo: getLabelWithValue(
         {

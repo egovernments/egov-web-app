@@ -91,12 +91,12 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: {
               labelName: "Payment has been collected successfully!",
-              labelKey: "NOC_CONFIRMATION_MESSAGE_MAIN"
+              labelKey: "NOC_PAYMENT_SUCCESS_MESSAGE_MAIN﻿"
             },
             body: {
               labelName:
                 "A notification regarding Payment Collection has been sent to building owner at registered Mobile No.",
-              labelKey: "NOC_CONFIRMATION_MESSAGE_SUB"
+              labelKey: "NOC_PAYMENT_SUCCESS_MESSAGE_SUB"
             },
             tailText: {
               labelName: "Payment Receipt No.",
@@ -201,10 +201,14 @@ const getAcknowledgementCard = (
           card: acknowledgementCard({
             icon: "close",
             backgroundColor: "#E54D42",
-            header: { labelName: "Payment has failed!" },
+            header: {
+              labelName: "Payment has failed!",
+              labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_MAIN"
+            },
             body: {
               labelName:
-                "A notification regarding payment failure has been sent to the building owner and applicant."
+                "A notification regarding payment failure has been sent to the building owner and applicant.",
+              labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_SUB"
             }
           })
         }

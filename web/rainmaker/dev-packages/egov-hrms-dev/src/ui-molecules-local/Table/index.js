@@ -85,7 +85,8 @@ class Table extends React.Component {
             search: false,
             print: false,
             download: false,
-            filter: false
+            filter: false,
+            responsive: "scroll"
           }}
         />
       </div>

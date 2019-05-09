@@ -6,6 +6,7 @@ import {
   getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
@@ -29,16 +30,28 @@ export const nocDetails = getCommonCard({
         xs: 12
       },
       jsonPath: "noc.nocType",
+      type: "array",
       props: {
-        label: "NOC Type",
-        buttons: ["New", "Provisional"],
+        required: true,
+        label: { name: "NOC Type", key: "NOC_TYPE_LABEL" },
+        buttons: [
+          {
+            labelName: "New",
+            labelKey: "NOC_TYPE_NEW_RADIOBUTTON",
+            value: "NEW"
+          },
+          {
+            label: "Provisional",
+            labelKey: "NOC_TYPE_PROVISIONAL_RADIOBUTTON",
+            value: "PROVISIONAL"
+          }
+        ],
         jsonPath: "noc.nocType",
-        defaultValue: "New",
-        required: true
+        defaultValue: "NEW"
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
-        if (action.value === "Provisional") {
+        if (action.value === "PROVISIONAL") {
           dispatch(
             handleField(
               "apply",
@@ -69,6 +82,8 @@ export const nocDetails = getCommonCard({
           labelName: "Enter Provisional fire NoC number",
           labelKey: "NOC_PROVISIONAL_FIRE_NOC_NO_PLACEHOLDER"
         },
+        pattern: /^[a-zA-Z0-9-]*$/i,
+        errorMessage: "Invalid Fire-NOC No.",
         // required: true,
         // pattern: getPattern("MobileNo"),
         jsonPath: "noc.provisionalNocNumber",

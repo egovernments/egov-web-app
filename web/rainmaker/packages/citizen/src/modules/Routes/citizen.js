@@ -57,7 +57,7 @@ const routes = [
     path: "user/profile",
     component: Profile,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "Edit Profile" },
+    options: { hideFooter: true, title: "CS_HOME_HEADER_PROFILE" },
   },
   // {
   //   path: "pgr-home",
@@ -71,9 +71,9 @@ const routes = [
     needsAuthentication: true,
     options: {
       isHomeScreen: true,
-      title: "Home",
+      title: "COMMON_BOTTOM_NAVIGATION_HOME",
       hideTitle: true,
-      redirectionUrl: "/language-selection",
+      redirectionUrl: "/user/login",
     },
   },
   {
