@@ -57,7 +57,8 @@ import {
   validateUnitandPlotSize,
   normalizePropertyDetails,
   getImportantDates,
-  renderPlotAndFloorDetails
+  renderPlotAndFloorDetails,
+  removeAdhocIfDifferentFY
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
@@ -212,8 +213,24 @@ class FormWizard extends Component {
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
 
-      if (isReassesment && activeModule) {
-        this.props.handleFieldChange("propertyAddress", "city", activeModule);
+      if (isReassesment) {
+        activeModule &&
+          this.props.handleFieldChange("propertyAddress", "city", activeModule);
+        let prepareFormData = get(
+          currentDraft,
+          "draftRecord.prepareFormData",
+          {}
+        );
+        let lastAssessedFY = get(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].financialYear"
+        );
+        lastAssessedFY !== financialYearFromQuery &&
+          (prepareFormData = removeAdhocIfDifferentFY(
+            prepareFormData,
+            financialYearFromQuery
+          ));
+        set(currentDraft, "draftRecord.prepareFormData", prepareFormData);
       }
       updatePrepareFormDataFromDraft(
         get(currentDraft, "draftRecord.prepareFormData", {})
