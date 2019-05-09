@@ -325,6 +325,18 @@ const screenConfig = {
       }
     }
 
+    // Set defaultValues of radiobuttons and selectors
+    let noOfBuildings = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      "SINGLE"
+    );
+    set(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      noOfBuildings
+    );
+
     // Preset multi-cards
     if (get(pfo, "buildingDetails.buildingType") === "Multiple Building") {
       set(

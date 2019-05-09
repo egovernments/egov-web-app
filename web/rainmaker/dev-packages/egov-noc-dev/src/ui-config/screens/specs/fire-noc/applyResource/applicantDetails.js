@@ -51,7 +51,7 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
-        errorMessage:"Invalid Mobile No.",
+        errorMessage: "Invalid Mobile No.",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber",
         iconObj: {
@@ -99,7 +99,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        errorMessage:"Invalid Name",
+        errorMessage: "Invalid Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name",
         // props: {
         //   style: {
@@ -142,7 +142,8 @@ const commonApplicantInformation = () => {
               value: "TRANSGENDER"
             }
           ],
-          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender",
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender",
           required: true
         },
         type: "array"
@@ -176,7 +177,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_EMAIL_PLACEHOLDER"
         },
         pattern: getPattern("Email"),
-        errorMessage:"Invalid Email",
+        errorMessage: "Invalid Email",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].emailId",
         gridDefination: {
@@ -196,7 +197,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Name"),
-        errorMessage:"Invalid Name",
+        errorMessage: "Invalid Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].fatherOrHusbandName",
         gridDefination: {
@@ -217,7 +218,10 @@ const commonApplicantInformation = () => {
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
         props: {
-          label: { name: "Relationship", key: "NOC_APPLICANT_RELATIONSHIP_LABEL" },
+          label: {
+            name: "Relationship",
+            key: "NOC_APPLICANT_RELATIONSHIP_LABEL"
+          },
           buttons: [
             {
               labelName: "Father",
@@ -246,7 +250,7 @@ const commonApplicantInformation = () => {
           labelKey: "NOC_ENTER_APPLICANT_PAN_PLACEHOLDER"
         },
         pattern: getPattern("PAN"),
-        errorMessage:"Invalid PAN",
+        errorMessage: "Invalid PAN",
         jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].pan",
         gridDefination: {
           xs: 12,
@@ -265,7 +269,7 @@ const commonApplicantInformation = () => {
         },
         required: true,
         pattern: getPattern("Address"),
-        errorMessage:"Invalid Address",
+        errorMessage: "Invalid Address",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].permanentAddress",
         gridDefination: {
@@ -331,8 +335,8 @@ const institutionInformation = () => {
           labelName: "Enter Name of Institution",
           labelKey: "NOC_ENTER_INSTITUTION_PLACEHOLDER"
         },
-        pattern:getPattern("Name"),
-        errorMessage:"Invalid Name",
+        pattern: getPattern("Name"),
+        errorMessage: "Invalid Name",
         required: true,
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionName",
@@ -352,8 +356,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_TELEPHONE_NUMBER_PLACEHOLDER"
         },
         required: true,
-        pattern:getPattern("MobileNo"),
-        errorMessage:"Invalid Number",
+        pattern: getPattern("MobileNo"),
+        errorMessage: "Invalid Number",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.telephoneNumber",
         gridDefination: {
@@ -372,8 +376,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_AUTHORIZED_PERSON_PLACEHOLDER"
         },
         required: true,
-        pattern:getPattern("Name"),
-        errorMessage:"Invalid Name",
+        pattern: getPattern("Name"),
+        errorMessage: "Invalid Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPerson",
         gridDefination: {
@@ -392,8 +396,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_INSTITUTION_DESIGNATION_PLACEHOLDER"
         },
         required: true,
-        pattern:getPattern("Name"),
-        errorMessage:"Invalid Designation Name",
+        pattern: getPattern("Name"),
+        errorMessage: "Invalid Designation Name",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionDesignation",
         gridDefination: {
@@ -412,8 +416,8 @@ const institutionInformation = () => {
           labelKey: "NOC_AUTHORIZED_PERSON_MOBILE_PLACEHOLDER"
         },
         required: true,
-        pattern:getPattern("MobileNo"),
-        errorMessage:"Invalid MobileNo.",
+        pattern: getPattern("MobileNo"),
+        errorMessage: "Invalid MobileNo.",
 
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonMobile",
@@ -432,8 +436,8 @@ const institutionInformation = () => {
           labelName: "Enter Email of Authorized Person",
           labelKey: "NOC_AUTHORIZED_PERSON_EMAIL_PLACEHOLDER"
         },
-        pattern:getPattern("Email"),
-        errorMessage:"Invalid Email",
+        pattern: getPattern("Email"),
+        errorMessage: "Invalid Email",
         required: true,
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonEmail",
@@ -453,8 +457,8 @@ const institutionInformation = () => {
           labelKey: "NOC_ENTER_OFFICIAL_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
         },
         required: true,
-        pattern:getPattern("Address"),
-        errorMessage:"Invalid Address",
+        pattern: getPattern("Address"),
+        errorMessage: "Invalid Address",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.officialCorrespondenceAddress",
         gridDefination: {
@@ -481,115 +485,117 @@ export const applicantDetails = getCommonCard({
   ),
   break: getBreak(),
   applicantTypeContainer: getCommonContainer({
-    applicantType: {
-      ...getSelectField({
-        label: {
-          labelName: "Applicant Type",
-          labelKey: "NOC_APPLICANT_TYPE_LABEL"
-        },
-        placeholder: {
-          labelName: "Select Applicant Type",
-          labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
-        },
-        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
-        localePrefix: {
-          moduleName: "common-masters",
-          masterName: "OwnerShipCategory"
-        },
-        // data: [
-        //   {
-        //     code: "Individual"
-        //   },
-        //   {
-        //     code: "Multiple"
-        //   },
-        //   {
-        //     code: "Institutional-Private"
-        //   }
-        // ],
-        required: true,
-        sourceJsonPath: "applyScreenMdmsData.DropdownsData.OwnershipCategory",
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
+    applicantTypeSelection: getCommonContainer({
+      applicantType: {
+        ...getSelectField({
+          label: {
+            labelName: "Applicant Type",
+            labelKey: "NOC_APPLICANT_TYPE_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Applicant Type",
+            labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
+          },
+          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+          localePrefix: {
+            moduleName: "common-masters",
+            masterName: "OwnerShipCategory"
+          },
+          // data: [
+          //   {
+          //     code: "Individual"
+          //   },
+          //   {
+          //     code: "Multiple"
+          //   },
+          //   {
+          //     code: "Institutional-Private"
+          //   }
+          // ],
+          required: true,
+          sourceJsonPath: "applyScreenMdmsData.DropdownsData.OwnershipCategory",
+          gridDefination: {
+            xs: 12,
+            sm: 12,
+            md: 6
+          }
+        }),
+        afterFieldChange: (action, state, dispatch) => {
+          let path = action.componentJsonpath.replace(
+            /.applicantType$/,
+            ".applicantSubType"
+          );
+          let applicantType = get(
+            state,
+            "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
+            []
+          );
+          let applicantSubType = applicantType.filter(item => {
+            return item.active && item.code.startsWith(action.value);
+          });
+          dispatch(handleField("apply", path, "props.data", applicantSubType));
         }
-      }),
-      afterFieldChange: (action, state, dispatch) => {
-        let path = action.componentJsonpath.replace(
-          /.applicantType$/,
-          ".applicantSubType"
-        );
-        let applicantType = get(
-          state,
-          "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
-          []
-        );
-        let applicantSubType = applicantType.filter(item => {
-          return item.active && item.code.startsWith(action.value);
-        });
-        dispatch(handleField("apply", path, "props.data", applicantSubType));
+      },
+      applicantSubType: {
+        ...getSelectField({
+          label: {
+            labelName: "Type of Applicant - Subtype",
+            labelKey: "NOC_APPLICANT_SUBTYPE_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Applicant Subtype",
+            labelKey: "NOC_APPLICANT_SUBTYPE_PLACEHOLDER"
+          },
+          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+          localePrefix: {
+            moduleName: "common-masters",
+            masterName: "OwnerShipCategory"
+          },
+          // data: [
+          //   {
+          //     code: "Private Company"
+          //   }
+          // ],
+          // props: {
+          //   style: {
+          //     display: "none"
+          //   }
+          // },
+          required: true,
+          gridDefination: {
+            xs: 12,
+            sm: 12,
+            md: 6
+          }
+        }),
+        afterFieldChange: (action, state, dispatch) => {
+          let singleApplicantContainerJsonPath =
+            "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer";
+          let multipleApplicantContainerJsonPath =
+            "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer";
+          let institutionContainerJsonPath =
+            "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer";
+          // let applicantSubtypeJsonPath =
+          //   "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType";
+          if (action.value.includes("SINGLEOWNER")) {
+            showComponent(dispatch, singleApplicantContainerJsonPath, true);
+            showComponent(dispatch, multipleApplicantContainerJsonPath, false);
+            showComponent(dispatch, institutionContainerJsonPath, false);
+            // showComponent(dispatch, applicantSubtypeJsonPath, false);
+          } else if (action.value.includes("MULTIPLEOWNERS")) {
+            showComponent(dispatch, singleApplicantContainerJsonPath, false);
+            showComponent(dispatch, multipleApplicantContainerJsonPath, true);
+            showComponent(dispatch, institutionContainerJsonPath, false);
+            // showComponent(dispatch, applicantSubtypeJsonPath, false);
+          } else if (action.value.includes("INSTITUTIONAL")) {
+            showComponent(dispatch, singleApplicantContainerJsonPath, false);
+            showComponent(dispatch, multipleApplicantContainerJsonPath, false);
+            showComponent(dispatch, institutionContainerJsonPath, true);
+            // showComponent(dispatch, applicantSubtypeJsonPath, true);
+          }
+        }
       }
-    },
-    applicantSubType: {
-      ...getSelectField({
-        label: {
-          labelName: "Type of Applicant - Subtype",
-          labelKey: "NOC_APPLICANT_SUBTYPE_LABEL"
-        },
-        placeholder: {
-          labelName: "Select Applicant Subtype",
-          labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
-        },
-        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
-        localePrefix: {
-          moduleName: "common-masters",
-          masterName: "OwnerShipCategory"
-        },
-        // data: [
-        //   {
-        //     code: "Private Company"
-        //   }
-        // ],
-        // props: {
-        //   style: {
-        //     display: "none"
-        //   }
-        // },
-        required: true,
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      }),
-      afterFieldChange: (action, state, dispatch) => {
-        let singleApplicantContainerJsonPath =
-          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer";
-        let multipleApplicantContainerJsonPath =
-          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer";
-        let institutionContainerJsonPath =
-          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer";
-        let applicantSubtypeJsonPath =
-          "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType";
-        if (action.value.includes("SINGLEOWNER")) {
-          showComponent(dispatch, singleApplicantContainerJsonPath, true);
-          showComponent(dispatch, multipleApplicantContainerJsonPath, false);
-          showComponent(dispatch, institutionContainerJsonPath, false);
-          // showComponent(dispatch, applicantSubtypeJsonPath, false);
-        } else if (action.value.includes("MULTIPLEOWNERS")) {
-          showComponent(dispatch, singleApplicantContainerJsonPath, false);
-          showComponent(dispatch, multipleApplicantContainerJsonPath, true);
-          showComponent(dispatch, institutionContainerJsonPath, false);
-          // showComponent(dispatch, applicantSubtypeJsonPath, false);
-        } else if (action.value.includes("INSTITUTIONAL")) {
-          showComponent(dispatch, singleApplicantContainerJsonPath, false);
-          showComponent(dispatch, multipleApplicantContainerJsonPath, false);
-          showComponent(dispatch, institutionContainerJsonPath, true);
-          // showComponent(dispatch, applicantSubtypeJsonPath, true);
-        }
-      }
-    },
+    }),
     singleApplicantContainer: {
       uiFramework: "custom-atoms",
       componentPath: "Div",

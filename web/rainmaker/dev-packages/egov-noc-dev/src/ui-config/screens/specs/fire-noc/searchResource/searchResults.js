@@ -57,7 +57,7 @@ export const textToLocalMapping = {
   ),
   PAID: getLocaleLabels(
     "Paid",
-    "WF_NEWNOC_PENDINGAPPROVAL",
+    "WF_NEWNOC_PAID",
     getTransformedLocalStorgaeLabels()
   ),
 
