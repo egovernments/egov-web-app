@@ -149,7 +149,6 @@ export const findCorrectDateObjPenaltyIntrest = (financialYear, category) => {
     chosenDateObj.startingDay = date.join("/");
     month = getMonth(chosenDateObj.startingDay);
   }
-  console.log("chosenDateObj", chosenDateObj);
   return chosenDateObj;
 };
 
@@ -335,7 +334,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
-  units = sortBy(uniqBy(units,"floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
+  units = sortBy(uniqBy(units, "floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
   let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
     if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;

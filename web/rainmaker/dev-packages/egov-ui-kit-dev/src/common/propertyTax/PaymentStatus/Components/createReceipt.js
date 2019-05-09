@@ -52,8 +52,8 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
             ? taxHeadContent[0].debitAmount
               ? `-${taxHeadContent[0].debitAmount}`
               : taxHeadContent[0].crAmountToBePaid
-                ? taxHeadContent[0].crAmountToBePaid
-                : "0"
+              ? taxHeadContent[0].crAmountToBePaid
+              : "0"
             : "NA",
         });
       return result;
@@ -132,10 +132,11 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid, latestPropertyDetails) => {
   const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
   const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
-  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
+  const { owners: ownerDetails, institution, ownershipCategory } = property.propertyDetails[0];
+  const { financialYear } = latestPropertyDetails;
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
     ? [{ key: "Institution Name:", value: institution.name }, { key: "Authorized Person Name:", value: ownerDetails[0].name }]
