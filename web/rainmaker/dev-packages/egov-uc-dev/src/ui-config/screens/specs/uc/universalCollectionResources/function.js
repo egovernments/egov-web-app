@@ -1,6 +1,6 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getSearchResults } from "../../../../..//ui-utils/commons";
+import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
@@ -12,12 +12,26 @@ const tenantId = "pb.amritsar";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
+  // let queryObject = [
+  //   {
+  //     key: "recepitNO.",
+  //     value: response.receiptNO
+  //   },
+  //   { key: "serviceTyype", value:response.serviceType},
+  //   { key: "mobileNo.", value: response.mobileNo},
+  //   { key: "fromDate", value:response.fromDate },
+  //   { key: "toDate", value: response.toDate },
+
+
+
+  // ];
+
   let queryObject = [
     {
       key: "tenantId",
       value: tenantId
     },
-    { key: "limit", value: "10" },
+    // { key: "limit", value: "10" },
     { key: "offset", value: "0" }
   ];
   let searchScreenObject = get(
@@ -86,50 +100,38 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    //const response = await getSearchResults(queryObject);
-    const response = [
-      {
-       receiptNO:12873873,
-       payeeName:"Ravindar Pal Singh",
-       serviceType:"Advertisement Tax",
-       date: 1554332357000,
-       amount:450,
-       status: "Approved"
-        //add download button
-      },
-      {
-        receiptNO:12873873,
-        payeeName:"Ravi kumar Singh",
-        serviceType:"Advertisement Tax",
-        date: 1554332357000,
-        amount:2200,
-        status: "Cancelled"
-         //add download button
-       },
-       {
-        receiptNO:12873873,
-        payeeName:"Amitabh singh",
-        serviceType:"Advertisement Tax",
-        date: 1554332357000,
-        amount:3350,
-        status: "Approved"
-         //add download button
-       },
-       {
-        receiptNO:12873873,
-        payeeName:"Rupendar singh Hora",
-        serviceType:"Advertisement Tax",
-        date: 1554332357000,
-        amount:9950,
-        status: "Approved"
-         //add download button
-       },
+    console.log(queryObject);
 
-    ];
+    const responseFromAPI = await getSearchResults(queryObject);
+    console.log(responseFromAPI);
+   
+     const Receipt=responseFromAPI.Receipt;
+     const response=[];
+     for(let i=0;i<Receipt.length;i++)
+      {
+        response[i]= {
+            receiptNumber:get(Receipt[i],`receiptNumber`),
+            payeeName:get(Receipt[i],`Bill[0].payerName`),
+            serviceType:get(Receipt[i],`Bill[0].billDetails[0].businessService`),
+           date:Receipt[i].receiptDate,
+           amount:Receipt[i].Bill[0].billDetails[0].amountPaid,
+           status:Receipt[i].Bill[0].billDetails[0].status
+
+
+
+
+        }
+
+
+      }
+  
+      console.log(response)
+   
+    
     try {
       let data = response.map(item => ({
         [get(textToLocalMapping, "Receipt No.")]:
-          item.receiptNO || "-",
+          item.receiptNumber || "-",
           [get(textToLocalMapping, "Payee Name")]:
           item.payeeName|| "-",
           [get(textToLocalMapping, "Service Type")]:

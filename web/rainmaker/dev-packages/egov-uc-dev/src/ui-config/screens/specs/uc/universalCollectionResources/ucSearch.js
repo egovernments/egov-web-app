@@ -10,7 +10,8 @@ import {
     getCommonSubHeader
   } from "egov-ui-framework/ui-config/screens/specs/utils";
   import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
- import { searchApiCall } from "./function";
+  import { searchApiCall } from "./function";
+  import{searchApi}from"../../utils";
  import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
   
@@ -73,18 +74,18 @@ import {
       labelKey: "UC_COMMON_SUB_HEADER"
     }),
     searchContainer: getCommonContainer({
-      receiptNo: getTextField({
+      receiptNumber: getTextField({
         label: {
-          labelName: "Receipt No.",
-          labelKey: "UC_receipt_LABEL"
+          labelName: "Receipt Number.",
+          labelKey: "UC_RECEPIT_NO_LABEL"
         },
         placeholder: {
           labelName: "Enter Receipt NO.",
-          labelKey: "UC_USAGE_PLACEHOLDER"
+          labelKey: "UC_ENTER_RECEPIT_NO_PLACEHOLDER"
         },
         required: false,
         visible: true,
-        jsonPath: "searchScreen.receiptNo",
+        jsonPath: "searchScreen.receiptNumbers",
         // sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
         gridDefination: {
           xs: 12,
@@ -141,7 +142,7 @@ import {
         },
         placeholder: {
           labelName: "Select From Date",
-          labelKey: "UC_FROM_DATE_PLACEHOLDER"
+          labelKey: "UC_SELECT_FROM_DATE_PLACEHOLDER"
         },
         required: false,
         pattern: getPattern("Date"),
@@ -161,7 +162,7 @@ import {
         },
         placeholder: {
           labelName: "Select From Date",
-          labelKey: "UC_TO_DATE_PLACEHOLDER"
+          labelKey: "UC_SELECT_TO_DATE_PLACEHOLDER"
         },
         required: false,
         pattern: getPattern("Date"),
@@ -237,7 +238,10 @@ import {
           },
           onClickDefination: {
             action: "condition",
-            callBack: searchApiCall
+            callBack: (state,dispatch)=>{
+              searchApiCall(state,dispatch);
+
+            }
           }
         },
 
