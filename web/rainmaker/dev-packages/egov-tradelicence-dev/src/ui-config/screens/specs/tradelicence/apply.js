@@ -229,6 +229,22 @@ export const getData = async (action, state, dispatch) => {
             "APPLICATIONTYPE.RENEWAL"
           )
         );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.financialYear",
+            "props.value",
+            ""
+          )
+        );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.applicationType",
+            "props.value",
+            "APPLICATIONTYPE.RENEWAL"
+          )
+        );
       }
 
       dispatch(prepareFinalObject("Licenses[0].applicationNumber", ""));
