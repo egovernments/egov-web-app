@@ -22,6 +22,8 @@ import {
   enableButton = hasButton && hasButton === "false" ? false : true;
   
 
+
+  
   const resetFields = (state, dispatch) => {
     dispatch(
       handleField(
@@ -64,14 +66,16 @@ import {
       )
     );
   };
+ 
+
   export const UCSearchCard = getCommonCard({
     header :getCommonHeader({
       labelName: "Search Receipt",
-      labelKey: "UC_COMMON_HEADER"
+      labelKey: "UC_SEARCH_COMMON_HEADER"
     }),
     subheader: getCommonSubHeader({
       labelName: "Provide at least one parameter to search for an application",
-      labelKey: "UC_COMMON_SUB_HEADER"
+      labelKey: "UC_SEARCH_COMMON_SUB_HEADER"
     }),
     searchContainer: getCommonContainer({
       receiptNumber: getTextField({
@@ -108,14 +112,8 @@ import {
           xs: 12,
           sm: 4
         },
-        data: [
-          {
-            code: "service-1"
-          },
-          {
-            code: "service-2"
-          }
-        ]
+        sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService",
+
       }),
       mobileNo: getTextField({
         label: {

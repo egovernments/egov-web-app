@@ -12,19 +12,6 @@ const tenantId = "pb.amritsar";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
-  // let queryObject = [
-  //   {
-  //     key: "recepitNO.",
-  //     value: response.receiptNO
-  //   },
-  //   { key: "serviceTyype", value:response.serviceType},
-  //   { key: "mobileNo.", value: response.mobileNo},
-  //   { key: "fromDate", value:response.fromDate },
-  //   { key: "toDate", value: response.toDate },
-
-
-
-  // ];
 
   let queryObject = [
     {
