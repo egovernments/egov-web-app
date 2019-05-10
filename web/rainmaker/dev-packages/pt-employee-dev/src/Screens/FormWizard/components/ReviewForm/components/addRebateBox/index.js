@@ -90,6 +90,8 @@ class AddRebateExemption extends React.Component {
           alert(
             "Adhoc Exemption cannot be greater than the estimated tax for the given property"
           );
+          this.props.handleFieldChange("adhocExemption", null);
+          this.props.handleFieldChange("adhocExemptionReason", null);
         } else {
           displayFormErrors("additionalRebate");
         }
