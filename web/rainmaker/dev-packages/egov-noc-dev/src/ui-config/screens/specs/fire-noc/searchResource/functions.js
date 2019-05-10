@@ -1,6 +1,6 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getSearchResults } from "../../../../..//ui-utils/commons";
+import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
@@ -13,9 +13,9 @@ export const searchApiCall = async (state, dispatch) => {
     {
       key: "tenantId",
       value: JSON.parse(getUserInfo()).tenantId
-    },
-    { key: "limit", value: "10" },
-    { key: "offset", value: "0" }
+    }
+    // { key: "limit", value: "10" },
+    // { key: "offset", value: "0" }
   ];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -82,36 +82,34 @@ export const searchApiCall = async (state, dispatch) => {
             key: key,
             value: convertDateToEpoch(searchScreenObject[key], "dayend")
           });
+        } else if (key === "status") {
+          queryObject.push({
+            key: "action",
+            value: searchScreenObject[key].trim()
+          });
         } else {
           queryObject.push({ key: key, value: searchScreenObject[key].trim() });
         }
       }
     }
-
-    //const response = await getSearchResults(queryObject);
-    const response = [
-      {
-        applicationNumber: "NOC-JLD-2018-09-8786",
-        nocNumber: "NOC1234",
-        BuildingName: "eGov",
-        ownerName: "Nandhan",
-        status: "INITIATED",
-        applicationDate: 1554332357000
-      }
-    ];
+    const response = await getSearchResults(queryObject);
     try {
-      let data = response.map(item => ({
-        [get(textToLocalMapping, "Application No")]:
-          item.applicationNumber || "-",
-        [get(textToLocalMapping, "NOC No")]: item.nocNumber || "-",
-        [get(textToLocalMapping, "Building Name")]: item.BuildingName || "-",
-        [get(textToLocalMapping, "Owner Name")]: item.ownerName || "-",
-        [get(textToLocalMapping, "Application Date")]:
-          convertEpochToDate(item.applicationDate) || "-",
-        tenantId: item.tenantId,
-        [get(textToLocalMapping, "Status")]:
-          get(textToLocalMapping, item.status) || "-"
-      }));
+      let data =
+        response &&
+        response.FireNOCs &&
+        response.FireNOCs.length > 0 &&
+        response.FireNOCs.map(item => ({
+          [get(textToLocalMapping, "Application No")]:
+            item.applicationnumber || "-",
+          [get(textToLocalMapping, "NOC No")]: "" || "-",
+          [get(textToLocalMapping, "NOC Name")]: "" || "-",
+          [get(textToLocalMapping, "Owner Name")]: "" || "-",
+          [get(textToLocalMapping, "Application Date")]:
+            convertEpochToDate(item.applicationdate) || "-",
+          tenantId: item.tenantId,
+          [get(textToLocalMapping, "Status")]:
+            item.fireNOCDetails.applicationStatus || "-"
+        }));
 
       dispatch(
         handleField(
@@ -126,8 +124,8 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${textToLocalMapping["Search Results for Fire NOC Applications"]} (${
-            response.length
+          `${textToLocalMapping["Search Results for Fire-NOC Applications"]}(${
+            response.FireNOCs.length
           })`
         )
       );

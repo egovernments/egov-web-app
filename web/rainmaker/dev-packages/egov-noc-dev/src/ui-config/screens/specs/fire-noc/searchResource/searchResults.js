@@ -25,8 +25,8 @@ export const textToLocalMapping = {
     "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
-  "Building Name": getLocaleLabels(
-    "Building Name",
+  "NOC Name": getLocaleLabels(
+    "NOC Name",
     "NOC_COMMON_TABLE_COL_BUILDING_NAME_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
@@ -93,7 +93,7 @@ export const textToLocalMapping = {
     getTransformedLocalStorgaeLabels()
   ),
   "Search Results for Fire-NOC Applications": getLocaleLabels(
-    "",
+    "Search Results for Fire-NOC Applications",
     "NOC_HOME_SEARCH_RESULTS_TABLE_HEADING",
     getTransformedLocalStorgaeLabels()
   )
@@ -123,7 +123,7 @@ export const searchResults = {
         }
       },
       [get(textToLocalMapping, "NOC No")]: {},
-      [get(textToLocalMapping, "Building Name")]: {},
+      [get(textToLocalMapping, "NOC Name")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
       [get(textToLocalMapping, "Application Date")]: {},
       [get(textToLocalMapping, "Status")]: {}
