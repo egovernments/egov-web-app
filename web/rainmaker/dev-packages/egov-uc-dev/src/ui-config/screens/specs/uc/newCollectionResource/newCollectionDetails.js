@@ -31,7 +31,7 @@ export const newCollectionDetailsCard = getCommonCard({
   searchContainer: getCommonContainer({
     ConsumerMobileNo: getTextField({
       label: {
-        labelName: " Consumer Mobile No",
+        labelName: " consumer Mobile No",
         labelKey: "CONS_MOBILE_NO_LABEL"
       },
       placeholder: {
@@ -41,13 +41,13 @@ export const newCollectionDetailsCard = getCommonCard({
 
       required: true,
       visible: true,
-      pattern: getPattern("ConsumerMobileNo"),
+      pattern: getPattern("consumerMobileNo"),
       errorMessage: "Invalid Mobile No.",
       jsonPath: "Demands[0].mobileNo"
     }),
     ConsumerName: getTextField({
       label: {
-        labelName: " Consumer Name",
+        labelName: " consumer Name",
         labelKey: "CONS_NAME_LABEL"
       },
       placeholder: {
@@ -57,9 +57,9 @@ export const newCollectionDetailsCard = getCommonCard({
 
       required: true,
       visible: true,
-      pattern: getPattern("ConsumerName"),
+      pattern: getPattern("consumerName"),
       errorMessage: "Invalid Name.",
-      jsonPath: "Demands[0].ConsumerName"
+      jsonPath: "Demands[0].consumerName"
     }),
     serviceCategory: getSelectField({
       label: {
