@@ -10,7 +10,10 @@ const styles = theme => ({
     padding: "8px 38px"
   },
   input: {
-    display: "none !important"
+    // display: "none !important",
+    //For QA Automation
+    position: "absolute",
+    right: 0
   }
 });
 
