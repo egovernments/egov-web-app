@@ -3,6 +3,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { convertDateToEpoch } from "../../utils";
+//import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 //import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const tenantId = "pb.amritsar";
@@ -51,6 +52,41 @@ export const newCollectionFooter = getCommonApplyFooter({
     }
   }
 });
+// componentDidMount() {
+//   const {
+//     fetchLocalizationLabel,
+//     fetchCurrentLocation,
+//     fetchMDMSData
+//   } = this.props;
+//   let requestBody = {
+//     MdmsCriteria: {
+//       tenantId: commonConfig.tenantId,
+//       moduleDetails: [
+//         {
+//           moduleName: "Billing Service",
+//           masterDetails: [
+//             {
+//               name: "Business Service"
+//             },
+//             {
+//               name: "Designation"
+//             }
+//           ]
+//         },
+//         {
+//           moduleName: "Billing Service",
+//           masterDetails: [
+//             {
+//               name: "Business Service"
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//   };
+//   // can be combined into one mdms call
+//   fetchMDMSData(requestBody);
+// }
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
   const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
