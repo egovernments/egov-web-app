@@ -22,7 +22,7 @@ class AddRebateExemption extends React.Component {
   state = {
     showExtraPenaltyField: false,
     showExtraExemptField: false,
-    exemptValue: 0
+    exemptValue: null
   };
 
   onChangePenaltyField = value => {
@@ -80,23 +80,26 @@ class AddRebateExemption extends React.Component {
       updateEstimate,
       totalAmount,
       displayFormErrors,
-      adhocExemption,
       adhocPenalty,
       additionalRebate
     } = this.props;
+    let { adhocExemption } = this.props;
+    const { exemptValue } = this.state;
+    adhocExemption = { ...adhocExemption, value: exemptValue };
     if (adhocExemption.value >= 0) {
       if (adhocExemption.value > totalAmount) {
         if (validateForm(additionalRebate)) {
           alert(
             "Adhoc Exemption cannot be greater than the estimated tax for the given property"
           );
-          this.props.handleFieldChange("adhocExemption", null);
-          this.props.handleFieldChange("adhocExemptionReason", null);
+          // this.props.handleFieldChange("adhocExemptionReason", null);
         } else {
           displayFormErrors("additionalRebate");
         }
       } else {
         if (validateForm(additionalRebate)) {
+          exemptValue !== null &&
+            this.props.handleFieldChange("adhocExemption", exemptValue);
           updateEstimate();
         } else {
           displayFormErrors("additionalRebate");
@@ -114,7 +117,11 @@ class AddRebateExemption extends React.Component {
 
   render() {
     const { handleFieldChange, fields } = this.props;
-    const { showExtraExemptField, showExtraPenaltyField } = this.state;
+    const {
+      showExtraExemptField,
+      showExtraPenaltyField,
+      exemptValue
+    } = this.state;
     const {
       adhocPenalty,
       adhocPenaltyReason,
@@ -123,6 +130,7 @@ class AddRebateExemption extends React.Component {
       otherExemptionReason,
       otherPenaltyReason
     } = fields || {};
+    adhocExemption = { ...adhocExemption, value: exemptValue };
     return (
       <div className="add-rebate-box">
         <div className="pt-emp-penalty-charges col-xs-12">
@@ -160,7 +168,7 @@ class AddRebateExemption extends React.Component {
           <div className="adhocExemption col-sm-6 col-xs-12">
             <TextField
               onChange={(e, value) => {
-                handleFieldChange("adhocExemption", value);
+                // handleFieldChange("adhocExemption", value);
                 this.setState({ exemptValue: value });
               }}
               {...adhocExemption}
