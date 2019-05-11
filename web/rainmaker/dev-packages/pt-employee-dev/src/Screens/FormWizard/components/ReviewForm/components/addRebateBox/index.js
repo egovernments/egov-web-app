@@ -122,7 +122,7 @@ class AddRebateExemption extends React.Component {
       showExtraPenaltyField,
       exemptValue
     } = this.state;
-    const {
+    let {
       adhocPenalty,
       adhocPenaltyReason,
       adhocExemption,
