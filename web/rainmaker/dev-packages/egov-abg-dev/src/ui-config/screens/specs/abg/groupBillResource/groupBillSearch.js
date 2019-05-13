@@ -8,7 +8,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
-import {generateSingleBill} from "../../utils/receiptPdf";
+import {generateBill} from "../../utils/receiptPdf";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -169,7 +169,7 @@ export const mergeDownloadButton = {
       },
       onClickDefination:{
         action: "condition",
-        callBack: generateSingleBill
+        callBack: generateBill
       }
     }
   }
