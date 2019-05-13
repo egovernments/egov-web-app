@@ -198,29 +198,25 @@ const ownerCheckList = getCommonGrayCard({
 
 export const NOCRequiredDocuments = getCommonContainer(
   {
-    headerDiv: {
+    documents: {
       uiFramework: "custom-atoms",
       componentPath: "Container",
-
       children: {
-        header: {
-          gridDefination: {
-            xs: 12
-          },
-          ...header
-        }
-      }
-    },
-    lowerDiv: {
-      uiFramework: "custom-atoms",
-      componentPath: "Container",
-
-      children: {
+        header,
         identityProof,
         addressProof,
         buildingPlan,
         fireFightingPlan,
-        ownerCheckList,
+        ownerCheckList
+      },
+      props: {
+        id: "documents-div"
+      }
+    },
+    footer: {
+      uiFramework: "custom-atoms",
+      componentPath: "Container",
+      children: {
         footer
       }
     }
