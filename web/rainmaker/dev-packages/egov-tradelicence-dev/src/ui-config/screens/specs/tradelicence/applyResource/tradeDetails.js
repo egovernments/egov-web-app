@@ -645,6 +645,30 @@ const accessoriesCard = {
               sm: 4
             }
           })
+        },
+        accessoriesCount: {
+          ...getTextField({
+            label: {
+              labelName: "Accessory Count",
+              labelKey: "TL_NEW_TRADE_ACCESSORRY_COUNT"
+            },
+            placeholder: {
+              labelName: "Enter accessory count",
+              labelKey: "TL_NEW_TRADE_ACCESSORRY_COUNT_PLACEHOLDER"
+            },
+            pattern: getPattern("NoOfEmp"),
+            props: {
+              setDataInField: true,
+              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count"
+            },
+            required: true,
+            defaultValue: 0,
+            jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
+            gridDefination: {
+              xs: 12,
+              sm: 4
+            }
+          })
         }
       })
     }),

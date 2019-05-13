@@ -195,14 +195,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         data.city
       )
     );
-    let accessories = response.Licenses[0].tradeLicenseDetail.accessories
-      ? response.Licenses[0].tradeLicenseDetail.accessories.length
-      : 0;
-    data.accessories = nullToNa(accessories);
-    if (accessories > 0) {
+    if (response.Licenses[0].tradeLicenseDetail.accessories.length > 0) {
       data.accessoriesList = response.Licenses[0].tradeLicenseDetail.accessories
         .map(item => {
-          return getMessageFromLocalization(item.accessoryCategory);
+          return `${getMessageFromLocalization(item.accessoryCategory)}(${
+            item.count
+          })`;
         })
         .reduce((pre, cur) => {
           return pre.concat(", " + cur);
