@@ -96,14 +96,13 @@ export const searchApiCall = async (state, dispatch) => {
     try {
       let data =
         response &&
-        response.FireNOCs &&
-        response.FireNOCs.length > 0 &&
-        response.FireNOCs.map(item => ({
+        get(response, "FireNOCs", []).map(item => ({
           [get(textToLocalMapping, "Application No")]:
             item.applicationnumber || "-",
           [get(textToLocalMapping, "NOC No")]: "" || "-",
           [get(textToLocalMapping, "NOC Name")]: "" || "-",
-          [get(textToLocalMapping, "Owner Name")]: "" || "-",
+          [get(textToLocalMapping, "Owner Name")]:
+            item.fireNOCDetails.applicantDetails.owners[0].name || "-",
           [get(textToLocalMapping, "Application Date")]:
             convertEpochToDate(item.applicationdate) || "-",
           tenantId: item.tenantId,
@@ -138,17 +137,6 @@ export const searchApiCall = async (state, dispatch) => {
     }
   }
 };
-// const showHideProgress = (booleanHideOrShow, dispatch) => {
-//   dispatch(
-//     handleField(
-//       "search",
-//       "components.div.children.progressStatus",
-//       "visible",
-//       booleanHideOrShow
-//     )
-//   );
-// };
-
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
     handleField(
