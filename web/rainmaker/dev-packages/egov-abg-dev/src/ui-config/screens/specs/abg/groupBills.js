@@ -8,7 +8,7 @@ import { searchResults } from "./groupBillResource/searchResults";
 
 const header = getCommonHeader({
   labelName: "Group Bills",
-  labelKey: "NOC_COMMON_NOC"
+  labelKey: "ABG_COMMON_HEADER"
 });
 
 const abgSearchAndResult = {

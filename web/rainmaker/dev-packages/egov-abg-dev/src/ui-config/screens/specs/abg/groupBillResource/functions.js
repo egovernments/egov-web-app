@@ -52,7 +52,7 @@ export const searchApiCall = async (state, dispatch) => {
         true,
         {
           labelName: "Please fill at least one field to start search",
-          labelKey: "NOC_SEARCH_SELECT_AT_LEAST_ONE_TOAST_MESSAGE"
+          labelKey: "ABG_SEARCH_SELECT_AT_LEAST_ONE_TOAST_MESSAGE"
         },
         "warning"
       )
