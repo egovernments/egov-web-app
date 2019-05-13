@@ -11,8 +11,33 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const acknowledgementFooter = getCommonApplyFooter({
-  nextButton: {
+const redirectionURL = "/egov-ui-framework/uc/search";
+
+export const acknowledgementSuccesFooter = getCommonApplyFooter({
+  goToHomeButton: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        minWidth: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      downloadReceiptButtonLabel: getLabel({
+        labelName: "Go To Home",
+        labelKey: "UC_BUTTON_GO_TO_HOME"
+      })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: redirectionURL
+    }
+  },
+
+  viewReceiptButton: {
     componentPath: "Button",
     props: {
       variant: "contained",
@@ -28,10 +53,34 @@ export const acknowledgementFooter = getCommonApplyFooter({
         labelName: "VIEW RECEIPT",
         labelKey: "UC_BUTTON_VIEW_RECEIPT"
       })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: redirectionURL
     }
-    // onClickDefination: {
-    //     action: "page_change",
-    //     path: redirectionURL
-    // }
+  }
+});
+export const acknowledgementFailureFooter = getCommonApplyFooter({
+  nextButton: {
+    componentPath: "Button",
+    props: {
+      variant: "contained",
+      color: "primary",
+      style: {
+        minWidth: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      downloadReceiptButtonLabel: getLabel({
+        labelName: "Go To Home",
+        labelKey: "UC_BUTTON_GO_TO_HOME"
+      })
+    },
+    onClickDefination: {
+      action: "page_change",
+      path: redirectionURL
+    }
   }
 });

@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+<<<<<<< Updated upstream
 import {generateReciept} from "../../utils/recieptPdf"
+=======
+import {
+  getTransformedLocalStorgaeLabels,
+  getLocaleLabels
+} from "egov-ui-framework/ui-utils/commons";
+>>>>>>> Stashed changes
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
@@ -12,37 +19,37 @@ const getLocalTextFromCode = localCode => {
 };
 
 export const textToLocalMapping = {
-  "Receipt No.": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_APP_NO"),
-    "message",
-    "Receipt No"
+  "Receipt No.": getLocaleLabels(
+    "Receipt No",
+    "UC_COMMON_TABLE_COL_RECEIPT_NO",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Payee Name": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Payee Name"
+  "Payee Name": getLocaleLabels(
+    "Payee Name",
+    "UC_COMMON_TABLE_COL_PAYEE_NAME",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Service Type": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Service Type"
+  "Service Type": getLocaleLabels(
+    "Service Type",
+    "UC_COMMON_TABLE_COL_SERVICE_TYPE",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Date": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Date"
+  Date: getLocaleLabels(
+    "Date",
+    "UC_COMMON_TABLE_COL_DATE",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Amount[INR]": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Amount[INR]"
+  "Amount[INR]": getLocaleLabels(
+    "Amount[INR]",
+    "UC_COMMON_TABLE_COL_AMOUNT",
+    getTransformedLocalStorgaeLabels()
   ),
 
-  "Status": get(
-    getLocalTextFromCode("UC_COMMON_TABLE_COL_OWN_NAME"),
-    "message",
-    "Status"
-  ),
+  Status: getLocaleLabels(
+    "Status",
+    "UC_COMMON_TABLE_COL_STATUS",
+    getTransformedLocalStorgaeLabels()
+  )
 
   //Download button
 };
@@ -72,7 +79,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Service Type")]: {},
       [get(textToLocalMapping, "Date")]: {},
       [get(textToLocalMapping, "Amount[INR]")]: {},
-      [get(textToLocalMapping, "Status")]: {},
+      [get(textToLocalMapping, "Status")]: {}
     },
     options: {
       filter: false,
@@ -105,4 +112,4 @@ const onRowClick = rowData => {
     default:
       return `/uc/search`;
   }
-  }
+};

@@ -45,11 +45,15 @@ export const newCollectionFooter = getCommonApplyFooter({
       }
     },
     onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        processDemand(state, dispatch);
-      }
+      action: "page_change",
+      path: "/egov-ui-framework/uc/pay"
     }
+    // onClickDefination: {
+    //   action: "condition",
+    //   callBack: (state, dispatch) => {
+    //     processDemand(state, dispatch);
+    //   }
+    // }
   }
 });
 // componentDidMount() {

@@ -2,12 +2,15 @@ import {
   getCommonHeader,
   //getCommonCard,
   //getCommonParagraph,
-  //getCommonContainer,
+  getCommonContainer,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-// import { acknowledgementFooter } from "./acknowledgementResource/acknowledgementFooter";
+import {
+  acknowledgementSuccesFooter,
+  acknowledgementFailureFooter
+} from "./acknowledgementResource/acknowledgementFooter";
 import set from "lodash/set";
 
 const getAcknowledgementCard = (
@@ -26,85 +29,89 @@ const getAcknowledgementCard = (
   // const financialYearText = licenseFinancialYear
   //   ? `(${licenseFinancialYear})`
   //   : "";
-  // if (purpose === "apply" && status === "success") {
   receiptNumber = "TL-JLD-2018-09-123434";
-  return {
-    header: getCommonHeader({
-      labelName: `new colllection`,
-      labelKey: "UC_NEW_COLLECTION_CC"
-      // dynamicArray: [financialYearText]
-    }),
-    applicationSuccessCard: {
-      uiFramework: "custom-atoms",
-      componentPath: "Div",
-      props: {
-        style: {
-          position: "absolute",
-          width: "95%"
+  if (purpose === "pay" && status === "success") {
+    return {
+      header: getCommonHeader({
+        labelName: `new colllection`,
+        labelKey: "UC_NEW_COLLECTION_CC"
+        // dynamicArray: [financialYearText]
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        props: {
+          style: {
+            position: "absolute",
+            width: "95%"
+          }
+        },
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Payment has been collected successfully!",
+              labelKey: "UC_PAYMENT_COLLECTED_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName:
+                "A notification regarding Payment Collection has been sent to the consumer at registered Mobile No.",
+              labelKey: "UCPAYMENT_SUCCESS_MESSAGE_SUB"
+            },
+            tailText: {
+              labelName: "payment receipt no.",
+              labelKey: "UC_PAYMENT_NO_LABEL"
+            },
+            number: receiptNumber
+          })
         }
       },
-      children: {
-        card: acknowledgementCard({
-          icon: "done",
-          backgroundColor: "#39CB74",
-          header: {
-            labelName: "Payment has been collected successfully!",
-            labelKey: "UC_PAYMENT_COLLECTED_SUCCESS_MESSAGE_MAIN"
-          },
-          body: {
-            labelName:
-              "A notification regarding Payment Collection has been sent to the consumer at registered Mobile No.",
-            labelKey: "UCPAYMENT_SUCCESS_MESSAGE_SUB"
-          },
-          tailText: {
-            labelName: "payment receipt no.",
-            labelKey: "UC_PAYMENT_NO_LABEL"
-          },
-          number: receiptNumber
-        })
-      }
-    },
-    iframeForPdf: {
-      uiFramework: "custom-atoms",
-      componentPath: "Div"
-    },
-    applicationSuccessFooter: acknowledgementFooter
-  };
-};
-const getCommonApplyFooter = children => {
-  return {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    props: {
-      className: "apply-wizard-footer"
-    },
-    children
-  };
-};
-export const acknowledgementFooter = getCommonApplyFooter({
-  nextButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "16px"
-      }
-    },
-    children: {
-      downloadReceiptButtonLabel: getLabel({
-        labelName: "VIEW RECEIPT",
-        labelKey: "UC_BUTTON_VIEW_RECEIPT"
-      })
-    }
-    // onClickDefination: {
-    //     action: "page_change",
-    //     path: redirectionURL
-    // }
+      iframeForPdf: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div"
+      },
+      applicationSuccessFooter: acknowledgementSuccesFooter
+    };
+  } else if (purpose === "pay" && status === "failure") {
+    return {
+      // header: getCommonContainer({
+      header: getCommonHeader({
+        labelName: `new collection`,
+        // dynamicArray: [financialYearText],
+        labelKey: "UC_NEW_COLLECTION"
+      }),
+      // applicationNumber: {
+      //   uiFramework: "custom-atoms-local",
+      //   moduleName: "egov-uc",
+      //   componentPath: "ApplicationNoContainer",
+      //   props: {
+      //     number: applicationNumber
+      //   }
+      // }
+      // }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "close",
+            backgroundColor: "#E54D42",
+            header: {
+              labelName: "Payment Collection failed!",
+              labelKey: "UC_PAYMENT_FAILED"
+            },
+            body: {
+              labelName: "Payment Collection has been failed!",
+              labelKey: "UC_PAYMENT_NOTIFICATION"
+            }
+          })
+        }
+      },
+      paymentFailureFooter: acknowledgementFailureFooter
+    };
   }
-});
+};
 
 const screenConfig = {
   uiFramework: "material-ui",
@@ -142,3 +149,5 @@ const screenConfig = {
 };
 
 export default screenConfig;
+
+// egov-ui-framework/uc/acknowledgement?purpose=pay&status=success

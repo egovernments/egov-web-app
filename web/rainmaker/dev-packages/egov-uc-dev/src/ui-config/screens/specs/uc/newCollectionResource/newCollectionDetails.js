@@ -31,12 +31,12 @@ export const newCollectionDetailsCard = getCommonCard({
   searchContainer: getCommonContainer({
     ConsumerMobileNo: getTextField({
       label: {
-        labelName: " consumer Mobile No",
-        labelKey: "CONS_MOBILE_NO_LABEL"
+        labelName: "consumer Mobile No",
+        labelKey: "UC_MOBILE_NO_LABEL"
       },
       placeholder: {
         labelName: "Enter Consumer Mobile No",
-        labelKey: "CONS_MOBILE_NO_LABEL_PLACEHOLDER"
+        labelKey: "UC_MOBILE_NO_LABEL_PLACEHOLDER"
       },
 
       required: true,
@@ -47,12 +47,12 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     ConsumerName: getTextField({
       label: {
-        labelName: " consumer Name",
-        labelKey: "CONS_NAME_LABEL"
+        labelName: "consumer Name",
+        labelKey: "UC_NAME_LABEL"
       },
       placeholder: {
         labelName: "Enter Consumer  Name",
-        labelKey: "CONS_NAME_LABEL_PLACEHOLDER"
+        labelKey: "UC_NAME_LABEL_PLACEHOLDER"
       },
 
       required: true,
@@ -163,7 +163,7 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_AMOUNT_TO_BE_ COLLECTED_LABEL"
       },
       placeholder: {
-        labelName: "Amount To be Collected ",
+        labelName: "Amount To be Collected",
         labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
       },
 
@@ -178,7 +178,7 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_FIELD_COLLECTION_FEE_LABEL"
       },
       placeholder: {
-        labelName: "field Collection Fee ",
+        labelName: "field Collection Fee",
         labelKey: "UC_FIELD_COLLECTION_FEE_PLACEHOLDER"
       },
 
