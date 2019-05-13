@@ -31,15 +31,15 @@ export const G8ReceiptDetails = getCommonGrayCard({
       },
       g8ReceiptNo: getTextField({
         label: {
-          labelName: " g8 Receipt No",
-          labelKey: "UC_RECEIPT_NO"
+          labelName: "g8 Receipt No",
+          labelKey: "UC_G8_RECEIPT_NO_LABEL"
         },
         placeholder: {
           labelName: "Enter G8 receipt No",
           labelKey: "UC_G8_RECEIPT_NO_PLACEHOLDER"
         },
 
-        required: true,
+        required: false,
         visible: true,
         pattern: getPattern("g8ReceiptNo "),
         errorMessage: "Invalid g8ReceiptNo.",
@@ -48,17 +48,17 @@ export const G8ReceiptDetails = getCommonGrayCard({
       g8ReceiptIssueDate: getDateField({
         label: {
           labelName: "g8 receipt issue Date",
-          labelKey: "UC_RECEIPT_ISSUE_DATE"
+          labelKey: "UC_G8_RECEIPT_ISSUE_DATE"
         },
         placeholder: {
           labelName: "Enter g8 receipt Issue Date",
-          labelKey: "UC_SELECT_RECEIPT_ISSUE_DATE_PLACEHOLDER"
+          labelKey: "UC_SELECT_G8_RECEIPT_ISSUE_DATE_PLACEHOLDER"
         },
         gridDefination: {
           xs: 12,
           sm: 6
         },
-        required: true,
+        required: false,
         pattern: getPattern("Date"),
         jsonPath: "Licenses[0].g8ReceiptIssueDate"
       })

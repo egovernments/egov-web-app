@@ -79,7 +79,7 @@ export const UCSearchCard = getCommonCard({
         labelKey: "UC_RECEPIT_NO_LABEL"
       },
       placeholder: {
-        labelName: "Enter Receipt NO.",
+        labelName: "Enter Receipt No.",
         labelKey: "UC_ENTER_RECEPIT_NO_PLACEHOLDER"
       },
       required: false,
@@ -94,7 +94,7 @@ export const UCSearchCard = getCommonCard({
     serviceType: getSelectField({
       label: {
         labelName: "Service Type",
-        labelKey: "UC__SERVICE_TYPE_LABEL"
+        labelKey: "UC_SERVICE_TYPE_LABEL"
       },
       placeholder: {
         labelName: "Select Service Type",
