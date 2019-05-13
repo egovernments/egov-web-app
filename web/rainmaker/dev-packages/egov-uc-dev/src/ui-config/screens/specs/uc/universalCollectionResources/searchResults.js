@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-<<<<<<< Updated upstream
+
 import {generateReciept} from "../../utils/recieptPdf"
-=======
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
->>>>>>> Stashed changes
+
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
