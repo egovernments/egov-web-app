@@ -243,7 +243,7 @@ export const applicationSuccessFooter = (
       roleDefination: {
         rolePath: "user-info.roles",
         action: "PAY",
-        roles: ["TL_CEMP", "SUPERUSER"]
+        roles: ["NOC_CEMP", "SUPERUSER"]
       }
     }
   });

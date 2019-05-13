@@ -64,7 +64,7 @@ export const nocSummary = getCommonGrayCard({
     nocType: getLabelWithValue(
       {
         labelName: "NOC Type",
-        labelKey: "NOC_NOC_TYPE_LABEL"
+        labelKey: "NOC_TYPE_LABEL"
       },
       {
         jsonPath: "FireNOCs[0].fireNOCDetails.fireNOCType"
@@ -76,7 +76,7 @@ export const nocSummary = getCommonGrayCard({
     fireNocNumber: getLabelWithValue(
       {
         labelName: "Provisional fire NoC number",
-        labelKey: "NOC_NUMBER_LABEL"
+        labelKey: "NOC_PROVISIONAL_FIRE_NOC_NO_LABEL"
       },
       {
         jsonPath: "FireNOCs[0].provisionFireNOCNumber"
