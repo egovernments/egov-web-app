@@ -28,7 +28,7 @@ export const getSearchResults = async (queryObject, dispatch) => {
   try {
     const response = await httpRequest(
       "post",
-      "/firenoc-service/v1/_search",
+      "/firenoc-services/v1/_search",
       "",
       queryObject
     );
