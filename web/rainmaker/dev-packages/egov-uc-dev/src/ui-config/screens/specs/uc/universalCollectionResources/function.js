@@ -92,7 +92,7 @@ export const searchApiCall = async (state, dispatch) => {
     const responseFromAPI = await getSearchResults(queryObject);
     console.log(responseFromAPI);
    
-     const Receipt=responseFromAPI.Receipt;
+     const Receipt=responseFromAPI && responseFromAPI.Receipt || [];
      const response=[];
      for(let i=0;i<Receipt.length;i++)
       {
