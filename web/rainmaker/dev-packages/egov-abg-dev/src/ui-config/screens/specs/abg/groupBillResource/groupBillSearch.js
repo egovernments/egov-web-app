@@ -8,7 +8,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
-import {generateBill} from "../../utils/receiptPdf";
+import {generateSingleBill} from "../../utils/receiptPdf";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -21,11 +21,11 @@ export const abgSearchCard = getCommonCard({
     financialYear: getSelectField({
       label: {
         labelName: "Financial Year",
-        labelKey: "TL_FINANCIAL_YEAR_LABEL"
+        labelKey: "ABG_FINANCIAL_YEAR_LABEL"
       },
       placeholder: {
         labelName: "Select Financial Year",
-        labelKey: "TL_FINANCIAL_YEAR_PLACEHOLDER"
+        labelKey: "ABG_FINANCIAL_YEAR_PLACEHOLDER"
       },
       required: true,
       visible: true,
@@ -47,11 +47,11 @@ export const abgSearchCard = getCommonCard({
     locMohalla: getSelectField({
       label: {
         labelName: "Location/Mohalla",
-        labelKey: "NOC_APPLICATION_NOC_LABEL"
+        labelKey: "ABG_LOCMOHALLA_LABEL"
       },
       placeholder: {
         labelName: "Select Location/Mohalla",
-        labelKey: "NOC_APPLICATION_PLACEHOLDER"
+        labelKey: "ABG_LOCMOHALLA_PLACEHOLDER"
       },
       required: false,
       jsonPath: "searchScreen.locMohalla",
@@ -71,11 +71,11 @@ export const abgSearchCard = getCommonCard({
     propertyId: getTextField({
       label: {
         labelName: "Property ID",
-        labelKey: "NOC_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+        labelKey: "ABG_PROPERTY_ID_LABEL"
       },
       placeholder: {
         labelName: "Enter Property ID",
-        labelKey: "NOC_HOME_SEARCH_RESULTS_APP_NO_PLACEHOLDER"
+        labelKey: "ABG_PROPERTY_ID_PLACEHOLDER"
       },
       gridDefination: {
         xs: 12,
@@ -118,7 +118,7 @@ export const abgSearchCard = getCommonCard({
         children: {
           buttonLabel: getLabel({
             labelName: "Search",
-            labelKey: "NOC_HOME_SEARCH_RESULTS_BUTTON_SEARCH"
+            labelKey: "ABG_GROUP_BILL_SEARCH_BUTTON"
           })
         },
         onClickDefination: {
@@ -169,7 +169,7 @@ export const mergeDownloadButton = {
       },
       onClickDefination:{
         action: "condition",
-        callBack: generateBill
+        callBack: generateSingleBill
       }
     }
   }
