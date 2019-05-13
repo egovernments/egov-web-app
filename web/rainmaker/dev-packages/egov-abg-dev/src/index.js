@@ -8,7 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import themeObject from "ui-config/themes";
 import { Provider } from "react-redux";
 import store from "ui-redux/store";
-import "./index.css";
+import "./index.scss";
 import App from "ui-views/App";
 // import registerServiceWorker from "./registerServiceWorker";
 
