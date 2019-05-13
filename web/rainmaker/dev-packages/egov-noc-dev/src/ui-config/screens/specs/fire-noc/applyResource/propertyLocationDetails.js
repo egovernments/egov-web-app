@@ -207,7 +207,6 @@ export const propertyLocationDetails = getCommonCard(
                 payload.TenantBoundary && payload.TenantBoundary[0].boundary
               )
             );
-            // console.log(payload.TenantBoundary[0].boundary);
             dispatch(
               handleField(
                 "apply",
@@ -219,6 +218,23 @@ export const propertyLocationDetails = getCommonCard(
           } catch (e) {
             console.log(e);
           }
+          // Set Firestation based on ULB
+          let fireStationsList = get(
+            state,
+            "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.FireStations",
+            []
+          );
+          let fireStations = fireStationsList.filter(firestation => {
+            return firestation.baseTenantId === action.value;
+          });
+          dispatch(
+            handleField(
+              "apply",
+              "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.propertyDetailsConatiner.children.propertyFirestation",
+              "props.data",
+              fireStations
+            )
+          );
         }
       },
       propertyPlotSurveyNo: getTextField({
@@ -385,18 +401,23 @@ export const propertyLocationDetails = getCommonCard(
           }
         }
       },
-      propertyFirestation: getTextField({
+      propertyFirestation: getSelectField({
         label: {
           labelName: "Applicable Fire Station",
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_LABEL"
         },
         placeholder: {
-          labelName: "Enter Applicable Fire Station",
+          labelName: "Select Applicable Fire Station",
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
-        pattern: getPattern("Name"),
-        errorMessage:"Invalid Fire-Station Name",
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.firestationId"
+        // pattern: getPattern("Name"),
+        // errorMessage:"Invalid Fire-Station Name",
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.firestationId",
+        // sourceJsonPath: "applyScreenMdmsData.firenoc.FireStations",
+        localePrefix: {
+          moduleName: "firenoc",
+          masterName: "FireStations"
+        }
       })
     }),
     mapsDialog: {
