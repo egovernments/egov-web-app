@@ -10,7 +10,6 @@
     "dev-packages/egov-tradelicence-dev",
     "dev-packages/egov-hrms-dev",
     "dev-packages/egov-noc-dev",
-    "dev-packages/egov-bp-dev",
     "packages/*"
   ],
   "version": "0.0.2"
