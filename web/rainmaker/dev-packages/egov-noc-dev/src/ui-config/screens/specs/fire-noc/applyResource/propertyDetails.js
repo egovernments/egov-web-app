@@ -88,7 +88,7 @@ const commonBuildingData = buildingType => {
         },
         required: true,
         localePrefix: {
-          moduleName: "egov-firenoc",
+          moduleName: "firenoc",
           masterName: "BuildingType"
         },
         jsonPath:
@@ -130,7 +130,7 @@ const commonBuildingData = buildingType => {
         },
         required: true,
         localePrefix: {
-          moduleName: "egov-firenoc",
+          moduleName: "firenoc",
           masterName: "BuildingType"
         },
         jsonPath:

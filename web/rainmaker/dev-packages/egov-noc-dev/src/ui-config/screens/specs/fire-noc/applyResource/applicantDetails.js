@@ -298,8 +298,8 @@ const commonApplicantInformation = () => {
         //   }
         // ],
         localePrefix: {
-          moduleName: "egov-firenoc",
-          masterName: "BuildingType"
+          moduleName: "common-masters",
+          masterName: "OwnerType"
         },
         sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType",
         gridDefination: {

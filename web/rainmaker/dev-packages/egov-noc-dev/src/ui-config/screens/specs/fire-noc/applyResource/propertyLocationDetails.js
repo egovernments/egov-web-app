@@ -168,6 +168,10 @@ export const propertyLocationDetails = getCommonCard(
       propertyCity: {
         ...getSelectField({
           label: { labelName: "City", labelKey: "NOC_PROPERTY_CITY_LABEL" },
+          localePrefix: {
+            moduleName: "TENANT",
+            masterName: "TENANTS"
+          },
           optionLabel: "name",
           placeholder: {
             labelName: "Select City",
