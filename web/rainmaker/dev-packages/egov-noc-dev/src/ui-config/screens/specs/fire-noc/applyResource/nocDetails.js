@@ -47,7 +47,7 @@ export const nocDetails = getCommonCard({
           }
         ],
         jsonPath: "noc.nocType",
-        defaultValue: "NEW"
+        defaultValue: "PROVISIONAL"
       },
       type: "array",
       afterFieldChange: (action, state, dispatch) => {
@@ -86,7 +86,7 @@ export const nocDetails = getCommonCard({
         errorMessage: "Invalid Fire-NOC No.",
         // required: true,
         // pattern: getPattern("MobileNo"),
-        jsonPath: "noc.provisionalNocNumber",
+        jsonPath: "FireNOCs[0].provisionFireNOCNumber",
         iconObj: {
           iconName: "search",
           position: "end",

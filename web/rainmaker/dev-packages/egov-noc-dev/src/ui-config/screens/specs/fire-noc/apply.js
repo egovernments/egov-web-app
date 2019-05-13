@@ -122,7 +122,11 @@ const getMdmsData = async (action, state, dispatch) => {
         },
         {
           moduleName: "firenoc",
-          masterDetails: [{ name: "PropertyType" }, { name: "BuildingType" }]
+          masterDetails: [
+            { name: "PropertyType" },
+            { name: "BuildingType" },
+            { name: "FireStations" }
+          ]
         },
         {
           moduleName: "egov-location",
@@ -223,7 +227,7 @@ const screenConfig = {
     let pfo = {};
     if (applicationNumber && !step) {
       pfo = {
-        nocType: "Provisional",
+        nocType: "PROVISIONAL",
         provisionalNocNumber: "NOC-JLD-2018-09-8786",
         buildingDetails: {
           buildingType: "Multiple Building",
@@ -336,9 +340,24 @@ const screenConfig = {
       "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
       noOfBuildings
     );
+    let nocType = get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType",
+      "PROVISIONAL"
+    );
+    set(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType",
+      nocType
+    );
 
     // Preset multi-cards
-    if (get(pfo, "buildingDetails.buildingType") === "Multiple Building") {
+    if (
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType"
+      ) === "Multiple Building"
+    ) {
       set(
         action.screenConfig,
         "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer.props.style",
@@ -350,14 +369,25 @@ const screenConfig = {
         {}
       );
     }
-    if (get(pfo, "nocType") === "Provisional") {
+    if (
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType"
+      ) === "PROVISIONAL"
+    ) {
       set(
         action.screenConfig,
         "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber.props.style",
         { visibility: "hidden" }
       );
     }
-    if (get(pfo, "applicantDetails.applicantType") === "Multiple") {
+    if (
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+        ""
+      ).includes("MULTIPLEOWNERS")
+    ) {
       set(
         action.screenConfig,
         "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
@@ -369,7 +399,11 @@ const screenConfig = {
         {}
       );
     } else if (
-      get(pfo, "applicantDetails.applicantType") === "Institutional-Private"
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+        ""
+      ).includes("INSTITUTIONAL")
     ) {
       set(
         action.screenConfig,
