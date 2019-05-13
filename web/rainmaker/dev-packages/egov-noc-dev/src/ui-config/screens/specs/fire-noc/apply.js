@@ -219,78 +219,95 @@ const screenConfig = {
     let pfo = {};
     if (applicationNumber && !step) {
       pfo = {
-        nocType: "PROVISIONAL",
-        provisionalNocNumber: "NOC-JLD-2018-09-8786",
-        buildingDetails: {
-          buildingType: "Multiple Building",
-          building: [
-            {
-              buildingName: "eGov",
-              buildingUsageType: "Commercial",
-              buildingUsageSubType: "Commercial",
-              noOfFloors: "3",
-              noOfBasements: "1",
-              plotSize: "6000",
-              builtupArea: "5000",
-              heightOfBuilding: "200"
+        fireNOCDetails: {
+          propertyDetails: {
+            address: {
+              city: "pb.amritsar",
+              locality: { code: "SUN04" },
+              pincode: "500076"
             },
-            {
-              buildingName: "Novo Pay",
-              buildingUsageType: "Commercial",
-              buildingUsageSubType: "Non-Commercial",
-              noOfFloors: "1",
-              noOfBasements: "2",
-              plotSize: "6000",
-              builtupArea: "3000",
-              heightOfBuilding: "100"
+            firestationId: "FS_AMRITSAR_01"
+          },
+          buildingDetails: {
+            buildings: {
+              "0": {
+                name: "DSR Rainbow Heights",
+                usageType: "GROUP_A_RESIDENTIAL",
+                usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
+                noOfFloors: "2",
+                noOfBasements: "1",
+                plotSize: "1000",
+                builtupArea: "650",
+                heightOfBuilding: "5000"
+              },
+              noOfBuildings: "SINGLE"
             }
-          ]
-        },
-        address: {
-          propertyId: "PROP1234",
-          doorHouseNo: "101",
-          buildingName: "eGovBuilding",
-          street: "Sarjapura Road",
-          mohalla: "Bellandur",
-          pincode: "123456",
-          additionalDetail: {
-            fireStation: "Sarjapur Fire Station"
+          },
+          fireNOCType: "PROVISIONAL",
+          applicantDetails: {
+            ownerShipType: "INDIVIDUAL.SINGLEOWNER",
+            owners: [
+              {
+                id: 23442,
+                userName: "9167765477",
+                salutation: null,
+                name: "Avijeet",
+                gender: "MALE",
+                mobileNumber: "9167765477",
+                emailId: "avi7@gm.com",
+                altContactNumber: null,
+                pan: "bnhpp5432k",
+                aadhaarNumber: null,
+                permanentAddress: null,
+                permanentCity: null,
+                permanentPinCode: null,
+                correspondenceAddress: "Some correspondance address",
+                correspondenceCity: null,
+                correspondencePinCode: null,
+                addresses: [
+                  {
+                    pinCode: null,
+                    city: null,
+                    address: "Some correspondance address",
+                    type: "PERMANENT",
+                    id: 48685,
+                    tenantId: "pb",
+                    userId: 23442,
+                    addressType: "PERMANENT",
+                    lastModifiedDate: null,
+                    lastModifiedBy: null
+                  }
+                ],
+                active: true,
+                locale: null,
+                type: "CITIZEN",
+                accountLocked: false,
+                accountLockedDate: 0,
+                fatherOrHusbandName: "A",
+                signature: null,
+                bloodGroup: null,
+                photo: null,
+                identificationMark: null,
+                createdBy: 0,
+                lastModifiedBy: 1,
+                tenantId: "pb",
+                roles: [{ code: "CITIZEN", name: "Citizen", tenantId: "pb" }],
+                uuid: "d9fb76e8-3c65-4e11-9f5f-2998c0f8b8a6",
+                createdDate: 1532962200000,
+                lastModifiedDate: 1554819900000,
+                dob: "1991-06-28",
+                pwdExpiryDate: 1541451000000,
+                relationship: "FATHER",
+                ownerType: "FREEDOMFIGHTER"
+              }
+            ]
           }
-        },
-        applicantDetails: {
-          applicantType: "Multiple",
-          applicant: [
-            {
-              mobileNo: "9167765477",
-              applicantName: "Avijeet",
-              applicantGender: "Male",
-              applicantDob: "1991-06-28",
-              applicantEmail: "avi7@egov.org",
-              applicantFatherHusbandName: "A",
-              applicantRelationship: "Father",
-              applicantPan: "BNHSP1234K",
-              applicantAddress: "Corr",
-              applicantCategory: "A"
-            },
-            {
-              mobileNo: "9100879085",
-              applicantName: "Sharath",
-              applicantGender: "Male",
-              applicantDob: "1997-04-26",
-              applicantEmail: "sharath@egov.org",
-              applicantFatherHusbandName: "A",
-              applicantRelationship: "Father",
-              applicantPan: "ABCDE1234F",
-              applicantAddress: "asd",
-              applicantCategory: "A"
-            }
-          ]
         }
       };
-      dispatch(prepareFinalObject("noc", pfo));
+      dispatch(prepareFinalObject("FireNOCs[0]", pfo));
     }
     if (step && get(state, "screenConfiguration.preparedFinalObject")) {
-      pfo = get(state, "screenConfiguration.preparedFinalObject.noc", {});
+      pfo = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0]", {});
     }
 
     // Code to goto a specific step through URL

@@ -67,7 +67,7 @@ export const nocSummary = getCommonGrayCard({
         labelKey: "NOC_NOC_TYPE_LABEL"
       },
       {
-        jsonPath: "noc.nocType"
+        jsonPath: "FireNOCs[0].fireNOCDetails.fireNOCType"
         // callBack: value => {
         //   return value.split(".")[0];
         // }
@@ -79,7 +79,7 @@ export const nocSummary = getCommonGrayCard({
         labelKey: "NOC_NUMBER_LABEL"
       },
       {
-        jsonPath: "noc.provisionalNocNumber"
+        jsonPath: "FireNOCs[0].provisionFireNOCNumber"
         // callBack: value => {
         //   return value.split(".")[1];
         // }

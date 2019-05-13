@@ -271,7 +271,7 @@ const commonApplicantInformation = () => {
         pattern: getPattern("Address"),
         errorMessage: "Invalid Address",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].permanentAddress",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].correspondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,

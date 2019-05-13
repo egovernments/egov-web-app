@@ -27,7 +27,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Plot size.",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotSize",
+          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotsize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -285,7 +285,7 @@ export const propertyDetails = getCommonCard({
         xs: 12
       },
       jsonPath:
-        "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+        "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
       props: {
         required: true,
         label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS_LABEL" },
@@ -302,7 +302,7 @@ export const propertyDetails = getCommonCard({
           }
         ],
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+          "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
         defaultValue: "SINGLE"
       },
       type: "array",

@@ -412,7 +412,7 @@ export const propertyLocationDetails = getCommonCard(
         },
         // pattern: getPattern("Name"),
         // errorMessage:"Invalid Fire-Station Name",
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.firestationId",
+        jsonPath: "FireNOCs[0].fireNOCDetails.firestationId",
         // sourceJsonPath: "applyScreenMdmsData.firenoc.FireStations",
         localePrefix: {
           moduleName: "firenoc",

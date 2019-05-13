@@ -73,7 +73,8 @@ export const applicantSummary = getCommonGrayCard({
               labelKey: "NOC_APPLICANT_MOBILE_NO_LABEL"
             },
             {
-              jsonPath: "noc.applicantDetails.applicant[0].mobileNo"
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber"
               // callBack: value => {
               //   return value.split(".")[0];
               // }
@@ -85,7 +86,8 @@ export const applicantSummary = getCommonGrayCard({
               labelKey: "NOC_APPLICANT_NAME_LABEL"
             },
             {
-              jsonPath: "noc.applicantDetails.applicant[0].applicantName"
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name"
               // callBack: value => {
               //   return value.split(".")[1];
               // }
@@ -96,7 +98,10 @@ export const applicantSummary = getCommonGrayCard({
               labelName: "Gender",
               labelKey: "NOC_GENDER_LABEL"
             },
-            { jsonPath: "noc.applicantDetails.applicant[0].applicantGender" }
+            {
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender"
+            }
           ),
           applicantFatherHusbandName: getLabelWithValue(
             {
@@ -105,7 +110,7 @@ export const applicantSummary = getCommonGrayCard({
             },
             {
               jsonPath:
-                "noc.applicantDetails.applicant[0].applicantFatherHusbandName"
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].fatherOrHusbandName"
             }
           ),
           applicantDob: getLabelWithValue(
@@ -113,35 +118,47 @@ export const applicantSummary = getCommonGrayCard({
               labelName: "Date of Birth",
               labelKey: "NOC_APPLICANT_DOB_LABEL"
             },
-            { jsonPath: "noc.applicantDetails.applicant[0].applicantDob" }
+            {
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].dob"
+            }
           ),
           applicantEmail: getLabelWithValue(
             {
               labelName: "Email",
               labelKey: "NOC_APPLICANT_EMAIL_LABEL"
             },
-            { jsonPath: "noc.applicantDetails.applicant[0].applicantEmail" }
+            {
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].emailId"
+            }
           ),
           applicantPan: getLabelWithValue(
             {
               labelName: "PAN",
               labelKey: "NOC_APPLICANT_PAN_LABEL"
             },
-            { jsonPath: "noc.applicantDetails.applicant[0].applicantPan" }
+            {
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].pan"
+            }
           ),
           applicantAddress: getLabelWithValue(
             {
               labelName: "Correspondence Address",
               labelKey: "NOC_APPLICANT_CORRESPONDENCE_ADDRESS_LABEL"
             },
-            { jsonPath: "noc.applicantDetails.applicant[0].applicantAddress" }
+            {
+              jsonPath:
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].correspondenceAddress"
+            }
           )
         })
       }),
       items: [],
       hasAddItem: false,
       isReviewPage: true,
-      sourceJsonPath: "noc.applicantDetails.applicant",
+      sourceJsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners",
       prefixSourceJsonPath:
         "children.cardContent.children.applicantContainer.children",
       afterPrefixJsonPath: "children.value.children.key"
