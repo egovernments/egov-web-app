@@ -29,7 +29,7 @@ const getAcknowledgementCard = (
   // const financialYearText = licenseFinancialYear
   //   ? `(${licenseFinancialYear})`
   //   : "";
-  receiptNumber = "TL-JLD-2018-09-123434";
+  receiptNumber = "UC-AMR-2018-09-123434";
   if (purpose === "pay" && status === "success") {
     return {
       header: getCommonHeader({
@@ -57,7 +57,7 @@ const getAcknowledgementCard = (
             body: {
               labelName:
                 "A notification regarding Payment Collection has been sent to the consumer at registered Mobile No.",
-              labelKey: "UCPAYMENT_SUCCESS_MESSAGE_SUB"
+              labelKey: "UC_PAYMENT_SUCCESS_MESSAGE_SUB"
             },
             tailText: {
               labelName: "payment receipt no.",

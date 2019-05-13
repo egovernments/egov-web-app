@@ -1,4 +1,5 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { generateReciept } from "../../utils/recieptPdf";
 
 const getCommonApplyFooter = children => {
   return {
@@ -55,8 +56,10 @@ export const acknowledgementSuccesFooter = getCommonApplyFooter({
       })
     },
     onClickDefination: {
-      action: "page_change",
-      path: redirectionURL
+      action: "condition",
+      callBack: (state, dispatch) => {
+        viewReceipt(state, dispatch);
+      }
     }
   }
 });
@@ -84,3 +87,7 @@ export const acknowledgementFailureFooter = getCommonApplyFooter({
     }
   }
 });
+
+const viewReceipt = (state, dispatch) => {
+  generateReciept(state, dispatch);
+};

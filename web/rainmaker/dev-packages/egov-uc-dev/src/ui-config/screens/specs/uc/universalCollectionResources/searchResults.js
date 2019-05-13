@@ -3,14 +3,11 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-
-import {generateReciept} from "../../utils/recieptPdf"
+import { generateReciept } from "../../utils/recieptPdf";
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
-
-
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
     item => item.code === localCode
@@ -64,13 +61,14 @@ export const searchResults = {
       [get(textToLocalMapping, "Receipt No.")]: {
         format: rowData => {
           return (
-              <span
-                style={{
-                  color: "#FE7A51"
-                }} onClick={() => generateReciept(rowData)}
-              >
-                {rowData[get(textToLocalMapping, "Receipt No.")]}
-              </span>
+            <span
+              style={{
+                color: "#FE7A51"
+              }}
+              onClick={() => generateReciept(rowData)}
+            >
+              {rowData[get(textToLocalMapping, "Receipt No.")]}
+            </span>
           );
         }
       },

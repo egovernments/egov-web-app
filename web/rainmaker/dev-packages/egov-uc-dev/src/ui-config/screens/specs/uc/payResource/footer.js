@@ -38,7 +38,7 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: "/egov-ui-framework/uc/acknowledgement"
+      path: "/egov-ui-framework/uc/acknowledgement?purpose=pay&status=success"
     }
   }
 });

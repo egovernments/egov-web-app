@@ -9,6 +9,10 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { convertDateToEpoch } from "../../utils";
+import {
+  getTransformedLocalStorgaeLabels,
+  getLocaleLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -31,12 +35,12 @@ export const newCollectionDetailsCard = getCommonCard({
   searchContainer: getCommonContainer({
     ConsumerMobileNo: getTextField({
       label: {
-        labelName: "consumer Mobile No",
-        labelKey: "UC_MOBILE_NO_LABEL"
+        labelName: " consumer Mobile No",
+        labelKey: "UC_CONS_MOBILE_NO_LABEL"
       },
       placeholder: {
         labelName: "Enter Consumer Mobile No",
-        labelKey: "UC_MOBILE_NO_LABEL_PLACEHOLDER"
+        labelKey: "UC_CONS_MOBILE_NO_LABEL_PLACEHOLDER"
       },
 
       required: true,
@@ -47,12 +51,12 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     ConsumerName: getTextField({
       label: {
-        labelName: "consumer Name",
-        labelKey: "UC_NAME_LABEL"
+        labelName: " consumer Name",
+        labelKey: "UC_CONS_NAME_LABEL"
       },
       placeholder: {
         labelName: "Enter Consumer  Name",
-        labelKey: "UC_NAME_LABEL_PLACEHOLDER"
+        labelKey: "UC_CONS_NAME_LABEL_PLACEHOLDER"
       },
 
       required: true,
@@ -163,7 +167,7 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_AMOUNT_TO_BE_ COLLECTED_LABEL"
       },
       placeholder: {
-        labelName: "Amount To be Collected",
+        labelName: "Enter Amount To be Collected ",
         labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
       },
 
@@ -178,7 +182,7 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_FIELD_COLLECTION_FEE_LABEL"
       },
       placeholder: {
-        labelName: "field Collection Fee",
+        labelName: "Enter Field Collection Fee ",
         labelKey: "UC_FIELD_COLLECTION_FEE_PLACEHOLDER"
       },
 
@@ -186,11 +190,11 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     comment: getTextField({
       label: {
-        labelName: "comment",
+        labelName: "Comment",
         labelKey: "UC_COMMENT_LABEL"
       },
       placeholder: {
-        labelName: "comment ",
+        labelName: "Enter Comment ",
         labelKey: "UC_COMMENT_PLACEHOLDER"
       },
 

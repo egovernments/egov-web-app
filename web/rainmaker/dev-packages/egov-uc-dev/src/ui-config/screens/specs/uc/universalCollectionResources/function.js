@@ -32,13 +32,13 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch,
     "search"
   );
-  if (!(isSearchBoxFirstRowValid)) {
+  if (!isSearchBoxFirstRowValid) {
     dispatch(
       toggleSnackbar(
         true,
         {
           labelName: "Please fill valid fields to start search",
-          labelKey: "UC_SEARCH_SELECT_VALID_ONE_TOAST_MESSAGE"
+          labelKey: "UC_SEARCH_SELECT_AT_LEAST_VALID_FIELD"
         },
         "warning"
       )
@@ -91,44 +91,31 @@ export const searchApiCall = async (state, dispatch) => {
 
     const responseFromAPI = await getSearchResults(queryObject);
     console.log(responseFromAPI);
-   
-     const Receipt=responseFromAPI && responseFromAPI.Receipt || [];
-     const response=[];
-     for(let i=0;i<Receipt.length;i++)
-      {
-        response[i]= {
-            receiptNumber:get(Receipt[i],`receiptNumber`),
-            payeeName:get(Receipt[i],`Bill[0].payerName`),
-            serviceType:get(Receipt[i],`Bill[0].billDetails[0].businessService`),
-           date:Receipt[i].receiptDate,
-           amount:Receipt[i].Bill[0].billDetails[0].amountPaid,
-           status:Receipt[i].Bill[0].billDetails[0].status
 
+    const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
+    const response = [];
+    for (let i = 0; i < Receipt.length; i++) {
+      response[i] = {
+        receiptNumber: get(Receipt[i], `receiptNumber`),
+        payeeName: get(Receipt[i], `Bill[0].payerName`),
+        serviceType: get(Receipt[i], `Bill[0].billDetails[0].businessService`),
+        date: Receipt[i].receiptDate,
+        amount: Receipt[i].Bill[0].billDetails[0].amountPaid,
+        status: Receipt[i].Bill[0].billDetails[0].status
+      };
+    }
 
+    console.log(response);
 
-
-        }
-
-
-      }
-  
-      console.log(response)
-   
-    
     try {
       let data = response.map(item => ({
-        [get(textToLocalMapping, "Receipt No.")]:
-          item.receiptNumber || "-",
-          [get(textToLocalMapping, "Payee Name")]:
-          item.payeeName|| "-",
-          [get(textToLocalMapping, "Service Type")]:
-          item.serviceType || "-", 
-         [get(textToLocalMapping, "Date")]:
-          convertEpochToDate(item. date) || "-",
-          [get(textToLocalMapping, "Amount[INR]")]:
-          item.amount || "-", 
+        [get(textToLocalMapping, "Receipt No.")]: item.receiptNumber || "-",
+        [get(textToLocalMapping, "Payee Name")]: item.payeeName || "-",
+        [get(textToLocalMapping, "Service Type")]: item.serviceType || "-",
+        [get(textToLocalMapping, "Date")]: convertEpochToDate(item.date) || "-",
+        [get(textToLocalMapping, "Amount[INR]")]: item.amount || "-",
         [get(textToLocalMapping, "Status")]: item.status || "-",
-        tenantId: item.tenantId,
+        tenantId: item.tenantId
       }));
       dispatch(
         handleField(
@@ -143,17 +130,11 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-           "Search Results for Receipt ("+ data.length +")"
-           
+          "Search Results for Receipt (" + data.length + ")"
         )
       );
 
-      dispatch(
-        handleField(
-          "search",
-          "components.div.children.searchResults",
-        )
-      );
+      dispatch(handleField("search", "components.div.children.searchResults"));
       showHideTable(true, dispatch);
     } catch (error) {
       dispatch(toggleSnackbar(true, error.message, "error"));
@@ -161,7 +142,6 @@ export const searchApiCall = async (state, dispatch) => {
     }
   }
 };
-
 
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
