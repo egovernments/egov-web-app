@@ -87,7 +87,7 @@ const NOCSearchAndResult = {
               },
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["TL_CEMP", "SUPERUSER"]
+                roles: ["NOC_CEMP", "SUPERUSER"]
               }
             }
           }
