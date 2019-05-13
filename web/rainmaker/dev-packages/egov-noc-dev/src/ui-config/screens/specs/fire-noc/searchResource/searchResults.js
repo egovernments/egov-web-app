@@ -25,8 +25,8 @@ export const textToLocalMapping = {
     "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
-  "NOC Name": getLocaleLabels(
-    "NOC Name",
+  "NOC Type": getLocaleLabels(
+    "NOC Type",
     "NOC_COMMON_TABLE_COL_BUILDING_NAME_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
@@ -123,7 +123,7 @@ export const searchResults = {
         }
       },
       [get(textToLocalMapping, "NOC No")]: {},
-      [get(textToLocalMapping, "NOC Name")]: {},
+      [get(textToLocalMapping, "NOC Type")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
       [get(textToLocalMapping, "Application Date")]: {},
       [get(textToLocalMapping, "Status")]: {}

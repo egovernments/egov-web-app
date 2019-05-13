@@ -100,7 +100,8 @@ export const searchApiCall = async (state, dispatch) => {
           [get(textToLocalMapping, "Application No")]:
             item.applicationnumber || "-",
           [get(textToLocalMapping, "NOC No")]: "" || "-",
-          [get(textToLocalMapping, "NOC Name")]: "" || "-",
+          [get(textToLocalMapping, "NOC Type")]:
+            item.fireNOCDetails.fireNOCType || "-",
           [get(textToLocalMapping, "Owner Name")]:
             item.fireNOCDetails.applicantDetails.owners[0].name || "-",
           [get(textToLocalMapping, "Application Date")]:
