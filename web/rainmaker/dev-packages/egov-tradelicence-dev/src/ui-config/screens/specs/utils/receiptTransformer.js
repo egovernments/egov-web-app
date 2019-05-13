@@ -195,7 +195,6 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         data.city
       )
     );
-
     if (response.Licenses[0].tradeLicenseDetail.accessories.length > 0) {
       data.accessoriesList = response.Licenses[0].tradeLicenseDetail.accessories
         .map(item => {
