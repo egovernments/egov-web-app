@@ -280,9 +280,10 @@ class WorkFlowContainer extends React.Component {
     const data = find(businessServiceData, { businessService: "NewTL" });
     const state = find(data.states, { applicationStatus: status });
     let actions = [];
-    state.actions.forEach(item => {
-      actions = [...actions, ...item.roles];
-    });
+    state.actions &&
+      state.actions.forEach(item => {
+        actions = [...actions, ...item.roles];
+      });
     const userRoles = JSON.parse(getUserInfo()).roles;
     const roleIndex = userRoles.findIndex(item => {
       if (actions.indexOf(item.code) > -1) return true;
