@@ -624,6 +624,25 @@ const accessoriesCard = {
                 dispatch(pFO(`${jsonArr.join(".")}.uom`, null));
                 dispatch(pFO(`${jsonArr.join(".")}.uomValue`, null));
               }
+              if (action.value) {
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesCount`,
+                    "props.disabled",
+                    false
+                  )
+                );
+              } else {
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesCount`,
+                    "props.disabled",
+                    true
+                  )
+                );
+              }
             } catch (e) {
               console.log(e);
             }
@@ -676,19 +695,20 @@ const accessoriesCard = {
           ...getTextField({
             label: {
               labelName: "Accessory Count",
-              labelKey: "TL_NEW_TRADE_ACCESSORRY_COUNT"
+              labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT"
             },
             placeholder: {
               labelName: "Enter accessory count",
-              labelKey: "TL_NEW_TRADE_ACCESSORRY_COUNT_PLACEHOLDER"
+              labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT_PLACEHOLDER"
             },
             pattern: getPattern("NoOfEmp"),
             props: {
               setDataInField: true,
-              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count"
+              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
+              disabled: true
             },
             required: true,
-            defaultValue: 0,
+            defaultValue: "1",
             jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
             gridDefination: {
               xs: 12,
