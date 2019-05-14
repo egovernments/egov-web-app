@@ -35,60 +35,94 @@ const propertyDetails = {
             labelName: "Property Type",
             labelKey: "NOC_PROPERTY_TYPE_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings" }
+          {
+            jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings"
+          }
         ),
         buildingName: getLabelWithValue(
           {
             labelName: "Name Of Building",
             labelKey: "NOC_NAME_OF_BUILDING_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name"
+          }
         ),
         buildingUsageType: getLabelWithValue(
           {
             labelName: "Building Usage Type",
             labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_TYPE_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
+            localePrefix: {
+              moduleName: "firenoc",
+              masterName: "BuildingType"
+            }
+          }
         ),
         buildingUsageSubType: getLabelWithValue(
           {
             labelName: "Building Usage Subtype",
             labelKey: "NOC_PROPERTY_DETAILS_BUILDING_USAGE_SUBTYPE_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
+            localePrefix: {
+              moduleName: "firenoc",
+              masterName: "BuildingType"
+            }
+          }
         ),
         noOfFloors: getLabelWithValue(
           { labelName: "No. of Floors", labelKey: "NOC_NO_OF_FLOORS_LABEL" },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors"
+          }
         ),
         noOfBasements: getLabelWithValue(
           {
             labelName: "No. of Basement",
             labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements"
+          }
         ),
         plotSize: getLabelWithValue(
           {
             labelName: "Plot Size (in sq meters)",
             labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotsize" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotsize"
+          }
         ),
         groundBuiltupArea: getLabelWithValue(
           {
             labelName: "Ground Builtup Area (sq meters)",
             labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea"
+          }
         ),
         heightOfBuilding: getLabelWithValue(
           {
             labelName: "Height of Building (in meters)",
             labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
           },
-          { jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding" }
+          {
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding"
+          }
         )
       })
     }),
@@ -117,7 +151,13 @@ const propertyLocationDetails = getCommonGrayCard({
         labelName: "City",
         labelKey: "NOC_PROPERTY_CITY_LABEL"
       },
-      { jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.city" }
+      {
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+        localePrefix: {
+          moduleName: "TENANT",
+          masterName: "TENANTS"
+        }
+      }
     ),
     doorHouseNo: getLabelWithValue(
       {
@@ -131,10 +171,16 @@ const propertyLocationDetails = getCommonGrayCard({
         labelName: "Building/Company Name",
         labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_LABEL"
       },
-      { jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName" }
+      {
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
+      }
     ),
     streetName: getLabelWithValue(
-      { labelName: "Street Name", labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_LABEL" },
+      {
+        labelName: "Street Name",
+        labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_LABEL"
+      },
       { jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.street" }
     ),
     mohalla: getLabelWithValue(
@@ -142,7 +188,10 @@ const propertyLocationDetails = getCommonGrayCard({
         labelName: "Mohalla",
         labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
       },
-      { jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code" }
+      {
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code"
+      }
     ),
     pincode: getLabelWithValue(
       {
@@ -156,14 +205,23 @@ const propertyLocationDetails = getCommonGrayCard({
         labelName: "Location On Map",
         labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_LABEL"
       },
-      { jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude" }
+      {
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude"
+      }
     ),
     applicableFireStation: getLabelWithValue(
       {
         labelName: "Applicable Fire Station",
         labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_LABEL"
       },
-      { jsonPath: "FireNOCs[0].fireNOCDetails.firestationId" }
+      {
+        jsonPath: "FireNOCs[0].fireNOCDetails.firestationId",
+        localePrefix: {
+          moduleName: "firenoc",
+          masterName: "FireStations"
+        }
+      }
     )
   })
 });

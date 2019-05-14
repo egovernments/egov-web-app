@@ -306,8 +306,8 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
         toggleSnackbar(
           true,
           {
-            labelName: "Owner already added !",
-            labelKey: "ERR_OWNER_ALREADY_ADDED"
+            labelName: "Owner has been added already!",
+            labelKey: "ERR_OWNER_ALREADY_ADDED_TOGGLE_MSG"
           },
           "error"
         )
@@ -353,7 +353,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
           toggleSnackbar(
             true,
             {
-              labelName: "Owner already added !",
+              labelName: "Owner already added!",
               labelKey: "ERR_OWNER_ALREADY_ADDED_1"
             },
             "error"
@@ -379,7 +379,7 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
             toggleSnackbar(
               true,
               {
-                labelName: "This mobile number is not registered !",
+                labelName: "This mobile number is not registered!",
                 labelKey: "ERR_MOBILE_NUMBER_NOT_REGISTERED"
               },
               "info"

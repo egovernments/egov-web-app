@@ -91,7 +91,7 @@ const getAcknowledgementCard = (
             backgroundColor: "#39CB74",
             header: {
               labelName: "Payment has been collected successfully!",
-              labelKey: "NOC_PAYMENT_SUCCESS_MESSAGE_MAIN﻿"
+              labelKey: "NOC_PAYMENT_COLLECTION_SUCCESS_MESSAGE_MAIN"
             },
             body: {
               labelName:
