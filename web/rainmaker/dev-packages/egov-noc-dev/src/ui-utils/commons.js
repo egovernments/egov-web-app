@@ -6,6 +6,8 @@ import {
   toggleSnackbar
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
+import set from "lodash/set";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -55,6 +57,7 @@ export const createNocApplication = async (state, dispatch) => {
       "FireNOCs",
       []
     );
+    set(payload[0], "tenantId", getTenantId());
     const response = await httpRequest(
       "post",
       "/firenoc-services/v1/_create",

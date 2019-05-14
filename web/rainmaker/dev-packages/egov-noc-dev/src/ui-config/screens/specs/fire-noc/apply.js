@@ -341,12 +341,12 @@ const screenConfig = {
     // Set defaultValues of radiobuttons and selectors
     let noOfBuildings = get(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings",
       "SINGLE"
     );
     set(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings",
       noOfBuildings
     );
     let nocType = get(
@@ -364,7 +364,7 @@ const screenConfig = {
     if (
       get(
         state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType"
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings[0].usageType"
       ) === "Multiple Building"
     ) {
       set(

@@ -27,7 +27,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Plot size.",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].plotsize",
+          "FireNOCs[0].fireNOCDetails.buildings[0].plotsize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -51,7 +51,7 @@ const commonBuildingData = buildingType => {
         pattern: getPattern("TradeName"),
         errorMessage: "Invalid Name",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].name",
+          "FireNOCs[0].fireNOCDetails.buildings[0].name",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -92,7 +92,7 @@ const commonBuildingData = buildingType => {
           masterName: "BuildingType"
         },
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageType",
+          "FireNOCs[0].fireNOCDetails.buildings[0].usageType",
         sourceJsonPath: "applyScreenMdmsData.DropdownsData.BuildingUsageType",
         gridDefination: {
           xs: 12,
@@ -134,7 +134,7 @@ const commonBuildingData = buildingType => {
           masterName: "BuildingType"
         },
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].usageSubType",
+          "FireNOCs[0].fireNOCDetails.buildings[0].usageSubType",
         // data: [
         //   {
         //     code: "Commercial"
@@ -166,7 +166,7 @@ const commonBuildingData = buildingType => {
         errorMessage: "Invalid number",
         required: true,
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfFloors",
+          "FireNOCs[0].fireNOCDetails.buildings[0].noOfFloors",
         data: [
           {
             code: "1"
@@ -200,7 +200,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid number",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].noOfBasements",
+          "FireNOCs[0].fireNOCDetails.buildings[0].noOfBasements",
         data: [
           {
             code: "1"
@@ -231,7 +231,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Area",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].builtupArea",
+          "FireNOCs[0].fireNOCDetails.buildings[0].builtupArea",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -252,7 +252,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Height",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildingDetails.buildings[0].heightOfBuilding",
+          "FireNOCs[0].fireNOCDetails.buildings[0].heightOfBuilding",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -284,7 +284,7 @@ export const propertyDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
+      jsonPath: "FireNOCs[0].fireNOCDetails.noOfBuildings",
       props: {
         required: true,
         label: { name: "No. of Buildings", key: "NOC_NO_OF_BUILDINGS_LABEL" },
@@ -300,7 +300,7 @@ export const propertyDetails = getCommonCard({
             value: "MULTIPLE"
           }
         ],
-        jsonPath: "FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
+        jsonPath: "FireNOCs[0].fireNOCDetails.noOfBuildings",
         defaultValue: "SINGLE"
       },
       type: "array",
@@ -386,7 +386,7 @@ export const propertyDetails = getCommonCard({
                 labelName: "ADD BUILDING"
               },
               sourceJsonPath:
-                "FireNOCs[0].fireNOCDetails.buildingDetails.buildings",
+                "FireNOCs[0].fireNOCDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
               prefixSourceJsonPath:

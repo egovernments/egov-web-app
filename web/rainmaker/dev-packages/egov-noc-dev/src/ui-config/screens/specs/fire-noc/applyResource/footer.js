@@ -72,7 +72,7 @@ const callBackForNext = async (state, dispatch) => {
 
     let noOfBuildings = get(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings"
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
     );
     if (noOfBuildings === "SINGLE") {
       isMultiplePropertyCardValid = true;
