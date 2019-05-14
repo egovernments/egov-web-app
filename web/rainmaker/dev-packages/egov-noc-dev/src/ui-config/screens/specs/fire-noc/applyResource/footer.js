@@ -8,6 +8,7 @@ import get from "lodash/get";
 import { getCommonApplyFooter, validateFields } from "../../utils";
 import "./index.css";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { createNocApplication } from "../../../../../ui-utils/commons";
 
 const moveToReview = dispatch => {
   const applicationNumber = getQueryArg(
@@ -71,7 +72,7 @@ const callBackForNext = async (state, dispatch) => {
 
     let noOfBuildings = get(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings"
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings"
     );
     if (noOfBuildings === "SINGLE") {
       isMultiplePropertyCardValid = true;
@@ -160,6 +161,9 @@ const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep !== 3) {
+    if (activeStep === 2) {
+      isFormValid = await createNocApplication(state, dispatch);
+    }
     if (isFormValid) {
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {

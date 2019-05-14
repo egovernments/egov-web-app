@@ -1,7 +1,11 @@
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 import { uploadFile, httpRequest } from "../ui-utils/api";
 import store from "ui-redux/store";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -41,5 +45,27 @@ export const getSearchResults = async (queryObject, dispatch) => {
         "error"
       )
     );
+  }
+};
+
+export const createNocApplication = async (state, dispatch) => {
+  try {
+    let payload = get(
+      state.screenConfiguration.preparedFinalObject,
+      "FireNOCs",
+      []
+    );
+    const response = await httpRequest(
+      "post",
+      "/firenoc-services/v1/_create",
+      "",
+      [],
+      { FireNOCs: payload }
+    );
+    dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
+    return true;
+  } catch (error) {
+    dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
+    return false;
   }
 };

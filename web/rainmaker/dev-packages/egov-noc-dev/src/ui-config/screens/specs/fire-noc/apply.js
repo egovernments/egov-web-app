@@ -341,12 +341,12 @@ const screenConfig = {
     // Set defaultValues of radiobuttons and selectors
     let noOfBuildings = get(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
       "SINGLE"
     );
     set(
       state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.buildings.noOfBuildings",
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildingDetails.noOfBuildings",
       noOfBuildings
     );
     let nocType = get(
