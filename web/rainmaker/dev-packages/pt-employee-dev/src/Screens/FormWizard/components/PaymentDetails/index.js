@@ -79,31 +79,31 @@ const paymentModeDetails = [
         })(DemandDraftInformation)
       }
     ]
-  },
-  {
-    primaryText: "PT_PAYMENT_CARD",
-    code: "Card",
-    forms: [
-      {
-        title: "PT_PAYER_DETAILS",
-        className: "payer-details",
-        comp: formHoc({
-          formKey: "cashInfo",
-          copyName: "cashInfo",
-          path: "PropertyTaxPay"
-        })(CashInformation)
-      },
-      {
-        title: "PT_CARD_DETAILS",
-        className: "card-details",
-        comp: formHoc({
-          formKey: "cardInfo",
-          copyName: "cardInfo",
-          path: "PropertyTaxPay"
-        })(CardInformation)
-      }
-    ]
   }
+  // {
+  //   primaryText: "PT_PAYMENT_CARD",
+  //   code: "Card",
+  //   forms: [
+  //     {
+  //       title: "PT_PAYER_DETAILS",
+  //       className: "payer-details",
+  //       comp: formHoc({
+  //         formKey: "cashInfo",
+  //         copyName: "cashInfo",
+  //         path: "PropertyTaxPay"
+  //       })(CashInformation)
+  //     },
+  //     {
+  //       title: "PT_CARD_DETAILS",
+  //       className: "card-details",
+  //       comp: formHoc({
+  //         formKey: "cardInfo",
+  //         copyName: "cardInfo",
+  //         path: "PropertyTaxPay"
+  //       })(CardInformation)
+  //     }
+  //   ]
+  // }
 ];
 
 class PaymentDetails extends Component {
