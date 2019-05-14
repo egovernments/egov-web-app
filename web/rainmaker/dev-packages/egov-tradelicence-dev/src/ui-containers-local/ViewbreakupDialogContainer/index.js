@@ -28,12 +28,17 @@ const closebuttonStyle = {
 const closeIcon = "close";
 
 const getMultiItem = (billingslabData, classes, style) => {
+  let labelCategory = "";
   return billingslabData.map((item, index) => {
+    if (item.type === "trade") labelCategory = "TRADETYPE";
+    else if ((item.type = "accessories")) labelCategory = "ACCESSORIESCATEGORY";
     return (
       <Grid sm={12} className={classes.container} container={true}>
         <Grid sm={10}>
           <LabelContainer
-            labelKey={`TL_${item.category}`}
+            labelKey={`TRADELICENSE_${labelCategory}_${item.category
+              .toUpperCase()
+              .replace(/[.:-\s\/]/g, "_")}`}
             style={{
               color: "rgba(0, 0, 0, 0.6000000238418579)",
               fontSize: "14px",
@@ -44,7 +49,11 @@ const getMultiItem = (billingslabData, classes, style) => {
         </Grid>
         <Grid sm={2}>
           <Label
-            label={`Rs ${item.rate}`}
+            label={
+              labelCategory === "TRADETYPE"
+                ? `Rs ${item.rate}`
+                : `Rs ${item.total}`
+            }
             style={{
               color: "rgba(0, 0, 0, 0.8700000047683716)",
               fontSize: "14px",
