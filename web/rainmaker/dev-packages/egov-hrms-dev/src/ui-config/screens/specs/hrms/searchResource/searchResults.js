@@ -37,10 +37,15 @@ export const textToLocalMapping = {
     "HR_HOME_SEARCH_RESULTS_TABLE_HEADING",
     getTransformedLocalStorgaeLabels()
   ),
-  "Tenant ID": getLocaleLabels(
-    "Tenant ID",
-    "HR_COMMON_TABLE_COL_TENANT_ID",
-    getTransformedLocalStorgaeLabels()
+  "Search Results for Employee": get(
+    getLocalTextFromCode("HR_HOME_SEARCH_RESULTS_TABLE_HEADING"),
+    "message",
+    "Search Results for Employee"
+  ),
+  "Tenant ID": get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_TENANT_ID"),
+    "message",
+    "Tenant ID"
   )
 };
 
@@ -71,7 +76,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Role")]: {},
       [get(textToLocalMapping, "Designation")]: {},
       [get(textToLocalMapping, "Department")]: {},
-      // [get(textToLocalMapping, "Tenant ID")]: {}
+      [get(textToLocalMapping, "Tenant ID")]: {}
     },
     title: get(textToLocalMapping, "Search Results for Employee")
   }

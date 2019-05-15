@@ -135,10 +135,11 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid, latestPropertyDetails) => {
   const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
   const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
-  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
+  const { owners: ownerDetails, institution, ownershipCategory } = property.propertyDetails[0];
+  const { financialYear } = latestPropertyDetails;
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
     ? [{ key: "PT_INSTITUTION_NAME", value: institution.name }, { key: "PT_AUTHORISED_PERSON_NAME", value: ownerDetails[0].name }]

@@ -149,7 +149,6 @@ export const configOwner = (ownersCount, component) =>
   formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay", isCoreConfiguration: true })(component);
 
 export function addOwner(isMultiple = false, component, self) {
-  console.log("addOwner");
   const { ownerInfoArr, ownersCount } = self.state;
   const OwnerInfoHOC = configOwner(ownersCount, component);
   self.setState(
@@ -543,4 +542,12 @@ export const renderPlotAndFloorDetails = (fromReviewPage, PlotComp, FloorComp, s
   } else {
     return null;
   }
+};
+
+export const removeAdhocIfDifferentFY = (property, fY) => {
+  set(property, "Properties[0].propertyDetails[0].adhocExemption", null);
+  set(property, "Properties[0].propertyDetails[0].adhocExemptionReason", null);
+  set(property, "Properties[0].propertyDetails[0].adhocPenalty", null);
+  set(property, "Properties[0].propertyDetails[0].adhocPenaltyReason", null);
+  return property;
 };
