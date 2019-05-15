@@ -1,3 +1,6 @@
+import React from "react";
+import Label from "egov-ui-kit/utils/translationNode";
+
 const formConfig = {
   name: "additionalRebate",
   fields: {
@@ -14,10 +17,10 @@ const formConfig = {
       id: "adhocPenaltyReason",
       type: "singleValueList",
       dropDownData: [
-        { label: "Pending dues from earlier", value: "Pending dues from earlier" },
-        { label: "Miscalculation of earlier assessment", value: "Miscalculation of earlier assessment" },
-        { label: "One time Penalty", value: "One time Penalty" },
-        { label: "Others", value: "Others" },
+        { label: <Label label="PT_PENDING_DUES_FROM_EARLIER" />, value: "Pending dues from earlier" },
+        { label: <Label label="PT_MISCALCULATION_DUES" />, value: "Miscalculation of earlier assessment" },
+        { label: <Label label="PT_ONE_TIME_PENALTY" />, value: "One time Penalty" },
+        { label: <Label label="PROPERTYTAX_BILLING_SLAB_OTHERS" />, value: "Others" },
       ],
       floatingLabelText: "PT_REASON_FOR_CHARGES",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
@@ -40,10 +43,10 @@ const formConfig = {
       floatingLabelText: "PT_REASON_FOR_REBATE",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       dropDownData: [
-        { label: "Advanced paid by citizen earlier", value: "Advanced paid by citizen earlier" },
-        { label: "Rebate provided by commissioner/EO", value: "Rebate provided by commissioner/EO" },
-        { label: "Additional amount charged from the citizen", value: "Additional amount charged from the citizen" },
-        { label: "Others", value: "Others" },
+        { label: <Label label="PT_REBATE_OPTION1" />, value: "Advanced paid by citizen earlier" },
+        { label: <Label label="PT_REBATE_OPTION2" />, value: "Rebate provided by commissioner/EO" },
+        { label: <Label label="PT_REBATE_OPTION3" />, value: "Additional amount charged from the citizen" },
+        { label: <Label label="PROPERTYTAX_BILLING_SLAB_OTHERS" />, value: "Others" },
       ],
       required: false,
       fullWidth: true,

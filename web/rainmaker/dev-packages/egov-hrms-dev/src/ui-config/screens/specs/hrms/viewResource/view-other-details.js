@@ -113,8 +113,14 @@ const deptCard = {
   type: "array"
 };
 
-const educationDetailsHeader = getHeader("Education Details");
-const deptDetailsHeader = getHeader("Department Test Details");
+const educationDetailsHeader = getHeader({
+  labelName: "Education Details",
+  labelKey: "HR_SUMMARY_EDUCATION_DEATILS_SUBHEADER"
+});
+const deptDetailsHeader = getHeader({
+  labelName: "Department Test Details",
+  labelKey: "HR_SUMMARY_DEPT_TEST_DEATILS_SUBHEADER"
+});
 
 export const getOtherDetailsView = (isReview = true) => {
   return getCommonGrayCard({

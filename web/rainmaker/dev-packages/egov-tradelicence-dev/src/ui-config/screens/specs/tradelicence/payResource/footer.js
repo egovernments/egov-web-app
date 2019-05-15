@@ -30,6 +30,17 @@ export const callPGService = async (state, dispatch) => {
       }
     ];
     const billPayload = await getBill(queryObj);
+    const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
+      item => {
+        if (item.businessService === "TL") {
+          item.amountPaid = get(
+            billPayload,
+            "billResponse.Bill[0].billDetails[0].totalAmount"
+          );
+        }
+        return item;
+      }
+    );
     try {
       const requestBody = {
         Transaction: {
@@ -39,8 +50,9 @@ export const callPGService = async (state, dispatch) => {
             "billResponse.Bill[0].billDetails[0].totalAmount"
           ),
           module: "TL",
+          taxAndPayments,
           billId: get(billPayload, "billResponse.Bill[0].id"),
-          moduleId: get(
+          consumerCode: get(
             billPayload,
             "billResponse.Bill[0].billDetails[0].consumerCode"
           ),
@@ -114,7 +126,10 @@ const getSelectedTabIndex = paymentType => {
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
-  const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath), "daystart");
+  const dateConvertedToEpoch = convertDateToEpoch(
+    get(finalObj, jsonPath),
+    "daystart"
+  );
   set(finalObj, jsonPath, dateConvertedToEpoch);
 };
 
@@ -309,58 +324,58 @@ export const footer = getCommonApplyFooter({
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
   },
-  downloadConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "DOWNLOAD CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
-  printConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "PRINT CONFIRMATION FORM",
-        labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
+  // downloadConfirmationform: {
+  //   componentPath: "Button",
+  //   props: {
+  //     variant: "outlined",
+  //     color: "primary",
+  //     style: {
+  //       minWidth: "200px",
+  //       height: "48px",
+  //       marginRight: "45px"
+  //     }
+  //   },
+  //   children: {
+  //     submitButtonLabel: getLabel({
+  //       labelName: "DOWNLOAD CONFIRMATION FORM",
+  //       labelKey: "TL_COMMON_BUTTON_DOWNLOAD_CONFIRMATION_FORM"
+  //     })
+  //   },
+  //   onClickDefination: {
+  //     action: "condition",
+  //     callBack: callBackForPay
+  //   },
+  //   roleDefination: {
+  //     rolePath: "user-info.roles"
+  //     roles: ["CITIZEN"]
+  //   }
+  // },
+  // printConfirmationform: {
+  //   componentPath: "Button",
+  //   props: {
+  //     variant: "outlined",
+  //     color: "primary",
+  //     style: {
+  //       minWidth: "200px",
+  //       height: "48px",
+  //       marginRight: "45px"
+  //     }
+  //   },
+  //   children: {
+  //     submitButtonLabel: getLabel({
+  //       labelName: "PRINT CONFIRMATION FORM",
+  //       labelKey: "TL_COMMON_BUTTON_PRINT_CONFIRMATION_FORM"
+  //     })
+  //   },
+  //   onClickDefination: {
+  //     action: "condition",
+  //     callBack: callBackForPay
+  //   },
+  //   roleDefination: {
+  //     rolePath: "user-info.roles"
+  //     roles: ["CITIZEN"]
+  //   }
+  // },
   makePayment: {
     componentPath: "Button",
     props: {

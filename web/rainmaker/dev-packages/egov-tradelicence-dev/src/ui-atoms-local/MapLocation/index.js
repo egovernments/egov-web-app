@@ -136,7 +136,7 @@ const MapLocation = compose(
       <input
         type="text"
         className="searchBoxStyles"
-        placeholder="Search address"
+        placeholder={props.placeholder}
         style={props.searchBoxStyles}
       />
     </SearchBox>

@@ -6,6 +6,7 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 export const getDeptName = (state, codes) => {
   let deptMdmsData = get(
@@ -32,6 +33,7 @@ export const getDesigName = (state, codes) => {
 };
 
 export const searchApiCall = async (state, dispatch) => {
+  let { localisationLabels } = state.app || {};
   showHideTable(false, dispatch);
   const tenantId =
     get(state.screenConfiguration.preparedFinalObject, "searchScreen.ulb") ||
@@ -110,7 +112,6 @@ export const searchApiCall = async (state, dispatch) => {
             return assignment.department;
           });
 
-        // console.log(getDeptName(state, currentDepartments));
         return {
           [get(textToLocalMapping, "Employee ID")]:
             get(item, "code", "-") || "-",

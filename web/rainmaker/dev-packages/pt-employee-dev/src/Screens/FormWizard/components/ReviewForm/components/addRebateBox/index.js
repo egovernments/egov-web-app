@@ -201,7 +201,8 @@ class AddRebateExemption extends React.Component {
             }}
             className="add-rebate-action-button"
             onClick={this.onSubmit}
-            label={"SUBMIT"}
+            buttonLabel={true}
+            label={<Label label="CS_COMMON_SUBMIT" buttonLabel={true} />}
           />
         </div>
       </div>

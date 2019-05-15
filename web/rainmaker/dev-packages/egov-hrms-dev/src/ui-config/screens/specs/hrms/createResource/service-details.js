@@ -165,7 +165,10 @@ const serviceDetailsCard = {
             props: {
               items: [
                 {
-                  label: "Currently Working Here"
+                  label: {
+                    labelName: "Currently Working Here",
+                    labelKey: "HR_CURRENTLY_WORKING_HERE_SWITCH_LABEL"
+                  }
                 }
               ],
               SwitchProps: {
@@ -218,7 +221,7 @@ const serviceDetailsCard = {
     items: [],
     addItemLabel: {
       labelName: "ADD SERVICE ENTRY",
-      labelKey: "TL_ADD_SERVICE_ENTRY"
+      labelKey: "HR_ADD_SERVICE_ENTRY"
     },
     headerName: "Service",
     headerJsonPath:

@@ -116,10 +116,7 @@ const commonReducer = (state = intialState, action) => {
           ...state.designationsById,
           ...designationsById,
         },
-        stateInfoById: {
-          ...state.stateInfoById,
-          ...stateInfoById,
-        },
+        stateInfoById,
         cities: [...cities],
         citiesByModule: citiesByModule,
       };

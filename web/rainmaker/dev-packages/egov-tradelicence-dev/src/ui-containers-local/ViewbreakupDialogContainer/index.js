@@ -28,12 +28,17 @@ const closebuttonStyle = {
 const closeIcon = "close";
 
 const getMultiItem = (billingslabData, classes, style) => {
+  let labelCategory = "";
   return billingslabData.map((item, index) => {
+    if (item.type === "trade") labelCategory = "TRADETYPE";
+    else if ((item.type = "accessories")) labelCategory = "ACCESSORIESCATEGORY";
     return (
       <Grid sm={12} className={classes.container} container={true}>
         <Grid sm={10}>
           <LabelContainer
-            labelKey={`TL_${item.category}`}
+            labelKey={`TRADELICENSE_${labelCategory}_${item.category
+              .toUpperCase()
+              .replace(/[.:-\s\/]/g, "_")}`}
             style={{
               color: "rgba(0, 0, 0, 0.6000000238418579)",
               fontSize: "14px",
@@ -44,7 +49,11 @@ const getMultiItem = (billingslabData, classes, style) => {
         </Grid>
         <Grid sm={2}>
           <Label
-            label={`Rs ${item.rate}`}
+            label={
+              labelCategory === "TRADETYPE"
+                ? `Rs ${item.rate}`
+                : `Rs ${item.total}`
+            }
             style={{
               color: "rgba(0, 0, 0, 0.8700000047683716)",
               fontSize: "14px",
@@ -89,8 +98,8 @@ class ViewBreakupContainer extends React.Component {
           />
         </Grid>
         <Grid sm={2}>
-          <Label
-            label={`Rs ${total}`}
+          <LabelContainer
+            labelName={`Rs ${total}`}
             style={
               style
                 ? style
@@ -147,8 +156,9 @@ class ViewBreakupContainer extends React.Component {
                 </Icon>
               </div>
               <div style={{ paddingBottom: "16px", paddingTop: "8px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName="Calculation Breakup"
+                  labelKey="TL_CALCULATION_BREAKUP"
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",
@@ -180,8 +190,9 @@ class ViewBreakupContainer extends React.Component {
                 getGridItem(tradeTotal, classes)}
               {accessoriesUnitData && accessoriesUnitData.length > 0 && (
                 <div style={{ paddingBottom: "12px", marginTop: 20 }}>
-                  <Label
-                    label={"Accessory Unit"}
+                  <LabelContainer
+                    labelName="Accessory Unit"
+                    labelKey="TL_ACCESSORY_UNIT"
                     style={{
                       color: "rgba(0, 0, 0, 0.8700000047683716)",
                       fontSize: "16px",
@@ -205,8 +216,9 @@ class ViewBreakupContainer extends React.Component {
           ) : (
             <div style={{ padding: "16px", width: "500px" }}>
               <div style={{ paddingBottom: "16px" }}>
-                <Label
-                  label="Calculation Breakup"
+                <LabelContainer
+                  labelName="Calculation Breakup"
+                  labelKey="TL_CALCULATION_BREAKUP"
                   style={{
                     color: "rgba(0, 0, 0, 0.8700000047683716)",
                     fontSize: "20px",

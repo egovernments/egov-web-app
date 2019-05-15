@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import LinearProgress from "../../ui-atoms/LinearSpinner";
 import Loadable from "react-loadable";
 import Item from "../../ui-atoms/Layout/Item";
-import remoteComponents from "../../ui-config/commonConfig/remote-component-paths";
+import remoteComponents from "ui-config/commonConfig/remote-component-paths";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import find from "lodash/find";
