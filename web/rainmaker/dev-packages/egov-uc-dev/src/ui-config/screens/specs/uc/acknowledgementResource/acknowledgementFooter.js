@@ -1,6 +1,6 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { generateReciept } from "../../utils/recieptPdf";
-
+import { ifUserRoleExists } from "../../utils";
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -11,9 +11,11 @@ const getCommonApplyFooter = children => {
     children
   };
 };
+export const getRedirectionURL = () => {
+  const redirectionURL = ifUserRoleExists("EMPLOYEE") ? "/uc/search" : "/inbox";
 
-const redirectionURL = "/egov-ui-framework/uc/search";
-
+  return redirectionURL;
+};
 export const acknowledgementSuccesFooter = getCommonApplyFooter({
   goToHomeButton: {
     componentPath: "Button",
@@ -34,7 +36,7 @@ export const acknowledgementSuccesFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: redirectionURL
+      path: `${getRedirectionURL()}`
     }
   },
 
@@ -83,7 +85,7 @@ export const acknowledgementFailureFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: redirectionURL
+      path: `${getRedirectionURL()}`
     }
   }
 });

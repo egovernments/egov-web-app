@@ -2,7 +2,7 @@ import {
   getCommonGrayCard,
   getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { cash, demandDraft, cheque, card } from "./payment-methods";
+import { cash, demandDraft, cheque, card } from "./paymentMethods";
 
 const capturePaymentDetails = getCommonGrayCard({
   header: getCommonSubHeader(
@@ -14,7 +14,7 @@ const capturePaymentDetails = getCommonGrayCard({
     }
   ),
   tabSection: {
-    uiFramework: "custom-containers-local",
+    uiFramework: "custom-containers",
     moduleName: "egov-tradelicence",
     componentPath: "CustomTabContainer",
     props: {
