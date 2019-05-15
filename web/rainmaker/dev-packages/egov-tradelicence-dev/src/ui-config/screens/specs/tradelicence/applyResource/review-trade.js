@@ -48,7 +48,7 @@ const accessoriesCard = {
         reviewAccessoryCount: getLabelWithValue(
           {
             labelName: "Accessory Count",
-            labelKey: "TL_NEW_TRADE_ACCESSORRY_COUNT"
+            labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT"
           },
           { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count" }
         )
