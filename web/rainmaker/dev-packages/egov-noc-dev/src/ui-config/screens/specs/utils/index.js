@@ -345,7 +345,10 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
         ) {
           owners.splice(cardIndex, 1);
           dispatch(
-            prepareFinalObject(`FireNOCs[0].fireNOCDetails.applicantDetails.owners`, owners)
+            prepareFinalObject(
+              `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
+              owners
+            )
           );
         }
       } else {

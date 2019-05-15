@@ -4,7 +4,6 @@ import {
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { NOCApplication } from "./searchResource/fireNocApplication";
-import { NOCRequiredDocuments } from "./reqDocs";
 import { showHideAdhocPopup } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
@@ -15,7 +14,14 @@ import {
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
 import find from "lodash/find";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import set from "lodash/set";
+import get from "lodash/get";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getRequiredDocuments } from "./requiredDocuments/reqDocs";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
@@ -25,6 +31,35 @@ const header = getCommonHeader({
   labelName: "Fire NOC",
   labelKey: "NOC_COMMON_NOC"
 });
+
+const getMdmsData = async (action, state, dispatch) => {
+  let tenantId = getTenantId();
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: "firenoc",
+          masterDetails: [{ name: "Documents" }]
+        }
+      ]
+    }
+  };
+  try {
+    let payload = null;
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const NOCSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
@@ -53,6 +88,18 @@ const NOCSearchAndResult = {
         )
       );
     }
+    getMdmsData(action, state, dispatch).then(() => {
+      let documents = get(
+        state,
+        "screenConfiguration.preparedFinalObject.searchScreenMdmsData.firenoc.Documents",
+        []
+      );
+      set(
+        action,
+        "screenConfig.components.adhocDialog.children.popup",
+        getRequiredDocuments(documents)
+      );
+    });
     return action;
   },
   components: {
@@ -140,7 +187,7 @@ const NOCSearchAndResult = {
         screenKey: "search"
       },
       children: {
-        popup: NOCRequiredDocuments
+        popup: {}
       }
     }
   }
