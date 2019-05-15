@@ -293,11 +293,6 @@ export const callBackForNext = async (state, dispatch) => {
       dispatch(
         prepareFinalObject("LicensesTemp[0].reviewDocData", reviewDocData)
       );
-      const updateMessage = {
-        labelName: "Rates will be updated on submission",
-        labelKey: "TL_COMMON_EDIT_UPDATE_MESSAGE"
-      };
-      dispatch(toggleSnackbar(true, updateMessage, "info"));
     }
   }
   if (activeStep === 3) {
