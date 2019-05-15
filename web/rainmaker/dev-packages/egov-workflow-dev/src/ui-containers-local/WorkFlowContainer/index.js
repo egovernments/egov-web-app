@@ -5,7 +5,8 @@ import { Footer } from "../../ui-molecules-local";
 import {
   getQueryArg,
   addWflowFileUrl,
-  orderWfProcessInstances
+  orderWfProcessInstances,
+  getMultiUnits
 } from "egov-ui-framework/ui-utils/commons";
 import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 
@@ -119,6 +120,18 @@ class WorkFlowContainer extends React.Component {
         ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
         ...removedDocs
       ]);
+      let accessories = get(Licenses[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(Licenses[0], "tradeLicenseDetail.tradeUnits");
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.tradeUnits",
+        getMultiUnits(tradeUnits)
+      );
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.accessories",
+        getMultiUnits(accessories)
+      );
     }
     const applicationNumber = getQueryArg(
       window.location.href,
