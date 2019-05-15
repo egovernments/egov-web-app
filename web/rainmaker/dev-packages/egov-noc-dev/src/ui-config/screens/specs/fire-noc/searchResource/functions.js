@@ -103,7 +103,7 @@ export const searchApiCall = async (state, dispatch) => {
           [get(textToLocalMapping, "NOC Type")]:
             item.fireNOCDetails.fireNOCType || "-",
           [get(textToLocalMapping, "Owner Name")]:
-            item.fireNOCDetails.applicantDetails.owners[0].name || "-",
+            get(item, "fireNOCDetails.applicantDetails.owners[0].name") || "-",
           [get(textToLocalMapping, "Application Date")]:
             convertEpochToDate(item.applicationdate) || "-",
           tenantId: item.tenantId,

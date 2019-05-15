@@ -91,32 +91,38 @@ export const NOCApplication = getCommonCard({
         labelName: "Select Application Status",
         labelKey: "NOC_APPLICATION_PLACEHOLDER"
       },
-      required: false,
+
+      localePrefix: {
+        moduleName: "WF",
+        masterName: "NEWTL"
+      },
       jsonPath: "searchScreen.status",
+      sourceJsonPath: "applyScreenMdmsData.searchScreen.status",
+      required: false,
       gridDefination: {
         xs: 12,
         sm: 4
-      },
-      data: [
-        {
-          code: "INITIATED"
-        },
-        {
-          code: "APPLIED"
-        },
-        {
-          code: "PAID"
-        },
-        {
-          code: "APPROVED"
-        },
-        {
-          code: "REJECTED"
-        },
-        {
-          code: "CANCELLED"
-        }
-      ]
+      }
+      // data: [
+      //   {
+      //     code: "INITIATED"
+      //   },
+      //   {
+      //     code: "APPLIED"
+      //   },
+      //   {
+      //     code: "PAID"
+      //   },
+      //   {
+      //     code: "APPROVED"
+      //   },
+      //   {
+      //     code: "REJECTED"
+      //   },
+      //   {
+      //     code: "CANCELLED"
+      //   }
+      // ]
     }),
 
     fromDate: getDateField({
