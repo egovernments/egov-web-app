@@ -8,13 +8,17 @@ import { NOCRequiredDocuments } from "./reqDocs";
 import { showHideAdhocPopup } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
-// import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
+import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
+import {
+  getTenantId,
+  localStorageGet
+} from "egov-ui-kit/utils/localStorageUtils";
+import find from "lodash/find";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
-//const hasApproval = getQueryArg(window.location.href, "hasApproval");
 let enableButton = true;
-//enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const header = getCommonHeader({
@@ -24,6 +28,33 @@ const header = getCommonHeader({
 const NOCSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
+  beforeInitScreen: (action, state, dispatch) => {
+    const tenantId = getTenantId();
+    const BSqueryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "businessService", value: "NOC" }
+    ];
+    setBusinessServiceDataToLocalStorage(BSqueryObject, dispatch);
+    const businessServiceData = JSON.parse(
+      localStorageGet("businessServiceData")
+    );
+    const data = find(businessServiceData, { businessService: "NewTL" });
+    const { states } = data || [];
+    if (states && states.length > 0) {
+      const status = states.map((item, index) => {
+        return {
+          code: item.state
+        };
+      });
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.searchScreen.status",
+          status.filter(item => item.code != null)
+        )
+      );
+    }
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",
