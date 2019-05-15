@@ -678,7 +678,8 @@ const accessoriesCard = {
             pattern: getPattern("NoOfEmp"),
             props: {
               setDataInField: true,
-              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count"
+              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
+              disabled: true
             },
             required: true,
             defaultValue: 1,
