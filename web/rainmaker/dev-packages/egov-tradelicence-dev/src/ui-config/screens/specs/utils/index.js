@@ -1380,23 +1380,13 @@ export const fetchBill = async (action, state, dispatch) => {
       prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
     );
 
-  //set amount paid as total amount from bill - destination changed in CS v1.1
+  //set amount paid as total amount from bill
   payload &&
     payload.billResponse &&
     dispatch(
       prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
+        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
         payload.billResponse.Bill[0].billDetails[0].totalAmount
-      )
-    );
-
-  //Collection Type Added in CS v1.1
-  payload &&
-    payload.billResponse &&
-    dispatch(
-      prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
-        "COUNTER"
       )
     );
 
