@@ -22,7 +22,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import store from "redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getQueryArg, getMultiUnits } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
 
@@ -210,37 +210,6 @@ const createOwnersBackup = (dispatch, payload) => {
         JSON.parse(JSON.stringify(owners))
       )
     );
-};
-
-const getMultiUnits = multiUnits => {
-  let hasTradeType = false;
-  let hasAccessoryType = false;
-
-  let mergedUnits =
-    multiUnits &&
-    multiUnits.reduce((result, item) => {
-      hasTradeType = item.hasOwnProperty("tradeType");
-      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
-      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
-        if (item.hasOwnProperty("id")) {
-          if (item.hasOwnProperty("active") && item.active) {
-            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
-              set(item, "active", false);
-              result.push(item);
-            } else {
-              result.push(item);
-            }
-          }
-        } else {
-          if (!item.hasOwnProperty("isDeleted")) {
-            result.push(item);
-          }
-        }
-      }
-      return result;
-    }, []);
-
-  return mergedUnits;
 };
 
 // const getMultipleAccessories = licenses => {
