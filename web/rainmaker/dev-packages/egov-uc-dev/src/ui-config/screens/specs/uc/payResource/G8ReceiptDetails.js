@@ -31,7 +31,7 @@ export const G8ReceiptDetails = getCommonGrayCard({
       },
       g8ReceiptNo: getTextField({
         label: {
-          labelName: "g8 Receipt No",
+          labelName: "G8 Receipt No",
           labelKey: "UC_G8_RECEIPT_NO_LABEL"
         },
         placeholder: {
@@ -47,11 +47,11 @@ export const G8ReceiptDetails = getCommonGrayCard({
       }),
       g8ReceiptIssueDate: getDateField({
         label: {
-          labelName: "g8 receipt issue Date",
+          labelName: "G8 receipt issue Date",
           labelKey: "UC_G8_RECEIPT_ISSUE_DATE"
         },
         placeholder: {
-          labelName: "Enter g8 receipt Issue Date",
+          labelName: "Enter G8 receipt Issue Date",
           labelKey: "UC_SELECT_G8_RECEIPT_ISSUE_DATE_PLACEHOLDER"
         },
         gridDefination: {

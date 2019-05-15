@@ -27,7 +27,7 @@ export const textToLocalMapping = {
   ),
   "Service Type": getLocaleLabels(
     "Service Type",
-    "UC_COMMON_TABLE_COL_SERVICE_TYPE",
+    "UC_SERVICE_TYPE_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
   Date: getLocaleLabels(
@@ -63,12 +63,15 @@ export const searchResults = {
           return (
             <span
               style={{
-                color: "#FE7A51"
+                color: "#FE7A51",
+                cursor: "pointer",
+                textDecoration: "underline"
               }}
               onClick={() => generateReciept(rowData)}
             >
               {rowData[get(textToLocalMapping, "Receipt No.")]}
             </span>
+            // <span style="cursor:pointer">pointer</span>
           );
         }
       },

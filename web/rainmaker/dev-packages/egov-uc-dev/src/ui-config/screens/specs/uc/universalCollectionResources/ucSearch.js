@@ -114,15 +114,21 @@ export const UCSearchCard = getCommonCard({
         labelKey: "UC_MOBILE_NO_LABEL"
       },
       placeholder: {
-        labelName: "+91|Enter Mobile NO.",
+        labelName: "Enter Mobile NO.",
         labelKey: "UC_MOBILE_NO_PLACEHOLDER"
       },
-      required: false,
-      jsonPath: "searchScreen.mobileNo",
       gridDefination: {
         xs: 12,
         sm: 4
-      }
+      },
+      iconObj: {
+        label: "+91 |",
+        position: "start"
+      },
+      required: false,
+      pattern: getPattern("MobileNo"),
+      errorMessage: "Invalid Mobile No..",
+      jsonPath: "searchScreen.mobileNo"
     }),
 
     fromDate: getDateField({
@@ -155,6 +161,7 @@ export const UCSearchCard = getCommonCard({
       required: false,
       pattern: getPattern("Date"),
       jsonPath: "searchScreen.toDate",
+
       gridDefination: {
         xs: 12,
         sm: 4

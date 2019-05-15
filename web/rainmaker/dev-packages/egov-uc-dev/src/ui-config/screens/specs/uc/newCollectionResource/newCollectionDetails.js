@@ -33,19 +33,57 @@ export const newCollectionDetailsCard = getCommonCard({
   //   }
   // ),
   searchContainer: getCommonContainer({
+    City: {
+      ...getSelectField({
+        label: {
+          labelName: "City",
+          labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
+        },
+        labelPrefix: {
+          moduleName: "TENANT",
+          masterName: "TENANTS"
+        },
+        optionLabel: "name",
+        placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
+        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+        jsonPath: "Demands[0].tenantId",
+        required: true,
+        props: {
+          required: true,
+          disabled: false
+        }
+      })
+    },
+    dummyDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
+      props: {
+        disabled: true
+      }
+    },
+
     ConsumerMobileNo: getTextField({
       label: {
-        labelName: " consumer Mobile No",
+        labelName: "Mobile No",
         labelKey: "UC_MOBILE_NO_LABEL"
       },
       placeholder: {
-        labelName: "Enter Consumer Mobile No",
+        labelName: "Enter Mobile No",
         labelKey: "UC_MOBILE_NO_PLACEHOLDER"
+      },
+      iconObj: {
+        label: "+91 |",
+        position: "start"
       },
 
       required: true,
       visible: true,
-      pattern: getPattern("consumerMobileNo"),
+      pattern: getPattern("MobileNo"),
       errorMessage: "Invalid Mobile No.",
       jsonPath: "Demands[0].mobileNo"
     }),
@@ -56,12 +94,12 @@ export const newCollectionDetailsCard = getCommonCard({
       },
       placeholder: {
         labelName: "Enter Consumer  Name",
-        labelKey: "UC_CONS_NAME_LABEL_PLACEHOLDER"
+        labelKey: "UC _CONS_NAME_LABEL_PLACEHOLDER"
       },
 
       required: true,
       visible: true,
-      pattern: getPattern("consumerName"),
+      pattern: getPattern("Name"),
       errorMessage: "Invalid Name.",
       jsonPath: "Demands[0].consumerName"
     }),
@@ -171,8 +209,8 @@ export const newCollectionDetailsCard = getCommonCard({
         labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
       },
 
-      required: false,
-      pattern: getPattern("amountTobeCollected"),
+      required: true,
+      pattern: getPattern("Amount"),
       errorMessage: "Invalid Amount",
       jsonPath: "Demands[0].demandDetails[0].taxAmount"
     }),
@@ -185,7 +223,8 @@ export const newCollectionDetailsCard = getCommonCard({
         labelName: "Enter Field Collection Fee ",
         labelKey: "UC_FIELD_COLLECTION_FEE_PLACEHOLDER"
       },
-
+      required: false,
+      pattern: getPattern("FieldCollectionFee"),
       jsonPath: "Demands[0].demandDetails[0].collectionAmount"
     }),
     comment: getTextField({

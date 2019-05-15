@@ -50,7 +50,7 @@ var acknowledgementCard = function acknowledgementCard() {
       tailText = _ref.tailText,
       number = _ref.number;
 
-  var tail = tailText ? {
+  var tail = tailText && number && number !== "null" ? {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     children: {
@@ -94,9 +94,9 @@ var acknowledgementCard = function acknowledgementCard() {
         componentPath: "Div",
         children: {
           header: (0, _utils.getCommonHeader)(header),
-          paragraph: (0, _utils.getCommonParagraph)(body, {
+          paragraph: body ? (0, _utils.getCommonParagraph)(body, {
             style: style.bodySub
-          })
+          }) : {}
         },
         props: {
           style: style.bodyBox

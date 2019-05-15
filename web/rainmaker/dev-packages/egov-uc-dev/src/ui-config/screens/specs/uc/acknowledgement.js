@@ -33,8 +33,8 @@ const getAcknowledgementCard = (
   if (purpose === "pay" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: `new colllection`,
-        labelKey: "UC_NEW_COLLECTION_CC"
+        labelName: `New Collection`,
+        labelKey: "UC_COMMON_HEADER"
         // dynamicArray: [financialYearText]
       }),
       applicationSuccessCard: {
@@ -79,7 +79,7 @@ const getAcknowledgementCard = (
       header: getCommonHeader({
         labelName: `new collection`,
         // dynamicArray: [financialYearText],
-        labelKey: "UC_NEW_COLLECTION"
+        labelKey: "new collection"
       }),
       // applicationNumber: {
       //   uiFramework: "custom-atoms-local",
