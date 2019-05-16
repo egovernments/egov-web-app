@@ -82,12 +82,14 @@ export const searchApiCall = async (state, dispatch) => {
             key: key,
             value: convertDateToEpoch(searchScreenObject[key], "dayend")
           });
-        } else if (key === "status") {
-          queryObject.push({
-            key: "action",
-            value: searchScreenObject[key].trim()
-          });
-        } else {
+        }
+        // else if (key === "status") {
+        //   queryObject.push({
+        //     key: "action",
+        //     value: searchScreenObject[key].trim()
+        //   });
+        // }
+        else {
           queryObject.push({ key: key, value: searchScreenObject[key].trim() });
         }
       }
@@ -108,7 +110,7 @@ export const searchApiCall = async (state, dispatch) => {
             convertEpochToDate(item.applicationdate) || "-",
           tenantId: item.tenantId,
           [get(textToLocalMapping, "Status")]:
-            item.fireNOCDetails.applicationStatus || "-"
+            get(textToLocalMapping, item.status) || "-"
         }));
 
       dispatch(

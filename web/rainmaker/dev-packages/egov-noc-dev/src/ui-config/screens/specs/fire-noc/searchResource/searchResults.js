@@ -179,8 +179,8 @@ const onRowClick = rowData => {
       }&tenantId=${rowData["tenantId"]}`;
     case get(textToLocalMapping, "INITIATED"):
       return process.env.REACT_APP_SELF_RUNNING === "true"
-        ? `/egov-ui-framework/fire-noc/taskDetails?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`
-        : `/fire-noc/taskDetails?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`;
+        ? `/egov-ui-framework/fire-noc/search-preview?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`
+        : `/fire-noc/search-preview?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`;
     case get(textToLocalMapping, "REJECTED"):
       return `/fire-noc/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]

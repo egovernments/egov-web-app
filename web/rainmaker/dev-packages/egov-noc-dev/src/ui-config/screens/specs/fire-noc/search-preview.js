@@ -31,7 +31,7 @@ const titlebar = getCommonContainer({
 
 const screenConfig = {
   uiFramework: "material-ui",
-  name: "taskDetails",
+  name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
     let pfo = {
       nocType: "Provisional",
