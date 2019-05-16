@@ -6,7 +6,7 @@ import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headersFromAPI = billAccountDetails.map((item) => {
-    return item.taxHeadCode && item.taxHeadCode;
+    return item.accountDescription && item.accountDescription.split("-")[0];
   });
   const headers = [
     "PT_TAX",
@@ -24,7 +24,6 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     "PT_DECIMAL_CEILING_CREDIT",
     "PT_DECIMAL_CEILING_CREDIT_DEBIT",
     "PT_DECIMAL_CEILING_DEBIT",
-    "PT_ROUNDOFF",
   ];
   const negativeHeaders = [
     "PT_ADHOC_REBATE",
@@ -45,14 +44,12 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     (result, current) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
       // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
-      const taxHeadContent = billAccountDetails.filter((item) => item.taxHeadCode && item.taxHeadCode === current);
+      const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
       taxHeadContent &&
         taxHeadContent[0] &&
         result[1].push({
           text: taxHeadContent[0]
-            ? taxHeadContent[0].amount
-              ? taxHeadContent[0].amount
-              : taxHeadContent[0].debitAmount
+            ? taxHeadContent[0].debitAmount
               ? `-${taxHeadContent[0].debitAmount}`
               : taxHeadContent[0].crAmountToBePaid
               ? taxHeadContent[0].crAmountToBePaid
@@ -135,11 +132,10 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid, latestPropertyDetails) => {
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
   const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
   const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
-  const { owners: ownerDetails, institution, ownershipCategory } = property.propertyDetails[0];
-  const { financialYear } = latestPropertyDetails;
+  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
     ? [{ key: "PT_INSTITUTION_NAME", value: institution.name }, { key: "PT_AUTHORISED_PERSON_NAME", value: ownerDetails[0].name }]
