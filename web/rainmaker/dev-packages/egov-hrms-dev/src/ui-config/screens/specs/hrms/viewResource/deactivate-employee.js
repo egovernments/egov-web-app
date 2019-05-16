@@ -227,7 +227,10 @@ export const deactivateEmployee = getCommonContainer({
               inputProps: {
                 accept: "image/*, .pdf, .png, .jpeg"
               },
-              buttonLabel: { labelName: "UPLOAD FILES" },
+              buttonLabel: {
+                labelName: "UPLOAD FILES",
+                labelKey: "HR_UPLOAD_FILES_BUTTON_LABEL"
+              },
               maxFileSize: 5000,
               moduleName: "HR",
               hasLocalization: false
@@ -280,7 +283,7 @@ export const deactivateEmployee = getCommonContainer({
         children: {
           previousButtonLabel: getLabel({
             labelName: "DEACTIVATE EMPLOYEE",
-            labelKey: "HR_DEACTIVATE_EMPLOYEE_BUTTON_TEXT"
+            labelKey: "HR_DEACTIVATE_EMPLOYEE_LABEL"
           })
         },
         onClickDefination: {

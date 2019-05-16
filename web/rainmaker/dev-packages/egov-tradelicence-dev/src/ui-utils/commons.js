@@ -22,9 +22,15 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import store from "redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  getFileUrlFromAPI
+} from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
+import {
+  setBusinessServiceDataToLocalStorage,
+  getMultiUnits
+} from "egov-ui-framework/ui-utils/commons";
 
 export const updateTradeDetails = async requestBody => {
   try {
@@ -74,6 +80,47 @@ export const getSearchResults = async queryObject => {
   }
 };
 
+const setDocsForEditFlow = async (state, dispatch) => {
+  const applicationDocuments = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Licenses[0].tradeLicenseDetail.applicationDocuments",
+    []
+  );
+  let uploadedDocuments = {};
+  let fileStoreIds =
+    applicationDocuments &&
+    applicationDocuments.map(item => item.fileStoreId).join(",");
+  const fileUrlPayload =
+    fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+  applicationDocuments &&
+    applicationDocuments.forEach((item, index) => {
+      uploadedDocuments[index] = [
+        {
+          fileName:
+            (fileUrlPayload &&
+              fileUrlPayload[item.fileStoreId] &&
+              decodeURIComponent(
+                fileUrlPayload[item.fileStoreId]
+                  .split(",")[0]
+                  .split("?")[0]
+                  .split("/")
+                  .pop()
+                  .slice(13)
+              )) ||
+            `Document - ${index + 1}`,
+          fileStoreId: item.fileStoreId,
+          fileUrl: Object.values(fileUrlPayload)[index],
+          documentType: item.documentType,
+          tenantId: item.tenantId,
+          id: item.id
+        }
+      ];
+    });
+  dispatch(
+    prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", uploadedDocuments)
+  );
+};
+
 export const updatePFOforSearchResults = async (
   action,
   state,
@@ -89,7 +136,14 @@ export const updatePFOforSearchResults = async (
     },
     { key: "applicationNumber", value: queryValue }
   ];
-  const payload = await getSearchResults(queryObject);
+  const isPreviouslyEdited = getQueryArg(window.location.href, "edited");
+  const payload = !isPreviouslyEdited
+    ? await getSearchResults(queryObject)
+    : {
+        Licenses: get(state.screenConfiguration.preparedFinalObject, "Licenses")
+      };
+  getQueryArg(window.location.href, "action") === "edit" &&
+    (await setDocsForEditFlow(state, dispatch));
   if (payload) {
     dispatch(prepareFinalObject("Licenses[0]", payload.Licenses[0]));
   }
@@ -111,7 +165,6 @@ export const updatePFOforSearchResults = async (
       )
     );
   updateDropDowns(payload, action, state, dispatch, queryValue);
-
   if (queryValuePurpose !== "cancel") {
     set(payload, getSafetyNormsJson(queryValuePurpose), "yes");
     set(payload, getHygeneLevelJson(queryValuePurpose), "yes");
@@ -210,37 +263,6 @@ const createOwnersBackup = (dispatch, payload) => {
         JSON.parse(JSON.stringify(owners))
       )
     );
-};
-
-const getMultiUnits = multiUnits => {
-  let hasTradeType = false;
-  let hasAccessoryType = false;
-
-  let mergedUnits =
-    multiUnits &&
-    multiUnits.reduce((result, item) => {
-      hasTradeType = item.hasOwnProperty("tradeType");
-      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
-      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
-        if (item.hasOwnProperty("id")) {
-          if (item.hasOwnProperty("active") && item.active) {
-            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
-              set(item, "active", false);
-              result.push(item);
-            } else {
-              result.push(item);
-            }
-          }
-        } else {
-          if (!item.hasOwnProperty("isDeleted")) {
-            result.push(item);
-          }
-        }
-      }
-      return result;
-    }, []);
-
-  return mergedUnits;
 };
 
 // const getMultipleAccessories = licenses => {
@@ -372,30 +394,53 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
       let action = "INITIATE";
       if (
         queryObject[0].tradeLicenseDetail &&
-        queryObject[0].tradeLicenseDetail.applicationDocuments &&
-        activeIndex === 1
-      ) {
-        set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
-      } else if (
-        queryObject[0].tradeLicenseDetail &&
         queryObject[0].tradeLicenseDetail.applicationDocuments
       ) {
-        action = "APPLY";
+        if (getQueryArg(window.location.href, "action") === "edit") {
+          // const removedDocs = get(
+          //   state.screenConfiguration.preparedFinalObject,
+          //   "LicensesTemp[0].removedDocs",
+          //   []
+          // );
+          // set(queryObject[0], "tradeLicenseDetail.applicationDocuments", [
+          //   ...get(
+          //     state.screenConfiguration.prepareFinalObject,
+          //     "Licenses[0].tradeLicenseDetail.applicationDocuments",
+          //     []
+          //   ),
+          //   ...removedDocs
+          // ]);
+        } else if (activeIndex === 1) {
+          set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
+        } else action = "APPLY";
       }
+      // else if (
+      //   queryObject[0].tradeLicenseDetail &&
+      //   queryObject[0].tradeLicenseDetail.applicationDocuments &&
+      //   activeIndex === 1
+      // ) {
+      // } else if (
+      //   queryObject[0].tradeLicenseDetail &&
+      //   queryObject[0].tradeLicenseDetail.applicationDocuments
+      // ) {
+      //   action = "APPLY";
+      // }
       set(queryObject[0], "action", action);
-      const updateResponse = await httpRequest(
-        "post",
-        "/tl-services/v1/_update",
-        "",
-        [],
-        { Licenses: queryObject }
-      );
+      const isEditFlow = getQueryArg(window.location.href, "action") === "edit";
+      !isEditFlow &&
+        (await httpRequest("post", "/tl-services/v1/_update", "", [], {
+          Licenses: queryObject
+        }));
       let searchQueryObject = [
         { key: "tenantId", value: queryObject[0].tenantId },
         { key: "applicationNumber", value: queryObject[0].applicationNumber }
       ];
       let searchResponse = await getSearchResults(searchQueryObject);
-      dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      if (isEditFlow) {
+        searchResponse = { Licenses: queryObject };
+      } else {
+        dispatch(prepareFinalObject("Licenses", searchResponse.Licenses));
+      }
       const updatedtradeUnits = get(
         searchResponse,
         "Licenses[0].tradeLicenseDetail.tradeUnits"

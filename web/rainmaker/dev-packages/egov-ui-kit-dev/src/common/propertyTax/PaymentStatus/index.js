@@ -61,7 +61,8 @@ const PaymentStatus = ({
                   receiptUIDetails.propertyInfo.map((item) => {
                     return (
                       <div className="row pt-reciept-label">
-                        <Label className="col-xs-6" label={item.key} />
+                        <Label className="col-xs-6" label={item.key} dynamicArray={item.dynamicArray ? item.dynamicArray : []} />
+                        <span>:</span>
                         <Label className="col-xs-6" labelStyle={labelStyle} label={item.value || "NA"} />
                       </div>
                     );
@@ -73,6 +74,7 @@ const PaymentStatus = ({
                     return (
                       <div className="row pt-reciept-label">
                         <Label className="col-xs-6" label={item.key} />
+                        <span>:</span>
                         <Label className="col-xs-6" labelStyle={labelStyle} label={item.value || item.value === "0" ? item.value : "NA"} />
                       </div>
                     );
@@ -81,20 +83,19 @@ const PaymentStatus = ({
             }
           />
         ) : null}
-        {receiptDetails &&
-          receiptDetails.ReceiptNo && (
-            <div
-              onClick={() => {
-                generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, receiptImageUrl);
-              }}
-            >
-              <Label
-                label="DOWNLOAD RECEIPT"
-                color="#fe7a51"
-                labelStyle={{ textAlign: "center", fontWeight: 500, fontSize: "16px", cursor: "pointer" }}
-              />
-            </div>
-          )}
+        {receiptDetails && receiptDetails.ReceiptNo && (
+          <div
+            onClick={() => {
+              generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, receiptImageUrl);
+            }}
+          >
+            <Label
+              label="PT_DOWNLOAD_RECEIPT"
+              color="#fe7a51"
+              labelStyle={{ textAlign: "center", fontWeight: 500, fontSize: "16px", cursor: "pointer" }}
+            />
+          </div>
+        )}
       </div>
       <ActionFooter key={2} label2={buttons.button2} primaryAction={primaryAction} />
     </div>

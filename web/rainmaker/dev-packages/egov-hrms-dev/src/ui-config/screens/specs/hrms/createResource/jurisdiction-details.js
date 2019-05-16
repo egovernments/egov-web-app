@@ -270,7 +270,7 @@ const jurisdictionDetailsCard = {
     items: [],
     addItemLabel: {
       labelName: "ADD JURISDICTION",
-      labelKey: "TL_ADD_JURISDICTION"
+      labelKey: "HR_ADD_JURISDICTION"
     },
     headerName: "Jurisdiction",
     headerJsonPath:

@@ -3,16 +3,14 @@ import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate } from "../../utils/index";
 import { httpRequest } from "../../../../../ui-utils";
 import {
+  getLocaleLabels,
+  getTransformedLocalStorgaeLabels
+} from "egov-ui-framework/ui-utils/commons";
+import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
-const getLocalTextFromCode = localCode => {
-  return JSON.parse(getLocalization("localization_en_IN")).find(
-    item => item.code == localCode
-  );
-};
 const getMdmsData = async () => {
   let mdmsBody = {
     MdmsCriteria: {
@@ -83,64 +81,92 @@ export const fetchData = async (action, state, dispatch) => {
 };
 
 export const textToLocalMapping = {
-  "Application No": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_NO"),
-    "message",
-    "Application No"
+  "Application No": getLocaleLabels(
+    "Application No",
+    "TL_COMMON_TABLE_COL_APP_NO",
+    getTransformedLocalStorgaeLabels()
   ),
-  "License No": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_LIC_NO"),
-    "message",
-    "License No"
+
+  "License No": getLocaleLabels(
+    "License No",
+    "TL_COMMON_TABLE_COL_LIC_NO",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Trade Name": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_TRD_NAME"),
-    "message",
-    "Trade Name"
+
+  "Trade Name": getLocaleLabels(
+    "Trade Name",
+    "TL_COMMON_TABLE_COL_TRD_NAME",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Owner Name": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_OWN_NAME"),
-    "message",
-    "Owner Name"
+  "Owner Name": getLocaleLabels(
+    "Owner Name",
+    "TL_COMMON_TABLE_COL_OWN_NAME",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Application Date": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_DATE"),
-    "message",
-    "Application Date"
+
+  "Application Date": getLocaleLabels(
+    "Application Date",
+    "TL_COMMON_TABLE_COL_APP_DATE",
+    getTransformedLocalStorgaeLabels()
   ),
-  Status: get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_STATUS"),
-    "message",
-    "Status"
+
+  Status: getLocaleLabels(
+    "Status",
+    "TL_COMMON_TABLE_COL_STATUS",
+    getTransformedLocalStorgaeLabels()
   ),
-  INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message", "INITIATED"),
-  APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message", "APPLIED"),
-  PAID: get(
-    getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
-    "message",
-    "PAID"
+
+  INITIATED: getLocaleLabels(
+    "Initiated,",
+    "TL_INITIATED",
+    getTransformedLocalStorgaeLabels()
   ),
-  PENDINGAPPROVAL: get(
-    getLocalTextFromCode("WF_NEWTL_PENDINGAPPROVAL"),
-    "message",
-    "Pending for Approval"
+  APPLIED: getLocaleLabels(
+    "Applied",
+    "TL_APPLIED",
+    getTransformedLocalStorgaeLabels()
   ),
-  PENDINGPAYMENT: get(
-    getLocalTextFromCode("WF_NEWTL_PENDINGPAYMENT"),
-    "message",
-    "Pending payment"
+  PAID: getLocaleLabels(
+    "Paid",
+    "WF_NEWTL_PENDINGAPPROVAL",
+    getTransformedLocalStorgaeLabels()
   ),
-  FIELDINSPECTION: get(
-    getLocalTextFromCode("WF_NEWTL_FIELDINSPECTION"),
-    "message",
-    "Pending for Field Inspection"
+
+  APPROVED: getLocaleLabels(
+    "Approved",
+    "TL_APPROVED",
+    getTransformedLocalStorgaeLabels()
   ),
-  APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message", "APPROVED"),
-  REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message", "REJECTED"),
-  CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message", "CANCELLED"),
-  MY_APPLICATIONS: get(
-    getLocalTextFromCode("TL_MY_APPLICATIONS"),
-    "message",
-    "My Applications"
+  REJECTED: getLocaleLabels(
+    "Rejected",
+    "TL_REJECTED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  CANCELLED: getLocaleLabels(
+    "Cancelled",
+    "TL_CANCELLED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGAPPROVAL: getLocaleLabels(
+    "Pending for Approval",
+    "WF_NEWTL_PENDINGAPPROVAL",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGPAYMENT: getLocaleLabels(
+    "Pending payment",
+    "WF_NEWTL_PENDINGPAYMENT",
+    getTransformedLocalStorgaeLabels()
+  ),
+
+  FIELDINSPECTION: getLocaleLabels(
+    "Pending for Field Inspection",
+    "WF_NEWTL_FIELDINSPECTION",
+    getTransformedLocalStorgaeLabels()
+  ),
+
+  MY_APPLICATIONS: getLocaleLabels(
+    "My Applications",
+    "TL_MY_APPLICATIONS",
+    getTransformedLocalStorgaeLabels()
   )
 };

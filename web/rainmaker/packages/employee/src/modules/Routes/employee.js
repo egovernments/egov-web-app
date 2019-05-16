@@ -127,11 +127,11 @@ const routes = [
     },
   },
   {
-    path: "",
+    path: "/",
     component: Home,
     needsAuthentication: true,
     options: {
-      title: "HOME",
+      title: "COMMON_BOTTOM_NAVIGATION_HOME",
       hideFooter: false,
       redirectionUrl: "/user/login",
       //isHomeScreen: true,
@@ -150,7 +150,7 @@ const routes = [
 
     options: {
       hideFooter: true,
-      title: "PGR REPORTS",
+      title: "CS_PGR_REPORTS_HEADER",
       hideTitle: true,
       redirectionUrl,
     },

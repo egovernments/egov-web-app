@@ -10,6 +10,7 @@ import {
 } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import orderBy from "lodash/orderBy";
+import set from "lodash/set";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -133,6 +134,13 @@ export const transformById = (payload, id) => {
       return result;
     }, {})
   );
+};
+
+export const getTransformedLocalStorgaeLabels = () => {
+  const localeLabels = JSON.parse(
+    getLocalization(`localization_${getLocale()}`)
+  );
+  return transformById(localeLabels, "code");
 };
 
 export const getTranslatedLabel = (labelKey, localizationLabels) => {
@@ -382,4 +390,35 @@ export const orderWfProcessInstances = processInstances => {
     return acc;
   }, []);
   return filteredInstances.reverse();
+};
+
+export const getMultiUnits = multiUnits => {
+  let hasTradeType = false;
+  let hasAccessoryType = false;
+
+  let mergedUnits =
+    multiUnits &&
+    multiUnits.reduce((result, item) => {
+      hasTradeType = item.hasOwnProperty("tradeType");
+      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
+      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
+        if (item.hasOwnProperty("id")) {
+          if (item.hasOwnProperty("active") && item.active) {
+            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+              set(item, "active", false);
+              result.push(item);
+            } else {
+              result.push(item);
+            }
+          }
+        } else {
+          if (!item.hasOwnProperty("isDeleted")) {
+            result.push(item);
+          }
+        }
+      }
+      return result;
+    }, []);
+
+  return mergedUnits;
 };

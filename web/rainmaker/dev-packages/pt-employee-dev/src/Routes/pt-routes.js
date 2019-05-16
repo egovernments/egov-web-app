@@ -41,7 +41,7 @@ const routes = [
     component: PTHome,
     needsAuthentication: true,
     options: {
-      title: "Property Tax",
+      title: "PT_HOME_PROPERTY_TAX",
       hideFooter: true
       // hideBackButton: true,
       // isHomeScreen: true,
@@ -53,7 +53,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Search Property"
+      title: "PT_SEARCH_PROPERTY_TITLE"
       // hideBackButton: true,
     }
   },

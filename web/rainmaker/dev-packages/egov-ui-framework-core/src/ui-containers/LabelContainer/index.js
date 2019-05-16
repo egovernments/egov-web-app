@@ -14,6 +14,7 @@ class LabelContainer extends React.Component {
       localePrefix,
       fieldValue,
       localizationLabels,
+      dynamicArray,
       ...rest
     } = this.props;
 
@@ -22,6 +23,23 @@ class LabelContainer extends React.Component {
       labelKey,
       localizationLabels
     );
+
+    if (dynamicArray) {
+      if (dynamicArray.length > 1) {
+        dynamicArray.forEach((item, index) => {
+          translatedLabel = translatedLabel.replace(
+            new RegExp("\\{" + index + "\\}", "gm"),
+            item
+          );
+        });
+      } else {
+        let index = 0;
+        translatedLabel = translatedLabel.replace(
+          new RegExp("\\{" + index + "\\}", "gm"),
+          dynamicArray[0]
+        );
+      }
+    }
 
     if (typeof fieldValue === "boolean") {
       fieldValue = fieldValue ? "Yes" : "No";

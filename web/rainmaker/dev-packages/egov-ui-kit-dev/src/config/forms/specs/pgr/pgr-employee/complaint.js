@@ -155,8 +155,10 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
-          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
+          if (selected) {
+            const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+            dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
+          }
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
