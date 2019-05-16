@@ -47,6 +47,7 @@ export const getSearchResults = async (queryObject, dispatch) => {
         "error"
       )
     );
+    throw error;
   }
 };
 

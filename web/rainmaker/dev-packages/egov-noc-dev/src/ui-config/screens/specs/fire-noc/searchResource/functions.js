@@ -6,6 +6,7 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { searchSampleResponse } from "../../../../../ui-utils/sampleResponses";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
@@ -94,8 +95,9 @@ export const searchApiCall = async (state, dispatch) => {
         }
       }
     }
-    const response = await getSearchResults(queryObject);
     try {
+      // const response = await getSearchResults(queryObject);
+      const response = searchSampleResponse();
       let data =
         response &&
         get(response, "FireNOCs", []).map(item => ({
