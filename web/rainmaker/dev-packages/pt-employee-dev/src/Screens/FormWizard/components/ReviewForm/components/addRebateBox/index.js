@@ -92,7 +92,6 @@ class AddRebateExemption extends React.Component {
           alert(
             "Adhoc Exemption cannot be greater than the estimated tax for the given property"
           );
-          // this.props.handleFieldChange("adhocExemptionReason", null);
         } else {
           displayFormErrors("additionalRebate");
         }
@@ -147,7 +146,7 @@ class AddRebateExemption extends React.Component {
           </div>
           <div className="adhocPenaltyReason col-sm-6 col-xs-12">
             <DropDown
-              onChange={e => this.onChangePenaltyField(e.target.innerHTML)}
+              onChange={e => this.onChangePenaltyField(e.target.innerText)}
               {...adhocPenaltyReason}
             />
           </div>
@@ -168,7 +167,6 @@ class AddRebateExemption extends React.Component {
           <div className="adhocExemption col-sm-6 col-xs-12">
             <TextField
               onChange={(e, value) => {
-                // handleFieldChange("adhocExemption", value);
                 this.setState({ exemptValue: value });
               }}
               {...adhocExemption}
@@ -176,7 +174,7 @@ class AddRebateExemption extends React.Component {
           </div>
           <div className="adhocExemptionReason col-sm-6 col-xs-12">
             <DropDown
-              onChange={e => this.onChangeExemptField(e.target.innerHTML)}
+              onChange={e => this.onChangeExemptField(e.target.innerText)}
               {...adhocExemptionReason}
             />
           </div>
