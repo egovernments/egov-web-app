@@ -12,6 +12,7 @@ export const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("EMPLOYEE") ? "/uc/pay" : "/inbox";
   return redirectionURL;
 };
+
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -48,10 +49,10 @@ export const newCollectionFooter = getCommonApplyFooter({
         }
       }
     },
-    onClickDefination: {
-      action: "page_change",
-      path: `${getRedirectionURL()}`
-    },
+    // onClickDefination: {
+    //   action: "page_change",
+    //   path: `${getRedirectionURL()}`
+    // },
     onClickDefination: {
       action: "condition",
       callBack: (state, dispatch) => {
@@ -98,7 +99,6 @@ export const newCollectionFooter = getCommonApplyFooter({
 //   // can be combined into one mdms call
 //   fetchMDMSData(requestBody);
 // }
-
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
   const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
   set(finalObj, jsonPath, dateConvertedToEpoch);
@@ -131,10 +131,12 @@ const createDemand = async (state, dispatch) => {
     { key: "offset", value: "0" }
   ];
   let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
-  set(demand[0], "tenantId", "pb.amritsar");
-  set(demand[0], "consumerCode", "pt-test-newgit-10/apr-2");
-  set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
-  set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
+  if (demand && demand.length) {
+    set(demand[0], "tenantId", "pb.amritsar");
+    set(demand[0], "consumerCode", "pt-test-newgit-10/apr-3");
+    set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
+    set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
+  }
 
   try {
     const payload = await httpRequest(

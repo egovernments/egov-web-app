@@ -8,7 +8,6 @@ import {
   // getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { convertDateToEpoch } from "../../utils";
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
@@ -212,7 +211,7 @@ export const newCollectionDetailsCard = getCommonCard({
       required: true,
       pattern: getPattern("Amount"),
       errorMessage: "Invalid Amount",
-      jsonPath: "Demands[0].demandDetails[0].taxAmount"
+      jsonPath: "Demands[0].demandDetails[0].collectionAmount"
     }),
     fieldCollectionFee: getTextField({
       label: {
@@ -225,7 +224,7 @@ export const newCollectionDetailsCard = getCommonCard({
       },
       required: false,
       pattern: getPattern("FieldCollectionFee"),
-      jsonPath: "Demands[0].demandDetails[0].collectionAmount"
+      jsonPath: "Demands[0].demandDetails[0].taxAmount"
     }),
     comment: getTextField({
       label: {
