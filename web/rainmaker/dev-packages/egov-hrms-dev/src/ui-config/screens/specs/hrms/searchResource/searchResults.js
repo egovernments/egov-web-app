@@ -37,15 +37,15 @@ export const textToLocalMapping = {
     "HR_HOME_SEARCH_RESULTS_TABLE_HEADING",
     getTransformedLocalStorgaeLabels()
   ),
-  "Search Results for Employee": get(
-    getLocalTextFromCode("HR_HOME_SEARCH_RESULTS_TABLE_HEADING"),
-    "message",
-    "Search Results for Employee"
+  "Search Results for Employee": getLocaleLabels(
+    "Search Results for Employee",
+    "HR_HOME_SEARCH_RESULTS_TABLE_HEADING",
+    getTransformedLocalStorgaeLabels()
   ),
-  "Tenant ID": get(
-    getLocalTextFromCode("HR_COMMON_TABLE_COL_TENANT_ID"),
-    "message",
-    "Tenant ID"
+  "Tenant ID": getLocaleLabels(
+    "Tenant ID",
+    "HR_COMMON_TABLE_COL_TENANT_ID",
+    getTransformedLocalStorgaeLabels()
   )
 };
 
