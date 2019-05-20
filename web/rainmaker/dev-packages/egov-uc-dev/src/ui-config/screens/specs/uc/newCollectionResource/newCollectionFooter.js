@@ -133,7 +133,8 @@ const createDemand = async (state, dispatch) => {
   let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
   if (demand && demand.length) {
     set(demand[0], "tenantId", "pb.amritsar");
-    set(demand[0], "consumerCode", "pt-test-newgit-10/apr-3");
+
+    set(demand[0], "consumerCode", "pt-test-newgit-19/jan-10");
     set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
     set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
   }
