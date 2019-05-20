@@ -2,7 +2,7 @@ import {
   getCommonGrayCard,
   getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { cash, demandDraft, cheque, card } from "./paymentMethods";
+import { cash, demandDraft, cheque, card } from "./payment-methods";
 
 const capturePaymentDetails = getCommonGrayCard({
   header: getCommonSubHeader(
