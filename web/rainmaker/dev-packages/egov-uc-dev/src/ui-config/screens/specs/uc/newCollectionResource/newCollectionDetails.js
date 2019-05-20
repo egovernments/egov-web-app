@@ -7,6 +7,7 @@ import {
   getDateField
   // getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { convertDateToEpoch } from "../../utils";
 import {
@@ -103,41 +104,52 @@ export const newCollectionDetailsCard = getCommonCard({
       errorMessage: "Invalid Name.",
       jsonPath: "Demands[0].consumerName"
     }),
-    serviceCategory: getSelectField({
-      label: {
-        labelName: "serviceCategory",
-        labelKey: "UC_SERVICE_CATEGORY_LABEL"
-      },
-      placeholder: {
-        labelName: "Select service Category ",
-        labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
-      },
-      required: true,
-      visible: true,
-      jsonPath: "Demands[0].consumerType",
-      // sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
-      gridDefination: {
-        xs: 12,
-        sm: 6
-      },
-      data: [
-        {
-          code: "tradelicense"
+    serviceCategory: {
+      ...getSelectField({
+        label: {
+          labelName: "serviceCategory",
+          labelKey: "UC_SERVICE_CATEGORY_LABEL"
+        },
+        placeholder: {
+          labelName: "Select service Category ",
+          labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
+        },
+        required: true,
+        visible: true,
+        jsonPath: "Demands[0].consumerType",
+        sourceJsonPath: "applyScreenMdmsData.serviceCategories",
+        gridDefination: {
+          xs: 12,
+          sm: 6
         }
-        // {
-        //   code: "chdfhvugb"
-        // },
-        // {
-        //   code: "chdfhvugb"
-        // },
-        // {
-        //   code: "chdfhvugb"
-        // },
-        // {
-        //   code: "chdfhvugb"
-        // }
-      ]
-    }),
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        console.log(action);
+        if (true) {
+          dispatch(
+            handleField(
+              "newCollection",
+              "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+              "amountTobeCollected1",
+              getTextField({
+                label: {
+                  labelName: "Amount To Be Collected",
+                  labelKey: "UC_AMOUNT_TO_BE_ COLLECTED_LABEL"
+                },
+                placeholder: {
+                  labelName: "Enter Amount To be Collected",
+                  labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
+                },
+                required: true,
+                pattern: getPattern("Amount"),
+                errorMessage: "Invalid Amount",
+                jsonPath: "Demands[0].demandDetails[0].taxAmount"
+              })
+            )
+          );
+        }
+      }
+    },
 
     serviceType: getSelectField({
       label: {
