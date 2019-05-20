@@ -73,3 +73,39 @@ export const createNocApplication = async (state, dispatch) => {
     return false;
   }
 };
+
+export const prepareDocumentsUploadData = (state, dispatch) => {
+  let documents = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.Documents",
+    []
+  );
+  documents = documents.filter(item => {
+    return item.active;
+  });
+  let documentsContract = [];
+  documents.forEach(item => {
+    if (item.hasMultipleRows && item.options) {
+      item.options.forEach(option => {
+        let doc = {};
+        doc["name"] = `${item.code}_${option.code}`;
+        doc["required"] = option.required ? true : false;
+        doc["jsonPath"] = `FireNOCs[0].documents.${item.code}.${option.code}`;
+        documentsContract.push(doc);
+      });
+    } else {
+      let doc = {};
+      doc["name"] = item.code;
+      doc["required"] = item.required ? true : false;
+      doc["jsonPath"] = `FireNOCs[0].documents.${item.code}`;
+      if (item.hasDropdown && item.dropdownData) {
+        doc["selector"] = {
+          inputLabel: "Select Document",
+          menuItems: get(item, "dropdownData", [])
+        };
+      }
+      documentsContract.push(doc);
+    }
+  });
+  dispatch(prepareFinalObject("documentsContract", documentsContract));
+};

@@ -17,8 +17,10 @@ import {
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "../../../../ui-utils";
+import { searchSampleResponse } from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
+import { prepareDocumentsUploadData } from "../../../../ui-utils/commons";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -118,14 +120,17 @@ const getMdmsData = async (action, state, dispatch) => {
         },
         {
           moduleName: "firenoc",
-          masterDetails: [{ name: "BuildingType" }, { name: "FireStations" }]
+          masterDetails: [
+            { name: "BuildingType" },
+            { name: "FireStations" },
+            { name: "Documents" }
+          ]
         },
         {
           moduleName: "egov-location",
           masterDetails: [
             {
               name: "TenantBoundary"
-              // filter: "$.*.hierarchyType"
             }
           ]
         },
@@ -214,100 +219,22 @@ const screenConfig = {
           ownershipCategory
         )
       );
+
+      // Set Documents Data (TEMP)
+      prepareDocumentsUploadData(state, dispatch);
     });
 
     let pfo = {};
     if (applicationNumber && !step) {
-      pfo = {
-        fireNOCDetails: {
-          propertyDetails: {
-            address: {
-              city: "pb.amritsar",
-              locality: { code: "SUN04" },
-              pincode: "500076"
-            },
-            firestationId: "FS_AMRITSAR_01"
-          },
-          buildingDetails: {
-            buildings: {
-              "0": {
-                name: "DSR Rainbow Heights",
-                usageType: "GROUP_A_RESIDENTIAL",
-                usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
-                noOfFloors: "2",
-                noOfBasements: "1",
-                plotSize: "1000",
-                builtupArea: "650",
-                heightOfBuilding: "5000"
-              },
-              noOfBuildings: "SINGLE"
-            }
-          },
-          fireNOCType: "PROVISIONAL",
-          applicantDetails: {
-            ownerShipType: "INDIVIDUAL.SINGLEOWNER",
-            owners: [
-              {
-                id: 23442,
-                userName: "9167765477",
-                salutation: null,
-                name: "Avijeet",
-                gender: "MALE",
-                mobileNumber: "9167765477",
-                emailId: "avi7@gm.com",
-                altContactNumber: null,
-                pan: "bnhpp5432k",
-                aadhaarNumber: null,
-                permanentAddress: null,
-                permanentCity: null,
-                permanentPinCode: null,
-                correspondenceAddress: "Some correspondance address",
-                correspondenceCity: null,
-                correspondencePinCode: null,
-                addresses: [
-                  {
-                    pinCode: null,
-                    city: null,
-                    address: "Some correspondance address",
-                    type: "PERMANENT",
-                    id: 48685,
-                    tenantId: "pb",
-                    userId: 23442,
-                    addressType: "PERMANENT",
-                    lastModifiedDate: null,
-                    lastModifiedBy: null
-                  }
-                ],
-                active: true,
-                locale: null,
-                type: "CITIZEN",
-                accountLocked: false,
-                accountLockedDate: 0,
-                fatherOrHusbandName: "A",
-                signature: null,
-                bloodGroup: null,
-                photo: null,
-                identificationMark: null,
-                createdBy: 0,
-                lastModifiedBy: 1,
-                tenantId: "pb",
-                roles: [{ code: "CITIZEN", name: "Citizen", tenantId: "pb" }],
-                uuid: "d9fb76e8-3c65-4e11-9f5f-2998c0f8b8a6",
-                createdDate: 1532962200000,
-                lastModifiedDate: 1554819900000,
-                dob: "1991-06-28",
-                pwdExpiryDate: 1541451000000,
-                relationship: "FATHER",
-                ownerType: "FREEDOMFIGHTER"
-              }
-            ]
-          }
-        }
-      };
-      dispatch(prepareFinalObject("FireNOCs[0]", pfo));
+      pfo = searchSampleResponse();
+      dispatch(prepareFinalObject("FireNOCs[0]", get(pfo, "FireNOCs[0]")));
     }
     if (step && get(state, "screenConfiguration.preparedFinalObject")) {
-      pfo = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0]", {});
+      pfo = get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0]",
+        {}
+      );
     }
 
     // Code to goto a specific step through URL

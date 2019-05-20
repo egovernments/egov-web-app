@@ -191,12 +191,14 @@ class DocumentList extends Component {
   };
 
   render() {
-    const { classes, documents, description } = this.props;
+    const { classes, documents, documentsList, description } = this.props;
+    // console.log("_____", this.props);
     const { uploadedIndex } = this.state;
+    const finalDocuments = documentsList;
     return (
       <div style={{ paddingTop: 10 }}>
-        {documents &&
-          documents.map((document, key) => {
+        {finalDocuments &&
+          finalDocuments.map((document, key) => {
             return (
               <div
                 key={key}
@@ -244,8 +246,8 @@ class DocumentList extends Component {
                         </InputLabel>
                         <Select
                           value={
-                            document.selector.value ||
-                            document.selector.initialValue
+                            documents[key].selector.value ||
+                            documents[key].selector.initialValue
                           }
                           onChange={event => this.handleChange(key, event)}
                           name="selected-document"
@@ -253,8 +255,8 @@ class DocumentList extends Component {
                           {document.selector.menuItems &&
                             document.selector.menuItems.map(item => {
                               return (
-                                <MenuItem value={item.value}>
-                                  {item.label}
+                                <MenuItem value={item.code}>
+                                  {item.code}
                                 </MenuItem>
                               );
                             })}

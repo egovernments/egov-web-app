@@ -8,7 +8,10 @@ import get from "lodash/get";
 import { getCommonApplyFooter, validateFields } from "../../utils";
 import "./index.css";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { createNocApplication } from "../../../../../ui-utils/commons";
+import {
+  createNocApplication,
+  prepareDocumentsUploadData
+} from "../../../../../ui-utils/commons";
 
 const moveToReview = dispatch => {
   const applicationNumber = getQueryArg(
@@ -161,10 +164,13 @@ const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep !== 3) {
-    if (activeStep === 2) {
-      isFormValid = await createNocApplication(state, dispatch);
-    }
     if (isFormValid) {
+      if (activeStep === 1) {
+        prepareDocumentsUploadData(state, dispatch);
+      }
+      if (activeStep === 2) {
+        isFormValid = await createNocApplication(state, dispatch);
+      }
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {
       let errorMessage = {

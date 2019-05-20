@@ -23,24 +23,30 @@ class DocumentListContainer extends Component {
 
 const mapStateToProps = state => {
   const { screenConfiguration, documents } = state;
-  const documentsList =
-    documents ||
-    get(
-      screenConfiguration.preparedFinalObject,
-      "LicensesTemp[0].applicationDocuments",
-      []
-    );
+  // console.log("++++++++", state);
+  let documentsList = get(
+    state,
+    "screenConfiguration.preparedFinalObject.documentsContract",
+    []
+  );
+  // const documentsList =
+  //   documents ||
+  //   get(
+  //     screenConfiguration.preparedFinalObject,
+  //     "LicensesTemp[0].applicationDocuments",
+  //     []
+  //   );
   const uploadedDocuments = get(
     screenConfiguration.preparedFinalObject,
     "LicensesTemp[0].uploadedDocsInRedux",
     []
   );
-  const tenantId = get(
-    screenConfiguration.preparedFinalObject,
-    "Licenses[0].tenantId",
-    ""
-  );
-  return { documentsList, tenantId, uploadedDocuments };
+  // const tenantId = get(
+  //   screenConfiguration.preparedFinalObject,
+  //   "Licenses[0].tenantId",
+  //   ""
+  // );
+  return { documentsList, uploadedDocuments };
 };
 
 export default withStyles(styles)(
