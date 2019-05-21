@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Screen, ModuleLandingPage } from "modules/common";
+import Label from "egov-ui-kit/utils/translationNode";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
@@ -10,7 +11,21 @@ import { Image } from "components";
 import logo from "egov-ui-kit/assets/images/punjab-logo.png";
 import orderby from "lodash/orderBy";
 import "./index.css";
+import ComplaintsIcon from "@material-ui/icons/LibraryBooks";
+import AddIcon from "@material-ui/icons/Add";
 
+const cardItems = [
+  {
+    label: "CS_HOME_FILE_COMPLAINT",
+    icon: <AddIcon />,
+    route: "/add-complaint"
+  },
+  {
+    label: "CS_HOME_MY_COMPLAINTS",
+    icon: <ComplaintsIcon />,
+    route: "/my-complaints"
+  }
+];
 class Home extends Component {
   componentDidMount = () => {
     const { fetchComplaints, resetFiles, removeForm } = this.props;
@@ -25,7 +40,18 @@ class Home extends Component {
     const { updates, history } = this.props;
     return (
       <Screen className="homepage-screen">
-        <ModuleLandingPage />
+        <ModuleLandingPage items={cardItems} history={history} />
+        <Label
+          label="CS_HOME_UPDATES"
+          dark={true}
+          fontSize={16}
+          fontWeight={900}
+          bold={true}
+          containerStyle={{ paddingLeft: 8, paddingTop: 16, paddingBottom: 8 }}
+        />
+        <div style={{ padding: "0px 8px" }}>
+          <Notifications updates={updates} history={history} />
+        </div>
       </Screen>
 
       // <Screen className="homepage-screen">

@@ -6,46 +6,51 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Label from "../../../utils/translationNode";
-import ComplaintsIcon from "@material-ui/icons/LibraryBooks";
-import AddIcon from "@material-ui/icons/Add";
+import "./index.css";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    borderRadius: 0,
+    marginTop: 0,
+    height: 110,
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    cursor: "pointer",
   },
   icon: {
-    margin: theme.spacing.unit,
-    fontSize: 32,
     color: "#fe7a51",
+  },
+  item: {
+    padding: 8,
   },
 });
 
 class ModuleLandingPage extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, items, history } = this.props;
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={6} sm={6} align="center">
-          <Card>
-            <CardContent>
-              <AddIcon className={classes.icon} />
-              <Label label={"File Complaints"} />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={6} sm={6} align="center">
-          <Card>
-            <CardContent>
-              <ComplaintsIcon className={classes.icon} />
-              <Label label={"My Complaints"} />
-            </CardContent>
-          </Card>
-        </Grid>
+      <Grid container>
+        {items.map((obj) => {
+          return (
+            <Grid className={classes.item} item xs={6} sm={6} align="center">
+              <Card
+                className={classes.paper}
+                onClick={(e) => {
+                  history.push(obj.route);
+                }}
+              >
+                <CardContent classes={{ root: "card-content-style" }}>
+                  <Icon classes={{ root: "module-page-icon" }}>{obj.icon}</Icon>
+                  <Label label={obj.label} fontSize={14} color="rgba(0, 0, 0, 0.8700000047683716)" dynamicArray={obj.dynamicArray} />
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
     );
   }

@@ -101,11 +101,13 @@ const getStatusAndChangeColor = (status, assignee) => {
   let statusObj = {
     style: {},
     message: "",
+    containerStyle: {},
   };
   switch (status) {
     case "CS_COMMON_OPEN_UCASE":
       statusObj.style = {
-        color: "#f89a3f",
+        // color: "#f89a3f",
+        color: "#ffffff",
       };
       statusObj.message = (
         <div>
@@ -115,10 +117,14 @@ const getStatusAndChangeColor = (status, assignee) => {
           <Label className="complaint-assignee" label={`${assignee}`} />
         </div>
       );
+      statusObj.containerStyle = {
+        backgroundColor: "red",
+      };
       break;
     case "CS_COMMON_CLOSED_UCASE":
       statusObj.style = {
-        color: "#5385a6",
+        // color: "#5385a6",
+        color: "#ffffff",
       };
       statusObj.message = (
         <div>
@@ -127,10 +133,14 @@ const getStatusAndChangeColor = (status, assignee) => {
           <Label label={"CS_MYCOMPLAINTS_RATE"} />
         </div>
       );
+      statusObj.containerStyle = {
+        backgroundColor: "#4CAF50",
+      };
       break;
     case "CS_COMMON_REJECTED_UCASE":
       statusObj.style = {
-        color: "#e74c3c",
+        // color: "#e74c3c",
+        color: "#ffffff",
       };
       statusObj.message = (
         <div>
@@ -139,12 +149,19 @@ const getStatusAndChangeColor = (status, assignee) => {
           <Label label={"CS_MYCOMPLAINTS_RATE"} />
         </div>
       );
+      statusObj.containerStyle = {
+        backgroundColor: "red",
+      };
       break;
     default:
       statusObj.style = {
-        color: "#484848",
+        // color: "#484848",
+        color: "#ffffff",
       };
       statusObj.message = `CS_MYCOMPLAINTS_RE_ASSIGNED ${assignee}`;
+      statusObj.containerStyle = {
+        backgroundColor: "#4CAF50",
+      };
   }
   if (status && status.toLowerCase().includes(`overdue`)) {
     statusObj.style = { color: "#e74c3c" };
@@ -195,18 +212,46 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                     labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
                   />
 
-                  <Label
-                    className="complaint-status-text text-bold"
-                    labelStyle={{
-                      whiteSpace: "pre",
-                      letterSpacing: 0.7,
-                      wordBreak: "normal",
-                      ...getStatusAndChangeColor(complaint.status.status).style,
-                    }}
-                    label={complaint.status.status}
-                    dynamicArray={[Math.abs(complaint.SLA)]}
-                    bold={true}
-                  />
+                  <div
+                    style={
+                      role === "citizen"
+                        ? {
+                            justifyContent: "center",
+                            display: "flex",
+                            borderRadius: 12,
+                            width: "25%",
+                            height: "24px",
+                            alignItems: "center",
+                            ...getStatusAndChangeColor(complaint.status.status).containerStyle,
+                          }
+                        : {}
+                    }
+                  >
+                    <Label
+                      className="complaint-status-text text-bold"
+                      labelStyle={{
+                        whiteSpace: "pre",
+                        letterSpacing: 0.7,
+                        wordBreak: "normal",
+
+                        ...getStatusAndChangeColor(complaint.status.status).style,
+                      }}
+                      // containerStyle={
+                      //   role === "citizen"
+                      //     ? {
+                      //         width: "20%",
+                      //         justifyContent: "center",
+                      //         display: "flex",
+                      //         ...getStatusAndChangeColor(complaint.status.status).containerStyle,
+                      //       }
+                      //     : {}
+                      // }
+                      fontSize={role === "citizen" ? 12 : 14}
+                      label={complaint.status.status}
+                      dynamicArray={[Math.abs(complaint.SLA)]}
+                      bold={true}
+                    />
+                  </div>
                 </div>
                 <div className="complaint-date-cont">
                   <Icon action="action" name="date-range" />

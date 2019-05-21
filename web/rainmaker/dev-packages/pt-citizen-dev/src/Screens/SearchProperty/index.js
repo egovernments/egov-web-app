@@ -3,7 +3,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import YearDialogue from "../common/YearDialogue";
 import { Screen } from "modules/common";
-import { BreadCrumbs, Button } from "components";
+import { BreadCrumbs, Button, Icon } from "components";
 import {
   addBreadCrumbs,
   toggleSnackbarAndSetText
@@ -156,6 +156,12 @@ class SearchProperty extends Component {
     console.log(e);
   };
 
+  onAddButtonClick = () => {
+    this.setState({
+      dialogueOpen: true
+    });
+  };
+
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
     const { showTable, urlToAppend } = this.state;
@@ -168,10 +174,35 @@ class SearchProperty extends Component {
     }
     return (
       <Screen loading={loading} className="screen-with-bredcrumb">
-        <BreadCrumbs
+        {/* <BreadCrumbs
           url={urls.length > 0 ? urls : urlArray}
           history={history}
-        />
+        /> */}
+        <div
+          className="rainmaker-displayInline"
+          style={{ justifyContent: "space-between" }}
+        >
+          <Label
+            label="PT_SEARCH_PROPERTY"
+            dark={true}
+            fontSize={16}
+            fontWeight={900}
+            bold={true}
+          />
+          <div
+            className="rainmaker-displayInline"
+            onClick={this.onAddButtonClick}
+          >
+            <Icon
+              action="content"
+              name="add"
+              color="#fe7a51"
+              style={{ height: 22 }}
+            />
+            <Label label="ADD NEW PROPERTY" color="#fe7a51" />
+          </div>
+        </div>
+
         <PropertySearchFormHOC
           history={this.props.history}
           onSearchClick={this.onSearchClick}
