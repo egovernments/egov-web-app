@@ -12,7 +12,6 @@
 /packages/egov-workflow
 /packages/egov-hrms
 /packages/egov-mp
-/packages/egov-uc
 /packages/egov-nus
 
 npm-debug.log*

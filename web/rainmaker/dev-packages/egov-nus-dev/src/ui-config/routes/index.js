@@ -10,10 +10,6 @@ const Landing = Loadable({
   loading: Loading,
 });
 
-const Playground = Loadable({
-  loader: () => import('ui-views/Playground'),
-  loading: Loading,
-});
 
 const ScreenInterface=Loadable({
   loader:()=>import ('ui-views/ScreenInterface'),
@@ -28,10 +24,6 @@ const mainRoutes = [
   {
     path:mainRouteConstants.SCREEN_INTERFACE,
     component:ScreenInterface
-  },
-  {
-    path: mainRouteConstants.PLAYGROUND,
-    component: Playground
   },
   {
     isRedirect:true,
