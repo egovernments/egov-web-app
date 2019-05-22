@@ -12,7 +12,6 @@ import {
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { convertDateToEpoch } from "../../utils";
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
@@ -239,7 +238,6 @@ export const newCollectionDetailsCard = getCommonCard({
     //     labelName: "Enter Amount To be Collected",
     //     labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
     //   },
-
     //   required: true,
     //   pattern: getPattern("Amount"),
     //   errorMessage: "Invalid Amount",

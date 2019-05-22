@@ -12,6 +12,7 @@ export const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("EMPLOYEE") ? "/uc/pay" : "/inbox";
   return redirectionURL;
 };
+
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -48,10 +49,10 @@ export const newCollectionFooter = getCommonApplyFooter({
         }
       }
     },
-    onClickDefination: {
-      action: "page_change",
-      path: `${getRedirectionURL()}`
-    },
+    // onClickDefination: {
+    //   action: "page_change",
+    //   path: `${getRedirectionURL()}`
+    // },
     onClickDefination: {
       action: "condition",
       callBack: (state, dispatch) => {
@@ -98,7 +99,6 @@ export const newCollectionFooter = getCommonApplyFooter({
 //   // can be combined into one mdms call
 //   fetchMDMSData(requestBody);
 // }
-
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
   const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
   set(finalObj, jsonPath, dateConvertedToEpoch);

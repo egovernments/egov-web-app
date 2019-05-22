@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
- // fetchFromLocalStorage,
+  // fetchFromLocalStorage,
   addQueryArg
 } from "egov-ui-framework/ui-utils/commons";
 import store from "../ui-redux/store";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
-  getAccessToken,
+  getAccessToken
   //getTenantId
 } from "egov-ui-kit/utils/localStorageUtils";
 
@@ -28,7 +28,7 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
     key: "",
     msgId: "20170310130900|en_IN",
     requesterId: "",
-    authToken: "5a755b3e-92a7-4fba-85f2-4f35f20db6f0" //Please change this before deploying
+    authToken: authToken //Please change this before deploying
   };
   RequestInfo = { ...RequestInfo, ...customRequestInfo };
   return Object.assign(
