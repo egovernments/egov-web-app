@@ -14,6 +14,7 @@ import {
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import get from "lodash/get";
+import commonConfig from "config/common.js";
 
 class PaymentSuccess extends Component {
   state = {
@@ -55,7 +56,7 @@ class PaymentSuccess extends Component {
     } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "PropertyTax",

@@ -59,7 +59,7 @@ const ReceiptFromAPI = {
               billAccountDetails: [
                 {
                   id: "8615",
-                  tenantId: "pb.amritsar",
+                  tenantId: "pb.amritsar", //DUMMY DATA
                   billDetail: "1895",
                   glcode: "1405015",
                   order: 1,

@@ -1,3 +1,4 @@
+import commonConfig from "config/common.js";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 // const formConfig = {
@@ -117,7 +118,7 @@ const formConfig = {
         queryParams: {},
         requestBody: {
           MdmsCriteria: {
-            tenantId: "pb",
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "tenant",

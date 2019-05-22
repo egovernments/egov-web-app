@@ -63,6 +63,7 @@ import {
   getUserInfo,
   localStorageSet
 } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -1273,7 +1274,7 @@ const mapStateToProps = state => {
   const { propertyAddress } = form;
   const { city } =
     (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
-  const currentTenantId = (city && city.value) || "pb";
+  const currentTenantId = (city && city.value) || commonConfig.tenantId;
   return {
     form,
     prepareFormData: common.prepareFormData,

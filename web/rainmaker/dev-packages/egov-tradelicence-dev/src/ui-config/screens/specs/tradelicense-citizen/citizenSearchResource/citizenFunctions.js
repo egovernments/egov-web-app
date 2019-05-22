@@ -7,6 +7,7 @@ import {
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(getLocalization("localization_en_IN")).find(
@@ -16,7 +17,7 @@ const getLocalTextFromCode = localCode => {
 const getMdmsData = async () => {
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: "pb",
+      tenantId: commonConfig.tenantId,
       moduleDetails: [
         {
           moduleName: "tenant",

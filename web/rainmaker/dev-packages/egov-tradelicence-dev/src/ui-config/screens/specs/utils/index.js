@@ -23,6 +23,7 @@ import {
   getUserInfo,
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -786,11 +787,11 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     }
     let payload = await httpRequest(
       "post",
-      "/user/_search?tenantId=pb",
+      `/user/_search?tenantId=${commonConfig.tenantId}`,
       "_search",
       [],
       {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         userName: `${ownerNo}`
       }
     );
