@@ -1,11 +1,9 @@
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import { LabelContainer } from "egov-ui-framework/ui-containers";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
@@ -16,6 +14,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { UploadSingleFile } from "../../ui-molecules-local";
+import get from "lodash/get";
 
 const themeStyles = theme => ({
   documentContainer: {
@@ -86,7 +85,8 @@ const themeStyles = theme => ({
   fileUploadDiv: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    paddingTop: "5px"
   }
 });
 
@@ -202,28 +202,15 @@ class DocumentList extends Component {
   };
 
   handleChange = (key, event) => {
-    const {
-      screenKey,
-      componentJsonpath,
-      jsonPath,
-      approveCheck,
-      onFieldChange,
-      prepareFinalObject
-    } = this.props;
-    onFieldChange(
-      screenKey,
-      componentJsonpath,
-      `props.documents[${key}].selector.value`,
-      event.target.value
-    );
-    prepareFinalObject(
-      `noc.documents[${key}].selector.value`,
-      event.target.value
-    );
+    const { documentsUploadRedux, prepareFinalObject } = this.props;
+    prepareFinalObject(`documentsUploadRedux`, {
+      ...documentsUploadRedux,
+      [key]: { dropdown: { value: event.target.value } }
+    });
   };
 
   getUploadCard = (card, key) => {
-    const { classes } = this.props;
+    const { classes, documentsUploadRedux } = this.props;
     const { uploadedIndex } = this.state;
     return (
       <Grid container={true}>
@@ -267,17 +254,22 @@ class DocumentList extends Component {
                 {card.dropdown.required && requiredIcon}
               </Grid>
               <Select
-                // value={
-                //   documents[key].dropdown.value ||
-                //   documents[key].dropdown.initialValue
-                // }
+                value={
+                  documentsUploadRedux[key] &&
+                  (documentsUploadRedux[key].dropdown.value ||
+                    documentsUploadRedux[key].dropdown.initialValue)
+                }
                 onChange={event => this.handleChange(key, event)}
                 name="selected-document"
                 required
               >
                 {card.dropdown.menu &&
                   card.dropdown.menu.map(item => {
-                    return <MenuItem value={item.code}>{item.code}</MenuItem>;
+                    return (
+                      <MenuItem value={item.code}>
+                        <LabelContainer labelKey={item.code} />
+                      </MenuItem>
+                    );
                   })}
               </Select>
             </FormControl>
@@ -308,9 +300,7 @@ class DocumentList extends Component {
   };
 
   render() {
-    const { classes, documents, documentsList, description } = this.props;
-    // console.log("_____", this.props);
-    // const finalDocuments = documentsList;
+    const { classes, documentsList } = this.props;
     let index = 0;
     return (
       <div>
@@ -357,20 +347,15 @@ DocumentList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// const mapStateToProps = state => {
-//   const { screenConfiguration } = state;
-//   const documents = get(
-//     screenConfiguration.preparedFinalObject,
-//     "LicensesTemp[0].applicationDocuments",
-//     []
-//   );
-//   const tenantId = get(
-//     screenConfiguration.preparedFinalObject,
-//     "LicensesTemp[0].tenantId",
-//     ""
-//   );
-//   return { documents, tenantId };
-// };
+const mapStateToProps = state => {
+  const { screenConfiguration } = state;
+  const documentsUploadRedux = get(
+    screenConfiguration.preparedFinalObject,
+    "documentsUploadRedux",
+    {}
+  );
+  return { documentsUploadRedux };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -381,7 +366,7 @@ const mapDispatchToProps = dispatch => {
 
 export default withStyles(themeStyles)(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(DocumentList)
 );
