@@ -109,6 +109,15 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
       });
     } else {
       card["required"] = doc.required ? true : false;
+      if (doc.hasDropdown && doc.dropdownData) {
+        let dropdown = {};
+        dropdown.label = "NOC_SELECT_DOC_DD_LABEL";
+        dropdown.required = true;
+        dropdown.menu = doc.dropdownData.filter(item => {
+          return item.active;
+        });
+        card["dropdown"] = dropdown;
+      }
     }
     tempDoc[doc.documentType].cards.push(card);
   });

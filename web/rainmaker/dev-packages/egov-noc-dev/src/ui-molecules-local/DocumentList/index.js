@@ -80,7 +80,8 @@ const themeStyles = theme => ({
     alignItems: "center"
   },
   formControl: {
-    minWidth: 250
+    minWidth: 250,
+    padding: "0px"
   },
   fileUploadDiv: {
     display: "flex",
@@ -106,6 +107,10 @@ const styles = {
     fontWeight: 400,
     letterSpacing: "0.67px",
     lineHeight: "19px"
+  },
+  dropdownLabel: {
+    color: "rgba(0, 0, 0, 0.54)",
+    fontSize: "12px"
   }
 };
 
@@ -249,26 +254,34 @@ class DocumentList extends Component {
           <Typography variant="caption">{description}</Typography> */}
         </Grid>
         <Grid item={true} xs={12} sm={6} md={4}>
-          {/* {document.selector && (
+          {card.dropdown && (
             <FormControl required className={classes.formControl}>
-              <InputLabel shrink htmlFor="age-label-placeholder">
-                {document.selector.inputLabel}
-              </InputLabel>
+              {/* <InputLabel shrink htmlFor="age-label-placeholder">
+                {card.dropdown.label}
+              </InputLabel> */}
+              <Grid className={classes.descriptionDiv}>
+                <LabelContainer
+                  labelKey={card.dropdown.label}
+                  style={styles.dropdownLabel}
+                />
+                {card.dropdown.required && requiredIcon}
+              </Grid>
               <Select
-                value={
-                  documents[key].selector.value ||
-                  documents[key].selector.initialValue
-                }
+                // value={
+                //   documents[key].dropdown.value ||
+                //   documents[key].dropdown.initialValue
+                // }
                 onChange={event => this.handleChange(key, event)}
                 name="selected-document"
+                required
               >
-                {document.selector.menuItems &&
-                  document.selector.menuItems.map(item => {
+                {card.dropdown.menu &&
+                  card.dropdown.menu.map(item => {
                     return <MenuItem value={item.code}>{item.code}</MenuItem>;
                   })}
               </Select>
             </FormControl>
-          )} */}
+          )}
         </Grid>
         <Grid
           item={true}
