@@ -105,7 +105,6 @@ const convertDateFieldToEpoch = (finalObj, jsonPath) => {
 };
 
 const allDateToEpoch = (finalObj, jsonPaths) => {
-  console.log(jsonPaths);
   jsonPaths.forEach(jsonPath => {
     if (get(finalObj, jsonPath)) {
       convertDateFieldToEpoch(finalObj, jsonPath);
@@ -120,7 +119,6 @@ const processDemand = (state, dispatch) => {
     "Demands[0].taxPeriodTo"
   ]);
   // billGenerate(state, dispatch);
-  console.log("state:", state);
 };
 const createDemand = async (state, dispatch) => {
   let queryObject = [
@@ -131,10 +129,10 @@ const createDemand = async (state, dispatch) => {
     { key: "offset", value: "0" }
   ];
   let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
-  set(demand[0], "tenantId", "pb.amritsar");
-  set(demand[0], "consumerCode", "pt-test-newgit-10/apr-2");
-  set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
-  set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
+  // set(demand[0], "tenantId", "pb.amritsar");
+  // set(demand[0], "consumerCode", "pt-test-newgit-10/apr-2");
+  // set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
+  // set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
 
   try {
     const payload = await httpRequest(
