@@ -16,6 +16,7 @@ import isEqual from "lodash/isEqual";
 import orderby from "lodash/orderBy";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
 import { getLocale, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 const innerDivStyle = {
   padding: "0",
@@ -57,7 +58,7 @@ class Property extends Component {
     const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle, fetchProperties } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "PropertyTax",

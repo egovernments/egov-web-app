@@ -16,6 +16,7 @@ import {
   fetchGeneralMDMSData
 } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
+import commonConfig from "config/common.js";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
@@ -40,7 +41,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {
           MdmsCriteria: {
-            tenantId: "pb",
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "tenant",
