@@ -11,6 +11,7 @@ import {
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import orderBy from "lodash/orderBy";
 import set from "lodash/set";
+import commonConfig from "config/common.js";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -199,7 +200,7 @@ export const replaceStrInPath = (inputString, search, replacement) => {
 
 export const getFileUrlFromAPI = async fileStoreId => {
   const queryObject = [
-    { key: "tenantId", value: "pb" },
+    { key: "tenantId", value: commonConfig.tenantId },
     { key: "fileStoreIds", value: fileStoreId }
   ];
   try {
@@ -342,7 +343,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             moduleName,
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         } else {
@@ -350,7 +351,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             moduleName,
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         }
