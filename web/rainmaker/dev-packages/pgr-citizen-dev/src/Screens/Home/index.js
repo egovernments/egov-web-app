@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Icon from "egov-ui-kit/components/Icon";
 import { Screen, ModuleLandingPage } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
@@ -11,18 +12,22 @@ import { Image } from "components";
 import logo from "egov-ui-kit/assets/images/punjab-logo.png";
 import orderby from "lodash/orderBy";
 import "./index.css";
-import ComplaintsIcon from "@material-ui/icons/LibraryBooks";
-import AddIcon from "@material-ui/icons/Add";
+
+const iconStyle = {
+  color: "#fe7a51",
+  height: 30,
+  width: 30
+};
 
 const cardItems = [
   {
     label: "CS_HOME_FILE_COMPLAINT",
-    icon: <AddIcon />,
+    icon: <Icon style={iconStyle} action="custom" name="account-alert" />,
     route: "/add-complaint"
   },
   {
     label: "CS_HOME_MY_COMPLAINTS",
-    icon: <ComplaintsIcon />,
+    icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
     route: "/my-complaints"
   }
 ];
