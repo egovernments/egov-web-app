@@ -55,7 +55,7 @@ const tradeLicenseSearchAndResult = {
   },
   components: {
     div: {
-      uiFramework: "custom-atoms",
+      uiFramewContainerork: "custom-atoms",
       componentPath: "Form",
       props: {
         className: "common-div-css",
@@ -64,7 +64,7 @@ const tradeLicenseSearchAndResult = {
       children: {
         headerDiv: {
           uiFramework: "custom-atoms",
-          componentPath: "Container",
+          componentPath: "",
 
           children: {
             header: {
