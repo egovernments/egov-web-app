@@ -16,7 +16,8 @@ import "./index.css";
 const iconStyle = {
   color: "#fe7a51",
   height: 30,
-  width: 30
+  width: 30,
+  overflow: "visible"
 };
 
 const cardItems = [

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Icon from "egov-ui-kit/components/Icon";
 import Card from "@material-ui/core/Card";
@@ -33,14 +32,14 @@ const services = [
   {
     label: "Complaints",
     icon: <Icon className="service-icon" action="custom" name="comment-plus" />,
-    route: "",
+    route: "/pgr-home",
   },
-  { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "" },
+  { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "/property-tax" },
   { label: "Trade License", icon: <Icon className="service-icon" action="action" name="work" />, route: "" },
-  { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "" },
+  { label: "Download Forms", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
   { label: "Water & Sewerage", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
-  { label: "Trade License", icon: <Icon className="service-icon" action="alert" name="warning" />, route: "" },
-
+  { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "" },
+  { label: "Document Locker", icon: <Icon className="service-icon" action="custom" name="file-download" />, route: "" },
   { label: "More", icon: <Icon className="service-icon" action="navigation" name="more-horiz" />, route: "" },
 ];
 
@@ -60,7 +59,7 @@ class ServiceList extends React.Component {
               >
                 <CardContent classes={{ root: "card-content-style" }}>
                   {service.icon}
-                  <Label label={service.label} fontSize={12} color="rgba(0, 0, 0, 0.8700000047683716)" />
+                  <Label className="service-label-cont" label={service.label} fontSize={12} color="rgba(0, 0, 0, 0.87)" />
                 </CardContent>
               </Card>
             </Grid>

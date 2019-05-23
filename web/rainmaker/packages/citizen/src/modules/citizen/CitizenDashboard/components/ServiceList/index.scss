@@ -15,6 +15,7 @@
   width: 30px !important;
   height: 30px !important;
   fill: #fe7a51 !important;
+  overflow: visible !important;
 }
 .module-page-icon {
   height: 30px;
@@ -24,4 +25,9 @@
 
 .card-content-style {
   padding: 0;
+}
+
+.service-label-cont .label-text {
+  word-break: inherit;
+  word-wrap: inherit;
 }

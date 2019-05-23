@@ -52,17 +52,26 @@ class PTHome extends Component {
     };
   }
 
+  iconStyle = {
+    color: "#fe7a51",
+    height: 30,
+    width: 30,
+    overflow: "visible"
+  };
   getCardItems = () => {
     const { numProperties, numDrafts } = this.props;
     return [
       {
         label: "PT_PAYMENT_ASSESS_AND_PAY",
-        icon: <PropertyIcon />,
+        icon: (
+          <Icon style={iconStyle} action="custom" name="home-city-outline" />
+        ),
+
         route: "/property-tax/assess-pay/search-property"
       },
       {
         label: "PT_MY_PROPERTY_SCREEN_HEADER",
-        icon: <MyPropertyIcon />,
+        icon: <Icon style={iconStyle} action="custom" name="home-account" />,
         dynamicArray: [numProperties],
         route: "/property-tax/my-properties"
       }
