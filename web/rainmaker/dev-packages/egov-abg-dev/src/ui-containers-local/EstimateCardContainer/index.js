@@ -13,31 +13,24 @@ const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
   const fees = [
     {
-      name: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" },
+      name: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_LABEL" },
       value: 5000,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
+      info: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_INFO" }
     },
     {
-      name: { labelName: "Rebate", labelKey: "NOC_ESTIMATE_REABATE" },
+      name: { labelName: "Rebate", labelKey: "ABG_REBATE_LABEL" },
       value: -500,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
+      info: { labelName: "Rebate", labelKey: "ABG_REBATE_INFO" }
     },
     {
-      name: { labelName: "Penalty", labelKey: "NOC_ESTIMATE_PENALTY" },
+      name: { labelName: "Penalty", labelKey: "ABG_PENALTY_LABEL" },
       value: 0,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
+      info: { labelName: "Penalty", labelKey: "ABG_PENALTY_INFO" }
     }
   ];
   const estimate = {
-    header: { labelName: "Fee Estimate", labelKey: "NOC_FEE_ESTIMATE_HEADER" },
+    header: { labelName: "Bill Details", labelKey: "ABG_BILL_DETAILS_HEADER" },
     fees
-    // extra: [
-    //   { textLeft: "Last Date for Rebate (20% of TL)" },
-    //   {
-    //     textLeft: "Penalty (10% of TL) applicable from"
-    //   },
-    //   { textLeft: "Additional Penalty (20% of TL) applicable from" }
-    // ]
   };
   return { estimate };
 };
