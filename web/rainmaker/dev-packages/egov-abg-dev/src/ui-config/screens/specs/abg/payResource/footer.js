@@ -19,7 +19,7 @@ export const getRedirectionURL = () => {
   return redirectionURL;
 };
 export const footer = getCommonApplyFooter({
-  nextButton: {
+  generateReceiptButton: {
 	componentPath: "Button",
 	props: {
 	  variant: "contained",

@@ -1,7 +1,8 @@
 import {
   getCommonCard,
   getCommonHeader,
-  getCommonContainer
+  getCommonContainer,
+  getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 import { billDetails } from "./payResource/billDetails";
@@ -54,9 +55,8 @@ const screenConfig = {
           billDetails: billDetails,
           // amount: amountToBePaid,
           capturePayment: capturePayment,
-          G8ReceiptDetails: G8ReceiptDetails
-          //   applicantSummary: applicantSummary,
-          //   documentsSummary: documentsSummary
+          G8ReceiptDetails: G8ReceiptDetails,
+          // breakAfterCard: getBreak()
         }),
         footer: footer
       }
