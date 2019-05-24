@@ -128,18 +128,45 @@ class DocumentList extends Component {
 
   componentDidMount = () => {
     const {
-      prepareFinalObject,
-      uploadedDocsInRedux: uploadedDocuments
+      documentsList,
+      documentsUploadRedux,
+      prepareFinalObject
     } = this.props;
-    if (uploadedDocuments) {
-      const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
-        return parseInt(item); //returns string so convert to integer
-      });
-      this.setState({ uploadedDocuments, uploadedIndex });
-    }
-    Object.values(uploadedDocuments).forEach((item, index) => {
-      prepareFinalObject(`noc.documents[${index}]`, { ...item[0] });
+    let index = 0;
+    let doc = {};
+    documentsList.forEach(docType => {
+      docType.cards &&
+        docType.cards.forEach(card => {
+          if (card.subCards) {
+            card.subCards.forEach(subCard => {
+              doc[index++] = {
+                documentType: docType.code,
+                documentCode: card.name,
+                documentSubCode: subCard.name
+              };
+            });
+          } else {
+            doc[index++] = {
+              documentType: docType.code,
+              documentCode: card.name
+            };
+          }
+        });
     });
+    prepareFinalObject("documentsUploadRedux", doc);
+    // const {
+    //   prepareFinalObject,
+    //   uploadedDocsInRedux: uploadedDocuments
+    // } = this.props;
+    // if (uploadedDocuments) {
+    //   const uploadedIndex = Object.keys(uploadedDocuments).map(item => {
+    //     return parseInt(item); //returns string so convert to integer
+    //   });
+    //   this.setState({ uploadedDocuments, uploadedIndex });
+    // }
+    // Object.values(uploadedDocuments).forEach((item, index) => {
+    //   prepareFinalObject(`noc.documents[${index}]`, { ...item[0] });
+    // });
   };
 
   onUploadClick = uploadedDocIndex => {
@@ -148,7 +175,12 @@ class DocumentList extends Component {
 
   handleDocument = async (file, fileStoreId) => {
     let { uploadedDocIndex, uploadedDocuments } = this.state;
-    const { prepareFinalObject, documents, tenantId } = this.props;
+    const {
+      prepareFinalObject,
+      documents,
+      tenantId,
+      documentsUploadRedux
+    } = this.props;
     const { jsonPath, name } = documents[uploadedDocIndex];
     const fileUrl = await getFileUrlFromAPI(fileStoreId);
     uploadedDocuments = {
@@ -164,17 +196,29 @@ class DocumentList extends Component {
       ]
     };
 
-    prepareFinalObject("nocTemp.uploadedDocsInRedux", {
-      ...uploadedDocuments
+    prepareFinalObject("documentsUploadRedux", {
+      ...documentsUploadRedux,
+      [uploadedDocIndex]: {
+        ...documentsUploadRedux[uploadedDocIndex],
+        documents: [
+          {
+            fileName: file.name,
+            fileStoreId,
+            fileUrl: Object.values(fileUrl)[0],
+            documentType: name,
+            tenantId
+          }
+        ]
+      }
     });
 
-    prepareFinalObject(jsonPath, {
-      fileName: file.name,
-      fileStoreId,
-      fileUrl: Object.values(fileUrl)[0],
-      documentType: name,
-      tenantId
-    });
+    // prepareFinalObject(jsonPath, {
+    //   fileName: file.name,
+    //   fileStoreId,
+    //   fileUrl: Object.values(fileUrl)[0],
+    //   documentType: name,
+    //   tenantId
+    // });
     this.setState({ uploadedDocuments });
     this.getFileUploadStatus(true, uploadedDocIndex);
   };
@@ -182,9 +226,12 @@ class DocumentList extends Component {
   removeDocument = remDocIndex => {
     let { uploadedDocuments } = this.state;
     const { prepareFinalObject, documents } = this.props;
-    const jsonPath = documents[remDocIndex].jsonPath;
-    uploadedDocuments[remDocIndex] = {};
-    prepareFinalObject(jsonPath, uploadedDocuments[remDocIndex]);
+    // const jsonPath = documents[remDocIndex].jsonPath;
+    uploadedDocuments[remDocIndex] = [];
+    prepareFinalObject(
+      `documentsUploadRedux.${remDocIndex}.documents`,
+      uploadedDocuments[remDocIndex]
+    );
     this.setState({ uploadedDocuments });
     this.getFileUploadStatus(false, remDocIndex);
   };
@@ -205,7 +252,10 @@ class DocumentList extends Component {
     const { documentsUploadRedux, prepareFinalObject } = this.props;
     prepareFinalObject(`documentsUploadRedux`, {
       ...documentsUploadRedux,
-      [key]: { dropdown: { value: event.target.value } }
+      [key]: {
+        ...documentsUploadRedux[key],
+        dropdown: { value: event.target.value }
+      }
     });
   };
 
@@ -256,6 +306,7 @@ class DocumentList extends Component {
               <Select
                 value={
                   documentsUploadRedux[key] &&
+                  documentsUploadRedux[key].dropdown &&
                   (documentsUploadRedux[key].dropdown.value ||
                     documentsUploadRedux[key].dropdown.initialValue)
                 }
