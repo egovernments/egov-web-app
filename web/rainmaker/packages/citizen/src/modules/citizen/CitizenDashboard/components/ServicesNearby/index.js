@@ -1,6 +1,5 @@
 import React from "react";
-import { Carousel, Icon, Card } from "components";
-import { Link } from "react-router-dom";
+import { Icon } from "components";
 import Grid from "@material-ui/core/Grid";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
@@ -26,9 +25,9 @@ const ServicesNearby = () => {
     <Grid container>
       {servicesNearBy.map((service) => {
         return (
-          <Grid item xs={3} align="center" style={{ padding: "0px 8px" }}>
+          <Grid item xs={3} sm={2} align="center" style={{ padding: "0px 8px" }}>
             <div className="service-nearby-icon-cont">{service.icon}</div>
-            <Label dark={true} className="service-label-cont" label={service.label} />
+            <Label dark={true} className="service-label-cont" fontSize={14} label={service.label} />
           </Grid>
         );
       })}

@@ -24,10 +24,16 @@
 }
 
 .card-content-style {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .service-label-cont .label-text {
   word-break: inherit;
   word-wrap: inherit;
+}
+
+@media only screen and (min-width: 768px) {
+  .service-module-style {
+    height: 140px !important;
+  }
 }

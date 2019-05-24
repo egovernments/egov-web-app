@@ -5,11 +5,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Label from "egov-ui-kit/utils/translationNode";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 import "./index.css";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
+    width: "12.5%",
   },
   paper: {
     borderRadius: 0,
@@ -48,23 +50,45 @@ class ServiceList extends React.Component {
     const { classes, history } = this.props;
     return (
       <Grid container>
-        {services.map((service) => {
-          return (
-            <Grid item xs={3} align="center">
-              <Card
-                className={classes.paper}
-                onClick={(e) => {
-                  history.push(service.route);
-                }}
-              >
-                <CardContent classes={{ root: "card-content-style" }}>
-                  {service.icon}
-                  <Label className="service-label-cont" label={service.label} fontSize={12} color="rgba(0, 0, 0, 0.87)" />
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
+        <Hidden smUp>
+          {services.map((service) => {
+            return (
+              <Grid item xs={3} sm={1} align="center">
+                <Card
+                  className={classes.paper}
+                  onClick={(e) => {
+                    history.push(service.route);
+                  }}
+                >
+                  <CardContent classes={{ root: "card-content-style" }}>
+                    {service.icon}
+                    <Label className="service-label-cont" label={service.label} fontSize={12} color="rgba(0, 0, 0, 0.87)" />
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Hidden>
+
+        <Hidden xsDown>
+          {services.map((service) => {
+            return (
+              <Grid className={classes.root} item align="center">
+                <Card
+                  className={`${classes.paper} service-module-style`}
+                  onClick={(e) => {
+                    history.push(service.route);
+                  }}
+                >
+                  <CardContent classes={{ root: "card-content-style" }}>
+                    <div>{service.icon}</div>
+                    <Label className="service-label-cont" label={service.label} fontSize={14} color="rgba(0, 0, 0, 0.87)" />
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Hidden>
       </Grid>
     );
   }
