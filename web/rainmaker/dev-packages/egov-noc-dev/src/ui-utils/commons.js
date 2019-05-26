@@ -1,5 +1,5 @@
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
-import { uploadFile, httpRequest } from "../ui-utils/api";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import store from "ui-redux/store";
 import {
   prepareFinalObject,
@@ -59,6 +59,25 @@ export const createNocApplication = async (state, dispatch) => {
       []
     );
     set(payload[0], "tenantId", getTenantId());
+    let buildings = get(payload, "[0].fireNOCDetails.buildings", []);
+    buildings.forEach((item, index) => {
+      set(
+        payload[0],
+        `fireNOCDetails.buildings[${index}].applicationDocuments`,
+        []
+      );
+      set(payload[0], `fireNOCDetails.buildings[${index}].uoms`, []);
+    });
+    let owners = get(payload, "[0].fireNOCDetails.applicantDetails.owners", []);
+    owners.forEach((item, index) => {
+      set(
+        payload[0],
+        `fireNOCDetails.applicantDetails.owners[${index}].documents`,
+        []
+      );
+    });
+    set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail", {});
+    
     const response = await httpRequest(
       "post",
       "/firenoc-services/v1/_create",
@@ -66,6 +85,7 @@ export const createNocApplication = async (state, dispatch) => {
       [],
       { FireNOCs: payload }
     );
+    
     dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     return true;
   } catch (error) {

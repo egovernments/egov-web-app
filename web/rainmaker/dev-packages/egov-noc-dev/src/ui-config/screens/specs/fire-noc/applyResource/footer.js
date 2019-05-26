@@ -164,12 +164,12 @@ const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep !== 3) {
+    if (activeStep === 2) {
+      isFormValid = await createNocApplication(state, dispatch);
+    }
     if (isFormValid) {
       if (activeStep === 1) {
         prepareDocumentsUploadData(state, dispatch);
-      }
-      if (activeStep === 2) {
-        isFormValid = await createNocApplication(state, dispatch);
       }
       changeStep(state, dispatch);
     } else if (hasFieldToaster) {
