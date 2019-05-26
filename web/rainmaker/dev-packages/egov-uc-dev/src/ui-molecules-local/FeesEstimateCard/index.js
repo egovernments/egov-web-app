@@ -72,9 +72,12 @@ const styles = {
 };
 
 function totalAmount(arr) {
-  return arr
-    .map(item => (item.value ? item.value : 0))
-    .reduce((prev, next) => prev + next, 0);
+  return (
+    arr &&
+    arr
+      .map(item => (item.value ? item.value : 0))
+      .reduce((prev, next) => prev + next, 0)
+  );
 }
 
 function FeesEstimateCard(props) {
@@ -91,54 +94,55 @@ function FeesEstimateCard(props) {
         />
         <div style={{ marginTop: 48, maxWidth: 400 }}>
           <Grid container>
-            {estimate.fees.map((fee, key) => {
-              let tooltip = fee.info ? (
-                <Tooltip title={fee.info.labelName}>
-                  <Icon className={classes.toolTipIcon}>
-                    <i class="material-icons" style={{ fontSize: 18 }}>
-                      info_circle
-                    </i>
-                  </Icon>
-                </Tooltip>
-              ) : (
-                ""
-              );
-              let textLeft = fee.name ? (
-                <Grid container xs={8}>
-                  <LabelContainer
-                    labelName={fee.name.labelName}
-                    labelKey={fee.name.labelKey}
-                    style={styles.taxStylesLeft}
-                  />
-                  {tooltip}
-                </Grid>
-              ) : (
-                <Grid xs={8} />
-              );
-              let textRight = fee.value ? (
-                <Grid xs={4} align="right">
-                  <LabelContainer
-                    labelName={fee.value}
-                    labelKey={fee.value}
-                    style={styles.taxStyles}
-                  />
-                </Grid>
-              ) : (
-                <Grid xs={4} align="right">
-                  <LabelContainer
-                    labelName={0}
-                    labelKey={0}
-                    style={styles.taxStyles}
-                  />
-                </Grid>
-              );
-              return (
-                <Grid key={key} container>
-                  {textLeft}
-                  {textRight}
-                </Grid>
-              );
-            })}
+            {estimate.fees &&
+              estimate.fees.map((fee, key) => {
+                let tooltip = fee.info ? (
+                  <Tooltip title={fee.info.labelName}>
+                    <Icon className={classes.toolTipIcon}>
+                      <i class="material-icons" style={{ fontSize: 18 }}>
+                        info_circle
+                      </i>
+                    </Icon>
+                  </Tooltip>
+                ) : (
+                  ""
+                );
+                let textLeft = fee.name ? (
+                  <Grid container xs={8}>
+                    <LabelContainer
+                      labelName={fee.name.labelName}
+                      labelKey={fee.name.labelKey}
+                      style={styles.taxStylesLeft}
+                    />
+                    {tooltip}
+                  </Grid>
+                ) : (
+                  <Grid xs={8} />
+                );
+                let textRight = fee.value ? (
+                  <Grid xs={4} align="right">
+                    <LabelContainer
+                      labelName={fee.value}
+                      labelKey={fee.value}
+                      style={styles.taxStyles}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid xs={4} align="right">
+                    <LabelContainer
+                      labelName={0}
+                      labelKey={0}
+                      style={styles.taxStyles}
+                    />
+                  </Grid>
+                );
+                return (
+                  <Grid key={key} container>
+                    {textLeft}
+                    {textRight}
+                  </Grid>
+                );
+              })}
           </Grid>
           <Divider style={{ marginBottom: 16 }} />
           <Grid container>

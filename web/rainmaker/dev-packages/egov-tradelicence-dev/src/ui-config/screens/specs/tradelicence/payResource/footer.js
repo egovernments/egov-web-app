@@ -3,7 +3,10 @@ import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import { httpRequest } from "../../../../../ui-utils/api";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  getSelectedTabIndex
+} from "egov-ui-framework/ui-utils/commons";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -88,41 +91,6 @@ const moveToSuccess = (href, dispatch, receiptNumber) => {
       `/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
     )
   );
-};
-
-const getSelectedTabIndex = paymentType => {
-  switch (paymentType) {
-    case "Cash":
-      return {
-        selectedPaymentMode: "cash",
-        selectedTabIndex: 0,
-        fieldsToValidate: ["payeeDetails"]
-      };
-    case "Cheque":
-      return {
-        selectedPaymentMode: "cheque",
-        selectedTabIndex: 1,
-        fieldsToValidate: ["payeeDetails", "chequeDetails"]
-      };
-    case "DD":
-      return {
-        selectedPaymentMode: "demandDraft",
-        selectedTabIndex: 2,
-        fieldsToValidate: ["payeeDetails", "demandDraftDetails"]
-      };
-    case "Card":
-      return {
-        selectedPaymentMode: "card",
-        selectedTabIndex: 3,
-        fieldsToValidate: ["payeeDetails", "cardDetails"]
-      };
-    default:
-      return {
-        selectedPaymentMode: "cash",
-        selectedTabIndex: 0,
-        fieldsToValidate: ["payeeDetails"]
-      };
-  }
 };
 
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {

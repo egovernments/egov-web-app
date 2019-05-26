@@ -3,11 +3,16 @@ import get from "lodash/get";
 import set from "lodash/set";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { convertDateToEpoch } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { ifUserRoleExists } from "../../utils";
 // import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
-// import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-const tenantId = "pb.amritsar";
+const tenantId = getTenantId();
 export const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("EMPLOYEE") ? "/uc/pay" : "/inbox";
   return redirectionURL;
@@ -49,10 +54,6 @@ export const newCollectionFooter = getCommonApplyFooter({
         }
       }
     },
-    // onClickDefination: {
-    //   action: "page_change",
-    //   path: `${getRedirectionURL()}`
-    // },
     onClickDefination: {
       action: "condition",
       callBack: (state, dispatch) => {
@@ -61,44 +62,7 @@ export const newCollectionFooter = getCommonApplyFooter({
     }
   }
 });
-// componentDidMount();
-// {
-//   const {
-//     //fetchLocalizationLabel,
-//     //fetchCurrentLocation,
-//     fetchMDMSData
-//   } = this.props;
 
-//   let requestBody = {
-//     MdmsCriteria: {
-//       tenantId: commonConfig.tenantId,
-//       moduleDetails: [
-//         {
-//           moduleName: "Billing Service",
-//           masterDetails: [
-//             {
-//               name: "Business Service"
-//             },
-//             {
-//               name: "Designation"
-//             }
-//           ]
-//         },
-//         {
-//           moduleName: "Billing Service",
-//           masterDetails: [
-//             {
-//               name: "Business Service"
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//   };
-
-//   // can be combined into one mdms call
-//   fetchMDMSData(requestBody);
-// }
 const convertDateFieldToEpoch = (finalObj, jsonPath) => {
   const dateConvertedToEpoch = convertDateToEpoch(get(finalObj, jsonPath));
   set(finalObj, jsonPath, dateConvertedToEpoch);
@@ -130,7 +94,7 @@ const createDemand = async (state, dispatch) => {
   ];
   let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
   // set(demand[0], "tenantId", "pb.amritsar");
-  // set(demand[0], "consumerCode", "pt-test-newgit-10/apr-2");
+  set(demand[0], "consumerType", "TL");
   // set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
   // set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
 
@@ -144,9 +108,70 @@ const createDemand = async (state, dispatch) => {
         Demands: demand
       }
     );
-  } catch (e) {}
+    if (true) {
+      const consumerCode = get(payload, "Demands[0].consumerCode");
+      const businessService = get(payload, "Demands[0].businessService");
+      await generateBill(consumerCode, tenantId, businessService, dispatch);
+    }
+  } catch (e) {
+    console.log(e);
+  }
   console.log("Demands:", demand);
 };
-// const billGenerate = (state, dispatch) => {
-//   console.log("state:", state);
-// };
+
+const generateBill = async (
+  consumerCode,
+  tenantId,
+  businessService,
+  dispatch
+) => {
+  try {
+    const payload = await httpRequest(
+      "post",
+      `/billing-service/bill/_generate?consumerCode=${consumerCode}&businessService=${businessService}&tenantId=${tenantId}`,
+      "",
+      [],
+      {}
+    );
+    console.log(payload);
+    if (payload && payload.Bill[0]) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
+      const estimateData = createEstimateData(payload.Bill[0]);
+      estimateData &&
+        estimateData.length &&
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.estimateCardData",
+            estimateData
+          )
+        );
+      dispatch(
+        prepareFinalObject("applyScreenMdmsData.consumerCode", consumerCode)
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.businessService",
+          businessService
+        )
+      );
+      dispatch(setRoute(`/uc/pay?tenantId=${tenantId}`));
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const createEstimateData = billObject => {
+  const billDetails = billObject && billObject.billDetails;
+  let fees =
+    billDetails &&
+    billDetails[0].billAccountDetails &&
+    billDetails[0].billAccountDetails.map(item => {
+      return {
+        name: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode },
+        value: item.amount,
+        info: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode }
+      };
+    });
+  return fees;
+};

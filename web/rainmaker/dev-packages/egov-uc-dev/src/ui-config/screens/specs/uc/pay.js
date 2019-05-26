@@ -7,11 +7,10 @@ import {
 import { estimateSummary } from "./payResource/estimateSummary";
 import { capturePayment } from "./payResource/capturePayment";
 import { G8ReceiptDetails } from "./payResource/G8ReceiptDetails";
-// import { applicantSummary } from "./summaryResource/applicantSummary";
-// import { documentsSummary } from "./summaryResource/documentsSummary";
 import { footer } from "./payResource/footer";
-// import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import get from "lodash/get";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -24,11 +23,32 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
+    const tenantId = getQueryArg(window.location.href, "tenantId");
+    const amount = get(
+      state.screenConfiguration,
+      "preparedFinalObject.ReceiptTemp[0].Bill[0].billDetails[0].totalAmount",
+      null
     );
-    // if (applicationNumber)
+    dispatch(
+      prepareFinalObject("ReceiptTemp[0].instrument", {
+        amount: amount,
+        instrumentType: { name: "Cash" },
+        tenantId: tenantId
+      })
+    );
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+        "COUNTER"
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
+        amount
+      )
+    );
+    dispatch(prepareFinalObject("ReceiptTemp[0].tenantId", tenantId));
     return action;
   },
   components: {

@@ -29,7 +29,6 @@ const getAcknowledgementCard = (
   // const financialYearText = licenseFinancialYear
   //   ? `(${licenseFinancialYear})`
   //   : "";
-  receiptNumber = "UC-AMR-2018-09-123434";
   if (purpose === "pay" && status === "success") {
     return {
       header: getCommonHeader({
@@ -128,10 +127,11 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
+    const receiptNumber = getQueryArg(window.location.href, "receiptNumber");
+    // const applicationNumber = getQueryArg(
+    //   window.location.href,
+    //   "applicationNumber"
+    // );
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
     const data = getAcknowledgementCard(
@@ -139,7 +139,7 @@ const screenConfig = {
       dispatch,
       purpose,
       status,
-      applicationNumber,
+      receiptNumber,
       secondNumber,
       tenant
     );

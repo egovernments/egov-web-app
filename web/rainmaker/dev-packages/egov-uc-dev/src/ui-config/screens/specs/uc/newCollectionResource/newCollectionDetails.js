@@ -117,7 +117,7 @@ export const newCollectionDetailsCard = getCommonCard({
         },
         required: true,
         visible: true,
-        jsonPath: "Demands[0].consumerType",
+        jsonPath: "Demands[0].businessService",
         sourceJsonPath: "applyScreenMdmsData.serviceCategories",
         gridDefination: {
           xs: 12,
@@ -295,7 +295,6 @@ const setTaxHeadFields = (action, state, dispatch) => {
     "preparedFinalObject.applyScreenMdmsData.BillingService.TaxHeadMaster",
     {}
   );
-  debugger;
   const matchingTaxHeads = taxHeadMasters.filter(
     item => item.service === action.value
   );
@@ -305,6 +304,12 @@ const setTaxHeadFields = (action, state, dispatch) => {
         prepareFinalObject(
           `Demands[0].demandDetails[${index}].taxHeadMasterCode`,
           item.code
+        )
+      );
+      dispatch(
+        prepareFinalObject(
+          `Demands[0].demandDetails[${index}].collectionAmount`,
+          0
         )
       );
       dispatch(
@@ -321,6 +326,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
               labelName: "Enter Tax Amount",
               labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
             },
+            componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${index}`,
             required: item.required || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",

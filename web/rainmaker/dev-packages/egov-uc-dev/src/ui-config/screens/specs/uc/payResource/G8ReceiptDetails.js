@@ -1,16 +1,10 @@
 import {
-  //getBreak,
-  //getCommonContainer,
   getCommonGrayCard,
   getCommonSubHeader,
-  //getSelectField,
   getTextField,
   getPattern,
   getDateField
-  //getLabel,
-  //getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-//import { gotoApplyWithStep } from "../../utils/index";
 
 export const G8ReceiptDetails = getCommonGrayCard({
   header: {
@@ -43,7 +37,7 @@ export const G8ReceiptDetails = getCommonGrayCard({
         visible: true,
         pattern: getPattern("g8ReceiptNo "),
         errorMessage: "Invalid g8ReceiptNo.",
-        jsonPath: "searchScreen.g8ReceiptNo"
+        jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptNumber"
       }),
       g8ReceiptIssueDate: getDateField({
         label: {
@@ -60,7 +54,7 @@ export const G8ReceiptDetails = getCommonGrayCard({
         },
         required: false,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].g8ReceiptIssueDate"
+        jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
       })
     }
   }

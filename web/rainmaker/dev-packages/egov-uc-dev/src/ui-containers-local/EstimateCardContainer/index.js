@@ -1,36 +1,44 @@
 import React, { Component } from "react";
 import { FeesEstimateCard } from "../../ui-molecules-local";
 import { connect } from "react-redux";
-//import get from "lodash/get";
+import get from "lodash/get";
 
 class EstimateCardContainer extends Component {
   render() {
+    console.log(this.props.estimate);
     return <FeesEstimateCard estimate={this.props.estimate} />;
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  //const { screenConfiguration } = state;
-  const fees = [
-    {
-      name: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" },
-      value: 5000,
-      info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
-    },
-    {
-      name: { labelName: "Rebate", labelKey: "UC_ESTIMATE_REABATE" },
-      value: -500,
-      info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
-    },
-    {
-      name: { labelName: "Penalty", labelKey: "UC_ESTIMATE_PENALTY" },
-      value: 0,
-      info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
-    }
-  ];
+  const { preparedFinalObject } = state.screenConfiguration || {};
+  const { applyScreenMdmsData } = preparedFinalObject || {};
+  const { estimateCardData } = applyScreenMdmsData || [];
+  // const estimateCardData = get(
+  //   preparedFinalObject,
+  //   "applyScreenMdmsData.estimateCardData",
+  //   []
+  // );
+  // const fees = [
+  //   {
+  //     name: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" },
+  //     value: 5000,
+  //     info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
+  //   },
+  //   {
+  //     name: { labelName: "Rebate", labelKey: "UC_ESTIMATE_REABATE" },
+  //     value: -500,
+  //     info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
+  //   },
+  //   {
+  //     name: { labelName: "Penalty", labelKey: "UC_ESTIMATE_PENALTY" },
+  //     value: 0,
+  //     info: { labelName: "UC Fee", labelKey: "UC_ESTIMATE_NOC_FEE" }
+  //   }
+  // ];
   const estimate = {
     header: { labelName: "Fee Estimate", labelKey: "UC_FEE_ESTIMATE_HEADER" },
-    fees
+    fees: estimateCardData
     // extra: [
     //   { textLeft: "Last Date for Rebate (20% of TL)" },
     //   {

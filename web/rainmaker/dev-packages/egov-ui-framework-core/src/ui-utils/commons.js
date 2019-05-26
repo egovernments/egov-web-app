@@ -390,3 +390,38 @@ export const orderWfProcessInstances = processInstances => {
   }, []);
   return filteredInstances.reverse();
 };
+
+export const getSelectedTabIndex = paymentType => {
+  switch (paymentType) {
+    case "Cash":
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+    case "Cheque":
+      return {
+        selectedPaymentMode: "cheque",
+        selectedTabIndex: 1,
+        fieldsToValidate: ["payeeDetails", "chequeDetails"]
+      };
+    case "DD":
+      return {
+        selectedPaymentMode: "demandDraft",
+        selectedTabIndex: 2,
+        fieldsToValidate: ["payeeDetails", "demandDraftDetails"]
+      };
+    case "Card":
+      return {
+        selectedPaymentMode: "card",
+        selectedTabIndex: 3,
+        fieldsToValidate: ["payeeDetails", "cardDetails"]
+      };
+    default:
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+  }
+};
