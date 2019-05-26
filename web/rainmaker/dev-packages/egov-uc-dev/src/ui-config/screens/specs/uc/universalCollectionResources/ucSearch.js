@@ -11,7 +11,6 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./function";
-import { searchApi } from "../../utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
