@@ -7,6 +7,7 @@ import {
   getDateField
   // getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
@@ -16,6 +17,7 @@ import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
+import set from "lodash/set";
 import get from "lodash/get";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
@@ -23,17 +25,6 @@ let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 export const newCollectionDetailsCard = getCommonCard({
-  // header: getCommonTitle(
-  //   {
-  //     labelName: "Trade Details",
-  //     labelKey: "TL_NEW_TRADE_DETAILS_PROV_DET_HEADER"
-  //   },
-  //   {
-  //     style: {
-  //       marginBottom: 18
-  //     }
-  //   }
-  // ),
   searchContainer: getCommonContainer({
     City: {
       ...getSelectField({
@@ -54,7 +45,53 @@ export const newCollectionDetailsCard = getCommonCard({
           required: true,
           disabled: false
         }
-      })
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: action.value,
+            moduleDetails: [
+              {
+                moduleName: "BillingService",
+                masterDetails: [
+                  {
+                    name: "BusinessService"
+                  },
+                  {
+                    name: "TaxHeadMaster"
+                  },
+                  {
+                    name: "TaxPeriod"
+                  }
+                ]
+              }
+            ]
+          }
+        };
+        try {
+          let payload = null;
+          payload = await httpRequest(
+            "post",
+            "/egov-mdms-service/v1/_search",
+            "_search",
+            [],
+            requestBody
+          );
+          dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.BillingService",
+              payload.MdmsRes.BillingService
+            )
+          );
+          setServiceCategory(
+            get(payload, "MdmsRes.BillingService.BusinessService", []),
+            dispatch
+          );
+        } catch (e) {
+          console.log(e);
+        }
+        return action;
+      }
     },
     dummyDiv: {
       uiFramework: "custom-atoms",
@@ -126,6 +163,15 @@ export const newCollectionDetailsCard = getCommonCard({
       }),
       beforeFieldChange: async (action, state, dispatch) => {
         console.log(action);
+        //Reset service type value, if any
+        dispatch(
+          handleField(
+            "newCollection",
+            "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
+            "props.value",
+            null
+          )
+        );
         //Set service type data and field if available.
         const serviceData = get(
           state.screenConfiguration,
@@ -161,12 +207,11 @@ export const newCollectionDetailsCard = getCommonCard({
                 false
               )
             );
+            //Set tax head fields if there is no service type available
+            if (serviceData[action.value]) {
+              const taxHeads = setTaxHeadFields(action, state, dispatch);
+            }
           }
-        }
-        //Set tax head fields if there is no service type available
-        if (serviceData[action.value]) {
-          const taxHeads = setTaxHeadFields(action, state, dispatch);
-          console.log(taxHeads);
         }
       }
     },
@@ -183,16 +228,18 @@ export const newCollectionDetailsCard = getCommonCard({
         required: true,
         visible: false,
         sourceJsonPath: "applyScreenMdmsData.serviceTypes",
-        jsonPath: "Demands[0].businessService",
+        jsonPath: "Demands[0].serviceType",
         gridDefination: {
           xs: 12,
           sm: 6
         }
-      })
-      // beforeFieldChange: async (action, state, dispatch) => {
-      //   const taxHeads = setTaxHeadFields(action, state, dispatch);
-      //   console.log(taxHeads);
-      // }
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        if (action.value) {
+          const taxHeads = setTaxHeadFields(action, state, dispatch);
+          console.log(taxHeads);
+        }
+      }
     },
     fromDate: getDateField({
       label: {
@@ -228,34 +275,6 @@ export const newCollectionDetailsCard = getCommonCard({
       pattern: getPattern("Date"),
       jsonPath: "Demands[0].taxPeriodTo"
     }),
-
-    // amountTobeCollected: getTextField({
-    //   label: {
-    //     labelName: "Amount To Be Collected",
-    //     labelKey: "UC_AMOUNT_TO_BE_ COLLECTED_LABEL"
-    //   },
-    //   placeholder: {
-    //     labelName: "Enter Amount To be Collected",
-    //     labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
-    //   },
-    //   required: true,
-    //   pattern: getPattern("Amount"),
-    //   errorMessage: "Invalid Amount",
-    //   jsonPath: "Demands[0].demandDetails[0].taxAmount"
-    // }),
-    // fieldCollectionFee: getTextField({
-    //   label: {
-    //     labelName: "Field Collection Fee",
-    //     labelKey: "UC_FIELD_COLLECTION_FEE_LABEL"
-    //   },
-    //   placeholder: {
-    //     labelName: "Enter Field Collection Fee ",
-    //     labelKey: "UC_FIELD_COLLECTION_FEE_PLACEHOLDER"
-    //   },
-    //   required: false,
-    //   pattern: getPattern("FieldCollectionFee"),
-    //   jsonPath: "Demands[0].demandDetails[0].collectionAmount"
-    // }),
     comment: getTextField({
       label: {
         labelName: "Comments",
@@ -299,6 +318,26 @@ const setTaxHeadFields = (action, state, dispatch) => {
     item => item.service === action.value
   );
   if (matchingTaxHeads && matchingTaxHeads.length > 0) {
+    //Delete previous Tax Head fields
+    const noOfPreviousTaxHeads = get(
+      state.screenConfiguration,
+      "preparedFinalObject.Demands[0].demandDetails",
+      []
+    ).length;
+    if (noOfPreviousTaxHeads > 0) {
+      for (let i = 0; i < noOfPreviousTaxHeads; i++) {
+        dispatch(
+          handleField(
+            "newCollection",
+            "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+            `taxheadField_${i}.visible`,
+            false
+          )
+        );
+      }
+      dispatch(prepareFinalObject(`Demands[0].demandDetails`, []));
+    }
+    //Show new tax head fields
     matchingTaxHeads.forEach((item, index) => {
       dispatch(
         prepareFinalObject(
@@ -330,10 +369,57 @@ const setTaxHeadFields = (action, state, dispatch) => {
             required: item.required || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
+            visible: true,
+            required: true,
+            props: {
+              required: true
+            },
             jsonPath: `Demands[0].demandDetails[${index}].taxAmount`
           })
         )
       );
     });
   }
+};
+
+const setServiceCategory = (businessServiceData, dispatch) => {
+  let nestedServiceData = {};
+  businessServiceData.forEach(item => {
+    if (item.code && item.code.indexOf(".") > 0) {
+      if (nestedServiceData[item.code.split(".")[0]]) {
+        let child = get(
+          nestedServiceData,
+          `${item.code.split(".")[0]}.child`,
+          []
+        );
+        child.push(item);
+        set(nestedServiceData, `${item.code.split(".")[0]}.child`, child);
+      } else {
+        set(
+          nestedServiceData,
+          `${item.code.split(".")[0]}.code`,
+          item.code.split(".")[0]
+        );
+        set(nestedServiceData, `${item.code.split(".")[0]}.child[0]`, item);
+      }
+    } else {
+      set(nestedServiceData, `${item.code}`, item);
+    }
+  });
+  console.log(nestedServiceData);
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.nestedServiceData",
+      nestedServiceData
+    )
+  );
+  let serviceCategories = Object.values(nestedServiceData).filter(
+    item => item.code
+  );
+  dispatch(
+    prepareFinalObject(
+      "applyScreenMdmsData.serviceCategories",
+      serviceCategories
+    )
+  );
 };

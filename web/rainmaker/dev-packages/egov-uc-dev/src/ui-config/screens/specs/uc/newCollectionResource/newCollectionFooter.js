@@ -5,11 +5,11 @@ import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { convertDateToEpoch } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { ifUserRoleExists } from "../../utils";
-// import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   handleScreenConfigurationFieldChange as handleField,
-  prepareFinalObject
+  prepareFinalObject,
+  toggleSnackbar
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const tenantId = getTenantId();
@@ -82,41 +82,61 @@ const processDemand = (state, dispatch) => {
     "Demands[0].taxPeriodFrom",
     "Demands[0].taxPeriodTo"
   ]);
-  // billGenerate(state, dispatch);
 };
-const createDemand = async (state, dispatch) => {
-  let queryObject = [
-    {
-      key: "tenantId",
-      value: tenantId
-    },
-    { key: "offset", value: "0" }
-  ];
-  let demand = get(state.screenConfiguration.preparedFinalObject, "Demands");
-  // set(demand[0], "tenantId", "pb.amritsar");
-  set(demand[0], "consumerType", "TL");
-  // set(demand[0], "payer.uuid", "4446312c-f21b-4cc3-9572-caca4e37225a");
-  // set(demand[0], "demandDetails[0].taxHeadMasterCode", "PT_TAX");
 
-  try {
-    const payload = await httpRequest(
-      "post",
-      "/billing-service/demand/_create",
-      "",
-      [],
-      {
-        Demands: demand
+const createDemand = async (state, dispatch) => {
+  let demands = get(state.screenConfiguration.preparedFinalObject, "Demands");
+  set(demands[0], "consumerType", demands[0].businessService);
+  const taxHeadsFilled =
+    demands[0].demandDetails &&
+    demands[0].demandDetails.filter(item => item.taxAmount >= 0);
+  set(demands[0], "demandDetails", taxHeadsFilled);
+  demands[0].serviceType &&
+    set(demands[0], "businessService", demands[0].serviceType);
+  set(
+    demands[0],
+    "taxPeriodFrom",
+    convertDateToEpoch(demands[0].taxPeriodFrom)
+  );
+  set(demands[0], "taxPeriodTo", convertDateToEpoch(demands[0].taxPeriodTo));
+
+  //Check if tax period fall between the tax periods coming from MDMS
+  const taxPeriodValid = isTaxPeriodValid(dispatch, demands[0], state);
+
+  if (taxHeadsFilled.length) {
+    if (taxPeriodValid) {
+      try {
+        const payload = await httpRequest(
+          "post",
+          "/billing-service/demand/_create",
+          "",
+          [],
+          {
+            Demands: demands
+          }
+        );
+        if (true) {
+          const consumerCode = get(payload, "Demands[0].consumerCode");
+          const businessService = get(payload, "Demands[0].businessService");
+          await generateBill(consumerCode, tenantId, businessService, dispatch);
+        }
+      } catch (e) {
+        console.log(e);
       }
-    );
-    if (true) {
-      const consumerCode = get(payload, "Demands[0].consumerCode");
-      const businessService = get(payload, "Demands[0].businessService");
-      await generateBill(consumerCode, tenantId, businessService, dispatch);
     }
-  } catch (e) {
-    console.log(e);
+  } else {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please fill atleast one tax amount",
+          labelKey: "UC_NEW_COLLECTION_ATLEAST_ONE_TAX_MSG"
+        },
+        "warning"
+      )
+    );
   }
-  console.log("Demands:", demand);
+  console.log("Demands:", demands);
 };
 
 const generateBill = async (
@@ -133,7 +153,6 @@ const generateBill = async (
       [],
       {}
     );
-    console.log(payload);
     if (payload && payload.Bill[0]) {
       dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
       const estimateData = createEstimateData(payload.Bill[0]);
@@ -174,4 +193,39 @@ const createEstimateData = billObject => {
       };
     });
   return fees;
+};
+
+const isTaxPeriodValid = (dispatch, demand, state) => {
+  const taxPeriods = get(
+    state.screenConfiguration,
+    "preparedFinalObject.applyScreenMdmsData.BillingService.TaxPeriod",
+    []
+  );
+  const selectedFrom = new Date(demand.taxPeriodFrom);
+  const selectedTo = new Date(demand.taxPeriodTo);
+  let found =
+    taxPeriods.length > 0 &&
+    taxPeriods.find(item => {
+      const fromDate = new Date(item.fromDate);
+      const toDate = new Date(item.toDate);
+      return (
+        item.service === demand.businessService &&
+        fromDate <= selectedFrom &&
+        toDate >= selectedTo
+      );
+    });
+  if (found) return true;
+  else {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please select the right tax period",
+          labelKey: "UC_NEW_COLLECTION_WRONG_TAX_PERIOD_MSG"
+        },
+        "warning"
+      )
+    );
+    return false;
+  }
 };
