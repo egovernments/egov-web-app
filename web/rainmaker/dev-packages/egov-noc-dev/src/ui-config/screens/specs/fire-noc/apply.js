@@ -20,7 +20,10 @@ import { httpRequest } from "../../../../ui-utils";
 import { searchSampleResponse } from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
-import { prepareDocumentsUploadData } from "../../../../ui-utils/commons";
+import {
+  prepareDocumentsUploadData,
+  getSearchResults
+} from "../../../../ui-utils/commons";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -172,6 +175,39 @@ const getFirstListFromDotSeparated = list => {
   return list;
 };
 
+const prepareEditFlow = async (state, dispatch, applicationNumber) => {
+  const nocs = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs",
+    []
+  );
+  if (applicationNumber && nocs.length == 0) {
+    const response = await getSearchResults([
+      {
+        key: "tenantId",
+        value: getTenantId()
+      },
+      { key: "applicationNumber", value: applicationNumber }
+    ]);
+    dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+
+    // Set no of buildings radiobutton and eventually the cards
+    let noOfBuildings =
+      get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "SINGLE") ===
+      "MULTIPLE"
+        ? "MULTIPLE"
+        : "SINGLE";
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingRadioGroup",
+        "props.value",
+        noOfBuildings
+      )
+    );
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
@@ -181,14 +217,6 @@ const screenConfig = {
       "applicationNumber"
     );
     const step = getQueryArg(window.location.href, "step");
-
-    // Set Property City
-    dispatch(
-      prepareFinalObject(
-        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
-        getTenantId()
-      )
-    );
 
     // Set MDMS Data
     getMdmsData(action, state, dispatch).then(response => {
@@ -224,18 +252,36 @@ const screenConfig = {
       prepareDocumentsUploadData(state, dispatch);
     });
 
-    let pfo = {};
-    if (applicationNumber && !step) {
-      pfo = searchSampleResponse();
-      dispatch(prepareFinalObject("FireNOCs[0]", get(pfo, "FireNOCs[0]")));
-    }
-    if (step && get(state, "screenConfiguration.preparedFinalObject")) {
-      pfo = get(
-        state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0]",
-        {}
-      );
-    }
+    // Search in case of EDIT flow
+    prepareEditFlow(state, dispatch, applicationNumber);
+
+    // Set Property City
+    dispatch(
+      prepareFinalObject(
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+        getTenantId()
+      )
+    );
+
+    // // Handle dependent dropdowns in edit flow
+    // set(
+    //   "apply",
+    //   "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer.children.singleBuilding.children.cardContent.children.singleBuildingCard.children.buildingSubUsageType",
+    //   { display: "none" }
+    // );
+
+    // let pfo = {};
+    // if (applicationNumber && !step) {
+    //   pfo = searchSampleResponse();
+    //   dispatch(prepareFinalObject("FireNOCs[0]", get(pfo, "FireNOCs[0]")));
+    // }
+    // if (step && get(state, "screenConfiguration.preparedFinalObject")) {
+    //   pfo = get(
+    //     state,
+    //     "screenConfiguration.preparedFinalObject.FireNOCs[0]",
+    //     {}
+    //   );
+    // }
 
     // Code to goto a specific step through URL
     if (step && step.match(/^\d+$/)) {

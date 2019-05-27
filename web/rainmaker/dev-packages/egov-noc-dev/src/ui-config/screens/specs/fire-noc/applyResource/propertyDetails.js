@@ -26,8 +26,7 @@ const commonBuildingData = buildingType => {
         },
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Plot size.",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].plotsize",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].plotsize",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -50,8 +49,7 @@ const commonBuildingData = buildingType => {
         // required: true,
         pattern: getPattern("TradeName"),
         errorMessage: "Invalid Name",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].name",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].name",
         // props: {
         //   style: {
         //     maxWidth: "400px"
@@ -91,8 +89,7 @@ const commonBuildingData = buildingType => {
           moduleName: "firenoc",
           masterName: "BuildingType"
         },
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].usageType",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].usageType",
         sourceJsonPath: "applyScreenMdmsData.DropdownsData.BuildingUsageType",
         gridDefination: {
           xs: 12,
@@ -133,8 +130,7 @@ const commonBuildingData = buildingType => {
           moduleName: "firenoc",
           masterName: "BuildingType"
         },
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].usageSubType",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].usageSubType",
         // data: [
         //   {
         //     code: "Commercial"
@@ -165,8 +161,7 @@ const commonBuildingData = buildingType => {
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid number",
         required: true,
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].noOfFloors",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].noOfFloors",
         data: [
           {
             code: "1"
@@ -199,8 +194,7 @@ const commonBuildingData = buildingType => {
         required: true,
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid number",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].noOfBasements",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].noOfBasements",
         data: [
           {
             code: "1"
@@ -230,8 +224,7 @@ const commonBuildingData = buildingType => {
         },
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Area",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].builtupArea",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].builtupArea",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -251,8 +244,7 @@ const commonBuildingData = buildingType => {
         },
         pattern: /^[0-9]*$/i,
         errorMessage: "Invalid Height",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.buildings[0].heightOfBuilding",
+        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].heightOfBuilding",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -385,8 +377,7 @@ export const propertyDetails = getCommonCard({
                 labelKey: "NOC_PROPERTY_DETAILS_ADD_BUILDING_LABEL",
                 labelName: "ADD BUILDING"
               },
-              sourceJsonPath:
-                "FireNOCs[0].fireNOCDetails.buildings",
+              sourceJsonPath: "FireNOCs[0].fireNOCDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
               prefixSourceJsonPath:
