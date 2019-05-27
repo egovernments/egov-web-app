@@ -50,7 +50,7 @@ const getMDMSData = async (action, state, dispatch) => {
   }
 };
 
-const ucSearchAndResult = {
+const billSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
@@ -78,25 +78,6 @@ const ucSearchAndResult = {
               },
               ...header
             },
-            newApplicationButton: {
-              componentPath: "Button",
-              gridDefination: {
-                xs: 12,
-                sm: 6,
-                align: "right"
-              },
-              visible: enableButton,
-              props: {
-                variant: "contained",
-                color: "primary",
-                style: {
-                  color: "white",
-                  borderRadius: "2px",
-                  width: "250px",
-                  height: "48px"
-                }
-              },
-            }
           }
         },
         billSearchCard,
@@ -107,4 +88,4 @@ const ucSearchAndResult = {
   }
 };
 
-export default ucSearchAndResult;
+export default billSearchAndResult;

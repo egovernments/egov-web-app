@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-import { generateReciept } from "../../utils/recieptPdf";
+// import { generateBill } from "../../utils/recieptPdf";
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
@@ -71,9 +71,9 @@ export const searchResults = {
                 cursor: "pointer",
                 textDecoration: "underline"
               }}
-              onClick={() => generateReciept(rowData)}
+              // onClick={() => generateBill(rowData)}
             >
-              {rowData[get(textToLocalMapping, "Receipt No.")]}
+              {rowData[get(textToLocalMapping, "Bill No.")]}
             </span>
             // <span style="cursor:pointer">pointer</span>
           );
