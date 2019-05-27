@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { handleScreenConfigurationFieldChange as handleField, prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -104,7 +104,12 @@ export const searchApiCall = async (state, dispatch) => {
         status: Receipt[i].Bill[0].billDetails[0].status
       };
     }
-
+    dispatch(
+      prepareFinalObject(
+        "receiptSearchResponse",
+        responseFromAPI
+      )
+    );
     console.log(response);
 
     try {
