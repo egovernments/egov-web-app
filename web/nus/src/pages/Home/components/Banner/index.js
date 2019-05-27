@@ -1,14 +1,14 @@
-import React from "react";
+// import React from "react";
 
-class Banner extends React.Component {
-  render()
-  {
-    return(
-      <div>
-        Banner
-      </div>
-    );
-  }
-}
+// class Banner extends React.Component {
+//   render()
+//   {
+//     return(
+//       <div>
+//         Banner
+//       </div>
+//     );
+//   }
+// }
 
-export default Banner;
+// export default Banner;
