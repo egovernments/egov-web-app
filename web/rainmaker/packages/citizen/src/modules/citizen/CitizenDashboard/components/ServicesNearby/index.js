@@ -4,20 +4,14 @@ import Grid from "@material-ui/core/Grid";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const iconStyle = {
-  width: "30px",
-  height: "30px",
-  fill: "#00bbd3",
-};
-
 const servicesNearBy = [
   {
     label: "My City",
-    icon: <Icon style={iconStyle} className="service-icon" action="custom" name="home-city-outline" />,
+    icon: <Icon className="service-icon" action="custom" name="home-city-outline" />,
   },
-  { label: "Places Near Me", icon: <Icon style={iconStyle} className="service-icon" action="custom" name="map-marker" /> },
-  { label: "Events", icon: <Icon style={iconStyle} className="service-icon" action="custom" name="calendar" /> },
-  { label: "Key Documents", icon: <Icon style={iconStyle} className="service-icon" action="av" name="library-books" /> },
+  { label: "Places Near Me", icon: <Icon className="service-icon" action="custom" name="map-marker" /> },
+  { label: "Events", icon: <Icon className="service-icon" action="custom" name="calendar" /> },
+  { label: "Key Documents", icon: <Icon className="service-icon" action="custom" name="library-books" /> },
 ];
 
 const ServicesNearby = () => {

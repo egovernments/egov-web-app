@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
+import { Screen } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
 import Notifications from "./components/Notifications";
@@ -43,29 +44,31 @@ class CitizenDashboard extends Component {
   render() {
     const { history } = this.props;
     return (
-      <div style={{ padding: 8, marginTop: 60 }}>
+      <div>
         <SearchService />
-        <Label
-          label="Citizen Services"
-          fontSize={16}
-          fontWeight={900}
-          color="rgba(0, 0, 0, 0.87"
-          containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
-        />
-        <ServiceList history={history} />
-        <Label
-          label="DASHBOARD_LOCAL_INFORMATION_LABEL"
-          fontSize={16}
-          fontWeight={900}
-          color="rgba(0, 0, 0, 0.87"
-          containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
-        />
-        <ServicesNearby />
-        <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
-          <Label label="Whats New" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-          <Label label={"VIEW ALL"} color="#fe7a51" fontSize={14} />
+        <div className="citizen-dashboard-cont">
+          <Label
+            label="Citizen Services"
+            fontSize={16}
+            fontWeight={900}
+            color="rgba(0, 0, 0, 0.87"
+            containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
+          />
+          <ServiceList history={history} />
+          <Label
+            label="DASHBOARD_LOCAL_INFORMATION_LABEL"
+            fontSize={16}
+            fontWeight={900}
+            color="rgba(0, 0, 0, 0.87"
+            containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
+          />
+          <ServicesNearby />
+          <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
+            <Label label="Whats New" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
+            <Label label={"VIEW ALL"} color="#fe7a51" fontSize={14} />
+          </div>
+          <Notifications notifications={notifications} />
         </div>
-        <Notifications notifications={notifications} />
       </div>
     );
   }
