@@ -330,6 +330,14 @@ const setTaxHeadFields = (action, state, dispatch) => {
           handleField(
             "newCollection",
             "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+            `taxheadField_${i}.props.value`,
+            ""
+          )
+        );
+        dispatch(
+          handleField(
+            "newCollection",
+            "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
             `taxheadField_${i}.visible`,
             false
           )
@@ -370,9 +378,9 @@ const setTaxHeadFields = (action, state, dispatch) => {
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
             visible: true,
-            required: true,
+            // required: true,
             props: {
-              required: true
+              // required: true
             },
             jsonPath: `Demands[0].demandDetails[${index}].taxAmount`
           })

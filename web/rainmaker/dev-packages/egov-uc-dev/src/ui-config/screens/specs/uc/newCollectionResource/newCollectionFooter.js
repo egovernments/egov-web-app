@@ -5,6 +5,7 @@ import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { convertDateToEpoch } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { ifUserRoleExists } from "../../utils";
+import { validateFields } from "../../utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   handleScreenConfigurationFieldChange as handleField,
@@ -77,15 +78,38 @@ const allDateToEpoch = (finalObj, jsonPaths) => {
 };
 
 const processDemand = (state, dispatch) => {
-  createDemand(state, dispatch);
-  allDateToEpoch(state.screenConfiguration.preparedFinalObject, [
-    "Demands[0].taxPeriodFrom",
-    "Demands[0].taxPeriodTo"
-  ]);
+  const isFormValid = validateFields(
+    "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+    state,
+    dispatch,
+    "newCollection"
+  );
+  if (isFormValid) {
+    createDemand(state, dispatch);
+    allDateToEpoch(state.screenConfiguration.preparedFinalObject, [
+      "Demands[0].taxPeriodFrom",
+      "Demands[0].taxPeriodTo"
+    ]);
+  } else {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please fill the required fields.",
+          labelKey: "UC_REQUIRED_FIELDS_ERROR_MSG"
+        },
+        "error"
+      )
+    );
+  }
 };
 
 const createDemand = async (state, dispatch) => {
-  let demands = get(state.screenConfiguration.preparedFinalObject, "Demands");
+  let demands = JSON.parse(
+    JSON.stringify(
+      get(state.screenConfiguration.preparedFinalObject, "Demands")
+    )
+  );
   set(demands[0], "consumerType", demands[0].businessService);
   const taxHeadsFilled =
     demands[0].demandDetails &&
@@ -100,7 +124,7 @@ const createDemand = async (state, dispatch) => {
   );
   set(demands[0], "taxPeriodTo", convertDateToEpoch(demands[0].taxPeriodTo));
 
-  //Check if tax period fall between the tax periods coming from MDMS
+  //Check if tax period fall between the tax periods coming from MDMS -- Not required as of now
   const taxPeriodValid = isTaxPeriodValid(dispatch, demands[0], state);
 
   if (taxHeadsFilled.length) {
@@ -115,13 +139,25 @@ const createDemand = async (state, dispatch) => {
             Demands: demands
           }
         );
-        if (true) {
+        if (payload.Demands.length > 0) {
           const consumerCode = get(payload, "Demands[0].consumerCode");
           const businessService = get(payload, "Demands[0].businessService");
           await generateBill(consumerCode, tenantId, businessService, dispatch);
+        } else {
+          alert("Empty response!!");
         }
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
+        dispatch(
+          toggleSnackbar(
+            true,
+            {
+              labelName: e.message,
+              labelKey: e.message
+            },
+            "error"
+          )
+        );
       }
     }
   } else {
@@ -203,6 +239,23 @@ const isTaxPeriodValid = (dispatch, demand, state) => {
   );
   const selectedFrom = new Date(demand.taxPeriodFrom);
   const selectedTo = new Date(demand.taxPeriodTo);
+  if (selectedFrom < selectedTo) {
+    return true;
+  } else {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please select the right tax period",
+          labelKey: "UC_NEW_COLLECTION_WRONG_TAX_PERIOD_MSG"
+        },
+        "warning"
+      )
+    );
+    return false;
+  }
+
+  //Validation against MDMS Tax periods not required as of now.
   let found =
     taxPeriods.length > 0 &&
     taxPeriods.find(item => {
