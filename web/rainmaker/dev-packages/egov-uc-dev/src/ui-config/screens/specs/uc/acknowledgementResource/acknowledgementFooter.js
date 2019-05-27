@@ -91,5 +91,6 @@ export const acknowledgementFailureFooter = getCommonApplyFooter({
 });
 
 const viewReceipt = (state, dispatch) => {
+  debugger;
   generateReciept(state, dispatch);
 };

@@ -48,6 +48,12 @@ const screenConfig = {
         amount
       )
     );
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+        amount
+      )
+    );
     dispatch(prepareFinalObject("ReceiptTemp[0].tenantId", tenantId));
     return action;
   },

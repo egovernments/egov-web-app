@@ -126,6 +126,26 @@ const callBackForPay = async (state, dispatch) => {
     );
   }
 
+  //Add payerName and Mobile no
+  set(
+    finalReceiptData,
+    "Bill[0].payerName",
+    get(
+      state.screenConfiguration,
+      "preparedFinalObject.Demands[0].consumerName",
+      ""
+    )
+  );
+  set(
+    finalReceiptData,
+    "Bill[0].mobileNumber",
+    get(
+      state.screenConfiguration,
+      "preparedFinalObject.Demands[0].mobileNo",
+      ""
+    )
+  );
+
   if (get(finalReceiptData, "instrument.transactionNumber")) {
     set(
       finalReceiptData,
@@ -180,6 +200,7 @@ const callBackForPay = async (state, dispatch) => {
         null
       );
       console.log(receiptNumber, response);
+      dispatch(prepareFinalObject("receiptSearchResponse", response));
       // moveToSuccess(href, dispatch, receiptNumber);
       dispatch(
         setRoute(

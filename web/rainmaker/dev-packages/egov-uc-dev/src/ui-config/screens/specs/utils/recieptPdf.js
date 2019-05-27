@@ -2,6 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import get from "lodash/get";
 import store from "../../../../ui-redux/store";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { loadReceiptData } from "./receiptTransformer";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -346,7 +347,7 @@ const getReceiptData = tranformedData => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Property Tax Payment Receipt",
+                    text: "Property Tax Payment Receipt (Citizen Copy)",
                     style: "receipt-logo-sub-header"
                   }
                 ],
@@ -595,7 +596,7 @@ const getReceiptData = tranformedData => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Property Tax Payment Receipt",
+                    text: "Property Tax Payment Receipt (Employee Copy)",
                     style: "receipt-logo-sub-header"
                   }
                 ],
@@ -886,19 +887,33 @@ const getReceiptData = tranformedData => {
   return receiptData;
 };
 
-export const generateReciept = async (rowData) => {
+export const generateReciept = async rowData => {
   const state = store.getState();
   const allReceipts = get(
     state.screenConfiguration,
     "preparedFinalObject.receiptSearchResponse",
     {}
   );
-  const data = allReceipts.Receipt.find(item=> (get(item, "Bill[0].billDetails[0].receiptNumber", "") === rowData["Receipt No"]))
-  if (_.isEmpty(data)) {
-    return;
+  let receipt_data = {};
+  if (getQueryArg(window.location.href, "receiptNumber")) {
+    if (allReceipts.Receipt && _.isEmpty(allReceipts.Receipt[0])) {
+      return;
+    }
+    const transformedData =
+      (allReceipts.Receipt && loadReceiptData(allReceipts.Receipt[0])) || {};
+    receipt_data = getReceiptData(transformedData);
+  } else {
+    const data = allReceipts.Receipt.find(
+      item =>
+        get(item, "Bill[0].billDetails[0].receiptNumber", "") ===
+        rowData["Receipt No"]
+    );
+    if (_.isEmpty(data)) {
+      return;
+    }
+    const transformedData = loadReceiptData(data);
+    receipt_data = getReceiptData(transformedData);
   }
-  const transformedData = loadReceiptData(data);
-  const receipt_data = getReceiptData(transformedData);
   receipt_data && pdfMake.createPdf(receipt_data).open();
 };
 
