@@ -96,8 +96,8 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
     try {
-      // const response = await getSearchResults(queryObject);
-      const response = searchSampleResponse();
+      const response = await getSearchResults(queryObject);
+      // const response = searchSampleResponse();
       let data =
         response &&
         get(response, "FireNOCs", []).map(item => ({
