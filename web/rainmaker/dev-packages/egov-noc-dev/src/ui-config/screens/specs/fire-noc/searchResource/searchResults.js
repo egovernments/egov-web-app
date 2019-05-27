@@ -183,7 +183,9 @@ const onRowClick = rowData => {
         ? `/egov-ui-framework/fire-noc/search-preview?applicationNumber=${
             rowData[get(textToLocalMapping, "Application No")]
           }&tenantId=${rowData.tenantId}`
-        : `/fire-noc/search-preview?applicationNumber=PB-TL-2019-01-24-001390&tenantId=pb.amritsar`;
+        : `/fire-noc/search-preview?applicationNumber=${
+            rowData[get(textToLocalMapping, "Application No")]
+          }&tenantId=${rowData.tenantId}`;
     case get(textToLocalMapping, "REJECTED"):
       return `/fire-noc/search-preview?status=rejected&role=approver&applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]

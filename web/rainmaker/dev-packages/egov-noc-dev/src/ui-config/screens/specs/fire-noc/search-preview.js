@@ -13,7 +13,7 @@ import { footer } from "./summaryResource/footer";
 import { taskStatus } from "./taskDetailsResource/taskStatus";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { searchSampleResponse } from "../../../../ui-utils/sampleResponses";
+import { getSearchResults } from "../../../../ui-utils/commons";
 import get from "lodash/get";
 
 const titlebar = getCommonContainer({
@@ -31,12 +31,29 @@ const titlebar = getCommonContainer({
   }
 });
 
+const setSearchResponse = async dispatch => {
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  const tenantId = getQueryArg(window.location.href, "tenantId");
+  const response = await getSearchResults([
+    {
+      key: "tenantId",
+      value: tenantId
+    },
+    { key: "applicationNumber", value: applicationNumber }
+  ]);
+  dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    let res = searchSampleResponse();
-    dispatch(prepareFinalObject("FireNOCs[0]", get(res, "FireNOCs[0]")));
+    // let res = searchSampleResponse();
+    // dispatch(prepareFinalObject("FireNOCs[0]", get(res, "FireNOCs[0]")));
+    setSearchResponse(dispatch);
     return action;
   },
   components: {

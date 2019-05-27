@@ -5,15 +5,14 @@ import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
-import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
-import { searchSampleResponse } from "../../../../../ui-utils/sampleResponses";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
   let queryObject = [
     {
       key: "tenantId",
-      value: JSON.parse(getUserInfo()).tenantId
+      value: getTenantId()
     }
     // { key: "limit", value: "10" },
     // { key: "offset", value: "0" }
@@ -110,7 +109,7 @@ export const searchApiCall = async (state, dispatch) => {
             get(item, "fireNOCDetails.applicantDetails.owners[0].name") || "-",
           [get(textToLocalMapping, "Application Date")]:
             convertEpochToDate(item.applicationdate) || "-",
-          tenantId: item.tenantId,
+          tenantId: item.tenantid,
           [get(textToLocalMapping, "Status")]:
             get(textToLocalMapping, item.status) || "-"
         }));
