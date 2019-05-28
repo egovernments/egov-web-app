@@ -101,6 +101,10 @@ export const UCSearchCard = getCommonCard({
       },
       required: false,
       jsonPath: "searchScreen.serviceType",
+      localePrefix: {
+        masterName: "BusinessService",
+        moduleName: "BillingService"
+      },
       gridDefination: {
         xs: 12,
         sm: 4

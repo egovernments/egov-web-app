@@ -152,6 +152,10 @@ export const newCollectionDetailsCard = getCommonCard({
           labelName: "Select service Category ",
           labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
         },
+        localePrefix: {
+          masterName: "BusinessService",
+          moduleName: "BillingService"
+        },
         required: true,
         visible: true,
         jsonPath: "Demands[0].businessService",
@@ -220,6 +224,10 @@ export const newCollectionDetailsCard = getCommonCard({
         label: {
           labelName: "Service Type",
           labelKey: "UC_SERVICE_TYPE_LABEL"
+        },
+        localePrefix: {
+          masterName: "BusinessService",
+          moduleName: "BillingService"
         },
         placeholder: {
           labelName: "Select Service Type",

@@ -99,6 +99,10 @@ export const UCSearchCard = getCommonCard({
         labelName: "Select Service Type",
         labelKey: "UC_SERVICE_TYPE_PLACEHOLDER"
       },
+      localePrefix: {
+        masterName: "BusinessService",
+        moduleName: "BillingService"
+      },
       required: false,
       jsonPath: "searchScreen.serviceType",
       gridDefination: {
