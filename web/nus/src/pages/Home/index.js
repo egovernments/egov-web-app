@@ -21,6 +21,7 @@ class Home extends React.Component {
 				<Menu menuItems={menuItems} />
 				<About />
 				<How />
+				<WhatNew />
 			</div>
 		);
 	}

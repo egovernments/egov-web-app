@@ -32,21 +32,18 @@ const newobj = [
 	{
 		header: 'Initiate',
 		subheader: 'State-on-Boarding',
-		icon: 'check_circle',
-		index: 1
+		icon: 'check_circle'
 	},
 	{
 		header: 'Define',
 		subheader: 'Current System/Process Study',
-		icon: 'cached',
-		index: 2
+		icon: 'cached'
 	},
 
 	{
 		header: 'Equip',
 		subheader: 'Product fitment and Solution design',
-		icon: 'copyright',
-		index: 3
+		icon: 'copyright'
 	},
 
 	{ header: 'Adopt', subheader: 'Develop and Deploy', icon: 'save', index: 4 },
@@ -54,8 +51,7 @@ const newobj = [
 	{
 		header: 'Leverages',
 		subheader: 'Rollout and Adoption review',
-		icon: 'code',
-		index: 5
+		icon: 'code'
 	}
 ];
 
@@ -89,7 +85,7 @@ class How extends React.Component {
 										/>
 										<div
 											style={{
-												left: '40%',
+												left: '5%',
 												top: '20%',
 												position: 'absolute'
 											}}
@@ -111,14 +107,14 @@ class How extends React.Component {
 												backgroundColor: '#E0E0E0'
 											}}
 										>
-											{' '}
 											{index}
 										</div>
 
 										<div
 											style={{
 												color: '#000000 - 87%',
-												fontSize: '20px'
+												fontSize: '20px',
+												marginLeft: '30px'
 											}}
 										>
 											{label.header}
