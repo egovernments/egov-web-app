@@ -917,18 +917,23 @@ export const generateReciept = async rowData => {
   receipt_data && pdfMake.createPdf(receipt_data).open();
 };
 
-export const generateCitizenReciept = async (state, dispatch, type) => {
-  let data1 = get(
+export const generateCitizenReciept = async rowData => {
+  const state = store.getState();
+  const allReceipts = get(
     state.screenConfiguration,
-    "preparedFinalObject.receiptDataForReceipt",
+    "preparedFinalObject.receiptSearchResponse",
     {}
   );
-  if (_.isEmpty(data1)) {
+  let citizenReceipt_data = {};
+  const data = allReceipts.Receipt.find(
+    item =>
+      get(item, "Bill[0].billDetails[0].receiptNumber", "") ===
+      rowData["Receipt No"]
+  );
+  if (_.isEmpty(data)) {
     return;
   }
-  let tranformedData = {
-    ...data1
-  };
-  let citizenReceipt_data = getCitizenReceipetData(tranformedData);
-  receipt_data && pdfMake.createPdf(receipt_data).open();
+  const transformedData = loadReceiptData(data);
+  citizenReceipt_data = getCitizenReceipetData(transformedData);
+  citizenReceipt_data && pdfMake.createPdf(citizenReceipt_data).open();
 };
