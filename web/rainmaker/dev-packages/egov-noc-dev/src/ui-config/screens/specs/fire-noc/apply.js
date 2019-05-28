@@ -17,7 +17,10 @@ import {
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "../../../../ui-utils";
-import { searchSampleResponse } from "../../../../ui-utils/sampleResponses";
+import {
+  sampleSearch,
+  sampleSingleSearch
+} from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
 import {
@@ -175,6 +178,32 @@ const getFirstListFromDotSeparated = list => {
   return list;
 };
 
+const setCardsIfMultipleBuildings = (state, dispatch) => {
+  if (
+    get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
+    ) === "MULTIPLE"
+  ) {
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer",
+        "props.style",
+        { display: "none" }
+      )
+    );
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer",
+        "props.style",
+        {}
+      )
+    );
+  }
+};
+
 const prepareEditFlow = async (state, dispatch, applicationNumber) => {
   const nocs = get(
     state,
@@ -182,13 +211,25 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
     []
   );
   if (applicationNumber && nocs.length == 0) {
-    const response = await getSearchResults([
-      {
-        key: "tenantId",
-        value: getTenantId()
-      },
-      { key: "applicationNumber", value: applicationNumber }
-    ]);
+    // const response = await getSearchResults([
+    //   {
+    //     key: "tenantId",
+    //     value: getTenantId()
+    //   },
+    //   { key: "applicationNumber", value: applicationNumber }
+    // ]);
+    let response = sampleSingleSearch();
+
+    // Handle applicant ownership dependent dropdowns
+    set(
+      response,
+      "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+        ""
+      ).split(".")[0]
+    );
     dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
 
     // Set no of buildings radiobutton and eventually the cards
@@ -205,6 +246,22 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
         noOfBuildings
       )
     );
+
+    // Set no of buildings radiobutton and eventually the cards
+    let nocType =
+      get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NEW") === "NEW"
+        ? "NEW"
+        : "PROVISIONAL";
+    dispatch(
+      handleField(
+        "apply",
+        "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.nocRadioGroup",
+        "props.value",
+        nocType
+      )
+    );
+
+    // setCardsIfMultipleBuildings(state, dispatch);
   }
 };
 
@@ -333,12 +390,12 @@ const screenConfig = {
       nocType
     );
 
-    // Preset multi-cards
+    // Preset multi-cards (CASE WHEN DATA PRE-LOADED)
     if (
       get(
         state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings[0].usageType"
-      ) === "Multiple Building"
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
+      ) === "MULTIPLE"
     ) {
       set(
         action.screenConfig,
@@ -351,58 +408,58 @@ const screenConfig = {
         {}
       );
     }
-    if (
-      get(
-        state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType"
-      ) === "PROVISIONAL"
-    ) {
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber.props.style",
-        { visibility: "hidden" }
-      );
-    }
-    if (
-      get(
-        state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
-        ""
-      ).includes("MULTIPLEOWNERS")
-    ) {
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
-        { display: "none" }
-      );
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.props.style",
-        {}
-      );
-    } else if (
-      get(
-        state,
-        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
-        ""
-      ).includes("INSTITUTIONAL")
-    ) {
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
-        { display: "none" }
-      );
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer.props.style",
-        {}
-      );
-      set(
-        action.screenConfig,
-        "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType.props.style",
-        {}
-      );
-    }
+    // if (
+    //   get(
+    //     state,
+    //     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType"
+    //   ) === "PROVISIONAL"
+    // ) {
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.provisionalNocNumber.props.style",
+    //     { visibility: "hidden" }
+    //   );
+    // }
+    // if (
+    //   get(
+    //     state,
+    //     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+    //     ""
+    //   ).includes("MULTIPLEOWNERS")
+    // ) {
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
+    //     { display: "none" }
+    //   );
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.props.style",
+    //     {}
+    //   );
+    // } else if (
+    //   get(
+    //     state,
+    //     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+    //     ""
+    //   ).includes("INSTITUTIONAL")
+    // ) {
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer.props.style",
+    //     { display: "none" }
+    //   );
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.institutionContainer.props.style",
+    //     {}
+    //   );
+    //   set(
+    //     action.screenConfig,
+    //     "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.applicantSubType.props.style",
+    //     {}
+    //   );
+    // }
 
     return action;
   },

@@ -97,7 +97,7 @@ const commonBuildingData = buildingType => {
           md: 6
         }
       }),
-      afterFieldChange: (action, state, dispatch) => {
+      beforeFieldChange: (action, state, dispatch) => {
         let path = action.componentJsonpath.replace(
           /.buildingUsageType$/,
           ".buildingSubUsageType"

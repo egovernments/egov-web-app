@@ -496,7 +496,8 @@ export const applicantDetails = getCommonCard({
             labelName: "Select Applicant Type",
             labelKey: "NOC_APPLICANT_TYPE_PLACEHOLDER"
           },
-          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
           localePrefix: {
             moduleName: "common-masters",
             masterName: "OwnerShipCategory"
@@ -520,7 +521,7 @@ export const applicantDetails = getCommonCard({
             md: 6
           }
         }),
-        afterFieldChange: (action, state, dispatch) => {
+        beforeFieldChange: (action, state, dispatch) => {
           let path = action.componentJsonpath.replace(
             /.applicantType$/,
             ".applicantSubType"
@@ -568,7 +569,7 @@ export const applicantDetails = getCommonCard({
             md: 6
           }
         }),
-        afterFieldChange: (action, state, dispatch) => {
+        beforeFieldChange: (action, state, dispatch) => {
           let singleApplicantContainerJsonPath =
             "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.singleApplicantContainer";
           let multipleApplicantContainerJsonPath =

@@ -50,7 +50,7 @@ export const nocDetails = getCommonCard({
         defaultValue: "PROVISIONAL"
       },
       type: "array",
-      afterFieldChange: (action, state, dispatch) => {
+      beforeFieldChange: (action, state, dispatch) => {
         if (action.value === "PROVISIONAL") {
           dispatch(
             handleField(
