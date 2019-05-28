@@ -12,7 +12,7 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 
 const header = getCommonHeader({
   labelName: "Universal Collection",
-  labelKey: "UC_COMMON_HEADER"
+  labelKey: "UC_COMMON_HEADER_SEARCH"
 });
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
@@ -120,7 +120,7 @@ const ucSearchAndResult = {
                   process.env.REACT_APP_SELF_RUNNING === "true"
                     ? `/egov-ui-framework/uc/newCollection`
                     : `/uc/newCollection`
-              },
+              }
             }
           }
         },
