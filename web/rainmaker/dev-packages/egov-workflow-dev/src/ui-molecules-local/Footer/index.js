@@ -20,8 +20,12 @@ class Footer extends React.Component {
   };
 
   getDownloadData = () => {
-    const { Licenses, state } = this.props;
-    const { status, applicationNumber } = (Licenses && Licenses[0]) || "";
+    const { dataPath, state } = this.props;
+    const data = get(
+      state,
+      `screenConfiguration.preparedFinalObject.${dataPath}`
+    );
+    const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Download",
       leftIcon: "cloud_download",
@@ -33,8 +37,12 @@ class Footer extends React.Component {
   };
 
   getPrintData = () => {
-    const { Licenses, state } = this.props;
-    const { status, applicationNumber } = (Licenses && Licenses[0]) || "";
+    const { dataPath, state } = this.props;
+    const data = get(
+      state,
+      `screenConfiguration.preparedFinalObject.${dataPath}`
+    );
+    const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Print",
       leftIcon: "print",
@@ -46,10 +54,10 @@ class Footer extends React.Component {
   };
 
   openActionDialog = async item => {
-    const { handleFieldChange, setRoute } = this.props;
+    const { handleFieldChange, setRoute, dataPath } = this.props;
     let employeeList = [];
-    handleFieldChange("Licenses[0].comment", "");
-    handleFieldChange("Licenses[0].assignee", "");
+    handleFieldChange(`${dataPath}[0].comment`, "");
+    handleFieldChange(`${dataPath}[0].assignee`, "");
     if (item.isLast) {
       setRoute(item.buttonUrl);
       // window.location.href = window.origin + item.buttonUrl;
@@ -159,10 +167,7 @@ class Footer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { screenConfiguration } = state;
-  const { preparedFinalObject } = screenConfiguration;
-  const { Licenses } = preparedFinalObject;
-  return { Licenses, state };
+  return { state };
 };
 
 const mapDispatchToProps = dispatch => {
