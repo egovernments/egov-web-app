@@ -5,6 +5,7 @@ import ActionMenuComp from "../ActionMenu/components";
 import "./index.css";
 import { fetchActionItems, updateActiveRoute } from "egov-ui-kit/redux/app/actions";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 class ActionMenu extends Component {
   componentDidMount = async () => {
@@ -15,7 +16,7 @@ class ActionMenu extends Component {
     await fetchActionMenu(
       {
         roleCodes: roleCodes,
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         actionMaster: "actions-test",
         enabled: true,
       },

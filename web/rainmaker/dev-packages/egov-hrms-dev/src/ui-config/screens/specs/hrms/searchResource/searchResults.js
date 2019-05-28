@@ -70,7 +70,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Name")]: {},
       [get(textToLocalMapping, "Role")]: {},
       [get(textToLocalMapping, "Designation")]: {},
-      [get(textToLocalMapping, "Department")]: {},
+      [get(textToLocalMapping, "Department")]: {}
       // [get(textToLocalMapping, "Tenant ID")]: {}
     },
     title: get(textToLocalMapping, "Search Results for Employee")

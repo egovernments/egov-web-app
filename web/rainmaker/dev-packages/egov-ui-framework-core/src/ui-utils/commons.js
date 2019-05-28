@@ -11,6 +11,8 @@ import {
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import orderBy from "lodash/orderBy";
 import get from "lodash/get";
+import set from "lodash/set";
+import commonConfig from "config/common.js";
 
 export const addComponentJsonpath = (components, jsonPath = "components") => {
   for (var componentKey in components) {
@@ -208,7 +210,7 @@ export const replaceStrInPath = (inputString, search, replacement) => {
 
 export const getFileUrlFromAPI = async fileStoreId => {
   const queryObject = [
-    { key: "tenantId", value: "pb" },
+    { key: "tenantId", value: commonConfig.tenantId },
     { key: "fileStoreIds", value: fileStoreId }
   ];
   try {
@@ -351,7 +353,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             moduleName,
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         } else {
@@ -359,7 +361,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             moduleName,
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         }
@@ -399,4 +401,35 @@ export const orderWfProcessInstances = processInstances => {
     return acc;
   }, []);
   return filteredInstances.reverse();
+};
+
+export const getMultiUnits = multiUnits => {
+  let hasTradeType = false;
+  let hasAccessoryType = false;
+
+  let mergedUnits =
+    multiUnits &&
+    multiUnits.reduce((result, item) => {
+      hasTradeType = item.hasOwnProperty("tradeType");
+      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
+      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
+        if (item.hasOwnProperty("id")) {
+          if (item.hasOwnProperty("active") && item.active) {
+            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
+              set(item, "active", false);
+              result.push(item);
+            } else {
+              result.push(item);
+            }
+          }
+        } else {
+          if (!item.hasOwnProperty("isDeleted")) {
+            result.push(item);
+          }
+        }
+      }
+      return result;
+    }, []);
+
+  return mergedUnits;
 };

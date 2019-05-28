@@ -195,14 +195,17 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         data.city
       )
     );
-    let accessories = response.Licenses[0].tradeLicenseDetail.accessories
-      ? response.Licenses[0].tradeLicenseDetail.accessories.length
-      : 0;
-    data.accessories = nullToNa(accessories);
-    if (accessories > 0) {
+    const accessories = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.accessories",
+      []
+    );
+    if (accessories && accessories.length > 0) {
       data.accessoriesList = response.Licenses[0].tradeLicenseDetail.accessories
         .map(item => {
-          return getMessageFromLocalization(item.accessoryCategory);
+          return `${getMessageFromLocalization(item.accessoryCategory)}(${
+            item.count
+          })`;
         })
         .reduce((pre, cur) => {
           return pre.concat(", " + cur);
@@ -363,7 +366,7 @@ export const loadUserNameData = async uuid => {
 /** Data used for creation of receipt is generated and stored in local storage here */
 export const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
-  loadUlbLogo(tenant); //pb.amritsar
+  loadUlbLogo(tenant);
   loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
   loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
   loadMdmsData(tenant);

@@ -149,7 +149,6 @@ export const findCorrectDateObjPenaltyIntrest = (financialYear, category) => {
     chosenDateObj.startingDay = date.join("/");
     month = getMonth(chosenDateObj.startingDay);
   }
-  console.log("chosenDateObj", chosenDateObj);
   return chosenDateObj;
 };
 

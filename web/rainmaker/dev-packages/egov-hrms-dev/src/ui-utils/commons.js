@@ -17,6 +17,7 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import get from "lodash/get";
 import set from "lodash/set";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -267,7 +268,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             "TL",
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         } else {
@@ -275,7 +276,7 @@ export const handleFileUpload = (event, handleDocument, props) => {
             S3_BUCKET.endPoint,
             "TL",
             file,
-            "pb"
+            commonConfig.tenantId
           );
           handleDocument(file, fileStoreId);
         }
