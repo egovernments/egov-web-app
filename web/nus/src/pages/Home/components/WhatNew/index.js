@@ -21,47 +21,57 @@ const styles = {
 const newsobj = [
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery1.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 	{
+		title: 'Andhra Impact',
+		photoUrl: require('../../../../../src/img/secondGallery.jpg'),
+		desc:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study'
+	},
+
+	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery1.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'NUS Punjab',
+		photoUrl: require('../../../../../src/img/gallery1.jpg'),
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
-	},
-
-	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
-		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study'
 	},
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery1.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'The Problem',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study',
+		photoUrl: require('../../../../../src/img/gallery1.jpg')
 	},
-
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		photoUrl: require('../../../../../src/img/gallery1.jpg')
 	},
-
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'NUS - The Solution',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study',
+		photoUrl: require('../../../../../src/img/gallery1.jpg')
 	}
 ];
 class WhatNew extends React.Component {
@@ -89,13 +99,14 @@ class WhatNew extends React.Component {
 				</Grid>
 				<Grid container>
 					{newsobj.map((item) => {
+						let photo = item.photoUrl;
 						return (
 							<Grid item xs={6}>
-								<Card className={classes.card}>
+								<Card className={classes.card} style={{ boxShadow: 'none' }}>
 									<CardContent>
 										<Grid container>
 											<Grid item xs={3}>
-												<img src={GalleryImg} height="102px" width="150px" />
+												<img src={item.photoUrl} height="102px" width="150px" />
 											</Grid>
 											<Grid item xs={9}>
 												<div className="Combine">
@@ -120,6 +131,17 @@ class WhatNew extends React.Component {
 														}}
 													>
 														{item.desc}
+													</div>
+													<div
+														style={{
+															color: '#4A90E2',
+															fontSize: '14px',
+															fontWeight: '500',
+															marginLeft: '3px',
+															marginTop: '32px'
+														}}
+													>
+														{item.case}
 													</div>
 												</div>
 											</Grid>

@@ -20,6 +20,9 @@ const styles = {
 	},
 	displayInline: {
 		display: 'inline'
+	},
+	subtitle: {
+		borderLeft: 'solid'
 	}
 };
 
@@ -46,21 +49,34 @@ class About extends React.Component {
 				</Grid>
 				<Grid item xs={6}>
 					<div className="rightSection">
+						<Typography gutterBottom color="initial" variant="caption" align="left">
+							About
+						</Typography>
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '34px',
+								color: '#4A90E2'
+							}}
+						>
+							National Urban Stack
+						</div>
+
 						<Card className={classes.card}>
 							<CardContent>
-								<Typography gutterBottom color="initial" variant="caption" align="left">
+								{/* <Typography gutterBottom color="initial" variant="caption" align="left">
 									About
 								</Typography>
 								<Typography
 									className={classes.displayInline}
 									gutterBottom
 									component="h1"
-									color="primary"
+									color=""
 									variant="h5"
 									align="left"
 								>
-									|National Urban Stack
-								</Typography>
+									National Urban Stack
+								</Typography> */}
 								<Typography
 									gutterBottom
 									variant="body1"

@@ -32,26 +32,30 @@ const newobj = [
 	{
 		header: 'Initiate',
 		subheader: 'State-on-Boarding',
-		icon: 'check_circle'
+		icon: <Icon color="primary">add_circle</Icon>
 	},
 	{
 		header: 'Define',
 		subheader: 'Current System/Process Study',
-		icon: 'cached'
+		icon: <Icon color="primary">add_circle</Icon>
 	},
 
 	{
 		header: 'Equip',
 		subheader: 'Product fitment and Solution design',
-		icon: 'copyright'
+		icon: <Icon color="primary">add_circle</Icon>
 	},
 
-	{ header: 'Adopt', subheader: 'Develop and Deploy', icon: 'save', index: 4 },
+	{
+		header: 'Adopt',
+		subheader: 'Develop and Deploy',
+		icon: <Icon color="primary">add_circle</Icon>
+	},
 
 	{
 		header: 'Leverages',
 		subheader: 'Rollout and Adoption review',
-		icon: 'code'
+		icon: <Icon color="primary">add_circle</Icon>
 	}
 ];
 
@@ -67,7 +71,13 @@ class How extends React.Component {
 					<Typography gutterBottom component="h1" color="primary" variant="h5" align="left">
 						Implementation Plan
 					</Typography>
-					<div className={classes.root}>
+					<div
+						style={{
+							marginTop: '-38px',
+							backgroundColor: 'green'
+						}}
+						className={classes.root}
+					>
 						<Stepper alternativeLabel nonLinear>
 							{newobj.map((label, index) => {
 								const stepProps = {};
@@ -80,7 +90,8 @@ class How extends React.Component {
 												width: '100px',
 												borderRadius: '50%',
 												position: 'relative',
-												backgroundColor: 'red'
+												backgroundColor: 'red',
+												borderColor: 'black'
 											}}
 										/>
 										<div
@@ -90,24 +101,27 @@ class How extends React.Component {
 												position: 'absolute'
 											}}
 										>
-											<Icon className={classes.icon} color="primary">
-												{label.icon}
-											</Icon>
+											{label.icon}
+											{/* <Icon className={classes.icon} color="primary">
+												
+											</Icon> */}
 										</div>
 
 										<div
 											style={{
-												top: '1px',
-												left: '59.5px',
+												top: '3px',
 												height: '30px',
 												width: '30px',
 												borderRadius: '50%',
 												position: 'absolute',
-												left: '18px',
-												backgroundColor: '#E0E0E0'
+												//left: '18px',
+												backgroundColor: '#E0E0E0',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center'
 											}}
 										>
-											{index}
+											{index + 1}
 										</div>
 
 										<div
@@ -133,21 +147,6 @@ class How extends React.Component {
 								);
 							})}
 						</Stepper>
-						{/* <div>
-							{allStepsCompleted() ? (
-								<div>
-									<Typography className={classes.instructions}>
-										All steps completed - you&apos;re finished
-									</Typography>
-								</div>
-							) : (
-								<div>
-									<Typography className={classes.instructions}>
-										{getStepContent(activeStep)}
-									</Typography>
-								</div>
-							)}
-						</div> */}
 					</div>
 				</div>
 			</div>

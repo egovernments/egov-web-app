@@ -1,9 +1,14 @@
 import React from 'react';
 import Header from './components/Header';
 import Menu from './components/Menu';
+import Banner from './components/Banner';
 import About from './components/About';
+import Explore from './components/Explore';
 import How from './components/How';
+import Testimonials from './components/Testimonials';
 import WhatNew from './components/WhatNew';
+import Footer from './components/Footer';
+
 const menuItems = [
 	{ label: 'HOME' },
 	{ label: 'ABOUT NUS' },
@@ -18,10 +23,15 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
+				<Header />
 				<Menu menuItems={menuItems} />
+				<Banner />
 				<About />
+				<Explore />
 				<How />
+				<Testimonials />
 				<WhatNew />
+				<Footer />
 			</div>
 		);
 	}
