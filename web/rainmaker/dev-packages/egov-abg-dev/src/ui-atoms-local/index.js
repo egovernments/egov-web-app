@@ -9,7 +9,7 @@ const TestAtoms = Loadable({
 });
 
 const ApplicationNoContainer = Loadable({
-  loader: () => import("./applicationNumber"),
+  loader: () => import("./billNumber"),
   loading: () => <Loading />
 });
 
@@ -41,7 +41,6 @@ const DownloadIcon = Loadable({
   loader: () => import("./DownloadIcon"),
   loading: () => <Loading />
 });
-
 
 export {
   TestAtoms,
