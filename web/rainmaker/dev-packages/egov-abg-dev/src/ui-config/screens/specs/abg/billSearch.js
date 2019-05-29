@@ -52,7 +52,7 @@ const getMDMSData = async (action, state, dispatch) => {
 
 const billSearchAndResult = {
   uiFramework: "material-ui",
-  name: "search",
+  name: "billSearch",
   beforeInitScreen: (action, state, dispatch) => {
     getData(action, state, dispatch);
     return action;
@@ -77,7 +77,7 @@ const billSearchAndResult = {
                 sm: 6
               },
               ...header
-            },
+            }
           }
         },
         billSearchCard,

@@ -5,7 +5,6 @@ import {
   getCommonContainer,
   getPattern,
   getLabel,
-  getDateField,
   getCommonHeader,
   getCommonSubHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
@@ -22,15 +21,15 @@ enableButton = hasButton && hasButton === "false" ? false : true;
 const resetFields = (state, dispatch) => {
   dispatch(
     handleField(
-      "search",
-      "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children.receiptNo",
+      "billSearch",
+      "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children.consumerCode",
       "props.value",
       ""
     )
   );
   dispatch(
     handleField(
-      "search",
+      "billSearch",
       "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children.billNumber",
       "props.value",
       ""
@@ -38,7 +37,7 @@ const resetFields = (state, dispatch) => {
   );
   dispatch(
     handleField(
-      "search",
+      "billSearch",
       "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children.serviceType",
       "props.value",
       ""
@@ -46,7 +45,7 @@ const resetFields = (state, dispatch) => {
   );
   dispatch(
     handleField(
-      "search",
+      "billSearch",
       "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children.mobileNo",
       "props.value",
       ""
@@ -64,7 +63,7 @@ export const billSearchCard = getCommonCard({
     labelKey: "ABG_SEARCH_BILL_COMMON_SUB_HEADER"
   }),
   searchContainer: getCommonContainer({
-    receiptNumber: getTextField({
+    consumerCode: getTextField({
       label: {
         labelName: "Consumer Code",
         labelKey: "ABG_CONSUMER_CODE_LABEL"
@@ -109,13 +108,21 @@ export const billSearchCard = getCommonCard({
         labelName: "Select Service Type",
         labelKey: "ABG_SERVICE_TYPE_PLACEHOLDER"
       },
-      required: true,
+      required: false,
       jsonPath: "searchScreen.serviceType",
       gridDefination: {
         xs: 12,
         sm: 4
       },
-      sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService"
+      data: [
+        {
+          code: "Type-1"
+        },
+        {
+          code: "Type-2"
+        }
+      ]
+      // sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService"
     }),
     mobileNo: getTextField({
       label: {

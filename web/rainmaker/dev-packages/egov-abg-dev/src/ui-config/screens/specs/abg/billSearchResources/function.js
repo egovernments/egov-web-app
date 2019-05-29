@@ -18,7 +18,7 @@ export const searchApiCall = async (state, dispatch) => {
       key: "tenantId",
       value: tenantId
     },
-    // { key: "limit", value: "10" },
+    { key: "limit", value: "10" },
     { key: "offset", value: "0" }
   ];
   let searchScreenObject = get(
@@ -28,11 +28,19 @@ export const searchApiCall = async (state, dispatch) => {
   );
   const isSearchBoxFirstRowValid = validateFields(
     "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children",
+    // "components.div.children.fireNOCApplication.children.cardContent.children.searchContainer.children",
     state,
     dispatch,
-    "search"
+    "billSearch"
   );
-  if (!isSearchBoxFirstRowValid) {
+  const isSearchBoxSecondRowValid = validateFields(
+    "components.div.children.billSearchCard.children.cardContent.children.searchContainer.children",
+    // "components.div.children.fireNOCApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
+    state,
+    dispatch,
+    "billSearch"
+  );
+  if (!isSearchBoxFirstRowValid && isSearchBoxSecondRowValid) {
     dispatch(
       toggleSnackbar(
         true,
@@ -70,37 +78,78 @@ export const searchApiCall = async (state, dispatch) => {
 
     console.log(queryObject);
 
-    const responseFromAPI = await getSearchResults(queryObject);
-    console.log(responseFromAPI);
+    // const responseFromAPI = await getSearchResults(queryObject);
+    // console.log(responseFromAPI);
 
-    const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
-    const response = [];
-    for (let i = 0; i < Receipt.length; i++) {
-      response[i] = {
-        receiptNumber: get(Receipt[i], `receiptNumber`),
-        payeeName: get(Receipt[i], `Bill[0].payerName`),
-        serviceType: get(Receipt[i], `Bill[0].billDetails[0].businessService`),
-        date: Receipt[i].receiptDate,
-        amount: Receipt[i].Bill[0].billDetails[0].amountPaid,
-        status: Receipt[i].Bill[0].billDetails[0].status
-      };
-    }
+    // const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
+    // const response = [];
+    // for (let i = 0; i < Receipt.length; i++) {
+    //   response[i] = {
+    //     receiptNumber: get(Receipt[i], `receiptNumber`),
+    //     payeeName: get(Receipt[i], `Bill[0].payerName`),
+    //     serviceType: get(Receipt[i], `Bill[0].billDetails[0].businessService`),
+    //     date: Receipt[i].receiptDate,
+    //     amount: Receipt[i].Bill[0].billDetails[0].amountPaid,
+    //     status: Receipt[i].Bill[0].billDetails[0].status
+    //   };
+    // }
+    const response = [
+      {
+        billNumber: "12873873",
+        consumerName: "Ravinder Pal Singh",
+        serviceCategory: "Advertisement Tax",
+        billDate: "12-04-2019",
+        billAmount: "4500.00",
+        status: "Paid",
+        action: "Download Receipt"
+      },
+      {
+        billNumber: "12873873",
+        consumerName: "Ravinder Pal Singh",
+        serviceCategory: "Advertisement Tax",
+        billDate: "12-04-2019",
+        billAmount: "4500.00",
+        status: "Partial Payment",
+        action: "pay"
+      },
+      {
+        billNumber: "12873873",
+        consumerName: "Ravinder Pal Singh",
+        serviceCategory: "Advertisement Tax",
+        billDate: "12-04-2019",
+        billAmount: "4500.00",
+        status: "Pending",
+        action: "pay"
+      },
+      {
+        billNumber: "12873873",
+        consumerName: "Ravinder Pal Singh",
+        serviceCategory: "Advertisement Tax",
+        billDate: "12-04-2019",
+        billAmount: 4500.0,
+        status: "Expired",
+        action: "Generate Bill"
+      }
+    ];
 
     console.log(response);
 
     try {
       let data = response.map(item => ({
-        [get(textToLocalMapping, "Receipt No.")]: item.receiptNumber || "-",
-        [get(textToLocalMapping, "Payee Name")]: item.payeeName || "-",
-        [get(textToLocalMapping, "Service Type")]: item.serviceType || "-",
-        [get(textToLocalMapping, "Date")]: convertEpochToDate(item.date) || "-",
-        [get(textToLocalMapping, "Amount[INR]")]: item.amount || "-",
+        [get(textToLocalMapping, "Bill No.")]: item.billNumber || "-",
+        [get(textToLocalMapping, "Consumer Name")]: item.consumerName || "-",
+        [get(textToLocalMapping, "Service Category")]:
+          item.serviceCategory || "-",
+        [get(textToLocalMapping, "Bill Date")]:
+          convertEpochToDate(item.billDate) || "-",
+        [get(textToLocalMapping, "Bill Amount[INR]")]: item.billAmount || "-",
         [get(textToLocalMapping, "Status")]: item.status || "-",
+        [get(textToLocalMapping, "Action")]: item.action || "-",
         tenantId: item.tenantId
       }));
       dispatch(
         handleField(
-          "search",
+          "billSearch",
           "components.div.children.searchResults",
           "props.data",
           data
@@ -108,14 +157,14 @@ export const searchApiCall = async (state, dispatch) => {
       );
       dispatch(
         handleField(
-          "search",
+          "billSearch",
           "components.div.children.searchResults",
           "props.title",
-          "Search Results for Receipt (" + data.length + ")"
+          "Search Results for Bill (" + data.length + ")"
         )
       );
 
-      dispatch(handleField("search", "components.div.children.searchResults"));
+      // dispatch(handleField("billSearch", "components.div.children.searchResults"));
       showHideTable(true, dispatch);
     } catch (error) {
       dispatch(toggleSnackbar(true, error.message, "error"));
@@ -127,7 +176,7 @@ export const searchApiCall = async (state, dispatch) => {
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(
     handleField(
-      "search",
+      "billSearch",
       "components.div.children.searchResults",
       "visible",
       booleanHideOrShow

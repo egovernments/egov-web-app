@@ -42,16 +42,16 @@ export const textToLocalMapping = {
     getTransformedLocalStorgaeLabels()
   ),
 
-  "Status": getLocaleLabels(
+  Status: getLocaleLabels(
     "Status",
     "ABG_COMMON_TABLE_COL_STATUS",
     getTransformedLocalStorgaeLabels()
-	),
-	"Action": getLocaleLabels(
-		"Action",
-		"ABG_COMMON_TABLE_COL_ACTION",
-		getTransformedLocalStorgaeLabels()
-	)
+  ),
+  Action: getLocaleLabels(
+    "Action",
+    "ABG_COMMON_TABLE_COL_ACTION",
+    getTransformedLocalStorgaeLabels()
+  )
 };
 
 export const searchResults = {
@@ -83,8 +83,8 @@ export const searchResults = {
       [get(textToLocalMapping, "Service Category")]: {},
       [get(textToLocalMapping, "Bill Date")]: {},
       [get(textToLocalMapping, "Bill Amount[INR]")]: {},
-			[get(textToLocalMapping, "Status")]: {},
-			[get(textToLocalMapping, "Action")]:{}
+      [get(textToLocalMapping, "Status")]: {},
+      [get(textToLocalMapping, "Action")]: {}
     },
     options: {
       filter: false,
@@ -95,7 +95,7 @@ export const searchResults = {
       rowsPerPageOptions: [10, 15, 20]
     },
     customSortColumn: {
-      column: "Date",
+      column: "Bill Date",
       sortingFn: (data, i, sortDateOrder) => {
         const epochDates = data.reduce((acc, curr) => {
           acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
