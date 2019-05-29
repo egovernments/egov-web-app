@@ -49,9 +49,15 @@ class About extends React.Component {
 				</Grid>
 				<Grid item xs={6}>
 					<div className="rightSection">
-						<Typography gutterBottom color="initial" variant="caption" align="left">
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '16px',
+								color: '#000000 - 60%'
+							}}
+						>
 							About
-						</Typography>
+						</div>
 						<div
 							className={classes.subtitle}
 							style={{
