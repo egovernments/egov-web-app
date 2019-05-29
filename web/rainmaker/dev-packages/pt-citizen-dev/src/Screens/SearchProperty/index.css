@@ -21,3 +21,11 @@
   .search-no-property-found .no-search-text {
     margin-bottom: 17px;
     margin-top: 36px; }
+
+.inner-header-style {
+  justify-content: space-between;
+  cursor: "pointer"; }
+
+@media only screen and (min-width: 768px) {
+  .inner-header-style {
+    padding: 0px 16px !important; } }

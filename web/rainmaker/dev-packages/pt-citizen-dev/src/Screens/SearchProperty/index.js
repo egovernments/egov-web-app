@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import YearDialogue from "../common/YearDialogue";
-import { Screen } from "modules/common";
-import { BreadCrumbs, Button, Icon } from "components";
+import { Screen, SingleProperty } from "modules/common";
+import Hidden from "@material-ui/core/Hidden";
+import { BreadCrumbs, Button, Icon, Card } from "components";
+import Grid from "@material-ui/core/Grid";
 import {
   addBreadCrumbs,
   toggleSnackbarAndSetText
@@ -178,10 +180,7 @@ class SearchProperty extends Component {
           url={urls.length > 0 ? urls : urlArray}
           history={history}
         /> */}
-        <div
-          className="rainmaker-displayInline"
-          style={{ justifyContent: "space-between" }}
-        >
+        <div className="rainmaker-displayInline inner-header-style">
           <Label
             label="PT_SEARCH_PROPERTY"
             dark={true}
@@ -207,12 +206,26 @@ class SearchProperty extends Component {
           history={this.props.history}
           onSearchClick={this.onSearchClick}
         />
-        {tableData.length > 0 && showTable ? (
-          <PropertyTable
-            tableData={tableData}
-            onActionClick={this.onActionClick}
+        <Hidden xsDown>
+          {tableData.length > 0 && showTable ? (
+            <PropertyTable
+              tableData={tableData}
+              onActionClick={this.onActionClick}
+            />
+          ) : null}
+        </Hidden>
+        <Hidden smUp>
+          <Label
+            label="PT_SEARCH_RESULTS"
+            fontSize={16}
+            color="rgba(0, 0, 0, 0.87)"
           />
-        ) : null}
+          <SingleProperty
+            data={tableData}
+            action={"PT_PAYMENT_ACCESSANDPAY"}
+            onActionClick={this.onAddButtonClick}
+          />
+        </Hidden>
         {showTable && tableData.length === 0 && (
           <div className="search-no-property-found">
             <div className="no-search-text">

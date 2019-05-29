@@ -39,7 +39,7 @@ class SearchService extends React.Component {
     const { classes } = this.props;
     return (
       <div className={`${classes.root} dashboard-search-main-cont`}>
-        <Icon action="action" name="search" />
+        <Icon action="action" name="search" style={{ marginLeft: 12 }} />
         {/* <TextField InputProps={{ disableUnderline: true }} className={classes.input} placeholder={"Search Services & Information"} /> */}
         <TextField
           style={{ height: 56, padding: "0px 0px 20px 10px" }}
@@ -57,7 +57,7 @@ class SearchService extends React.Component {
           onChange={(e) => this.onSearchClick(e)}
         />
 
-        <Icon action="av" name="mic" />
+        <Icon action="av" name="mic" style={{ marginRight: 12 }} />
       </div>
     );
   }

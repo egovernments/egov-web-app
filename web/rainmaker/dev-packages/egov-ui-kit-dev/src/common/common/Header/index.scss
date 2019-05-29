@@ -37,6 +37,13 @@
 .rainmaker-header {
   position: fixed !important;
   width: 100% !important;
+  // height: 104px;
+  background-image: linear-gradient(#16222a, #3a6073) !important;
+}
+
+.rainmaker-header-home-small-screen {
+  position: fixed !important;
+  width: 100% !important;
   height: 104px;
   background-image: linear-gradient(#16222a, #3a6073) !important;
 }
@@ -47,9 +54,20 @@
     width: 100vw !important;
     padding-left: 53px !important;
     z-index: 1105 !important;
-    height: inherit !important;
+    height: auto !important;
     background-image: none !important;
   }
+
+  .rainmaker-header-home-small-screen {
+    background-color: #ffffff !important;
+    position: fixed !important;
+    width: 100vw !important;
+    padding-left: 53px !important;
+    z-index: 1105 !important;
+    height: auto !important;
+    background-image: none !important;
+  }
+
   .rainmaker-header-cont > div:first-child {
     height: 64px !important;
   }

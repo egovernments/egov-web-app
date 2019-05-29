@@ -143,7 +143,7 @@ const withAuthorization = (options = {}) => (Component) => {
               refreshButton={refreshButton}
               sortButton={sortButton}
               searchButton={searchButton}
-              className="rainmaker-header"
+              className={isHomeScreen ? "rainmaker-header-home-small-screen" : "rainmaker-header"}
             />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>

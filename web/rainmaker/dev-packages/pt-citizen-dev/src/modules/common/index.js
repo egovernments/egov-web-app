@@ -23,6 +23,7 @@ import PropertyInformation from "egov-ui-kit/common/propertyTax/PropertyInformat
 import SearchProperty from "egov-ui-kit/common/propertyTax/SearchProperty";
 import TransformedAssessments from "egov-ui-kit/common/propertyTax/TransformedAssessments";
 import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
+import SingleProperty from "egov-ui-kit/common/propertyTax/SingleProperty";
 
 //User common components
 import LanguageSelectionForm from "egov-ui-kit/common/User/components/LanguageSelectionForm";
@@ -58,5 +59,6 @@ export {
   SearchProperty,
   TransformedAssessments,
   YearDialogue,
-  ModuleLandingPage
+  ModuleLandingPage,
+  SingleProperty
 };
