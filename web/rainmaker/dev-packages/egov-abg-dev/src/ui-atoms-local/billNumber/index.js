@@ -12,9 +12,9 @@ const styles = {
   fontSize: "16px"
 };
 
-function ApplicationNoContainer(props) {
+function BillNoContainer(props) {
   const { number } = props;
-  return <div style={styles}>Application No. {number}</div>;
+  return <div style={styles}>Bill No. {number}</div>;
 }
 
-export default ApplicationNoContainer;
+export default BillNoContainer;

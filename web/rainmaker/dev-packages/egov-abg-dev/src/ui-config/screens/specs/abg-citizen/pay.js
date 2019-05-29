@@ -13,7 +13,15 @@ const header = getCommonContainer({
   header: getCommonHeader({
     labelName: "Universal Bill",
     labelKey: "ABG_UNIVERSAL_BILL_COMMON_HEADER"
-  })
+  }),
+  billNumber: {
+    uiFramework: "custom-atoms-local",
+    moduleName: "egov-abg",
+    componentPath: "BillNoContainer",
+    props: {
+      number: getQueryArg(window.location.href, "billNumber")
+    }
+  }
 });
 
 const screenConfig = {
@@ -49,7 +57,7 @@ const screenConfig = {
           }
         },
         body: getCommonCard({
-          billDetails: billDetails,
+          billDetails: billDetails
           // amount: amountToBePaid,
           // breakAfterCard: getBreak()
         }),
