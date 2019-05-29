@@ -20,7 +20,6 @@ const styles = {
     display: "flex",
     flexDirection: "row"
   },
-
   appBarRoot: {
     backgroundColor: "#FFFFFF",
     color: "black"
@@ -82,6 +81,7 @@ class Header extends React.Component {
             }}
           >
             <Toolbar>
+
               <div className={classes.SearchIcon} style={{ display: "flex" }}>
                 <SearchIcon />
 
