@@ -9,21 +9,19 @@ import Testimonials from "./components/Testimonials";
 import WhatNew from "./components/WhatNew";
 import Footer from "./components/Footer";
 
-
 class Home extends React.Component {
-  render()
-  {
-    return(
+  render() {
+    return (
       <div>
-        <Header/>
-        <Menu/>
-        <Banner/>
-        <About/>
-        <Explore/>
-        <How/>
-        <Testimonials/>
-        <WhatNew/>
-        <Footer/>
+        <Header />
+        <Menu />
+        <Banner />
+        <About />
+        <Explore />
+        <How />
+        <Testimonials />
+        <WhatNew />
+        <Footer />
       </div>
     );
   }

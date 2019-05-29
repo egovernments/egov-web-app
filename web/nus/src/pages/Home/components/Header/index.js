@@ -14,6 +14,13 @@ const styles = {
   grow: {
     flexGrow: 1
   },
+  app: {
+    paddingLeft: "20px",
+    paddingRight: "10px",
+    display: "flex",
+    flexDirection: "row"
+  },
+
   appBarRoot: {
     backgroundColor: "#FFFFFF",
     color: "black"
@@ -75,20 +82,21 @@ class Header extends React.Component {
             }}
           >
             <Toolbar>
-              <div className={classes.SearchIcon} display="flex">
+              <div className={classes.SearchIcon} style={{ display: "flex" }}>
                 <SearchIcon />
-                <Typography
-                  variant="h6"
-                  align="right"
-                  marginLeft="100px"
-                  marginRight="100px"
-                  color="inherit"
-                  className={classes.grow}
-                />
-                <span>-A </span>
-                <span> A</span>
-                <span>+A </span>
-                <span>हिंदी </span>
+
+                <div
+                  className={classes.app}
+                  style={{ minWidth: "120px", justifyContent: "space-between" }}
+                >
+                  <span>-A </span>
+
+                  <span> A</span>
+
+                  <span>+A</span>
+
+                  <span>हिंदी </span>
+                </div>
               </div>
             </Toolbar>
           </div>
