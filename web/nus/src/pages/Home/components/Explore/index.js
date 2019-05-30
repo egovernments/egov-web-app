@@ -15,6 +15,7 @@ import WaterIcon from "../../../../icon/water-pump";
 import WorkIcon from "@material-ui/icons/Work";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
+import Button from "@material-ui/core/Button";
 //import WhatshotIcon from "@material-ui/icons/Whatshot";
 
 const styles = theme => ({
@@ -22,45 +23,52 @@ const styles = theme => ({
     flexGrow: 1
   },
   paper: {
-    // padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary
+    // padding: theme.spacing,
+    // textAlign: "center",
+    // color: theme.palette.text.secondary
   },
   card: {
     backgroundcolor: "#FFFFFF",
-    border: "0.5",
+    //border: "0.5",
     //borderRadius: "5px",
-    minWidth: "280px",
-    whiteSpace: "normal",
-    marginTop: "10px",
-    paddingLeft: "10px",
+    Width: "50px",
+    //height: "64px",
+    //whiteSpace: "normal",
+    marginTop: "5px",
+    //marginBottom: "16px",
+    paddingLeft: "20px",
     paddingTop: "5px",
-    // paddingBottom: "-10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    paddingBottom: "-10px"
+    // display: "flex",
+    // justifyContent: "left",
+    // alignItems: "left"
   },
   title: {
     fontSize: 14,
-    textAlign: "center",
-    paddingTop: "10px"
+    textAlign: "right"
   },
   tittle1: {
     color: "#4A90E2",
-    // paddingleft: "100px",
+    paddingleft: "10px",
     paddingBottom: "20px",
-    paddingRight: "25px",
+    paddingRight: "40px",
     borderRight: "solid",
     width: "4px",
     height: "56px",
     margin: "0px 0px 5px 0px"
   },
+  CardContent: {
+    display: "flex",
+    justifContent: "center",
+    alignItems: "center"
+  },
 
   icon: {
-    borderRadius: "50%",
-    color: "white",
-    display: "inline-block",
+    //borderRadius: "50%",
+    color: "#4A90E2",
+    //display: "inline-block",
     textTransform: "none"
+    //alignItems: "left"
   }
 });
 
@@ -69,59 +77,41 @@ class Explore extends React.Component {
     const { classes } = this.props;
     return [
       {
-        cardHeader: "Building Plan Approval",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
-        icon: <BusinessIcon className={classes.icon} />
-      },
-      {
         cardHeader: "Public Grievance",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
+
         icon: <PeopleIcon className={classes.icon} />
       },
       {
+        cardHeader: "Building Plan Approval",
+
+        icon: <BusinessIcon className={classes.icon} />
+      },
+      {
         cardHeader: "Property Tax",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
         icon: <HomeIcon className={classes.icon} />
       },
       {
         cardHeader: "Water",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
+
         icon: <WaterIcon className={classes.icon} />
       },
       {
         cardHeader: "Sewerage",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
         icon: <PipeIcon className={classes.icon} />
       },
       {
         cardHeader: "Trade license",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
+
         icon: <WorkIcon className={classes.icon} />
       },
       {
         cardHeader: "Fire NOC",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
+
         icon: <WhatshotIcon className={classes.icon} />
       },
       {
         cardHeader: "Dashboards",
-        option1: "Apply Online",
-        option2: "Access Anywhere",
-        option3: "Ease of Payment",
+
         icon: <EqualizerIcon className={classes.icon} />
       }
     ];
@@ -139,8 +129,9 @@ class Explore extends React.Component {
               fontFamily: "Montserrat",
               width: "50px",
               height: "19px",
+
               textAlign: "left",
-              paddingLeft: "40px",
+              paddingLeft: "50px",
               marginTop: "10px",
               marginLeft: "10px",
               // paddingBottom: "0px",
@@ -157,7 +148,7 @@ class Explore extends React.Component {
               fontFamily: "Montserrat",
               width: "363px",
               height: "42px",
-              paddingLeft: "40px",
+              paddingLeft: "50px",
               marginTop: "10px",
               marginLeft: "10px"
               // marginBottom: "10px"
@@ -167,68 +158,50 @@ class Explore extends React.Component {
           </div>
         </div>
 
-        <Grid container spacing={0} className={classes.card}>
+        <Grid container spacing={3} className={classes.card}>
           {this.getItems().map(item => {
             return (
               <Grid item xs={3} className={classes.card}>
                 <Card className={classes.card}>
-                  <CardContent>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}
-                    >
-                      <div
-                        style={{
-                          borderRadius: "50%",
-                          backgroundColor: "#4A90E2",
-                          height: "80px",
-                          width: "80px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        {item.icon}
-                      </div>
+                  <CardContent className={classes.CardContent}>
+                    <div style={{ marginRight: "10px", marginLeft: "0px" }}>
+                      {item.icon}
                     </div>
 
                     <Typography
                       className={classes.title}
                       color="#000000"
                       fontFamily="Montserrat"
+                      marginLeft="3px"
+                      paddingLeft="2px"
                       gutterBottom
                     >
                       {item.cardHeader}
-                    </Typography>
-                    <Typography
-                      className={classes.title}
-                      color="textSecondary"
-                      gutterBottom
-                    >
-                      {item.option1}
-                    </Typography>
-                    <Typography
-                      className={classes.title}
-                      color="textSecondary"
-                      gutterBottom
-                    >
-                      {item.option2}
-                    </Typography>
-                    <Typography
-                      className={classes.title}
-                      color="textSecondary"
-                      gutterBottom
-                    >
-                      {item.option3}
                     </Typography>
                   </CardContent>
                 </Card>
               </Grid>
             );
           })}
+
+          <div>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              style={{
+                border: "1px solid #4A90E2",
+
+                borderRadius: "32px",
+                width: "292px",
+                height: "64px",
+                marginLeft: "450px",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+            >
+              Read More
+            </Button>
+          </div>
         </Grid>
       </div>
     );
