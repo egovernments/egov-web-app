@@ -18,8 +18,7 @@ export const searchApiCall = async (state, dispatch) => {
       key: "tenantId",
       value: tenantId
     },
-    { key: "limit", value: "10" },
-    { key: "offset", value: "0" }
+    { key: "limit", value: "10" }
   ];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -81,7 +80,7 @@ export const searchApiCall = async (state, dispatch) => {
     const responseFromAPI = await getSearchResults(queryObject);
     // console.log(responseFromAPI);
 
-    const getResponse = (responseFromAPI && responseFromAPI.Receipt) || [];
+    const getResponse = (responseFromAPI && responseFromAPI.Bills) || [];
     const response = [];
     for (let i = 0; i < getResponse.length; i++) {
       response[i] = {
