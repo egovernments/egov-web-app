@@ -75,7 +75,6 @@ export const billSearchCard = getCommonCard({
       required: false,
       visible: true,
       jsonPath: "searchScreen.receiptNumbers",
-      // sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
       gridDefination: {
         xs: 12,
         sm: 4
@@ -93,7 +92,6 @@ export const billSearchCard = getCommonCard({
       required: false,
       visible: true,
       jsonPath: "searchScreen.billNumber",
-      // sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
       gridDefination: {
         xs: 12,
         sm: 4
@@ -108,21 +106,13 @@ export const billSearchCard = getCommonCard({
         labelName: "Select Service Type",
         labelKey: "ABG_SERVICE_TYPE_PLACEHOLDER"
       },
-      required: false,
+      required: true,
       jsonPath: "searchScreen.serviceType",
       gridDefination: {
         xs: 12,
         sm: 4
       },
-      data: [
-        {
-          code: "Type-1"
-        },
-        {
-          code: "Type-2"
-        }
-      ]
-      // sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService"
+      sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService"
     }),
     mobileNo: getTextField({
       label: {

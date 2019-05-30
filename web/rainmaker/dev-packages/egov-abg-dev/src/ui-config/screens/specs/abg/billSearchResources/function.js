@@ -5,7 +5,7 @@ import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
-import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 // const tenantId = JSON.parse(getUserInfo()).tenantId;
 const tenantId = "pb.amritsar";
@@ -78,59 +78,64 @@ export const searchApiCall = async (state, dispatch) => {
 
     console.log(queryObject);
 
-    // const responseFromAPI = await getSearchResults(queryObject);
+    const responseFromAPI = await getSearchResults(queryObject);
     // console.log(responseFromAPI);
 
-    // const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
-    // const response = [];
-    // for (let i = 0; i < Receipt.length; i++) {
-    //   response[i] = {
-    //     receiptNumber: get(Receipt[i], `receiptNumber`),
-    //     payeeName: get(Receipt[i], `Bill[0].payerName`),
-    //     serviceType: get(Receipt[i], `Bill[0].billDetails[0].businessService`),
-    //     date: Receipt[i].receiptDate,
-    //     amount: Receipt[i].Bill[0].billDetails[0].amountPaid,
-    //     status: Receipt[i].Bill[0].billDetails[0].status
-    //   };
-    // }
-    const response = [
-      {
-        billNumber: "12873873",
-        consumerName: "Ravinder Pal Singh",
-        serviceCategory: "Advertisement Tax",
-        billDate: "12-04-2019",
-        billAmount: "4500.00",
-        status: "Paid",
-        action: "Download Receipt"
-      },
-      {
-        billNumber: "12873873",
-        consumerName: "Ravinder Pal Singh",
-        serviceCategory: "Advertisement Tax",
-        billDate: "12-04-2019",
-        billAmount: "4500.00",
-        status: "Partial Payment",
-        action: "pay"
-      },
-      {
-        billNumber: "12873873",
-        consumerName: "Ravinder Pal Singh",
-        serviceCategory: "Advertisement Tax",
-        billDate: "12-04-2019",
-        billAmount: "4500.00",
-        status: "Pending",
-        action: "pay"
-      },
-      {
-        billNumber: "12873873",
-        consumerName: "Ravinder Pal Singh",
-        serviceCategory: "Advertisement Tax",
-        billDate: "12-04-2019",
-        billAmount: 4500.0,
-        status: "Expired",
-        action: "Generate Bill"
-      }
-    ];
+    const getResponse = (responseFromAPI && responseFromAPI.Receipt) || [];
+    const response = [];
+    for (let i = 0; i < getResponse.length; i++) {
+      response[i] = {
+        billNumber: get(getResponse[i], `Bill[0].billDetails[0].billNumber`),
+        consumerName: get(getResponse[i], `Bill[0].payerName`),
+        serviceCategory: get(
+          getResponse[i],
+          `Bill[0].billDetails[0].businessService`
+        ),
+        billDate: get(getResponse[i], `Bill[0].billDetails[0].billDate`),
+        billAmount: get(getResponse[i], `Bill[0].taxAndPayments[0].amountPaid`),
+        status: get(getResponse[i], `Bill[0].billDetails[0].status`),
+        action: getAction("status")
+      };
+    }
+
+    // const response = [
+    //   {
+    //     billNumber: "12873873",
+    //     consumerName: "Ravinder Pal Singh",
+    //     serviceCategory: "Advertisement Tax",
+    //     billDate: "12-04-2019",
+    //     billAmount: "4500.00",
+    //     status: "Paid",
+    //     action: "Download Receipt"
+    //   },
+    //   {
+    //     billNumber: "12873873",
+    //     consumerName: "Ravinder Pal Singh",
+    //     serviceCategory: "Advertisement Tax",
+    //     billDate: "12-04-2019",
+    //     billAmount: "4500.00",
+    //     status: "Partial Payment",
+    //     action: "pay"
+    //   },
+    //   {
+    //     billNumber: "12873873",
+    //     consumerName: "Ravinder Pal Singh",
+    //     serviceCategory: "Advertisement Tax",
+    //     billDate: "12-04-2019",
+    //     billAmount: "4500.00",
+    //     status: "Pending",
+    //     action: "pay"
+    //   },
+    //   {
+    //     billNumber: "12873873",
+    //     consumerName: "Ravinder Pal Singh",
+    //     serviceCategory: "Advertisement Tax",
+    //     billDate: "12-04-2019",
+    //     billAmount: 4500.0,
+    //     status: "Expired",
+    //     action: "Generate Bill"
+    //   }
+    // ];
 
     console.log(response);
 
@@ -182,4 +187,8 @@ const showHideTable = (booleanHideOrShow, dispatch) => {
       booleanHideOrShow
     )
   );
+};
+
+const getAction = rowData => {
+  console.log("calm");
 };

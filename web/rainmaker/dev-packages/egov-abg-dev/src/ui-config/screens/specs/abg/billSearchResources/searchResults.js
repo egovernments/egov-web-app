@@ -71,7 +71,7 @@ export const searchResults = {
                 cursor: "pointer",
                 textDecoration: "underline"
               }}
-              // onClick={() => generateBill(rowData)}
+              // onClick={() => getAction(rowData)}
             >
               {rowData[get(textToLocalMapping, "Bill No.")]}
             </span>
@@ -84,7 +84,22 @@ export const searchResults = {
       [get(textToLocalMapping, "Bill Date")]: {},
       [get(textToLocalMapping, "Bill Amount[INR]")]: {},
       [get(textToLocalMapping, "Status")]: {},
-      [get(textToLocalMapping, "Action")]: {}
+      [get(textToLocalMapping, "Action")]: {
+        format: rowData => {
+          return (
+            <span
+              style={{
+                color: "#FE7A51",
+                cursor: "pointer"
+              }}
+              // onClick={() => getAction(rowData)}
+            >
+              {rowData[get(textToLocalMapping, "Action")]}
+            </span>
+            // <span style="cursor:pointer">pointer</span>
+          );
+        }
+      }
     },
     options: {
       filter: false,

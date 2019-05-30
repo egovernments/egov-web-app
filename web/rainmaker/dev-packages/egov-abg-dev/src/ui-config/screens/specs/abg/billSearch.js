@@ -9,19 +9,15 @@ import { searchResults } from "./billSearchResources/searchResults";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const header = getCommonHeader({
   labelName: "Universal Bill",
   labelKey: "ABG_UNIVERSAL_BILL_COMMON_HEADER"
 });
-
 const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
-
-const getData = async (action, state, dispatch) => {
-  await getMDMSData(action, state, dispatch);
-};
 
 const getMDMSData = async (action, state, dispatch) => {
   const tenantId = "pb.amritsar";
@@ -31,7 +27,11 @@ const getMDMSData = async (action, state, dispatch) => {
       moduleDetails: [
         {
           moduleName: "BillingService",
-          masterDetails: [{ name: "BusinessService" }]
+          masterDetails: [
+            {
+              name: "BusinessService"
+            }
+          ]
         }
       ]
     }
@@ -48,6 +48,10 @@ const getMDMSData = async (action, state, dispatch) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+const getData = async (action, state, dispatch) => {
+  await getMDMSData(action, state, dispatch);
 };
 
 const billSearchAndResult = {
