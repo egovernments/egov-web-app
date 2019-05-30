@@ -6,6 +6,7 @@ import set from "lodash/set";
 import get from "lodash/get";
 import { getUserInfo, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import commonConfig from '../../../common'
 
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
@@ -30,7 +31,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {
           MdmsCriteria: {
-            tenantId: process.env.REACT_APP_DEFAULT_TENANT_ID,
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "tenant",

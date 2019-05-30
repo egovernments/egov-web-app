@@ -16,6 +16,7 @@ import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/Tra
 import isEqual from "lodash/isEqual";
 import orderby from "lodash/orderBy";
 import get from "lodash/get";
+import commonConfig from "config/common.js";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -57,7 +58,7 @@ class Property extends Component {
     } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "PropertyTax",

@@ -62,6 +62,7 @@ import {
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 class FormWizard extends Component {
   state = {
@@ -1501,7 +1502,7 @@ const mapStateToProps = state => {
   const { propertyAddress } = form;
   const { city } =
     (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
-  const currentTenantId = (city && city.value) || "pb";
+  const currentTenantId = (city && city.value) || commonConfig.tenantId;
   return {
     form,
     currentTenantId,
