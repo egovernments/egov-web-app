@@ -9,7 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import BusinessIcon from "@material-ui/icons/Business";
 import HomeIcon from "@material-ui/icons/Home";
 //import Header from "../Header";
-import PersonIcon from "@material-ui/icons/Person";
+import PeopleIcon from "../../../../icon/account-alert";
+import PipeIcon from "../../../../icon/pipe";
+import WaterIcon from "../../../../icon/water-pump";
 import WorkIcon from "@material-ui/icons/Work";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
@@ -27,12 +29,13 @@ const styles = theme => ({
   card: {
     backgroundcolor: "#FFFFFF",
     border: "0.5",
-    borderRadius: "6px",
+    //borderRadius: "5px",
     minWidth: "280px",
     whiteSpace: "normal",
-    margin: "16px 0px",
+    marginTop: "10px",
     paddingLeft: "10px",
-    paddingTop: "0px",
+    paddingTop: "5px",
+    // paddingBottom: "-10px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
@@ -44,8 +47,13 @@ const styles = theme => ({
   },
   tittle1: {
     color: "#4A90E2",
-    padding: "10px",
-    borderLeft: "solid"
+    // paddingleft: "100px",
+    paddingBottom: "20px",
+    paddingRight: "25px",
+    borderRight: "solid",
+    width: "4px",
+    height: "56px",
+    margin: "0px 0px 5px 0px"
   },
 
   icon: {
@@ -72,7 +80,7 @@ class Explore extends React.Component {
         option1: "Apply Online",
         option2: "Access Anywhere",
         option3: "Ease of Payment",
-        icon: <PersonIcon className={classes.icon} />
+        icon: <PeopleIcon className={classes.icon} />
       },
       {
         cardHeader: "Property Tax",
@@ -86,14 +94,14 @@ class Explore extends React.Component {
         option1: "Apply Online",
         option2: "Access Anywhere",
         option3: "Ease of Payment",
-        icon: <PersonIcon className={classes.icon} />
+        icon: <WaterIcon className={classes.icon} />
       },
       {
         cardHeader: "Sewerage",
         option1: "Apply Online",
         option2: "Access Anywhere",
         option3: "Ease of Payment",
-        icon: <PersonIcon className={classes.icon} />
+        icon: <PipeIcon className={classes.icon} />
       },
       {
         cardHeader: "Trade license",
@@ -128,7 +136,15 @@ class Explore extends React.Component {
             style={{
               fontSize: "16px",
               color: "black",
-              fontFamily: "Montserrat"
+              fontFamily: "Montserrat",
+              width: "50px",
+              height: "19px",
+              textAlign: "left",
+              paddingLeft: "40px",
+              marginTop: "10px",
+              marginLeft: "10px",
+              // paddingBottom: "0px",
+              paddingTop: "10px"
             }}
           >
             Explore
@@ -138,7 +154,13 @@ class Explore extends React.Component {
             style={{
               fontSize: "34px",
               color: "#4A90E2",
-              fontFamily: "Montserrat"
+              fontFamily: "Montserrat",
+              width: "363px",
+              height: "42px",
+              paddingLeft: "40px",
+              marginTop: "10px",
+              marginLeft: "10px"
+              // marginBottom: "10px"
             }}
           >
             Core Components

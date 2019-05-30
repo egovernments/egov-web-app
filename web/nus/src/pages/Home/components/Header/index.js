@@ -4,8 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import logo1 from "../../../../utils/logo1.png";
-import urban from "../../../../utils/urban.png";
+import logo1 from "../../../../assets/logo1.png";
+import urban from "../../../../assets/urban.png";
 import SearchIcon from "@material-ui/icons/Search";
 const styles = {
   root: {
@@ -51,8 +51,10 @@ class Header extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                padding: "8px 50px",
-                textAlign: "right"
+                padding: "50px 24px",
+                paddingTop: "30px",
+                textAlign: "right",
+                fontSize: "14px"
               }}
             >
               <div>भारत सरकार</div>
@@ -63,8 +65,9 @@ class Header extends React.Component {
               style={{
                 display: "flex  ",
                 flexDirection: "column",
-                padding: "8px",
-                marginLeft: "0px"
+                paddingTop: "30px",
+                marginLeft: "0px",
+                fontSize: "14px"
               }}
             >
               <div>आवासन और शहरी कार्य मंत्रालय</div>
@@ -81,7 +84,6 @@ class Header extends React.Component {
             }}
           >
             <Toolbar>
-
               <div className={classes.SearchIcon} style={{ display: "flex" }}>
                 <SearchIcon />
 
