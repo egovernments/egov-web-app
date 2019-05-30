@@ -67,7 +67,7 @@ const billSearchAndResult = {
       componentPath: "Form",
       props: {
         className: "common-div-css",
-        id: "universalCollection"
+        id: "billSearch"
       },
       children: {
         headerDiv: {
@@ -81,6 +81,38 @@ const billSearchAndResult = {
                 sm: 6
               },
               ...header
+            },
+            groupBillButton: {
+              componentPath: "Button",
+              gridDefination: {
+                xs: 12,
+                sm: 6,
+                align: "right"
+              },
+              visible: enableButton,
+              props: {
+                variant: "contained",
+                color: "primary",
+                style: {
+                  color: "white",
+                  borderRadius: "2px",
+                  width: "250px",
+                  height: "48px"
+                }
+              },
+              children: {
+                ButtonLabel: getLabel({
+                  labelName: "Group Bills",
+                  labelKey: "ABG_COMMON_HEADER"
+                })
+              },
+              onClickDefination: {
+                action: "page_change",
+                path:
+                  process.env.REACT_APP_SELF_RUNNING === "true"
+                    ? `/egov-ui-framework/abg/groupBills`
+                    : `/abg/groupBills`
+              }
             }
           }
         },
