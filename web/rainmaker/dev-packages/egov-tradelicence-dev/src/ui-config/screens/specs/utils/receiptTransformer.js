@@ -341,7 +341,8 @@ export const loadMdmsData = async tenantid => {
     const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
       ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
       : "MUNICIPAL CORPORATION";
-    const cityKey = `TENANT_TENANTS_${get(ulbData, "city.name", "NA")
+
+    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
       .toUpperCase()
       .replace(/[.]/g, "_")}`;
 
