@@ -423,3 +423,13 @@ export const getMultiUnits = multiUnits => {
 
   return mergedUnits;
 };
+
+export const getUlbGradeLabel = ulbGrade => {
+  if (ulbGrade) {
+    let ulbWiseHeaderName = ulbGrade.toUpperCase();
+    if (ulbWiseHeaderName.indexOf(" ") > 0) {
+      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
+    }
+    return "ULBGRADE" + "_" + ulbWiseHeaderName;
+  }
+};
