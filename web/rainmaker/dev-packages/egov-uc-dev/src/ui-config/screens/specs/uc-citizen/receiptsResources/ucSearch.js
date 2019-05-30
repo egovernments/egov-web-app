@@ -23,7 +23,7 @@ const resetFields = (state, dispatch) => {
   dispatch(
     handleField(
       "search",
-      "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.receiptNo",
+      "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.receiptNumber",
       "props.value",
       ""
     )
