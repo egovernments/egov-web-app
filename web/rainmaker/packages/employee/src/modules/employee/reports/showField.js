@@ -118,7 +118,7 @@ export default class ShowField extends Component {
               fullWidth={true}
               floatingLabelFixed={true}
               maxDate={maxDate}
-              required={obj.isMandatory ? true : false}
+              // required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
                   <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
