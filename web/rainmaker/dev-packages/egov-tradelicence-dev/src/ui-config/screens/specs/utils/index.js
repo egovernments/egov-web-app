@@ -23,6 +23,7 @@ import {
   getUserInfo,
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -830,11 +831,11 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       //New number search only
       let payload = await httpRequest(
         "post",
-        "/user/_search?tenantId=pb",
+        `/user/_search?tenantId=${commonConfig.tenantId}`,
         "_search",
         [],
         {
-          tenantId: "pb",
+          tenantId: commonConfig.tenantId,
           userName: `${ownerNo}`
         }
       );
@@ -1023,7 +1024,12 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   }
 };
 
-const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
+const getBillingSlabData = async (
+  dispatch,
+  billingSlabIds,
+  tenantId,
+  accessories
+) => {
   const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
     billingSlabIds || {};
   if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
@@ -1069,9 +1075,14 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
                 type: "trade"
               });
             } else {
-              accessoriesTotal = accessoriesTotal + item.rate;
+              const count = accessories.find(
+                accessory =>
+                  item.accessoryCategory === accessory.accessoryCategory
+              ).count;
+              accessoriesTotal = accessoriesTotal + item.rate * count;
               result.accessoryData.push({
                 rate: item.rate,
+                total: item.rate * count,
                 category: item.accessoryCategory,
                 type: "accessories"
               });
@@ -1193,9 +1204,10 @@ export const createEstimateData = async (
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
+  const accessories = get(LicenseData, "tradeLicenseDetail.accessories", []);
   payload &&
     payload.billingSlabIds &&
-    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId);
+    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId, accessories);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });

@@ -240,9 +240,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 style: "receipt-table-key"
               },
               {
-                text: `(${transformedData.accessories}) ${
-                  transformedData.accessoriesList
-                }`,
+                text: `${transformedData.accessoriesList}`,
                 border: borderValue
               }
             ]
@@ -773,9 +771,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `(${transformedData.accessories}) ${
-              transformedData.accessoriesList
-            }`
+            text: `${transformedData.accessoriesList}`
           }
         ]
       },
