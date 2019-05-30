@@ -1,16 +1,12 @@
-.aboutSection {
-	width: 450px;
-	height: 450px;
-}
-.aboutSection .leftSection {
+/* .aboutSection .leftSection {
 	width: 40%;
 	margin-left: 1px;
 	margin-right: 20px;
-}
-.aboutSection .rightSection div {
+} */
+/* .aboutSection .rightSection div {
 	max-width: 628px;
 	margin-bottom: -4px;
-}
+} */
 
 .aboutSection .leftSection .imgWrapper {
 	position: 'relative';

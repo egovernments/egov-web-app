@@ -2,152 +2,170 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
+import CursorIcon from '../../../../../src/icon/Cursor';
+import DocumentIcon from '../../../../icon/Document';
+import ExpandIcon from '../../../../icon/Expand';
+import NetworkIcon from '../../../../icon/Network';
+import GPSIcon from '../../../../icon/Gps';
 
 const styles = (theme) => ({
 	root: {
-		width: '90%'
+		flexGrow: '1'
 	},
-	button: {
-		//marginRight: theme.spacing(1)
-	},
-	backButton: {
-		// marginRight: theme.spacing(1)
-	},
+
 	completed: {
 		display: 'inline-block'
 	},
-	instructions: {
-		// marginTop: theme.spacing(1),
-		// marginBottom: theme.spacing(1)
-	},
+
 	icon: {
-		height: '30px',
-		width: '30px'
+		width: '53.11px',
+		height: '69.66px',
+		borderRadius: '50%',
+		color: '#4A90E2'
+	},
+	tittle1: {
+		color: '#4A90E2',
+		padding: '10px',
+		borderLeft: 'solid'
 	}
 });
 
-const newobj = [
-	{
-		header: 'Initiate',
-		subheader: 'State-on-Boarding',
-		icon: <Icon color="primary">add_circle</Icon>
-	},
-	{
-		header: 'Define',
-		subheader: 'Current System/Process Study',
-		icon: <Icon color="primary">add_circle</Icon>
-	},
-
-	{
-		header: 'Equip',
-		subheader: 'Product fitment and Solution design',
-		icon: <Icon color="primary">add_circle</Icon>
-	},
-
-	{
-		header: 'Adopt',
-		subheader: 'Develop and Deploy',
-		icon: <Icon color="primary">add_circle</Icon>
-	},
-
-	{
-		header: 'Leverages',
-		subheader: 'Rollout and Adoption review',
-		icon: <Icon color="primary">add_circle</Icon>
-	}
-];
-
 class How extends React.Component {
+	newobj = () => {
+		const { classes } = this.props;
+		return [
+			{
+				header: 'Initiate',
+				subheader: 'State-on-Boarding',
+				icon: <CursorIcon className={classes.icon} />
+			},
+			{
+				header: 'Define',
+				subheader: 'Current System/Process Study',
+				icon: <GPSIcon className={classes.icon} />
+			},
+
+			{
+				header: 'Equip',
+				subheader: 'Product fitment and Solution design',
+				icon: <DocumentIcon className={classes.icon} />
+			},
+
+			{
+				header: 'Adopt',
+				subheader: 'Develop and Deploy',
+				icon: <NetworkIcon className={classes.icon} />
+			},
+
+			{
+				header: 'Leverages',
+				subheader: 'Rollout and Adoption review',
+				icon: <ExpandIcon className={classes.icon} />
+			}
+		];
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="How">
-				<Typography gutterBottom color="initial" variant="caption" align="left">
-					How
-				</Typography>
-				<div className="Implementation Plan">
-					<Typography gutterBottom component="h1" color="primary" variant="h5" align="left">
-						Implementation Plan
-					</Typography>
+			<div className={classes.root}>
+				<div className={classes.tittle1}>
 					<div
 						style={{
-							marginTop: '-38px',
-							backgroundColor: 'green'
+							fontSize: '16px',
+							color: 'rgba(0, 0, 0, 0.6000000238418579)'
 						}}
-						className={classes.root}
 					>
-						<Stepper alternativeLabel nonLinear>
-							{newobj.map((label, index) => {
-								const stepProps = {};
-
-								return (
-									<Step key={label} {...stepProps} completed>
-										<div
-											style={{
-												height: '100px',
-												width: '100px',
-												borderRadius: '50%',
-												position: 'relative',
-												backgroundColor: 'red',
-												borderColor: 'black'
-											}}
-										/>
-										<div
-											style={{
-												left: '5%',
-												top: '20%',
-												position: 'absolute'
-											}}
-										>
-											{label.icon}
-											{/* <Icon className={classes.icon} color="primary">
-												
-											</Icon> */}
-										</div>
-
-										<div
-											style={{
-												top: '3px',
-												height: '30px',
-												width: '30px',
-												borderRadius: '50%',
-												position: 'absolute',
-												//left: '18px',
-												backgroundColor: '#E0E0E0',
-												display: 'flex',
-												alignItems: 'center',
-												justifyContent: 'center'
-											}}
-										>
-											{index + 1}
-										</div>
-
-										<div
-											style={{
-												color: '#000000 - 87%',
-												fontSize: '20px',
-												marginLeft: '30px'
-											}}
-										>
-											{label.header}
-										</div>
-										<div
-											style={{
-												color: '#000000 - 87%',
-												fontSize: '16px',
-												fontWeight: '400',
-												textAlign: 'center'
-											}}
-										>
-											{label.subheader}
-										</div>
-									</Step>
-								);
-							})}
-						</Stepper>
+						How
 					</div>
+					<div
+						style={{
+							fontSize: '34px',
+							color: '#4A90E2'
+						}}
+					>
+						Implementation Plan
+					</div>
+				</div>
+
+				<div className={classes.root}>
+					<Stepper alternativeLabel nonLinear>
+						{this.newobj().map((label, index) => {
+							const stepProps = {};
+
+							return (
+								<Step key={label} {...stepProps} completed>
+									<div
+										style={{
+											height: '100px',
+											width: '100px',
+											borderRadius: '50%',
+											position: 'relative',
+											backgroundColor: '#F0F0F0',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+									/>
+									<div
+										style={{
+											top: '18px',
+											left: '28px',
+											borderRadius: '50%',
+											position: 'absolute',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+									>
+										{label.icon}
+									</div>
+
+									<div
+										style={{
+											top: '3px',
+											height: '30px',
+											width: '30px',
+											borderRadius: '50%',
+											position: 'absolute',
+											backgroundColor: '#E0E0E0',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+									>
+										{index + 1}
+									</div>
+
+									<div
+										style={{
+											color: '#000000 - 87%',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											fontSize: '20px',
+											marginLeft: '-111px'
+										}}
+									>
+										{label.header}
+									</div>
+									<div
+										style={{
+											color: '#000000 - 87%',
+											fontSize: '16px',
+											fontWeight: '400',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											marginLeft: '-105px'
+										}}
+									>
+										{label.subheader}
+									</div>
+								</Step>
+							);
+						})}
+					</Stepper>
 				</div>
 			</div>
 		);
