@@ -6,6 +6,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Banner from '../Banner';
+import About from '../About';
+import Explore from '../Explore';
+import How from '../How';
+import Testimonials from '../Testimonials';
+import WhatNew from '../WhatNew';
+import Footer from '../Footer';
 
 function TabContainer(props) {
 	return (
@@ -31,6 +38,11 @@ class Menu extends React.Component {
 		value: 0
 	};
 
+	ScrollableTabsButtonAuto() {
+		const classes = withStyles();
+		const [ value, setValue ] = React.useState(0);
+	}
+
 	handleChange = (event, value) => {
 		this.setState({ value });
 	};
@@ -40,14 +52,27 @@ class Menu extends React.Component {
 		const { value } = this.state;
 
 		return (
-			<Grid item xs={12}>
+			<Grid item md={12} xs={12}>
 				<AppBar className={classes.root} position="static">
-					<Tabs value={value} indicatorColor="primary" onChange={this.handleChange}>
+					<Tabs
+						value={value}
+						indicatorColor="primary"
+						variant="scrollable"
+						scrollButtons="auto"
+						onChange={this.handleChange}
+					>
 						{menuItems.map((item) => {
 							return <Tab label={item.label} />;
 						})}
 					</Tabs>
 				</AppBar>
+				{value === 0 && <TabContainer>{Banner}</TabContainer>}
+				{value === 1 && <TabContainer>{About}</TabContainer>}
+				{value === 2 && <TabContainer>{Explore}</TabContainer>}
+				{value === 3 && <TabContainer>{How}</TabContainer>}
+				{value === 4 && <TabContainer>{Testimonials}</TabContainer>}
+				{value === 5 && <TabContainer>{WhatNew}</TabContainer>}
+				{value === 6 && <TabContainer>{Footer}</TabContainer>}
 			</Grid>
 		);
 	}

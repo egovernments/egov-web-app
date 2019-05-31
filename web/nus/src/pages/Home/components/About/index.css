@@ -1,0 +1,23 @@
+.aboutSection .leftSection .imgWrapper {
+	position: 'relative';
+}
+.aboutSection .leftSection .innerImg img {
+	width: 380px;
+	Height: 431px;
+	position: absolute;
+}
+.aboutSection .leftSection .upperImg img {
+	width: 380px;
+	height: 273px;
+	position: absolute;
+	margin-left: 100px;
+	margin-top: 150px;
+	border: 6px solid #ffffff;
+}
+.about {
+	font-Size: 16px;
+	color: rgba(0, 0, 0, 0.6000000238418579);
+	padding-Top: 5px;
+	text-Align: left;
+	margin-left: 10px;
+}

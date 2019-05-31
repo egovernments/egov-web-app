@@ -8,9 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import StarIcon from '@material-ui/icons/Star';
 import AboutImg from '../../../../../src/img/about.jpg';
 import UpperImg from '../../../../../src/img/upper.jpg';
+import './index.css';
 const styles = {
 	root: {
-		flexGrow: 1,
+		marginTop: '40px',
 		color: 'rgba(0, 0, 0, 0.6000000238418579)',
 		fontFamily: 'Montserrat',
 		fontSize: '16px'
@@ -35,24 +36,18 @@ class About extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.root}>
-				<Grid
-					style={{
-						marginTop: '50px'
-					}}
-					container
-					className="aboutSection"
-				>
+				<Grid container className="aboutSection">
 					<Grid item xs={5}>
 						<div className="leftSection">
 							<div className="imgWrapper">
 								{
 									<div className="innerImg">
-										<img src={AboutImg} />
+										<img alt="inner" src={AboutImg} />
 									</div>
 								}
 								{
 									<div className="upperImg">
-										<img src={UpperImg} />
+										<img alt="upper" src={UpperImg} />
 									</div>
 								}
 							</div>
@@ -61,17 +56,7 @@ class About extends React.Component {
 					<Grid item xs={7}>
 						<div className="RightSection">
 							<div className={classes.tittle1}>
-								<div
-									style={{
-										fontSize: '16px',
-										color: 'rgba(0, 0, 0, 0.6000000238418579)',
-										paddingTop: '5px',
-										textAlign: 'left',
-										marginLeft: '10px'
-									}}
-								>
-									About
-								</div>
+								<div className="about">About</div>
 								<div
 									style={{
 										fontSize: '34px',
