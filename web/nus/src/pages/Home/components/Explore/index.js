@@ -9,196 +9,203 @@ import Typography from '@material-ui/core/Typography';
 import BusinessIcon from '@material-ui/icons/Business';
 import HomeIcon from '@material-ui/icons/Home';
 //import Header from "../Header";
-import PersonIcon from '@material-ui/icons/Person';
-import WorkIcon from '@material-ui/icons/Work';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
+import PeopleIcon from "../../../../icon/account-alert";
+import PipeIcon from "../../../../icon/pipe";
+import WaterIcon from "../../../../icon/water-pump";
+import WorkIcon from "@material-ui/icons/Work";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import WhatshotIcon from "@material-ui/icons/Whatshot";
+import Button from "@material-ui/core/Button";
 //import WhatshotIcon from "@material-ui/icons/Whatshot";
 
-const styles = (theme) => ({
-	root: {
-		flexGrow: 1
-	},
-	paper: {
-		// padding: theme.spacing(1),
-		textAlign: 'center',
-		color: theme.palette.text.secondary
-	},
-	card: {
-		backgroundcolor: '#FFFFFF',
-		border: '0.5',
-		borderRadius: '6px',
-		minWidth: '280px',
-		whiteSpace: 'normal',
-		margin: '16px 0px',
-		paddingLeft: '10px',
-		paddingTop: '0px',
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	title: {
-		fontSize: 14,
-		textAlign: 'center',
-		paddingTop: '10px'
-	},
-	tittle1: {
-		color: '#4A90E2',
-		padding: '10px',
-		borderLeft: 'solid'
-	},
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    // padding: theme.spacing,
+    // textAlign: "center",
+    // color: theme.palette.text.secondary
+  },
+  card: {
+    backgroundcolor: "#FFFFFF",
+    //border: "0.5",
+    //borderRadius: "5px",
+    Width: "50px",
+    //height: "64px",
+    //whiteSpace: "normal",
+    marginTop: "5px",
+    //marginBottom: "16px",
+    paddingLeft: "20px",
+    paddingTop: "5px",
+    paddingBottom: "-10px"
+    // display: "flex",
+    // justifyContent: "left",
+    // alignItems: "left"
+  },
+  title: {
+    fontSize: 14,
+    textAlign: "right"
+  },
+  tittle1: {
+    color: "#4A90E2",
+    paddingleft: "10px",
+    paddingBottom: "20px",
+    paddingRight: "40px",
+    borderRight: "solid",
+    width: "4px",
+    height: "56px",
+    margin: "0px 0px 5px 0px"
+  },
+  CardContent: {
+    display: "flex",
+    justifContent: "center",
+    alignItems: "center"
+  },
 
-	icon: {
-		borderRadius: '50%',
-		color: 'white',
-		display: 'inline-block',
-		textTransform: 'none'
-	}
+  icon: {
+    //borderRadius: "50%",
+    color: "#4A90E2",
+    //display: "inline-block",
+    textTransform: "none"
+    //alignItems: "left"
+  }
 });
 
 class Explore extends React.Component {
-	getItems = () => {
-		const { classes } = this.props;
-		return [
-			{
-				cardHeader: 'Building Plan Approval',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <BusinessIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Public Grievance',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <PersonIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Property Tax',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <HomeIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Water',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <PersonIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Sewerage',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <PersonIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Trade license',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <WorkIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Fire NOC',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <WhatshotIcon className={classes.icon} />
-			},
-			{
-				cardHeader: 'Dashboards',
-				option1: 'Apply Online',
-				option2: 'Access Anywhere',
-				option3: 'Ease of Payment',
-				icon: <EqualizerIcon className={classes.icon} />
-			}
-		];
-	};
+  getItems = () => {
+    const { classes } = this.props;
+    return [
+      {
+        cardHeader: "Public Grievance",
 
-	render() {
-		const { classes } = this.props;
-		return (
-			<div className={classes.root}>
-				<div className={classes.tittle1}>
-					<div
-						style={{
-							fontSize: '16px',
-							color: 'black',
-							fontFamily: 'Montserrat'
-						}}
-					>
-						Explore
-					</div>
+        icon: <PeopleIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Building Plan Approval",
 
-					<div
-						style={{
-							fontSize: '34px',
-							color: '#4A90E2',
-							fontFamily: 'Montserrat'
-						}}
-					>
-						Core Components
-					</div>
-				</div>
+        icon: <BusinessIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Property Tax",
+        icon: <HomeIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Water",
 
-				<Grid container spacing={0} className={classes.card}>
-					{this.getItems().map((item) => {
-						return (
-							<Grid item xs={3} className={classes.card}>
-								<Card className={classes.card}>
-									<CardContent>
-										<div
-											style={{
-												display: 'flex',
-												justifyContent: 'center',
-												alignItems: 'center'
-											}}
-										>
-											<div
-												style={{
-													borderRadius: '50%',
-													backgroundColor: '#4A90E2',
-													height: '80px',
-													width: '80px',
-													display: 'flex',
-													justifyContent: 'center',
-													alignItems: 'center'
-												}}
-											>
-												{item.icon}
-											</div>
-										</div>
+        icon: <WaterIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Sewerage",
+        icon: <PipeIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Trade license",
 
-										<Typography
-											className={classes.title}
-											color="#000000"
-											fontFamily="Montserrat"
-											gutterBottom
-										>
-											{item.cardHeader}
-										</Typography>
-										<Typography className={classes.title} color="textSecondary" gutterBottom>
-											{item.option1}
-										</Typography>
-										<Typography className={classes.title} color="textSecondary" gutterBottom>
-											{item.option2}
-										</Typography>
-										<Typography className={classes.title} color="textSecondary" gutterBottom>
-											{item.option3}
-										</Typography>
-									</CardContent>
-								</Card>
-							</Grid>
-						);
-					})}
-				</Grid>
-			</div>
-		);
-	}
+        icon: <WorkIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Fire NOC",
+
+        icon: <WhatshotIcon className={classes.icon} />
+      },
+      {
+        cardHeader: "Dashboards",
+
+        icon: <EqualizerIcon className={classes.icon} />
+      }
+    ];
+  };
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <div className={classes.tittle1}>
+          <div
+            style={{
+              fontSize: "16px",
+              color: "black",
+              fontFamily: "Montserrat",
+              width: "50px",
+              height: "19px",
+
+              textAlign: "left",
+              paddingLeft: "50px",
+              marginTop: "10px",
+              marginLeft: "10px",
+              // paddingBottom: "0px",
+              paddingTop: "10px"
+            }}
+          >
+            Explore
+          </div>
+
+          <div
+            style={{
+              fontSize: "34px",
+              color: "#4A90E2",
+              fontFamily: "Montserrat",
+              width: "363px",
+              height: "42px",
+              paddingLeft: "50px",
+              marginTop: "10px",
+              marginLeft: "10px"
+              // marginBottom: "10px"
+            }}
+          >
+            Core Components
+          </div>
+        </div>
+
+        <Grid container spacing={3} className={classes.card}>
+          {this.getItems().map((item,key) => {
+            return (
+              <Grid key={key} item xs={3} className={classes.card}>
+                <Card className={classes.card}>
+                  <CardContent className={classes.CardContent}>
+                    <div style={{ marginRight: "10px", marginLeft: "0px" }}>
+                      {item.icon}
+                    </div>
+
+                    <Typography
+                      className={classes.title}
+                      color="#000000"
+                      fontFamily="Montserrat"
+                      marginLeft="3px"
+                      paddingLeft="2px"
+                      gutterBottom
+                    >
+                      {item.cardHeader}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+
+          <div>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              style={{
+                border: "1px solid #4A90E2",
+
+                borderRadius: "32px",
+                width: "292px",
+                height: "64px",
+                marginLeft: "450px",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+            >
+              Read More
+            </Button>
+          </div>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 export default withStyles(styles)(Explore);
