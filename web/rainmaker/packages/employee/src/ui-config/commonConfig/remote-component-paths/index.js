@@ -28,6 +28,7 @@ const remoteComponentPath = (moduleName, path) => {
         component = import("egov-workflow/ui-containers-local");
       }
       break;
+    
     default:
       break;
   }
