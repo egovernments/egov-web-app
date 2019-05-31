@@ -13,7 +13,10 @@ import AboutImg from '../../../../../src/img/about.jpg';
 import UpperImg from '../../../../../src/img/upper.jpg';
 const styles = {
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+		color: 'rgba(0, 0, 0, 0.6000000238418579)',
+		fontFamily: 'Montserrat',
+		fontSize: '16px'
 	},
 	card: {
 		maxWidth: 345
@@ -26,10 +29,6 @@ const styles = {
 	},
 	tittle1: {
 		color: '#4A90E2',
-		paddingTop: '5px',
-		//marginLeft: '-8px',
-		//marginTop: '18px',
-
 		borderLeft: 'solid'
 	}
 };
@@ -39,7 +38,13 @@ class About extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.root}>
-				<Grid container className="aboutSection">
+				<Grid
+					style={{
+						marginTop: '50px'
+					}}
+					container
+					className="aboutSection"
+				>
 					<Grid item xs={5}>
 						<div className="leftSection">
 							<div className="imgWrapper">
@@ -65,7 +70,7 @@ class About extends React.Component {
 										color: 'rgba(0, 0, 0, 0.6000000238418579)',
 										paddingTop: '5px',
 										textAlign: 'left',
-										marginTop: '50px'
+										marginLeft: '10px'
 									}}
 								>
 									About
@@ -73,71 +78,92 @@ class About extends React.Component {
 								<div
 									style={{
 										fontSize: '34px',
-										color: '#4A90E2'
+										color: '#4A90E2',
+										marginLeft: '10px'
 									}}
 								>
 									National Urban Stack
 								</div>
 							</div>
 
-							<Typography
-								gutterBottom
-								variant="body1"
-								color="initial"
-								display="inline"
-								component="h4"
-								align="left"
+							<div
+								style={{
+									padding: '8px',
+									marginLeft: '-7px',
+									fontSize: '20px',
+									color: '#rgba(0, 0, 0, 0.8700000047683716)',
+									fontStyle: 'italic',
+									fontWeight: '400',
+									width: '674px',
+									alignItems: 'left'
+								}}
 							>
 								This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
 								Aenean sollicitudin
-							</Typography>
-							<Typography
-								gutterBottom
-								variant="caption"
-								color="initial"
-								component="h4"
-								align="left"
-								component="p"
+							</div>
+							<div
+								style={{
+									padding: '8px',
+									marginLeft: '-7px',
+
+									fontSize: '16px',
+									color: 'rgba(0, 0, 0, 0.6000000238418579)',
+									fontFamily: 'Montserrat',
+									fontWeight: '300',
+									width: '610px'
+								}}
 							>
 								This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
 								Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis
 								sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi
 								accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio.
-							</Typography>
-							<List component="nav">
-								<ListItem button>
-									<ListItemIcon>
-										<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
-									</ListItemIcon>
-									<ListItemText primary="Open, shared, extensible national digital infrastructure" />
-								</ListItem>
-								<ListItem button>
-									<ListItemIcon>
-										<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
-									</ListItemIcon>
-									<ListItemText primary="Acts as a Public Good with a federated architecture" />
-								</ListItem>
-								<ListItem button>
-									<ListItemIcon>
-										<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
-									</ListItemIcon>
-									<ListItemText primary="State Government(s) have strategic control" />
-								</ListItem>
-								<ListItem button>
-									<ListItemIcon>
-										<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
-									</ListItemIcon>
-									<ListItemText primary="Free of cost Technology Platform" />
-								</ListItem>
-								<ListItem button>
-									<ListItemIcon>
-										<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
-									</ListItemIcon>
-									<ListItemText primary="Provide locally relevant solutions for cities" />
-								</ListItem>
-							</List>
+							</div>
 
-							<List component="nav" />
+							<div>
+								<div className={classes.root}>
+									<List>
+										<ListItem button>
+											<ListItemIcon>
+												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+											</ListItemIcon>
+											<ListItemText
+												style={{
+													color: 'rgba(0, 0, 0, 0.6000000238418579)',
+													fontFamily: 'Montserrat',
+													fontSize: '16px'
+												}}
+												primary="Open, shared, extensible national digital infrastructure"
+											/>
+										</ListItem>
+										<ListItem button>
+											<ListItemIcon>
+												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+											</ListItemIcon>
+											<ListItemText primary="Acts as a Public Good with a federated architecture" />
+										</ListItem>
+										<ListItem button>
+											<ListItemIcon>
+												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+											</ListItemIcon>
+											<ListItemText primary="State Government(s) have strategic control" />
+										</ListItem>
+										<ListItem button>
+											<ListItemIcon>
+												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+											</ListItemIcon>
+											<ListItemText primary="Free of cost Technology Platform" />
+										</ListItem>
+										<ListItem button>
+											<ListItemIcon>
+												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+											</ListItemIcon>
+											<ListItemText primary="Provide locally relevant solutions for cities" />
+										</ListItem>
+									</List>
+								</div>
+
+								<List />
+							</div>
 						</div>
 					</Grid>
 				</Grid>

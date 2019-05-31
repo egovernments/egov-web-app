@@ -12,7 +12,6 @@ const styles = (theme) => ({
 	root: {
 		flexGrow: '1'
 	},
-
 	completed: {
 		display: 'inline-block'
 	},
@@ -94,6 +93,14 @@ class How extends React.Component {
 							const stepProps = {};
 
 							return (
+								// <div
+								// 	style={{
+								// 		backgroundColor: '#F0F0F0',
+								// 		display: 'flex',
+								// 		alignItems: 'center',
+								// 		justifyContent: 'center'
+								// 	}}
+								// >
 								<Step key={label} {...stepProps} completed>
 									<div
 										style={{
@@ -163,6 +170,7 @@ class How extends React.Component {
 										{label.subheader}
 									</div>
 								</Step>
+								// </div>
 							);
 						})}
 					</Stepper>
