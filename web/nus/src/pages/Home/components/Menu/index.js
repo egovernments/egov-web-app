@@ -41,15 +41,10 @@ class Menu extends React.Component {
 
 		return (
 			<div>
-				<AppBar className={classes.root} color="#4A90E2" Width="1280px" Height="56px" position="static">
+				<AppBar className={classes.root} position="static">
 					<Tabs
 						value={value}
-						color="#FFFFFF"
 						indicatorColor="primary"
-						margin="11.64px"
-						font-size="14px"
-						Line
-						Spacing="17px"
 						onChange={this.handleChange}
 					>
 						{menuItems.map((item) => {
