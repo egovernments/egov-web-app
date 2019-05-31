@@ -132,7 +132,7 @@ export default class Footer extends React.Component {
                 height: "17px"
               }}
             >
-              <CallIcon style={{ paddingRight: "5px" }} />
+              <CallIcon style={{ paddingRight: "3px" }} />
               011-23063266
             </div>
             <div
@@ -193,7 +193,7 @@ export default class Footer extends React.Component {
             backgroundColor: "#263748",
             padding: "10px",
             textAlign: "center",
-            color: "#ffffff",
+            color: "rgba(255, 255, 255, 0.7)",
             fontSize: "14px",
             fontFamily: "Montserrat"
           }}

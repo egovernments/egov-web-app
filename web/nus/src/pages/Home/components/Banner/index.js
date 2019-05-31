@@ -15,7 +15,7 @@ class Banner extends React.Component {
       slidesToScroll: 1,
       autoplay: false,
       autoplaySpeed: 2000,
-      margin: "0px px 0px 10px",
+      margin: "0px 0px 0px 10px",
       paddingTop: "15px",
       paddingRight: "15px",
       paddingleft: "15px",
