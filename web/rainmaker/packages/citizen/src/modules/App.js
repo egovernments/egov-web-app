@@ -3,13 +3,15 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass } from "egov-ui-kit/utils/commons";
-import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "egov-ui-kit/redux/app/actions";
+import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute, setPreviousRoute } from "egov-ui-kit/redux/app/actions";
 import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { getQueryArg } from "egov-ui-kit/utils/commons";
 import isEmpty from "lodash/isEmpty";
 
 class App extends Component {
@@ -22,7 +24,6 @@ class App extends Component {
       addBodyClass(nextPath);
       props.toggleSnackbarAndSetText(false, { labelName: "", labelKey: "" }, false);
     });
-
     addBodyClass(currentPath);
   }
 
@@ -65,6 +66,18 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
+    getQueryArg("", "smsLink") && this.handleSMSLinks();
+  };
+
+  handleSMSLinks = () => {
+    const { authenticated, setPreviousRoute, setRoute, handleFieldChange } = this.props;
+    const link = window.location.href;
+    const mobileNo = getQueryArg("", "mobileNo");
+    if (!authenticated) {
+      setRoute("/user/otp?smsLink=true");
+      setPreviousRoute(link);
+      // handleFieldChange("app", "mobileNo", mobileNo);
+    }
   };
 
   componentWillReceiveProps(nextProps) {
@@ -74,7 +87,7 @@ class App extends Component {
       history.push(nextRoute);
       setRoute("");
     }
-    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated) {
+    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated && !getQueryArg("", "smsLink")) {
       nextProps.hasLocalisation && this.props.history.replace("/language-selection");
     }
   }
@@ -124,9 +137,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     fetchMDMSData: (criteria) => dispatch(fetchMDMSData(criteria)),
     fetchCurrentLocation: () => dispatch(fetchCurrentLocation()),
     setRoute: (route) => dispatch(setRoute(route)),
+    setPreviousRoute: (route) => dispatch(setPreviousRoute(route)),
   };
 };
 

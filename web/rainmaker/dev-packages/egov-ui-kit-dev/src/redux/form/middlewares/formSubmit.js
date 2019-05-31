@@ -35,7 +35,7 @@ const formSubmit = (store) => (next) => (action) => {
         dispatch(toggleSnackbarAndSetText(true, { labelName: mdmsToast, labelKey: mdmsToast }, false));
       }
     }
-
+    debugger;
     // for login/register flow
     if (formKey === "otp") {
       redirectionRoute = "/";
