@@ -159,9 +159,9 @@ class Explore extends React.Component {
         </div>
 
         <Grid container spacing={3} className={classes.card}>
-          {this.getItems().map(item => {
+          {this.getItems().map((item,key) => {
             return (
-              <Grid item xs={3} className={classes.card}>
+              <Grid key={key} item xs={3} className={classes.card}>
                 <Card className={classes.card}>
                   <CardContent className={classes.CardContent}>
                     <div style={{ marginRight: "10px", marginLeft: "0px" }}>
