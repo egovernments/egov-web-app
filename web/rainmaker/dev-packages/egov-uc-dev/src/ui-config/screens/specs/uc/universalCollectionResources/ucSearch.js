@@ -92,14 +92,14 @@ export const UCSearchCard = getCommonCard({
     }),
     serviceType: getSelectField({
       label: {
-        labelName: "Service Type",
+        labelName: "Service Category",
         labelKey: "UC_SERVICE_TYPE_LABEL"
       },
       placeholder: {
-        labelName: "Select Service Type",
+        labelName: "Select Service Category",
         labelKey: "UC_SERVICE_TYPE_PLACEHOLDER"
       },
-      required: false,
+      required: true,
       jsonPath: "searchScreen.businessCodes",
       localePrefix: {
         masterName: "BusinessService",

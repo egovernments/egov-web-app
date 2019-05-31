@@ -104,7 +104,7 @@ export const UCSearchCard = getCommonCard({
         moduleName: "BillingService"
       },
       required: false,
-      jsonPath: "searchScreen.serviceType",
+      jsonPath: "searchScreen.businessCodes",
       gridDefination: {
         xs: 12,
         sm: 4
