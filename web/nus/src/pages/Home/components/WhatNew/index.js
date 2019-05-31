@@ -4,8 +4,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import GalleryImg from '../../../../../src/img/gallery1.jpg';
-import SecondGallery from '../../../../../src/img/secondGallery.jpg';
 const styles = {
 	card: {
 		//maxWidth: 450
@@ -15,53 +13,68 @@ const styles = {
 	},
 	displayInline: {
 		display: 'inline'
+	},
+	subtitle: {
+		color: '#4A90E2',
+		padding: '10px 5px 10px 10px',
+		borderLeft: 'solid'
 	}
 };
 
 const newsobj = [
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery1.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 	{
+		title: 'Andhra Impact',
+		photoUrl: require('../../../../../src/img/secondGallery.jpg'),
+		desc:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study'
+	},
+
+	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery2.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'NUS Punjab',
+		photoUrl: require('../../../../../src/img/secondGallery2.jpg'),
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
-	},
-
-	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
-		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study'
 	},
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
+		photoUrl: require('../../../../../src/img/gallery3.jpg'),
 		desc:
 			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
 	},
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'The Problem',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study',
+		photoUrl: require('../../../../../src/img/secondGallery3.jpg')
 	},
-
 	{
 		title: 'Enrolment Workshop in Himachal Pradesh',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		photoUrl: require('../../../../../src/img/gallery4.jpg')
 	},
-
 	{
-		title: 'Enrolment Workshop in Himachal Pradesh',
+		title: 'NUS - The Solution',
 		desc:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		case: 'Read case study',
+		photoUrl: require('../../../../../src/img/secondGallery4.jpg')
 	}
 ];
 class WhatNew extends React.Component {
@@ -71,31 +84,58 @@ class WhatNew extends React.Component {
 			<div>
 				<Grid container>
 					<Grid item xs={6}>
-						<Typography gutterBottom color="initial" variant="caption" align="left">
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '16px',
+								color: '#000000 - 60%'
+							}}
+						>
 							Whats New
-						</Typography>
-						<Typography gutterBottom component="h1" color="primary" variant="h5" align="left">
+						</div>
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '34px',
+								color: '#4A90E2',
+								marginTop: '-21px'
+							}}
+						>
 							News & Gallery
-						</Typography>
+						</div>
 					</Grid>
 					<Grid item xs={6}>
-						<Typography gutterBottom color="initial" variant="caption" align="left">
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '16px',
+								color: '#000000 - 60%'
+							}}
+						>
 							Refer
-						</Typography>
-						<Typography gutterBottom component="h1" color="primary" variant="h5" align="left">
+						</div>
+						<div
+							className={classes.subtitle}
+							style={{
+								fontSize: '34px',
+								color: '#4A90E2',
+								marginTop: '-21px'
+							}}
+						>
 							Case Studies
-						</Typography>
+						</div>
 					</Grid>
 				</Grid>
 				<Grid container>
 					{newsobj.map((item) => {
+						let photo = item.photoUrl;
 						return (
 							<Grid item xs={6}>
-								<Card className={classes.card}>
+								<Card className={classes.card} style={{ boxShadow: 'none' }}>
 									<CardContent>
 										<Grid container>
 											<Grid item xs={3}>
-												<img src={GalleryImg} height="102px" width="150px" />
+												<img src={item.photoUrl} height="102px" width="150px" />
 											</Grid>
 											<Grid item xs={9}>
 												<div className="Combine">
@@ -120,6 +160,17 @@ class WhatNew extends React.Component {
 														}}
 													>
 														{item.desc}
+													</div>
+													<div
+														style={{
+															color: '#4A90E2',
+															fontSize: '14px',
+															fontWeight: '500',
+															marginLeft: '3px',
+															marginTop: '32px'
+														}}
+													>
+														{item.case}
 													</div>
 												</div>
 											</Grid>

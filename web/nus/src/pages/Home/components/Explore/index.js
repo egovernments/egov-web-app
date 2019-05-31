@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import BusinessIcon from "@material-ui/icons/Business";
-import HomeIcon from "@material-ui/icons/Home";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import BusinessIcon from '@material-ui/icons/Business';
+import HomeIcon from '@material-ui/icons/Home';
 //import Header from "../Header";
 import PeopleIcon from "../../../../icon/account-alert";
 import PipeIcon from "../../../../icon/pipe";
@@ -159,9 +159,9 @@ class Explore extends React.Component {
         </div>
 
         <Grid container spacing={3} className={classes.card}>
-          {this.getItems().map(item => {
+          {this.getItems().map((item,key) => {
             return (
-              <Grid item xs={3} className={classes.card}>
+              <Grid key={key} item xs={3} className={classes.card}>
                 <Card className={classes.card}>
                   <CardContent className={classes.CardContent}>
                     <div style={{ marginRight: "10px", marginLeft: "0px" }}>

@@ -188,7 +188,6 @@ class Testimonials extends React.Component {
               </Grid>
             );
           })}{" "}
-          ;
         </Grid>
       </div>
     );

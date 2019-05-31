@@ -1,16 +1,12 @@
-.aboutSection {
-	width: 450px;
-	height: 450px;
-}
-.aboutSection .leftSection {
+/* .aboutSection .leftSection {
 	width: 40%;
 	margin-left: 1px;
 	margin-right: 20px;
-}
-.aboutSection .rightSection div {
+} */
+/* .aboutSection .rightSection div {
 	max-width: 628px;
 	margin-bottom: -4px;
-}
+} */
 
 .aboutSection .leftSection .imgWrapper {
 	position: 'relative';
@@ -30,30 +26,3 @@
 }
 
 /*css for What new component*/
-.whatNewSection {
-	width: 200px;
-	height: 200px;
-}
-.whatNewSection .row {
-	width: 20%;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-.whatNewSection .leftSection {
-	width: 20%;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-
-.whatNewSection .rightSection {
-	max-width: 100px;
-	margin-bottom: -4px;
-}
-
-.whatNewSection .leftSection .galleryImg img {
-	width: 20px;
-	height: 20px;
-	position: absolute;
-	margin-left: 0px;
-	margin-top: 0px;
-}

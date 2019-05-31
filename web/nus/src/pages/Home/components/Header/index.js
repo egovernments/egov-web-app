@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import logo1 from "../../../../assets/logo1.png";
@@ -37,7 +38,7 @@ class Header extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar classes={{ root: classes.appBarRoot1 }} position="static">
-          <div
+      <div
             className="leftdiv"
             style={{
               display: "flex",
@@ -86,14 +87,12 @@ class Header extends React.Component {
             <Toolbar>
               <div className={classes.SearchIcon} style={{ display: "flex" }}>
                 <SearchIcon />
-
                 <div
                   className={classes.app}
                   style={{ minWidth: "120px", justifyContent: "space-between" }}
                 >
-                  <span>-A </span>
-
-                  <span> A</span>
+                  <span>-A</span>
+                  <span>A</span>
 
                   <span>+A</span>
 

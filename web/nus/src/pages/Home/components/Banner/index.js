@@ -163,5 +163,4 @@ class Banner extends React.Component {
     );
   }
 }
-
 export default Banner;
