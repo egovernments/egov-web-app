@@ -58,7 +58,6 @@ export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
 };
 
 export const getSearchResults = async queryObject => {
-    console.log("function called");
   try {
     const response = await httpRequest(
       "post",
@@ -69,7 +68,7 @@ export const getSearchResults = async queryObject => {
 
     return response;
   } catch (error) {
-      console.error(error);
+    console.error(error);
     store.dispatch(
       toggleSnackbar(
         true,
@@ -120,8 +119,6 @@ const setDocsForEditFlow = async (state, dispatch) => {
     prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", uploadedDocuments)
   );
 };
-
-
 
 export const getBoundaryData = async (
   action,

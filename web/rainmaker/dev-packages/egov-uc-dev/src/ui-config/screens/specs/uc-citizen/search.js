@@ -9,7 +9,9 @@ import { searchResult } from "./receiptsResources/searchResult";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
+const tenantId = getTenantId();
 const header = getCommonHeader({
   labelName: "Receipt",
   labelKey: "UC_RECEIPT"
@@ -24,7 +26,6 @@ const getData = async (action, state, dispatch) => {
 };
 
 const getMDMSData = async (action, state, dispatch) => {
-  const tenantId = "pb.amritsar";
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: tenantId,

@@ -10,7 +10,6 @@ const header = getCommonHeader({
   labelName: "New Collection",
   labelKey: "UC_COMMON_HEADER"
 });
-// const tenantId = "pb.amritsar";
 const tenantId = getTenantId();
 
 const getData = async (action, state, dispatch) => {

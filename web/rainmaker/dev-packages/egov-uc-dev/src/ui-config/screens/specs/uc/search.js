@@ -9,7 +9,9 @@ import { searchResults } from "./universalCollectionResources/searchResults";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
+const tenantId = getTenantId();
 const header = getCommonHeader({
   labelName: "Universal Collection",
   labelKey: "UC_COMMON_HEADER_SEARCH"
@@ -24,7 +26,6 @@ const getData = async (action, state, dispatch) => {
 };
 
 const getMDMSData = async (action, state, dispatch) => {
-  const tenantId = "pb.amritsar";
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: tenantId,
@@ -47,6 +48,7 @@ const getMDMSData = async (action, state, dispatch) => {
     dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
+    alert("Billing service data fetch failed");
   }
 };
 

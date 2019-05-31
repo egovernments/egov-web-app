@@ -12,6 +12,7 @@ import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
   getTransformedLocalStorgaeLabels,
@@ -23,6 +24,7 @@ import get from "lodash/get";
 const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
+const tenantId = getTenantId();
 
 export const newCollectionDetailsCard = getCommonCard({
   searchContainer: getCommonContainer({
@@ -41,9 +43,12 @@ export const newCollectionDetailsCard = getCommonCard({
         sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
         jsonPath: "Demands[0].tenantId",
         required: true,
+        disabled: true,
         props: {
           required: true,
-          disabled: false
+          disabled: false,
+          value: tenantId,
+          disabled: true
         }
       }),
       beforeFieldChange: async (action, state, dispatch) => {

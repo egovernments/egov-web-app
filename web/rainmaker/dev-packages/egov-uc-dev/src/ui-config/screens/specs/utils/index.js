@@ -104,8 +104,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 };
 
 export const getEpochForDate = date => {
-  const dateSplit = date.split("/");
-  return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
+  if (typeof date === "string") {
+    const dateSplit = date.split("/");
+    return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
+  }
 };
 
 export const sortByEpoch = (data, order) => {

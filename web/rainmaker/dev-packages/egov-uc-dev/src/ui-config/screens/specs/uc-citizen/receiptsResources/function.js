@@ -8,10 +8,9 @@ import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResult";
 import { validateFields } from "../../utils";
-import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
-// const tenantId = JSON.parse(getUserInfo()).tenantId;
-const tenantId = "pb.amritsar";
+const tenantId = getTenantId();
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);

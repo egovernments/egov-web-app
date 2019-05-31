@@ -1,6 +1,9 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { generateReciept } from "../../utils/recieptPdf";
 import { ifUserRoleExists } from "../../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+
 const getCommonApplyFooter = children => {
   return {
     uiFramework: "custom-atoms",
@@ -35,8 +38,10 @@ export const acknowledgementSuccesFooter = getCommonApplyFooter({
       })
     },
     onClickDefination: {
-      action: "page_change",
-      path: `${getRedirectionURL()}`
+      action: "condition",
+      callBack: (state, dispatch) => {
+        goToHome(state, dispatch);
+      }
     }
   },
 
@@ -92,4 +97,9 @@ export const acknowledgementFailureFooter = getCommonApplyFooter({
 
 const viewReceipt = (state, dispatch) => {
   generateReciept(state, dispatch);
+};
+
+const goToHome = (state, dispatch) => {
+  dispatch(prepareFinalObject("Demands", []));
+  dispatch(setRoute(`${getRedirectionURL()}`));
 };
