@@ -57,8 +57,8 @@ const screenConfig = {
           }
         },
         body: getCommonCard({
-          billDetails: billDetails
-          // amount: amountToBePaid,
+          billDetails: billDetails,
+          amount: amountToBePaid
           // breakAfterCard: getBreak()
         }),
         footer: footer

@@ -13,7 +13,7 @@ const getCommonApplyFooter = children => {
 };
 export const getRedirectionURL = () => {
   const redirectionURL = ifUserRoleExists("EMPLOYEE")
-	? "/uc/acknowledgement?purpose=pay&status=success"
+	? "/abg-citizen/acknowledgement?purpose=pay&status=success"
 	: "/inbox";
 
   return redirectionURL;

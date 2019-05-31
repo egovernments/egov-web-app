@@ -54,13 +54,15 @@ export const amountToBePaid = getCommonGrayCard({
         },
         type: "array"
       },
-      amountToPay: getLabelWithValue({
-        label: {
+      amountToPay: getLabelWithValue(
+        {
           labelName: "Amount to pay(INR)",
           labelKey: "ABG_AMOUNT_TO_PAY_LABEL"
         },
-        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name"
-      }),
+        {
+          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name"
+        }
+      )
     }
   }
 });

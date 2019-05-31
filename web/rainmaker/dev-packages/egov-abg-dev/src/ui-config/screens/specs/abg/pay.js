@@ -61,7 +61,7 @@ const screenConfig = {
         },
         body: getCommonCard({
           billDetails: billDetails,
-          // amount: amountToBePaid,
+          amount: amountToBePaid,
           capturePayment: capturePayment,
           G8ReceiptDetails: G8ReceiptDetails
           // breakAfterCard: getBreak()
