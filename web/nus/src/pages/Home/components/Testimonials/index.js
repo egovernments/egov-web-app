@@ -6,38 +6,24 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-//import imgUrl from "../../../../assets/shree.jpg";
-//import imgUrl from "../../../../../src/assets/jagan-Shah.jpg";
-//import imgurl from "../../../../assets/manish.jpg";
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  paper: {
-    // padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
   card: {
     backgroundcolor: "#FFFFFF",
     border: "0.5",
-    //borderRadius: "6px",
     minWidth: "280px",
     whiteSpace: "normal",
-    // margin: "16px 0px",
+
     paddingLeft: "15px",
     paddingTop: "0px",
     display: "flex",
     flexDirection: "row"
-
-    // justifyContent: "right",
-    // alignItems: "right"
   },
   Avatar: {
     width: "100px",
     height: "100px",
-    // borderRadius: "100%",
-    // justifyContent: "center",
     marginRight: "16px"
   },
   title: {
@@ -61,7 +47,6 @@ const styles = theme => ({
   },
   tittletwo: {
     color: "#4A90E2",
-    // paddingleft: "100px",
     paddingBottom: "20px",
     paddingRight: "25px",
     borderRight: "solid",

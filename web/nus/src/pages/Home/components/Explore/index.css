@@ -1,0 +1,22 @@
+.heading {
+  font-size: 16px;
+  color: black;
+  font-family: Montserrat;
+  width: 50px;
+  height: 19px;
+  text-align: left;
+  padding-left: 50px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+.heads {
+  font-size: 34px;
+  color: #4a90e2;
+  font-family: Montserrat;
+  width: 363px;
+  height: 42px;
+  padding-left: 50px;
+  margin-top: 10px;
+  margin-left: 10px;
+}

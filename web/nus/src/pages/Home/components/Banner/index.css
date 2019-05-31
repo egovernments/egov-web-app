@@ -1,0 +1,21 @@
+.mainDiv {
+  position: absolute;
+  left: 50px;
+  top: 100px;
+  width: 400px;
+  height: 150px;
+  background: #ffffff;
+  padding: 16px;
+}
+.head {
+  color: black;
+  text-align: left;
+  font-size: 34px;
+  font-family: Montserrat;
+}
+.content {
+  color: black;
+  text-align: left;
+  font-size: 14px;
+  font-family: Montserrat;
+}

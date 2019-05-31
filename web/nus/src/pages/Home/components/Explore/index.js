@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import BusinessIcon from '@material-ui/icons/Business';
-import HomeIcon from '@material-ui/icons/Home';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import BusinessIcon from "@material-ui/icons/Business";
+import HomeIcon from "@material-ui/icons/Home";
 //import Header from "../Header";
 import PeopleIcon from "../../../../icon/account-alert";
 import PipeIcon from "../../../../icon/pipe";
@@ -16,32 +16,21 @@ import WorkIcon from "@material-ui/icons/Work";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
 import Button from "@material-ui/core/Button";
+import "./index.css";
 //import WhatshotIcon from "@material-ui/icons/Whatshot";
 
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  paper: {
-    // padding: theme.spacing,
-    // textAlign: "center",
-    // color: theme.palette.text.secondary
-  },
+
   card: {
     backgroundcolor: "#FFFFFF",
-    //border: "0.5",
-    //borderRadius: "5px",
     Width: "50px",
-    //height: "64px",
-    //whiteSpace: "normal",
     marginTop: "5px",
-    //marginBottom: "16px",
     paddingLeft: "20px",
     paddingTop: "5px",
     paddingBottom: "-10px"
-    // display: "flex",
-    // justifyContent: "left",
-    // alignItems: "left"
   },
   title: {
     fontSize: 14,
@@ -64,11 +53,17 @@ const styles = theme => ({
   },
 
   icon: {
-    //borderRadius: "50%",
     color: "#4A90E2",
-    //display: "inline-block",
     textTransform: "none"
-    //alignItems: "left"
+  },
+  button: {
+    border: "1px solid #4A90E2",
+    borderRadius: "32px",
+    width: "292px",
+    height: "64px",
+    marginLeft: "450px",
+    marginTop: "10px",
+    cursor: "pointer"
   }
 });
 
@@ -122,44 +117,13 @@ class Explore extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.tittle1}>
-          <div
-            style={{
-              fontSize: "16px",
-              color: "black",
-              fontFamily: "Montserrat",
-              width: "50px",
-              height: "19px",
+          <div className="heading">Explore</div>
 
-              textAlign: "left",
-              paddingLeft: "50px",
-              marginTop: "10px",
-              marginLeft: "10px",
-              // paddingBottom: "0px",
-              paddingTop: "10px"
-            }}
-          >
-            Explore
-          </div>
-
-          <div
-            style={{
-              fontSize: "34px",
-              color: "#4A90E2",
-              fontFamily: "Montserrat",
-              width: "363px",
-              height: "42px",
-              paddingLeft: "50px",
-              marginTop: "10px",
-              marginLeft: "10px"
-              // marginBottom: "10px"
-            }}
-          >
-            Core Components
-          </div>
+          <div className="heads">Core Components</div>
         </div>
 
         <Grid container spacing={3} className={classes.card}>
-          {this.getItems().map((item,key) => {
+          {this.getItems().map((item, key) => {
             return (
               <Grid key={key} item xs={3} className={classes.card}>
                 <Card className={classes.card}>
@@ -183,25 +147,15 @@ class Explore extends React.Component {
               </Grid>
             );
           })}
-
-          <div>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              style={{
-                border: "1px solid #4A90E2",
-
-                borderRadius: "32px",
-                width: "292px",
-                height: "64px",
-                marginLeft: "450px",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-            >
-              Read More
-            </Button>
-          </div>
+          <Grid container>
+            <Grid item xs={12} sm={4} md={6}>
+              <div>
+                <Button variant="outlined" className={classes.button}>
+                  Read More
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
         </Grid>
       </div>
     );

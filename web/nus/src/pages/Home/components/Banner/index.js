@@ -1,10 +1,10 @@
 import React from "react";
 import Slider from "react-slick";
 import sliderbanner from "../../../../assets/slider-banner.jpg";
-import banner2 from "../../../../assets/banner2.jpeg";
-import banner3 from "../../../../assets/banner3.jpeg";
+import bannertwo from "../../../../assets/banner2.jpeg";
+import bannerthree from "../../../../assets/banner3.jpeg";
 //import color from "@material-ui/core/colors/lightBlue";
-
+import "./index.css";
 class Banner extends React.Component {
   render() {
     const settings = {
@@ -26,35 +26,9 @@ class Banner extends React.Component {
         <Slider {...settings}>
           <div style={{ padding: "0", overflow: "hidden" }}>
             <div style={{ position: "relative" }}>
-              <div
-                style={{
-                  position: "absolute",
-                  left: "50px",
-                  top: "100px",
-                  width: "400px",
-                  height: "150px",
-                  background: "#ffffff",
-                  padding: "16px"
-                }}
-              >
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "34px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
-                  National Urban Stack
-                </div>
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "14px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
+              <div className="mainDiv">
+                <div className="head">National Urban Stack</div>
+                <div className="content">
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
                   standard dummy text ever since the 1500s, when an unknown
@@ -78,35 +52,9 @@ class Banner extends React.Component {
           </div>
           <div style={{ padding: "0" }}>
             <div style={{ position: "relative" }}>
-              <div
-                style={{
-                  position: "absolute",
-                  left: "50px",
-                  top: "100px",
-                  width: "400px",
-                  height: "150px",
-                  background: "#ffffff",
-                  padding: "16px"
-                }}
-              >
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "34px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
-                  National Urban Stack
-                </div>
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "14px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
+              <div className="mainDiv">
+                <div className="head">National Urban Stack</div>
+                <div className="content">
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
                   standard dummy text ever since the 1500s, when an unknown
@@ -114,40 +62,14 @@ class Banner extends React.Component {
                   specimen book. It has survived not only five centuries.
                 </div>
               </div>
-              <img style={{ width: "100%", height: "400px" }} src={banner2} />
+              <img style={{ width: "100%", height: "400px" }} src={bannertwo} />
             </div>
           </div>
           <div style={{ padding: "0" }}>
             <div style={{ position: "relative" }}>
-              <div
-                style={{
-                  position: "absolute",
-                  left: "50px",
-                  top: "100px",
-                  width: "400px",
-                  height: "150px",
-                  background: "#ffffff",
-                  padding: "16px"
-                }}
-              >
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "34px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
-                  National Urban Stack
-                </div>
-                <div
-                  style={{
-                    color: "black",
-                    textAlign: "left",
-                    fontSize: "14px",
-                    fontFamily: "Montserrat"
-                  }}
-                >
+              <div className="mainDiv">
+                <div className="head">National Urban Stack</div>
+                <div className="content">
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
                   standard dummy text ever since the 1500s, when an unknown
@@ -155,7 +77,10 @@ class Banner extends React.Component {
                   specimen book. It has survived not only five centuries.
                 </div>
               </div>
-              <img style={{ width: "100%", height: "400px" }} src={banner3} />
+              <img
+                style={{ width: "100%", height: "400px" }}
+                src={bannerthree}
+              />
             </div>
           </div>
         </Slider>

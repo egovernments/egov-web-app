@@ -8,196 +8,57 @@ import CallIcon from "@material-ui/icons/Call";
 import MailIcon from "@material-ui/icons/Mail";
 import FacebookIcon from "../../../../icon/facebook";
 import TwitterIcon from "../../../../icon/twitter";
-// import CallIcon from "@material-ui/icons/Call";
+import "./index.css";
 export default class Footer extends React.Component {
   render() {
     return (
       <div style={{ backgroundColor: "#34495E" }}>
-        <div
-          style={{
-            display: "flex",
-            maxWidth: "1200px",
-            color: "#ffffff",
-            padding: "30px",
-            marginTop: "50px"
-          }}
-        >
+        <div className="container">
           <div style={{ width: "30%", paddingLeft: "20px" }}>
-            <div
-              style={{
-                color: "#ffffff",
-                fontWeight: "500",
-                fontFamily: "Montserrat-Medium"
-              }}
-            >
-              QUICK LINKS
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              MyGov
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              {" "}
-              E Office
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              {" "}
-              Digital india
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              {" "}
-              Right to Information Act
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              eGazette
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                color: "#ffffff-70%",
-                fontFamily: "Montserrat"
-              }}
-            >
-              URDPFI Guidelines
-            </div>
+            <div className="quick-links">QUICK LINKS</div>
+            <div className="footer-div">MyGov</div>
+            <div className="footer-div">E Office</div>
+            <div className="footer-div">Digital india</div>
+            <div className="footer-div">Right to Information Act</div>
+            <div className="footer-div">eGazette</div>
+            <div className="footer-div">URDPFI Guidelines</div>
           </div>
           <div style={{ width: "30%", paddingLeft: "30px" }}>
-            <div
-              style={{
-                color: "#ffffff",
-                fontWeight: "500",
-                fontFamily: "Montserrat-Medium"
-              }}
-            >
-              GET IN TOUCH
-            </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                fontFamily: "Montserrat",
-                display: "flex",
-                alignItems: "center",
-                width: "263px",
-                height: "60px"
-              }}
-            >
-              <RoomIcon style={{ paddingRight: "5px" }} />
+            <div className="quick-links">GET IN TOUCH</div>
+            <div className="footer-div1">
+              <RoomIcon style={{ paddingRight: "0px", color: "white" }} />
               Ministry of Housing and Urban Affairs Maulana Azad Road, Nirman
               Bhawan, New Delhi-110011
             </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                fontFamily: "Montserrat",
-                display: "flex",
-                alignItems: "center",
-                width: "93px",
-                height: "17px"
-              }}
-            >
-              <CallIcon style={{ paddingRight: "3px" }} />
+            <div className="footer-div1">
+              <CallIcon style={{ paddingRight: "3px", color: "white" }} />
               011-23063266
             </div>
-            <div
-              style={{
-                padding: "10px 0",
-                fontSize: "14px",
-                fontFamily: "Montserrat",
-                display: "flex",
-                alignItems: "center",
-                width: "154px",
-                height: "17px"
-              }}
-            >
-              <MailIcon style={{ paddingRight: "5px" }} />
+            <div className="footer-div1">
+              <MailIcon style={{ paddingRight: "5px", color: "white" }} />
               contact@nus-nuia.org
             </div>
-            <div style={{ padding: "10px 0" }}>
+            <div style={{ padding: "10px 0", color: "white" }}>
               <FacebookIcon
                 style={{ paddingRight: "5px", fontFamily: "Montserrat" }}
               />
-              <TwitterIcon style={{ paddingRight: "5px" }} />
+              <TwitterIcon style={{ paddingRight: "5px", color: "white" }} />
             </div>
           </div>
           <div style={{ width: "30%", paddingLeft: "30px" }}>
-            <div
-              style={{
-                display: "flex",
-                paddingTop: "30px",
-                paddingBottom: "15px",
-                justifyContent: "flex-end"
-              }}
-            >
-              <img
-                style={{ width: "149px", height: "36px", marginRight: "20px" }}
-                src={indportal}
-              />
-              <img style={{ width: "149px", height: "36px" }} src={img3} />
+            <div className="imgcontent">
+              <img className="ind" src={indportal} />
+              <img className="ind" src={img3} />
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-            >
-              <img
-                style={{ width: "246px", height: "118px", marginRight: "10px" }}
-                src={digital}
-              />
-              <img style={{ width: "118px", height: "118px" }} src={smart} />
+            <div className="imgonecontent">
+              <img className="indo" src={digital} />
+              <img className="smart" src={smart} />
             </div>
           </div>
-
           <div />
           <div />
         </div>
-        <div
-          style={{
-            backgroundColor: "#263748",
-            padding: "10px",
-            textAlign: "center",
-            color: "rgba(255, 255, 255, 0.7)",
-            fontSize: "14px",
-            fontFamily: "Montserrat"
-          }}
-        >
+        <div className="copyright-2019-min">
           Copyright © 2019 Ministry of Housing and Urban Affairs, Govt. of
           India. All rights reserved
         </div>
