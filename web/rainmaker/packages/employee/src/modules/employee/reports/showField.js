@@ -258,7 +258,7 @@ export default class ShowField extends Component {
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               multiple={true}
-              dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
+              dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "top" } }}
               floatingLabelFixed={true}
               floatingLabelText={
                 <span>
@@ -275,10 +275,10 @@ export default class ShowField extends Component {
               {dropDownData.map((dd, index) => (
                 <MenuItem
                   insetChildren={true}
-                  checked={obj.value && obj.value.indexOf(dd.key) > -1 ? true : false}
-                  value={translate(dd.key)}
+                  checked={obj.value && obj.value.indexOf(dd.value) > -1 ? true : false}
+                  value={translate(dd.value)}
                   key={index}
-                  primaryText={translate(dd.value)}
+                  primaryText={translate(dd.label)}
                 />
               ))}
             </SelectField>
