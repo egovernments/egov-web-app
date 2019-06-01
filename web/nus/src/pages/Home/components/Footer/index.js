@@ -14,7 +14,7 @@ export default class Footer extends React.Component {
     return (
       <div style={{ backgroundColor: "#34495E" }}>
         <div className="container">
-          <div style={{ width: "30%", paddingLeft: "20px" }}>
+          <div className="footer-section">
             <div className="quick-links">QUICK LINKS</div>
             <div className="footer-div">MyGov</div>
             <div className="footer-div">E Office</div>
@@ -23,7 +23,7 @@ export default class Footer extends React.Component {
             <div className="footer-div">eGazette</div>
             <div className="footer-div">URDPFI Guidelines</div>
           </div>
-          <div style={{ width: "30%", paddingLeft: "30px" }}>
+          <div className="footer-section">
             <div className="quick-links">GET IN TOUCH</div>
             <div className="footer-div1">
               <RoomIcon style={{ paddingRight: "0px", color: "white" }} />
@@ -45,7 +45,7 @@ export default class Footer extends React.Component {
               <TwitterIcon style={{ paddingRight: "5px", color: "white" }} />
             </div>
           </div>
-          <div style={{ width: "30%", paddingLeft: "30px" }}>
+          <div className="img-wrapper">
             <div className="imgcontent">
               <img className="ind" src={indportal} />
               <img className="ind" src={img3} />

@@ -9,6 +9,7 @@ import logo1 from "../../../../assets/logo1.png";
 import urban from "../../../../assets/urban.png";
 import SearchIcon from "@material-ui/icons/Search";
 import "./index.css";
+import { wrap } from "module";
 const styles = {
   root: {
     flexGrow: 1
@@ -32,7 +33,8 @@ const styles = {
   appBarRoot1: {
     backgroundColor: "#F0F0F0",
     color: "black",
-    flexDirection: "row"
+    flexDirection: "row",
+    flexWrap: "wrap"
   }
 };
 

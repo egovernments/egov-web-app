@@ -76,3 +76,38 @@
   width: 118px;
   height: 118px;
 }
+.footer-section,
+.img-wrapper {
+  width: 30%;
+  padding-left: 30px;
+}
+@media screen and (max-width: 767px) {
+  .footer-section {
+    width: 40%;
+    padding-left: 20px;
+  }
+  .container {
+    flex-wrap: wrap;
+  }
+  .img-wrapper {
+    width: 100%;
+    padding: 0 5%;
+    box-sizing: border-box;
+  }
+  .indo,
+  .smart {
+    width: 45%;
+  }
+  .imgonecontent,
+  .imgcontent {
+    justify-content: space-between;
+    margin-right: 0;
+  }
+  .ind {
+    width: 45%;
+  }
+  .smart,
+  .indo {
+    height: 70px;
+  }
+}

@@ -19,7 +19,8 @@ const styles = theme => ({
     paddingLeft: "15px",
     paddingTop: "0px",
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    marginBottom: "10px"
   },
   Avatar: {
     width: "100px",

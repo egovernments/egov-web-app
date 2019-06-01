@@ -30,7 +30,8 @@ const styles = theme => ({
     marginTop: "5px",
     paddingLeft: "20px",
     paddingTop: "5px",
-    paddingBottom: "-10px"
+    paddingBottom: "-10px",
+    minHeight: "100px"
   },
   title: {
     fontSize: 14,
@@ -57,7 +58,7 @@ const styles = theme => ({
     textTransform: "none"
   },
   button: {
-    border: "1px solid #4A90E2",
+    border: "1px solid #4a90e2",
     borderRadius: "32px",
     width: "292px",
     height: "64px",
@@ -125,7 +126,7 @@ class Explore extends React.Component {
         <Grid container spacing={3} className={classes.card}>
           {this.getItems().map((item, key) => {
             return (
-              <Grid key={key} item xs={3} className={classes.card}>
+              <Grid key={key} item xs={6} sm={3} className={classes.card}>
                 <Card className={classes.card}>
                   <CardContent className={classes.CardContent}>
                     <div style={{ marginRight: "10px", marginLeft: "0px" }}>
@@ -150,7 +151,13 @@ class Explore extends React.Component {
           <Grid container>
             <Grid item xs={12} sm={4} md={6}>
               <div>
-                <Button variant="outlined" className={classes.button}>
+                <Button
+                  variant="outlined"
+                  style={{
+                    marginLeft: window.innerWidth < 767 ? "30px" : "450px"
+                  }}
+                  className={classes.button}
+                >
                   Read More
                 </Button>
               </div>

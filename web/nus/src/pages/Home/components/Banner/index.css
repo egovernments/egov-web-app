@@ -4,6 +4,7 @@
   top: 100px;
   width: 400px;
   height: 150px;
+  height: 150px;
   background: #ffffff;
   padding: 16px;
 }
@@ -18,4 +19,12 @@
   text-align: left;
   font-size: 14px;
   font-family: Montserrat;
+}
+@media screen and (max-width: 767px) {
+  .mainDiv {
+    width: 90%;
+    left: 5%;
+    height: auto;
+    box-sizing: border-box;
+  }
 }

@@ -27,3 +27,16 @@
   margin-left: 10px;
   padding: 8px;
 }
+
+@media screen and (max-width: 767px) {
+  .govt-name-parent {
+    font-size: 12px;
+    padding: 30px 10px;
+  }
+  .dept-name-parent {
+    font-size: 12px;
+  }
+  .leftdiv {
+    padding-right: 10px;
+  }
+}
