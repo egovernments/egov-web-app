@@ -29,3 +29,15 @@
   margin-top: 10px;
   cursor: pointer;
 }
+@media screen and (max-width: 767px) {
+  .heads {
+    color: #4a90e2;
+    width: 363px;
+    height: 42px;
+    font-size: 22px;
+    margin-top: 10px;
+    font-family: Montserrat;
+    margin-left: 10px;
+    padding-left: 40px;
+  }
+}

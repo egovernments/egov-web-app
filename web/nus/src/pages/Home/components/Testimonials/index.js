@@ -6,6 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import "./index.css";
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -66,8 +67,8 @@ const styles = theme => ({
     marginLeft: "10px"
   },
   textone: {
-    fontSize: "29px",
-    color: "#4A90E2",
+    fontSize: "25px",
+    color: "#4a90e2",
     fontFamily: "Montserrat",
     width: "363px",
     height: "42px",
