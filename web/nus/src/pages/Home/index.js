@@ -27,15 +27,15 @@ class Home extends React.Component {
         }}
       >
         <Header />
-        <Menu menuItems={menuItems} />
+        {/* <Menu menuItems={menuItems} /> */}
         <Banner />
         <br />
         <br />
-        <About />
+        {/*<About />*/}
         <Explore />
-        <How />
+        {/*<How />*/}
         <Testimonials />
-        <WhatNew />
+        {/*<WhatNew />*/}
         <Footer />
       </div>
     );

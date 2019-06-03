@@ -30,7 +30,7 @@ const styles = {
     color: "black"
   },
 
-  appBarRoot1: {
+  appBarRootOne: {
     backgroundColor: "#F0F0F0",
     color: "black",
     flexDirection: "row",
@@ -43,7 +43,7 @@ class Header extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar classes={{ root: classes.appBarRoot1 }} position="static">
+        <AppBar classes={{ root: classes.appBarRootOne }} position="static">
           <Grid container>
             <Grid item xs={12} sm={4} md={6}>
               <div className="leftdiv">

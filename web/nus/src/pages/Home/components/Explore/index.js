@@ -27,19 +27,22 @@ const styles = theme => ({
   card: {
     backgroundcolor: "#FFFFFF",
     Width: "50px",
-    marginTop: "5px",
+    paddingRight: "10px",
+
     paddingLeft: "20px",
+
     paddingTop: "5px",
-    paddingBottom: "-10px",
-    minHeight: "100px"
+    paddingBottom: "10px"
   },
   title: {
     fontSize: 14,
-    textAlign: "right"
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center"
   },
   tittle1: {
     color: "#4A90E2",
-    paddingleft: "10px",
+    //paddingleft: "10px",
     paddingBottom: "20px",
     paddingRight: "40px",
     borderRight: "solid",
@@ -47,10 +50,12 @@ const styles = theme => ({
     height: "56px",
     margin: "0px 0px 5px 0px"
   },
-  CardContent: {
+  cardContent: {
     display: "flex",
     justifContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingLeft: "10px",
+    marginRight: "20px"
   },
 
   icon: {
@@ -59,9 +64,10 @@ const styles = theme => ({
   },
   button: {
     border: "1px solid #4a90e2",
-    borderRadius: "32px",
-    width: "292px",
-    height: "64px",
+    borderRadius: "34px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     marginLeft: "450px",
     marginTop: "10px",
     cursor: "pointer"
@@ -126,10 +132,19 @@ class Explore extends React.Component {
         <Grid container spacing={3} className={classes.card}>
           {this.getItems().map((item, key) => {
             return (
-              <Grid key={key} item xs={6} sm={3} className={classes.card}>
+              <Grid key={key} item xs={12} sm={3} className={classes.card}>
                 <Card className={classes.card}>
-                  <CardContent className={classes.CardContent}>
-                    <div style={{ marginRight: "10px", marginLeft: "0px" }}>
+                  <CardContent className={classes.cardContent}>
+                    <div
+                      style={{
+                        marginRight: "10px",
+                        marginLeft: "0px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItem: "center"
+                        // minHeight: "50%"
+                      }}
+                    >
                       {item.icon}
                     </div>
 
@@ -149,15 +164,9 @@ class Explore extends React.Component {
             );
           })}
           <Grid container>
-            <Grid item xs={12} sm={4} md={6}>
+            <Grid item xs={12}>
               <div>
-                <Button
-                  variant="outlined"
-                  style={{
-                    marginLeft: window.innerWidth < 767 ? "30px" : "450px"
-                  }}
-                  className={classes.button}
-                >
+                <Button variant="outlined" className={classes.button}>
                   Read More
                 </Button>
               </div>

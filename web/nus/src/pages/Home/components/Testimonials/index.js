@@ -14,10 +14,11 @@ const styles = theme => ({
   card: {
     backgroundcolor: "#FFFFFF",
     border: "0.5",
-    minWidth: "280px",
+    // minWidth: "280px",
     whiteSpace: "normal",
-
-    paddingLeft: "15px",
+    // marginRight: "5px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
     paddingTop: "0px",
     display: "flex",
     flexDirection: "row",
@@ -58,19 +59,19 @@ const styles = theme => ({
   },
   textzero: {
     fontFamily: "Montserrat",
-    width: "50px",
-    height: "19px",
-    textAlign: "left",
+    // width: "50px",
+    // height: "19px",
+    // textAlign: "left",
     paddingLeft: "40px",
     paddingTop: "10px",
     marginTop: "10px",
     marginLeft: "10px"
   },
   textone: {
-    fontSize: "25px",
+    fontSize: "23px",
     color: "#4a90e2",
     fontFamily: "Montserrat",
-    width: "363px",
+    width: "300px",
     height: "42px",
     paddingLeft: "40px",
     marginTop: "10px",
@@ -126,7 +127,14 @@ class Testimonials extends React.Component {
         <Grid container spacing={0} className={classes.card}>
           {this.getItems().map(item => {
             return (
-              <Grid item xs={4} className={classes.card} justify="left">
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                md={4}
+                className={classes.card}
+                justify="left"
+              >
                 <Card className={classes.card}>
                   <CardContent
                     //className={classes.avatar}

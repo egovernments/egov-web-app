@@ -14,7 +14,7 @@
   font-size: 34px;
   color: #4a90e2;
   font-family: Montserrat;
-  width: 363px;
+  width: 100px;
   height: 42px;
   padding-left: 50px;
   margin-top: 10px;
@@ -23,21 +23,60 @@
 .button {
   border: 1px solid #4a90e2;
   border-radius: 32px;
-  width: 292px;
-  height: 64px;
-  margin-left: 450px;
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
+.title {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.tittle1 {
+  color: #4a90e2;
+  padding-left: 10px;
+  padding-bottom: 20px;
+  padding-right: 40px;
+  border-right: solid;
+  width: 4px;
+  height: 56px;
+  margin: 0px 0px 5px 0px;
+}
+.cardContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+.card {
+  background-color: #ffffff;
+  width: 50px;
+  margin-top: 5px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  min-height: 50px;
+}
 @media screen and (max-width: 767px) {
-  .heads {
+  .card {
     color: #4a90e2;
     width: 363px;
-    height: 42px;
+    /* height: 42px; */
     font-size: 22px;
     margin-top: 10px;
     font-family: Montserrat;
     margin-left: 10px;
-    padding-left: 40px;
+    margin-right: 20px;
+    /* padding-left: 40px;
+    min-height: 130px;
+    padding-bottom: 20px;
+  
+    */
+  }
+  .button {
+    width: 168px;
+    margin-left: 97px;
   }
 }
