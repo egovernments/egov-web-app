@@ -6,8 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import StarIcon from '@material-ui/icons/Star';
-import AboutImg from '../../../../../src/img/about.jpg';
-import UpperImg from '../../../../../src/img/upper.jpg';
+
 import './index.css';
 const styles = {
 	root: {
@@ -46,12 +45,12 @@ class About extends React.Component {
 							<div className="imgWrapper">
 								{
 									<div className="innerImg">
-										<img alt="inner" src={AboutImg} />
+										<img alt="inner" src="/img/about.jpg" />
 									</div>
 								}
 								{
 									<div className="upperImg">
-										<img alt="upper" src={UpperImg} />
+										<img alt="upper" src="/img/upper.jpg" />
 									</div>
 								}
 							</div>
