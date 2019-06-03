@@ -8,8 +8,52 @@ import {
   getTextField,
   getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
+
+let previousUoms = [];
+
+const dynamic = (uom, path, index, buildingIndex) => {
+  return {
+    ...getTextField({
+      label: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_LABEL`
+      },
+      placeholder: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
+      },
+      pattern: /^[0-9]*$/i,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
+        index}].value`,
+      required: true,
+      gridDefination: {
+        xs: 12,
+        sm: 12,
+        md: 6
+      }
+    }),
+    componentJsonpath: `${path}.${uom}`,
+    afterFieldChange: (action, state, dispatch) => {
+      dispatch(
+        prepareFinalObject(
+          `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
+            index}].isActiveUom`,
+          true
+        )
+      );
+      dispatch(
+        prepareFinalObject(
+          `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
+            index}].code`,
+          uom
+        )
+      );
+    }
+  };
+};
 
 const commonBuildingData = buildingType => {
   let plotSize = {};
@@ -131,21 +175,56 @@ const commonBuildingData = buildingType => {
           masterName: "BuildingType"
         },
         jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].usageSubType",
-        // data: [
-        //   {
-        //     code: "Commercial"
-        //   },
-        //   {
-        //     code: "Non-Commercial"
-        //   }
-        // ],
-        // sourceJsonPath: "noc.buildingUsageSubType",
         gridDefination: {
           xs: 12,
           sm: 12,
           md: 6
         }
-      })
+      }),
+      beforeFieldChange: (action, state, dispatch) => {
+        // Get the list of uom for selected building subtype
+        let uomsList = get(
+          state,
+          "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
+          []
+        ).filter(item => {
+          return item.code === action.value;
+        });
+        let uoms = get(uomsList, "[0].uom", []);
+
+        // Get the path of the current childrens
+        let path = action.componentJsonpath.replace(
+          /.buildingSubUsageType$/,
+          ""
+        );
+
+        // Get the index in case on multi-item
+        let buildingIndex = get(path.match(/\d+/), "[0]", 0);
+
+        // Remove previous dynamic uoms
+        previousUoms.forEach(uom => {
+          dispatch(
+            handleField("apply", `${path}.${uom}`, "props.style", {
+              display: "none"
+            })
+          );
+        });
+
+        // Dynamically create UOM's based on building subtype selection
+        uoms.forEach((uom, index) => {
+          dispatch(
+            handleField(
+              "apply",
+              path,
+              uom,
+              dynamic(uom, path, index, buildingIndex)
+            )
+          );
+        });
+
+        // Set previous uoms array
+        previousUoms = uoms;
+      }
     },
     noOfFloors: {
       ...getSelectField({
@@ -171,6 +250,27 @@ const commonBuildingData = buildingType => {
           },
           {
             code: "3"
+          },
+          {
+            code: "4"
+          },
+          {
+            code: "5"
+          },
+          {
+            code: "6"
+          },
+          {
+            code: "7"
+          },
+          {
+            code: "8"
+          },
+          {
+            code: "9"
+          },
+          {
+            code: "10"
           }
         ],
         sourceJsonPath: "noc.noOfFloors",
@@ -201,6 +301,15 @@ const commonBuildingData = buildingType => {
           },
           {
             code: "2"
+          },
+          {
+            code: "3"
+          },
+          {
+            code: "4"
+          },
+          {
+            code: "5"
           }
         ],
         sourceJsonPath: "noc.noOfBasements",
