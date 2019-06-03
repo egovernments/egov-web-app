@@ -28,14 +28,14 @@ class Home extends React.Component {
 			>
 				{/* /	<Header /> */}
 				<Menu menuItems={menuItems} />
-				<Banner />
+				{/*<Banner />*/}
 
 				<About />
-				<Explore />
-				<How />
-				<Testimonials />
+				{/*<Explore />*/}
+				{/*<How />*/}
+				{/*<Testimonials />*/}
 				<WhatNew />
-				<Footer />
+				{/*<Footer />*/}
 			</div>
 		);
 	}

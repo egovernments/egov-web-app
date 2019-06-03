@@ -21,3 +21,49 @@
 	text-Align: left;
 	margin-left: 10px;
 }
+.urban {
+	font-Size: 34px;
+	color: #4a90e2;
+	margin-Left: 10px;
+}
+
+.paragraph1 {
+	padding: 8px;
+	margin-Left: -7px;
+	font-Size: 20px;
+	color: rgba (0, 0, 0, 0.8700000047683716);
+	font-Style: italic;
+	font-weight: 400;
+
+	align-Items: left;
+}
+.secondParagrph {
+	padding: 8px;
+	margin-Left: -7px;
+
+	font-Size: 16px;
+	color: rgba(0, 0, 0, 0.6000000238418579);
+	font-Family: Montserrat;
+	font-Weight: 300;
+}
+.listItem {
+	color: rgba(0, 0, 0, 0.6000000238418579);
+	font-Family: Montserrat;
+	font-Size: 16px;
+}
+
+@media only screen and (max-width: 768px) {
+	.RightSection {
+		margin-top: 450px;
+	}
+
+	.aboutSection .leftSection .innerImg img {
+		Height: 331px;
+	}
+	.aboutSection .leftSection .upperImg img {
+		height: 273px;
+		margin-left: 70px;
+		margin-top: 150px;
+		border: 6px solid #ffffff;
+	}
+}

@@ -40,7 +40,6 @@ class Menu extends React.Component {
 
 	ScrollableTabsButtonAuto() {
 		const classes = withStyles();
-		const [ value, setValue ] = React.useState(0);
 	}
 
 	handleChange = (event, value) => {

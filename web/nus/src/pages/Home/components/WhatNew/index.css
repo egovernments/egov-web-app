@@ -1,0 +1,58 @@
+.what {
+	font-Size: 16px;
+	color: #000000 - 60% !important;
+	margin-left: 13px;
+}
+.news {
+	font-Size: 34px;
+	color: #4a90e2;
+	margin-left: 13px;
+}
+.refer {
+	font-Size: 16px;
+	color: 000000 - 60%;
+	margin-left: 13px;
+}
+.studies {
+	font-Size: 34px;
+	color: #4a90e2;
+	margin-left: 13px;
+}
+.combineONE {
+	color: rgba(0, 0, 0, 0.87);
+	font-Size: 16px;
+	font-Weight: 400;
+	margin-Left: 3px;
+	margin-Bottom: 5px;
+}
+.combineTWO {
+	font-Size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+	font-Weight: 300;
+	margin-Left: 3px;
+}
+.read {
+	color: #4a90e2;
+	font-Size: 14px;
+	font-Weight: 500;
+	margin-Left: 3px;
+	margin-Top: 32px;
+}
+
+@media only screen and (max-width: 768px) {
+	.combineONE {
+		margin-left: 80px;
+		margin-Bottom: 3px;
+	}
+	.combineTWO {
+		margin-left: 80px;
+	}
+
+	.read {
+		margin-Left: 80px;
+		margin-Top: 0px;
+	}
+	SecondTwoItem {
+		margin-Bottom: 8px;
+	}
+}

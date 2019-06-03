@@ -14,7 +14,8 @@ const styles = {
 		marginTop: '40px',
 		color: 'rgba(0, 0, 0, 0.6000000238418579)',
 		fontFamily: 'Montserrat',
-		fontSize: '16px'
+		fontSize: '16px',
+		marginTop: '-13px'
 	},
 	card: {
 		maxWidth: 345
@@ -28,6 +29,9 @@ const styles = {
 	tittle1: {
 		color: '#4A90E2',
 		borderLeft: 'solid'
+	},
+	icon: {
+		color: '#4a90e2'
 	}
 };
 
@@ -37,7 +41,7 @@ class About extends React.Component {
 		return (
 			<div className={classes.root}>
 				<Grid container className="aboutSection">
-					<Grid item xs={5}>
+					<Grid item xs={12} sm={5}>
 						<div className="leftSection">
 							<div className="imgWrapper">
 								{
@@ -53,48 +57,18 @@ class About extends React.Component {
 							</div>
 						</div>
 					</Grid>
-					<Grid item xs={7}>
+					<Grid item xs={12} sm={7}>
 						<div className="RightSection">
 							<div className={classes.tittle1}>
 								<div className="about">About</div>
-								<div
-									style={{
-										fontSize: '34px',
-										color: '#4A90E2',
-										marginLeft: '10px'
-									}}
-								>
-									National Urban Stack
-								</div>
+								<div className="urban">National Urban Stack</div>
 							</div>
 
-							<div
-								style={{
-									padding: '8px',
-									marginLeft: '-7px',
-									fontSize: '20px',
-									color: '#rgba(0, 0, 0, 0.8700000047683716)',
-									fontStyle: 'italic',
-									fontWeight: '400',
-									width: '674px',
-									alignItems: 'left'
-								}}
-							>
+							<div className="paragraph1">
 								This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
 								Aenean sollicitudin
 							</div>
-							<div
-								style={{
-									padding: '8px',
-									marginLeft: '-7px',
-
-									fontSize: '16px',
-									color: 'rgba(0, 0, 0, 0.6000000238418579)',
-									fontFamily: 'Montserrat',
-									fontWeight: '300',
-									width: '610px'
-								}}
-							>
+							<div className="secondParagrph">
 								This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
 								Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis
 								sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi
@@ -106,40 +80,51 @@ class About extends React.Component {
 									<List>
 										<ListItem button>
 											<ListItemIcon>
-												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+												<StarIcon className={classes.icon} />
 											</ListItemIcon>
 											<ListItemText
-												style={{
-													color: 'rgba(0, 0, 0, 0.6000000238418579)',
-													fontFamily: 'Montserrat',
-													fontSize: '16px'
-												}}
+												className="listItem"
 												primary="Open, shared, extensible national digital infrastructure"
 											/>
 										</ListItem>
 										<ListItem button>
 											<ListItemIcon>
-												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+												<StarIcon className={classes.icon} />
 											</ListItemIcon>
-											<ListItemText primary="Acts as a Public Good with a federated architecture" />
+											<ListItemText
+												className="listItem"
+												primary="Acts as a Public Good with a federated architecture"
+											/>
 										</ListItem>
 										<ListItem button>
 											<ListItemIcon>
-												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+												<StarIcon className={classes.icon} />
 											</ListItemIcon>
-											<ListItemText primary="State Government(s) have strategic control" />
+											<ListItemText
+												className="listItem"
+												primary="State Government(s) have
+											strategic control"
+											/>
 										</ListItem>
 										<ListItem button>
 											<ListItemIcon>
-												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+												<StarIcon className={classes.icon} />
 											</ListItemIcon>
-											<ListItemText primary="Free of cost Technology Platform" />
+											<ListItemText
+												className="listItem"
+												primary="Free of cost Technology
+											Platform"
+											/>
 										</ListItem>
 										<ListItem button>
 											<ListItemIcon>
-												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
+												<StarIcon className={classes.icon} />
 											</ListItemIcon>
-											<ListItemText primary="Provide locally relevant solutions for cities" />
+											<ListItemText
+												className="listItem"
+												primary="Provide locally relevant
+											solutions for cities"
+											/>
 										</ListItem>
 									</List>
 								</div>
