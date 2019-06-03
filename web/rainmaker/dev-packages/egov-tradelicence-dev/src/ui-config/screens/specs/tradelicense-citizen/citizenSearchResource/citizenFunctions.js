@@ -10,11 +10,12 @@ import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import commonConfig from "config/common.js";
 
 const getMdmsData = async () => {
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: "pb",
+      tenantId: commonConfig.tenantId,
       moduleDetails: [
         {
           moduleName: "tenant",

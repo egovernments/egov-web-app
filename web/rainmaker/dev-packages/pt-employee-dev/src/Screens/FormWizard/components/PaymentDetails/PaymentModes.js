@@ -20,7 +20,7 @@ class PaymentModes extends Component {
           const { title, comp: TransactionForm, className } = form;
           return (
             <div className={className} key={index}>
-              <span className="mode-title">{title}</span>
+              <Label className="mode-title" label={title} />
               <TransactionForm onIconClick={this.onIconClick} />
             </div>
           );
