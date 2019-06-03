@@ -11,6 +11,7 @@ import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import isEqual from "lodash/isEqual";
 import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -46,7 +47,7 @@ class Property extends Component {
     const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "PropertyTax",

@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
+import commonConfig from "config/common.js";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
@@ -39,7 +40,7 @@ class YearDialog extends Component {
     const { fetchGeneralMDMSData, toggleSpinner } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "egf-master",

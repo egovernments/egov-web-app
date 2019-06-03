@@ -41,7 +41,11 @@ const formConfig = {
         var arr = formKey.split("_");
         var floorIndex = parseInt(arr[1]);
         const floorNo = get(state, `form.${formKey}.fields.floorName.value`);
-        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${floorIndex}].floorNo`, floorNo));
+        for (var variable in state.form) {
+          if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${floorIndex}`)) {
+            dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${state.form[variable].unitsIndex}].floorNo`, floorNo));
+          }
+        }
       },
     },
   },

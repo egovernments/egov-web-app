@@ -44,6 +44,13 @@ const accessoriesCard = {
             labelKey: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"
           },
           { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue" }
+        ),
+        reviewAccessoryCount: getLabelWithValue(
+          {
+            labelName: "Accessory Count",
+            labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT"
+          },
+          { jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count" }
         )
       })
     }),

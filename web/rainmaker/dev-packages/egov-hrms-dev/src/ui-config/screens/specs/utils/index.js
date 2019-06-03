@@ -16,6 +16,7 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import commonConfig from "config/common.js";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -744,11 +745,11 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     }
     let payload = await httpRequest(
       "post",
-      "/user/_search?tenantId=pb",
+      `/user/_search?tenantId=${commonConfig.tenantId}`,
       "_search",
       [],
       {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         userName: `${ownerNo}`
       }
     );
@@ -1912,7 +1913,11 @@ export const getAdminRole = state => {
       '["HRMS_ADMIN"]'
     )
   );
-  const stateTenantId = get(state, "common.stateInfoById[0].code", "pb");
+  const stateTenantId = get(
+    state,
+    "common.stateInfoById[0].code",
+    commonConfig.tenantId
+  );
   /** END */
 
   let hasAdminRole = false;
