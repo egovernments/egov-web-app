@@ -38,6 +38,11 @@ const MenuButton = Loadable({
   loading: () => <Loading />
 });
 
+const FormIcon = Loadable({
+  loader: () => import("./FormIcon"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -45,5 +50,6 @@ export {
   MapLocation,
   AutoSuggest,
   Asteric,
-  MenuButton
+  MenuButton,
+  FormIcon
 };
