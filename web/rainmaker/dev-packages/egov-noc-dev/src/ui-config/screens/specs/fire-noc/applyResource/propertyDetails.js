@@ -16,7 +16,7 @@ import get from "lodash/get";
 
 let previousUoms = [];
 
-const dynamic = (uom, path, index, buildingIndex) => {
+const dynamic = (uom, path, buildingIndex) => {
   return {
     ...getTextField({
       label: {
@@ -26,8 +26,7 @@ const dynamic = (uom, path, index, buildingIndex) => {
         labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
       },
       pattern: /^[0-9]*$/i,
-      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
-        index}].value`,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms.${uom}`,
       required: true,
       gridDefination: {
         xs: 12,
@@ -35,24 +34,93 @@ const dynamic = (uom, path, index, buildingIndex) => {
         md: 6
       }
     }),
-    componentJsonpath: `${path}.${uom}`,
-    afterFieldChange: (action, state, dispatch) => {
-      dispatch(
-        prepareFinalObject(
-          `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
-            index}].isActiveUom`,
-          true
-        )
-      );
-      dispatch(
-        prepareFinalObject(
-          `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
-            index}].code`,
-          uom
-        )
-      );
-    }
+    componentJsonpath: `${path}.${uom}`
+    // afterFieldChange: (action, state, dispatch) => {
+    //   dispatch(
+    //     prepareFinalObject(
+    //       `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
+    //         index}].isActiveUom`,
+    //       true
+    //     )
+    //   );
+    //   dispatch(
+    //     prepareFinalObject(
+    //       `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
+    //         index}].code`,
+    //       uom
+    //     )
+    //   );
+    // }
   };
+};
+
+const prepareSelectField = (uom, limit) => {
+  let data = [];
+  for (let i = 1; i <= limit; i++) {
+    data.push({ code: i });
+  }
+  return {
+    ...getSelectField({
+      label: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_LABEL`
+      },
+      placeholder: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
+      },
+      pattern: /^[0-9]*$/i,
+      errorMessage: "Invalid number",
+      required: true,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uoms.${uom}`,
+      data: data,
+      gridDefination: {
+        xs: 12,
+        sm: 12,
+        md: 6
+      }
+    })
+  };
+};
+
+const prepareTextField = uom => {
+  return {
+    ...getTextField({
+      label: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_LABEL`
+      },
+      placeholder: {
+        labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
+      },
+      pattern: /^[0-9]*$/i,
+      errorMessage: "Invalid Area",
+      // required: true,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uoms.${uom}`,
+      gridDefination: {
+        xs: 12,
+        sm: 12,
+        md: 6
+      }
+    })
+  };
+};
+
+const checkUomIsDefault = uom => {
+  if (
+    [
+      "NO_OF_FLOORS",
+      "NO_OF_BASEMENTS",
+      "PLOT_SIZE",
+      "BUILTUP_AREA",
+      "HEIGHT_OF_BUILDING"
+    ].indexOf(uom) >= 0
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const setMandatory = (dispatch, path, value) => {
+  dispatch(handleField("apply", path, "required", value));
+  dispatch(handleField("apply", path, "props.required", value));
 };
 
 const commonBuildingData = buildingType => {
@@ -90,7 +158,7 @@ const commonBuildingData = buildingType => {
           labelName: "Enter Name of the Building",
           labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_PLACEHOLDER"
         },
-        // required: true,
+        required: true,
         pattern: getPattern("TradeName"),
         errorMessage: "Invalid Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].name",
@@ -203,164 +271,35 @@ const commonBuildingData = buildingType => {
 
         // Remove previous dynamic uoms
         previousUoms.forEach(uom => {
-          dispatch(
-            handleField("apply", `${path}.${uom}`, "props.style", {
-              display: "none"
-            })
-          );
+          !checkUomIsDefault(uom) &&
+            dispatch(handleField("apply", `${path}.${uom}`, "visible", false));
         });
 
+        // Set required fields defaults
+        setMandatory(dispatch, `${path}.PLOT_SIZE`, false);
+        setMandatory(dispatch, `${path}.BUILTUP_AREA`, false);
+        setMandatory(dispatch, `${path}.HEIGHT_OF_BUILDING`, false);
+
         // Dynamically create UOM's based on building subtype selection
-        uoms.forEach((uom, index) => {
-          dispatch(
-            handleField(
-              "apply",
-              path,
-              uom,
-              dynamic(uom, path, index, buildingIndex)
-            )
-          );
+        uoms.forEach(uom => {
+          if (checkUomIsDefault(uom)) {
+            setMandatory(dispatch, `${path}.${uom}`, true);
+          } else {
+            dispatch(
+              handleField("apply", path, uom, dynamic(uom, path, buildingIndex))
+            );
+          }
         });
 
         // Set previous uoms array
         previousUoms = uoms;
       }
     },
-    noOfFloors: {
-      ...getSelectField({
-        label: {
-          labelName:
-            "No. Of Floors (Excluding Basement, Including Ground Floor)",
-          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_LABEL"
-        },
-        placeholder: {
-          labelName: "Select No. of Floors",
-          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_FLOORS_PLACEHOLDER"
-        },
-        pattern: /^[0-9]*$/i,
-        errorMessage: "Invalid number",
-        required: true,
-        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].noOfFloors",
-        data: [
-          {
-            code: "1"
-          },
-          {
-            code: "2"
-          },
-          {
-            code: "3"
-          },
-          {
-            code: "4"
-          },
-          {
-            code: "5"
-          },
-          {
-            code: "6"
-          },
-          {
-            code: "7"
-          },
-          {
-            code: "8"
-          },
-          {
-            code: "9"
-          },
-          {
-            code: "10"
-          }
-        ],
-        sourceJsonPath: "noc.noOfFloors",
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      })
-    },
-    noOfBasements: {
-      ...getSelectField({
-        label: {
-          labelName: "No. Of Basements",
-          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
-        },
-        placeholder: {
-          labelName: "Select No. Of Basements",
-          labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_PLACEHOLDER"
-        },
-        required: true,
-        pattern: /^[0-9]*$/i,
-        errorMessage: "Invalid number",
-        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].noOfBasements",
-        data: [
-          {
-            code: "1"
-          },
-          {
-            code: "2"
-          },
-          {
-            code: "3"
-          },
-          {
-            code: "4"
-          },
-          {
-            code: "5"
-          }
-        ],
-        sourceJsonPath: "noc.noOfBasements",
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      })
-    },
-    plotSize: plotSize,
-    groundFloorBuiltupArea: {
-      ...getTextField({
-        label: {
-          labelName: "Ground Floor Builtup Area (in Sq meters)",
-          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Ground Floor Builtup Area in Sq meters",
-          labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_PLACEHOLDER"
-        },
-        pattern: /^[0-9]*$/i,
-        errorMessage: "Invalid Area",
-        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].builtupArea",
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      })
-    },
-    heightOfBuilding: {
-      ...getTextField({
-        label: {
-          labelName: "Height of the Building from Ground level (in meters)",
-          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Height of the Building in meters",
-          labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_PLACEHOLDER"
-        },
-        pattern: /^[0-9]*$/i,
-        errorMessage: "Invalid Height",
-        jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].heightOfBuilding",
-        gridDefination: {
-          xs: 12,
-          sm: 12,
-          md: 6
-        }
-      })
-    }
+    NO_OF_FLOORS: prepareSelectField("NO_OF_FLOORS", 20),
+    NO_OF_BASEMENTS: prepareSelectField("NO_OF_BASEMENTS", 5),
+    PLOT_SIZE: prepareTextField("PLOT_SIZE"),
+    BUILTUP_AREA: prepareTextField("BUILTUP_AREA"),
+    HEIGHT_OF_BUILDING: prepareTextField("HEIGHT_OF_BUILDING")
   };
 };
 
