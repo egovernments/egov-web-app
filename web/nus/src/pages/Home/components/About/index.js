@@ -14,7 +14,7 @@ const styles = {
 		color: 'rgba(0, 0, 0, 0.6000000238418579)',
 		fontFamily: 'Montserrat',
 		fontSize: '16px',
-		marginTop: '-13px'
+		marginTop: '5px'
 	},
 	card: {
 		maxWidth: 345
@@ -42,8 +42,7 @@ class About extends React.Component {
 				<Grid container className="aboutSection">
 					<Grid item xs={12} sm={5}>
 						<div className="leftSection">
-							<div className="inner" style={{ backgroundImage: 'url(/img/about.jpg)' }} />
-							<div className="upper" style={{ backgroundImage: 'url(/img/upper.jpg)' }} />
+							<div className="inner" style={{ backgroundImage: 'url(/img/AboutImage.jpg)' }} />
 						</div>
 					</Grid>
 					<Grid item xs={12} sm={7}>

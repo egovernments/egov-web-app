@@ -8,6 +8,9 @@ import DocumentIcon from '../../../../icon/Document';
 import ExpandIcon from '../../../../icon/Expand';
 import NetworkIcon from '../../../../icon/Network';
 import GPSIcon from '../../../../icon/Gps';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 import './index.css';
 
 const styles = (theme) => ({
@@ -31,6 +34,22 @@ const styles = (theme) => ({
 	},
 	lineHorizontal: {
 		orientation: 'horizontal'
+	},
+	button: {
+		border: '1px solid #4a90e2',
+		borderRadius: '34px',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+
+		cursor: 'pointer'
+	},
+	buttonOne: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+
+		cursor: 'pointer'
 	}
 });
 
@@ -97,6 +116,18 @@ class How extends React.Component {
 						);
 					})}
 				</Stepper>
+
+				<div>
+					<Grid container>
+						<Grid item xs={12}>
+							<div className={classes.buttonOne}>
+								<Button variant="outlined" className={classes.button}>
+									Read More
+								</Button>
+							</div>
+						</Grid>
+					</Grid>
+				</div>
 			</div>
 		);
 	}

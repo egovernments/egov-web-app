@@ -10,15 +10,7 @@
 
 	margin-right: 20px;
 }
-.upper {
-	left: 75px;
-	height: 28vw;
-	min-width: 31vw;
-	top: 200px;
-	position: absolute;
 
-	border: 6px solid #ffffff;
-}
 .about {
 	font-Size: 16px;
 	color: rgba(0, 0, 0, 0.6000000238418579);
@@ -65,9 +57,5 @@
 	.inner {
 		min-width: 90vw;
 		height: 50vh;
-	}
-	.upper {
-		height: 50vh;
-		min-width: 75vw;
 	}
 }
