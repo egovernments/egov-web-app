@@ -32,12 +32,28 @@ const getCitizenReceipetData = tranformedData => {
                   },
                   {
                     text: "Property Tax Payment Receipt",
-                    style: "receipt-logo-sub-header"
+                    style: "receipt-logo-sub-header",
+                    margin: [0, 10, 0, 0]
                   }
                 ],
                 alignment: "left",
 
                 margin: [10, 23, 0, 0]
+              },
+              {
+                stack: [
+                  {
+                    text: "Receipt No",
+                    style: "receipt-logo-sub-header"
+                  },
+                  {
+                    text: tranformedData.receiptNumber,
+                    style: "receipt-logo-header",
+                    margin: [0, 10, 0, 0]
+                  }
+                ],
+                alignment: "center",
+                margin: [-250, 23, 0, 0]
               }
             ]
           ]
@@ -63,7 +79,7 @@ const getCitizenReceipetData = tranformedData => {
           {
             text: [
               {
-                text: "Contact No. ",
+                text: "Contact No ",
                 bold: true
               },
               {
@@ -71,7 +87,8 @@ const getCitizenReceipetData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -102,7 +119,8 @@ const getCitizenReceipetData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -196,6 +214,26 @@ const getCitizenReceipetData = tranformedData => {
                 text: tranformedData.g8ReceiptNo,
                 border: [false, true, true, true]
               }
+            ],
+            [
+              {
+                text: "Created By",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: tranformedData.createdBy,
+                border: [false, true, true, true]
+              },
+              {
+                text: "",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: "",
+                border: [false, true, true, true]
+              }
             ]
           ]
         },
@@ -285,7 +323,8 @@ const getCitizenReceipetData = tranformedData => {
       },
       "receipt-no": {
         color: "#484848",
-        fontSize: 10
+        fontSize: 13,
+        margin: []
       },
       "receipt-approver": {
         fontSize: 10,
@@ -322,12 +361,28 @@ const getReceiptData = tranformedData => {
                   },
                   {
                     text: "Property Tax Payment Receipt (Citizen Copy)",
-                    style: "receipt-logo-sub-header"
+                    style: "receipt-logo-sub-header",
+                    margin: [0, 10, 0, 0]
                   }
                 ],
                 alignment: "left",
 
                 margin: [10, 23, 0, 0]
+              },
+              {
+                stack: [
+                  {
+                    text: "Receipt No",
+                    style: "receipt-logo-sub-header"
+                  },
+                  {
+                    text: tranformedData.receiptNumber,
+                    style: "receipt-logo-header",
+                    margin: [0, 10, 0, 0]
+                  }
+                ],
+                alignment: "center",
+                margin: [-250, 23, 0, 0]
               }
             ]
           ]
@@ -353,7 +408,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Contact No. ",
+                text: "Contact No ",
                 bold: true
               },
               {
@@ -361,7 +416,8 @@ const getReceiptData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -392,7 +448,8 @@ const getReceiptData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -565,12 +622,28 @@ const getReceiptData = tranformedData => {
                   },
                   {
                     text: "Property Tax Payment Receipt (Employee Copy)",
-                    style: "receipt-logo-sub-header"
+                    style: "receipt-logo-sub-header",
+                    margin: [0, 10, 0, 0]
                   }
                 ],
                 alignment: "left",
 
                 margin: [10, 23, 0, 0]
+              },
+              {
+                stack: [
+                  {
+                    text: "Receipt No",
+                    style: "receipt-logo-sub-header"
+                  },
+                  {
+                    text: tranformedData.receiptNumber,
+                    style: "receipt-logo-header",
+                    margin: [0, 10, 0, 0]
+                  }
+                ],
+                alignment: "center",
+                margin: [-250, 23, 0, 0]
               }
             ]
           ]
@@ -596,7 +669,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Contact No. ",
+                text: "Contact No ",
                 bold: true
               },
               {
@@ -604,7 +677,8 @@ const getReceiptData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -635,7 +709,8 @@ const getReceiptData = tranformedData => {
                 bold: false
               }
             ],
-            alignment: "right"
+            alignment: "right",
+            margin: [100, 0, 0, 0]
           }
         ]
       },
@@ -729,6 +804,26 @@ const getReceiptData = tranformedData => {
                 text: tranformedData.g8ReceiptNo,
                 border: [false, true, true, true]
               }
+            ],
+            [
+              {
+                text: "Created By",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: tranformedData.createdBy,
+                border: [false, true, true, true]
+              },
+              {
+                text: "",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: "",
+                border: [false, true, true, true]
+              }
             ]
           ]
         },
@@ -818,7 +913,7 @@ const getReceiptData = tranformedData => {
       },
       "receipt-no": {
         color: "#484848",
-        fontSize: 10
+        fontSize: 13
       },
       "receipt-approver": {
         fontSize: 10,

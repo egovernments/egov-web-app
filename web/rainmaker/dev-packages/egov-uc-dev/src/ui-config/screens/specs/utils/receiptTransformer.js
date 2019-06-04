@@ -10,7 +10,7 @@ const ifNotNull = value => {
 };
 
 const nullToNa = value => {
-  return ["", "NA", "null", null].includes(value) ? "NA" : value;
+  return ["", "NA", "null", null].includes(value) ? "None" : value;
 };
 
 const epochToDate = et => {
@@ -67,6 +67,11 @@ export const loadReceiptData = async response => {
     data.paymentMode = nullToNa(
       get(response, "instrument.instrumentType.name", "NA")
     );
+    data.receiptNumber = get(
+      response,
+      "Bill[0].billDetails[0].receiptNumber",
+      null
+    );
     data.g8ReceiptNo = nullToNa(
       get(response, "Bill[0].billDetails[0].manualReceiptNumber", "None")
     );
@@ -83,7 +88,7 @@ export const loadReceiptData = async response => {
     ];
 
     data.createdBy =
-      get(response, "instrument.instrumentType.name") !== "Cash"
+      get(response, "instrument.instrumentType.name") !== "Online"
         ? await getEmployeeName(queryObj)
         : "NA";
   }
