@@ -62,13 +62,12 @@
 		margin-top: 450px;
 	}
 
-	.aboutSection .leftSection .innerImg img {
-		Height: 331px;
+	.inner {
+		min-width: 90vw;
+		height: 50vh;
 	}
-	.aboutSection .leftSection .upperImg img {
-		height: 273px;
-		margin-left: 70px;
-		margin-top: 150px;
-		border: 6px solid #ffffff;
+	.upper {
+		height: 50vh;
+		min-width: 75vw;
 	}
 }
