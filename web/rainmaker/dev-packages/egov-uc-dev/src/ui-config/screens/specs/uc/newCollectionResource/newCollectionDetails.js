@@ -133,11 +133,11 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     ConsumerName: getTextField({
       label: {
-        labelName: " consumer Name",
+        labelName: "Consumer Name",
         labelKey: "UC_CONS_NAME_LABEL"
       },
       placeholder: {
-        labelName: "Enter Consumer  Name",
+        labelName: "Enter Consumer Name",
         labelKey: "UC _CONS_NAME_LABEL_PLACEHOLDER"
       },
 
@@ -150,11 +150,11 @@ export const newCollectionDetailsCard = getCommonCard({
     serviceCategory: {
       ...getSelectField({
         label: {
-          labelName: "serviceCategory",
+          labelName: "Service Category",
           labelKey: "UC_SERVICE_CATEGORY_LABEL"
         },
         placeholder: {
-          labelName: "Select service Category ",
+          labelName: "Select service Category",
           labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
         },
         localePrefix: {

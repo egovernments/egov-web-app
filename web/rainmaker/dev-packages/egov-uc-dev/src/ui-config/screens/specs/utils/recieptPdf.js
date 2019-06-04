@@ -1,11 +1,13 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import store from "../../../../ui-redux/store";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { loadReceiptData } from "./receiptTransformer";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+const receiptTableWidth = ["*", "*", "*", "*"];
 const getCitizenReceipetData = tranformedData => {
   let citizenRecieptData = {
     content: [
@@ -23,9 +25,7 @@ const getCitizenReceipetData = tranformedData => {
                 margin: [41, 12, 10, 10]
               },
               {
-                //  "columns":[]
                 stack: [
-                  //   "columns":[
                   {
                     text: "AMRITSAR MUNCIPAL CORPORATION",
                     style: "receipt-logo-header"
@@ -114,32 +114,8 @@ const getCitizenReceipetData = tranformedData => {
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: [
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 66.630859375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 101.0302734375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            }
-          ],
+          widths: receiptTableWidth,
+
           body: [
             [
               {
@@ -339,9 +315,7 @@ const getReceiptData = tranformedData => {
                 margin: [41, 12, 10, 10]
               },
               {
-                //  "columns":[]
                 stack: [
-                  //   "columns":[
                   {
                     text: "AMRITSAR MUNCIPAL CORPORATION",
                     style: "receipt-logo-header"
@@ -430,32 +404,8 @@ const getReceiptData = tranformedData => {
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: [
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 66.630859375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 101.0302734375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            }
-          ],
+          widths: receiptTableWidth,
+
           body: [
             [
               {
@@ -536,6 +486,26 @@ const getReceiptData = tranformedData => {
                 text: tranformedData.g8ReceiptNo,
                 border: [false, true, true, true]
               }
+            ],
+            [
+              {
+                text: "Created By",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: tranformedData.createdBy,
+                border: [false, true, true, true]
+              },
+              {
+                text: "",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: "",
+                border: [false, true, true, true]
+              }
             ]
           ]
         },
@@ -588,9 +558,7 @@ const getReceiptData = tranformedData => {
                 margin: [41, 12, 10, 10]
               },
               {
-                //  "columns":[]
                 stack: [
-                  //   "columns":[
                   {
                     text: "AMRITSAR MUNCIPAL CORPORATION",
                     style: "receipt-logo-header"
@@ -679,32 +647,8 @@ const getReceiptData = tranformedData => {
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: [
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 66.630859375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 33.7158203125,
-              _maxWidth: 101.0302734375,
-              _calcWidth: 120.195
-            },
-            {
-              width: "*",
-              _minWidth: 13.740234375,
-              _maxWidth: 13.740234375,
-              _calcWidth: 120.195
-            }
-          ],
+          widths: receiptTableWidth,
+
           body: [
             [
               {
@@ -895,13 +839,16 @@ export const generateReciept = async rowData => {
     {}
   );
   let receipt_data = {};
+  let transformedData = {};
   if (getQueryArg(window.location.href, "receiptNumber")) {
     if (allReceipts.Receipt && _.isEmpty(allReceipts.Receipt[0])) {
       return;
     }
-    const transformedData =
-      (allReceipts.Receipt && loadReceiptData(allReceipts.Receipt[0])) || {};
-    receipt_data = getReceiptData(transformedData);
+    transformedData =
+      (allReceipts.Receipt &&
+        (await loadReceiptData(allReceipts.Receipt[0]))) ||
+      {};
+    receipt_data = !isEmpty(transformedData) && getReceiptData(transformedData);
   } else {
     const data = allReceipts.Receipt.find(
       item =>
@@ -911,10 +858,12 @@ export const generateReciept = async rowData => {
     if (_.isEmpty(data)) {
       return;
     }
-    const transformedData = loadReceiptData(data);
-    receipt_data = getReceiptData(transformedData);
+    transformedData = await loadReceiptData(data);
+    receipt_data = !isEmpty(transformedData) && getReceiptData(transformedData);
   }
-  receipt_data && pdfMake.createPdf(receipt_data).open();
+  receipt_data &&
+    !isEmpty(transformedData) &&
+    pdfMake.createPdf(receipt_data).open();
 };
 
 export const generateCitizenReciept = async rowData => {
@@ -934,6 +883,9 @@ export const generateCitizenReciept = async rowData => {
     return;
   }
   const transformedData = loadReceiptData(data);
-  citizenReceipt_data = getCitizenReceipetData(transformedData);
-  citizenReceipt_data && pdfMake.createPdf(citizenReceipt_data).open();
+  citizenReceipt_data =
+    !isEmpty(transformedData) && getCitizenReceipetData(transformedData);
+  citizenReceipt_data &&
+    !isEmpty(transformedData) &&
+    pdfMake.createPdf(citizenReceipt_data).open();
 };

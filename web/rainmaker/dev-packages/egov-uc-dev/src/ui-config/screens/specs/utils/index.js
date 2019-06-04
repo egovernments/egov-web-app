@@ -2,6 +2,7 @@ import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
@@ -265,4 +266,22 @@ export const getLabelOnlyValue = (value, props = {}) => {
       value: getCommonCaption(value)
     }
   };
+};
+
+export const getEmployeeName = async queryObject => {
+  try {
+    let employeeName = "";
+    const payload = await httpRequest(
+      "post",
+      "/egov-hrms/employees/_search",
+      "",
+      queryObject
+    );
+    if (payload && payload.Employees && payload.Employees.length > 0) {
+      employeeName = payload.Employees[0].user.name;
+    }
+    return employeeName;
+  } catch (e) {
+    console.log(e.message);
+  }
 };

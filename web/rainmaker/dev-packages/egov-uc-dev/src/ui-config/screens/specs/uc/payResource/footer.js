@@ -199,12 +199,17 @@ const callBackForPay = async (state, dispatch) => {
         "Receipt[0].Bill[0].billDetails[0].receiptNumber",
         null
       );
+      let serviceCategory = get(
+        response,
+        "Receipt[0].Bill[0].billDetails[0].businessService",
+        ""
+      );
       console.log(receiptNumber, response);
       dispatch(prepareFinalObject("receiptSearchResponse", response));
       // moveToSuccess(href, dispatch, receiptNumber);
       dispatch(
         setRoute(
-          `/uc/acknowledgement?purpose=pay&status=success&receiptNumber=${receiptNumber}`
+          `/uc/acknowledgement?purpose=pay&status=success&receiptNumber=${receiptNumber}&serviceCategory=${serviceCategory}`
         )
       );
     } catch (e) {
