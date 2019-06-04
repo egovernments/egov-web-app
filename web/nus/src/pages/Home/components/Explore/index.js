@@ -68,9 +68,18 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "450px",
-    marginTop: "10px",
+    // marginLeft: "450px",
+    // marginTop: "10px",
     cursor: "pointer"
+  },
+  buttonOne: {
+    // border: "1px solid #4a90e2",
+    // borderRadius: "34px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+    // marginLeft: "450px",
+    // marginTop: "10cursor: "pointer"
   }
 });
 
@@ -165,7 +174,7 @@ class Explore extends React.Component {
           })}
           <Grid container>
             <Grid item xs={12}>
-              <div>
+              <div className={classes.buttonOne}>
                 <Button variant="outlined" className={classes.button}>
                   Read More
                 </Button>

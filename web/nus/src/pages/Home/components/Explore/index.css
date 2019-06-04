@@ -14,7 +14,7 @@
   font-size: 34px;
   color: #4a90e2;
   font-family: Montserrat;
-  width: 100px;
+  width: 300px;
   height: 42px;
   padding-left: 50px;
   margin-top: 10px;
@@ -76,7 +76,8 @@
     */
   }
   .button {
-    width: 168px;
-    margin-left: 97px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
