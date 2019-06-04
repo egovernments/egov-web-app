@@ -25,7 +25,7 @@ const styles = {
 	displayInline: {
 		display: 'inline'
 	},
-	tittle1: {
+	tittleONE: {
 		color: '#4A90E2',
 		borderLeft: 'solid'
 	},
@@ -42,28 +42,18 @@ class About extends React.Component {
 				<Grid container className="aboutSection">
 					<Grid item xs={12} sm={5}>
 						<div className="leftSection">
-							<div className="imgWrapper">
-								{
-									<div className="innerImg">
-										<img alt="inner" src="/img/about.jpg" />
-									</div>
-								}
-								{
-									<div className="upperImg">
-										<img alt="upper" src="/img/upper.jpg" />
-									</div>
-								}
-							</div>
+							<div className="inner" style={{ backgroundImage: 'url(/img/about.jpg)' }} />
+							<div className="upper" style={{ backgroundImage: 'url(/img/upper.jpg)' }} />
 						</div>
 					</Grid>
 					<Grid item xs={12} sm={7}>
 						<div className="RightSection">
-							<div className={classes.tittle1}>
+							<div className={classes.tittleONE}>
 								<div className="about">About</div>
 								<div className="urban">National Urban Stack</div>
 							</div>
 
-							<div className="paragraph1">
+							<div className="paragraphONE">
 								This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.
 								Aenean sollicitudin
 							</div>
@@ -138,3 +128,16 @@ class About extends React.Component {
 	}
 }
 export default withStyles(styles)(About);
+
+/*<div className="imgWrapper">
+								{
+									<div className="innerImg">
+										<img alt="inner" src="/img/about.jpg" />
+									</div>
+								}
+								{
+									<div className="upperImg">
+										<img alt="upper" src="/img/upper.jpg" />
+									</div>
+								}
+							</div>*/

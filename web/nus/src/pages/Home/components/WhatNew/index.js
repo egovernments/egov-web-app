@@ -86,7 +86,7 @@ class WhatNew extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Grid container>
+			<Grid container spacing={8}>
 				<Grid item xs={12} md={6}>
 					<div className={classes.root}>
 						<div className="what">Whats New</div>

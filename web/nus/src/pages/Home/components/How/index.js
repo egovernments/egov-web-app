@@ -26,7 +26,7 @@ const styles = (theme) => ({
 		borderRadius: '50%',
 		color: '#4A90E2'
 	},
-	title1: {
+	titleONE: {
 		color: '#4A90E2'
 	},
 	lineHorizontal: {
@@ -74,9 +74,9 @@ class How extends React.Component {
 		return (
 			<div>
 				<div className={classes.root}>
-					<div className={classes.tittle1}>
-						<div className="tittle1">How</div>
-						<div1 className="tittle2">Implementation Plan</div1>
+					<div className={classes.tittleONE}>
+						<div className="tittleOne">How</div>
+						<div1 className="tittleTwo">Implementation Plan</div1>
 					</div>
 				</div>
 				<Stepper alternativeLabel nonLinear>
@@ -92,7 +92,7 @@ class How extends React.Component {
 								<div className="index">{index + 1}</div>
 
 								<div className="header">{label.header}</div>
-								<div classNmae="subheader">{label.subheader}</div>
+								<div className="subheader">{label.subheader}</div>
 							</Step>
 						);
 					})}
