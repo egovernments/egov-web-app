@@ -68,18 +68,15 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    // marginLeft: "450px",
-    // marginTop: "10px",
+
     cursor: "pointer"
   },
   buttonOne: {
-    // border: "1px solid #4a90e2",
-    // borderRadius: "34px",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
-    // marginLeft: "450px",
-    // marginTop: "10cursor: "pointer"
+    justifyContent: "center",
+
+    cursor: "pointer"
   }
 });
 
