@@ -126,11 +126,7 @@ const getMdmsData = async (action, state, dispatch) => {
         },
         {
           moduleName: "firenoc",
-          masterDetails: [
-            { name: "BuildingType" },
-            { name: "FireStations" },
-            { name: "Documents" }
-          ]
+          masterDetails: [{ name: "BuildingType" }, { name: "FireStations" }]
         },
         {
           moduleName: "egov-location",
@@ -147,7 +143,8 @@ const getMdmsData = async (action, state, dispatch) => {
               name: "tenants"
             }
           ]
-        }
+        },
+        { moduleName: "FireNoc", masterDetails: [{ name: "Documents" }] }
       ]
     }
   };

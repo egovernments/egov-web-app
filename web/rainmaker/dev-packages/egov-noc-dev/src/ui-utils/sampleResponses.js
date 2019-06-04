@@ -522,85 +522,38 @@ export const sampleSingleSearch = () => {
               locality: {
                 code: "SUN04"
               },
-              pincode: "431003"
+              pincode: "560102"
             }
           },
           noOfBuildings: "MULTIPLE",
           fireNOCType: "PROVISIONAL",
           buildings: [
             {
-              name: "Dsr Rainbow Heights",
+              name: "Dsrrh Indigo",
               usageType: "GROUP_A_RESIDENTIAL",
-              usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-3",
-              noOfFloors: "3",
-              noOfBasements: "2",
-              plotsize: "1000",
-              builtupArea: "2000",
-              heightOfBuilding: "5000",
-              applicationDocuments: [],
-              uoms: []
+              usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
+              uoms: [],
+              applicationDocuments: []
+            },
+            {
+              name: "dsrrh violet",
+              usageType: "GROUP_A_RESIDENTIAL",
+              usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
+              uoms: [],
+              applicationDocuments: []
             }
           ],
-          firestationId: "FS_AMRITSAR_01",
           applicantDetails: {
-            ownerShipType: "INDIVIDUAL.MULTIPLEOWNERS",
+            ownerShipMajorType: "INDIVIDUAL",
+            ownerShipType: "INDIVIDUAL.SINGLEOWNER",
             owners: [
               {
-                id: 23442,
-                userName: "9167765477",
-                salutation: null,
-                name: "Avijeet",
-                gender: "MALE",
                 mobileNumber: "9167765477",
-                emailId: "avi7@gm.com",
-                altContactNumber: null,
-                pan: "bnhpp5432k",
-                aadhaarNumber: null,
-                permanentAddress: "Some correspondance address",
-                permanentCity: null,
-                permanentPinCode: null,
-                correspondenceAddress: "corres",
-                correspondenceCity: null,
-                correspondencePinCode: null,
-                addresses: [
-                  {
-                    pinCode: null,
-                    city: null,
-                    address: "Some correspondance address",
-                    type: "PERMANENT",
-                    id: 48685,
-                    tenantId: "pb",
-                    userId: 23442,
-                    addressType: "PERMANENT",
-                    lastModifiedDate: null,
-                    lastModifiedBy: null
-                  }
-                ],
-                active: true,
-                locale: null,
-                type: "CITIZEN",
-                accountLocked: false,
-                accountLockedDate: 0,
-                fatherOrHusbandName: "A",
-                signature: null,
-                bloodGroup: null,
-                photo: null,
-                identificationMark: null,
-                createdBy: 0,
-                lastModifiedBy: 1,
-                tenantId: "pb",
-                roles: [
-                  {
-                    code: "CITIZEN",
-                    name: "Citizen",
-                    tenantId: "pb"
-                  }
-                ],
-                uuid: "d9fb76e8-3c65-4e11-9f5f-2998c0f8b8a6",
-                createdDate: 1532962200000,
-                lastModifiedDate: 1554819900000,
+                gender: "MALE",
+                name: "Avijeet",
+                correspondenceAddress: "corres addr",
+                fatherOrHusbandName: "a",
                 dob: "1991-06-28",
-                pwdExpiryDate: 1541451000000,
                 documents: []
               }
             ],
