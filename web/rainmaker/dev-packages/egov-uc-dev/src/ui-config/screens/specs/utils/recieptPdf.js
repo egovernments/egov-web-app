@@ -977,7 +977,7 @@ export const generateCitizenReciept = async rowData => {
   if (_.isEmpty(data)) {
     return;
   }
-  const transformedData = loadReceiptData(data);
+  const transformedData = await loadReceiptData(data);
   citizenReceipt_data =
     !isEmpty(transformedData) && getCitizenReceipetData(transformedData);
   citizenReceipt_data &&

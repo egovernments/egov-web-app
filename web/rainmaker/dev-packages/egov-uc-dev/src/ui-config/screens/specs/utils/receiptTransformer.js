@@ -83,7 +83,10 @@ export const loadReceiptData = async response => {
       },
       {
         key: "tenantId",
-        value: getTenantId()
+        value:
+          process.env.REACT_APP_NAME === "Employee"
+            ? getTenantId()
+            : response.tenantId
       }
     ];
 
