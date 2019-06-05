@@ -3,6 +3,8 @@ import {
   getLabel,
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import get from "lodash/get";
+import { setServiceCategory } from "../utils";
 import { UCSearchCard } from "./receiptsResources/ucSearch";
 //import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchResult } from "./receiptsResources/searchResult";
@@ -32,7 +34,9 @@ const getMDMSData = async (action, state, dispatch) => {
       moduleDetails: [
         {
           moduleName: "BillingService",
-          masterDetails: [{ name: "BusinessService" }]
+          masterDetails: [
+            { name: "BusinessService", filter: "[?(@.type=='Adhoc')]" }
+          ]
         }
       ]
     }
@@ -45,7 +49,17 @@ const getMDMSData = async (action, state, dispatch) => {
       [],
       mdmsBody
     );
-    dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+    // dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+    let serviceCategories = setServiceCategory(
+      get(payload, "MdmsRes.BillingService.BusinessService", []),
+      dispatch
+    );
+    dispatch(
+      prepareFinalObject(
+        "searchScreenMdmsData.serviceCategory",
+        serviceCategories
+      )
+    );
   } catch (e) {
     console.log(e);
   }

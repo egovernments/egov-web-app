@@ -1,10 +1,4 @@
-import {
-  getCommonHeader,
-  //getCommonCard,
-  //getCommonParagraph,
-  getCommonContainer,
-  getLabel
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import {
@@ -12,6 +6,9 @@ import {
   acknowledgementFailureFooter
 } from "./acknowledgementResource/acknowledgementFooter";
 import set from "lodash/set";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getSearchResults } from "../../../../ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const getAcknowledgementCard = (
   state,
@@ -22,19 +19,11 @@ const getAcknowledgementCard = (
   secondNumber,
   tenant
 ) => {
-  // const licenseFinancialYear = get(
-  //   state,
-  //   "screenConfiguration.preparedFinalObject.Licenses[0].financialYear"
-  // );
-  // const financialYearText = licenseFinancialYear
-  //   ? `(${licenseFinancialYear})`
-  //   : "";
   if (purpose === "pay" && status === "success") {
     return {
       header: getCommonHeader({
         labelName: `New Collection`,
         labelKey: "UC_COMMON_HEADER"
-        // dynamicArray: [financialYearText]
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -74,21 +63,10 @@ const getAcknowledgementCard = (
     };
   } else if (purpose === "pay" && status === "failure") {
     return {
-      // header: getCommonContainer({
       header: getCommonHeader({
-        labelName: `new collection`,
-        // dynamicArray: [financialYearText],
+        labelName: `New collection`,
         labelKey: "new collection"
       }),
-      // applicationNumber: {
-      //   uiFramework: "custom-atoms-local",
-      //   moduleName: "egov-uc",
-      //   componentPath: "ApplicationNoContainer",
-      //   props: {
-      //     number: applicationNumber
-      //   }
-      // }
-      // }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -112,6 +90,16 @@ const getAcknowledgementCard = (
   }
 };
 
+const getSearchData = async (dispatch, queryObj) => {
+  const response = await getSearchResults(queryObj);
+  response &&
+    response.Receipt &&
+    response.Receipt.length > 0 &&
+    dispatch(
+      prepareFinalObject("receiptSearchResponse.Receipt", response.Receipt)
+    );
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "acknowledgement",
@@ -128,12 +116,31 @@ const screenConfig = {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
     const receiptNumber = getQueryArg(window.location.href, "receiptNumber");
-    // const applicationNumber = getQueryArg(
-    //   window.location.href,
-    //   "applicationNumber"
-    // );
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
+    const serviceCategory = getQueryArg(
+      window.location.href,
+      "serviceCategory"
+    );
+    const tenantId = getTenantId();
+    const queryObject = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      { key: "offset", value: "0" },
+      {
+        key: "receiptNumbers",
+        value: receiptNumber
+      },
+      {
+        key: "businessCodes",
+        value: serviceCategory
+      }
+    ];
+
+    getSearchData(dispatch, queryObject);
+
     const data = getAcknowledgementCard(
       state,
       dispatch,
@@ -149,5 +156,3 @@ const screenConfig = {
 };
 
 export default screenConfig;
-
-// egov-ui-framework/uc/acknowledgement?purpose=pay&status=success

@@ -93,14 +93,14 @@ export const UCSearchCard = getCommonCard({
     serviceType: getSelectField({
       label: {
         labelName: "Service Category",
-        labelKey: "UC_SERVICE_TYPE_LABEL"
+        labelKey: "UC_SERVICE_CATEGORY_LABEL"
       },
       placeholder: {
         labelName: "Select Service Category",
-        labelKey: "UC_SERVICE_TYPE_PLACEHOLDER"
+        labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
       },
       required: true,
-      jsonPath: "searchScreen.businessCodes",
+      jsonPath: "searchScreen.serviceName",
       localePrefix: {
         masterName: "BusinessService",
         moduleName: "BillingService"
@@ -109,7 +109,7 @@ export const UCSearchCard = getCommonCard({
         xs: 12,
         sm: 4
       },
-      sourceJsonPath: "searchScreenMdmsData.BillingService.BusinessService"
+      sourceJsonPath: "searchScreenMdmsData.serviceCategory"
     }),
     mobileNo: getTextField({
       label: {
@@ -136,7 +136,7 @@ export const UCSearchCard = getCommonCard({
 
     fromDate: getDateField({
       label: {
-        labelName: "Select From Date",
+        labelName: "From Date",
         labelKey: "UC_FROM_DATE_LABEL"
       },
       placeholder: {
@@ -154,7 +154,7 @@ export const UCSearchCard = getCommonCard({
 
     toDate: getDateField({
       label: {
-        labelName: "Select To Date",
+        labelName: "To Date",
         labelKey: "UC_TO_DATE_LABEL"
       },
       placeholder: {

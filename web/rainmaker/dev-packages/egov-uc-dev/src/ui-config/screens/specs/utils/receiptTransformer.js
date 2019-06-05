@@ -1,15 +1,16 @@
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "../../../../ui-redux/store";
+import { getEmployeeName } from "../utils/index";
 import { getMdmsData } from "../utils";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
 };
 
 const nullToNa = value => {
-  return ["", "NA", "null", null].includes(value) ? "NA" : value;
+  return ["", "NA", "null", null].includes(value) ? "None" : value;
 };
 
 const epochToDate = et => {
@@ -35,7 +36,7 @@ export const loadUlbLogo = tenantid => {
   img.src = `/pb-egov-assets/${tenantid}/logo.png`;
 };
 
-export const loadReceiptData = response => {
+export const loadReceiptData = async response => {
   let data = {};
 
   if (response.Bill && response.Bill.length > 0) {
@@ -66,9 +67,33 @@ export const loadReceiptData = response => {
     data.paymentMode = nullToNa(
       get(response, "instrument.instrumentType.name", "NA")
     );
+    data.receiptNumber = get(
+      response,
+      "Bill[0].billDetails[0].receiptNumber",
+      null
+    );
     data.g8ReceiptNo = nullToNa(
       get(response, "Bill[0].billDetails[0].manualReceiptNumber", "None")
     );
+
+    const queryObj = [
+      {
+        key: "ids",
+        value: get(response, "auditDetails.createdBy")
+      },
+      {
+        key: "tenantId",
+        value:
+          process.env.REACT_APP_NAME === "Employee"
+            ? getTenantId()
+            : response.tenantId
+      }
+    ];
+
+    data.createdBy =
+      get(response, "instrument.instrumentType.name") !== "Online"
+        ? await getEmployeeName(queryObj)
+        : "NA";
   }
   return data;
   // store.dispatch(prepareFinalObject("receiptDataForReceipt", data));

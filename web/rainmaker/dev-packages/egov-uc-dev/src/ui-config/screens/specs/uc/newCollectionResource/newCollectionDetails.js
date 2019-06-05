@@ -60,7 +60,8 @@ export const newCollectionDetailsCard = getCommonCard({
                 moduleName: "BillingService",
                 masterDetails: [
                   {
-                    name: "BusinessService"
+                    name: "BusinessService",
+                    filter: "[?(@.type=='Adhoc')]"
                   },
                   {
                     name: "TaxHeadMaster"
@@ -133,11 +134,11 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     ConsumerName: getTextField({
       label: {
-        labelName: " consumer Name",
+        labelName: "Consumer Name",
         labelKey: "UC_CONS_NAME_LABEL"
       },
       placeholder: {
-        labelName: "Enter Consumer  Name",
+        labelName: "Enter Consumer Name",
         labelKey: "UC _CONS_NAME_LABEL_PLACEHOLDER"
       },
 
@@ -150,11 +151,11 @@ export const newCollectionDetailsCard = getCommonCard({
     serviceCategory: {
       ...getSelectField({
         label: {
-          labelName: "serviceCategory",
+          labelName: "Service Category",
           labelKey: "UC_SERVICE_CATEGORY_LABEL"
         },
         placeholder: {
-          labelName: "Select service Category ",
+          labelName: "Select service Category",
           labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
         },
         localePrefix: {
@@ -256,7 +257,7 @@ export const newCollectionDetailsCard = getCommonCard({
     },
     fromDate: getDateField({
       label: {
-        labelName: "Select from Date",
+        labelName: "From Date",
         labelKey: "UC_FROM_DATE_LABEL"
       },
       placeholder: {
@@ -273,7 +274,7 @@ export const newCollectionDetailsCard = getCommonCard({
     }),
     toDate: getDateField({
       label: {
-        labelName: "Select to Date",
+        labelName: "To Date",
         labelKey: "UC_TO_DATE_LABEL"
       },
       placeholder: {
