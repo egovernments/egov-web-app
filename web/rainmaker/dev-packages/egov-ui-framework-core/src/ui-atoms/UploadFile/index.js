@@ -9,14 +9,15 @@ const UploadFile = props => {
     buttonProps,
     inputProps,
     accept,
-    buttonLabel
+    buttonLabel,
+    id
   } = props;
   return (
     <div>
       <input
         accept={accept}
         className={classes.input}
-        id="contained-button-file"
+        id={id ? id : "contained-button-file"}
         multiple
         type="file"
         onChange={handleFileUpload}
@@ -25,7 +26,7 @@ const UploadFile = props => {
         }}
         {...inputProps}
       />
-      <label htmlFor="contained-button-file">
+      <label htmlFor={id ? id : "contained-button-file"}>
         <Button component="span" className={classes.button} {...buttonProps}>
           <LabelContainer {...buttonLabel} />
         </Button>

@@ -128,7 +128,7 @@ class PropertyTaxDetails extends React.Component {
                               (item.taxHeadCode === "PT_ADVANCE_CARRYFORWARD" ||
                                 item.category === "EXEMPTION" ||
                                 item.category === "REBATE")
-                                ? "- "
+                                ? ""
                                 : "") +
                               `${
                                 !(

@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { EMPLOYEE, CITIZEN, MDMS, EMPLOYEE_ASSIGN } from "egov-ui-kit/utils/endPoints";
 import cloneDeep from "lodash/cloneDeep";
+import commonConfig from "config/common.js";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
@@ -217,7 +218,7 @@ export const fetchpgrConstants = () => {
   return async (dispatch) => {
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "RAINMAKER-PGR",

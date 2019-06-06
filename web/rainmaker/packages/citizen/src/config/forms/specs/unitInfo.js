@@ -1,4 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import commonConfig from '../../common'
 const formConfig = {
   name: "unitInfo",
   fields: {
@@ -27,7 +28,7 @@ const formConfig = {
         queryParams: {},
         requestBody: {
           MdmsCriteria: {
-            tenantId: process.env.REACT_APP_DEFAULT_TENANT_ID,
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "PropertyTax",

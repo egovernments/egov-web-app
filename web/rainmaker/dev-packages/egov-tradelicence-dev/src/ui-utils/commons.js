@@ -27,7 +27,10 @@ import {
   getFileUrlFromAPI
 } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
+import {
+  setBusinessServiceDataToLocalStorage,
+  getMultiUnits
+} from "egov-ui-framework/ui-utils/commons";
 
 export const updateTradeDetails = async requestBody => {
   try {
@@ -84,34 +87,35 @@ const setDocsForEditFlow = async (state, dispatch) => {
     []
   );
   let uploadedDocuments = {};
-  let fileStoreIds = applicationDocuments
-    .map(item => item.fileStoreId)
-    .join(",");
+  let fileStoreIds =
+    applicationDocuments &&
+    applicationDocuments.map(item => item.fileStoreId).join(",");
   const fileUrlPayload =
     fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-  applicationDocuments.forEach((item, index) => {
-    uploadedDocuments[index] = [
-      {
-        fileName:
-          (fileUrlPayload &&
-            fileUrlPayload[item.fileStoreId] &&
-            decodeURIComponent(
-              fileUrlPayload[item.fileStoreId]
-                .split(",")[0]
-                .split("?")[0]
-                .split("/")
-                .pop()
-                .slice(13)
-            )) ||
-          `Document - ${index + 1}`,
-        fileStoreId: item.fileStoreId,
-        fileUrl: Object.values(fileUrlPayload)[index],
-        documentType: item.documentType,
-        tenantId: item.tenantId,
-        id: item.id
-      }
-    ];
-  });
+  applicationDocuments &&
+    applicationDocuments.forEach((item, index) => {
+      uploadedDocuments[index] = [
+        {
+          fileName:
+            (fileUrlPayload &&
+              fileUrlPayload[item.fileStoreId] &&
+              decodeURIComponent(
+                fileUrlPayload[item.fileStoreId]
+                  .split(",")[0]
+                  .split("?")[0]
+                  .split("/")
+                  .pop()
+                  .slice(13)
+              )) ||
+            `Document - ${index + 1}`,
+          fileStoreId: item.fileStoreId,
+          fileUrl: Object.values(fileUrlPayload)[index],
+          documentType: item.documentType,
+          tenantId: item.tenantId,
+          id: item.id
+        }
+      ];
+    });
   dispatch(
     prepareFinalObject("LicensesTemp[0].uploadedDocsInRedux", uploadedDocuments)
   );
@@ -261,37 +265,6 @@ const createOwnersBackup = (dispatch, payload) => {
     );
 };
 
-const getMultiUnits = multiUnits => {
-  let hasTradeType = false;
-  let hasAccessoryType = false;
-
-  let mergedUnits =
-    multiUnits &&
-    multiUnits.reduce((result, item) => {
-      hasTradeType = item.hasOwnProperty("tradeType");
-      hasAccessoryType = item.hasOwnProperty("accessoryCategory");
-      if (item && item !== null && (hasTradeType || hasAccessoryType)) {
-        if (item.hasOwnProperty("id")) {
-          if (item.hasOwnProperty("active") && item.active) {
-            if (item.hasOwnProperty("isDeleted") && !item.isDeleted) {
-              set(item, "active", false);
-              result.push(item);
-            } else {
-              result.push(item);
-            }
-          }
-        } else {
-          if (!item.hasOwnProperty("isDeleted")) {
-            result.push(item);
-          }
-        }
-      }
-      return result;
-    }, []);
-
-  return mergedUnits;
-};
-
 // const getMultipleAccessories = licenses => {
 //   let accessories = get(licenses, "tradeLicenseDetail.accessories");
 //   let mergedAccessories =
@@ -438,8 +411,6 @@ export const applyTradeLicense = async (state, dispatch, activeIndex) => {
           //   ...removedDocs
           // ]);
         } else if (activeIndex === 1) {
-          alert("active index 1");
-
           set(queryObject[0], "tradeLicenseDetail.applicationDocuments", null);
         } else action = "APPLY";
       }

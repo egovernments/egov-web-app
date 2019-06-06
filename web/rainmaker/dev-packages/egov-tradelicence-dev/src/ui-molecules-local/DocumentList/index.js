@@ -52,7 +52,7 @@ const styles = theme => ({
     padding: "8px 38px"
   },
   input: {
-    display: "none"
+    opacity: 0
   }
 });
 const documentTitle = {
@@ -152,6 +152,7 @@ class DocumentList extends Component {
     const { prepareFinalObject, documents, preparedFinalObject } = this.props;
     const jsonPath = documents[remDocIndex].jsonPath;
     getQueryArg(window.location.href, "action") === "edit" &&
+      uploadedDocuments[remDocIndex][0].id &&
       prepareFinalObject("LicensesTemp[0].removedDocs", [
         ...get(preparedFinalObject, "LicensesTemp[0].removedDocs", []),
         {
@@ -234,6 +235,7 @@ class DocumentList extends Component {
                   <Grid item={true} xs={12} sm={5} align="right">
                     <UploadSingleFile
                       classes={this.props.classes}
+                      id={`upload-button-${key}`}
                       handleFileUpload={e =>
                         handleFileUpload(e, this.handleDocument, this.props)
                       }

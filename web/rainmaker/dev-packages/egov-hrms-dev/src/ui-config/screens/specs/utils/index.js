@@ -15,6 +15,8 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import isUndefined from "lodash/isUndefined";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import commonConfig from "config/common.js";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -743,11 +745,11 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     }
     let payload = await httpRequest(
       "post",
-      "/user/_search?tenantId=pb",
+      `/user/_search?tenantId=${commonConfig.tenantId}`,
       "_search",
       [],
       {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         userName: `${ownerNo}`
       }
     );
@@ -1841,33 +1843,32 @@ export const setFilteredTradeTypes = (
 
 export const showCityPicker = (state, dispatch) => {
   let toggle = get(
-    state.screenConfiguration.screenConfig["home"],
+    state.screenConfiguration.screenConfig["search"],
     "components.cityPickerDialog.props.open",
     false
   );
   dispatch(
-    handleField("home", "components.cityPickerDialog", "props.open", !toggle)
+    handleField("search", "components.cityPickerDialog", "props.open", !toggle)
   );
 };
 
-export const applyForm = (state, dispatch) => {
+export const createEmployee = (state, dispatch) => {
   const tenantId = get(
     state.screenConfiguration.preparedFinalObject,
-    "citiesByModule.citizenTenantId"
+    "citiesByModule.tenantId.value"
   );
-
-  const isTradeDetailsValid = validateFields(
-    "components.cityPickerDialog.children.dialogContent.children.popup.children.cityPicker.children",
-    state,
-    dispatch,
-    "home"
-  );
-  if (isTradeDetailsValid) {
-    window.location.href =
-      process.env.NODE_ENV === "development"
-        ? `/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/hrms/egov-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
-  }
+  get(state.screenConfiguration.preparedFinalObject, "Employee") &&
+    dispatch(prepareFinalObject("Employee", []));
+  get(
+    state.screenConfiguration.preparedFinalObject,
+    "hrms.reviewScreen.furnishedRolesList"
+  ) && dispatch(prepareFinalObject("hrms.reviewScreen.furnishedRolesList", ""));
+  const tenantIdQueryString = tenantId ? `?tenantId=${tenantId}` : "";
+  const createUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/hrms/create${tenantIdQueryString}`
+      : `/hrms/create${tenantIdQueryString}`;
+  dispatch(setRoute(createUrl));
 };
 
 export const sortByEpoch = (data, order) => {
@@ -1897,4 +1898,38 @@ export const toggleDeactivateDialog = (state, dispatch) => {
   dispatch(
     handleField("view", "components.deactivateEmployee", "props.open", !toggle)
   );
+};
+
+// HRMS GET STATE ADMIN ROLE
+export const getAdminRole = state => {
+  let userInfo = JSON.parse(getUserInfo());
+  const currentUserRoles = get(userInfo, "roles");
+
+  /** REMOVE THESE 2 HARDCODES after moving StateInfo object to localStorage */
+  const configAdminRoles = JSON.parse(
+    get(
+      state,
+      "common.stateInfoById[0].roleMapping.hrmsAdmin",
+      '["HRMS_ADMIN"]'
+    )
+  );
+  const stateTenantId = get(
+    state,
+    "common.stateInfoById[0].code",
+    commonConfig.tenantId
+  );
+  /** END */
+
+  let hasAdminRole = false;
+  Array.isArray(currentUserRoles) &&
+    currentUserRoles.forEach(role => {
+      if (
+        Array.isArray(configAdminRoles) &&
+        configAdminRoles.includes(role.code) &&
+        role.tenantId === stateTenantId
+      ) {
+        hasAdminRole = true;
+      }
+    });
+  return { hasAdminRole: hasAdminRole, configAdminRoles: configAdminRoles };
 };

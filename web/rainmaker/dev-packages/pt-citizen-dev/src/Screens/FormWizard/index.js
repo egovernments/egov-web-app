@@ -62,6 +62,7 @@ import {
   getUserInfo,
   localStorageSet
 } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -805,6 +806,7 @@ class FormWizard extends Component {
         }/employee/property-tax/payment-redirect-page`;
       }
     }
+
     try {
       const getBill = !isCompletePayment
         ? await this.callGetBill(
@@ -814,6 +816,16 @@ class FormWizard extends Component {
             tenantId
           )
         : billResponse;
+      const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
+        item => {
+          if (item.businessService === "PT") {
+            item.amountPaid = isFullPayment
+              ? get(getBill, "Bill[0].billDetails[0].totalAmount")
+              : totalAmountToBePaid;
+          }
+          return item;
+        }
+      );
       try {
         const requestBody = {
           Transaction: {
@@ -822,8 +834,9 @@ class FormWizard extends Component {
               ? get(getBill, "Bill[0].billDetails[0].totalAmount")
               : totalAmountToBePaid,
             module: "PT",
+            taxAndPayments,
             billId: get(getBill, "Bill[0].id"),
-            moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
+            consumerCode: get(getBill, "Bill[0].billDetails[0].consumerCode"),
             productInfo: "Property Tax Payment",
             gateway: "AXIS",
             callbackUrl
@@ -1256,7 +1269,7 @@ const mapStateToProps = state => {
   const { propertyAddress } = form;
   const { city } =
     (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
-  const currentTenantId = (city && city.value) || "pb";
+  const currentTenantId = (city && city.value) || commonConfig.tenantId;
   return {
     form,
     prepareFormData: common.prepareFormData,

@@ -1,6 +1,6 @@
 import React from "react";
 // nodejs library that concatenates classes
-// import classNames from "classnames";
+
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -17,7 +17,7 @@ import GridItem from "@material-ui/core/Grid";
 import navPillsStyle from "./css.js";
 import LabelContainer from "egov-ui-framework/ui-containers/LabelContainer";
 
-class CustomTab extends React.Component {
+class NavPills extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +25,9 @@ class CustomTab extends React.Component {
     };
   }
   handleChange = (event, active) => {
+    const { handleClick } = this.props;
     this.setState({ active });
+    handleClick(active);
   };
   handleChangeIndex = index => {
     this.setState({ active: index });
@@ -94,12 +96,12 @@ class CustomTab extends React.Component {
   }
 }
 
-CustomTab.defaultProps = {
+NavPills.defaultProps = {
   active: 0,
   color: "primary"
 };
 
-CustomTab.propTypes = {
+NavPills.propTypes = {
   classes: PropTypes.object.isRequired,
   // index of the default active pill
   active: PropTypes.number,
@@ -126,4 +128,4 @@ CustomTab.propTypes = {
   alignCenter: PropTypes.bool
 };
 
-export default withStyles(navPillsStyle)(CustomTab);
+export default withStyles(navPillsStyle)(NavPills);

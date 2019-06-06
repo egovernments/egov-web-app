@@ -34,6 +34,7 @@ import {
 } from "../../../../ui-utils/commons";
 import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import commonConfig from "config/common.js";
 
 export const stepsData = [
   { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
@@ -47,18 +48,21 @@ export const stepper = getStepperObject(
 );
 
 export const header = getCommonContainer({
-  header: getCommonHeader({
-    labelName: `Apply for New Trade License ${
-      process.env.REACT_APP_NAME === "Citizen"
-        ? "(" + getCurrentFinancialYear() + ")"
-        : ""
-    }`,
-    dynamicArray: [getCurrentFinancialYear()],
-    labelKey:
-      process.env.REACT_APP_NAME === "Citizen"
-        ? "TL_COMMON_APPL_NEW_LICENSE"
-        : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
-  }),
+  header:
+    getQueryArg(window.location.href, "action") !== "edit"
+      ? getCommonHeader({
+          labelName: `Apply for New Trade License ${
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "(" + getCurrentFinancialYear() + ")"
+              : ""
+          }`,
+          dynamicArray: [getCurrentFinancialYear()],
+          labelKey:
+            process.env.REACT_APP_NAME === "Citizen"
+              ? "TL_COMMON_APPL_NEW_LICENSE"
+              : "TL_COMMON_APPL_NEW_LICENSE_YEAR"
+        })
+      : {},
   applicationNumber: {
     uiFramework: "custom-atoms-local",
     moduleName: "egov-tradelicence",
@@ -93,7 +97,7 @@ export const tradeDocumentDetails = getCommonCard({
 export const getMdmsData = async (action, state, dispatch) => {
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: "pb",
+      tenantId: commonConfig.tenantId,
       moduleDetails: [
         {
           moduleName: "TradeLicense",
@@ -210,16 +214,40 @@ export const getData = async (action, state, dispatch) => {
 
     await updatePFOforSearchResults(action, state, dispatch, applicationNo);
     if (!queryValue) {
+      const oldApplicationNo = get(
+        state.screenConfiguration.preparedFinalObject,
+        "Licenses[0].applicationNumber",
+        null
+      );
       dispatch(
-        prepareFinalObject(
-          "Licenses[0].oldLicenseNumber",
-          get(
-            state.screenConfiguration.preparedFinalObject,
-            "Licenses[0].applicationNumber",
+        prepareFinalObject("Licenses[0].oldLicenseNumber", oldApplicationNo)
+      );
+      if (oldApplicationNo !== null) {
+        dispatch(prepareFinalObject("Licenses[0].financialYear", ""));
+        dispatch(
+          prepareFinalObject(
+            "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+            "APPLICATIONTYPE.RENEWAL"
+          )
+        );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.financialYear",
+            "props.value",
             ""
           )
-        )
-      );
+        );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.applicationType",
+            "props.value",
+            "APPLICATIONTYPE.RENEWAL"
+          )
+        );
+      }
+
       dispatch(prepareFinalObject("Licenses[0].applicationNumber", ""));
       dispatch(
         handleField(

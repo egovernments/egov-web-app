@@ -5,15 +5,21 @@ import { Footer } from "../../ui-molecules-local";
 import {
   getQueryArg,
   addWflowFileUrl,
-  orderWfProcessInstances
+  orderWfProcessInstances,
+  getMultiUnits
 } from "egov-ui-framework/ui-utils/commons";
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
+
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import find from "lodash/find";
-import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  localStorageGet,
+  getUserInfo
+} from "egov-ui-kit/utils/localStorageUtils";
 import orderBy from "lodash/orderBy";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
@@ -101,10 +107,31 @@ class WorkFlowContainer extends React.Component {
         "LicensesTemp[0].removedDocs",
         []
       );
+      if (Licenses[0] && Licenses[0].commencementDate) {
+        Licenses[0].commencementDate = convertDateToEpoch(
+          Licenses[0].commencementDate,
+          "dayend"
+        );
+      }
+      let owners = get(Licenses[0], "tradeLicenseDetail.owners");
+      owners = (owners && this.convertOwnerDobToEpoch(owners)) || [];
+      set(Licenses[0], "tradeLicenseDetail.owners", owners);
       set(Licenses[0], "tradeLicenseDetail.applicationDocuments", [
         ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
         ...removedDocs
       ]);
+      let accessories = get(Licenses[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(Licenses[0], "tradeLicenseDetail.tradeUnits");
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.tradeUnits",
+        getMultiUnits(tradeUnits)
+      );
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.accessories",
+        getMultiUnits(accessories)
+      );
     }
     const applicationNumber = getQueryArg(
       window.location.href,
@@ -265,8 +292,18 @@ class WorkFlowContainer extends React.Component {
     );
     const data = find(businessServiceData, { businessService: "NewTL" });
     const state = find(data.states, { applicationStatus: status });
+    let actions = [];
+    state.actions &&
+      state.actions.forEach(item => {
+        actions = [...actions, ...item.roles];
+      });
+    const userRoles = JSON.parse(getUserInfo()).roles;
+    const roleIndex = userRoles.findIndex(item => {
+      if (actions.indexOf(item.code) > -1) return true;
+    });
+
     let editAction = {};
-    if (state.isStateUpdatable) {
+    if (state.isStateUpdatable && actions.length > 0 && roleIndex > -1) {
       editAction = {
         buttonLabel: "EDIT",
         moduleName: "NewTL",
@@ -316,6 +353,21 @@ class WorkFlowContainer extends React.Component {
     let editAction = getActionIfEditable(applicationStatus, businessId);
     editAction.buttonLabel && actions.push(editAction);
     return actions;
+  };
+
+  convertOwnerDobToEpoch = owners => {
+    let updatedOwners =
+      owners &&
+      owners
+        .map(owner => {
+          return {
+            ...owner,
+            dob:
+              owner && owner !== null && convertDateToEpoch(owner.dob, "dayend")
+          };
+        })
+        .filter(item => item && item !== null);
+    return updatedOwners;
   };
 
   render() {

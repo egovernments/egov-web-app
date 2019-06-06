@@ -6,6 +6,7 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { textToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 export const getDeptName = (state, codes) => {
   let deptMdmsData = get(
@@ -32,11 +33,15 @@ export const getDesigName = (state, codes) => {
 };
 
 export const searchApiCall = async (state, dispatch) => {
+  let { localisationLabels } = state.app || {};
   showHideTable(false, dispatch);
+  const tenantId =
+    get(state.screenConfiguration.preparedFinalObject, "searchScreen.ulb") ||
+    JSON.parse(getUserInfo()).tenantId;
   let queryObject = [
     {
       key: "tenantId",
-      value: JSON.parse(getUserInfo()).tenantId
+      value: tenantId
     }
   ];
   let searchScreenObject = get(
@@ -107,7 +112,6 @@ export const searchApiCall = async (state, dispatch) => {
             return assignment.department;
           });
 
-        // console.log(getDeptName(state, currentDepartments));
         return {
           [get(textToLocalMapping, "Employee ID")]:
             get(item, "code", "-") || "-",
@@ -121,7 +125,8 @@ export const searchApiCall = async (state, dispatch) => {
           [get(textToLocalMapping, "Designation")]:
             getDesigName(state, currentDesignations) || "-",
           [get(textToLocalMapping, "Department")]:
-            getDeptName(state, currentDepartments) || "-"
+            getDeptName(state, currentDepartments) || "-",
+          [get(textToLocalMapping, "Tenant ID")]: get(item, "tenantId", "-")
         };
       });
 

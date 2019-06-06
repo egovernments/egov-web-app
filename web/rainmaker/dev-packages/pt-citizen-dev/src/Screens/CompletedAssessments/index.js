@@ -11,96 +11,128 @@ import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
+import commonConfig from "config/common.js";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
 const innerDivStyle = {
-  padding:"0px",
-  borderBottom: "1px solid #e0e0e0",
+  padding: "0px",
+  borderBottom: "1px solid #e0e0e0"
 };
 
 const secondaryTextLabelStyle = {
-  letterSpacing: 0.5,
+  letterSpacing: 0.5
 };
 
 const primaryTextLabelStyle = {
-  letterSpacing: 0.6,
+  letterSpacing: 0.6
 };
 
 const secondaryTextContainer = {
-  marginTop: 5,
+  marginTop: 5
 };
 class CompletedAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
-    height: "20px",
+    height: "20px"
   };
   state = {
     dialogueOpen: false,
     items: [
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+        primaryText: (
+          <Label
+            label="INR 1300.00"
+            fontSize="16px"
+            color="#484848"
+            bold={true}
+            labelStyle={primaryTextLabelStyle}
+          />
+        ),
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="2016-2017"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
             <Label
               label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
               containerStyle={secondaryTextContainer}
               labelStyle={secondaryTextLabelStyle}
             />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="Assessment No.: ZRN-453-98"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
           </div>
         ),
         date: "12-06-2018",
         status: "Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-    ],
+        statusIcon: (
+          <Icon
+            action="navigation"
+            name="check"
+            style={this.iconStyle}
+            color={"#22b25f"}
+          />
+        ),
+        receipt: true
+      }
+    ]
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, userInfo, fetchGeneralMDMSData, getAssesmentsandStatus, form, removeForm } = this.props;
+    const {
+      addBreadCrumbs,
+      title,
+      userInfo,
+      fetchGeneralMDMSData,
+      getAssesmentsandStatus,
+      form,
+      removeForm
+    } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
     //getFetchGeneralMDMSData(fetchGeneralMDMSData);
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "PropertyTax",
             masterDetails: [
               {
-                name: "Floor",
+                name: "Floor"
               },
               {
-                name: "UsageCategoryMajor",
+                name: "UsageCategoryMajor"
               },
               {
-                name: "UsageCategoryMinor",
+                name: "UsageCategoryMinor"
               },
               {
-                name: "UsageCategorySubMinor",
+                name: "UsageCategorySubMinor"
               },
               {
-                name: "OccupancyType",
+                name: "OccupancyType"
               },
               {
-                name: "PropertyType",
+                name: "PropertyType"
               },
               {
-                name: "PropertySubType",
+                name: "PropertySubType"
               },
               {
-                name: "OwnerType",
+                name: "OwnerType"
               },
               {
-                name: "UsageCategoryDetail",
-              },
-            ],
-          },
-        ],
-      },
+                name: "UsageCategoryDetail"
+              }
+            ]
+          }
+        ]
+      }
     };
     fetchGeneralMDMSData(requestBody, "PropertyTax", [
       "Floor",
@@ -111,7 +143,7 @@ class CompletedAssessments extends Component {
       "PropertyType",
       "PropertySubType",
       "OwnerType",
-      "UsageCategoryDetail",
+      "UsageCategoryDetail"
     ]);
     getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
     resetFormWizard(form, removeForm);
@@ -123,12 +155,18 @@ class CompletedAssessments extends Component {
 
   onNewPropertyButtonClick = () => {
     this.setState({
-      dialogueOpen: true,
+      dialogueOpen: true
     });
   };
 
   render() {
-    const { urls, history, loading, sortedProperties, generalMDMSDataById } = this.props;
+    const {
+      urls,
+      history,
+      loading,
+      sortedProperties,
+      generalMDMSDataById
+    } = this.props;
     return (
       <Screen loading={loading} className="screen-with-bredcrumb">
         <BreadCrumbs url={urls} history={history} />
@@ -150,23 +188,31 @@ class CompletedAssessments extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { properties, common, app, form } = state;
   const { localizationLabels } = app;
   const { cities, generalMDMSDataById } = common;
   const { urls } = state.app;
   const { assessmentsByStatus, loading } = properties || {};
-  const completedAssessments = getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels);
-  const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  const completedAssessments = getCompletedTransformedItems(
+    assessmentsByStatus,
+    cities,
+    localizationLabels
+  );
+  const sortedProperties =
+    completedAssessments &&
+    orderby(completedAssessments, ["epocDate"], ["desc"]);
   return { sortedProperties, urls, loading, form, generalMDMSDataById };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
-    removeForm: (formkey) => dispatch(removeForm(formkey)),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    addBreadCrumbs: url => dispatch(addBreadCrumbs(url)),
+    getAssesmentsandStatus: queryObj =>
+      dispatch(getAssesmentsandStatus(queryObj)),
+    removeForm: formkey => dispatch(removeForm(formkey)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) =>
+      dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName))
   };
 };
 

@@ -57,10 +57,12 @@ import {
   validateUnitandPlotSize,
   normalizePropertyDetails,
   getImportantDates,
-  renderPlotAndFloorDetails
+  renderPlotAndFloorDetails,
+  removeAdhocIfDifferentFY
 } from "egov-ui-kit/utils/PTCommon/FormWizardUtils";
 import sortBy from "lodash/sortBy";
 import { getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 class FormWizard extends Component {
   state = {
@@ -211,10 +213,26 @@ class FormWizard extends Component {
         const documentTypeMdms = await getDocumentTypes();
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
-
-      if (isReassesment && activeModule) {
-        this.props.handleFieldChange("propertyAddress", "city", activeModule);
+      if (isReassesment) {
+        activeModule &&
+          this.props.handleFieldChange("propertyAddress", "city", activeModule);
+        let prepareFormData = get(
+          currentDraft,
+          "draftRecord.prepareFormData",
+          {}
+        );
+        let lastAssessedFY = get(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].financialYear"
+        );
+        lastAssessedFY !== financialYearFromQuery &&
+          (prepareFormData = removeAdhocIfDifferentFY(
+            prepareFormData,
+            financialYearFromQuery
+          ));
+        set(currentDraft, "draftRecord.prepareFormData", prepareFormData);
       }
+
       updatePrepareFormDataFromDraft(
         get(currentDraft, "draftRecord.prepareFormData", {})
       );
@@ -911,6 +929,18 @@ class FormWizard extends Component {
       "Receipt[0].Bill[0].billDetails[0].amountPaid",
       this.state.totalAmountToBePaid
     );
+    //CS v1.1 changes
+    set(
+      prepareFormData,
+      "Receipt[0].Bill[0].taxAndPayments[0].amountPaid",
+      this.state.totalAmountToBePaid
+    );
+    set(
+      prepareFormData,
+      "Receipt[0].Bill[0].billDetails[0].collectionType",
+      "COUNTER" // HardCoding collectionType to COUNTER - Discussed with BE
+    );
+    //----------------
     set(
       prepareFormData,
       "Receipt[0].instrument.tenantId",
@@ -997,7 +1027,7 @@ class FormWizard extends Component {
       set(
         prepareFormData,
         "Receipt[0].Bill[0].paidBy",
-        get(prepareFormData, "Receipt[0].Bill[0].payeeName")
+        get(prepareFormData, "Receipt[0].Bill[0].payerName")
       );
     }
 
@@ -1023,6 +1053,7 @@ class FormWizard extends Component {
       console.log(e);
       set(prepareFormData, "Receipt[0].Bill", []);
       set(prepareFormData, "Receipt[0].instrument", {});
+      hideSpinner();
       this.props.history.push(
         `payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`
       );
@@ -1033,6 +1064,7 @@ class FormWizard extends Component {
   estimate = async () => {
     let { form, common, showSpinner, hideSpinner } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
+
     showSpinner();
     if (
       get(
@@ -1128,6 +1160,7 @@ class FormWizard extends Component {
         prepareFormData.Properties,
         this
       );
+
       let estimateResponse = await httpRequest(
         "pt-calculator-v2/propertytax/_estimate",
         "_estimate",
@@ -1469,7 +1502,7 @@ const mapStateToProps = state => {
   const { propertyAddress } = form;
   const { city } =
     (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
-  const currentTenantId = (city && city.value) || "pb";
+  const currentTenantId = (city && city.value) || commonConfig.tenantId;
   return {
     form,
     currentTenantId,

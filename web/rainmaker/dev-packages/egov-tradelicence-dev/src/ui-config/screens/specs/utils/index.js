@@ -23,6 +23,7 @@ import {
   getUserInfo,
   localStorageGet
 } from "egov-ui-kit/utils/localStorageUtils";
+import commonConfig from "config/common.js";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -830,11 +831,11 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       //New number search only
       let payload = await httpRequest(
         "post",
-        "/user/_search?tenantId=pb",
+        `/user/_search?tenantId=${commonConfig.tenantId}`,
         "_search",
         [],
         {
-          tenantId: "pb",
+          tenantId: commonConfig.tenantId,
           userName: `${ownerNo}`
         }
       );
@@ -939,7 +940,9 @@ export const prepareDocumentTypeObj = documents => {
 
 const getTaxValue = item => {
   return item
-    ? item.debitAmount
+    ? item.amount
+      ? item.amount
+      : item.debitAmount
       ? -Math.abs(item.debitAmount)
       : item.crAmountToBePaid
       ? item.crAmountToBePaid
@@ -1021,7 +1024,12 @@ const getEstimateData = (Bill, getFromReceipt, LicenseData) => {
   }
 };
 
-const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
+const getBillingSlabData = async (
+  dispatch,
+  billingSlabIds,
+  tenantId,
+  accessories
+) => {
   const { accesssoryBillingSlabIds, tradeTypeBillingSlabIds } =
     billingSlabIds || {};
   if (accesssoryBillingSlabIds || tradeTypeBillingSlabIds) {
@@ -1067,9 +1075,14 @@ const getBillingSlabData = async (dispatch, billingSlabIds, tenantId) => {
                 type: "trade"
               });
             } else {
-              accessoriesTotal = accessoriesTotal + item.rate;
+              const count = accessories.find(
+                accessory =>
+                  item.accessoryCategory === accessory.accessoryCategory
+              ).count;
+              accessoriesTotal = accessoriesTotal + item.rate * count;
               result.accessoryData.push({
                 rate: item.rate,
+                total: item.rate * count,
                 category: item.accessoryCategory,
                 type: "accessories"
               });
@@ -1191,9 +1204,10 @@ export const createEstimateData = async (
         getEstimateData(payload.billResponse.Bill, false, LicenseData)
     : [];
   dispatch(prepareFinalObject(jsonPath, estimateData));
+  const accessories = get(LicenseData, "tradeLicenseDetail.accessories", []);
   payload &&
     payload.billingSlabIds &&
-    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId);
+    getBillingSlabData(dispatch, payload.billingSlabIds, tenantId, accessories);
 
   /** Waiting for estimate to load while downloading confirmation form */
   var event = new CustomEvent("estimateLoaded", { detail: true });
@@ -1207,7 +1221,7 @@ export const getCurrentFinancialYear = () => {
   var today = new Date();
   var curMonth = today.getMonth();
   var fiscalYr = "";
-  if (curMonth > 2) {
+  if (curMonth >= 3) {
     var nextYr1 = (today.getFullYear() + 1).toString();
     fiscalYr = today.getFullYear().toString() + "-" + nextYr1;
   } else {
@@ -1367,13 +1381,23 @@ export const fetchBill = async (action, state, dispatch) => {
       prepareFinalObject("ReceiptTemp[0].Bill[0]", payload.billResponse.Bill[0])
     );
 
-  //set amount paid as total amount from bill
+  //set amount paid as total amount from bill - destination changed in CS v1.1
   payload &&
     payload.billResponse &&
     dispatch(
       prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
         payload.billResponse.Bill[0].billDetails[0].totalAmount
+      )
+    );
+
+  //Collection Type Added in CS v1.1
+  payload &&
+    payload.billResponse &&
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+        "COUNTER"
       )
     );
 
