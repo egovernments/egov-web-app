@@ -15,15 +15,16 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
     const { name: formKey, fields } = form;
     let formData = null;
     try {
-      Object.keys(fields).map((key) => {
-        let item = fields[key];
-        if (item.dataFetchConfig && !item.dataFetchConfig.isDependent) {
-          switch (item.type) {
-            case "singleValueList":
-              fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, state);
+      fields &&
+        Object.keys(fields).map((key) => {
+          let item = fields[key];
+          if (item.dataFetchConfig && !item.dataFetchConfig.isDependent) {
+            switch (item.type) {
+              case "singleValueList":
+                fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, state);
+            }
           }
-        }
-      });
+        });
     } catch (error) {
       const { message } = error;
       dispatch(toggleSnackbarAndSetText(true, { labelName: message, labelKey: message }, true));

@@ -3,6 +3,7 @@ import { setDependentFields } from "egov-ui-kit/config/forms/specs/PropertyTaxPa
 import get from "lodash/get";
 import set from "lodash/set";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import commonConfig from '../../../common'
 
 const formConfig = {
   name: "ownerInfo",
@@ -96,7 +97,7 @@ const formConfig = {
         queryParams: [],
         requestBody: {
           MdmsCriteria: {
-            tenantId: process.env.REACT_APP_DEFAULT_TENANT_ID,
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "PropertyTax",

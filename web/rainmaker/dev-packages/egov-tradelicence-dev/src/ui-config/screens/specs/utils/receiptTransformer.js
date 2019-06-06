@@ -8,7 +8,15 @@ import {
   getUserDataFromUuid,
   getFinancialYearDates
 } from "../utils";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocalization,
+  getLocale
+} from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getUlbGradeLabel,
+  getTranslatedLabel,
+  transformById
+} from "egov-ui-framework/ui-utils/commons";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -300,6 +308,10 @@ export const loadReceiptData = async (consumerCode, tenant) => {
 };
 
 export const loadMdmsData = async tenantid => {
+  let localStorageLabels = JSON.parse(
+    window.localStorage.getItem(`localization_${getLocale()}`)
+  );
+  let localizationLabels = transformById(localStorageLabels, "code");
   let data = {};
   let queryObject = [
     {
@@ -326,21 +338,19 @@ export const loadMdmsData = async tenantid => {
       return item.code == tenantid;
     });
     /** START Corporation name generation logic */
-    let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
-    let name = get(ulbData, "city.name", "NA");
-    if (ulbGrade) {
-      if (ulbGrade === "NP") {
-        data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
-      } else if (ulbGrade === "Municipal Corporation") {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      } else if (ulbGrade.includes("MC Class")) {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
-      } else {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      }
-    } else {
-      data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    }
+    const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
+      ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
+      : "MUNICIPAL CORPORATION";
+
+    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
+      .toUpperCase()
+      .replace(/[.]/g, "_")}`;
+
+    data.corporationName = `${getTranslatedLabel(
+      cityKey,
+      localizationLabels
+    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
+
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
     data.corporationContact = get(ulbData, "contactNumber", "NA");
