@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
-import { handleFieldChange, submitForm } from "egov-ui-kit/redux/form/actions";
+import { handleFieldChange, submitForm, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 import { Screen } from "modules/common";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -23,11 +23,12 @@ class OTP extends Component {
   }
 
   sendOtpForAutoLogin = async () => {
-    const { phoneNumber } = this.props;
+    const { phoneNumber, setFieldProperty } = this.props;
     if (phoneNumber) {
-      const formResponse = await httpRequest(`/user-otp/v1/_send?tenantId=pb`, "_send", [], {
+      await httpRequest(`/user-otp/v1/_send?tenantId=pb`, "_send", [], {
         otp: { mobileNumber: phoneNumber, type: "login", tenantId: commonConfig.tenantId },
       });
+      setFieldProperty("otp", "otp", "phone", phoneNumber);
     }
   };
 
@@ -91,6 +92,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
     sendOTP: (otp) => dispatch(sendOTP(otp)),
+    setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) => dispatch(setFieldProperty(formKey, fieldKey, propertyName, propertyValue)),
   };
 };
 

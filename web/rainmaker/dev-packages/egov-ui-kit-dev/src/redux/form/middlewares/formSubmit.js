@@ -35,10 +35,14 @@ const formSubmit = (store) => (next) => (action) => {
         dispatch(toggleSnackbarAndSetText(true, { labelName: mdmsToast, labelKey: mdmsToast }, false));
       }
     }
-    debugger;
     // for login/register flow
     if (formKey === "otp") {
-      redirectionRoute = "/";
+      const previousRoute = get(state.app, "previousRoute", "");
+      if (previousRoute.indexOf("smsLink=true") > 0) {
+        redirectionRoute = previousRoute;
+      } else {
+        redirectionRoute = "/";
+      }
       delete payload.ResponseInfo;
       dispatch(authenticated(payload));
     }

@@ -89,10 +89,7 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    console.log(queryObject);
-
     const responseFromAPI = await getSearchResults(queryObject);
-    console.log(responseFromAPI);
     dispatch(prepareFinalObject("receiptSearchResponse", responseFromAPI));
     const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
     const response = [];
@@ -106,7 +103,6 @@ export const searchApiCall = async (state, dispatch) => {
         status: Receipt[i].Bill[0].billDetails[0].status
       };
     }
-    console.log(response);
 
     try {
       let data = response.map(item => ({

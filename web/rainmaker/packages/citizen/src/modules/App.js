@@ -71,12 +71,10 @@ class App extends Component {
 
   handleSMSLinks = () => {
     const { authenticated, setPreviousRoute, setRoute, handleFieldChange } = this.props;
-    const link = window.location.href;
-    const mobileNo = getQueryArg("", "mobileNo");
+    const { pathname, search } = window.location;
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
-      setPreviousRoute(link);
-      // handleFieldChange("app", "mobileNo", mobileNo);
+      setPreviousRoute(pathname + search);
     }
   };
 
