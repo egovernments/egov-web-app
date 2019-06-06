@@ -1,6 +1,6 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
-// import { getSelectedTabIndex } from "egov-ui-framework/ui-utils/commons";
+import { getSelectedTabIndex } from "egov-ui-framework/ui-utils/commons";
 import cloneDeep from "lodash/cloneDeep";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { convertDateToEpoch, validateFields } from "../../utils";
@@ -11,41 +11,6 @@ import {
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import set from "lodash/set";
-
-export const getSelectedTabIndex = paymentType => {
-  switch (paymentType) {
-    case "Cash":
-      return {
-        selectedPaymentMode: "cash",
-        selectedTabIndex: 0,
-        fieldsToValidate: ["payeeDetails"]
-      };
-    case "Cheque":
-      return {
-        selectedPaymentMode: "cheque",
-        selectedTabIndex: 1,
-        fieldsToValidate: ["payeeDetails", "chequeDetails"]
-      };
-    case "DD":
-      return {
-        selectedPaymentMode: "demandDraft",
-        selectedTabIndex: 2,
-        fieldsToValidate: ["payeeDetails", "demandDraftDetails"]
-      };
-    case "Card":
-      return {
-        selectedPaymentMode: "card",
-        selectedTabIndex: 3,
-        fieldsToValidate: ["payeeDetails", "cardDetails"]
-      };
-    default:
-      return {
-        selectedPaymentMode: "cash",
-        selectedTabIndex: 0,
-        fieldsToValidate: ["payeeDetails"]
-      };
-  }
-};
 
 const getCommonApplyFooter = children => {
   return {
@@ -59,13 +24,13 @@ const getCommonApplyFooter = children => {
 };
 export const getRedirectionURL = receiptNumber => {
   const redirectionURL = ifUserRoleExists("EMPLOYEE")
-    ? `/uc/acknowledgement?purpose=pay&status=success&receeiptNumber=${receiptNumber}`
+    ? "/abg/acknowledgement?purpose=pay&status=success"
     : "/inbox";
 
   return redirectionURL;
 };
 export const footer = getCommonApplyFooter({
-  nextButton: {
+  generateReceiptButton: {
     componentPath: "Button",
     props: {
       variant: "contained",
@@ -79,7 +44,7 @@ export const footer = getCommonApplyFooter({
     children: {
       downloadReceiptButtonLabel: getLabel({
         labelName: "GENERATE RECEIPT",
-        labelKey: "UC_BUTTON_GENERATE_RECEIPT"
+        labelKey: "ABG_BUTTON_GENERATE_RECEIPT"
       }),
       nextButtonIcon: {
         uiFramework: "custom-atoms",

@@ -10,16 +10,20 @@ class EstimateCardContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const fees = get(
-    state,
-    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.estimateCardData",
-    []
-  );
+  const { preparedFinalObject } = state.screenConfiguration || {};
+  const { applyScreenMdmsData } = preparedFinalObject || {};
+  const { estimateCardData } = applyScreenMdmsData || {};
   // const fees = [
   //   {
-  //     name: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_LABEL" },
+  //     name: {
+  //       labelName: "Advertisement Tax",
+  //       labelKey: "ABG_ADVERTISEMENT_TAX_LABEL"
+  //     },
   //     value: 5000,
-  //     info: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_INFO" }
+  //     info: {
+  //       labelName: "Advertisement Tax",
+  //       labelKey: "ABG_ADVERTISEMENT_TAX_INFO"
+  //     }
   //   },
   //   {
   //     name: { labelName: "Rebate", labelKey: "ABG_REBATE_LABEL" },
@@ -34,7 +38,7 @@ const mapStateToProps = (state, ownProps) => {
   // ];
   const estimate = {
     header: { labelName: "Bill Details", labelKey: "ABG_BILL_DETAILS_HEADER" },
-    fees
+    fees: estimateCardData
   };
   return { estimate };
 };

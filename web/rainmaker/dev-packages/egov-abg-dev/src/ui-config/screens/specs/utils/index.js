@@ -4,11 +4,11 @@ import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-
 import {
   getCommonCard,
   getCommonCaption
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { httpRequest } from "../../../../ui-utils";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -32,6 +32,21 @@ export const transformById = (payload, id) => {
       return result;
     }, {})
   );
+};
+
+export const getMdmsData = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "egov-mdms-service/v1/_get",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
 };
 
 export const getTranslatedLabel = (labelKey, localizationLabels) => {
