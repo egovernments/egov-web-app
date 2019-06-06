@@ -121,7 +121,7 @@ export const fetchUiCommonConfig = () => {
   return async (dispatch) => {
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "common-masters",
@@ -139,26 +139,6 @@ export const fetchUiCommonConfig = () => {
       const { MdmsRes } = payload;
       const commonMasters = MdmsRes["common-masters"];
       const UiCommonConfig = commonMasters["uiCommonConfig"];
-      // const payload = {
-      //   tradelicense: {
-      //     routes: {
-      //       search: {
-      //         routePath: "/employee-tradelicence/egov-ui-framework/tradelicence/search",
-      //         isOrigin: false,
-      //         domain: "https://egov-micro-dev.egovernments.org",
-      //       },
-      //     },
-      //   },
-      //   ws: {
-      //     routes: {
-      //       dashboard: {
-      //         routePath: "",
-      //         isOrigin: false,
-      //         domain: "https://dashboard-pbuat.egovernments.org/app/kibana#/dashboards?title=W%20%26%20S%20Consumers%20Dashboard&embed=true",
-      //       },
-      //     },
-      //   },
-      // };
       dispatch(setUiCommonConfig(UiCommonConfig[0]));
     } catch (error) {
       console.log(error);
@@ -171,7 +151,7 @@ export const fetchUiCommonConstants = () => {
   return async (dispatch) => {
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "common-masters",

@@ -5,7 +5,8 @@ import { Footer } from "../../ui-molecules-local";
 import {
   getQueryArg,
   addWflowFileUrl,
-  orderWfProcessInstances
+  orderWfProcessInstances,
+  getMultiUnits
 } from "egov-ui-framework/ui-utils/commons";
 import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 
@@ -119,6 +120,18 @@ class WorkFlowContainer extends React.Component {
         ...get(Licenses[0], "tradeLicenseDetail.applicationDocuments", []),
         ...removedDocs
       ]);
+      let accessories = get(Licenses[0], "tradeLicenseDetail.accessories");
+      let tradeUnits = get(Licenses[0], "tradeLicenseDetail.tradeUnits");
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.tradeUnits",
+        getMultiUnits(tradeUnits)
+      );
+      set(
+        Licenses[0],
+        "tradeLicenseDetail.accessories",
+        getMultiUnits(accessories)
+      );
     }
     const applicationNumber = getQueryArg(
       window.location.href,
@@ -280,9 +293,10 @@ class WorkFlowContainer extends React.Component {
     const data = find(businessServiceData, { businessService: "NewTL" });
     const state = find(data.states, { applicationStatus: status });
     let actions = [];
-    state.actions.forEach(item => {
-      actions = [...actions, ...item.roles];
-    });
+    state.actions &&
+      state.actions.forEach(item => {
+        actions = [...actions, ...item.roles];
+      });
     const userRoles = JSON.parse(getUserInfo()).roles;
     const roleIndex = userRoles.findIndex(item => {
       if (actions.indexOf(item.code) > -1) return true;

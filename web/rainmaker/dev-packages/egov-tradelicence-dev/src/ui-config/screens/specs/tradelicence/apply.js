@@ -34,6 +34,7 @@ import {
 } from "../../../../ui-utils/commons";
 import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import commonConfig from "config/common.js";
 
 export const stepsData = [
   { labelName: "Trade Details", labelKey: "TL_COMMON_TR_DETAILS" },
@@ -96,7 +97,7 @@ export const tradeDocumentDetails = getCommonCard({
 export const getMdmsData = async (action, state, dispatch) => {
   let mdmsBody = {
     MdmsCriteria: {
-      tenantId: "pb",
+      tenantId: commonConfig.tenantId,
       moduleDetails: [
         {
           moduleName: "TradeLicense",
@@ -226,6 +227,22 @@ export const getData = async (action, state, dispatch) => {
         dispatch(
           prepareFinalObject(
             "Licenses[0].tradeLicenseDetail.additionalDetail.applicationType",
+            "APPLICATIONTYPE.RENEWAL"
+          )
+        );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.financialYear",
+            "props.value",
+            ""
+          )
+        );
+        dispatch(
+          handleField(
+            "apply",
+            "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.applicationType",
+            "props.value",
             "APPLICATIONTYPE.RENEWAL"
           )
         );
