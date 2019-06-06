@@ -16,19 +16,25 @@ const styles = theme => ({
 
 class DocumentListContainer extends Component {
   render() {
-    const { uploadedDocuments, ...rest } = this.props;
-    return <DocumentList uploadedDocsInRedux={uploadedDocuments} {...rest} />;
+    const { ...rest } = this.props;
+    return <DocumentList {...rest} />;
   }
 }
 
 const mapStateToProps = state => {
-  const { screenConfiguration, documents } = state;
+  // const { screenConfiguration, documents } = state;
   let documentsList = get(
     state,
     "screenConfiguration.preparedFinalObject.documentsContract",
     []
   );
-  console.log("++++++++", documentsList);
+  // documentsList.forEach(container => {
+  //   let index = 0;
+  //   container.cards.forEach((card, cardIndex) => {
+  //     if (card.code.startsWith("OWNER."))
+  //   });
+  // });
+  // console.log("++++++++", documentsList);
   // const documentsList =
   //   documents ||
   //   get(
@@ -36,17 +42,17 @@ const mapStateToProps = state => {
   //     "LicensesTemp[0].applicationDocuments",
   //     []
   //   );
-  const uploadedDocuments = get(
-    screenConfiguration.preparedFinalObject,
-    "LicensesTemp[0].uploadedDocsInRedux",
-    []
-  );
+  // const uploadedDocuments = get(
+  //   screenConfiguration.preparedFinalObject,
+  //   "LicensesTemp[0].uploadedDocsInRedux",
+  //   []
+  // );
   // const tenantId = get(
   //   screenConfiguration.preparedFinalObject,
   //   "Licenses[0].tenantId",
   //   ""
   // );
-  return { documentsList, uploadedDocuments };
+  return { documentsList };
 };
 
 export default withStyles(styles)(

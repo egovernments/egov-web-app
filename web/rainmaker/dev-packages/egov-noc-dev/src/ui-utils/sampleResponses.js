@@ -565,3 +565,89 @@ export const sampleSingleSearch = () => {
     ]
   };
 };
+
+export const sampleDocUpload = () => {
+  return {
+    "0": {
+      documentType: "OWNER",
+      documentCode: "OWNER.IDENTITYPROOF",
+      documents: [
+        {
+          fileName: "preview-PB-TL-2018-12-02-001113 (1).pdf",
+          fileStoreId: "89fe5959-79e1-4201-b8ca-bcbc4c23c828"
+        }
+      ],
+      dropdown: {
+        value: "OWNER.IDENTITYPROOF.AADHAAR"
+      }
+    },
+    "1": {
+      documentType: "OWNER",
+      documentCode: "OWNER.ADDRESSPROOF"
+    },
+    "2": {
+      documentType: "BUILDING",
+      documentCode: "Dsrrh Indigo",
+      documentSubCode: "BUILDING.BUILDING_PLAN.SITE_PLAN"
+    },
+    "3": {
+      documentType: "BUILDING",
+      documentCode: "Dsrrh Indigo",
+      documentSubCode: "BUILDING.BUILDING_PLAN.GROUND_FLOOR_PLAN"
+    },
+    "4": {
+      documentType: "BUILDING",
+      documentCode: "Dsrrh Indigo",
+      documentSubCode: "BUILDING.BUILDING_PLAN.SECTION_PLAN"
+    },
+    "5": {
+      documentType: "BUILDING",
+      documentCode: "Dsrrh Indigo",
+      documentSubCode: "BUILDING.BUILDING_PLAN.ELEVATION_PLAN"
+    },
+    "6": {
+      documentType: "BUILDING",
+      documentCode: "Dsrrh Indigo",
+      documentSubCode: "BUILDING.BUILDING_PLAN.BUILTUP_AREA_STATEMENT"
+    },
+    "7": {
+      documentType: "BUILDING",
+      documentCode: "dsrrh violet",
+      documentSubCode: "BUILDING.BUILDING_PLAN.SITE_PLAN",
+      documents: [
+        {
+          fileName: "preview-PB-TL-2018-12-02-001113 (2).pdf",
+          fileStoreId: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78"
+        }
+      ]
+    },
+    "8": {
+      documentType: "BUILDING",
+      documentCode: "dsrrh violet",
+      documentSubCode: "BUILDING.BUILDING_PLAN.GROUND_FLOOR_PLAN"
+    },
+    "9": {
+      documentType: "BUILDING",
+      documentCode: "dsrrh violet",
+      documentSubCode: "BUILDING.BUILDING_PLAN.SECTION_PLAN"
+    },
+    "10": {
+      documentType: "BUILDING",
+      documentCode: "dsrrh violet",
+      documentSubCode: "BUILDING.BUILDING_PLAN.ELEVATION_PLAN"
+    },
+    "11": {
+      documentType: "BUILDING",
+      documentCode: "dsrrh violet",
+      documentSubCode: "BUILDING.BUILDING_PLAN.BUILTUP_AREA_STATEMENT"
+    },
+    "12": {
+      documentType: "BUILDING",
+      documentCode: "BUILDING.FIRE_FIGHTING_PLAN"
+    },
+    "13": {
+      documentType: "BUILDING",
+      documentCode: "BUILDING.OWNERS_CHECKLIST"
+    }
+  };
+};

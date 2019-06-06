@@ -129,6 +129,7 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
       buildingsData.forEach(building => {
         let card = {};
         card["name"] = building.name;
+        card["code"] = doc.code;
         card["hasSubCards"] = true;
         card["subCards"] = [];
         doc.options.forEach(subDoc => {
@@ -142,6 +143,7 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
     } else {
       let card = {};
       card["name"] = doc.code;
+      card["code"] = doc.code;
       card["required"] = doc.required ? true : false;
       if (doc.hasDropdown && doc.dropdownData) {
         let dropdown = {};

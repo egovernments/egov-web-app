@@ -19,7 +19,8 @@ import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "../../../../ui-utils";
 import {
   sampleSearch,
-  sampleSingleSearch
+  sampleSingleSearch,
+  sampleDocUpload
 } from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
@@ -259,6 +260,9 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
     );
 
     // setCardsIfMultipleBuildings(state, dispatch);
+
+    // Set sample docs upload
+    dispatch(prepareFinalObject("documentsUploadRedux", sampleDocUpload()));
   }
 };
 
