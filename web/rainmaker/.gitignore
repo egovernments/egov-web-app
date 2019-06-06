@@ -12,6 +12,7 @@
 /packages/egov-workflow
 /packages/egov-hrms
 /packages/egov-noc
+/packages/egov-abg
 
 npm-debug.log*
 yarn-debug.log*

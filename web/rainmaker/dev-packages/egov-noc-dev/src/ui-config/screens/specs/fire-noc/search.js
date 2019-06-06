@@ -39,7 +39,7 @@ const getMdmsData = async (action, state, dispatch) => {
       tenantId: tenantId,
       moduleDetails: [
         {
-          moduleName: "firenoc",
+          moduleName: "FireNoc",
           masterDetails: [{ name: "Documents" }]
         }
       ]
@@ -91,7 +91,7 @@ const NOCSearchAndResult = {
     getMdmsData(action, state, dispatch).then(() => {
       let documents = get(
         state,
-        "screenConfiguration.preparedFinalObject.searchScreenMdmsData.firenoc.Documents",
+        "screenConfiguration.preparedFinalObject.searchScreenMdmsData.FireNoc.Documents",
         []
       );
       set(

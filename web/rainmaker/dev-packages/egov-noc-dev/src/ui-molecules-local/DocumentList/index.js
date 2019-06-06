@@ -4,7 +4,10 @@ import Icon from "@material-ui/core/Icon";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { withStyles } from "@material-ui/core/styles";
-import { LabelContainer } from "egov-ui-framework/ui-containers";
+import {
+  LabelContainer,
+  TextFieldContainer
+} from "egov-ui-framework/ui-containers";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   handleFileUpload,
@@ -287,43 +290,20 @@ class DocumentList extends Component {
         >
           <LabelContainer labelKey={card.name} style={styles.documentName} />
           {card.required && requiredIcon}
-          {/* <Typography variant="caption">{document.statement}</Typography>
-          <Typography variant="caption">{description}</Typography> */}
         </Grid>
         <Grid item={true} xs={12} sm={6} md={4}>
           {card.dropdown && (
-            <FormControl required className={classes.formControl}>
-              {/* <InputLabel shrink htmlFor="age-label-placeholder">
-                {card.dropdown.label}
-              </InputLabel> */}
-              <Grid className={classes.descriptionDiv}>
-                <LabelContainer
-                  labelKey={card.dropdown.label}
-                  style={styles.dropdownLabel}
-                />
-                {card.dropdown.required && requiredIcon}
-              </Grid>
-              <Select
-                value={
-                  documentsUploadRedux[key] &&
-                  documentsUploadRedux[key].dropdown &&
-                  (documentsUploadRedux[key].dropdown.value ||
-                    documentsUploadRedux[key].dropdown.initialValue)
-                }
-                onChange={event => this.handleChange(key, event)}
-                name="selected-document"
-                required
-              >
-                {card.dropdown.menu &&
-                  card.dropdown.menu.map(item => {
-                    return (
-                      <MenuItem value={item.code}>
-                        <LabelContainer labelKey={item.code} />
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
+            <TextFieldContainer
+              select={true}
+              label={{ labelKey: card.dropdown.label }}
+              placeholder={{ labelKey: card.dropdown.label }}
+              data={card.dropdown.menu}
+              optionValue="code"
+              optionLabel="code"
+              required={true}
+              onChange={event => this.handleChange(key, event)}
+              jsonPath="Licenses[0].assignee"
+            />
           )}
         </Grid>
         <Grid
