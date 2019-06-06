@@ -11,6 +11,15 @@ import { capturePayment } from "./payResource/capturePayment";
 import { G8ReceiptDetails } from "./payResource/G8ReceiptDetails";
 import { footer } from "./payResource/footer";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
+import { httpRequest } from "egov-ui-framework/ui-utils/api.js";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import get from "lodash/get";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -27,15 +36,73 @@ const header = getCommonContainer({
   }
 });
 
+const createEstimateData = billObject => {
+  const billDetails = billObject && billObject.billDetails;
+  let fees =
+    billDetails &&
+    billDetails[0].billAccountDetails &&
+    billDetails[0].billAccountDetails.map(item => {
+      return {
+        name: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode },
+        value: item.amount,
+        info: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode }
+      };
+    });
+  return fees;
+};
+
+const generateBill = async (
+  dispatch,
+  consumerCode,
+  tenantId,
+  businessService
+) => {
+  try {
+    const payload = await httpRequest(
+      "post",
+      `/billing-service/bill/_search?consumerCode=${consumerCode}&service=${businessService}&tenantId=${tenantId}`,
+      "",
+      [],
+      {}
+    );
+    let billId = get(payload, "Bill", []).length - 1;
+    if (payload && payload.Bill[billId]) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
+      const estimateData = createEstimateData(payload.Bill[billId]);
+      estimateData &&
+        estimateData.length &&
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.estimateCardData",
+            estimateData
+          )
+        );
+      dispatch(
+        prepareFinalObject("applyScreenMdmsData.consumerCode", consumerCode)
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.businessService",
+          businessService
+        )
+      );
+      // dispatch(setRoute(`/uc/pay?tenantId=${tenantId}`));
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
+    generateBill(
+      dispatch,
+      "PT-107-016855:AS-2019-05-17-044116",
+      "pb.amritsar",
+      "PT"
     );
-    // if (applicationNumber)
     return action;
   },
   components: {

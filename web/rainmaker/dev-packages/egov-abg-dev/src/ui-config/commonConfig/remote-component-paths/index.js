@@ -1,10 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var remoteComponentPath = function remoteComponentPath(moduleName, path) {
-  var component = null;
+const remoteComponentPath = (moduleName, path) => {
+  let component = null;
   switch (moduleName) {
     default:
       break;
@@ -12,4 +7,4 @@ var remoteComponentPath = function remoteComponentPath(moduleName, path) {
   return component;
 };
 
-exports.default = remoteComponentPath;
+export default remoteComponentPath;

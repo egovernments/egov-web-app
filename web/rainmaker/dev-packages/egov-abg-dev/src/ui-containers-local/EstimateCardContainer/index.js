@@ -10,24 +10,28 @@ class EstimateCardContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { screenConfiguration } = state;
-  const fees = [
-    {
-      name: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_LABEL" },
-      value: 5000,
-      info: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_INFO" }
-    },
-    {
-      name: { labelName: "Rebate", labelKey: "ABG_REBATE_LABEL" },
-      value: -500,
-      info: { labelName: "Rebate", labelKey: "ABG_REBATE_INFO" }
-    },
-    {
-      name: { labelName: "Penalty", labelKey: "ABG_PENALTY_LABEL" },
-      value: 0,
-      info: { labelName: "Penalty", labelKey: "ABG_PENALTY_INFO" }
-    }
-  ];
+  const fees = get(
+    state,
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.estimateCardData",
+    []
+  );
+  // const fees = [
+  //   {
+  //     name: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_LABEL" },
+  //     value: 5000,
+  //     info: { labelName: "Advertisement Tax", labelKey: "ABG_ADVERTISEMENT_TAX_INFO" }
+  //   },
+  //   {
+  //     name: { labelName: "Rebate", labelKey: "ABG_REBATE_LABEL" },
+  //     value: -500,
+  //     info: { labelName: "Rebate", labelKey: "ABG_REBATE_INFO" }
+  //   },
+  //   {
+  //     name: { labelName: "Penalty", labelKey: "ABG_PENALTY_LABEL" },
+  //     value: 0,
+  //     info: { labelName: "Penalty", labelKey: "ABG_PENALTY_INFO" }
+  //   }
+  // ];
   const estimate = {
     header: { labelName: "Bill Details", labelKey: "ABG_BILL_DETAILS_HEADER" },
     fees
