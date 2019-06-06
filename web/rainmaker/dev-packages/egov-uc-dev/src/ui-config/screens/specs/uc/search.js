@@ -4,7 +4,8 @@ import {
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { UCSearchCard } from "./universalCollectionResources/ucSearch";
-//   import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import get from "lodash/get";
+import { setServiceCategory } from "../utils";
 import { searchResults } from "./universalCollectionResources/searchResults";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
@@ -32,7 +33,9 @@ const getMDMSData = async (action, state, dispatch) => {
       moduleDetails: [
         {
           moduleName: "BillingService",
-          masterDetails: [{ name: "BusinessService" }]
+          masterDetails: [
+            { name: "BusinessService", filter: "[?(@.type=='Adhoc')]" }
+          ]
         }
       ]
     }
@@ -45,7 +48,17 @@ const getMDMSData = async (action, state, dispatch) => {
       [],
       mdmsBody
     );
-    dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+    // dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+    let serviceCategories = setServiceCategory(
+      get(payload, "MdmsRes.BillingService.BusinessService", []),
+      dispatch
+    );
+    dispatch(
+      prepareFinalObject(
+        "searchScreenMdmsData.serviceCategory",
+        serviceCategories
+      )
+    );
   } catch (e) {
     console.log(e);
     alert("Billing service data fetch failed");

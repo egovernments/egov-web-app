@@ -2,9 +2,10 @@ import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-
+import set from "lodash/set";
 import {
   getCommonCard,
   getCommonCaption
@@ -265,4 +266,65 @@ export const getLabelOnlyValue = (value, props = {}) => {
       value: getCommonCaption(value)
     }
   };
+};
+
+export const getEmployeeName = async queryObject => {
+  try {
+    let employeeName = "";
+    const payload = await httpRequest(
+      "post",
+      "/egov-hrms/employees/_search",
+      "",
+      queryObject
+    );
+    if (payload && payload.Employees && payload.Employees.length > 0) {
+      employeeName = payload.Employees[0].user.name;
+    }
+    return employeeName;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const setServiceCategory = (businessServiceData, dispatch) => {
+  let nestedServiceData = {};
+  businessServiceData.forEach(item => {
+    if (item.code && item.code.indexOf(".") > 0) {
+      if (nestedServiceData[item.code.split(".")[0]]) {
+        let child = get(
+          nestedServiceData,
+          `${item.code.split(".")[0]}.child`,
+          []
+        );
+        child.push(item);
+        set(nestedServiceData, `${item.code.split(".")[0]}.child`, child);
+      } else {
+        set(
+          nestedServiceData,
+          `${item.code.split(".")[0]}.code`,
+          item.code.split(".")[0]
+        );
+        set(nestedServiceData, `${item.code.split(".")[0]}.child[0]`, item);
+      }
+    } else {
+      set(nestedServiceData, `${item.code}`, item);
+    }
+  });
+  // console.log(nestedServiceData);
+  // dispatch(
+  //   prepareFinalObject(
+  //     "applyScreenMdmsData.nestedServiceData",
+  //     nestedServiceData
+  //   )
+  // );
+  let serviceCategories = Object.values(nestedServiceData).filter(
+    item => item.code
+  );
+  return serviceCategories;
+  // dispatch(
+  //   prepareFinalObject(
+  //     "applyScreenMdmsData.serviceCategories",
+  //     serviceCategories
+  //   )
+  // );
 };
