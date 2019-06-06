@@ -6,7 +6,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = theme => ({
   root: {
-    width: "100%",
     margin: "16px 8px",
     backgroundColor: theme.palette.background.paper
   }

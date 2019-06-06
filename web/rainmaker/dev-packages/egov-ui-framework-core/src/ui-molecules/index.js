@@ -143,6 +143,11 @@ const LandingPage = Loadable({
   loading: () => <Loading />
 });
 
+const SingleApplication = Loadable({
+  loader: () => import("./SingleApplication"),
+  loading: () => <Loading />
+});
+
 export {
   RenderRoutes,
   Map,
@@ -173,5 +178,6 @@ export {
   TaskDialog,
   TaskStatusComponents,
   UploadMultipleFiles,
-  LandingPage
+  LandingPage,
+  SingleApplication
 };

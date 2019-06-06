@@ -53,29 +53,37 @@ export const fetchData = async (action, state, dispatch) => {
     )
   );
   try {
-    let data =
-      response &&
-      response.Licenses.map(item => ({
-        [get(textToLocalMapping, "Application No")]:
-          item.applicationNumber || "-",
-        [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
-        [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
-        [get(textToLocalMapping, "Owner Name")]:
-          item.tradeLicenseDetail.owners[0].name || "-",
-        [get(textToLocalMapping, "Application Date")]:
-          convertEpochToDate(item.applicationDate) || "-",
-        tenantId: item.tenantId,
-        [get(textToLocalMapping, "Status")]:
-          get(textToLocalMapping, item.status) || "-"
-      }));
-    dispatch(
-      handleField(
-        "home",
-        "components.div.children.applyCard.children.searchResults",
-        "props.data",
-        data
-      )
-    );
+    /*Mseva 1.0 */
+    // let data =
+    //   response &&
+    //   response.Licenses.map(item => ({
+    //     [get(textToLocalMapping, "Application No")]:
+    //       item.applicationNumber || "-",
+    //     [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
+    //     [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
+    //     [get(textToLocalMapping, "Owner Name")]:
+    //       item.tradeLicenseDetail.owners[0].name || "-",
+    //     [get(textToLocalMapping, "Application Date")]:
+    //       convertEpochToDate(item.applicationDate) || "-",
+    //     tenantId: item.tenantId,
+    //     [get(textToLocalMapping, "Status")]:
+    //       get(textToLocalMapping, item.status) || "-"
+    //   }));
+
+    // dispatch(
+    //   handleField(
+    //     "home",
+    //     "components.div.children.applyCard.children.searchResults",
+    //     "props.data",
+    //     data
+    //   )
+    // );
+    /*Mseva 2.0 */
+
+    response &&
+      response.Licenses &&
+      response.Licenses.length > 0 &&
+      dispatch(prepareFinalObject("searchResults", response.Licenses));
   } catch (error) {
     console.log(error);
   }

@@ -39,7 +39,12 @@ const MenuButton = Loadable({
 });
 
 const FormIcon = Loadable({
-  loader: () => import("./FormIcon"),
+  loader: () => import("./Icons/FormIcon"),
+  loading: () => <Loading />
+});
+
+const TradeLicenseIcon = Loadable({
+  loader: () => import("./Icons/TradeLicenseIcon"),
   loading: () => <Loading />
 });
 
@@ -51,5 +56,6 @@ export {
   AutoSuggest,
   Asteric,
   MenuButton,
-  FormIcon
+  FormIcon,
+  TradeLicenseIcon
 };

@@ -10,7 +10,8 @@ import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
 import { cityPicker } from "./citypicker";
-import FormIcon from "../../../../ui-atoms-local/FormIcon";
+import FormIcon from "../../../../ui-atoms-local/Icons/FormIcon";
+import TradeLicenseIcon from "../../../../ui-atoms-local/Icons/TradeLicenseIcon";
 
 const header = getCommonHeader({
   labelName: "Trade License",
@@ -23,7 +24,7 @@ const cardItems = [
       labelKey: "TL_APPLY_TRADELICENSE",
       labelName: "Apply for Trade License"
     },
-    icon: <FormIcon />,
+    icon: <TradeLicenseIcon />,
     route: "/add-complaint"
   },
   {
@@ -67,7 +68,6 @@ const tradeLicenseSearchAndResult = {
         }
       }
     },
-
     // div: {
     //   uiFramework: "custom-atoms",
     //   componentPath: "Div",
