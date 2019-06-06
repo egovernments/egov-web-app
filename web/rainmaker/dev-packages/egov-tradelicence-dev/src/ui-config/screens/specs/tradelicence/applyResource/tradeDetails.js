@@ -90,6 +90,10 @@ const tradeUnitCard = {
                   )
                 );
                 let componentPath = action.componentJsonpath.split(".");
+
+                let index = action.componentJsonpath
+                  .split("[")[1]
+                  .split("]")[0];
                 componentPath.pop();
                 componentPath.push("tradeType");
                 componentPath = componentPath.join(".");
@@ -109,6 +113,28 @@ const tradeUnitCard = {
                     )
                   )
                 );
+                let tradeCat = get(
+                  state.screenConfiguration.preparedFinalObject,
+                  `LicensesTemp.tradeUnits[${parseInt(index)}].tradeType`
+                );
+                if (tradeCat != action.value) {
+                  dispatch(
+                    pFO(
+                      `LicensesTemp.tradeUnits[${parseInt(
+                        index
+                      )}].tradeSubType`,
+                      ""
+                    )
+                  );
+                  dispatch(
+                    pFO(
+                      `Licenses[0].tradeLicenseDetail.tradeUnits[${parseInt(
+                        index
+                      )}].tradeType`,
+                      ""
+                    )
+                  );
+                }
               } catch (e) {
                 console.log(e);
               }
@@ -598,6 +624,25 @@ const accessoriesCard = {
                 dispatch(pFO(`${jsonArr.join(".")}.uom`, null));
                 dispatch(pFO(`${jsonArr.join(".")}.uomValue`, null));
               }
+              if (action.value) {
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesCount`,
+                    "props.disabled",
+                    false
+                  )
+                );
+              } else {
+                dispatch(
+                  handleField(
+                    "apply",
+                    `${currentUOMValueFieldPath}.accessoriesCount`,
+                    "props.disabled",
+                    true
+                  )
+                );
+              }
             } catch (e) {
               console.log(e);
             }
@@ -640,6 +685,31 @@ const accessoriesCard = {
             },
             required: true,
             jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].uomValue",
+            gridDefination: {
+              xs: 12,
+              sm: 4
+            }
+          })
+        },
+        accessoriesCount: {
+          ...getTextField({
+            label: {
+              labelName: "Accessory Count",
+              labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT"
+            },
+            placeholder: {
+              labelName: "Enter accessory count",
+              labelKey: "TL_NEW_TRADE_ACCESSORY_COUNT_PLACEHOLDER"
+            },
+            pattern: getPattern("NoOfEmp"),
+            props: {
+              setDataInField: true,
+              jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
+              disabled: true
+            },
+            required: true,
+            defaultValue: 1,
+            jsonPath: "Licenses[0].tradeLicenseDetail.accessories[0].count",
             gridDefination: {
               xs: 12,
               sm: 4
@@ -735,7 +805,6 @@ export const tradeDetails = getCommonCard({
         }
       }),
       beforeFieldChange: (action, state, dispatch) => {
-
         if (action.value === "APPLICATIONTYPE.RENEWAL") {
           dispatch(
             handleField(

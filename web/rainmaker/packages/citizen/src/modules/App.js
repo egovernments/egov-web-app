@@ -20,7 +20,7 @@ class App extends Component {
     props.history.listen((location, action) => {
       const { pathname: nextPath } = location;
       addBodyClass(nextPath);
-      props.toggleSnackbarAndSetText(false, "");
+      props.toggleSnackbarAndSetText(false, { labelName: "", labelKey: "" }, false);
     });
 
     addBodyClass(currentPath);
@@ -74,7 +74,6 @@ class App extends Component {
       history.push(nextRoute);
       setRoute("");
     }
-
     if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated) {
       nextProps.hasLocalisation && this.props.history.replace("/language-selection");
     }

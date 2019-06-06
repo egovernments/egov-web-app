@@ -1,12 +1,11 @@
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
-import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getTranslatedLabel, getUlbGradeLabel, getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headersFromAPI = billAccountDetails.map((item) => {
-    return item.accountDescription && item.accountDescription.split("-")[0];
+    return item.taxHeadCode && item.taxHeadCode;
   });
   const headers = [
     "PT_TAX",
@@ -24,6 +23,7 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     "PT_DECIMAL_CEILING_CREDIT",
     "PT_DECIMAL_CEILING_CREDIT_DEBIT",
     "PT_DECIMAL_CEILING_DEBIT",
+    "PT_ROUNDOFF",
   ];
   const negativeHeaders = [
     "PT_ADHOC_REBATE",
@@ -44,12 +44,14 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     (result, current) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
       // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
-      const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+      const taxHeadContent = billAccountDetails.filter((item) => item.taxHeadCode && item.taxHeadCode === current);
       taxHeadContent &&
         taxHeadContent[0] &&
         result[1].push({
           text: taxHeadContent[0]
-            ? taxHeadContent[0].debitAmount
+            ? taxHeadContent[0].amount
+              ? taxHeadContent[0].amount
+              : taxHeadContent[0].debitAmount
               ? `-${taxHeadContent[0].debitAmount}`
               : taxHeadContent[0].crAmountToBePaid
               ? taxHeadContent[0].crAmountToBePaid
@@ -65,12 +67,15 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   return taxArray;
 };
 
-const getHeaderDetails = (property, cities) => {
+const getHeaderDetails = (property, cities, localizationLabels) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
-  const ulbGrade = get(propertyTenant[0], "city.ulbGrade");
-  const name = get(propertyTenant[0], "name");
+  const ulbGrade = get(propertyTenant[0], "city.ulbGrade") ? getUlbGradeLabel(get(propertyTenant[0], "city.ulbGrade")) : "MUNICIPAL CORPORATION";
+  const cityKey = `TENANT_TENANTS_${get(propertyTenant[0], "code")
+    .toUpperCase()
+    .replace(/[.]/g, "_")}`;
   return {
-    header: getReceiptHeaderLabel(name, ulbGrade),
+    // header: getReceiptHeaderLabel(name, ulbGrade),
+    header: `${getTranslatedLabel(cityKey, localizationLabels).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`,
     subheader: "Property Tax Payment Receipt",
     logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,
@@ -97,7 +102,7 @@ const getReceiptHeaderLabel = (name, ulbGrade) => {
 const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay, totalAmountPaid) => {
   return {
     ReceiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-    header: getHeaderDetails(property, cities),
+    header: getHeaderDetails(property, cities, localizationLabels),
     taxNew:
       receiptDetails &&
       getTaxInfo(receiptDetails.Bill[0].billDetails[0].billAccountDetails, receiptDetails.Bill[0].billDetails[0].totalAmount, localizationLabels),
@@ -132,10 +137,11 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid) => {
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success, totalAmountPaid, latestPropertyDetails) => {
   const amountToPay = receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].totalAmount" : "billDetails[0].totalAmount").toString();
   const amountDue = receiptDetails && (success ? totalAmountToPay - totalAmountPaid : amountToPay).toString();
-  const { owners: ownerDetails, financialYear, institution, ownershipCategory } = property.propertyDetails[0];
+  const { owners: ownerDetails, institution, ownershipCategory } = property.propertyDetails[0];
+  const { financialYear } = latestPropertyDetails;
   const isInstitution = ownershipCategory === "INSTITUTIONALPRIVATE" || ownershipCategory === "INSTITUTIONALGOVERNMENT";
   const ownerInfo = isInstitution
     ? [{ key: "PT_INSTITUTION_NAME", value: institution.name }, { key: "PT_AUTHORISED_PERSON_NAME", value: ownerDetails[0].name }]

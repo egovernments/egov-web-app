@@ -3,6 +3,7 @@ import get from "lodash/get";
 import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import commonConfig from "config/common.js";
 
 const tenantId = getTenantId();
 
@@ -135,7 +136,7 @@ const formConfig = {
     tenantId: {
       id: "add-complaint-tenantid",
       jsonPath: "services[0].tenantId",
-      value: "pb",
+      value: commonConfig.tenantId,
     },
   },
   submit: {
@@ -155,8 +156,10 @@ const formConfig = {
           let selected = cities.find((city) => {
             return city.code === tenant.code;
           });
-          const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
-          dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
+          if (selected) {
+            const label = `TENANT_TENANTS_${selected.code.toUpperCase().replace(/[.]/g, "_")}`;
+            dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
+          }
           return dd;
         }, []);
         dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));

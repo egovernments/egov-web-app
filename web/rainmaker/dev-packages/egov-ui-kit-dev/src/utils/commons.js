@@ -230,6 +230,16 @@ export const prepareFormData = (form) => {
   }, {});
 };
 
+export const getUlbGradeLabel = (ulbGrade) => {
+  if (ulbGrade) {
+    let ulbWiseHeaderName = ulbGrade.toUpperCase();
+    if (ulbWiseHeaderName.indexOf(" ") > 0) {
+      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
+    }
+    return "ULBGRADE" + "_" + ulbWiseHeaderName;
+  }
+};
+
 export const getTranslatedLabel = (labelKey, localizationLabels) => {
   let translatedLabel = null;
   if (localizationLabels && localizationLabels.hasOwnProperty(labelKey)) {
@@ -331,7 +341,7 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
   let slaStatement = "";
   const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    slaStatement = Math.abs(daysCount) === 1 ? "CS_OVERDUE_BY_DAY_TESTING" : "CS_OVERDUE_BY_DAY_TESTING";
+    slaStatement = Math.abs(daysCount) === 1 ? "CS_OVERDUE_BY_DAY" : "CS_OVERDUE_BY_DAYS";
     //slaStatement = Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
   } else {
     slaStatement = Math.abs(daysCount) === 1 ? "CS_DAY_LEFT" : "CS_DAYS_LEFT";
@@ -565,7 +575,7 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
         )
       );
     } else {
-      dispatch(toggleSnackbarAndSetText(true, message, true));
+      dispatch(toggleSnackbarAndSetText(true, { labelName: message, labelKey: message }, true));
     }
     return;
   }

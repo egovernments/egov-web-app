@@ -3,6 +3,7 @@ import { setDependentFields } from "egov-ui-kit/config/forms/specs/PropertyTaxPa
 import get from "lodash/get";
 import set from "lodash/set";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import commonConfig from "config/common.js";
 
 const formConfig = {
   name: "ownerInfo",
@@ -17,7 +18,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[a-zA-Z\.\s]{1,64}$/i,
       errorMessage: "PT_NAME_ERROR_MESSAGE",
-      disabled: true,
+      disabled: true
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -29,17 +30,18 @@ const formConfig = {
       pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "PT_MOBILE_NUMBER_ERROR_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      disabled: true,
+      disabled: true
     },
     ownerGuardian: {
       id: "ownerGuardian",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
       type: "textfield",
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      disabled: true,
+      disabled: true
     },
     // ownerAadhar: {
     //   id: "ownerAadhar",
@@ -58,7 +60,7 @@ const formConfig = {
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
       errorMessage: "Enter valid email id",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/,
+      pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/
     },
     ownerAddress: {
       id: "ownerAddress",
@@ -68,7 +70,7 @@ const formConfig = {
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,500}$/,
-      errorMessage: "PT_ADDRESS_ERROR_MESSAGE",
+      errorMessage: "PT_ADDRESS_ERROR_MESSAGE"
     },
     ownerRelationship: {
       id: "ownerRelationship",
@@ -76,9 +78,12 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_RELATIONSHIP",
       hintText: "",
-      dropDownData: [{ label: "Father", value: "FATHER" }, { label: "Husband", value: "HUSBAND" }],
+      dropDownData: [
+        { label: "Father", value: "FATHER" },
+        { label: "Husband", value: "HUSBAND" }
+      ],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      disabled: true,
+      disabled: true
     },
     ownerCategory: {
       id: "ownerCategory",
@@ -96,44 +101,65 @@ const formConfig = {
         queryParams: [],
         requestBody: {
           MdmsCriteria: {
-            tenantId: "pb",
+            tenantId: commonConfig.tenantId,
             moduleDetails: [
               {
                 moduleName: "PropertyTax",
                 masterDetails: [
                   {
                     name: "OwnerType",
-                    filter: "[?(@.fromFY=='2015-16')]", //year value for this filter should be dynamic.
-                  },
-                ],
-              },
-            ],
-          },
+                    filter: "[?(@.fromFY=='2015-16')]" //year value for this filter should be dynamic.
+                  }
+                ]
+              }
+            ]
+          }
         },
-        dataPath: ["MdmsRes.PropertyTax.OwnerType"],
+        dataPath: ["MdmsRes.PropertyTax.OwnerType"]
       },
-      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+      updateDependentFields: ({
+        formKey,
+        field: sourceField,
+        dispatch,
+        state
+      }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         let documentTypes = get(
           state,
-          `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
+          `${
+            process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"
+          }.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
           []
         )
-          .filter((docu) => {
+          .filter(docu => {
             return docu.ownerTypeCode === value;
           })
           .reduce((acc, curr) => {
             let currAcc = [...acc];
             let dropDownData = {
               label: curr.name,
-              value: curr.code,
+              value: curr.code
             };
             currAcc.push(dropDownData);
             return currAcc;
           }, []);
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
+        dispatch(
+          setFieldProperty(
+            formKey,
+            "ownerCategoryIdType",
+            "dropDownData",
+            documentTypes
+          )
+        );
+        dispatch(
+          setFieldProperty(
+            formKey,
+            "ownerCategoryIdType",
+            "value",
+            get(documentTypes, "[0].value", "")
+          )
+        );
         switch (value) {
           case "NONE":
             setDependentFields(dependentFields, dispatch, formKey, true);
@@ -148,26 +174,46 @@ const formConfig = {
         const state = store.getState();
         const { fieldKey, formKey, propertyValue } = action;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE");
+        const currentCategory = get(
+          state,
+          `form.${formKey}.fields.${fieldKey}.value`,
+          "NONE"
+        );
         let documentTypes = get(
           state,
-          `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
+          `${
+            process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"
+          }.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
           []
         )
-          .filter((docu) => {
+          .filter(docu => {
             return docu.ownerTypeCode === currentCategory;
           })
           .reduce((acc, curr) => {
             let currAcc = [...acc];
             let dropDownData = {
               label: curr.name,
-              value: curr.code,
+              value: curr.code
             };
             currAcc.push(dropDownData);
             return currAcc;
           }, []);
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
-        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
+        dispatch(
+          setFieldProperty(
+            formKey,
+            "ownerCategoryIdType",
+            "dropDownData",
+            documentTypes
+          )
+        );
+        dispatch(
+          setFieldProperty(
+            formKey,
+            "ownerCategoryIdType",
+            "value",
+            get(documentTypes, "[0].value", "")
+          )
+        );
         if (propertyValue.length > 0) {
           if (currentCategory === "NONE") {
             setDependentFields(dependentFields, dispatch, formKey, true);
@@ -177,11 +223,12 @@ const formConfig = {
         }
         return action;
       },
-      disabled: true,
+      disabled: true
     },
     ownerCategoryId: {
       id: "ownerCategoryId",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentUid",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].document.documentUid",
       required: true,
       type: "textfield",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
@@ -190,11 +237,12 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      disabled: true,
+      disabled: true
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentType",
+      jsonPath:
+        "Properties[0].propertyDetails[0].owners[0].document.documentType",
       required: true,
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
@@ -205,23 +253,44 @@ const formConfig = {
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dropDownData: [], //[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
-      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+      updateDependentFields: ({
+        formKey,
+        field: sourceField,
+        dispatch,
+        state
+      }) => {
         const { value } = sourceField;
         if (value === "Aadhar") {
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", /^[0-9]{12}$/i));
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", "Enter valid 12 digits aadhar no"));
+          dispatch(
+            setFieldProperty(
+              formKey,
+              "ownerCategoryId",
+              "pattern",
+              /^[0-9]{12}$/i
+            )
+          );
+          dispatch(
+            setFieldProperty(
+              formKey,
+              "ownerCategoryId",
+              "errorMessage",
+              "Enter valid 12 digits aadhar no"
+            )
+          );
         } else {
           dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", ""));
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", ""));
+          dispatch(
+            setFieldProperty(formKey, "ownerCategoryId", "errorMessage", "")
+          );
         }
       },
-      disabled: true,
+      disabled: true
     },
     ownerGender: {
       id: "ownerGender",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].gender",
       value: "Male",
-      disabled: true,
+      disabled: true
     },
     isSameAsPropertyAddress: {
       id: "rcpt",
@@ -230,10 +299,26 @@ const formConfig = {
       errorMessage: "",
       floatingLabelText: "PT_FORM3_ADDRESS_CHECKBOX",
       value: "",
-      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+      updateDependentFields: ({
+        formKey,
+        field: sourceField,
+        dispatch,
+        state
+      }) => {
         const { value: iscorrAddrSameProp } = sourceField;
-        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = "" } = get(state, "form.propertyAddress.fields", {});
-        const mohallaDetails = mohalla && mohalla.dropDownData.find((mohallaData) => mohallaData.value === get(mohalla, "value", ""));
+        const {
+          city = "",
+          colony = "",
+          houseNumber = "",
+          mohalla = "",
+          pincode = "",
+          street = ""
+        } = get(state, "form.propertyAddress.fields", {});
+        const mohallaDetails =
+          mohalla &&
+          mohalla.dropDownData.find(
+            mohallaData => mohallaData.value === get(mohalla, "value", "")
+          );
         if (iscorrAddrSameProp) {
           const correspondingAddress = [
             `${get(houseNumber, "value", "")}`,
@@ -243,22 +328,29 @@ const formConfig = {
             `${get(city, "value", "")
               .split(".")
               .pop()}`,
-            `${get(pincode, "value", "")}`,
+            `${get(pincode, "value", "")}`
           ]
             .join(", ")
             .replace(/^(,\s)+|(,\s)+$/g, "")
             .replace(/(,\s){2,}/g, ", ");
-          dispatch(setFieldProperty(formKey, "ownerAddress", "value", correspondingAddress));
+          dispatch(
+            setFieldProperty(
+              formKey,
+              "ownerAddress",
+              "value",
+              correspondingAddress
+            )
+          );
         } else {
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", ""));
         }
-      },
-    },
+      }
+    }
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false,
+  isFormValid: false
 };
 
 export default formConfig;

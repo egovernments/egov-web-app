@@ -164,7 +164,7 @@ const assignmentDetailsCard = {
               label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
               placeholder: {
                 labelName: "Select Designation",
-                labelKey: "HR_DEPT_PLACEHOLDER"
+                labelKey: "HR_DESIGNATION_PLACEHOLDER"
               },
               required: true,
               jsonPath: "Employee[0].assignments[0].designation",

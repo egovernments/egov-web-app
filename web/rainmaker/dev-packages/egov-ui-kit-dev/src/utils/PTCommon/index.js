@@ -149,7 +149,6 @@ export const findCorrectDateObjPenaltyIntrest = (financialYear, category) => {
     chosenDateObj.startingDay = date.join("/");
     month = getMonth(chosenDateObj.startingDay);
   }
-  console.log("chosenDateObj", chosenDateObj);
   return chosenDateObj;
 };
 
@@ -208,11 +207,12 @@ export const getEstimateFromBill = (bill) => {
     "PT_ADHOC_REBATE",
     "PT_ADVANCE_CARRYFORWARD",
     "PT_DECIMAL_CEILING_DEBIT",
+    "PT_ROUNDOFF",
   ]; //Hardcoding as backend is not sending in correct order
   const { billDetails, tenantId } = bill && bill[0];
   const { collectedAmount, totalAmount, billAccountDetails } = billDetails && billDetails[0];
   const taxHeadsFromAPI = billAccountDetails.map((item) => {
-    return item.accountDescription.split("-")[0];
+    return item.taxHeadCode;
   });
   const transformedTaxHeads = taxHeads.reduce((result, current) => {
     if (taxHeadsFromAPI.indexOf(current) > -1) {
@@ -225,12 +225,13 @@ export const getEstimateFromBill = (bill) => {
   estimate.tenantId = tenantId;
   estimate.collectedAmount = collectedAmount;
   const taxHeadEstimates = transformedTaxHeads.reduce((taxHeadEstimates, current) => {
-    const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+    const taxHeadContent = billAccountDetails.filter((item) => item.taxHeadCode && item.taxHeadCode === current);
     taxHeadContent &&
       taxHeadContent[0] &&
       taxHeadEstimates.push({
-        taxHeadCode: taxHeadContent[0].accountDescription.split("-")[0],
-        estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        taxHeadCode: taxHeadContent[0].taxHeadCode,
+        // estimateAmount: taxHeadContent[0].debitAmount ? taxHeadContent[0].debitAmount : taxHeadContent[0].crAmountToBePaid,
+        estimateAmount: taxHeadContent[0].amount,
         category: taxHeadContent[0].purpose,
       });
     return taxHeadEstimates;
@@ -335,7 +336,7 @@ export const transformPropertyDataToAssessInfo = (data) => {
 };
 
 const prepareUniqueFloorIndexObj = (units) => {
-  units = sortBy(uniqBy(units,"floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
+  units = sortBy(uniqBy(units, "floorNo"), (unit) => parseInt(unit.floorNo) || -99999);
   let floorIndexObj = units.reduce((floorIndexObj, item, index) => {
     if (isUndefined(floorIndexObj[item.floorNo])) {
       floorIndexObj[item.floorNo] = index;

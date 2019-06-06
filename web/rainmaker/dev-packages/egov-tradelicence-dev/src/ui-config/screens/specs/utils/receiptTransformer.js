@@ -8,7 +8,15 @@ import {
   getUserDataFromUuid,
   getFinancialYearDates
 } from "../utils";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocalization,
+  getLocale
+} from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getUlbGradeLabel,
+  getTranslatedLabel,
+  transformById
+} from "egov-ui-framework/ui-utils/commons";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -195,14 +203,17 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         data.city
       )
     );
-    let accessories = response.Licenses[0].tradeLicenseDetail.accessories
-      ? response.Licenses[0].tradeLicenseDetail.accessories.length
-      : 0;
-    data.accessories = nullToNa(accessories);
-    if (accessories > 0) {
+    const accessories = get(
+      response,
+      "Licenses[0].tradeLicenseDetail.accessories",
+      []
+    );
+    if (accessories && accessories.length > 0) {
       data.accessoriesList = response.Licenses[0].tradeLicenseDetail.accessories
         .map(item => {
-          return getMessageFromLocalization(item.accessoryCategory);
+          return `${getMessageFromLocalization(item.accessoryCategory)}(${
+            item.count
+          })`;
         })
         .reduce((pre, cur) => {
           return pre.concat(", " + cur);
@@ -278,13 +289,13 @@ export const loadReceiptData = async (consumerCode, tenant) => {
     var tlAdhocPenalty = 0,
       tlAdhocRebate = 0;
     response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
-      let desc = item.accountDescription ? item.accountDescription : "";
-      if (desc.startsWith("TL_TAX")) {
-        data.tlFee = item.crAmountToBePaid;
-      } else if (desc.startsWith("TL_ADHOC_PENALTY")) {
-        tlAdhocPenalty = item.crAmountToBePaid;
-      } else if (desc.startsWith("TL_ADHOC_REBATE")) {
-        tlAdhocRebate = item.debitAmount;
+      let desc = item.taxHeadCode ? item.taxHeadCode : "";
+      if (desc === "TL_TAX") {
+        data.tlFee = item.amount;
+      } else if (desc === "TL_ADHOC_PENALTY") {
+        tlAdhocPenalty = item.amount;
+      } else if (desc === "TL_ADHOC_REBATE") {
+        tlAdhocRebate = item.amount;
       }
     });
     data.tlPenalty = "NA";
@@ -297,6 +308,10 @@ export const loadReceiptData = async (consumerCode, tenant) => {
 };
 
 export const loadMdmsData = async tenantid => {
+  let localStorageLabels = JSON.parse(
+    window.localStorage.getItem(`localization_${getLocale()}`)
+  );
+  let localizationLabels = transformById(localStorageLabels, "code");
   let data = {};
   let queryObject = [
     {
@@ -323,21 +338,19 @@ export const loadMdmsData = async tenantid => {
       return item.code == tenantid;
     });
     /** START Corporation name generation logic */
-    let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
-    let name = get(ulbData, "city.name", "NA");
-    if (ulbGrade) {
-      if (ulbGrade === "NP") {
-        data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
-      } else if (ulbGrade === "Municipal Corporation") {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      } else if (ulbGrade.includes("MC Class")) {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
-      } else {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      }
-    } else {
-      data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    }
+    const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
+      ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
+      : "MUNICIPAL CORPORATION";
+
+    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
+      .toUpperCase()
+      .replace(/[.]/g, "_")}`;
+
+    data.corporationName = `${getTranslatedLabel(
+      cityKey,
+      localizationLabels
+    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
+
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
     data.corporationContact = get(ulbData, "contactNumber", "NA");
@@ -363,7 +376,7 @@ export const loadUserNameData = async uuid => {
 /** Data used for creation of receipt is generated and stored in local storage here */
 export const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
-  loadUlbLogo(tenant); //pb.amritsar
+  loadUlbLogo(tenant);
   loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
   loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
   loadMdmsData(tenant);

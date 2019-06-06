@@ -10,7 +10,10 @@ const styles = theme => ({
     padding: "8px 38px"
   },
   input: {
-    display: "none !important"
+    // display: "none !important",
+    //For QA Automation
+    position: "absolute",
+    right: 0
   }
 });
 
@@ -31,14 +34,15 @@ const mapStateToProps = state => {
   const uploadedDocuments = get(
     screenConfiguration.preparedFinalObject,
     "LicensesTemp[0].uploadedDocsInRedux",
-    []
+    {}
   );
   const tenantId = get(
     screenConfiguration.preparedFinalObject,
     "Licenses[0].tenantId",
     ""
   );
-  return { documents, tenantId, uploadedDocuments };
+  const { preparedFinalObject } = screenConfiguration || {};
+  return { documents, tenantId, uploadedDocuments, preparedFinalObject };
 };
 
 export default withStyles(styles)(

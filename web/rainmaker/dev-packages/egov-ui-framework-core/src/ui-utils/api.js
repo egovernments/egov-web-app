@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "redux/store";
+import store from "ui-redux/store";
 import {
   getAccessToken,
   getTenantId,
@@ -20,7 +20,7 @@ const wrapRequestBody = (requestBody, action) => {
   let RequestInfo = {
     apiId: "Mihy",
     ver: ".01",
-    ts: getDateInEpoch(),
+    // ts: getDateInEpoch(),
     action: action,
     did: "1",
     key: "",
