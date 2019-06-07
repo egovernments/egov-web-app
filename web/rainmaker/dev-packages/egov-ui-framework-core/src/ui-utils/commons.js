@@ -1,7 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 import { httpRequest, uploadFile } from "./api.js";
 import cloneDeep from "lodash/cloneDeep";
-import store from "ui-redux/store";
+// import store from "ui-redux/store";
 import {
   localStorageSet,
   localStorageGet,
@@ -403,6 +403,40 @@ export const orderWfProcessInstances = processInstances => {
   return filteredInstances.reverse();
 };
 
+export const getSelectedTabIndex = paymentType => {
+  switch (paymentType) {
+    case "Cash":
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+    case "Cheque":
+      return {
+        selectedPaymentMode: "cheque",
+        selectedTabIndex: 1,
+        fieldsToValidate: ["payeeDetails", "chequeDetails"]
+      };
+    case "DD":
+      return {
+        selectedPaymentMode: "demandDraft",
+        selectedTabIndex: 2,
+        fieldsToValidate: ["payeeDetails", "demandDraftDetails"]
+      };
+    case "Card":
+      return {
+        selectedPaymentMode: "card",
+        selectedTabIndex: 3,
+        fieldsToValidate: ["payeeDetails", "cardDetails"]
+      };
+    default:
+      return {
+        selectedPaymentMode: "cash",
+        selectedTabIndex: 0,
+        fieldsToValidate: ["payeeDetails"]
+      };
+  }
+};
 export const getMultiUnits = multiUnits => {
   let hasTradeType = false;
   let hasAccessoryType = false;
@@ -432,4 +466,14 @@ export const getMultiUnits = multiUnits => {
     }, []);
 
   return mergedUnits;
+};
+
+export const getUlbGradeLabel = ulbGrade => {
+  if (ulbGrade) {
+    let ulbWiseHeaderName = ulbGrade.toUpperCase();
+    if (ulbWiseHeaderName.indexOf(" ") > 0) {
+      ulbWiseHeaderName = ulbWiseHeaderName.split(" ").join("_");
+    }
+    return "ULBGRADE" + "_" + ulbWiseHeaderName;
+  }
 };
