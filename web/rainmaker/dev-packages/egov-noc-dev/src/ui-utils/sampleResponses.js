@@ -532,14 +532,22 @@ export const sampleSingleSearch = () => {
               name: "Dsrrh Indigo",
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
-              uoms: { NO_OF_FLOORS: 8, NO_OF_BASEMENTS: 1, HEIGHT_OF_BUILDING: "5000" },
+              uoms: [
+                { code: "NO_OF_FLOORS", value: 8, isActiveUom: true, active: true },
+                { code: "NO_OF_BASEMENTS", value: 1, isActiveUom: true, active: true },
+                { code: "HEIGHT_OF_BUILDING", value: 5000, isActiveUom: true, active: true }
+              ],
               applicationDocuments: []
             },
             {
               name: "dsrrh violet",
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
-              uoms: { NO_OF_FLOORS: 7, NO_OF_BASEMENTS: 2, HEIGHT_OF_BUILDING: "4500" },
+              uoms: [
+                { code: "NO_OF_FLOORS", value: 7, isActiveUom: true, active: true },
+                { code: "NO_OF_BASEMENTS", value: 2, isActiveUom: true, active: true },
+                { code: "HEIGHT_OF_BUILDING", value: 4500, isActiveUom: true, active: true }
+              ],
               applicationDocuments: []
             }
           ],
