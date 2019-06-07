@@ -281,8 +281,9 @@ DocumentList.propTypes = {
 
 const mapStateToProps = state => {
   const { screenConfiguration } = state;
+  const { moduleName } = screenConfiguration;
   const documentsUploadRedux = get(screenConfiguration.preparedFinalObject, "documentsUploadRedux", {});
-  return { documentsUploadRedux };
+  return { documentsUploadRedux, moduleName };
 };
 
 const mapDispatchToProps = dispatch => {

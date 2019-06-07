@@ -243,6 +243,9 @@ const screenConfig = {
     const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     const step = getQueryArg(window.location.href, "step");
 
+    //Set Module Name
+    set(state, "screenConfiguration.moduleName", "fire-noc");
+
     // Set MDMS Data
     getMdmsData(action, state, dispatch).then(response => {
       // Set Dropdowns Data
