@@ -9,7 +9,7 @@ import Router from "./Router";
 import commonConfig from "config/common";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
-import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { getLocale, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { getQueryArg } from "egov-ui-kit/utils/commons";
 import isEmpty from "lodash/isEmpty";
@@ -66,15 +66,17 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
-    getQueryArg("", "smsLink") && this.handleSMSLinks();
+    if (getQueryArg("", "smsLink") || localStorageGet("smsRedirectionLink", null)) this.handleSMSLinks();
   };
 
   handleSMSLinks = () => {
     const { authenticated, setPreviousRoute, setRoute, handleFieldChange } = this.props;
     const { pathname, search } = window.location;
+    const link = localStorageGet("smsRedirectionLink", null);
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
-      setPreviousRoute(pathname + search);
+      link.indexOf("smsLink=true") > -1 ? setPreviousRoute(link) : setPreviousRoute(pathname + search);
+      !link && localStorageSet("smsRedirectionLink", pathname + search, null);
     }
   };
 

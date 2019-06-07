@@ -13,7 +13,7 @@ const Main = ({ routes, hasLocalisation, defaultUrl }) => {
           }}
         />
 
-        <Redirect from="/" to={"/user/otp?smsLink=true"} />
+        <Redirect from="/" to={hasLocalisation ? "/language-selection" : defaultUrl.citizen} />
       </Switch>
     </main>
   );
