@@ -37,7 +37,7 @@ const services = [
     route: "/pgr-home",
   },
   { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "/property-tax" },
-  { label: "Trade License", icon: <Icon className="service-icon" action="custom" name="trade-license" />, route: "/tradelicence/search" },
+  { label: "Trade License", icon: <Icon className="service-icon" action="custom" name="trade-license" />, route: "/tradelicense-citizen/home" },
   { label: "Download Forms", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
   { label: "Water & Sewerage", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
   { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "" },

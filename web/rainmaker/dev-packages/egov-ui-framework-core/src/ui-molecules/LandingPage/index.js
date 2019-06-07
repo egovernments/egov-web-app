@@ -60,14 +60,16 @@ class LandingPage extends React.Component {
               >
                 <CardContent classes={{ root: "card-content-style" }}>
                   {obj.icon}
-                  <LabelContainer
-                    labelKey={obj.label.labelKey}
-                    labelName={obj.label.labelName}
-                    style={{
-                      fontSize: 14,
-                      color: "rgba(0, 0, 0, 0.8700000047683716)"
-                    }}
-                  />
+                  <div>
+                    <LabelContainer
+                      labelKey={obj.label.labelKey}
+                      labelName={obj.label.labelName}
+                      style={{
+                        fontSize: 14,
+                        color: "rgba(0, 0, 0, 0.8700000047683716)"
+                      }}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </Grid>
