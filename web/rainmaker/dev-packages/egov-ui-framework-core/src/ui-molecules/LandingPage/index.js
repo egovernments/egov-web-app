@@ -55,7 +55,7 @@ class LandingPage extends React.Component {
           return (
             <Grid className={classes.item} item xs={6} sm={6} align="center">
               <Card
-                className={classes.paper}
+                className={`${classes.paper} module-card-style`}
                 onClick={() => this.onCardCLick(obj.route)}
               >
                 <CardContent classes={{ root: "card-content-style" }}>
