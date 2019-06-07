@@ -17,11 +17,7 @@ export const searchApiCall = async (state, dispatch) => {
     // { key: "limit", value: "10" },
     // { key: "offset", value: "0" }
   ];
-  let searchScreenObject = get(
-    state.screenConfiguration.preparedFinalObject,
-    "searchScreen",
-    {}
-  );
+  let searchScreenObject = get(state.screenConfiguration.preparedFinalObject, "searchScreen", {});
   const isSearchBoxFirstRowValid = validateFields(
     "components.div.children.fireNOCApplication.children.cardContent.children.appNOCAndMobNumContainer.children",
     state,
@@ -37,17 +33,8 @@ export const searchApiCall = async (state, dispatch) => {
   );
 
   if (!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid)) {
-    dispatch(
-      toggleSnackbar(
-        true,
-        "Please fill valid fields to start search",
-        "warning"
-      )
-    );
-  } else if (
-    Object.keys(searchScreenObject).length == 0 ||
-    Object.values(searchScreenObject).every(x => x === "")
-  ) {
+    dispatch(toggleSnackbar(true, "Please fill valid fields to start search", "warning"));
+  } else if (Object.keys(searchScreenObject).length == 0 || Object.values(searchScreenObject).every(x => x === "")) {
     dispatch(
       toggleSnackbar(
         true,
@@ -59,8 +46,7 @@ export const searchApiCall = async (state, dispatch) => {
       )
     );
   } else if (
-    (searchScreenObject["fromDate"] === undefined ||
-      searchScreenObject["fromDate"].length === 0) &&
+    (searchScreenObject["fromDate"] === undefined || searchScreenObject["fromDate"].length === 0) &&
     searchScreenObject["toDate"] !== undefined &&
     searchScreenObject["toDate"].length !== 0
   ) {
@@ -68,10 +54,7 @@ export const searchApiCall = async (state, dispatch) => {
   } else {
     //  showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
-      if (
-        searchScreenObject.hasOwnProperty(key) &&
-        searchScreenObject[key].trim() !== ""
-      ) {
+      if (searchScreenObject.hasOwnProperty(key) && searchScreenObject[key].trim() !== "") {
         if (key === "fromDate") {
           queryObject.push({
             key: key,
@@ -100,36 +83,22 @@ export const searchApiCall = async (state, dispatch) => {
       let data =
         response &&
         get(response, "FireNOCs", []).map(item => ({
-          [get(textToLocalMapping, "Application No")]:
-            item.applicationnumber || "-",
+          [get(textToLocalMapping, "Application No")]: item.fireNOCDetails.applicationNumber || "-",
           [get(textToLocalMapping, "NOC No")]: "" || "-",
-          [get(textToLocalMapping, "NOC Type")]:
-            item.fireNOCDetails.fireNOCType || "-",
-          [get(textToLocalMapping, "Owner Name")]:
-            get(item, "fireNOCDetails.applicantDetails.owners[0].name") || "-",
-          [get(textToLocalMapping, "Application Date")]:
-            convertEpochToDate(item.applicationdate) || "-",
-          tenantId: item.tenantid,
-          [get(textToLocalMapping, "Status")]:
-            get(textToLocalMapping, item.status) || "-"
+          [get(textToLocalMapping, "NOC Type")]: item.fireNOCDetails.fireNOCType || "-",
+          [get(textToLocalMapping, "Owner Name")]: get(item, "fireNOCDetails.applicantDetails.owners[0].name") || "-",
+          [get(textToLocalMapping, "Application Date")]: convertEpochToDate(item.applicationdate) || "-",
+          tenantId: item.tenantId,
+          [get(textToLocalMapping, "Status")]: get(textToLocalMapping, item.fireNOCDetails.status) || "-"
         }));
 
-      dispatch(
-        handleField(
-          "search",
-          "components.div.children.searchResults",
-          "props.data",
-          data
-        )
-      );
+      dispatch(handleField("search", "components.div.children.searchResults", "props.data", data));
       dispatch(
         handleField(
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${textToLocalMapping["Search Results for Fire-NOC Applications"]}(${
-            response.FireNOCs.length
-          })`
+          `${textToLocalMapping["Search Results for Fire-NOC Applications"]}(${response.FireNOCs.length})`
         )
       );
       //showHideProgress(false, dispatch);
@@ -142,12 +111,5 @@ export const searchApiCall = async (state, dispatch) => {
   }
 };
 const showHideTable = (booleanHideOrShow, dispatch) => {
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.searchResults",
-      "visible",
-      booleanHideOrShow
-    )
-  );
+  dispatch(handleField("search", "components.div.children.searchResults", "visible", booleanHideOrShow));
 };
