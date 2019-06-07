@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import get from "lodash/get";
 import LabelContainer from "../../ui-containers/LabelContainer";
+import { handleScreenConfigurationFieldChange as handleField } from "../../ui-redux/screen-configuration/actions";
 import "./index.css";
 
 const styles = theme => ({
@@ -28,8 +33,22 @@ const styles = theme => ({
 });
 
 class LandingPage extends React.Component {
+  onCardCLick = route => {
+    const { screenConfig, handleField, setRoute } = this.props;
+    if (typeof route === "string") {
+      setRoute(route);
+    } else {
+      let toggle = get(
+        screenConfig[route.screenKey],
+        `${route.jsonPath}.props.open`,
+        false
+      );
+      handleField(route.screenKey, route.jsonPath, "props.open", !toggle);
+    }
+  };
+
   render() {
-    const { classes, items, history } = this.props;
+    const { classes, items } = this.props;
     return (
       <Grid container style={{ paddingTop: 45 }}>
         {items.map(obj => {
@@ -37,18 +56,17 @@ class LandingPage extends React.Component {
             <Grid className={classes.item} item xs={6} sm={6} align="center">
               <Card
                 className={classes.paper}
-                // onClick={e => {
-                //   history.push(obj.route);
-                // }}
+                onClick={() => this.onCardCLick(obj.route)}
               >
                 <CardContent classes={{ root: "card-content-style" }}>
                   {obj.icon}
                   <LabelContainer
                     labelKey={obj.label.labelKey}
                     labelName={obj.label.labelName}
-                    // fontSize={14}
-                    // color="rgba(0, 0, 0, 0.8700000047683716)"
-                    // dynamicArray={obj.dynamicArray}
+                    style={{
+                      fontSize: 14,
+                      color: "rgba(0, 0, 0, 0.8700000047683716)"
+                    }}
                   />
                 </CardContent>
               </Card>
@@ -60,4 +78,22 @@ class LandingPage extends React.Component {
   }
 }
 
-export default withStyles(styles)(LandingPage);
+const mapStateToProps = state => {
+  const screenConfig = get(state.screenConfiguration, "screenConfig");
+  return { screenConfig };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleField: (screenKey, jsonPath, fieldKey, value) =>
+      dispatch(handleField(screenKey, jsonPath, fieldKey, value)),
+    setRoute: path => dispatch(setRoute(path))
+  };
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LandingPage)
+);

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  getBreak,
-  getCommonCard,
-  getCommonContainer,
-  getCommonHeader,
-  getLabel
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { showCityPicker } from "../utils";
 import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
@@ -25,7 +19,10 @@ const cardItems = [
       labelName: "Apply for Trade License"
     },
     icon: <TradeLicenseIcon />,
-    route: "/add-complaint"
+    route: {
+      screenKey: "home",
+      jsonPath: "components.cityPickerDialog"
+    }
   },
   {
     label: {
@@ -33,7 +30,7 @@ const cardItems = [
       labelName: "My Applications"
     },
     icon: <FormIcon />,
-    route: "/my-complaints"
+    route: "my-applications"
   }
 ];
 
