@@ -38,6 +38,16 @@ const MenuButton = Loadable({
   loading: () => <Loading />
 });
 
+const FireNocIcon = Loadable({
+  loader: () => import("./Icons/FireNocIcon"),
+  loading: () => <Loading />
+});
+
+const MyApplicationIcon = Loadable({
+  loader: () => import("./Icons/MyApplicationIcon"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -45,5 +55,7 @@ export {
   MapLocation,
   AutoSuggest,
   Asteric,
-  MenuButton
+  MenuButton,
+  FireNocIcon,
+  MyApplicationIcon
 };
