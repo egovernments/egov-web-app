@@ -503,15 +503,13 @@ export const sampleSearch = () => {
 
 export const sampleSingleSearch = () => {
   return {
-    RequestInfo: {
+    ResponseInfo: {
       apiId: "Mihy",
       ver: ".01",
-      action: "",
-      did: "1",
-      key: "",
+      ts: null,
+      resMsgId: "uief87324",
       msgId: "20170310130900|en_IN",
-      requesterId: "",
-      authToken: "922b86b7-2763-4155-ad42-645f6728eb81"
+      status: "successful"
     },
     FireNOCs: [
       {
@@ -522,7 +520,8 @@ export const sampleSingleSearch = () => {
               locality: {
                 code: "SUN04"
               },
-              pincode: "560102"
+              pincode: "560102",
+              id: "968e8152-5d8f-4dd4-b5e6-1d750ee04313"
             }
           },
           noOfBuildings: "MULTIPLE",
@@ -533,27 +532,65 @@ export const sampleSingleSearch = () => {
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
               uoms: [
-                { code: "NO_OF_FLOORS", value: 8, isActiveUom: true, active: true },
-                { code: "NO_OF_BASEMENTS", value: 1, isActiveUom: true, active: true },
-                { code: "HEIGHT_OF_BUILDING", value: 5000, isActiveUom: true, active: true }
+                {
+                  code: "HEIGHT_OF_BUILDING",
+                  value: 5000,
+                  isActiveUom: true,
+                  active: true,
+                  id: "1d05612a-e680-4192-8f17-c949774ae1d6"
+                },
+                {
+                  code: "NO_OF_FLOORS",
+                  value: 8,
+                  isActiveUom: true,
+                  active: true,
+                  id: "2c82b1f1-89ee-4703-bc71-7bfbbd7e6868"
+                },
+                {
+                  code: "NO_OF_BASEMENTS",
+                  value: 1,
+                  isActiveUom: true,
+                  active: true,
+                  id: "328d4697-33d6-47d6-b51f-a5bdfc612ba3"
+                }
               ],
-              applicationDocuments: []
+              applicationDocuments: [],
+              id: "c53ca061-4fe8-48c0-aec7-1eff3621d72a"
             },
             {
               name: "dsrrh violet",
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
               uoms: [
-                { code: "NO_OF_FLOORS", value: 7, isActiveUom: true, active: true },
-                { code: "NO_OF_BASEMENTS", value: 2, isActiveUom: true, active: true },
-                { code: "HEIGHT_OF_BUILDING", value: 4500, isActiveUom: true, active: true }
+                {
+                  code: "HEIGHT_OF_BUILDING",
+                  value: 4500,
+                  isActiveUom: true,
+                  active: true,
+                  id: "069603e2-41f2-47be-8fb8-f4ee0fa99610"
+                },
+                {
+                  code: "NO_OF_FLOORS",
+                  value: 7,
+                  isActiveUom: true,
+                  active: true,
+                  id: "2f8188d3-e0de-4c91-84ed-2e3ab96becf3"
+                },
+                {
+                  code: "NO_OF_BASEMENTS",
+                  value: 2,
+                  isActiveUom: true,
+                  active: true,
+                  id: "b4fe86c3-d75f-461b-84ae-cf2b90ac5f93"
+                }
               ],
-              applicationDocuments: []
+              applicationDocuments: [],
+              id: "5427ad45-2bf7-428b-bcc8-3c52c7747925"
             }
           ],
           applicantDetails: {
-            ownerShipMajorType: "INDIVIDUAL",
-            ownerShipType: "INDIVIDUAL.SINGLEOWNER",
+            ownerShipMajorType: "INSTITUTIONALPRIVATE",
+            ownerShipType: "INSTITUTIONALPRIVATE.PRIVATECOMPANY",
             owners: [
               {
                 mobileNumber: "9167765477",
@@ -562,13 +599,26 @@ export const sampleSingleSearch = () => {
                 correspondenceAddress: "corres addr",
                 fatherOrHusbandName: "a",
                 dob: "1991-06-28",
-                documents: []
+                documents: [],
+                id: "551083f4-df06-40de-bc72-a1d03654d13e"
               }
             ],
-            additionalDetail: {}
-          }
+            additionalDetail: {
+              id: "e03df560-595a-4258-bb05-67318651178f"
+            }
+          },
+          action: "INITIATE",
+          id: "951ab026-0c77-4368-a944-10cf07287b86",
+          applicationNumber: "PB-FN-2019-06-07-002024"
         },
-        tenantId: "pb.amritsar"
+        tenantId: "pb.amritsar",
+        id: "af82e49e-c966-40ab-993f-9ead126b3583",
+        auditDetails: {
+          createdBy: "52bb4f29-922a-4ba1-b3f1-33cfff16cd7e",
+          lastModifiedBy: "",
+          createdTime: 1559897605727,
+          lastModifiedTime: 0
+        }
       }
     ]
   };

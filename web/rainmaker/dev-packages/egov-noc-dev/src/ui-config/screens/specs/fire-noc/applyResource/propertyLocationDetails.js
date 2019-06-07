@@ -347,7 +347,7 @@ export const propertyLocationDetails = getCommonCard(
         pattern: getPattern("Pincode"),
         errorMessage: "Invalid Pincode",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode",
-        required: true
+        // required: true
       }),
       propertyGisCoordinates: {
         uiFramework: "custom-atoms",
