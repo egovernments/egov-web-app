@@ -149,7 +149,18 @@ export const newCollectionDetailsCard = getCommonCard({
       jsonPath: "Demands[0].consumerName"
     }),
     serviceCategory: {
-      ...getSelectField({
+      uiFramework: "custom-containers",
+      componentPath: "AutosuggestContainer",
+      jsonPath: "Demands[0].businessService",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      props: {
+        style: {
+          width: "100%",
+          cursor: "pointer"
+        },
         label: {
           labelName: "Service Category",
           labelKey: "UC_SERVICE_CATEGORY_LABEL"
@@ -166,11 +177,13 @@ export const newCollectionDetailsCard = getCommonCard({
         visible: true,
         jsonPath: "Demands[0].businessService",
         sourceJsonPath: "applyScreenMdmsData.serviceCategories",
-        gridDefination: {
-          xs: 12,
-          sm: 6
+        labelsFromLocalisation: true,
+        suggestions: [],
+        fullwidth: true,
+        inputLabelProps: {
+          shrink: true
         }
-      }),
+      },
       beforeFieldChange: async (action, state, dispatch) => {
         console.log(action);
         //Reset service type value, if any
@@ -225,6 +238,17 @@ export const newCollectionDetailsCard = getCommonCard({
         }
       }
     },
+
+    // serviceCategory: {
+    //   ...getSelectField({
+
+    //     gridDefination: {
+    //       xs: 12,
+    //       sm: 6
+    //     }
+    //   }),
+
+    // },
     serviceType: {
       ...getSelectField({
         label: {
@@ -289,19 +313,19 @@ export const newCollectionDetailsCard = getCommonCard({
       pattern: getPattern("Date"),
       jsonPath: "Demands[0].taxPeriodTo"
     }),
-    comment: getTextField({
-      label: {
-        labelName: "Comments",
-        labelKey: "UC_COMMENT_LABEL"
-      },
-      placeholder: {
-        labelName: "Enter Comment ",
-        labelKey: "UC_COMMENT_PLACEHOLDER"
-      },
+    // comment: getTextField({
+    //   label: {
+    //     labelName: "Comments",
+    //     labelKey: "UC_COMMENT_LABEL"
+    //   },
+    //   placeholder: {
+    //     labelName: "Enter Comment ",
+    //     labelKey: "UC_COMMENT_PLACEHOLDER"
+    //   },
 
-      Required: false,
-      jsonPath: "Demands[0].demandDetails[0].comment"
-    }),
+    //   Required: false,
+    //   jsonPath: "Demands[0].demandDetails[0].comment"
+    // }),
     dummyDiv: {
       uiFramework: "custom-atoms",
       componentPath: "Div",
@@ -401,6 +425,26 @@ const setTaxHeadFields = (action, state, dispatch) => {
         )
       );
     });
+    dispatch(
+      handleField(
+        "newCollection",
+        "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+        `comment`,
+        getTextField({
+          label: {
+            labelName: "Comments",
+            labelKey: "UC_COMMENT_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Comment ",
+            labelKey: "UC_COMMENT_PLACEHOLDER"
+          },
+          Required: false,
+          jsonPath: "Demands[0].comment",
+          componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
+        })
+      )
+    );
   }
 };
 
