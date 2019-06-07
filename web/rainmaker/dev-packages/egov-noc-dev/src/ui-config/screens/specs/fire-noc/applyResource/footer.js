@@ -1,26 +1,15 @@
-import {
-  dispatchMultipleFieldChangeAction,
-  getLabel
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { dispatchMultipleFieldChangeAction, getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import get from "lodash/get";
 import { getCommonApplyFooter, validateFields } from "../../utils";
 import "./index.css";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import {
-  createNocApplication,
-  prepareDocumentsUploadData
-} from "../../../../../ui-utils/commons";
+import { createUpdateNocApplication, prepareDocumentsUploadData } from "../../../../../ui-utils/commons";
 
 const moveToReview = dispatch => {
-  const applicationNumber = getQueryArg(
-    window.location.href,
-    "applicationNumber"
-  );
-  const applicationNumberQueryString = applicationNumber
-    ? `?applicationNumber=${applicationNumber}`
-    : ``;
+  const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+  const applicationNumberQueryString = applicationNumber ? `?applicationNumber=${applicationNumber}` : ``;
   const reviewUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/fire-noc/summary${applicationNumberQueryString}`
@@ -53,16 +42,11 @@ const callBackForNext = async (state, dispatch) => {
     // Multiple buildings cards validations
     let multiplePropertyCardPath =
       "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer.children.multipleBuilding.props.items";
-    let multiplePropertyCardItems = get(
-      state.screenConfiguration.screenConfig.apply,
-      multiplePropertyCardPath,
-      []
-    );
+    let multiplePropertyCardItems = get(state.screenConfiguration.screenConfig.apply, multiplePropertyCardPath, []);
     let isMultiplePropertyCardValid = true;
     for (var j = 0; j < multiplePropertyCardItems.length; j++) {
       if (
-        (multiplePropertyCardItems[j].isDeleted === undefined ||
-          multiplePropertyCardItems[j].isDeleted !== false) &&
+        (multiplePropertyCardItems[j].isDeleted === undefined || multiplePropertyCardItems[j].isDeleted !== false) &&
         !validateFields(
           `${multiplePropertyCardPath}[${j}].item${j}.children.cardContent.children.multipleBuildingCard.children`,
           state,
@@ -73,21 +57,14 @@ const callBackForNext = async (state, dispatch) => {
         isMultiplePropertyCardValid = false;
     }
 
-    let noOfBuildings = get(
-      state,
-      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
-    );
+    let noOfBuildings = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings");
     if (noOfBuildings === "SINGLE") {
       isMultiplePropertyCardValid = true;
     } else {
       isSinglePropertyCardValid = true;
     }
 
-    if (
-      !isSinglePropertyCardValid ||
-      !isPropertyLocationCardValid ||
-      !isMultiplePropertyCardValid
-    ) {
+    if (!isSinglePropertyCardValid || !isPropertyLocationCardValid || !isMultiplePropertyCardValid) {
       isFormValid = false;
     }
   }
@@ -113,16 +90,11 @@ const callBackForNext = async (state, dispatch) => {
     let multipleApplicantCardPath =
       "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items";
     // "components.div.children.formwizardThirdStep.children.applicantDetails.children.cardContent.children.applicantTypeContainer.children.multipleApplicantContainer.children.multipleApplicantInfo.props.items[0].item0.children.cardContent.children.applicantCard"
-    let multipleApplicantCardItems = get(
-      state.screenConfiguration.screenConfig.apply,
-      multipleApplicantCardPath,
-      []
-    );
+    let multipleApplicantCardItems = get(state.screenConfiguration.screenConfig.apply, multipleApplicantCardPath, []);
     let isMultipleApplicantCardValid = true;
     for (var j = 0; j < multipleApplicantCardItems.length; j++) {
       if (
-        (multipleApplicantCardItems[j].isDeleted === undefined ||
-          multipleApplicantCardItems[j].isDeleted !== false) &&
+        (multipleApplicantCardItems[j].isDeleted === undefined || multipleApplicantCardItems[j].isDeleted !== false) &&
         !validateFields(
           `${multipleApplicantCardPath}[${j}].item${j}.children.cardContent.children.applicantCard.children`,
           state,
@@ -165,7 +137,7 @@ const callBackForNext = async (state, dispatch) => {
 
   if (activeStep !== 3) {
     if (activeStep === 2) {
-      isFormValid = await createNocApplication(state, dispatch);
+      isFormValid = await createUpdateNocApplication(state, dispatch);
     }
     if (isFormValid) {
       if (activeStep === 1) {
@@ -180,15 +152,13 @@ const callBackForNext = async (state, dispatch) => {
       switch (activeStep) {
         case 1:
           errorMessage = {
-            labelName:
-              "Please fill all mandatory fields for Property Details, then proceed!",
+            labelName: "Please fill all mandatory fields for Property Details, then proceed!",
             labelKey: "ERR_FILL_ALL_MANDATORY_FIELDS_PROPERTY_TOAST"
           };
           break;
         case 2:
           errorMessage = {
-            labelName:
-              "Please fill all mandatory fields for Applicant Details, then proceed!",
+            labelName: "Please fill all mandatory fields for Applicant Details, then proceed!",
             labelKey: "ERR_FILL_ALL_MANDATORY_FIELDS_APPLICANT_TOAST"
           };
           break;
@@ -198,12 +168,7 @@ const callBackForNext = async (state, dispatch) => {
   }
 };
 
-export const changeStep = (
-  state,
-  dispatch,
-  mode = "next",
-  defaultActiveStep = -1
-) => {
+export const changeStep = (state, dispatch, mode = "next", defaultActiveStep = -1) => {
   let activeStep = get(
     state.screenConfiguration.screenConfig["apply"],
     "components.div.children.stepper.props.activeStep",
@@ -258,36 +223,28 @@ export const renderSteps = (activeStep, dispatch) => {
     case 0:
       dispatchMultipleFieldChangeAction(
         "apply",
-        getActionDefinationForStepper(
-          "components.div.children.formwizardFirstStep"
-        ),
+        getActionDefinationForStepper("components.div.children.formwizardFirstStep"),
         dispatch
       );
       break;
     case 1:
       dispatchMultipleFieldChangeAction(
         "apply",
-        getActionDefinationForStepper(
-          "components.div.children.formwizardSecondStep"
-        ),
+        getActionDefinationForStepper("components.div.children.formwizardSecondStep"),
         dispatch
       );
       break;
     case 2:
       dispatchMultipleFieldChangeAction(
         "apply",
-        getActionDefinationForStepper(
-          "components.div.children.formwizardThirdStep"
-        ),
+        getActionDefinationForStepper("components.div.children.formwizardThirdStep"),
         dispatch
       );
       break;
     default:
       dispatchMultipleFieldChangeAction(
         "apply",
-        getActionDefinationForStepper(
-          "components.div.children.formwizardFourthStep"
-        ),
+        getActionDefinationForStepper("components.div.children.formwizardFourthStep"),
         dispatch
       );
   }

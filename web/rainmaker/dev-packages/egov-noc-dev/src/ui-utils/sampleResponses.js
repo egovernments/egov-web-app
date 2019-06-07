@@ -532,14 +532,14 @@ export const sampleSingleSearch = () => {
               name: "Dsrrh Indigo",
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
-              uoms: [],
+              uoms: { NO_OF_FLOORS: 8, NO_OF_BASEMENTS: 1, HEIGHT_OF_BUILDING: "5000" },
               applicationDocuments: []
             },
             {
               name: "dsrrh violet",
               usageType: "GROUP_A_RESIDENTIAL",
               usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
-              uoms: [],
+              uoms: { NO_OF_FLOORS: 7, NO_OF_BASEMENTS: 2, HEIGHT_OF_BUILDING: "4500" },
               applicationDocuments: []
             }
           ],
