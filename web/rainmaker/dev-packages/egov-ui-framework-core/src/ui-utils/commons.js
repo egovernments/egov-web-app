@@ -467,3 +467,11 @@ export const getUlbGradeLabel = ulbGrade => {
     return "ULBGRADE" + "_" + ulbWiseHeaderName;
   }
 };
+
+export const findItemInArrayOfObject = (arr, conditionCheckerFn) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (conditionCheckerFn(arr[i])) {
+      return arr[i];
+    }
+  }
+};

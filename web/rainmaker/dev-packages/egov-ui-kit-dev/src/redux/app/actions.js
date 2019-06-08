@@ -16,6 +16,10 @@ export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
 };
 
+export const setPreviousRoute = (route) => {
+  return { type: actionTypes.SET_PREVIOUS_ROUTE, route };
+};
+
 export const setBottomNavigationIndex = (bottomNavigationIndex) => {
   return { type: actionTypes.CHANGE_BOTTOM_NAVIGATION_INDEX, bottomNavigationIndex };
 };
