@@ -7,6 +7,7 @@ import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText,
 import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
+import redirectionLink from "../config/smsRedirectionLinks";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
 import { getLocale, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
@@ -72,10 +73,10 @@ class App extends Component {
 
   handleSMSLinks = () => {
     const { authenticated, setPreviousRoute, setRoute, handleFieldChange } = this.props;
-    const { pathname, search } = window.location;
+    const { pathname, href } = window.location;
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
-      setPreviousRoute("/citizen/uc-citizen/smsViewReceipt?mobileNo=8050579149&tenantId=pb.amritsar&receiptNo=05/2019-20/002226&smsLink=true");
+      setPreviousRoute(redirectionLink(href));
       // localStorageSet("smsRedirectionLink", pathname + search, null);
     }
   };

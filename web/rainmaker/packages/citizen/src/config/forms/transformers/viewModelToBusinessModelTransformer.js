@@ -114,7 +114,7 @@ const transformer = (formKey, form = {}, state = {}) => {
             value: fields.phone.value,
           },
         };
-      } else if (previousRoute.endsWith("smsLink=true")) {
+      } else if (previousRoute.indexOf("smsLink=true") > 0) {
         fields = {
           password: {
             jsonPath: "login.password",
