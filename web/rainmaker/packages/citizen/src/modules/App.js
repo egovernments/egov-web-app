@@ -66,17 +66,16 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
-    if (getQueryArg("", "smsLink") || localStorageGet("smsRedirectionLink", null)) this.handleSMSLinks();
+    getQueryArg("", "smsLink") && this.handleSMSLinks();
   };
 
   handleSMSLinks = () => {
     const { authenticated, setPreviousRoute, setRoute, handleFieldChange } = this.props;
     const { pathname, search } = window.location;
-    const link = localStorageGet("smsRedirectionLink", null);
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
-      link && link.indexOf("smsLink=true") > -1 ? setPreviousRoute(link) : setPreviousRoute(pathname + search);
-      !link && localStorageSet("smsRedirectionLink", pathname + search, null);
+      setPreviousRoute(pathname + search);
+      localStorageSet("smsRedirectionLink", pathname + search, null);
     }
   };
 

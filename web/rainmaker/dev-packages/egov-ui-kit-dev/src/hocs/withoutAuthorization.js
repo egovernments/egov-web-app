@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getQueryArg } from "egov-ui-kit/utils/commons";
 
 const withoutAuthorization = (redirectionUrl) => (Component) => {
   class Wrapper extends React.Component {
@@ -17,13 +16,7 @@ const withoutAuthorization = (redirectionUrl) => (Component) => {
     const { authenticated } = state.auth;
     let { stateInfoById } = state.common || [];
     let hasLocalisation = false;
-    let defaultUrl = getQueryArg("", "smsLink")
-      ? "/user/otp?smsLink=true"
-      : process.env.REACT_APP_NAME === "Citizen"
-      ? "/user/register"
-      : "/user/login";
-
-    console.log("======> 3");
+    let defaultUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
     if (stateInfoById && stateInfoById.length > 0) {
       hasLocalisation = stateInfoById[0].hasLocalisation;
       defaultUrl = stateInfoById[0].defaultUrl;
