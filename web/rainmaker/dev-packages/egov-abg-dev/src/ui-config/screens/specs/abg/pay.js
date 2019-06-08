@@ -110,21 +110,6 @@ const header = getCommonContainer({
   }
 });
 
-const createEstimateData = billObject => {
-  const billDetails = billObject && billObject.billDetails;
-  let fees =
-    billDetails &&
-    billDetails[0].billAccountDetails &&
-    billDetails[0].billAccountDetails.map(item => {
-      return {
-        name: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode },
-        value: item.amount,
-        info: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode }
-      };
-    });
-  return fees;
-};
-
 const generateBill = async (
   dispatch,
   consumerCode,

@@ -1,11 +1,9 @@
 import {
   getCommonGrayCard,
   getCommonSubHeader,
-  getTextField,
-  getPattern,
-  getDateField,
-  getLabel,
-  getLabelWithValue
+  getLabelWithValue,
+  getSelectField,
+  getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const amountToBePaid = getCommonGrayCard({
@@ -34,8 +32,7 @@ export const amountToBePaid = getCommonGrayCard({
           sm: 12,
           md: 6
         },
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
+        jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].amountToBePaid",
         props: {
           buttons: [
             {
@@ -49,18 +46,17 @@ export const amountToBePaid = getCommonGrayCard({
               value: "PARTIAL AMOUNT"
             }
           ],
-          jsonPath:
-            "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship"
+          jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid"
         },
         type: "array"
       },
-      amountToPay: getLabelWithValue(
+      amountToPay: getTextField(
         {
           labelName: "Amount to pay(INR)",
           labelKey: "ABG_AMOUNT_TO_PAY_LABEL"
         },
         {
-          jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name"
+          jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].amountPaidPartially"
         }
       )
     }
