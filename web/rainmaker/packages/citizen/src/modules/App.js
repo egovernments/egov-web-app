@@ -29,6 +29,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     const { fetchLocalizationLabel, fetchCurrentLocation, fetchMDMSData } = this.props;
+    const { pathname, search } = window.location;
     let requestBody = {
       MdmsCriteria: {
         tenantId: commonConfig.tenantId,
@@ -66,7 +67,7 @@ class App extends Component {
     // current location
     fetchCurrentLocation();
     fetchMDMSData(requestBody);
-    getQueryArg("", "smsLink") && this.handleSMSLinks();
+    pathname.indexOf("/otpLogin") > -1 && this.handleSMSLinks();
   };
 
   handleSMSLinks = () => {
@@ -74,8 +75,8 @@ class App extends Component {
     const { pathname, search } = window.location;
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
-      setPreviousRoute(pathname + search);
-      localStorageSet("smsRedirectionLink", pathname + search, null);
+      setPreviousRoute("/citizen/uc-citizen/smsViewReceipt?mobileNo=8050579149&tenantId=pb.amritsar&receiptNo=05/2019-20/002226&smsLink=true");
+      // localStorageSet("smsRedirectionLink", pathname + search, null);
     }
   };
 
@@ -86,7 +87,7 @@ class App extends Component {
       history.push(nextRoute);
       setRoute("");
     }
-    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated && history.location.search.indexOf("smsLink=true") < 0) {
+    if (nextProps.hasLocalisation !== this.props.hasLocalisation && !authenticated && !getQueryArg("", "smsLink")) {
       nextProps.hasLocalisation && this.props.history.replace("/language-selection");
     }
   }
