@@ -77,7 +77,8 @@ class App extends Component {
     if (!authenticated) {
       setRoute("/user/otp?smsLink=true");
       setPreviousRoute(redirectionLink(href));
-      // localStorageSet("smsRedirectionLink", pathname + search, null);
+    } else {
+      setRoute(redirectionLink(href));
     }
   };
 
