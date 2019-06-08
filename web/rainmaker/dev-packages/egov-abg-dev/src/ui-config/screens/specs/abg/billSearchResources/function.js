@@ -80,7 +80,8 @@ export const searchApiCall = async (state, dispatch) => {
     const responseFromAPI = await getSearchResults(queryObject);
     // console.log(responseFromAPI);
 
-    const getResponse = (responseFromAPI && responseFromAPI.Bills) || [];
+    const getResponse = (responseFromAPI && responseFromAPI.Bill) || [];
+    debugger;
     const response = [];
     for (let i = 0; i < getResponse.length; i++) {
       response[i] = {
@@ -136,7 +137,7 @@ export const searchApiCall = async (state, dispatch) => {
     //   }
     // ];
 
-    console.log(response);
+    console.log("LOLOL....", response);
 
     try {
       let data = response.map(item => ({

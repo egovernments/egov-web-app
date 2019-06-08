@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
-import { sortByEpoch, getEpochForDate } from "../../utils";
+import { sortByEpoch, getEpochForDate, gotoApplyWithStep } from "../../utils";
+import { generateSingleBill } from "../../utils/receiptPdf";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 // import { generateBill } from "../../utils/recieptPdf";
 import {
@@ -65,17 +66,17 @@ export const searchResults = {
       [get(textToLocalMapping, "Bill No.")]: {
         format: rowData => {
           return (
-            <span
-              style={{
-                color: "#FE7A51",
-                cursor: "pointer",
-                textDecoration: "underline"
-              }}
-              // onClick={() => getAction(rowData)}
-            >
-              {rowData[get(textToLocalMapping, "Bill No.")]}
-            </span>
-            // <span style="cursor:pointer">pointer</span>
+            <Link to={generateSingleBill(rowData)}>
+              <span
+                style={{
+                  color: "#FE7A51",
+                  cursor: "pointer",
+                  textDecoration: "underline"
+                }}
+              >
+                {rowData[get(textToLocalMapping, "Bill No.")]}
+              </span>
+            </Link>
           );
         }
       },
@@ -127,9 +128,17 @@ export const searchResults = {
   }
 };
 
-const onRowClick = rowData => {
-  switch (rowData[get(textToLocalMapping, "")]) {
-    default:
-      return `/abg/search`;
-  }
-};
+// const onRowClick = rowData => {
+//   switch (rowData[get(textToLocalMapping, "Status")]) {
+//     case get(textToLocalMapping, "PAID"):
+//       return goToDownloadBill;
+//     case get(textToLocalMapping, "PARTIALLY PAID"):
+//       return gotoPay;
+//     case get(textToLocalMapping, "PARTIALLY PAID"):
+//       return gotoPayForFullPayment;
+//     case get(textToLocalMapping, "PARTIALLY PAID"):
+//       return gotoPayWithUpdatedBillNumber;
+//     default:
+//       return;
+//   }
+// };
