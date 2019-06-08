@@ -26,312 +26,296 @@ let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 const tenantId = getTenantId();
 
-export const newCollectionDetailsCard = getCommonCard(
-  {
-    searchContainer: getCommonContainer(
-      {
-        City: {
-          ...getSelectField({
-            label: {
-              labelName: "City",
-              labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
-            },
-            labelPrefix: {
-              moduleName: "TENANT",
-              masterName: "TENANTS"
-            },
-            optionLabel: "name",
-            placeholder: {
-              labelName: "Select City",
-              labelKey: "TL_SELECT_CITY"
-            },
-            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-            jsonPath: "Demands[0].tenantId",
-            required: true,
-            disabled: true,
-            props: {
-              required: true,
-              disabled: false,
-              value: tenantId,
-              disabled: true
-            }
-          }),
-          beforeFieldChange: async (action, state, dispatch) => {
-            let requestBody = {
-              MdmsCriteria: {
-                tenantId: action.value,
-                moduleDetails: [
+export const newCollectionDetailsCard = getCommonCard({
+  searchContainer: getCommonContainer({
+    City: {
+      ...getSelectField({
+        label: {
+          labelName: "City",
+          labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
+        },
+        labelPrefix: {
+          moduleName: "TENANT",
+          masterName: "TENANTS"
+        },
+        optionLabel: "name",
+        placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
+        sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+        jsonPath: "Demands[0].tenantId",
+        required: true,
+        disabled: true,
+        props: {
+          required: true,
+          disabled: false,
+          value: tenantId,
+          disabled: true
+        }
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: action.value,
+            moduleDetails: [
+              {
+                moduleName: "BillingService",
+                masterDetails: [
                   {
-                    moduleName: "BillingService",
-                    masterDetails: [
-                      {
-                        name: "BusinessService",
-                        filter: "[?(@.type=='Adhoc')]"
-                      },
-                      {
-                        name: "TaxHeadMaster"
-                      },
-                      {
-                        name: "TaxPeriod"
-                      }
-                    ]
+                    name: "BusinessService",
+                    filter: "[?(@.type=='Adhoc')]"
+                  },
+                  {
+                    name: "TaxHeadMaster"
+                  },
+                  {
+                    name: "TaxPeriod"
                   }
                 ]
               }
-            };
-            try {
-              let payload = null;
-              payload = await httpRequest(
-                "post",
-                "/egov-mdms-service/v1/_search",
-                "_search",
-                [],
-                requestBody
-              );
-              dispatch(
-                prepareFinalObject(
-                  "applyScreenMdmsData.BillingService",
-                  payload.MdmsRes.BillingService
-                )
-              );
-              setServiceCategory(
-                get(payload, "MdmsRes.BillingService.BusinessService", []),
-                dispatch
-              );
-            } catch (e) {
-              console.log(e);
-            }
-            return action;
+            ]
           }
-        },
-        dummyDiv: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          },
-          visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
-          props: {
-            disabled: true
-          }
-        },
-        ConsumerMobileNo: getTextField({
-          label: {
-            labelName: "Mobile No",
-            labelKey: "UC_MOBILE_NO_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Mobile No",
-            labelKey: "UC_MOBILE_NO_PLACEHOLDER"
-          },
-          iconObj: {
-            label: "+91 |",
-            position: "start"
-          },
+        };
+        try {
+          let payload = null;
+          payload = await httpRequest(
+            "post",
+            "/egov-mdms-service/v1/_search",
+            "_search",
+            [],
+            requestBody
+          );
+          dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.BillingService",
+              payload.MdmsRes.BillingService
+            )
+          );
+          setServiceCategory(
+            get(payload, "MdmsRes.BillingService.BusinessService", []),
+            dispatch
+          );
+        } catch (e) {
+          console.log(e);
+        }
+        return action;
+      }
+    },
+    dummyDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
+      props: {
+        disabled: true
+      }
+    },
 
-          required: true,
-          visible: true,
-          pattern: getPattern("MobileNo"),
-          errorMessage: "Invalid Mobile No.",
-          jsonPath: "Demands[0].mobileNo"
-        }),
-        ConsumerName: getTextField({
-          label: {
-            labelName: "Consumer Name",
-            labelKey: "UC_CONS_NAME_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Consumer Name",
-            labelKey: "UC _CONS_NAME_LABEL_PLACEHOLDER"
-          },
+    ConsumerMobileNo: getTextField({
+      label: {
+        labelName: "Mobile No",
+        labelKey: "UC_MOBILE_NO_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter Mobile No",
+        labelKey: "UC_MOBILE_NO_PLACEHOLDER"
+      },
+      iconObj: {
+        label: "+91 |",
+        position: "start"
+      },
 
-          required: true,
-          visible: true,
-          pattern: getPattern("Name"),
-          errorMessage: "Invalid Name.",
-          jsonPath: "Demands[0].consumerName"
-        }),
-        serviceCategory: {
-          uiFramework: "custom-containers",
-          componentPath: "AutosuggestContainer",
-          jsonPath: "Demands[0].businessService",
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          },
-          props: {
-            style: {
-              width: "100%",
-              cursor: "pointer"
-            },
-            label: {
-              labelName: "Service Category",
-              labelKey: "UC_SERVICE_CATEGORY_LABEL"
-            },
-            placeholder: {
-              labelName: "Select service Category",
-              labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
-            },
-            localePrefix: {
-              masterName: "BusinessService",
-              moduleName: "BillingService"
-            },
-            required: true,
-            visible: true,
-            jsonPath: "Demands[0].businessService",
-            sourceJsonPath: "applyScreenMdmsData.serviceCategories",
-            labelsFromLocalisation: true,
-            suggestions: [],
-            fullwidth: true,
-            inputLabelProps: {
-              shrink: true
-            }
-          },
-          beforeFieldChange: async (action, state, dispatch) => {
-            console.log(action);
-            //Reset service type value, if any
+      required: true,
+      visible: true,
+      pattern: getPattern("MobileNo"),
+      errorMessage: "Invalid Mobile No.",
+      jsonPath: "Demands[0].mobileNo"
+    }),
+    ConsumerName: getTextField({
+      label: {
+        labelName: "Consumer Name",
+        labelKey: "UC_CONS_NAME_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter Consumer Name",
+        labelKey: "UC _CONS_NAME_LABEL_PLACEHOLDER"
+      },
+
+      required: true,
+      visible: true,
+      pattern: getPattern("Name"),
+      errorMessage: "Invalid Name.",
+      jsonPath: "Demands[0].consumerName"
+    }),
+    serviceCategory: {
+      ...getSelectField({
+        label: {
+          labelName: "Service Category",
+          labelKey: "UC_SERVICE_CATEGORY_LABEL"
+        },
+        placeholder: {
+          labelName: "Select service Category",
+          labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
+        },
+        localePrefix: {
+          masterName: "BusinessService",
+          moduleName: "BillingService"
+        },
+        required: true,
+        visible: true,
+        jsonPath: "Demands[0].businessService",
+        sourceJsonPath: "applyScreenMdmsData.serviceCategories",
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        console.log(action);
+        //Reset service type value, if any
+        dispatch(
+          handleField(
+            "newCollection",
+            "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
+            "props.value",
+            null
+          )
+        );
+        //Set service type data and field if available.
+        const serviceData = get(
+          state.screenConfiguration,
+          "preparedFinalObject.applyScreenMdmsData.nestedServiceData",
+          {}
+        );
+        if (action.value) {
+          if (
+            serviceData[action.value] &&
+            serviceData[action.value].child &&
+            serviceData[action.value].child.length > 0
+          ) {
+            dispatch(
+              prepareFinalObject(
+                "applyScreenMdmsData.serviceTypes",
+                serviceData[action.value].child
+              )
+            );
             dispatch(
               handleField(
                 "newCollection",
                 "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
-                "props.value",
-                null
+                "visible",
+                true
               )
             );
-            //Set service type data and field if available.
-            const serviceData = get(
-              state.screenConfiguration,
-              "preparedFinalObject.applyScreenMdmsData.nestedServiceData",
-              {}
+          } else {
+            dispatch(
+              handleField(
+                "newCollection",
+                "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
+                "visible",
+                false
+              )
             );
-            if (action.value) {
-              if (
-                serviceData[action.value] &&
-                serviceData[action.value].child &&
-                serviceData[action.value].child.length > 0
-              ) {
-                dispatch(
-                  prepareFinalObject(
-                    "applyScreenMdmsData.serviceTypes",
-                    serviceData[action.value].child
-                  )
-                );
-                dispatch(
-                  handleField(
-                    "newCollection",
-                    "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
-                    "visible",
-                    true
-                  )
-                );
-              } else {
-                dispatch(
-                  handleField(
-                    "newCollection",
-                    "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceType",
-                    "visible",
-                    false
-                  )
-                );
-                //Set tax head fields if there is no service type available
-                if (serviceData[action.value]) {
-                  const taxHeads = setTaxHeadFields(action, state, dispatch);
-                }
-              }
-            }
-          }
-        },
-        serviceType: {
-          ...getSelectField({
-            label: {
-              labelName: "Service Type",
-              labelKey: "UC_SERVICE_TYPE_LABEL"
-            },
-            localePrefix: {
-              masterName: "BusinessService",
-              moduleName: "BillingService"
-            },
-            placeholder: {
-              labelName: "Select Service Type",
-              labelKey: "UC_SERVICE_TYPE_PLACEHOLDER"
-            },
-            required: true,
-            visible: false,
-            sourceJsonPath: "applyScreenMdmsData.serviceTypes",
-            jsonPath: "Demands[0].serviceType",
-            gridDefination: {
-              xs: 12,
-              sm: 6
-            }
-          }),
-          beforeFieldChange: async (action, state, dispatch) => {
-            if (action.value) {
+            //Set tax head fields if there is no service type available
+            if (serviceData[action.value]) {
               const taxHeads = setTaxHeadFields(action, state, dispatch);
-              console.log(taxHeads);
             }
           }
-        },
-        fromDate: getDateField({
-          label: {
-            labelName: "From Date",
-            labelKey: "UC_FROM_DATE_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter from Date",
-            labelKey: "UC_SELECT_FROM_DATE_PLACEHOLDER"
-          },
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          },
-          required: true,
-          pattern: getPattern("Date"),
-          jsonPath: "Demands[0].taxPeriodFrom"
-        }),
-        toDate: getDateField({
-          label: {
-            labelName: "To Date",
-            labelKey: "UC_TO_DATE_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter to Date",
-            labelKey: "UC_SELECT_TO_DATE_PLACEHOLDER"
-          },
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          },
-          required: true,
-          pattern: getPattern("Date"),
-          jsonPath: "Demands[0].taxPeriodTo"
-        }),
-        dummyDiv: {
-          uiFramework: "custom-atoms",
-          componentPath: "Div",
-          gridDefination: {
-            xs: 12,
-            sm: 6
-          },
-          visible: true,
-          props: {
-            disabled: true
-          }
-        }
-      },
-      {
-        style: {
-          overflow: "visible"
         }
       }
-    )
-  },
-  {
-    style: {
-      overflow: "visible"
+    },
+    serviceType: {
+      ...getSelectField({
+        label: {
+          labelName: "Service Type",
+          labelKey: "UC_SERVICE_TYPE_LABEL"
+        },
+        localePrefix: {
+          masterName: "BusinessService",
+          moduleName: "BillingService"
+        },
+        placeholder: {
+          labelName: "Select Service Type",
+          labelKey: "UC_SERVICE_TYPE_PLACEHOLDER"
+        },
+        required: true,
+        visible: false,
+        sourceJsonPath: "applyScreenMdmsData.serviceTypes",
+        jsonPath: "Demands[0].serviceType",
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        if (action.value) {
+          const taxHeads = setTaxHeadFields(action, state, dispatch);
+          console.log(taxHeads);
+        }
+      }
+    },
+    fromDate: getDateField({
+      label: {
+        labelName: "From Date",
+        labelKey: "UC_FROM_DATE_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter from Date",
+        labelKey: "UC_SELECT_FROM_DATE_PLACEHOLDER"
+      },
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      required: true,
+      pattern: getPattern("Date"),
+      jsonPath: "Demands[0].taxPeriodFrom"
+    }),
+    toDate: getDateField({
+      label: {
+        labelName: "To Date",
+        labelKey: "UC_TO_DATE_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter to Date",
+        labelKey: "UC_SELECT_TO_DATE_PLACEHOLDER"
+      },
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      required: true,
+      pattern: getPattern("Date"),
+      jsonPath: "Demands[0].taxPeriodTo"
+    }),
+    comment: getTextField({
+      label: {
+        labelName: "Comments",
+        labelKey: "UC_COMMENT_LABEL"
+      },
+      placeholder: {
+        labelName: "Enter Comment ",
+        labelKey: "UC_COMMENT_PLACEHOLDER"
+      },
+
+      Required: false,
+      jsonPath: "Demands[0].demandDetails[0].comment"
+    }),
+    dummyDiv: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      },
+      visible: true,
+      props: {
+        disabled: true
+      }
     }
-  }
-);
+  })
+});
 
 const setTaxHeadFields = (action, state, dispatch) => {
   const serviceData = get(
@@ -417,26 +401,6 @@ const setTaxHeadFields = (action, state, dispatch) => {
         )
       );
     });
-    dispatch(
-      handleField(
-        "newCollection",
-        "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-        `comment`,
-        getTextField({
-          label: {
-            labelName: "Comments",
-            labelKey: "UC_COMMENT_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Comment ",
-            labelKey: "UC_COMMENT_PLACEHOLDER"
-          },
-          Required: false,
-          jsonPath: "Demands[0].comment",
-          componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
-        })
-      )
-    );
   }
 };
 

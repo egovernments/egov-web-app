@@ -81,9 +81,6 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.UPDATE_ACTIVE_ROUTE_PATH: {
       return { ...state, activeRoutePath: action.routePath };
     }
-    case actionTypes.SET_PREVIOUS_ROUTE: {
-      return { ...state, previousRoute: action.route };
-    }
     default:
       return state;
   }

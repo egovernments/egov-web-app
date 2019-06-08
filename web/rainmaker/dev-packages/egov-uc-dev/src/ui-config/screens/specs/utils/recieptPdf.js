@@ -31,7 +31,7 @@ const getCitizenReceipetData = tranformedData => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Payment Receipt",
+                    text: "Property Tax Payment Receipt",
                     style: "receipt-logo-sub-header",
                     margin: [0, 10, 0, 0]
                   }
@@ -66,7 +66,7 @@ const getCitizenReceipetData = tranformedData => {
           {
             text: [
               {
-                text: "Receipt Date   ",
+                text: "Receipt Date ",
                 bold: true
               },
               {
@@ -98,7 +98,7 @@ const getCitizenReceipetData = tranformedData => {
           {
             text: [
               {
-                text: "Tax Period   ",
+                text: "Tax Period ",
                 bold: true
               },
               {
@@ -276,7 +276,7 @@ const getCitizenReceipetData = tranformedData => {
       "pt-reciept-citizen-subheader": {
         fontSize: 10,
         bold: true,
-        margin: [-18, 16, 8, 15],
+        margin: [-18, 16, 8, 8],
         color: "#484848"
       },
       "pt-reciept-citizen-table": {
@@ -360,7 +360,7 @@ const getReceiptData = tranformedData => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Payment Receipt (Citizen Copy)",
+                    text: "Property Tax Payment Receipt (Citizen Copy)",
                     style: "receipt-logo-sub-header",
                     margin: [0, 10, 0, 0]
                   }
@@ -395,7 +395,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Receipt Date   ",
+                text: "Receipt Date ",
                 bold: true
               },
               {
@@ -427,7 +427,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Tax Period   ",
+                text: "Tax Period ",
                 bold: true
               },
               {
@@ -621,7 +621,7 @@ const getReceiptData = tranformedData => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Payment Receipt (Employee Copy)",
+                    text: "Property Tax Payment Receipt (Employee Copy)",
                     style: "receipt-logo-sub-header",
                     margin: [0, 10, 0, 0]
                   }
@@ -656,7 +656,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Receipt Date   ",
+                text: "Receipt Date ",
                 bold: true
               },
               {
@@ -688,7 +688,7 @@ const getReceiptData = tranformedData => {
           {
             text: [
               {
-                text: "Tax Period   ",
+                text: "Tax Period ",
                 bold: true
               },
               {

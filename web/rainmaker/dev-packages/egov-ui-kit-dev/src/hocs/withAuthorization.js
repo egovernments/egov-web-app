@@ -7,7 +7,6 @@ import { Header } from "modules/common";
 import { ActionMenu } from "modules/common";
 import IconButton from "material-ui/IconButton";
 import Label from "egov-ui-kit/utils/translationNode";
-import { getQueryArg } from "egov-ui-kit/utils/commons";
 import { logout } from "egov-ui-kit/redux/auth/actions";
 import SortDialog from "../common/common/Header/components/SortDialog";
 
@@ -35,7 +34,7 @@ const withAuthorization = (options = {}) => (Component) => {
     componentWillMount() {
       const { authenticated, hasLocalisation, defaultUrl } = this.props;
       const { redirectionUrl } = options;
-      if (!authenticated && !getQueryArg("", "smsLink")) {
+      if (!authenticated) {
         const baseUrl = hasLocalisation ? "/language-selection" : process.env.REACT_APP_NAME === "Citizen" ? defaultUrl.citizen : defaultUrl.employee;
         this.props.history.replace(redirectionUrl || baseUrl);
       }

@@ -30,37 +30,6 @@ export const getRedirectionURL = receiptNumber => {
   return redirectionURL;
 };
 export const footer = getCommonApplyFooter({
-  prevButton: {
-    componentPath: "Button",
-    props: {
-      variant: "contained",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "16px"
-      }
-    },
-    children: {
-      downloadReceiptButtonLabel: getLabel({
-        labelName: "GENERATE RECEIPT",
-        labelKey: "UC_BUTTON_GENERATE_RECEIPT"
-      }),
-      nextButtonIcon: {
-        uiFramework: "custom-atoms",
-        componentPath: "Icon",
-        props: {
-          iconName: "keyboard_arrow_right"
-        }
-      }
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: (state, dispatch) => {
-        goBack(state, dispatch);
-      }
-    }
-  },
   nextButton: {
     componentPath: "Button",
     props: {
@@ -276,8 +245,4 @@ const convertDateFieldToEpoch = (finalObj, jsonPath) => {
     "daystart"
   );
   set(finalObj, jsonPath, dateConvertedToEpoch);
-};
-
-const goBack = (state, dispatch) => {
-  dispatch(setRoute(`/uc/search`));
 };
