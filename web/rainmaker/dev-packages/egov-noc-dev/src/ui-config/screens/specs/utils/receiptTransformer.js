@@ -67,7 +67,54 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.nocType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NA"));
     data.provisionalNocNumber = nullToNa(get(response, "FireNOCs[0].provisionFireNOCNumber", "NA"));
     data.fireStationId = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA"));
+
+    // Buildings Data
     data.propertyType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "NA"));
+    let buildings = get(response, "FireNOCs[0].fireNOCDetails.buildings", []);
+    data.buildings = buildings.map(building => {
+      let uoms = get(building, "uoms", []);
+      let uomsObject = {};
+      uoms.forEach(uom => {
+        uomsObject[uom.code] = uom.value;
+      });
+      return {
+        name: get(building, "name", "NA"),
+        usageType: get(building, "usageType", "NA").split(".")[0],
+        usageSubType: get(building, "usageType", "NA"),
+        ...uomsObject
+      };
+    });
+
+    // Property Location
+    data.propertyId = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.propertyId", "NA"));
+    data.city = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.city", "NA"));
+    data.door = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo", "NA"));
+    data.buildingName = nullToNa(
+      get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName", "NA")
+    );
+    data.street = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.street", "NA"));
+    data.mohalla = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code", "NA"));
+    data.pincode = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode", "NA"));
+    data.gis = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude", "NA"));
+
+    // Applicant Details
+    let owners = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.owners", []);
+    data.owners = owners.map(owner => {
+      return {
+        mobile: get(owner, "mobileNumber", "NA"),
+        name: get(owner, "name", "NA"),
+        gender: get(owner, "gender", "NA"),
+        fatherHusbandName: get(owner, "fatherOrHusbandName", "NA"),
+        dob: get(owner, "dob", "NA"),
+        email: get(owner, "emailId", "NA"),
+        pan: get(owner, "pan", "NA"),
+        address: get(owner, "correspondenceAddress", "NA")
+      };
+    });
+
+    // Documents
+
+    console.log("+++++++++", data);
   }
   store.dispatch(prepareFinalObject("applicationDataForPdf", data));
 };
