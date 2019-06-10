@@ -69,7 +69,9 @@ export const searchApiCall = async (state, dispatch) => {
   } else {
     //  showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
-      if (
+      if (searchScreenObject.hasOwnProperty(key) && key === "businessCodes") {
+        queryObject.push({ key: key, value: searchScreenObject[key] });
+      } else if (
         searchScreenObject.hasOwnProperty(key) &&
         searchScreenObject[key].trim() !== ""
       ) {
@@ -89,10 +91,7 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    console.log(queryObject);
-
     const responseFromAPI = await getSearchResults(queryObject);
-    console.log(responseFromAPI);
     dispatch(prepareFinalObject("receiptSearchResponse", responseFromAPI));
 
     const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
