@@ -38,7 +38,9 @@ export const getSearchResults = async (queryObject, dispatch) => {
   }
 };
 
-export const createUpdateNocApplication = async (state, dispatch, method) => {
+export const createUpdateNocApplication = async (state, dispatch) => {
+  let nocId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].id");
+  let method = nocId ? "UPDATE" : "CREATE";
   try {
     let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
     set(payload[0], "tenantId", getTenantId());

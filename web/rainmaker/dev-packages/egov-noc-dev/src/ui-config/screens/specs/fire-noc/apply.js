@@ -194,15 +194,22 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
       ownershipType == undefined ? "SINGLE" : ownershipType.split(".")[0]
     );
 
-    // Prepare uoms in required format
+    // Prepare UOMS and Usage Type Dropdowns in required format
     let buildings = get(response, "FireNOCs[0].fireNOCDetails.buildings", []);
     buildings.forEach((building, index) => {
       let uoms = get(building, "uoms", []);
       let uomMap = {};
       uoms.forEach(uom => {
-        uomMap[uom.code] = uom.value;
+        uomMap[uom.code] = parseInt(uom.value);
       });
       set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomMap);
+
+      let usageType = get(building, "usageType");
+      set(
+        response,
+        `FireNOCs[0].fireNOCDetails.buildings[${index}].usageTypeMajor`,
+        usageType == undefined ? "" : usageType.split(".")[0]
+      );
     });
 
     dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
