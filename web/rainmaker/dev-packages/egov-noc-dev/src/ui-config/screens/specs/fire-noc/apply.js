@@ -177,20 +177,21 @@ const setCardsIfMultipleBuildings = (state, dispatch) => {
 const prepareEditFlow = async (state, dispatch, applicationNumber) => {
   const nocs = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
   if (applicationNumber && nocs.length == 0) {
-    // const response = await getSearchResults([
-    //   {
-    //     key: "tenantId",
-    //     value: getTenantId()
-    //   },
-    //   { key: "applicationNumber", value: applicationNumber }
-    // ]);
-    let response = sampleSingleSearch();
+    const response = await getSearchResults([
+      {
+        key: "tenantId",
+        value: getTenantId()
+      },
+      { key: "applicationNumber", value: applicationNumber }
+    ]);
+    // let response = sampleSingleSearch();
 
     // Handle applicant ownership dependent dropdowns
+    let ownershipType = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType");
     set(
       response,
       "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
-      get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType", "").split(".")[0]
+      ownershipType == undefined ? "SINGLE" : ownershipType.split(".")[0]
     );
 
     // Prepare uoms in required format
