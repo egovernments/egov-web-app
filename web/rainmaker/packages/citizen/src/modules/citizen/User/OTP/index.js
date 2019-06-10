@@ -3,9 +3,12 @@ import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
-import { handleFieldChange, submitForm } from "egov-ui-kit/redux/form/actions";
+import { handleFieldChange, submitForm, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 import { Screen } from "modules/common";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import commonConfig from "config/common";
+import { getQueryArg } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import { localStorageSet } from "egov-ui-kit/utils/localStorageUtils";
 
@@ -18,6 +21,16 @@ class OTP extends Component {
       this.props.history.push("/user/register");
     }
   }
+
+  sendOtpForAutoLogin = async () => {
+    const { phoneNumber, setFieldProperty } = this.props;
+    if (phoneNumber) {
+      await httpRequest(`/user-otp/v1/_send?tenantId=pb`, "_send", [], {
+        otp: { mobileNumber: phoneNumber, type: "login", tenantId: commonConfig.tenantId },
+      });
+      setFieldProperty("otp", "otp", "phone", phoneNumber);
+    }
+  };
 
   componentDidMount() {
     const { submitForm, handleFieldChange, previousRoute } = this.props;
@@ -32,6 +45,7 @@ class OTP extends Component {
         submitForm("otp");
       }
     });
+    getQueryArg("", "smsLink") && this.sendOtpForAutoLogin();
   }
 
   componentWillUnmount() {
@@ -69,6 +83,7 @@ const mapStateToProps = (state) => {
   if (intent) {
     phoneNumber = state.form[intent].fields.phone.value;
   }
+  if (phoneNumber === null && getQueryArg("", "smsLink")) phoneNumber = getQueryArg(previousRoute, "mobileNo");
   return { previousRoute, intent, phoneNumber, loading: authenticating, bannerUrl, logoUrl };
 };
 
@@ -77,6 +92,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
     sendOTP: (otp) => dispatch(sendOTP(otp)),
+    setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) => dispatch(setFieldProperty(formKey, fieldKey, propertyName, propertyValue)),
   };
 };
 

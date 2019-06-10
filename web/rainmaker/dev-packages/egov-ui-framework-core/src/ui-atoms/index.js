@@ -118,6 +118,11 @@ const MenuButton = Loadable({
   loading: () => <Loading />
 });
 
+const AutoSuggest = Loadable({
+  loader: () => import("./AutoSuggest"),
+  loading: () => <Loading />
+});
+
 export {
   Div,
   Form,
@@ -147,5 +152,6 @@ export {
   Snackbar,
   UploadFile,
   UploadedDocument,
-  MenuButton
+  MenuButton,
+  AutoSuggest
 };
