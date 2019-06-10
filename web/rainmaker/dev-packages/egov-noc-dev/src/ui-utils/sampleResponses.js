@@ -513,118 +513,205 @@ export const sampleSingleSearch = () => {
     },
     FireNOCs: [
       {
+        id: "af82e49e-c966-40ab-993f-9ead126b3583",
+        tenantId: "pb.amritsar",
+        fireNOCNumber: null,
+        provisionFireNOCNumber: null,
+        oldFireNOCNumber: null,
+        dateOfApplied: null,
         fireNOCDetails: {
-          propertyDetails: {
-            address: {
-              city: "pb.amritsar",
-              locality: {
-                code: "SUN04"
-              },
-              pincode: "560102",
-              id: "968e8152-5d8f-4dd4-b5e6-1d750ee04313"
-            }
-          },
-          noOfBuildings: "MULTIPLE",
+          id: "951ab026-0c77-4368-a944-10cf07287b86",
+          applicationNumber: "PB-FN-2019-06-07-002024",
+          status: "INITIATED",
           fireNOCType: "PROVISIONAL",
+          applicationDate: null,
+          financialYear: null,
+          issuedDate: null,
+          validFrom: null,
+          validTo: null,
+          action: "INITIATE",
+          channel: null,
+          noOfBuildings: "MULTIPLE",
           buildings: [
             {
-              name: "Dsrrh Indigo",
-              usageType: "GROUP_A_RESIDENTIAL",
-              usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
-              uoms: [
-                {
-                  code: "HEIGHT_OF_BUILDING",
-                  value: 5000,
-                  isActiveUom: true,
-                  active: true,
-                  id: "1d05612a-e680-4192-8f17-c949774ae1d6"
-                },
-                {
-                  code: "NO_OF_FLOORS",
-                  value: 8,
-                  isActiveUom: true,
-                  active: true,
-                  id: "2c82b1f1-89ee-4703-bc71-7bfbbd7e6868"
-                },
-                {
-                  code: "NO_OF_BASEMENTS",
-                  value: 1,
-                  isActiveUom: true,
-                  active: true,
-                  id: "328d4697-33d6-47d6-b51f-a5bdfc612ba3"
-                }
-              ],
-              applicationDocuments: [],
-              id: "c53ca061-4fe8-48c0-aec7-1eff3621d72a"
-            },
-            {
+              id: "5427ad45-2bf7-428b-bcc8-3c52c7747925",
+              tenantId: "pb.amritsar",
               name: "dsrrh violet",
-              usageType: "GROUP_A_RESIDENTIAL",
-              usageSubType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
+              usageType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-1",
               uoms: [
-                {
-                  code: "HEIGHT_OF_BUILDING",
-                  value: 4500,
-                  isActiveUom: true,
-                  active: true,
-                  id: "069603e2-41f2-47be-8fb8-f4ee0fa99610"
-                },
                 {
                   code: "NO_OF_FLOORS",
                   value: 7,
                   isActiveUom: true,
-                  active: true,
-                  id: "2f8188d3-e0de-4c91-84ed-2e3ab96becf3"
+                  active: true
                 },
                 {
                   code: "NO_OF_BASEMENTS",
                   value: 2,
                   isActiveUom: true,
-                  active: true,
-                  id: "b4fe86c3-d75f-461b-84ae-cf2b90ac5f93"
+                  active: true
+                },
+                {
+                  code: "HEIGHT_OF_BUILDING",
+                  value: 4500,
+                  isActiveUom: true,
+                  active: true
                 }
               ],
               applicationDocuments: [
                 {
                   tenantId: "pb.amritsar",
                   documentType: "BUILDING.BUILDING_PLAN.SITE_PLAN",
-                  fileStoreId: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78",
-                  documentUid: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78"
+                  fileStoreId: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78"
                 }
               ],
-              id: "5427ad45-2bf7-428b-bcc8-3c52c7747925"
+              usageTypeMajor: "GROUP_A_RESIDENTIAL"
+            },
+            {
+              id: "c53ca061-4fe8-48c0-aec7-1eff3621d72a",
+              tenantId: "pb.amritsar",
+              name: "Dsrrh Indigo",
+              usageType: "GROUP_A_RESIDENTIAL.SUBDIVISIONA-2",
+              uoms: [
+                {
+                  code: "NO_OF_FLOORS",
+                  value: 8,
+                  isActiveUom: true,
+                  active: true
+                },
+                {
+                  code: "NO_OF_BASEMENTS",
+                  value: 1,
+                  isActiveUom: true,
+                  active: true
+                },
+                {
+                  code: "HEIGHT_OF_BUILDING",
+                  value: 5000,
+                  isActiveUom: true,
+                  active: true
+                }
+              ],
+              applicationDocuments: [],
+              usageTypeMajor: "GROUP_A_RESIDENTIAL"
             }
           ],
+          propertyDetails: {
+            id: "968e8152-5d8f-4dd4-b5e6-1d750ee04313",
+            propertyId: null,
+            address: {
+              tenantId: "pb.amritsar",
+              doorNo: null,
+              latitude: null,
+              longitude: null,
+              buildingName: null,
+              city: "pb.amritsar",
+              locality: {
+                code: "SUN04"
+              },
+              pincode: "560102",
+              street: null
+            }
+          },
           applicantDetails: {
-            ownerShipMajorType: "INSTITUTIONALPRIVATE",
-            ownerShipType: "INSTITUTIONALPRIVATE.PRIVATECOMPANY",
+            ownerShipType: "INDIVIDUAL.SINGLEOWNER",
             owners: [
               {
-                mobileNumber: "9167765477",
-                gender: "MALE",
+                id: 23442,
+                userName: "9167765477",
+                salutation: null,
                 name: "Avijeet",
-                correspondenceAddress: "corres addr",
-                fatherOrHusbandName: "a",
+                gender: "MALE",
+                mobileNumber: "9167765477",
+                emailId: "avi7@gm.com",
+                altContactNumber: null,
+                pan: "bnhpp5432k",
+                aadhaarNumber: null,
+                permanentAddress: "Some correspondance address",
+                permanentCity: null,
+                permanentPinCode: null,
+                correspondenceAddress: "Corresponding address",
+                correspondenceCity: null,
+                correspondencePinCode: null,
+                addresses: [
+                  {
+                    pinCode: null,
+                    city: null,
+                    address: "Corresponding address",
+                    type: "CORRESPONDENCE",
+                    id: 52741,
+                    tenantId: "pb",
+                    userId: 23442,
+                    addressType: "CORRESPONDENCE",
+                    lastModifiedBy: null,
+                    lastModifiedDate: null
+                  },
+                  {
+                    pinCode: null,
+                    city: null,
+                    address: "Some correspondance address",
+                    type: "PERMANENT",
+                    id: 48685,
+                    tenantId: "pb",
+                    userId: 23442,
+                    addressType: "PERMANENT",
+                    lastModifiedBy: null,
+                    lastModifiedDate: null
+                  }
+                ],
+                active: true,
+                locale: null,
+                type: "CITIZEN",
+                accountLocked: false,
+                accountLockedDate: 0,
+                fatherOrHusbandName: "A",
+                signature: null,
+                bloodGroup: null,
+                photo: null,
+                identificationMark: null,
+                createdBy: 0,
+                lastModifiedBy: 1,
+                tenantId: "pb",
+                roles: [
+                  {
+                    code: "CITIZEN",
+                    name: "Citizen",
+                    tenantId: "pb"
+                  }
+                ],
+                uuid: "d9fb76e8-3c65-4e11-9f5f-2998c0f8b8a6",
+                createdDate: 1532962200000,
+                lastModifiedDate: 1560171420000,
                 dob: "1991-06-28",
-                documents: [],
-                id: "551083f4-df06-40de-bc72-a1d03654d13e"
+                pwdExpiryDate: 1541470800000
               }
             ],
             additionalDetail: {
-              id: "e03df560-595a-4258-bb05-67318651178f"
-            }
+              documents: [
+                {
+                  tenantId: "pb.amritsar",
+                  documentType: "OWNER.IDENTITYPROOF",
+                  fileStoreId: "89fe5959-79e1-4201-b8ca-bcbc4c23c828"
+                }
+              ]
+            },
+            ownerShipMajorType: "INDIVIDUAL"
           },
-          action: "INITIATE",
-          id: "951ab026-0c77-4368-a944-10cf07287b86",
-          applicationNumber: "PB-FN-2019-06-07-002024"
+          additionalDetail: {
+            documents: []
+          },
+          auditDetails: {
+            createdBy: "52bb4f29-922a-4ba1-b3f1-33cfff16cd7e",
+            lastModifiedBy: "",
+            createdTime: "1559897605727",
+            lastModifiedTime: "0"
+          }
         },
-        tenantId: "pb.amritsar",
-        id: "af82e49e-c966-40ab-993f-9ead126b3583",
         auditDetails: {
           createdBy: "52bb4f29-922a-4ba1-b3f1-33cfff16cd7e",
           lastModifiedBy: "",
-          createdTime: 1559897605727,
-          lastModifiedTime: 0
+          createdTime: "1559897605727",
+          lastModifiedTime: "0"
         }
       }
     ]
