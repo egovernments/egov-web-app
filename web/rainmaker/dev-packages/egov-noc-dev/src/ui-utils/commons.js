@@ -38,7 +38,7 @@ export const getSearchResults = async (queryObject, dispatch) => {
   }
 };
 
-export const createUpdateNocApplication = async (state, dispatch) => {
+export const createUpdateNocApplication = async (state, dispatch, method) => {
   try {
     let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
     set(payload[0], "tenantId", getTenantId());
@@ -96,16 +96,37 @@ export const createUpdateNocApplication = async (state, dispatch) => {
       set(payload[0], `fireNOCDetails.buildings[${index}].applicationDocuments`, uploadedDocs);
     });
 
-    let owners = get(payload, "[0].fireNOCDetails.applicantDetails.owners", []);
-    // owners.forEach((item, index) => {
-    //   set(payload[0], `fireNOCDetails.applicantDetails.owners[${index}].documents`, []);
-    // });
-    // set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail", {});
+    // Set owners & other documents
+    let ownerDocuments = [];
+    let otherDocuments = [];
+    jp.query(reduxDocuments, "$.*").forEach(doc => {
+      if (doc.documents && doc.documents.length > 0) {
+        if (doc.documentType === "OWNER") {
+          ownerDocuments = [
+            ...ownerDocuments,
+            { tenantId: getTenantId(), documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
+          ];
+        } else if (!doc.documentSubCode) {
+          // SKIP BUILDING PLAN DOCS
+          otherDocuments = [
+            ...otherDocuments,
+            { tenantId: getTenantId(), documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
+          ];
+        }
+      }
+    });
 
-    // const response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
+    set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail.documents", ownerDocuments);
+    set(payload[0], "fireNOCDetails.additionalDetail.documents", otherDocuments);
 
-    // dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
-    return false;
+    if (method === "CREATE") {
+      const response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
+      dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
+    } else if (method === "UPDATE") {
+      const response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], { FireNOCs: payload });
+      dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
+    }
+    return true;
   } catch (error) {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
     return false;
