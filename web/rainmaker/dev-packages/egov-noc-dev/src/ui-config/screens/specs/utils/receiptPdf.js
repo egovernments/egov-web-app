@@ -3,129 +3,40 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import _ from "lodash";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-let tableborder = {
-  hLineColor: function(i, node) {
-    return "#979797";
-  },
-  vLineColor: function(i, node) {
-    return "#979797";
-  },
-  hLineWidth: function(i, node) {
-    return 0.5;
-  },
-  vLineWidth: function(i, node) {
-    return 0.5;
-  }
-};
-
-let noborder = {
-  hLineWidth: function(i, node) {
-    return 0;
-  },
-  vLineWidth: function(i, node) {
-    return 0;
-  }
-};
-
-let borderKey = [true, true, false, true];
-let borderValue = [false, true, true, true];
-let receiptTableWidth = ["*", "*", "*", "*"];
-let payableAmountTable = ["*", "*", "*", "*", "*", "*"];
-let payableAmountBorderKey = [true, true, true, true, true, true, true];
-let payableInfoTable3 = ["*", "*", "*"];
-let accessoriesTable = ["24%", "76%"];
-
-const getReceiptData = (transformedData, ulbLogo) => {
-  let owners = transformedData.owners.map(owner => [
-    {
-      text: "Owner Name",
-      border: [true, true, false, true],
-      style: "receipt-table-key"
-    },
-    { text: owner.name, border: [false, true, true, true] },
-    {
-      text: "Mobile No.",
-      border: [true, true, false, true],
-      style: "receipt-table-key"
-    },
-    { text: owner.mobile, border: [false, true, true, true] }
-  ]);
-  var receiptData = {
+const getApplicationData = (transformedData, ulbLogo) => {
+  let dd = {
     content: [
       {
         style: "tl-head",
         table: {
-          widths: [50, "*", 100],
+          widths: [100, "*", 18],
           body: [
             [
               {
                 image: ulbLogo,
-                width: 50,
+                width: 60,
                 height: 61.25,
                 margin: [41, 12, 10, 10]
               },
               {
-                //stack is used here to give multiple sections one after another in same body
                 stack: [
                   {
                     text: transformedData.corporationName,
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "NOC Payment Receipt (Citizen Copy)",
+                    text: "Fire-NOC Application Confirmation",
                     style: "receipt-logo-sub-header"
                   }
                 ],
-                alignment: "center",
-                margin: [56, 23, 0, 0]
-              },
-              {
-                text: [
-                  {
-                    text: `Receipt No.\n ${transformedData.receiptNumber}`,
-                    bold: true,
-                    style: "receipt-no"
-                  }
-                ],
-                alignment: "center",
-                margin: [-50, 30, 0, 2]
+                alignment: "left",
+
+                margin: [10, 23, 0, 0]
               }
             ]
           ]
         },
-        layout: noborder
-      },
-      { 
-        style: "pt-reciept-citizen-header",
-        columns: [
-          {
-            text: [
-              {
-                text: "Application Type ",
-                bold: true
-              },
-              {
-                text: transformedData.applicationType,
-                bold: false
-              }
-            ],
-
-            alignment: "left"
-          },
-          {
-            text: [
-              {
-                text: "Old License No. ",
-                bold: true
-              },
-              {
-                text: transformedData.oldLicenseNumber,
-                bold: false
-              }
-            ],
-            alignment: "right"
-          }
-        ]
+        layout: {}
       },
       {
         style: "pt-reciept-citizen-header",
@@ -133,7 +44,7 @@ const getReceiptData = (transformedData, ulbLogo) => {
           {
             text: [
               {
-                text: "Application No. ",
+                text: "Application No.  ",
                 bold: true
               },
               {
@@ -141,17 +52,16 @@ const getReceiptData = (transformedData, ulbLogo) => {
                 bold: false
               }
             ],
-
             alignment: "left"
           },
           {
             text: [
               {
-                text: "Receipt No. ",
+                text: "Date of Application ",
                 bold: true
               },
               {
-                text: transformedData.receiptNumber,
+                text: transformedData.applicationDate,
                 bold: false
               }
             ],
@@ -165,398 +75,676 @@ const getReceiptData = (transformedData, ulbLogo) => {
           {
             text: [
               {
-                text: "Financial Year ",
+                text: "Application Mode ",
                 bold: true
               },
               {
-                text: transformedData.financialYear,
+                text: transformedData.applicationMode,
                 bold: false
               }
             ],
             alignment: "left"
-          },
-          {
-            text: [
-              {
-                text: "Payment Date ",
-                bold: true
-              },
-              {
-                text: transformedData.paymentDate,
-                bold: false
-              }
-            ],
-            alignment: "right"
           }
         ]
       },
-      { text: "TRADE DETAILS", style: "pt-reciept-citizen-subheader" },
       {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: receiptTableWidth,
-          body: [
-            [
-              {
-                text: "Trade Name",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              { text: transformedData.tradeName, border: borderValue },
-              {
-                text: "Trade Category",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.tradeCategory,
-                border: borderValue
-              }
-            ]
-          ]
-        },
-        layout: tableborder
+        text: "NOC DETAILS",
+        style: "pt-reciept-citizen-subheader"
       },
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: accessoriesTable,
+          widths: ["*", "*", "*"],
           body: [
             [
               {
-                text: "Trade Type",
-                border: [true, false, false, true],
-                style: "receipt-table-key"
+                text: "NOC Type",
+                border: [true, true, false, false],
+                style: "receipt-table-key",
+                " alignment": "left"
+              },
+
+              {
+                text: "Provisional NOC No.",
+                border: [false, true, false, false]
               },
               {
-                text: transformedData.tradeTypeReceipt,
+                text: "Applicable Fire station",
+                border: [
+                  false, //left
+                  true, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+
+            [
+              {
+                text: transformedData.nocType,
+                border: [true, false, false, true],
+                style: "receipt-table-value",
+                " alignment": "center"
+              },
+              {
+                text: transformedData.provisionalNocNumber,
+                style: "receipt-table-value",
+                border: [false, false, false, true],
+                style: "receipt-table-value"
+              },
+              {
+                text: transformedData.fireStationId,
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, true, true],
+
+                style: "receipt-table-value",
+                " alignment": "center"
+              }
+            ]
+          ]
+        }
+      },
+      {
+        text: "PROPERTY DETAILS",
+        style: "pt-reciept-citizen-subheader"
+      },
+      {
+        style: "pt-reciept-citizen-table",
+        table: {
+          widths: ["*", "*", "*", "*"],
+          body: [
+            [
+              {
+                text: "Property Type",
+                border: [true, true, false, false]
+              },
+
+              {
+                text: " Name of Building",
+                border: [false, true, false, false]
+              },
+              {
+                text: "Building Usage Type",
+                border: [
+                  false, //left
+                  true, //top
+                  false, //right
+                  false //bottom
+                ]
+              },
+              {
+                text: "Building Usage Subtype",
+                border: [
+                  false, //left
+                  true, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+            [
+              {
+                text: "Single Building",
+                style: "receipt-table-value",
+                border: [true, false, false, false]
+              },
+              {
+                text: "Suncity",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+              {
+                text: "Educational",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "Training Institution",
+                style: "receipt-table-value",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "",
+                style: "receipt-table-value",
+                border: [true, false, false, false]
+              },
+              {
+                text: "",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+              {
+                text: "",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "",
+                style: "receipt-table-value",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "No. of Floors",
+                border: [true, false, false, false]
+              },
+              {
+                text: " No. of Basements",
+                border: [false, false, false, false]
+              },
+              {
+                text: "Plot Size (Sq mtrs)",
+                border: [
+                  false, //left
+                  false, //top
+                  false, //right
+                  false //bottom
+                ]
+              },
+              {
+                text: "round Builtup Area (sq mtrs)",
+                border: [
+                  false, //left
+                  false, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+            [
+              {
+                text: "2",
+                style: "receipt-table-value",
+                border: [true, false, false, false]
+              },
+              {
+                text: "1",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+              {
+                text: "single building",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "222",
+                style: "receipt-table-value",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [true, false, false, false]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "Height of Building (in mtrs)",
+                style: "pt-reciept-citizen-table-row",
+                border: [true, false, false, false]
+              },
+              {
+                text: "",
+                border: [false, false, false, false]
+              },
+              {
+                text: "",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "100",
+                style: "receipt-table-value",
+                border: [true, false, false, true]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, true]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, true]
+              },
+
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
                 border: [false, false, true, true]
               }
-            ],
-            [
-              {
-                text: "Accessories",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: `(${transformedData.accessories}) ${
-                  transformedData.accessoriesList
-                }`,
-                border: borderValue
-              }
             ]
           ]
-        },
-        layout: tableborder
+        }
       },
-      { text: "TRADE LOCATION DETAILS", style: "pt-reciept-citizen-subheader" },
+      {
+        text: "PROPERTY LOCATION DETAILS",
+        style: "pt-reciept-citizen-subheader"
+      },
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: receiptTableWidth,
+          widths: ["*", "*", "*", "*"],
           body: [
             [
               {
-                text: "House/Door No.",
-                border: borderKey,
-                style: "receipt-table-key"
+                text: "Property Id",
+                border: [true, true, false, false]
               },
-              { text: transformedData.doorNo, border: borderValue },
+
               {
-                text: "Building/Colony Name.",
-                border: borderKey,
-                style: "receipt-table-key"
+                text: "City",
+                border: [false, true, false, false]
               },
               {
-                text: transformedData.buildingName,
-                border: borderValue
+                text: "Door/House No.",
+                border: [
+                  false, //left
+                  true, //top
+                  false, //right
+                  false //bottom
+                ]
+              },
+              {
+                text: "Building/Company Name",
+                border: [
+                  false, //left
+                  true, //top
+                  true, //right
+                  false //bottom
+                ]
               }
             ],
+
+            [
+              {
+                text: "456",
+                style: "receipt-table-value",
+                border: [true, false, false, false]
+              },
+              {
+                text: "Amritsar",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+              {
+                text: "707/B",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "Suncity Apartments",
+                style: "receipt-table-value",
+                border: [false, false, true, false]
+              }
+            ],
+            [
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [true, false, false, false]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
+              },
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, true, false]
+              }
+            ],
+
             [
               {
                 text: "Street Name",
-                border: borderKey,
-                style: "receipt-table-key"
+                border: [true, false, false, false]
               },
-              { text: transformedData.streetName, border: borderValue },
+
               {
-                text: "Locality/Mohalla",
-                border: borderKey,
-                style: "receipt-table-key"
+                text: " Mohalla",
+                border: [false, false, false, false]
               },
               {
-                text: transformedData.locality,
-                border: borderValue
-              }
-            ]
-          ]
-        },
-        layout: tableborder
-      },
-      { text: "OWNERSHIP INFORMATION", style: "pt-reciept-citizen-subheader" },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: receiptTableWidth,
-          body: owners
-        },
-        layout: tableborder
-      },
-      { text: "PAYABLE AMOUNT", style: "pt-reciept-citizen-subheader" },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: payableAmountTable,
-          body: [
-            [
-              {
-                text: "Trade License Fee",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
+                text: "Pincode",
+                border: [
+                  false, //left
+                  false, //top
+                  false, //right
+                  false //bottom
+                ]
               },
               {
-                text: "Penalty",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Rebate",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Adhoc Penalty",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Adhoc Rebate",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Total",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
+                text: "Location on Map",
+                border: [
+                  false, //left
+                  false, //top
+                  true, //right
+                  false //bottom
+                ]
               }
             ],
             [
               {
-                text: transformedData.tlFee,
-                border: payableAmountBorderKey,
+                text: "Old Gurudwara Road",
                 style: "receipt-table-value",
-                alignment: "center"
+                border: [true, false, false, true]
               },
               {
-                text: transformedData.tlPenalty,
-                border: payableAmountBorderKey,
+                text: "Ajit Nagar",
                 style: "receipt-table-value",
-                alignment: "center"
+                border: [false, false, false, true]
               },
               {
-                text: transformedData.tlRebate,
-                border: payableAmountBorderKey,
+                text: "273001",
                 style: "receipt-table-value",
-                alignment: "center"
+                border: [false, false, false, true]
               },
+
               {
-                text: transformedData.tlAdhocPenalty,
-                border: payableAmountBorderKey,
+                text: "Lat-Long Value",
                 style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: transformedData.tlAdhocRebate,
-                border: payableAmountBorderKey,
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: transformedData.totalAmount,
-                border: payableAmountBorderKey,
-                style: "receipt-table-value",
-                alignment: "center"
+                border: [false, false, true, true]
               }
             ]
           ]
-        },
-        layout: tableborder
+        }
       },
-      { text: "PAYMENT INFORMATION", style: "pt-reciept-citizen-subheader" },
       {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: receiptTableWidth,
-          body: [
-            [
-              {
-                text: "Total Amount Paid:",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              { text: transformedData.amountPaid, border: borderValue },
-              {
-                text: "Amount Due:",
-                border: borderKey,
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.amountDue,
-                border: borderValue
-              }
-            ]
-          ]
-        },
-        layout: tableborder
+        text: "APPLICANT DETAILS",
+        style: "pt-reciept-citizen-subheader"
       },
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: payableInfoTable3,
+          widths: ["*", "*", "*", "*"],
           body: [
             [
               {
-                text: "Payment Mode",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
+                text: "Mobile No.",
+                border: [true, true, false, false]
+              },
+
+              {
+                text: "Name",
+                border: [false, true, false, false]
               },
               {
-                text: "Transaction ID/ Cheque/ DD No.",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
+                text: "Gender",
+                border: [
+                  false, //left
+                  true, //top
+                  false, //right
+                  false //bottom
+                ]
               },
               {
-                text: "Bank Name & Branch",
-                border: payableAmountBorderKey,
-                style: "receipt-table-key",
-                alignment: "center"
+                text: "Father/Husband's Name",
+                border: [
+                  false, //left
+                  true, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+
+            [
+              {
+                text: "9676545454",
+                style: "receipt-table-value",
+                border: [true, false, false, false]
+              },
+              {
+                text: "Ajit Singh",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+              {
+                text: "Male",
+                style: "receipt-table-value",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "Sujir Singh",
+                style: "receipt-table-value",
+                border: [false, false, true, false]
               }
             ],
             [
               {
-                text: transformedData.paymentMode,
-                border: payableAmountBorderKey,
+                text: "",
                 style: "receipt-table-value",
-                alignment: "center"
+                border: [true, false, false, false]
               },
               {
-                text: transformedData.transactionNumber,
-                border: payableAmountBorderKey,
-                style: "receipt-table-value",
-                alignment: "center"
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
               },
               {
-                text: transformedData.bankAndBranch,
-                border: payableAmountBorderKey,
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, false, false]
+              },
+
+              {
+                text: "",
+                style: "pt-reciept-citizen-table-row",
+                border: [false, false, true, false]
+              }
+            ],
+
+            [
+              {
+                text: "Date of Birth",
+                border: [true, false, false, false]
+              },
+
+              {
+                text: " Email",
+                border: [false, false, false, false]
+              },
+              {
+                text: "PAN No.",
+                border: [
+                  false, //left
+                  false, //top
+                  false, //right
+                  false //bottom
+                ]
+              },
+              {
+                text: "Correspondence Address",
+                border: [
+                  false, //left
+                  false, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+            [
+              {
+                text: "12/12/1987",
                 style: "receipt-table-value",
-                alignment: "center"
+                border: [true, false, false, true]
+              },
+              {
+                text: "ajit@gmail.com",
+                style: "receipt-table-value",
+                border: [false, false, false, true]
+              },
+              {
+                text: "GHGH7237G",
+                style: "receipt-table-value",
+                border: [false, false, false, true]
+              },
+
+              {
+                text: "707/B, Railway colony, Gorakhpur",
+                style: "receipt-table-value",
+                border: [false, false, true, true]
               }
             ]
           ]
-        },
-        layout: tableborder
+        }
+      },
+      {
+        text: "DOCUMNETS",
+        style: "pt-reciept-citizen-subheader"
       },
       {
         style: "pt-reciept-citizen-table",
         table: {
-          widths: receiptTableWidth,
+          widths: ["*", "*", "*", "*"],
           body: [
             [
               {
-                text: "G8 Receipt No:",
-                border: borderKey,
-                style: "receipt-table-key"
+                text: "Aadhar card",
+                border: [true, true, false, false]
               },
-              { text: transformedData.g8ReceiptNo, border: borderValue },
+
               {
-                text: "G8 Receipt Issue Date:",
-                border: borderKey,
-                style: "receipt-table-key"
+                text: "Driving License",
+                border: [false, true, false, false]
               },
               {
-                text: transformedData.g8ReceiptDate,
-                border: borderValue
+                text: "Site Plan",
+                border: [
+                  false, //left
+                  true, //top
+                  false, //right
+                  false //bottom
+                ]
+              },
+              {
+                text: "Owner's Checklist as per NBC",
+                border: [
+                  false, //left
+                  true, //top
+                  true, //right
+                  false //bottom
+                ]
+              }
+            ],
+
+            [
+              {
+                text: "Filename.jpg",
+                style: "receipt-table-value",
+                border: [true, false, false, true]
+              },
+              {
+                text: "filename.jpg",
+                style: "receipt-table-value",
+                border: [false, false, false, true]
+              },
+              {
+                text: "filename.jpg",
+                style: "receipt-table-value",
+                border: [false, false, false, true]
+              },
+
+              {
+                text: "filename.jpg",
+                style: "receipt-table-value",
+                border: [false, false, true, true]
               }
             ]
           ]
-        },
-        layout: tableborder
+        }
       },
+
       {
-        style: "receipt-approver",
+        text: "",
+        style: "pt-reciept-citizen-subheader"
+      },
+
+      {
+        text: "",
+        style: "pt-reciept-citizen-subheader"
+      },
+
+      {
+        style: "pt-reciept-citizen-header",
         columns: [
           {
             text: [
               {
-                text: "Generated by: ",
-                bold: true
-              },
-              {
-                text: transformedData.auditorName,
-                bold: false
-              }
-            ],
-            alignment: "left"
-          },
-          {
-            text: [
-              {
-                text: "Commissioner/EO",
+                text: "",
                 bold: true
               }
-            ],
-            alignment: "right"
+            ]
           }
         ]
       }
     ],
-    footer: [
-      {
-        text:
-          "Note:\n1. Payment received by cheque/demand draft shall be subject to realization.\n2. This document is not a proof of Property Ownership.\n3. This is a computer generated document, hence requires no signature.",
-        style: "receipt-footer"
-      }
-    ],
+    footer: [],
+
     styles: {
       "tl-head": {
         fillColor: "#F2F2F2",
-        margin: [-41, -41, -41, 0]
+        margin: [-70, -41, -81, 0]
       },
       "pt-reciept-citizen-header": {
         fontSize: 12,
         bold: true,
-        margin: [0, 8, 0, 0], //left top right bottom
+        margin: [-18, 8, 10, 0],
         color: "#484848"
       },
       "pt-reciept-citizen-subheader": {
-        fontSize: 10,
+        fontSize: 12,
         bold: true,
-        margin: [0, 16, 0, 8], //left top right bottom
+        margin: [-18, 16, 8, 8],
         color: "#484848"
       },
       "pt-reciept-citizen-table": {
         fontSize: 10,
-        color: "#484848"
-      },
-      "receipt-assess-table": {
-        fontSize: 10,
         color: "#484848",
-        margin: [0, 8, 0, 0]
+        margin: [-20, -2, -8, -8]
       },
-      "receipt-assess-table-header": {
-        bold: true,
-        fillColor: "#D8D8D8",
-        color: "#484848"
-      },
+
       "receipt-header-details": {
         fontSize: 9,
         margin: [0, 0, 0, 8],
@@ -564,420 +752,62 @@ const getReceiptData = (transformedData, ulbLogo) => {
       },
       "receipt-table-key": {
         color: "#484848",
-        bold: true
+        bold: false,
+        fontSize: 10
       },
       "receipt-table-value": {
-        color: "#484848"
+        color: "#484848",
+        bold: true,
+        fontSize: 12
       },
       "receipt-logo-header": {
         color: "#484848",
         fontFamily: "Roboto",
         fontSize: 16,
         bold: true,
+
         letterSpacing: 0.74
       },
       "receipt-logo-sub-header": {
         color: "#484848",
         fontFamily: "Roboto",
         fontSize: 13,
-        letterSpacing: 1.6,
-        margin: [0, 6, 0, 0]
+        letterSpacing: 0.6
+      },
+      "pt-reciept-citizen-footer": {
+        color: "#484848",
+        fontSize: 12,
+        margin: [15, -5, 10, 5]
       },
       "receipt-footer": {
         color: "#484848",
         fontSize: 8,
-        margin: [30, -20, 0, 0]
+        margin: [-6, 15, -15, -10]
       },
       "receipt-no": {
         color: "#484848",
         fontSize: 10
       },
       "receipt-approver": {
-        fontSize: 10,
+        fontSize: 12,
         bold: true,
-        margin: [0, 60, 0, 8], //left top right bottom
+        margin: [-10, -60, 10, -8],
         color: "#484848"
       }
     }
   };
-  return receiptData;
+  return dd;
 };
 
-const getCertificateData = (transformedData, ulbLogo) => {
-  var tlCertificateData = {
-    content: [
-      {
-        table: {
-          widths: ["*"],
-          body: [
-            [
-              {
-                stack: [
-                  {
-                    image: ulbLogo,
-                    width: 50,
-                    height: 61.25,
-                    alignment: "center"
-                  },
-                  {
-                    text: transformedData.corporationName,
-                    style: "receipt-logo-header",
-                    margin: [0, 10, 0, 0]
-                  },
-                  {
-                    text: `${transformedData.corporationAddress}\nContact : ${
-                      transformedData.corporationContact
-                    }\nWebsite : ${
-                      transformedData.corporationWebsite
-                    }\nEmail : ${transformedData.corporationEmail}`,
-                    style: "receipt-logo-sub-text",
-                    margin: [0, 8, 0, 0]
-                  },
-                  {
-                    text: "TRADE LICENSE CERTIFICATE",
-                    style: "receipt-logo-sub-header",
-                    margin: [0, 30, 0, 0]
-                  }
-                ],
-                alignment: "center",
-                margin: [0, 0, 0, 0]
-              }
-            ]
-          ]
-        },
-        layout: noborder
-      },
-      {
-        style: "tl-certificate-data",
-        columns: [
-          {
-            width: 160,
-            text: "Trade License Number"
-          },
-          {
-            width: "*",
-            text: transformedData.licenseNumber
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Application Number"
-          },
-          {
-            width: "*",
-            text: transformedData.applicationNumber
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Receipt Number"
-          },
-          {
-            width: "*",
-            text: transformedData.receiptNumber
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Financial Year"
-          },
-          {
-            width: "*",
-            text: transformedData.financialYear
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data",
-        columns: [
-          {
-            width: 160,
-            text: "Trade Name"
-          },
-          {
-            width: "*",
-            text: transformedData.tradeName
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Trade Owner Name"
-          },
-          {
-            width: "*",
-            text: transformedData.ownersList
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Trade Owner Contact"
-          },
-          {
-            width: "*",
-            text: transformedData.owners[0].mobile
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Trade Address"
-          },
-          {
-            width: "*",
-            text: transformedData.address
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Trade Type"
-          },
-          {
-            width: "*",
-            text: transformedData.tradeTypeCertificate
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Accessories"
-          },
-          {
-            width: "*",
-            text: `(${transformedData.accessories}) ${
-              transformedData.accessoriesList
-            }`
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "Trade License Fee"
-          },
-          {
-            width: "*",
-            text: `Rs. ${transformedData.totalAmount}`
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "License Issue Date"
-          },
-          {
-            width: "*",
-            text: transformedData.licenseIssueDate
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-data-2",
-        columns: [
-          {
-            width: 160,
-            text: "License Validity"
-          },
-          {
-            width: "*",
-            text: `${transformedData.licenseValidity.startDate} to ${
-              transformedData.licenseValidity.endDate
-            } `
-          }
-        ]
-      },
-      {
-        style: "tl-certificate-footer",
-        columns: [
-          {
-            text: [
-              {
-                text: "Approved by: "
-              },
-              {
-                text: transformedData.auditorName
-              }
-            ],
-            alignment: "left"
-          },
-          {
-            text: [
-              {
-                text: "Commissioner/EO",
-                bold: false
-              }
-            ],
-            alignment: "right"
-          }
-        ]
-      }
-    ],
-    footer: [
-      {
-        text:
-          "Disclaimer:\nThis license is not the proof of ownership.\nThis Trade License is issued under rule 10.39 of the Municipal Account Code 2017 with condition that the applicant shall obtain relevant NOC from concerned departments like Punjab Pollution control board / Fire Office /Health Department/ Excise Department/Deputy Commissioner (under Explosive Act) whichever applicable. The Municipal Council/Corporation reserves the right to cancel this Trade License for Breach of any condition in accordance with law.",
-        style: "receipt-footer"
-      }
-    ],
-    //define all the styles here
-    styles: {
-      "pt-reciept-citizen-header": {
-        fontSize: 14,
-        margin: [0, 24, 0, 0], //left top right bottom
-        color: "#1E1E1E"
-      },
-      "tl-certificate-data": {
-        fontSize: 14,
-        margin: [0, 40, 0, 0], //left top right bottom
-        color: "#1E1E1E"
-      },
-      "tl-certificate-data-2": {
-        fontSize: 14,
-        margin: [0, 8, 0, 0], //left top right bottom
-        color: "#1E1E1E"
-      },
-      "pt-reciept-citizen-subheader": {
-        fontSize: 10,
-        bold: true,
-        margin: [0, 16, 0, 8], //left top right bottom
-        color: "#484848"
-      },
-      "pt-reciept-citizen-table": {
-        fontSize: 10,
-        color: "#484848"
-      },
-      "receipt-assess-table": {
-        fontSize: 10,
-        color: "#484848",
-        margin: [0, 8, 0, 0]
-      },
-      "receipt-assess-table-header": {
-        bold: true,
-        fillColor: "#D8D8D8",
-        color: "#484848"
-      },
-      "receipt-header-details": {
-        fontSize: 9,
-        margin: [0, 0, 0, 8],
-        color: "#484848"
-      },
-      "receipt-table-key": {
-        color: "#484848",
-        bold: true
-      },
-      "receipt-table-value": {
-        color: "#484848"
-      },
-      "receipt-logo-header": {
-        color: "#1E1E1E",
-        fontFamily: "Roboto",
-        fontSize: 18,
-        bold: true,
-        letterSpacing: 0.74
-      },
-      "receipt-logo-sub-text": {
-        color: "#656565",
-        fontFamily: "Roboto",
-        fontSize: 14,
-        letterSpacing: 0.74
-      },
-      "receipt-logo-sub-header": {
-        color: "#1E1E1E",
-        fontFamily: "Roboto",
-        fontSize: 16,
-        letterSpacing: 1.6,
-        bold: true
-      },
-      "receipt-footer": {
-        color: "#484848",
-        fontSize: 8,
-        margin: [10, -15, 5, 5]
-      },
-      "receipt-no": {
-        color: "#484848",
-        fontSize: 10
-      },
-      "tl-certificate-footer": {
-        fontSize: 14,
-        margin: [0, 50, 0, 0], //left top right bottom
-        color: "#1E1E1E"
-      }
-    }
-  };
-  return tlCertificateData;
-};
-
-const generateReceipt = async (state, dispatch, type) => {
-  let data1 = _.get(
-    state.screenConfiguration.preparedFinalObject,
-    "applicationDataForReceipt",
-    {}
-  );
-  let data2 = _.get(
-    state.screenConfiguration.preparedFinalObject,
-    "receiptDataForReceipt",
-    {}
-  );
-  let data3 = _.get(
-    state.screenConfiguration.preparedFinalObject,
-    "mdmsDataForReceipt",
-    {}
-  );
-  let data4 = _.get(
-    state.screenConfiguration.preparedFinalObject,
-    "userDataForReceipt",
-    {}
-  );
-  let ulbLogo = _.get(
-    state.screenConfiguration.preparedFinalObject,
-    "base64UlbLogo",
-    ""
-  );
+const generatePdf = async (state, dispatch, type) => {
+  let data1 = _.get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
+  let data2 = _.get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
+  let ulbLogo = _.get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
   if (_.isEmpty(data1)) {
     console.log("Error in application data");
     return;
   } else if (_.isEmpty(data2)) {
-    console.log("Error in receipt data");
-    return;
-  } else if (_.isEmpty(data3)) {
     console.log("Error in mdms data");
-    return;
-  } else if (_.isEmpty(data4)) {
-    console.log("Error in auditor user data");
     return;
   } else if (_.isEmpty(ulbLogo)) {
     console.log("Error in image data");
@@ -985,32 +815,20 @@ const generateReceipt = async (state, dispatch, type) => {
   }
   let transformedData = {
     ...data1,
-    ...data2,
-    ...data3,
-    ...data4
+    ...data2
   };
   switch (type) {
-    case "certificate_download":
-      let certificate_data = getCertificateData(transformedData, ulbLogo);
-      certificate_data &&
-        pdfMake.createPdf(certificate_data).download("tl_certificate.pdf");
+    case "application_download":
+      let application_data = getApplicationData(transformedData, ulbLogo);
+      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
-    case "certificate_print":
-      certificate_data = getCertificateData(transformedData, ulbLogo);
-      certificate_data && pdfMake.createPdf(certificate_data).print();
-      break;
-    case "receipt_download":
-      let receipt_data = getReceiptData(transformedData, ulbLogo);
-      receipt_data &&
-        pdfMake.createPdf(receipt_data).download("tl_receipt.pdf");
-      break;
-    case "receipt_print":
-      receipt_data = getReceiptData(transformedData, ulbLogo);
-      receipt_data && pdfMake.createPdf(receipt_data).print();
+    case "application_print":
+      application_data = getApplicationData(transformedData, ulbLogo);
+      application_data && pdfMake.createPdf(application_data).print();
       break;
     default:
       break;
   }
 };
 
-export default generateReceipt;
+export default generatePdf;

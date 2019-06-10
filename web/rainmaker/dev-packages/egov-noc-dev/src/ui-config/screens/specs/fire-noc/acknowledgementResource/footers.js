@@ -1,14 +1,9 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-//import generateReceipt from "../../utils/receiptPdf";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { ifUserRoleExists } from "../../utils";
+import generatePdf from "../../utils/receiptPdf";
 
 export const getRedirectionURL = () => {
-  const redirectionURL = ifUserRoleExists("CITIZEN")
-    ? "/fire-noc-citizen/home"
-    : "/inbox";
+  const redirectionURL = ifUserRoleExists("CITIZEN") ? "/fire-noc-citizen/home" : "/inbox";
   return redirectionURL;
 };
 
@@ -148,73 +143,56 @@ export const gotoHomeFooter = getCommonApplyFooter({
 });
 
 //Function for application success(show those 3 buttons )
-export const applicationSuccessFooter = (
-  state,
-  dispatch,
-  applicationNumber,
-  tenant
-) => {
+export const applicationSuccessFooter = (state, dispatch, applicationNumber, tenant) => {
   return getCommonApplyFooter({
-    // downloadFormButton: {
-    //   componentPath: "Button",
-    //   props: {
-    //     variant: "outlined",
-    //     color: "primary",
-    //     style: {
-    //       minWidth: "290px",
-    //       height: "48px",
-    //       marginRight: "16px"
-    //     }
-    //   },
-    //   children: {
-    //     downloadFormButtonLabel: getLabel({
-    //       labelName: "DOWNLOAD CONFIRMATION FORM",
-    //       labelKey: "NOC_APPLICATION_BUTTON_DOWN_CONF"
-    //     })
-    //   },
-    //   onClickDefination: {
-    //     action: "condition",
-    //     callBack: () => {
-    //       generatePdfAndDownload(
-    //         state,
-    //         dispatch,
-    //         "download",
-    //         applicationNumber,
-    //         tenant
-    //       );
-    //     }
-    //   }
-    // },
-    // printFormButton: {
-    //   componentPath: "Button",
-    //   props: {
-    //     variant: "outlined",
-    //     color: "primary",
-    //     style: {
-    //       minWidth: "250px",
-    //       height: "48px",
-    //       marginRight: "16px"
-    //     }
-    //   },
-    //   children: {
-    //     printFormButtonLabel: getLabel({
-    //       labelName: "PRINT CONFIRMATION FORM",
-    //       labelKey: "NOC_APPLICATION_BUTTON_PRINT_CONF"
-    //     })
-    //   },
-    //   onClickDefination: {
-    //     action: "condition",
-    //     callBack: () => {
-    //       generatePdfAndDownload(
-    //         state,
-    //         dispatch,
-    //         "print",
-    //         applicationNumber,
-    //         tenant
-    //       );
-    //     }
-    //   }
-    // },
+    downloadFormButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "290px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadFormButtonLabel: getLabel({
+          labelName: "DOWNLOAD CONFIRMATION FORM",
+          labelKey: "NOC_APPLICATION_BUTTON_DOWN_CONF"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: () => {
+          generatePdf(state, dispatch, "application_download");
+        }
+      }
+    },
+    printFormButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "250px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        printFormButtonLabel: getLabel({
+          labelName: "PRINT CONFIRMATION FORM",
+          labelKey: "NOC_APPLICATION_BUTTON_PRINT_CONF"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: () => {
+          generatePdf(state, dispatch, "application_print");
+        }
+      }
+    },
     proceedToPaymentButton: {
       componentPath: "Button",
       props: {
@@ -238,7 +216,7 @@ export const applicationSuccessFooter = (
         path:
           process.env.REACT_APP_SELF_RUNNING === "true"
             ? `/egov-ui-framework/fire-noc/pay`
-            : `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=NOC`
+            : `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=FIRENOC`
       },
       roleDefination: {
         rolePath: "user-info.roles",
@@ -403,10 +381,7 @@ export const paymentSuccessFooter = () => {
       },
       onClickDefination: {
         action: "page_change",
-        path:
-          process.env.REACT_APP_SELF_RUNNING === "true"
-            ? `/egov-ui-framework/fire-noc/search`
-            : `/fire-noc/search`
+        path: process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework/fire-noc/search` : `/fire-noc/search`
       }
       // visible: false
     }

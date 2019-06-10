@@ -1,0 +1,193 @@
+import get from "lodash/get";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import store from "../../../../ui-redux/store";
+import { getMdmsData, getReceiptData, getUserDataFromUuid, getFinancialYearDates } from "../utils";
+import { getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { getUlbGradeLabel, getTranslatedLabel, transformById } from "egov-ui-framework/ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
+
+const ifNotNull = value => {
+  return !["", "NA", "null", null].includes(value);
+};
+
+const nullToNa = value => {
+  return ["", "NA", "null", null].includes(value) ? "NA" : value;
+};
+
+const createAddress = (doorNo, buildingName, street, locality, city) => {
+  let address = "";
+  address += ifNotNull(doorNo) ? doorNo + ", " : "";
+  address += ifNotNull(buildingName) ? buildingName + ", " : "";
+  address += ifNotNull(street) ? street + ", " : "";
+  address += locality + ", ";
+  address += city;
+  return address;
+};
+
+const epochToDate = et => {
+  if (!et) return null;
+  var date = new Date(Math.round(Number(et)));
+  var formattedDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+  return formattedDate;
+};
+
+const getMessageFromLocalization = code => {
+  let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(item => {
+    return item.code == "TL_" + code;
+  });
+  return messageObject ? messageObject.message : code;
+};
+
+export const loadUlbLogo = tenantid => {
+  var img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.onload = function() {
+    var canvas = document.createElement("CANVAS");
+    var ctx = canvas.getContext("2d");
+    canvas.height = this.height;
+    canvas.width = this.width;
+    ctx.drawImage(this, 0, 0);
+    store.dispatch(prepareFinalObject("base64UlbLogoForPdf", canvas.toDataURL()));
+    canvas = null;
+  };
+  img.src = `/pb-egov-assets/${tenantid}/logo.png`;
+};
+
+export const loadApplicationData = async (applicationNumber, tenant) => {
+  let data = {};
+  let queryObject = [{ key: "tenantId", value: tenant }, { key: "applicationNumber", value: applicationNumber }];
+  let response = await getSearchResults(queryObject);
+
+  if (response && response.FireNOCs && response.FireNOCs.length > 0) {
+    data.applicationNumber = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.applicationNumber", "NA"));
+    data.applicationDate = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.applicationDate", "NA"));
+    data.applicationMode = getMessageFromLocalization(
+      nullToNa(get(response, "FireNOCs[0].fireNOCDetails.channel", "NA"))
+    );
+    data.nocType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NA"));
+    data.provisionalNocNumber = nullToNa(get(response, "FireNOCs[0].provisionFireNOCNumber", "NA"));
+    data.fireStationId = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA"));
+    data.propertyType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "NA"));
+  }
+  store.dispatch(prepareFinalObject("applicationDataForPdf", data));
+};
+
+export const loadReceiptData = async (consumerCode, tenant) => {
+  let data = {};
+  let queryObject = [
+    {
+      key: "tenantId",
+      value: tenant
+    },
+    {
+      key: "consumerCode",
+      value: consumerCode
+    }
+  ];
+  let response = await getReceiptData(queryObject);
+
+  if (response && response.Receipt && response.Receipt.length > 0) {
+    data.receiptNumber = nullToNa(get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", "NA"));
+    data.amountPaid = get(response, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
+    data.totalAmount = get(response, "Receipt[0].Bill[0].billDetails[0].totalAmount", 0);
+    data.amountDue = data.totalAmount - data.amountPaid;
+    data.paymentMode = nullToNa(get(response, "Receipt[0].instrument.instrumentType.name", "NA"));
+    data.transactionNumber = nullToNa(get(response, "Receipt[0].instrument.transactionNumber", "NA"));
+    data.bankName = get(response, "Receipt[0].instrument.bank.name", "NA");
+    data.branchName = get(response, "Receipt[0].instrument.branchName", null);
+    data.bankAndBranch = nullToNa(
+      data.bankName && data.branchName ? data.bankName + ", " + data.branchName : get(data, "bankName", "NA")
+    );
+    data.paymentDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)));
+    data.g8ReceiptNo = nullToNa(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber", "NA"));
+    data.g8ReceiptDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)));
+    /** START TL Fee, Adhoc Penalty/Rebate Calculation */
+    var tlAdhocPenalty = 0,
+      tlAdhocRebate = 0;
+    response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
+      let desc = item.taxHeadCode ? item.taxHeadCode : "";
+      if (desc === "TL_TAX") {
+        data.tlFee = item.amount;
+      } else if (desc === "TL_ADHOC_PENALTY") {
+        tlAdhocPenalty = item.amount;
+      } else if (desc === "TL_ADHOC_REBATE") {
+        tlAdhocRebate = item.amount;
+      }
+    });
+    data.tlPenalty = "NA";
+    data.tlRebate = "NA";
+    data.tlAdhocPenalty = tlAdhocPenalty;
+    data.tlAdhocRebate = tlAdhocRebate;
+    /** END */
+  }
+  store.dispatch(prepareFinalObject("receiptDataForPdf", data));
+};
+
+export const loadMdmsData = async tenantid => {
+  let localStorageLabels = JSON.parse(window.localStorage.getItem(`localization_${getLocale()}`));
+  let localizationLabels = transformById(localStorageLabels, "code");
+  let data = {};
+  let queryObject = [
+    {
+      key: "tenantId",
+      value: `${tenantid}`
+    },
+    {
+      key: "moduleName",
+      value: "tenant"
+    },
+    {
+      key: "masterName",
+      value: "tenants"
+    }
+  ];
+  let response = await getMdmsData(queryObject);
+
+  if (response && response.MdmsRes && response.MdmsRes.tenant.tenants.length > 0) {
+    let ulbData = response.MdmsRes.tenant.tenants.find(item => {
+      return item.code == tenantid;
+    });
+    /** START Corporation name generation logic */
+    const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
+      ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
+      : "MUNICIPAL CORPORATION";
+
+    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
+      .toUpperCase()
+      .replace(/[.]/g, "_")}`;
+
+    data.corporationName = `${getTranslatedLabel(cityKey, localizationLabels).toUpperCase()} ${getTranslatedLabel(
+      ulbGrade,
+      localizationLabels
+    )}`;
+
+    /** END */
+    data.corporationAddress = get(ulbData, "address", "NA");
+    data.corporationContact = get(ulbData, "contactNumber", "NA");
+    data.corporationWebsite = get(ulbData, "domainUrl", "NA");
+    data.corporationEmail = get(ulbData, "emailId", "NA");
+  }
+  store.dispatch(prepareFinalObject("mdmsDataForPdf", data));
+};
+
+export const loadUserNameData = async uuid => {
+  let data = {};
+  let bodyObject = {
+    uuid: [uuid]
+  };
+  let response = await getUserDataFromUuid(bodyObject);
+
+  if (response && response.user && response.user.length > 0) {
+    data.auditorName = get(response, "user[0].name", "NA");
+  }
+  store.dispatch(prepareFinalObject("userDataForPdf", data));
+};
+
+/** Data used for creation of receipt is generated and stored in local storage here */
+export const loadReceiptGenerationData = (applicationNumber, tenant) => {
+  /** Logo loaded and stored in local storage in base64 */
+  loadUlbLogo(tenant);
+  loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
+  // loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
+  loadMdmsData(tenant);
+};

@@ -1,7 +1,4 @@
-import {
-  getCommonHeader,
-  getCommonContainer
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCommonHeader, getCommonContainer } from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
   applicationSuccessFooter,
   paymentSuccessFooter,
@@ -14,6 +11,7 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 // import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
+import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -31,16 +29,9 @@ export const header = getCommonContainer({
   }
 });
 
-const getAcknowledgementCard = (
-  state,
-  dispatch,
-  purpose,
-  status,
-  applicationNumber,
-  secondNumber,
-  tenant
-) => {
+const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNumber, secondNumber, tenant) => {
   if (purpose === "apply" && status === "success") {
+    loadReceiptGenerationData(applicationNumber, tenant);
     return {
       header,
       applicationSuccessCard: {
@@ -71,12 +62,7 @@ const getAcknowledgementCard = (
         uiFramework: "custom-atoms",
         componentPath: "Div"
       },
-      applicationSuccessFooter: applicationSuccessFooter(
-        state,
-        dispatch,
-        applicationNumber,
-        tenant
-      )
+      applicationSuccessFooter: applicationSuccessFooter(state, dispatch, applicationNumber, tenant)
     };
   } else if (purpose === "pay" && status === "success") {
     // loadReceiptGenerationData(applicationNumber, tenant);
@@ -206,8 +192,7 @@ const getAcknowledgementCard = (
               labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_MAIN"
             },
             body: {
-              labelName:
-                "A notification regarding payment failure has been sent to the building owner and applicant.",
+              labelName: "A notification regarding payment failure has been sent to the building owner and applicant.",
               labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_SUB"
             }
           })
@@ -289,21 +274,10 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const applicationNumber = getQueryArg(
-      window.location.href,
-      "applicationNumber"
-    );
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
-    const data = getAcknowledgementCard(
-      state,
-      dispatch,
-      purpose,
-      status,
-      applicationNumber,
-      secondNumber,
-      tenant
-    );
+    const data = getAcknowledgementCard(state, dispatch, purpose, status, applicationNumber, secondNumber, tenant);
     set(action, "screenConfig.components.div.children", data);
     return action;
   }
