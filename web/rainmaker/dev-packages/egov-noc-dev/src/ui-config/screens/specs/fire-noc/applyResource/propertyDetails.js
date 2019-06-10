@@ -56,7 +56,7 @@ const dynamic = (uom, path, buildingIndex) => {
 
 const prepareSelectField = (uom, limit) => {
   let data = [];
-  for (let i = 1; i <= limit; i++) {
+  for (let i = 0; i <= limit; i++) {
     data.push({ code: i });
   }
   return {
