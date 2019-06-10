@@ -354,13 +354,21 @@ const setTaxHeadFields = (action, state, dispatch) => {
       "preparedFinalObject.Demands[0].demandDetails",
       []
     ).length;
+    const taxFields = get(
+      state.screenConfiguration,
+      "screenConfig.newCollection.components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+      {}
+    );
+    const taxFieldKeys = Object.keys(taxFields).filter(item =>
+      item.startsWith("taxheadField_")
+    );
     if (noOfPreviousTaxHeads > 0) {
-      for (let i = 0; i < noOfPreviousTaxHeads; i++) {
+      for (let i = 0; i < taxFieldKeys.length; i++) {
         dispatch(
           handleField(
             "newCollection",
             "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-            `taxheadField_${i}.props.value`,
+            `${taxFieldKeys[i]}.props.value`,
             ""
           )
         );
@@ -368,7 +376,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
           handleField(
             "newCollection",
             "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-            `taxheadField_${i}.visible`,
+            `${taxFieldKeys[i]}.visible`,
             false
           )
         );
@@ -393,7 +401,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
         handleField(
           "newCollection",
           "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-          `taxheadField_${index}`,
+          `taxheadField_${item.code.split(".").join("_")}`,
           getTextField({
             label: {
               labelName: "Tax Amount",
@@ -403,7 +411,9 @@ const setTaxHeadFields = (action, state, dispatch) => {
               labelName: "Enter Tax Amount",
               labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
             },
-            componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${index}`,
+            componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${item.code
+              .split(".")
+              .join("_")}`,
             required: item.required || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
