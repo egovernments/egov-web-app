@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import Icon from "egov-ui-kit/components/Icon";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -38,31 +39,49 @@ const services = [
   },
   { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "/property-tax" },
   { label: "Trade License", icon: <Icon className="service-icon" action="custom" name="trade-license" />, route: "/tradelicense-citizen/home" },
-  { label: "Download Forms", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
-  { label: "Water & Sewerage", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
+  // { label: "Download Forms", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
+  // { label: "Water & Sewerage", icon: <Icon className="service-icon" action="custom" name="water-pump" />, route: "" },
   { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "" },
-  { label: "Document Locker", icon: <Icon className="service-icon" action="custom" name="file-download" />, route: "" },
-  { label: "More", icon: <Icon className="service-icon" action="navigation" name="more-horiz" />, route: "" },
+  // { label: "Document Locker", icon: <Icon className="service-icon" action="custom" name="file-download" />, route: "" },
+  // { label: "More", icon: <Icon className="service-icon" action="navigation" name="more-horiz" />, route: "" },
 ];
 
 class ServiceList extends React.Component {
+  state = {
+    actionList: [],
+  };
+  componentWillReceiveProps(nextProps) {
+    const { menu } = nextProps;
+    const list = menu && menu.filter((item) => item.url === "card");
+    this.setState({
+      actionList: list,
+    });
+  }
   render() {
     const { classes, history } = this.props;
+    const { actionList } = this.state;
+    console.log("=========>", actionList);
     return (
       <Grid container>
         <Hidden smUp>
-          {services.map((service) => {
+          {actionList.map((service) => {
             return (
               <Grid item xs={3} sm={1} align="center">
                 <Card
                   className={classes.paper}
                   onClick={(e) => {
-                    history.push(service.route);
+                    history.push(service.navigationURL);
                   }}
                 >
                   <CardContent classes={{ root: "card-content-style" }}>
-                    {service.icon}
-                    <Label className="service-label-cont" label={service.label} fontSize={12} color="rgba(0, 0, 0, 0.87)" />
+                    {/* {service.icon} */}
+                    <Icon className="service-icon" action={service.leftIcon.split(":")[0]} name={service.leftIcon.split(":")[1]} />
+                    <Label
+                      className="service-label-cont"
+                      label={`ACTION_TEST_${service.displayName.toUpperCase().replace(/[\s]/g, "_")}`}
+                      fontSize={12}
+                      color="rgba(0, 0, 0, 0.87)"
+                    />
                   </CardContent>
                 </Card>
               </Grid>
@@ -71,18 +90,24 @@ class ServiceList extends React.Component {
         </Hidden>
 
         <Hidden xsDown>
-          {services.map((service) => {
+          {actionList.map((service) => {
             return (
               <Grid className={classes.root} item align="center">
                 <Card
                   className={`${classes.paper} service-module-style`}
                   onClick={(e) => {
-                    history.push(service.route);
+                    history.push(service.navigationURL);
                   }}
                 >
                   <CardContent classes={{ root: "card-content-style" }}>
-                    <div>{service.icon}</div>
-                    <Label className="service-label-cont" label={service.label} fontSize={14} color="rgba(0, 0, 0, 0.87)" />
+                    {/* <div>{service.icon}</div> */}
+                    <Icon className="service-icon" action={service.leftIcon.split(":")[0]} name={service.leftIcon.split(":")[1]} />
+                    <Label
+                      className="service-label-cont"
+                      label={`ACTION_TEST_${service.displayName.toUpperCase().replace(/[\s]/g, "_")}`}
+                      fontSize={14}
+                      color="rgba(0, 0, 0, 0.87)"
+                    />
                   </CardContent>
                 </Card>
               </Grid>
@@ -94,4 +119,17 @@ class ServiceList extends React.Component {
   }
 }
 
-export default withStyles(styles)(ServiceList);
+const mapStateToProps = (state) => {
+  const { auth, app } = state;
+  const { menu } = app;
+  const { userInfo } = auth;
+  const name = auth && userInfo.name;
+
+  return { name, menu };
+};
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    null
+  )(ServiceList)
+);
