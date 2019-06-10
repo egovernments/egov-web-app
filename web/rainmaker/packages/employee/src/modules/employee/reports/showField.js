@@ -118,7 +118,7 @@ export default class ShowField extends Component {
               fullWidth={true}
               floatingLabelFixed={true}
               maxDate={maxDate}
-              required={obj.isMandatory ? true : false}
+              // required={obj.isMandatory ? true : false}
               floatingLabelText={
                 <div className="rainmaker-displayInline">
                   <Label className="show-field-label" label={description} containerStyle={{ marginRight: "5px" }} />
@@ -258,12 +258,23 @@ export default class ShowField extends Component {
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               multiple={true}
-              dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "bottom" } }}
+              dropDownMenuProps={{ targetOrigin: { horizontal: "left", vertical: "top" } }}
               floatingLabelFixed={true}
+              // floatingLabelText={
+              //   <span>
+              //     {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+              //   </span>
+              // }
               floatingLabelText={
-                <span>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                <div className="rainmaker-displayInline">
+                  <Label
+                    className="show-field-label"
+                    label={description}
+                    containerStyle={{ marginRight: "5px" }}
+                    style={{ fontSize: "16px !important" }}
+                  />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               value={typeof obj.value == "undefined" ? "" : obj.value}
               onChange={(event, key, value) => {
@@ -275,10 +286,10 @@ export default class ShowField extends Component {
               {dropDownData.map((dd, index) => (
                 <MenuItem
                   insetChildren={true}
-                  checked={obj.value && obj.value.indexOf(dd.key) > -1 ? true : false}
-                  value={translate(dd.key)}
+                  checked={obj.value && obj.value.indexOf(dd.value) > -1 ? true : false}
+                  value={translate(dd.value)}
                   key={index}
-                  primaryText={translate(dd.value)}
+                  primaryText={translate(dd.label)}
                 />
               ))}
             </SelectField>

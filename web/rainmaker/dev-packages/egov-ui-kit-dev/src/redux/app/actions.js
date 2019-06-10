@@ -16,6 +16,10 @@ export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
 };
 
+export const setPreviousRoute = (route) => {
+  return { type: actionTypes.SET_PREVIOUS_ROUTE, route };
+};
+
 export const setBottomNavigationIndex = (bottomNavigationIndex) => {
   return { type: actionTypes.CHANGE_BOTTOM_NAVIGATION_INDEX, bottomNavigationIndex };
 };
@@ -37,7 +41,7 @@ export const toggleSnackbarAndSetText = (open, message = {}, error) => {
 
 export const fetchLocalizationLabel = (locale, module, tenantId) => {
   return async (dispatch) => {
-    const commonModules = "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common,rainmaker-hr";
+    const commonModules = "rainmaker-pgr,rainmaker-pt,rainmaker-tl,finance-erp,rainmaker-common,rainmaker-hr,rainmaker-uc";
     try {
       const payload1 = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: commonModules },

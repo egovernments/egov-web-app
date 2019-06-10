@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchFromLocalStorage, addQueryArg, getDateInEpoch } from "./commons";
 import { toggleSpinner } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "redux/store";
+import store from "../ui-redux/store";
 import {
   getAccessToken,
   getTenantId,
