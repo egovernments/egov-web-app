@@ -1,10 +1,11 @@
-import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
-import store from "ui-redux/store";
 import { prepareFinalObject, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import jp from "jsonpath";
 import get from "lodash/get";
 import set from "lodash/set";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import store from "ui-redux/store";
+import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -42,6 +43,10 @@ export const createUpdateNocApplication = async (state, dispatch) => {
     let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
     set(payload[0], "tenantId", getTenantId());
     set(payload[0], "fireNOCDetails.action", "INITIATE");
+
+    // Get uploaded documents from redux
+    let reduxDocuments = get(state, "screenConfiguration.preparedFinalObject.documentsUploadRedux", {});
+
     let buildings = get(payload, "[0].fireNOCDetails.buildings", []);
     buildings.forEach((item, index) => {
       // GET UOMS FOR THE SELECTED BUILDING TYPE
@@ -70,18 +75,37 @@ export const createUpdateNocApplication = async (state, dispatch) => {
       });
       set(payload[0], `fireNOCDetails.buildings[${index}].uoms`, finalUoms);
 
-      // set(payload[0], `fireNOCDetails.buildings[${index}].applicationDocuments`, []);
+      // Set building documents
+      let uploadedDocs = [];
+      jp.query(reduxDocuments, "$.*").forEach(doc => {
+        if (doc.documents && doc.documents.length > 0) {
+          if (doc.documentSubCode && doc.documentSubCode.startsWith("BUILDING.BUILDING_PLAN")) {
+            if (doc.documentCode === item.name) {
+              uploadedDocs = [
+                ...uploadedDocs,
+                {
+                  tenantId: getTenantId(),
+                  documentType: doc.documentSubCode,
+                  fileStoreId: doc.documents[0].fileStoreId
+                }
+              ];
+            }
+          }
+        }
+      });
+      set(payload[0], `fireNOCDetails.buildings[${index}].applicationDocuments`, uploadedDocs);
     });
+
     let owners = get(payload, "[0].fireNOCDetails.applicantDetails.owners", []);
     // owners.forEach((item, index) => {
     //   set(payload[0], `fireNOCDetails.applicantDetails.owners[${index}].documents`, []);
     // });
     // set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail", {});
 
-    const response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
+    // const response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
 
-    dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
-    return true;
+    // dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
+    return false;
   } catch (error) {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
     return false;
@@ -148,73 +172,41 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
     documentsContract.push(tempDoc[key]);
   });
 
-  console.log("+++++", documentsContract);
-  console.log("+++++", tempDoc);
-
-  // let documentsContract = [];
-  // let documentsCards = {};
-  // documents.forEach(item => {
-  //   // Initialize a map with keys as documentType (eg. Owner, Building)
-  //   documentsCards[item.documentType] = get(
-  //     documentsCards,
-  //     item.documentType,
-  //     []
-  //   );
-
-  //   // Handling multiple buildings by calculating cards required
-  //   if (item.hasMultipleRows && item.options && item.code === "BUILDING_PLAN") {
-  //     // Get the buildings added in property details step
-  //     let buildings = get(
-  //       state,
-  //       "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings",
-  //       [{ name: "ASd" }]
-  //     );
-  //     // For each building, be it 0 or >0, add the cards in contract
-  //     buildings.forEach((building, key) => {
-  //       item.options.forEach(option => {
-  //         let doc = {};
-  //         doc["name"] = `${item.code}_${option.code}`;
-  //         doc["required"] = option.required ? true : false;
-  //         doc["jsonPath"] = `uploadedDocuments.${item.documentType}[${key}].${
-  //           item.code
-  //         }.${option.code}`;
-  //         doc["buildingName"] = building.name;
-  //         documentsCards[item.documentType].push(doc);
-  //       });
-  //     });
-  //   }
-  //   // In case of multiple rows with options (Eg. Building plans, FireStations plans)
-  //   else if (item.hasMultipleRows && item.options) {
-  //     item.options.forEach(option => {
-  //       let doc = {};
-  //       doc["name"] = `${item.code}_${option.code}`;
-  //       doc["required"] = option.required ? true : false;
-  //       doc["jsonPath"] = `FireNOCs[0].documents.${item.code}.${option.code}`;
-  //       documentsCards[item.documentType].push(doc);
-  //     });
-  //   } else {
-  //     let doc = {};
-  //     doc["name"] = item.code;
-  //     doc["required"] = item.required ? true : false;
-  //     doc["jsonPath"] = `FireNOCs[0].documents.${item.code}`;
-  //     if (item.hasDropdown && item.dropdownData) {
-  //       doc["selector"] = {
-  //         inputLabel: "Select Document",
-  //         menuItems: get(item, "dropdownData", [])
-  //       };
-  //     }
-  //     // documentsContract.push(doc);
-  //     documentsCards[item.documentType].push(doc);
-  //   }
-  // });
-  // documentsContract = Object.keys(documentsCards).map(key => {
-  //   return {
-  //     name: `NOC_${key}_CARD_HEADER`,
-  //     code: key,
-  //     children: documentsCards[key]
-  //   };
-  // });
-  // console.log("+++++=========", documentsContract);
-  // console.log("+++++=========", documentsCards);
   dispatch(prepareFinalObject("documentsContract", documentsContract));
+};
+
+export const prepareDocumentsUploadRedux = (state, dispatch) => {
+  const { documentsList, documentsUploadRedux = {}, prepareFinalObject } = this.props;
+  let index = 0;
+  documentsList.forEach(docType => {
+    docType.cards &&
+      docType.cards.forEach(card => {
+        if (card.subCards) {
+          card.subCards.forEach(subCard => {
+            let oldDocType = get(documentsUploadRedux, `[${index}].documentType`);
+            let oldDocCode = get(documentsUploadRedux, `[${index}].documentCode`);
+            let oldDocSubCode = get(documentsUploadRedux, `[${index}].documentSubCode`);
+            if (oldDocType != docType.code || oldDocCode != card.name || oldDocSubCode != subCard.name) {
+              documentsUploadRedux[index] = {
+                documentType: docType.code,
+                documentCode: card.name,
+                documentSubCode: subCard.name
+              };
+            }
+            index++;
+          });
+        } else {
+          let oldDocType = get(documentsUploadRedux, `[${index}].documentType`);
+          let oldDocCode = get(documentsUploadRedux, `[${index}].documentCode`);
+          if (oldDocType != docType.code || oldDocCode != card.name) {
+            documentsUploadRedux[index] = {
+              documentType: docType.code,
+              documentCode: card.name
+            };
+          }
+        }
+        index++;
+      });
+  });
+  prepareFinalObject("documentsUploadRedux", documentsUploadRedux);
 };

@@ -2,13 +2,16 @@ import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getCommonApplyFooter } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import "./index.scss";
+import { createUpdateNocApplication } from "../../../../../ui-utils/commons";
 
-const gotoAcknowledgement = (state, dispatch) => {
-  const acknowledgementUrl =
-    process.env.REACT_APP_SELF_RUNNING === "true"
-      ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`
-      : `/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
-  dispatch(setRoute(acknowledgementUrl));
+const updateNocApplication = (state, dispatch) => {
+  if (createUpdateNocApplication(state, dispatch)) {
+    const acknowledgementUrl =
+      process.env.REACT_APP_SELF_RUNNING === "true"
+        ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`
+        : `/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
+    dispatch(setRoute(acknowledgementUrl));
+  }
 };
 
 export const footer = getCommonApplyFooter({
@@ -38,7 +41,7 @@ export const footer = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "condition",
-      callBack: gotoAcknowledgement
+      callBack: updateNocApplication
     }
   }
 });
