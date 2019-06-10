@@ -144,8 +144,8 @@ class DocumentList extends Component {
                 documentCode: card.name
               };
             }
+            index++;
           }
-          index++;
         });
     });
     prepareFinalObject("documentsUploadRedux", documentsUploadRedux);
