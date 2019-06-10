@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
-import { generateReciept, generateCitizenReciept } from "../../utils/recieptPdf";
+import {
+  generateReciept,
+  generateCitizenReciept
+} from "../../utils/recieptPdf";
 import {
   getTransformedLocalStorgaeLabels,
   getLocaleLabels
@@ -21,22 +24,22 @@ export const textToLocalMapping = {
     getTransformedLocalStorgaeLabels()
   ),
   "Payee Name": getLocaleLabels(
-    "Payee Name",
+    "Consumer Name",
     "UC_COMMON_TABLE_COL_PAYEE_NAME",
     getTransformedLocalStorgaeLabels()
   ),
   "Service Type": getLocaleLabels(
-    "Service Type",
+    "Service Category",
     "UC_SERVICE_TYPE_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
   Date: getLocaleLabels(
-    "Date",
+    "Receipt Date",
     "UC_COMMON_TABLE_COL_DATE",
     getTransformedLocalStorgaeLabels()
   ),
   "Amount[INR]": getLocaleLabels(
-    "Amount[INR]",
+    "Amount Paid[INR]",
     "UC_COMMON_TABLE_COL_AMOUNT",
     getTransformedLocalStorgaeLabels()
   ),
