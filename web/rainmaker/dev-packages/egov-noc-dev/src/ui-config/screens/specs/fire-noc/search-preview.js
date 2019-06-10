@@ -3,6 +3,7 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { getFileUrlFromAPI, getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import jp from "jsonpath";
 import get from "lodash/get";
+import set from "lodash/set";
 import { getSearchResults } from "../../../../ui-utils/commons";
 import { applicantSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
@@ -89,6 +90,29 @@ const screenConfig = {
     // let res = searchSampleResponse();
     // dispatch(prepareFinalObject("FireNOCs[0]", get(res, "FireNOCs[0]")));
     setSearchResponse(state, dispatch);
+
+    // Hide edit buttons
+    set(
+      action,
+      "screenConfig.components.div.children.body.children.cardContent.children.nocSummary.children.cardContent.children.header.children.editSection.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.header.children.editSection.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.body.children.cardContent.children.applicantSummary.children.cardContent.children.header.children.editSection.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.body.children.cardContent.children.documentsSummary.children.cardContent.children.header.children.editSection.visible",
+      false
+    );
+
     return action;
   },
   components: {
