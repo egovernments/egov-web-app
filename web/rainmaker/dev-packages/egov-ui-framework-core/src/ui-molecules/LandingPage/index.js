@@ -50,7 +50,7 @@ class LandingPage extends React.Component {
   render() {
     const { classes, items } = this.props;
     return (
-      <Grid container style={{ paddingTop: 45 }}>
+      <Grid container className="landing-page-main-grid">
         {items.map(obj => {
           return (
             <Grid className={classes.item} item xs={6} sm={6} align="center">

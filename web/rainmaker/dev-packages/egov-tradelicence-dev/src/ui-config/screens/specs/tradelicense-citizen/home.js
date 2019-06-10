@@ -7,10 +7,17 @@ import { cityPicker } from "./citypicker";
 import FormIcon from "../../../../ui-atoms-local/Icons/FormIcon";
 import TradeLicenseIcon from "../../../../ui-atoms-local/Icons/TradeLicenseIcon";
 
-const header = getCommonHeader({
-  labelName: "Trade License",
-  labelKey: "TL_COMMON_TL"
-});
+const header = getCommonHeader(
+  {
+    labelName: "Trade License",
+    labelKey: "TL_COMMON_TL"
+  },
+  {
+    classes: {
+      root: "common-header-cont"
+    }
+  }
+);
 
 const cardItems = [
   {

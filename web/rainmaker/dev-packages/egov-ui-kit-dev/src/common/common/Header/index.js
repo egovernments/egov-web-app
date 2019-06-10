@@ -145,6 +145,7 @@ class Header extends Component {
       name,
       history,
       title,
+      headerTitle,
       titleAddon,
       fetchLocalizationLabel,
       userInfo,
@@ -160,7 +161,7 @@ class Header extends Component {
       <div>
         <AppBar
           className={className}
-          title={title}
+          title={title ? title : headerTitle}
           ulbName={name}
           defaultTitle={defaultTitle}
           titleAddon={titleAddon}
@@ -218,7 +219,9 @@ const mapStateToProps = (state, ownProps) => {
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "code");
   const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
-  return { cities, defaultTitle, name };
+  const screenKey = window.location.pathname.split("/").pop();
+  const headerTitle = get(state.screenConfiguration.screenConfig, `${screenKey}.components.div.children.header.children.key.props.labelKey`);
+  return { cities, defaultTitle, name, headerTitle };
 };
 
 const mapDispatchToProps = (dispatch) => {
