@@ -4,15 +4,6 @@ import store from "../../../../ui-redux/store";
 import { getEmployeeName } from "../utils/index";
 import { getMdmsData } from "../utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import {
-  getLocalization,
-  getLocale
-} from "egov-ui-kit/utils/localStorageUtils";
-import {
-  getUlbGradeLabel,
-  getTranslatedLabel,
-  transformById
-} from "egov-ui-framework/ui-utils/commons";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -48,7 +39,7 @@ export const loadUlbLogo = tenantid => {
 export const loadReceiptData = async response => {
   let data = {};
 
-  if (response && response.Bill && response.Bill.length > 0) {
+  if (response.Bill && response.Bill.length > 0) {
     data.receiptDate = epochToDate(
       get(response, "Bill[0].billDetails[0].receiptDate")
     );
@@ -109,10 +100,6 @@ export const loadReceiptData = async response => {
 };
 
 export const loadMdmsData = async tenantid => {
-  let localStorageLabels = JSON.parse(
-    window.localStorage.getItem(`localization_${getLocale()}`)
-  );
-  let localizationLabels = transformById(localStorageLabels, "code");
   let data = {};
   let queryObject = [
     {
@@ -139,32 +126,21 @@ export const loadMdmsData = async tenantid => {
       return item.code == tenantid;
     });
     /** START Corporation name generation logic */
-    const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
-      ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
-      : "MUNICIPAL CORPORATION";
+    let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
     let name = get(ulbData, "city.name", "NA");
-    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
-      .toUpperCase()
-      .replace(/[.]/g, "_")}`;
-
-    data.corporationName = `${getTranslatedLabel(
-      cityKey,
-      localizationLabels
-    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
-
-    // if (ulbGrade) {
-    //   if (ulbGrade === "NP") {
-    //     data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
-    //   } else if (ulbGrade === "Municipal Corporation") {
-    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    //   } else if (ulbGrade.includes("MC Class")) {
-    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
-    //   } else {
-    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    //   }
-    // } else {
-    //   data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    // }
+    if (ulbGrade) {
+      if (ulbGrade === "NP") {
+        data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
+      } else if (ulbGrade === "Municipal Corporation") {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+      } else if (ulbGrade.includes("MC Class")) {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+      } else {
+        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+      }
+    } else {
+      data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    }
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
     data.corporationContact = get(ulbData, "contactNumber", "NA");
@@ -178,7 +154,6 @@ export const loadMdmsData = async tenantid => {
 export const loadReceiptGenerationData = (applicationNumber, tenant) => {
   /** Logo loaded and stored in local storage in base64 */
   // loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
-  loadUlbLogo(tenant);
   loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
   loadMdmsData(tenant);
 };
