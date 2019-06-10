@@ -584,7 +584,14 @@ export const sampleSingleSearch = () => {
                   id: "b4fe86c3-d75f-461b-84ae-cf2b90ac5f93"
                 }
               ],
-              applicationDocuments: [],
+              applicationDocuments: [
+                {
+                  tenantId: "pb.amritsar",
+                  documentType: "BUILDING.BUILDING_PLAN.SITE_PLAN",
+                  fileStoreId: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78",
+                  documentUid: "bcc598cf-04bf-45c8-bbf5-b1d3619b2d78"
+                }
+              ],
               id: "5427ad45-2bf7-428b-bcc8-3c52c7747925"
             }
           ],
