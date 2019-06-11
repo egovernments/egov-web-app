@@ -5,7 +5,6 @@ import get from "lodash/get";
 
 class EstimateCardContainer extends Component {
   render() {
-    console.log(this.props.estimate);
     return <FeesEstimateCard estimate={this.props.estimate} />;
   }
 }

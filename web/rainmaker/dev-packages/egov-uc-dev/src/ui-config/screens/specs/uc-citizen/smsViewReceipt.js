@@ -1,7 +1,10 @@
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { generateCitizenReciept } from "../utils/recieptPdf";
 import { getSearchResults } from "../../../../ui-utils/commons";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const fetchAndGenerate = async (dispatch, receiptNo, tenantId) => {
   const queryObj = [
@@ -15,10 +18,23 @@ const fetchAndGenerate = async (dispatch, receiptNo, tenantId) => {
     }
   ];
   const response = await getSearchResults(queryObj);
-  dispatch(prepareFinalObject("receiptSearchResponse", response));
-  let pdfGenerateData = {};
-  pdfGenerateData["Receipt No"] = receiptNo;
-  await generateCitizenReciept(pdfGenerateData);
+  if (response && response.Receipt && response.Receipt.length) {
+    dispatch(prepareFinalObject("receiptSearchResponse", response));
+    let pdfGenerateData = {};
+    pdfGenerateData["Receipt No"] = receiptNo;
+    await generateCitizenReciept(pdfGenerateData);
+  } else {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "No receipt found !",
+          labelKey: "UC_CITIZEN_NO_RECEIPT_FOUND"
+        },
+        "error"
+      )
+    );
+  }
 };
 
 const ucViewReceipt = {
