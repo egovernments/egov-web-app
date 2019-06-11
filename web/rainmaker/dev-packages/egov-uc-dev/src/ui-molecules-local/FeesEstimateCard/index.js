@@ -96,17 +96,19 @@ function FeesEstimateCard(props) {
           <Grid container>
             {estimate.fees &&
               estimate.fees.map((fee, key) => {
-                let tooltip = fee.info ? (
-                  <Tooltip title={fee.info.labelName}>
-                    <Icon className={classes.toolTipIcon}>
-                      <i class="material-icons" style={{ fontSize: 18 }}>
-                        info_circle
-                      </i>
-                    </Icon>
-                  </Tooltip>
-                ) : (
-                  ""
-                );
+                //Removed tooltip for now
+                let tooltip =
+                  fee.info && false ? (
+                    <Tooltip title={fee.info.labelName}>
+                      <Icon className={classes.toolTipIcon}>
+                        <i class="material-icons" style={{ fontSize: 18 }}>
+                          info_circle
+                        </i>
+                      </Icon>
+                    </Tooltip>
+                  ) : (
+                    ""
+                  );
                 let textLeft = fee.name ? (
                   <Grid container xs={8}>
                     <LabelContainer

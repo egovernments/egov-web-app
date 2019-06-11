@@ -113,7 +113,8 @@ export const payeeDetails = getCommonContainer({
       position: "start",
       label: "+91 |"
     },
-    required: true
+    required: false,
+    visible: false
   })
 });
 
