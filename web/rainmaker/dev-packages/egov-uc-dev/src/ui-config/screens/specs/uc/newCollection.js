@@ -40,16 +40,24 @@ const getData = async (action, state, dispatch) => {
       [],
       requestBody
     );
-    console.log(payload);
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
     const serviceCategories = get(
       state.screenConfiguration,
       "preparedFinalObject.searchScreenMdmsData.serviceCategory",
       []
     );
-    serviceCategories &&
-      serviceCategories.length &&
-      setServiceCategory(serviceCategories, dispatch);
+    if (serviceCategories && serviceCategories.length) {
+      const serviceCategoriesTransformed = setServiceCategory(
+        serviceCategories,
+        dispatch
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.serviceCategories",
+          serviceCategoriesTransformed
+        )
+      );
+    }
   } catch (e) {
     console.log(e);
   }
