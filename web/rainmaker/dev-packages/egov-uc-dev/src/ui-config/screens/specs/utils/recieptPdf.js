@@ -948,10 +948,13 @@ export const generateReciept = async rowData => {
     if (allReceipts.Receipt && isEmpty(allReceipts.Receipt[0])) {
       return;
     }
+    const tenant = get(allReceipts.Receipt[0], "tenantId");
+    loadUlbLogo(tenant);
     transformedData =
       (allReceipts.Receipt &&
         (await loadReceiptData(allReceipts.Receipt[0]))) ||
       {};
+    await loadMdmsData(tenant);
     // data1 is for ULB logo from loadUlbLogo
     let data1 = get(
       state.screenConfiguration.preparedFinalObject,
@@ -968,9 +971,10 @@ export const generateReciept = async rowData => {
 
     let finalTransformedData = {
       ...transformedData, //getreceiptData
-      ...data1, //UlbLogo
+      ulbLogo: data1, //UlbLogo
       ...data2 //MDMS
     };
+    debugger;
     receipt_data =
       !isEmpty(finalTransformedData) && getReceiptData(finalTransformedData);
   } else {
