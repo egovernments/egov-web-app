@@ -4,6 +4,15 @@ import store from "../../../../ui-redux/store";
 import { getEmployeeName } from "../utils/index";
 import { getMdmsData } from "../utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocaleLabels,
+  transformById,
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
+
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+const transfomedKeys = transformById(localizationLabels, "code");
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -52,15 +61,25 @@ export const loadReceiptData = async response => {
     data.taxPeriod = `${fromDate} - ${toDate}`;
     data.consumerName = get(response, "Bill[0].payerName");
     data.mobileNumber = get(response, "Bill[0].mobileNumber");
-    data.serviceCategory = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[0];
-    const serviceType = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[1];
-    data.serviceType = serviceType ? serviceType : "NONE";
+
+    const serviceCatLabel = getTransformedLocale(
+      get(response, "Bill[0].billDetails[0].businessService").split(".")[0]
+    );
+    data.serviceCategory = getLocaleLabels(
+      "",
+      `BILLINGSERVICE_BUSINESSSERVICE_${serviceCatLabel}`,
+      transfomedKeys
+    );
+
+    const serviceTypeLabel = getTransformedLocale(
+      get(response, "Bill[0].billDetails[0].businessService")
+    );
+    const serviceType = getLocaleLabels(
+      "",
+      `BILLINGSERVICE_BUSINESSSERVICE_${serviceTypeLabel}`,
+      transfomedKeys
+    );
+    data.serviceType = serviceType ? serviceType : "NA";
     data.amountPaid = get(response, "Bill[0].billDetails[0].amountPaid", 0);
     data.totalAmount = get(response, "Bill[0].billDetails[0].totalAmount", 0);
     data.amountDue = data.totalAmount - data.amountPaid;
