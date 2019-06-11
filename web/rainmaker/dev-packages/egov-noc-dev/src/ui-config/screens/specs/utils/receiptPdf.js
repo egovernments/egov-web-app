@@ -1,6 +1,7 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import _ from "lodash";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getApplicationData = (transformedData, ulbLogo) => {
@@ -118,7 +119,6 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 ]
               }
             ],
-
             [
               {
                 text: transformedData.nocType,
@@ -184,23 +184,22 @@ const getApplicationData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "Single Building",
+                text: transformedData.propertyType,
                 style: "receipt-table-value",
                 border: [true, false, false, false]
               },
               {
-                text: "Suncity",
+                text: get(transformedData, "buildings[0].name", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
               {
-                text: "Educational",
+                text: get(transformedData, "buildings[0].usageType", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
-
               {
-                text: "Training Institution",
+                text: get(transformedData, "buildings[0].usageSubType", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, true, false]
               }
@@ -247,7 +246,7 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 ]
               },
               {
-                text: "round Builtup Area (sq mtrs)",
+                text: "Builtup Area (sq mtrs)",
                 border: [
                   false, //left
                   false, //top
@@ -258,23 +257,22 @@ const getApplicationData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "2",
+                text: get(transformedData, "NO_OF_FLOORS", "NA"),
                 style: "receipt-table-value",
                 border: [true, false, false, false]
               },
               {
-                text: "1",
+                text: get(transformedData, "NO_OF_BASEMENTS", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
               {
-                text: "single building",
+                text: get(transformedData, "PLOT_SIZE", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
-
               {
-                text: "222",
+                text: get(transformedData, "BUILTUP_AREA", "NA"),
                 style: "receipt-table-value",
                 border: [false, false, true, false]
               }
@@ -324,7 +322,7 @@ const getApplicationData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "100",
+                text: get(transformedData, "HEIGHT_OF_BUILDING", "NA"),
                 style: "receipt-table-value",
                 border: [true, false, false, true]
               },
@@ -362,7 +360,6 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 text: "Property Id",
                 border: [true, true, false, false]
               },
-
               {
                 text: "City",
                 border: [false, true, false, false]
@@ -386,26 +383,24 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 ]
               }
             ],
-
             [
               {
-                text: "456",
+                text: transformedData.propertyId,
                 style: "receipt-table-value",
                 border: [true, false, false, false]
               },
               {
-                text: "Amritsar",
+                text: transformedData.city,
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
               {
-                text: "707/B",
+                text: transformedData.door,
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
-
               {
-                text: "Suncity Apartments",
+                text: transformedData.buildingName,
                 style: "receipt-table-value",
                 border: [false, false, true, false]
               }
@@ -433,7 +428,6 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 border: [false, false, true, false]
               }
             ],
-
             [
               {
                 text: "Street Name",
@@ -465,23 +459,22 @@ const getApplicationData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "Old Gurudwara Road",
+                text: transformedData.street,
                 style: "receipt-table-value",
                 border: [true, false, false, true]
               },
               {
-                text: "Ajit Nagar",
+                text: transformedData.mohalla,
                 style: "receipt-table-value",
                 border: [false, false, false, true]
               },
               {
-                text: "273001",
+                text: transformedData.pincode,
                 style: "receipt-table-value",
                 border: [false, false, false, true]
               },
-
               {
-                text: "Lat-Long Value",
+                text: transformedData.gis,
                 style: "receipt-table-value",
                 border: [false, false, true, true]
               }
@@ -530,23 +523,23 @@ const getApplicationData = (transformedData, ulbLogo) => {
 
             [
               {
-                text: "9676545454",
+                text: get(transformedData, "owners[0].mobileNumber"),
                 style: "receipt-table-value",
                 border: [true, false, false, false]
               },
               {
-                text: "Ajit Singh",
+                text: get(transformedData, "owners[0].name"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
               {
-                text: "Male",
+                text: get(transformedData, "owners[0].gender"),
                 style: "receipt-table-value",
                 border: [false, false, false, false]
               },
 
               {
-                text: "Sujir Singh",
+                text: get(transformedData, "owners[0].fatherHusbandName"),
                 style: "receipt-table-value",
                 border: [false, false, true, false]
               }
@@ -574,7 +567,6 @@ const getApplicationData = (transformedData, ulbLogo) => {
                 border: [false, false, true, false]
               }
             ],
-
             [
               {
                 text: "Date of Birth",
@@ -582,7 +574,7 @@ const getApplicationData = (transformedData, ulbLogo) => {
               },
 
               {
-                text: " Email",
+                text: "Email",
                 border: [false, false, false, false]
               },
               {
@@ -606,23 +598,23 @@ const getApplicationData = (transformedData, ulbLogo) => {
             ],
             [
               {
-                text: "12/12/1987",
+                text: get(transformedData, "owners[0].dob"),
                 style: "receipt-table-value",
                 border: [true, false, false, true]
               },
               {
-                text: "ajit@gmail.com",
+                text: get(transformedData, "owners[0].email"),
                 style: "receipt-table-value",
                 border: [false, false, false, true]
               },
               {
-                text: "GHGH7237G",
+                text: get(transformedData, "owners[0].pan"),
                 style: "receipt-table-value",
                 border: [false, false, false, true]
               },
 
               {
-                text: "707/B, Railway colony, Gorakhpur",
+                text: get(transformedData, "owners[0].address"),
                 style: "receipt-table-value",
                 border: [false, false, true, true]
               }
@@ -631,81 +623,13 @@ const getApplicationData = (transformedData, ulbLogo) => {
         }
       },
       {
-        text: "DOCUMNETS",
+        text: "",
         style: "pt-reciept-citizen-subheader"
       },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: ["*", "*", "*", "*"],
-          body: [
-            [
-              {
-                text: "Aadhar card",
-                border: [true, true, false, false]
-              },
-
-              {
-                text: "Driving License",
-                border: [false, true, false, false]
-              },
-              {
-                text: "Site Plan",
-                border: [
-                  false, //left
-                  true, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Owner's Checklist as per NBC",
-                border: [
-                  false, //left
-                  true, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-
-            [
-              {
-                text: "Filename.jpg",
-                style: "receipt-table-value",
-                border: [true, false, false, true]
-              },
-              {
-                text: "filename.jpg",
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-              {
-                text: "filename.jpg",
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-
-              {
-                text: "filename.jpg",
-                style: "receipt-table-value",
-                border: [false, false, true, true]
-              }
-            ]
-          ]
-        }
-      },
-
       {
         text: "",
         style: "pt-reciept-citizen-subheader"
       },
-
-      {
-        text: "",
-        style: "pt-reciept-citizen-subheader"
-      },
-
       {
         style: "pt-reciept-citizen-header",
         columns: [
@@ -744,7 +668,6 @@ const getApplicationData = (transformedData, ulbLogo) => {
         color: "#484848",
         margin: [-20, -2, -8, -8]
       },
-
       "receipt-header-details": {
         fontSize: 9,
         margin: [0, 0, 0, 8],
@@ -800,16 +723,16 @@ const getApplicationData = (transformedData, ulbLogo) => {
 };
 
 const generatePdf = async (state, dispatch, type) => {
-  let data1 = _.get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
-  let data2 = _.get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
-  let ulbLogo = _.get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
-  if (_.isEmpty(data1)) {
+  let data1 = get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
+  let data2 = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
+  let ulbLogo = get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
+  if (isEmpty(data1)) {
     console.log("Error in application data");
     return;
-  } else if (_.isEmpty(data2)) {
+  } else if (isEmpty(data2)) {
     console.log("Error in mdms data");
     return;
-  } else if (_.isEmpty(ulbLogo)) {
+  } else if (isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
   }
