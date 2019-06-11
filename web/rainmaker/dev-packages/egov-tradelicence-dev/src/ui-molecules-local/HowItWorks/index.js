@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { LabelContainer } from "egov-ui-framework/ui-containers";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -21,7 +22,18 @@ class HowItWorks extends React.Component {
       <div className={classes.root}>
         <List component="nav">
           <ListItem button>
-            <ListItemText primary="How it Works?" />
+            <ListItemText
+              primary={
+                <LabelContainer
+                  labelKey="COMMON_HOW_IT_WORKS"
+                  labelName="How it works?"
+                  style={{
+                    fontSize: 14,
+                    color: "rgba(0, 0, 0, 0.8700000047683716)"
+                  }}
+                />
+              }
+            />
             <ListItemSecondaryAction>
               <IconButton edge="end">
                 <KeyboardRightIcon />

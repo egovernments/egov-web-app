@@ -48,6 +48,7 @@ class SearchProperty extends Component {
     if (!(localStorageGet("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
+    this.setState({ searchResult: [] });
   };
 
   closeYearRangeDialogue = () => {
@@ -55,7 +56,12 @@ class SearchProperty extends Component {
   };
 
   onSearchClick = (form, formKey) => {
+    const { propertiesFound } = this.props;
     const { city, ids, oldpropertyids, mobileNumber } = form.fields || {};
+    const tableData = this.extractTableData(propertiesFound);
+    this.setState({
+      searchResult: tableData
+    });
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
@@ -170,7 +176,8 @@ class SearchProperty extends Component {
     const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const { pathname } = location;
-    const tableData = this.extractTableData(propertiesFound);
+    // const tableData = this.extractTableData(propertiesFound);
+    const { searchResult } = this.state;
     if (urls.length == 0 && localStorageGet("path") === pathname) {
       urlArray = JSON.parse(localStorageGet("breadCrumbObject"));
     }
@@ -207,9 +214,9 @@ class SearchProperty extends Component {
           onSearchClick={this.onSearchClick}
         />
         <Hidden xsDown>
-          {tableData.length > 0 && showTable ? (
+          {searchResult && searchResult.length > 0 && showTable ? (
             <PropertyTable
-              tableData={tableData}
+              tableData={searchResult}
               onActionClick={this.onActionClick}
             />
           ) : null}
@@ -221,12 +228,12 @@ class SearchProperty extends Component {
             color="rgba(0, 0, 0, 0.87)"
           />
           <SingleProperty
-            data={tableData}
+            data={searchResult}
             action={"PT_PAYMENT_ACCESSANDPAY"}
             onActionClick={this.onAddButtonClick}
           />
         </Hidden>
-        {showTable && tableData.length === 0 && (
+        {showTable && searchResult.length === 0 && (
           <div className="search-no-property-found">
             <div className="no-search-text">
               <Label label="PT_NO_PROPERTY_RECORD" />

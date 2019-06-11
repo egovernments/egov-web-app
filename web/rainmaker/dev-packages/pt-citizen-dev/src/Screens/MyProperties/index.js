@@ -115,8 +115,9 @@ class MyProperties extends Component {
         <Hidden smUp>
           <SingleProperty
             data={transformedPropertiesMobile}
-            action="VIEW DETAILS"
-            onActionClick={this.onListItemClick}
+            action="PT_VIEW_DETAILS"
+            history={history}
+            // onActionClick={this.onListItemClick}
           />
         </Hidden>
       </Screen>

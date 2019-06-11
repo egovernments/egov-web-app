@@ -65,7 +65,7 @@ class LandingPage extends React.Component {
                       labelKey={obj.label.labelKey}
                       labelName={obj.label.labelName}
                       style={{
-                        fontSize: 14,
+                        fontSize: 16,
                         color: "rgba(0, 0, 0, 0.8700000047683716)"
                       }}
                     />

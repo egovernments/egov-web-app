@@ -5,6 +5,11 @@ import Grid from "@material-ui/core/Grid";
 import "./index.css";
 
 class SingleProperty extends React.Component {
+  onCardClick = (item) => {
+    const { route: propertyId, tenantId } = item;
+    this.props.history.push(`/property-tax/my-properties/property/${encodeURIComponent(propertyId)}/${tenantId}`);
+  };
+
   render() {
     const { data, action, onActionClick } = this.props;
     return (
@@ -48,7 +53,7 @@ class SingleProperty extends React.Component {
                     <Label label={item.oldPropertyId ? item.oldPropertyId : "NA"} fontSize={14} color={"rgba(0, 0, 0, 0.87"} />
                   </Grid>
                 </Grid>
-                <div onClick={onActionClick}>
+                <div onClick={onActionClick ? onActionClick : () => this.onCardClick(item)}>
                   <Label label={action} textTransform={"uppercase"} color="#fe7a51" fontSize={14} labelStyle={{ textTransform: "uppercase" }} />
                 </div>
               </div>

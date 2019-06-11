@@ -52,7 +52,7 @@ class ServiceList extends React.Component {
   };
   componentWillReceiveProps(nextProps) {
     const { menu } = nextProps;
-    const list = menu && menu.filter((item) => item.url === "card");
+    const list = menu && menu.filter((item) => item.url === "card" && item.name.startsWith("rainmaker-citizen"));
     this.setState({
       actionList: list,
     });
@@ -60,11 +60,12 @@ class ServiceList extends React.Component {
   render() {
     const { classes, history } = this.props;
     const { actionList } = this.state;
-    console.log("=========>", actionList);
     return (
       <Grid container>
         <Hidden smUp>
           {actionList.map((service) => {
+            const translatedLabel = service.displayName.toUpperCase().replace(/[.:\-\s]/g, "_");
+
             return (
               <Grid item xs={3} sm={1} align="center">
                 <Card
@@ -76,12 +77,7 @@ class ServiceList extends React.Component {
                   <CardContent classes={{ root: "card-content-style" }}>
                     {/* {service.icon} */}
                     <Icon className="service-icon" action={service.leftIcon.split(":")[0]} name={service.leftIcon.split(":")[1]} />
-                    <Label
-                      className="service-label-cont"
-                      label={`ACTION_TEST_${service.displayName.toUpperCase().replace(/[\s]/g, "_")}`}
-                      fontSize={12}
-                      color="rgba(0, 0, 0, 0.87)"
-                    />
+                    <Label className="service-label-cont" label={`ACTION_TEST_${translatedLabel}`} fontSize={12} color="rgba(0, 0, 0, 0.87)" />
                   </CardContent>
                 </Card>
               </Grid>
@@ -91,6 +87,7 @@ class ServiceList extends React.Component {
 
         <Hidden xsDown>
           {actionList.map((service) => {
+            const translatedLabel = service.displayName.toUpperCase().replace(/[.:\-\s]/g, "_");
             return (
               <Grid className={classes.root} item align="center">
                 <Card
@@ -102,12 +99,7 @@ class ServiceList extends React.Component {
                   <CardContent classes={{ root: "card-content-style" }}>
                     {/* <div>{service.icon}</div> */}
                     <Icon className="service-icon" action={service.leftIcon.split(":")[0]} name={service.leftIcon.split(":")[1]} />
-                    <Label
-                      className="service-label-cont"
-                      label={`ACTION_TEST_${service.displayName.toUpperCase().replace(/[\s]/g, "_")}`}
-                      fontSize={14}
-                      color="rgba(0, 0, 0, 0.87)"
-                    />
+                    <Label className="service-label-cont" label={`ACTION_TEST_${translatedLabel}`} fontSize={14} color="rgba(0, 0, 0, 0.87)" />
                   </CardContent>
                 </Card>
               </Grid>
