@@ -974,7 +974,6 @@ export const generateReciept = async rowData => {
       ulbLogo: data1, //UlbLogo
       ...data2 //MDMS
     };
-    debugger;
     receipt_data =
       !isEmpty(finalTransformedData) && getReceiptData(finalTransformedData);
   } else {
