@@ -414,7 +414,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
             componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${item.code
               .split(".")
               .join("_")}`,
-            required: item.required || false,
+            required: item.isRequired || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
             visible: true,
