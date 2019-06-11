@@ -7,6 +7,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getCommonGrayCard, getLabelOnlyValue } from "../../utils";
 import { footer } from "./footer";
+import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
 const styles = {
   header: {
@@ -58,7 +59,7 @@ const generateDocument = item => {
     item.code &&
     getCommonTitle(
       {
-        labelKey: `NOC_${item.code}_HEADING`
+        labelKey: getTransformedLocale(`NOC_${item.code}_HEADING`)
       },
       {
         style: styles.subHeader
@@ -71,7 +72,7 @@ const generateDocument = item => {
     docs = item.dropdownData.reduce((obj, doc) => {
       obj[doc.code] = getLabelOnlyValue(
         {
-          labelKey: `NOC_${doc.code}_LABEL`
+          labelKey: getTransformedLocale(`NOC_${doc.code}_LABEL`)
         },
         {
           style: styles.docs
@@ -83,7 +84,7 @@ const generateDocument = item => {
     docs = item.options.reduce((obj, doc) => {
       obj[doc.code] = getLabelOnlyValue(
         {
-          labelKey: `NOC_${doc.code}_LABEL`
+          labelKey: getTransformedLocale(`NOC_${doc.code}_LABEL`)
         },
         {
           style: styles.docs
@@ -97,7 +98,7 @@ const generateDocument = item => {
   let subParagraph = item.description
     ? getCommonParagraph(
         {
-          labelKey: `NOC_${item.description}_NOTE`
+          labelKey: getTransformedLocale(`NOC_${item.description}_NOTE`)
         },
         {
           style: styles.description

@@ -1,7 +1,7 @@
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getApplicationData = (transformedData, ulbLogo) => {
