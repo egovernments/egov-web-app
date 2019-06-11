@@ -2,29 +2,19 @@ import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "../../../../ui-redux/store";
 import { getEmployeeName } from "../utils/index";
-import {
-  getMdmsData,
-  getReceiptData,
-  getSearchResults,
-  getUserDataFromUuid,
-  getFinancialYearDates
-} from "../utils";
+import { getMdmsData } from "../utils";
 import {
   getLocalization,
   getLocale
 } from "egov-ui-kit/utils/localStorageUtils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   getUlbGradeLabel,
   getTranslatedLabel,
-  transformById
-} from "egov-ui-framework/ui-utils/commons";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import {
   getLocaleLabels,
   transformById,
   getTransformedLocale
 } from "egov-ui-framework/ui-utils/commons";
-import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 const transfomedKeys = transformById(localizationLabels, "code");
@@ -193,7 +183,10 @@ export const loadMdmsData = async tenantid => {
     data.corporationName = `${getTranslatedLabel(
       cityKey,
       localizationLabels
-    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
+    ).toUpperCase()} ${getTranslatedLabel(
+      ulbGrade,
+      localizationLabels
+    ).toUpperCase()}`;
 
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");

@@ -932,7 +932,7 @@ const getReceiptData = transformedData => {
   return receiptData;
 };
 
-//Generates Employee Reciept PDF part
+//Generates PDF for Employee Reciept
 export const generateReciept = async rowData => {
   const state = store.getState();
   const allReceipts = get(
@@ -1014,7 +1014,7 @@ export const generateReciept = async rowData => {
     pdfMake.createPdf(receipt_data).open();
 };
 
-//Generates Citizen Reciept PDF part
+//Generates PDF for Citizen Reciept
 export const generateCitizenReciept = async rowData => {
   const state = store.getState();
   const allReceipts = get(
@@ -1034,6 +1034,7 @@ export const generateCitizenReciept = async rowData => {
   const tenant = get(allReceipts.Receipt[0], "tenantId");
   loadUlbLogo(tenant);
   const transformedData = await loadReceiptData(data);
+  await loadMdmsData(tenant);
   // data1 is for ULB logo from loadUlbLogo
   let data1 = get(
     state.screenConfiguration.preparedFinalObject,
