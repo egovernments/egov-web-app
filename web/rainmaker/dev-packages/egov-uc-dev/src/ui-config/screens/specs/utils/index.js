@@ -310,21 +310,8 @@ export const setServiceCategory = (businessServiceData, dispatch) => {
       set(nestedServiceData, `${item.code}`, item);
     }
   });
-  // console.log(nestedServiceData);
-  // dispatch(
-  //   prepareFinalObject(
-  //     "applyScreenMdmsData.nestedServiceData",
-  //     nestedServiceData
-  //   )
-  // );
   let serviceCategories = Object.values(nestedServiceData).filter(
     item => item.code
   );
   return serviceCategories;
-  // dispatch(
-  //   prepareFinalObject(
-  //     "applyScreenMdmsData.serviceCategories",
-  //     serviceCategories
-  //   )
-  // );
 };
