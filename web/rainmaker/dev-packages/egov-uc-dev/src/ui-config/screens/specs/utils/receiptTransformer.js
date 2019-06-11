@@ -7,19 +7,17 @@ import {
   getLocalization,
   getLocale
 } from "egov-ui-kit/utils/localStorageUtils";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   getUlbGradeLabel,
   getTranslatedLabel,
-  getLocaleLabels,
   transformById,
-  getTransformedLocale
+  getTransformedLocale,
+  getLocaleLabels
 } from "egov-ui-framework/ui-utils/commons";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
 const transfomedKeys = transformById(localizationLabels, "code");
-
-const tenant = getTenantId();
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
