@@ -72,7 +72,7 @@ export const billSearchCard = getCommonCard({
         labelName: "Enter Consumer Code",
         labelKey: "ABG_CONSUMER_CODE_PLACEHOLDER"
       },
-      required: true,
+      required: false,
       visible: true,
       jsonPath: "searchScreen.consumerCode",
       gridDefination: {

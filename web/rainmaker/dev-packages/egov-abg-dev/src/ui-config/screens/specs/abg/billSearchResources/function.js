@@ -1,5 +1,8 @@
 import get from "lodash/get";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../../ui-utils/commons";
 import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -39,7 +42,8 @@ export const searchApiCall = async (state, dispatch) => {
     dispatch,
     "billSearch"
   );
-  if (!isSearchBoxFirstRowValid && isSearchBoxSecondRowValid) {
+  console.log(searchScreenObject);
+  if (!isSearchBoxFirstRowValid || !isSearchBoxSecondRowValid) {
     dispatch(
       toggleSnackbar(
         true,
@@ -75,72 +79,27 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    console.log(queryObject);
-
     const responseFromAPI = await getSearchResults(queryObject);
     // console.log(responseFromAPI);
 
-    const getResponse = (responseFromAPI && responseFromAPI.Bill) || [];
-    debugger;
-    const response = [];
-    for (let i = 0; i < getResponse.length; i++) {
-      response[i] = {
-        billNumber: get(getResponse[i], `Bill[0].billDetails[0].billNumber`),
-        consumerName: get(getResponse[i], `Bill[0].payerName`),
-        serviceCategory: get(
-          getResponse[i],
-          `Bill[0].billDetails[0].businessService`
-        ),
-        billDate: get(getResponse[i], `Bill[0].billDetails[0].billDate`),
-        billAmount: get(getResponse[i], `Bill[0].taxAndPayments[0].amountPaid`),
-        status: get(getResponse[i], `Bill[0].billDetails[0].status`),
-        action: getAction("status")
+    const bills = (responseFromAPI && responseFromAPI.Bill) || [];
+    const billTableData = bills.map(item => {
+      return {
+        billNumber: get(item, `id`),
+        consumerName: get(item, `payerName`),
+        serviceCategory: get(item, `billDetails[0].businessService`),
+        billDate: get(item, `billDetails[0].billDate`),
+        billAmount: get(item, `taxAndPayments[0].taxAmount`),
+        status: get(item, `billDetails[0].status`),
+        action: getActionText(item)
       };
-    }
-
-    // const response = [
-    //   {
-    //     billNumber: "12873873",
-    //     consumerName: "Ravinder Pal Singh",
-    //     serviceCategory: "Advertisement Tax",
-    //     billDate: "12-04-2019",
-    //     billAmount: "4500.00",
-    //     status: "Paid",
-    //     action: "Download Receipt"
-    //   },
-    //   {
-    //     billNumber: "12873873",
-    //     consumerName: "Ravinder Pal Singh",
-    //     serviceCategory: "Advertisement Tax",
-    //     billDate: "12-04-2019",
-    //     billAmount: "4500.00",
-    //     status: "Partial Payment",
-    //     action: "pay"
-    //   },
-    //   {
-    //     billNumber: "12873873",
-    //     consumerName: "Ravinder Pal Singh",
-    //     serviceCategory: "Advertisement Tax",
-    //     billDate: "12-04-2019",
-    //     billAmount: "4500.00",
-    //     status: "Pending",
-    //     action: "pay"
-    //   },
-    //   {
-    //     billNumber: "12873873",
-    //     consumerName: "Ravinder Pal Singh",
-    //     serviceCategory: "Advertisement Tax",
-    //     billDate: "12-04-2019",
-    //     billAmount: 4500.0,
-    //     status: "Expired",
-    //     action: "Generate Bill"
-    //   }
-    // ];
-
-    console.log("LOLOL....", response);
-
+    });
+    console.log(billTableData);
+    dispatch(
+      prepareFinalObject("searchScreenMdmsData.billSearchResponse", bills)
+    );
     try {
-      let data = response.map(item => ({
+      let data = billTableData.map(item => ({
         [get(textToLocalMapping, "Bill No.")]: item.billNumber || "-",
         [get(textToLocalMapping, "Consumer Name")]: item.consumerName || "-",
         [get(textToLocalMapping, "Service Category")]:
@@ -189,6 +148,6 @@ const showHideTable = (booleanHideOrShow, dispatch) => {
   );
 };
 
-const getAction = rowData => {
-  console.log("calm");
+const getActionText = item => {
+  return "Pending";
 };
