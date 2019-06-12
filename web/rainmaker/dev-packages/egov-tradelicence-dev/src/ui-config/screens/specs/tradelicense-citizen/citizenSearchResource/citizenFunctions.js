@@ -80,10 +80,12 @@ export const fetchData = async (action, state, dispatch) => {
     // );
     /*Mseva 2.0 */
 
-    response &&
-      response.Licenses &&
-      response.Licenses.length > 0 &&
+    if (response && response.Licenses && response.Licenses.length > 0) {
       dispatch(prepareFinalObject("searchResults", response.Licenses));
+      dispatch(
+        prepareFinalObject("myApplicationsCount", response.Licenses.length)
+      );
+    }
   } catch (error) {
     console.log(error);
   }
