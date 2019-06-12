@@ -11,23 +11,7 @@ class EstimateCardContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
-  const fees = [
-    {
-      name: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" },
-      value: 5000,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
-    },
-    {
-      name: { labelName: "Rebate", labelKey: "NOC_ESTIMATE_REABATE" },
-      value: -500,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
-    },
-    {
-      name: { labelName: "Penalty", labelKey: "NOC_ESTIMATE_PENALTY" },
-      value: 0,
-      info: { labelName: "NOC Fee", labelKey: "NOC_ESTIMATE_NOC_FEE" }
-    }
-  ];
+  const fees = get(screenConfiguration, "preparedFinalObject.applyScreenMdmsData.estimateCardData");
   const estimate = {
     header: { labelName: "Fee Estimate", labelKey: "NOC_FEE_ESTIMATE_HEADER" },
     fees

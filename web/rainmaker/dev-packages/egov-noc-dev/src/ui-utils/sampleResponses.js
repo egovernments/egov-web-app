@@ -803,3 +803,83 @@ export const sampleDocUpload = () => {
     }
   };
 };
+
+export const sampleGetBill = () => {
+  return {
+    ResposneInfo: null,
+    Bill: [
+      {
+        id: "b8378732-c1d0-4910-8d65-f3b027c48d8c",
+        mobileNumber: null,
+        payerName: null,
+        payerAddress: null,
+        payerEmail: null,
+        isActive: true,
+        isCancelled: null,
+        additionalDetails: null,
+        taxAndPayments: [
+          {
+            businessService: "FIRENOC",
+            taxAmount: 16500,
+            amountPaid: null
+          }
+        ],
+        billDetails: [
+          {
+            id: "31dd68b0-ded3-45de-b241-de96d73b487c",
+            tenantId: "pb.amritsar",
+            demandId: "02f07856-978f-4a6b-acb9-8ad635699c4f",
+            bill: "b8378732-c1d0-4910-8d65-f3b027c48d8c",
+            businessService: "FIRENOC",
+            billNumber: null,
+            billDate: 1560258084110,
+            consumerCode: "PB-FN-1234",
+            consumerType: "FIRENOC",
+            expiryDate: 1560258084110,
+            minimumAmount: null,
+            totalAmount: 16500,
+            fromPeriod: 1554076799000,
+            toPeriod: 1585679399000,
+            collectedAmount: 0,
+            collectionModesNotAllowed: ["DD"],
+            partPaymentAllowed: false,
+            isAdvanceAllowed: false,
+            additionalDetails: null,
+            billAccountDetails: [
+              {
+                id: "48417f1e-f8ac-4469-8e31-b801731884db",
+                tenantId: "pb.amritsar",
+                billDetail: "31dd68b0-ded3-45de-b241-de96d73b487c",
+                demandDetailId: "b15dcc8b-3748-4835-97fa-a9e42e632ecc",
+                order: 3,
+                amount: 16500,
+                adjustedAmount: 0,
+                isActualDemand: true,
+                glcode: null,
+                taxHeadCode: "FIRENOC_FEES",
+                additionalDetails: null,
+                purpose: "CURRENT"
+              }
+            ],
+            status: null
+          }
+        ],
+        tenantId: "pb.amritsar",
+        auditDetails: {
+          createdBy: "ed8cebbc-750c-4e03-98b5-488d6e506395",
+          lastModifiedBy: "ed8cebbc-750c-4e03-98b5-488d6e506395",
+          createdTime: 1560258084110,
+          lastModifiedTime: 1560258084110
+        }
+      }
+    ],
+    ResponseInfo: {
+      apiId: "string",
+      ver: "string",
+      ts: null,
+      resMsgId: "uief87324",
+      msgId: "string",
+      status: "successful"
+    }
+  };
+};

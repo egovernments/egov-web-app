@@ -9,6 +9,7 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { httpRequest } from "../../../../ui-utils/api";
 import isUndefined from "lodash/isUndefined";
 import { getCommonCard, getCommonValue, getCommonCaption } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { sampleGetBill } from "../../../../ui-utils/sampleResponses";
 
 export const getCommonApplyFooter = children => {
   return {
@@ -389,20 +390,20 @@ export const getUserDataFromUuid = async bodyObject => {
 
 export const generateBill = async (dispatch, applicationNumber, tenantId) => {
   try {
-    const payload = await httpRequest(
+    let payload = await httpRequest(
       "post",
       `/billing-service/bill/_search?tenantId=${tenantId}&limit=10&consumerCode=${applicationNumber}&service=FIRENOC`,
       "",
       [],
       {}
     );
+    payload = sampleGetBill();
     if (payload && payload.Bill[0]) {
       dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
       const estimateData = createEstimateData(payload.Bill[0]);
       estimateData &&
         estimateData.length &&
         dispatch(prepareFinalObject("applyScreenMdmsData.estimateCardData", estimateData));
-      // dispatch(setRoute(`/uc/pay?tenantId=${tenantId}`));
     }
   } catch (e) {
     console.log(e);
