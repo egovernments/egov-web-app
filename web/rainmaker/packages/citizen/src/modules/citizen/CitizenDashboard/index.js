@@ -50,7 +50,7 @@ class CitizenDashboard extends Component {
         <SearchService />
         <div className="citizen-dashboard-cont">
           <Label
-            label="Citizen Services"
+            label="DASHBOARD_CITIZEN_SERVICES_LABEL"
             fontSize={16}
             fontWeight={900}
             color="rgba(0, 0, 0, 0.87"
@@ -66,8 +66,8 @@ class CitizenDashboard extends Component {
           />
           <ServicesNearby />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
-            <Label label="Whats New" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <Label label={"VIEW ALL"} color="#fe7a51" fontSize={14} />
+            <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
+            <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
           </div>
           <Notifications notifications={notifications} history={history} />
         </div>
