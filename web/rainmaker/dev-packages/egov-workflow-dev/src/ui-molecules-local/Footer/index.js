@@ -21,10 +21,7 @@ class Footer extends React.Component {
 
   getDownloadData = () => {
     const { dataPath, state } = this.props;
-    const data = get(
-      state,
-      `screenConfiguration.preparedFinalObject.${dataPath}`
-    );
+    const data = get(state, `screenConfiguration.preparedFinalObject.${dataPath}`);
     const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Download",
@@ -38,10 +35,7 @@ class Footer extends React.Component {
 
   getPrintData = () => {
     const { dataPath, state } = this.props;
-    const data = get(
-      state,
-      `screenConfiguration.preparedFinalObject.${dataPath}`
-    );
+    const data = get(state, `screenConfiguration.preparedFinalObject.${dataPath}`);
     const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Print",
@@ -75,12 +69,7 @@ class Footer extends React.Component {
           value: tenantId
         }
       ];
-      const payload = await httpRequest(
-        "post",
-        "/egov-hrms/employees/_search",
-        "",
-        queryObj
-      );
+      const payload = await httpRequest("post", "/egov-hrms/employees/_search", "", queryObj);
       employeeList =
         payload &&
         payload.Employees.map((item, index) => {
@@ -102,21 +91,11 @@ class Footer extends React.Component {
   };
 
   render() {
-    const {
-      color,
-      variant,
-      contractData,
-      handleFieldChange,
-      onDialogButtonClick
-    } = this.props;
+    const { color, variant, contractData, handleFieldChange, onDialogButtonClick, dataPath } = this.props;
     const { open, data, employeeList } = this.state;
     const { getPrintData, getDownloadData } = this;
     return (
-      <div
-        className="apply-wizard-footer"
-        id="custom-atoms-footer"
-        style={{ textAlign: "right" }}
-      >
+      <div className="apply-wizard-footer" id="custom-atoms-footer" style={{ textAlign: "right" }}>
         <Container>
           <Item xs={12} sm={4} style={{ paddingLeft: "20px" }}>
             <Container>
@@ -160,6 +139,7 @@ class Footer extends React.Component {
           dropDownData={employeeList}
           handleFieldChange={handleFieldChange}
           onButtonClick={onDialogButtonClick}
+          dataPath={dataPath}
         />
       </div>
     );
