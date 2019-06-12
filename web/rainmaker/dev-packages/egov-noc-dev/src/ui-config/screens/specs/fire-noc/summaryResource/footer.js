@@ -3,13 +3,20 @@ import { getCommonApplyFooter } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import "./index.scss";
 import { createUpdateNocApplication } from "../../../../../ui-utils/commons";
+import get from "lodash/get";
 
 const updateNocApplication = (state, dispatch) => {
-  if (createUpdateNocApplication(state, dispatch, "SUBMIT")) {
+  let isValid = createUpdateNocApplication(state, dispatch, "SUBMIT");
+  let applicationNumber = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicationNumber"
+  );
+  let tenantId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.tenantId");
+  if (isValid) {
     const acknowledgementUrl =
       process.env.REACT_APP_SELF_RUNNING === "true"
-        ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`
-        : `/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=NOC-JLD-2018-09-123434`;
+        ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+        : `/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     dispatch(setRoute(acknowledgementUrl));
   }
 };
