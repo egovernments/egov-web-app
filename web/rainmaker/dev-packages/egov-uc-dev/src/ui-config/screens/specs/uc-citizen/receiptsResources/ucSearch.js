@@ -11,7 +11,11 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./function";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -90,27 +94,43 @@ export const UCSearchCard = getCommonCard({
         sm: 4
       }
     }),
-    serviceType: getSelectField({
-      label: {
-        labelName: "Service Category",
-        labelKey: "UC_SERVICE_CATEGORY_LABEL"
-      },
-      placeholder: {
-        labelName: "Select Service Category",
-        labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
-      },
-      localePrefix: {
-        masterName: "BusinessService",
-        moduleName: "BillingService"
-      },
-      required: false,
-      jsonPath: "searchScreen.serviceName",
-      gridDefination: {
-        xs: 12,
-        sm: 4
-      },
-      sourceJsonPath: "searchScreenMdmsData.serviceCategory"
-    }),
+    serviceType: {
+      ...getSelectField({
+        label: {
+          labelName: "Service Category",
+          labelKey: "UC_SERVICE_CATEGORY_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Service Category",
+          labelKey: "UC_SERVICE_CATEGORY_PLACEHOLDER"
+        },
+        localePrefix: {
+          masterName: "BusinessService",
+          moduleName: "BillingService"
+        },
+        required: false,
+        jsonPath: "searchScreenMdmsData.businessServiceSelected",
+        gridDefination: {
+          xs: 12,
+          sm: 4
+        },
+        sourceJsonPath: "searchScreenMdmsData.serviceCategory"
+      }),
+      beforeFieldChange: async (action, state, dispatch) => {
+        const serviceCategory = get(
+          state.screenConfiguration,
+          "preparedFinalObject.searchScreenMdmsData.serviceCategory"
+        );
+        const selectedCategory = serviceCategory.find(
+          item => item.code === action.value
+        );
+        const serviceTypes = selectedCategory.child.map(item => item.code);
+        dispatch(
+          prepareFinalObject("searchScreen.businessCodes", serviceTypes)
+        );
+        return action;
+      }
+    },
     mobileNo: getTextField({
       label: {
         labelName: "Mobile No.",
