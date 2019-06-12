@@ -137,7 +137,7 @@ const callBackForNext = async (state, dispatch) => {
 
   if (activeStep !== 3) {
     if (activeStep === 2) {
-      isFormValid = await createUpdateNocApplication(state, dispatch);
+      isFormValid = await createUpdateNocApplication(state, dispatch, "INITIATE");
     }
     if (isFormValid) {
       if (activeStep === 1) {

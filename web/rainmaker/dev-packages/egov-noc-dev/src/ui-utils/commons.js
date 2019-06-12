@@ -38,13 +38,13 @@ export const getSearchResults = async (queryObject, dispatch) => {
   }
 };
 
-export const createUpdateNocApplication = async (state, dispatch) => {
+export const createUpdateNocApplication = async (state, dispatch, status) => {
   let nocId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].id");
   let method = nocId ? "UPDATE" : "CREATE";
   try {
     let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
     set(payload[0], "tenantId", getTenantId());
-    set(payload[0], "fireNOCDetails.action", "INITIATE");
+    set(payload[0], "fireNOCDetails.action", status);
 
     // Get uploaded documents from redux
     let reduxDocuments = get(state, "screenConfiguration.preparedFinalObject.documentsUploadRedux", {});
