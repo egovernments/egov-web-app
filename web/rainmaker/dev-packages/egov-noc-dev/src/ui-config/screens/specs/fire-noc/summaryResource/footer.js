@@ -11,7 +11,7 @@ const updateNocApplication = (state, dispatch) => {
     state,
     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicationNumber"
   );
-  let tenantId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.tenantId");
+  let tenantId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].tenantId");
   if (isValid) {
     const acknowledgementUrl =
       process.env.REACT_APP_SELF_RUNNING === "true"

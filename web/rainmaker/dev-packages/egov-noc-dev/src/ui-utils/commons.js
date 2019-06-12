@@ -57,7 +57,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
         "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
         []
       ).filter(buildingType => {
-        return buildingType.code === item.usageSubType;
+        return buildingType.code === item.usageType;
       });
       uoms = get(uoms, "[0].uom", []);
       // GET UNIQUE UOMS LIST INCLUDING THE DEFAULT
