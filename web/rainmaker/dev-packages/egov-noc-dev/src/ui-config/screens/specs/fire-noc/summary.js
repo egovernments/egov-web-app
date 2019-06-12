@@ -9,6 +9,7 @@ import { estimateSummary } from "./summaryResource/estimateSummary";
 import { footer } from "./summaryResource/footer";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
+import { generateBill } from "../utils/index";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -43,7 +44,8 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "summary",
   beforeInitScreen: (action, state, dispatch) => {
-    // const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    generateBill(state, dispatch, applicationNumber);
     prepareDocumentsView(state, dispatch);
     return action;
   },

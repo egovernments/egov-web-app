@@ -11,6 +11,7 @@ import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
 import { sampleSingleSearch } from "../../../../ui-utils/sampleResponses";
+import { generateBill } from "../utils/index";
 
 const titlebar = getCommonContainer({
   header: getCommonHeader({
@@ -68,17 +69,15 @@ const prepareDocumentsView = async (state, dispatch) => {
 //   dispatch(prepareFinalObject("documentsUploadRedux", documentsUploadRedux));
 // };
 
-const setSearchResponse = async (state, dispatch) => {
-  const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
-  const tenantId = getQueryArg(window.location.href, "tenantId");
-  // const response = await getSearchResults([
-  //   {
-  //     key: "tenantId",
-  //     value: tenantId
-  //   },
-  //   { key: "applicationNumber", value: applicationNumber }
-  // ]);
-  const response = sampleSingleSearch();
+const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) => {
+  const response = await getSearchResults([
+    {
+      key: "tenantId",
+      value: tenantId
+    },
+    { key: "applicationNumber", value: applicationNumber }
+  ]);
+  // const response = sampleSingleSearch();
   dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
   prepareDocumentsView(state, dispatch);
 };
@@ -87,9 +86,11 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    // let res = searchSampleResponse();
-    // dispatch(prepareFinalObject("FireNOCs[0]", get(res, "FireNOCs[0]")));
-    setSearchResponse(state, dispatch);
+    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const tenantId = getQueryArg(window.location.href, "tenantId");
+    generateBill(dispatch, applicationNumber, tenantId);
+
+    setSearchResponse(state, dispatch, applicationNumber, tenantId);
 
     // Hide edit buttons
     set(

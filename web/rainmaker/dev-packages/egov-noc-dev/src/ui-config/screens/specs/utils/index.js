@@ -386,3 +386,40 @@ export const getUserDataFromUuid = async bodyObject => {
     return {};
   }
 };
+
+export const generateBill = async (dispatch, applicationNumber, tenantId) => {
+  try {
+    const payload = await httpRequest(
+      "post",
+      `/billing-service/bill/_search?tenantId=${tenantId}&limit=10&consumerCode=${applicationNumber}&service=FIRENOC`,
+      "",
+      [],
+      {}
+    );
+    if (payload && payload.Bill[0]) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
+      const estimateData = createEstimateData(payload.Bill[0]);
+      estimateData &&
+        estimateData.length &&
+        dispatch(prepareFinalObject("applyScreenMdmsData.estimateCardData", estimateData));
+      // dispatch(setRoute(`/uc/pay?tenantId=${tenantId}`));
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const createEstimateData = billObject => {
+  const billDetails = billObject && billObject.billDetails;
+  let fees =
+    billDetails &&
+    billDetails[0].billAccountDetails &&
+    billDetails[0].billAccountDetails.map(item => {
+      return {
+        name: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode },
+        value: item.amount,
+        info: { labelName: item.taxHeadCode, labelKey: item.taxHeadCode }
+      };
+    });
+  return fees;
+};
