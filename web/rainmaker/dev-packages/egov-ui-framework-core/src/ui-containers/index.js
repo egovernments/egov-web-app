@@ -38,6 +38,11 @@ const RadioGroupContainer = Loadable({
   loading: () => <Loading />
 });
 
+const AutosuggestContainer = Loadable({
+  loader: () => import("./AutosuggestContainer"),
+  loading: () => <Loading />
+});
+
 export {
   TextFieldContainer,
   RadioGroupContainer,
@@ -45,5 +50,6 @@ export {
   MultiItem,
   SnackbarContainer,
   CustomTabContainer,
-  DownloadFileContainer
+  DownloadFileContainer,
+  AutosuggestContainer
 };

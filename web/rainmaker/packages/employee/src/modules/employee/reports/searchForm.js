@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
+import Grid from '@material-ui/core/Grid';
 import { Card, Button } from "components";
 import { CardHeader, CardText } from "material-ui/Card";
 import { brown500, red500, white, orange800 } from "material-ui/styles/colors";
@@ -641,7 +642,7 @@ class ShowForm extends Component {
               textChildren={
                 <div>
                   <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
-                  <Row>{this.handleFormFields()}</Row>
+                  <Grid container spacing={8}>{this.handleFormFields()}</Grid>
                   <Row>
                     <div style={{ marginTop: "16px", textAlign: "center" }} className="col-xs-12">
                       <RaisedButton

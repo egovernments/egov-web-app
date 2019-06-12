@@ -9,7 +9,15 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { textToLocalMapping } from "./searchResult";
 import { validateFields } from "../../utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocaleLabels,
+  transformById,
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
+import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+const transfomedKeys = transformById(localizationLabels, "code");
 const tenantId = getTenantId();
 
 export const searchApiCall = async (state, dispatch) => {
@@ -69,7 +77,9 @@ export const searchApiCall = async (state, dispatch) => {
   } else {
     //  showHideProgress(true, dispatch);
     for (var key in searchScreenObject) {
-      if (
+      if (searchScreenObject.hasOwnProperty(key) && key === "businessCodes") {
+        queryObject.push({ key: key, value: searchScreenObject[key] });
+      } else if (
         searchScreenObject.hasOwnProperty(key) &&
         searchScreenObject[key].trim() !== ""
       ) {
@@ -89,19 +99,23 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
 
-    console.log(queryObject);
-
     const responseFromAPI = await getSearchResults(queryObject);
-    console.log(responseFromAPI);
     dispatch(prepareFinalObject("receiptSearchResponse", responseFromAPI));
 
     const Receipt = (responseFromAPI && responseFromAPI.Receipt) || [];
     const response = [];
     for (let i = 0; i < Receipt.length; i++) {
+      const serviceTypeLabel = getTransformedLocale(
+        get(Receipt[i], `Bill[0].billDetails[0].businessService`)
+      );
       response[i] = {
         receiptNumber: get(Receipt[i], `receiptNumber`),
         payeeName: get(Receipt[i], `Bill[0].payerName`),
-        serviceType: get(Receipt[i], `Bill[0].billDetails[0].businessService`),
+        serviceType: getLocaleLabels(
+          "",
+          `BILLINGSERVICE_BUSINESSSERVICE_${serviceTypeLabel}`,
+          transfomedKeys
+        ),
         date: Receipt[i].receiptDate,
         amount: Receipt[i].Bill[0].billDetails[0].amountPaid,
         status: Receipt[i].Bill[0].billDetails[0].status

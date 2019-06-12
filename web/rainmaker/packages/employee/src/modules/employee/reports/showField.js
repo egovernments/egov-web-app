@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Col } from "react-bootstrap";
 import { TextField, DropDown, DatePicker } from "components";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import Checkbox from "material-ui/Checkbox";
 import { translate } from "./commons/common";
+import Grid from '@material-ui/core/Grid';
 import AutoComplete from "material-ui/AutoComplete";
 import Label from "egov-ui-kit/utils/translationNode";
 import UiBoundary from "./components/boundary";
@@ -51,7 +51,7 @@ export default class ShowField extends Component {
     switch (obj.type) {
       case "string":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item  xs={12} sm={4} md={4} lg={4}>
             <TextField
               value={this.props.value}
               id={obj.label.split(".").join("-")}
@@ -65,11 +65,11 @@ export default class ShowField extends Component {
               }
               onChange={(e) => this.props.handler(e, obj.name, obj.isMandatory ? true : false, "")}
             />
-          </Col>
+          </Grid>
         );
       case "number":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <TextField
               value={this.props.value}
               id={obj.label.split(".").join("-")}
@@ -82,11 +82,11 @@ export default class ShowField extends Component {
               }
               onChange={(e) => this.props.handler(e, obj.name, obj.isMandatory ? true : false, /^[+-]?\d+(\.\d+)?$/)}
             />
-          </Col>
+          </Grid>
         );
       case "date":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <DatePicker
               autoOk={true}
               // className="custom-form-control-for-textfield"
@@ -106,11 +106,11 @@ export default class ShowField extends Component {
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
               }}
             />
-          </Col>
+          </Grid>
         );
       case "epoch":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <DatePicker
               // className="custom-form-control-for-textfield"
               id={obj.label.split(".").join("-")}
@@ -144,7 +144,7 @@ export default class ShowField extends Component {
               minDate={obj.minValue}
               maxDate={obj.maxValue}
             />
-          </Col>
+          </Grid>
         );
       // case "singlevaluelist":
       //   return (
@@ -177,7 +177,7 @@ export default class ShowField extends Component {
       case "singlevaluelist":
         const dataSourceConfig = { text: "label", value: "value" };
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <AutoComplete
               // className="custom-form-control-for-textfield"
 
@@ -215,12 +215,12 @@ export default class ShowField extends Component {
               maxSearchResults={200}
               searchText={getDropdownLabel(obj.searchText, dropDownData)}
             />
-          </Col>
+          </Grid>
         );
 
       case "url":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <SelectField
               // className="custom-form-control-for-select"
               hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
@@ -246,12 +246,12 @@ export default class ShowField extends Component {
                 <MenuItem value={translate(dd.key)} key={index} primaryText={translate(dd.value)} />
               ))}
             </SelectField>
-          </Col>
+          </Grid>
         );
 
       case "multivaluelist":
         return (
-          <Col xs={12} sm={4} md={4} lg={4}>
+          <Grid item xs={12} sm={4} md={4} lg={4}>
             <SelectField
               // className="custom-form-control-for-select"
               hintText={<Label label="PT_COMMONS_SELECT_PLACEHOLDER" />}
@@ -293,12 +293,12 @@ export default class ShowField extends Component {
                 />
               ))}
             </SelectField>
-          </Col>
+          </Grid>
         );
 
       case "checkbox":
         return (
-          <Col xs={12} md={3}>
+          <Grid item xs={12} md={3}>
             <Checkbox
               id={obj.label.split(".").join("-")}
               label={
@@ -309,7 +309,7 @@ export default class ShowField extends Component {
               checked={obj.value ? obj.value : false}
               onCheck={(e) => this.props.handler({ target: { value: e.target.checked } }, obj.name, obj.isMandatory ? true : false, "")}
             />
-          </Col>
+          </Grid>
         );
 
       case "boundarylist":

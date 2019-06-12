@@ -4,6 +4,7 @@ import { newCollectionFooter } from "./newCollectionResource/newCollectionFooter
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { setServiceCategory } from "../utils";
 import get from "lodash/get";
 
 const header = getCommonHeader({
@@ -39,12 +40,24 @@ const getData = async (action, state, dispatch) => {
       [],
       requestBody
     );
-    console.log(payload);
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
-    // setServiceCategory(
-    //   get(payload, "MdmsRes.BillingService.BusinessService", []),
-    //   dispatch
-    // );
+    const serviceCategories = get(
+      state.screenConfiguration,
+      "preparedFinalObject.searchScreenMdmsData.serviceCategory",
+      []
+    );
+    if (serviceCategories && serviceCategories.length) {
+      const serviceCategoriesTransformed = setServiceCategory(
+        serviceCategories,
+        dispatch
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.serviceCategories",
+          serviceCategoriesTransformed
+        )
+      );
+    }
   } catch (e) {
     console.log(e);
   }
