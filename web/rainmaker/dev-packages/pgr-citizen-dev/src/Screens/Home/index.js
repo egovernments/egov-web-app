@@ -39,7 +39,7 @@ class Home extends Component {
         route: "/add-complaint"
       },
       {
-        label: "CS_HOME_MY_COMPLAINTS",
+        label: "CS_HOME_MY_COMPLAINTS_CARD_LABEL",
         dynamicArray: [updates.length],
         icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
         route: "/my-complaints"
