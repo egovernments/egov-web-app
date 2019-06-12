@@ -15,6 +15,7 @@ const notifications = [
         label: "PAY NOW",
       },
     ],
+    route: "property-tax",
     dueTime: "1 Day ago",
   },
   {
@@ -24,6 +25,7 @@ const notifications = [
         label: "PAY NOW",
       },
     ],
+    route: "tradelicense-citizen/home",
     dueTime: "1 Day ago",
   },
   {
@@ -67,7 +69,7 @@ class CitizenDashboard extends Component {
             <Label label="Whats New" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
             <Label label={"VIEW ALL"} color="#fe7a51" fontSize={14} />
           </div>
-          <Notifications notifications={notifications} />
+          <Notifications notifications={notifications} history={history} />
         </div>
       </div>
     );

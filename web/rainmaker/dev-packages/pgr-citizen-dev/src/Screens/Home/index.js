@@ -20,18 +20,6 @@ const iconStyle = {
   overflow: "visible"
 };
 
-const cardItems = [
-  {
-    label: "CS_HOME_FILE_COMPLAINT",
-    icon: <Icon style={iconStyle} action="custom" name="account-alert" />,
-    route: "/add-complaint"
-  },
-  {
-    label: "CS_HOME_MY_COMPLAINTS",
-    icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
-    route: "/my-complaints"
-  }
-];
 class Home extends Component {
   componentDidMount = () => {
     const { fetchComplaints, resetFiles, removeForm } = this.props;
@@ -42,11 +30,29 @@ class Home extends Component {
     }
   };
 
+  getCardItems = () => {
+    const { updates } = this.props;
+    return [
+      {
+        label: "CS_HOME_FILE_COMPLAINT",
+        icon: <Icon style={iconStyle} action="custom" name="account-alert" />,
+        route: "/add-complaint"
+      },
+      {
+        label: "CS_HOME_MY_COMPLAINTS",
+        dynamicArray: [updates.length],
+        icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
+        route: "/my-complaints"
+      }
+    ];
+  };
+
   render() {
-    const { updates, history } = this.props;
+    const { updates, history, loading } = this.props;
+    const { getCardItems } = this;
     return (
-      <Screen className="homepage-screen">
-        <ModuleLandingPage items={cardItems} history={history} />
+      <Screen className="homepage-screen" loading={loading}>
+        <ModuleLandingPage items={getCardItems()} history={history} />
         <Label
           label="CS_HOME_UPDATES"
           dark={true}
@@ -81,6 +87,8 @@ class Home extends Component {
 }
 const mapStateToProps = state => {
   const complaints = state.complaints || {};
+  const { fetchSuccess } = complaints;
+  const loading = fetchSuccess ? false : true;
   const { form } = state || {};
   let updates = [];
   Object.keys(complaints.byId).forEach((complaintKey, index) => {
@@ -108,6 +116,7 @@ const mapStateToProps = state => {
     ["date"],
     ["desc"]
   );
+
   var nonClosedComplaints = orderby(
     updates.filter(
       complaint =>
@@ -116,7 +125,12 @@ const mapStateToProps = state => {
     ["date"],
     ["desc"]
   );
-  return { form, updates: [...nonClosedComplaints, ...closedComplaints] };
+
+  return {
+    form,
+    updates: [...nonClosedComplaints, ...closedComplaints],
+    loading
+  };
 };
 
 const mapDispatchToProps = dispatch => {

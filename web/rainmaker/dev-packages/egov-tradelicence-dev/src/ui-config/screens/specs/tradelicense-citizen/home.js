@@ -6,7 +6,7 @@ import { fetchData } from "./citizenSearchResource/citizenFunctions";
 import { cityPicker } from "./citypicker";
 import FormIcon from "../../../../ui-atoms-local/Icons/FormIcon";
 import TradeLicenseIcon from "../../../../ui-atoms-local/Icons/TradeLicenseIcon";
-
+import "../utils/index.css";
 const header = getCommonHeader(
   {
     labelName: "Trade License",
@@ -157,7 +157,10 @@ const tradeLicenseSearchAndResult = {
         dialogContent: {
           componentPath: "DialogContent",
           props: {
-            style: { minHeight: "180px", minWidth: "365px" }
+            classes: {
+              root: "city-picker-dialog-style"
+            }
+            // style: { minHeight: "180px", minWidth: "365px" }
           },
           children: {
             popup: cityPicker

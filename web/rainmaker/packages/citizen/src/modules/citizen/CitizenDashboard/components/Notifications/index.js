@@ -3,9 +3,9 @@ import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const Updates = ({ notifications = [] }) => {
+const Updates = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons } = notification;
+    const { title, dueTime, buttons, route } = notification;
     return (
       <Card
         className="home-notification"
@@ -19,7 +19,19 @@ const Updates = ({ notifications = [] }) => {
             <div style={{ marginTop: 5, display: "flex" }}>
               {buttons.map((button, index) => {
                 return (
-                  <Label label={button.label} color="#fe7a51" fontSize={14} containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}} />
+                  <div
+                    onClick={() => {
+                      history.push(route);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Label
+                      label={button.label}
+                      color="#fe7a51"
+                      fontSize={14}
+                      containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
+                    />
+                  </div>
                 );
               })}
             </div>
