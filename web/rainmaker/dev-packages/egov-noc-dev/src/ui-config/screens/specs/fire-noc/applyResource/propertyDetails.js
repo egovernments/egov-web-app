@@ -34,23 +34,11 @@ const dynamic = (uom, path, buildingIndex) => {
         md: 6
       }
     }),
-    componentJsonpath: `${path}.${uom}`
-    // afterFieldChange: (action, state, dispatch) => {
-    //   dispatch(
-    //     prepareFinalObject(
-    //       `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
-    //         index}].isActiveUom`,
-    //       true
-    //     )
-    //   );
-    //   dispatch(
-    //     prepareFinalObject(
-    //       `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms[${5 +
-    //         index}].code`,
-    //       uom
-    //     )
-    //   );
-    // }
+    componentJsonpath: `${path}.${uom}`,
+    beforeFieldChange: (action, state, dispatch) => {
+      action.value = parseInt(action.value);
+      return action;
+    }
   };
 };
 
