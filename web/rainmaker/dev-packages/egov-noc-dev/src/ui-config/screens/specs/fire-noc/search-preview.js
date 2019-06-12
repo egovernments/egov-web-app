@@ -11,7 +11,7 @@ import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
 import { sampleSingleSearch } from "../../../../ui-utils/sampleResponses";
-import { generateBill } from "../utils/index";
+import { searchBill } from "../utils/index";
 
 const titlebar = getCommonContainer({
   header: getCommonHeader({
@@ -88,7 +88,7 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     const tenantId = getQueryArg(window.location.href, "tenantId");
-    generateBill(dispatch, applicationNumber, tenantId);
+    searchBill(dispatch, applicationNumber, tenantId);
 
     setSearchResponse(state, dispatch, applicationNumber, tenantId);
 

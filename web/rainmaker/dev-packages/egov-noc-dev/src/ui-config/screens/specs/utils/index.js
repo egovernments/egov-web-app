@@ -388,7 +388,7 @@ export const getUserDataFromUuid = async bodyObject => {
   }
 };
 
-export const generateBill = async (dispatch, applicationNumber, tenantId) => {
+export const searchBill = async (dispatch, applicationNumber, tenantId) => {
   try {
     let payload = await httpRequest(
       "post",
@@ -423,4 +423,34 @@ const createEstimateData = billObject => {
       };
     });
   return fees;
+};
+
+export const generateBill = async (state, dispatch) => {
+  let tenantId = get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].tenantId");
+  let applicationNumber = get(
+    state.screenConfiguration.preparedFinalObject,
+    "FireNOCs[0].fireNOCDetails.applicationNumber"
+  );
+  // let fireNocData = get(state, "screenConfiguration.preparedFinalObject.FireNOCs");
+  try {
+    if (applicationNumber && tenantId) {
+      // let payload = await httpRequest(
+      //   "post",
+      //   `/billing-service/bill/_generate?consumerCode=${applicationNumber}&businessService=FIRENOC&tenantId=${tenantId}`,
+      //   "",
+      //   [],
+      //   {}
+      // );
+      let payload = sampleGetBill();
+      if (payload && payload.Bill[0]) {
+        dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
+        const estimateData = createEstimateData(payload.Bill[0]);
+        estimateData &&
+          estimateData.length &&
+          dispatch(prepareFinalObject("applyScreenMdmsData.estimateCardData", estimateData));
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };
