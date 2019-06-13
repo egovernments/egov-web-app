@@ -71,9 +71,10 @@ const moveToSuccess = (href, dispatch, receiptNumber) => {
   const tenantId = getQueryArg(href, "tenantId");
   const purpose = "pay";
   const status = "success";
+  const appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
   dispatch(
     setRoute(
-      `/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
+      `${appendUrl}/fire-noc/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
     )
   );
 };

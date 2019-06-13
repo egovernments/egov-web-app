@@ -7,13 +7,14 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
-import { getCurrentFinancialYear, searchBill, showHideAdhocPopup } from "../utils";
+import { getCurrentFinancialYear, generateBill, showHideAdhocPopup } from "../utils";
 import { adhocPopup } from "./payResource/adhocPopup";
 import capturePaymentDetails from "./payResource/capture-payment-details";
 import estimateDetails from "./payResource/estimate-details";
 import { footer } from "./payResource/footer";
 import g8Details from "./payResource/g8-details";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getSearchResults } from "../../../../ui-utils/commons";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -31,22 +32,19 @@ const header = getCommonContainer({
 });
 
 const fetchBill = async (state, dispatch, applicationNumber, tenantId) => {
-  await searchBill(dispatch, applicationNumber, tenantId);
+  await generateBill(dispatch, applicationNumber, tenantId);
 
   let payload = get(state, "screenConfiguration.preparedFinalObject.ReceiptTemp[0].Bill[0].billDetails[0]");
-
-  //set amount paid as total amount from bill - destination changed in CS v1.1
-  payload &&
-    payload.totalAmount &&
-    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid", payload.totalAmount));
 
   //Collection Type Added in CS v1.1
   payload && dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].billDetails[0].collectionType", "COUNTER"));
 
-  //set total amount in instrument
-  payload &&
-    payload.totalAmount &&
+  if (get(payload, "totalAmount") != undefined) {
+    //set amount paid as total amount from bill - destination changed in CS v1.1
+    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid", payload.totalAmount));
+    //set total amount in instrument
     dispatch(prepareFinalObject("ReceiptTemp[0].instrument.amount", payload.totalAmount));
+  }
 
   //Initially select instrument type as Cash
   dispatch(prepareFinalObject("ReceiptTemp[0].instrument.instrumentType.name", "Cash"));
@@ -58,12 +56,25 @@ const fetchBill = async (state, dispatch, applicationNumber, tenantId) => {
   dispatch(prepareFinalObject("ReceiptTemp[0].instrument.tenantId", tenantId));
 };
 
+const loadNocData = async (dispatch, applicationNumber, tenantId) => {
+  const response = await getSearchResults([
+    {
+      key: "tenantId",
+      value: tenantId
+    },
+    { key: "applicationNumber", value: applicationNumber }
+  ]);
+  // const response = sampleSingleSearch();
+  dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
     let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
     let tenantId = getQueryArg(window.location.href, "tenantId");
+    loadNocData(dispatch, applicationNumber, tenantId);
     fetchBill(state, dispatch, applicationNumber, tenantId);
     return action;
   },

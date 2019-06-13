@@ -44,8 +44,13 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "summary",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
-    generateBill(state, dispatch, applicationNumber);
+    let applicationNumber =
+      getQueryArg(window.location.href, "applicationNumber") ||
+      get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].fireNOCDetails.applicationNumber");
+    let tenantId =
+      getQueryArg(window.location.href, "applicationNumber") ||
+      get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].tenantId");
+    generateBill(dispatch, applicationNumber, tenantId);
     prepareDocumentsView(state, dispatch);
     return action;
   },

@@ -29,7 +29,7 @@ export const nocDetails = getCommonCard({
       gridDefination: {
         xs: 12
       },
-      jsonPath: "noc.nocType",
+      jsonPath: "FireNOCs[0].fireNOCDetails.fireNOCType",
       type: "array",
       props: {
         required: true,
@@ -46,7 +46,7 @@ export const nocDetails = getCommonCard({
             value: "PROVISIONAL"
           }
         ],
-        jsonPath: "noc.nocType",
+        jsonPath: "FireNOCs[0].fireNOCDetails.fireNOCType",
         defaultValue: "PROVISIONAL"
       },
       type: "array",
