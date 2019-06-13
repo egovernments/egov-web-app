@@ -40,6 +40,21 @@ const getMDMSData = async (action, state, dispatch) => {
         {
           moduleName: "egf-master",
           masterDetails: [{ name: "FinancialYear" }]
+        },
+        {
+          moduleName: "BillingService",
+          masterDetails: [
+            {
+              name: "BusinessService",
+              filter: "[?(@.type=='Adhoc')]"
+            },
+            {
+              name: "TaxHeadMaster"
+            },
+            {
+              name: "TaxPeriod"
+            }
+          ]
         }
       ]
     }
