@@ -1,4 +1,5 @@
 import { httpRequest } from "./api";
+import store from "../ui-redux/store";
 import {
   convertDateToEpoch,
   getCurrentFinancialYear,
@@ -19,7 +20,6 @@ import {
   ifUserRoleExists
 } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import store from "../ui-redux/store";
 import get from "lodash/get";
 import set from "lodash/set";
 import {
@@ -66,6 +66,29 @@ export const getSearchResults = async queryObject => {
       "",
       queryObject,
       {}
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+    store.dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: error.message, labelCode: error.message },
+        "error"
+      )
+    );
+  }
+};
+
+export const getGroupBillSearch = async searchScreenObject => {
+  // console.log("function called");
+  try {
+    const response = await httpRequest(
+      "post",
+      "egov-searcher/bill-genie/billswithaddranduser/_get",
+      "",
+      [],
+      { searchCriteria: searchScreenObject }
     );
     return response;
   } catch (error) {
@@ -137,14 +160,14 @@ export const getBoundaryData = async (
       queryObject,
       {}
     );
-    const tenantId =
-      process.env.REACT_APP_NAME === "Employee"
-        ? get(
-            state.screenConfiguration.preparedFinalObject,
-            "Licenses[0].tradeLicenseDetail.address.city"
-          )
-        : getQueryArg(window.location.href, "tenantId");
-
+    const tenantId = "pb.amritsar";
+    // process.env.REACT_APP_NAME === "Employee"
+    //   ? get(
+    //       state.screenConfiguration.preparedFinalObject,
+    //       "Licenses[0].tradeLicenseDetail.address.city"
+    //     )
+    //   : getQueryArg(window.location.href, "tenantId");
+    console.log("LOLOLOLOL:", tenantId);
     const mohallaData =
       payload &&
       payload.TenantBoundary[0] &&
@@ -163,20 +186,20 @@ export const getBoundaryData = async (
 
     dispatch(
       prepareFinalObject(
-        "applyScreenMdmsData.tenant.localities",
+        "searchScreenMdmsData.localities",
         // payload.TenantBoundary && payload.TenantBoundary[0].boundary,
         mohallaData
       )
     );
 
-    dispatch(
-      handleField(
-        "apply",
-        "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-        "props.suggestions",
-        mohallaData
-      )
-    );
+    // dispatch(
+    //   handleField(
+    //     "apply",
+    //     "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+    //     "props.suggestions",
+    //     mohallaData
+    //   )
+    // );
     if (code) {
       let data = payload.TenantBoundary[0].boundary;
       let messageObject =

@@ -66,7 +66,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Bill No.")]: {
         format: rowData => {
           return (
-            <Link to={generateSingleBill(rowData)}>
+            <Link to={() => generateSingleBill(rowData)}>
               <span
                 style={{
                   color: "#FE7A51",

@@ -6,9 +6,11 @@ import {
   getPattern,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getFinancialYearDates } from "../../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
-import {generateBill} from "../../utils/receiptPdf";
+import { generateBill } from "../../utils/receiptPdf";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -27,22 +29,16 @@ export const abgSearchCard = getCommonCard({
         labelName: "Select Financial Year",
         labelKey: "ABG_FINANCIAL_YEAR_PLACEHOLDER"
       },
-      required: true,
+      required: false,
       visible: true,
-      jsonPath: "searchScreen.financialYear",
+      jsonPath: "searchCriteria.financialYear",
       // sourceJsonPath: "applyScreenMdmsData.egf-master.FinancialYear",
       gridDefination: {
         xs: 12,
         sm: 4
       },
-      data: [
-        {
-          code: "2018-19"
-        },
-        {
-          code: "2019-20"
-        }
-      ]
+      visible: process.env.REACT_APP_NAME === "Citizen" ? false : true,
+      sourceJsonPath: "searchScreenMdmsData.egf-master.FinancialYear"
     }),
     locMohalla: getSelectField({
       label: {
@@ -54,37 +50,30 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_LOCMOHALLA_PLACEHOLDER"
       },
       required: false,
-      jsonPath: "searchScreen.locMohalla",
+      jsonPath: "searchCriteria.locality",
       gridDefination: {
         xs: 12,
         sm: 4
       },
-      data: [
-        {
-          code: "Ajit Nagar"
-        },
-        {
-          code: "Cinema road-1"
-        }
-      ]
+      sourceJsonPath: "searchScreenMdmsData.localities"
     }),
-    propertyId: getTextField({
+    consumerId: getTextField({
       label: {
-        labelName: "Property ID",
+        labelName: "Consumer ID",
         labelKey: "ABG_PROPERTY_ID_LABEL"
       },
       placeholder: {
         labelName: "Enter Property ID",
-        labelKey: "ABG_PROPERTY_ID_PLACEHOLDER"
+        labelKey: "ABG_CONSUMER_ID_PLACEHOLDER"
       },
       gridDefination: {
         xs: 12,
         sm: 4
       },
       required: false,
-      pattern: getPattern("PropertyID"),
-      errorMessage: "Invalid Property ID",
-      jsonPath: "searchScreen.propertyId"
+      // pattern: getPattern("PropertyID"),
+      // errorMessage: "Invalid Property ID",
+      jsonPath: "searchCriteria.consumercode[0]"
     })
   }),
 
@@ -167,7 +156,7 @@ export const mergeDownloadButton = {
           labelKey: "ABG_GROUP_BILLS_MERGE_AND_DOWNLOAD_BUTTON"
         })
       },
-      onClickDefination:{
+      onClickDefination: {
         action: "condition",
         callBack: generateBill
       }
