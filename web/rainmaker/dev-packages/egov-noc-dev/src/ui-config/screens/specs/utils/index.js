@@ -180,9 +180,9 @@ export const gotoApplyWithStep = (state, dispatch, step) => {
   dispatch(setRoute(applyUrl));
 };
 
-export const showHideAdhocPopup = (state, dispatch) => {
-  let toggle = get(state.screenConfiguration.screenConfig["search"], "components.adhocDialog.props.open", false);
-  dispatch(handleField("search", "components.adhocDialog", "props.open", !toggle));
+export const showHideAdhocPopup = (state, dispatch, screenKey) => {
+  let toggle = get(state.screenConfiguration.screenConfig[screenKey], "components.adhocDialog.props.open", false);
+  dispatch(handleField(screenKey, "components.adhocDialog", "props.open", !toggle));
 };
 
 export const getCommonGrayCard = children => {
@@ -410,7 +410,7 @@ export const searchBill = async (dispatch, applicationNumber, tenantId) => {
   }
 };
 
-const createEstimateData = billObject => {
+export const createEstimateData = billObject => {
   const billDetails = billObject && billObject.billDetails;
   let fees =
     billDetails &&

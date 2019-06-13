@@ -136,11 +136,7 @@ const callBackForPay = async (state, dispatch) => {
     state.screenConfiguration.preparedFinalObject,
     "ReceiptTemp[0].instrument.instrumentType.name"
   );
-  const {
-    selectedTabIndex,
-    selectedPaymentMode,
-    fieldsToValidate
-  } = getSelectedTabIndex(selectedPaymentType);
+  const { selectedTabIndex, selectedPaymentMode, fieldsToValidate } = getSelectedTabIndex(selectedPaymentType);
 
   isFormValid =
     fieldsToValidate
@@ -153,12 +149,7 @@ const callBackForPay = async (state, dispatch) => {
         );
       })
       .indexOf(false) === -1;
-  if (
-    get(
-      state.screenConfiguration.preparedFinalObject,
-      "Bill[0].billDetails[0].manualReceiptDate"
-    )
-  ) {
+  if (get(state.screenConfiguration.preparedFinalObject, "Bill[0].billDetails[0].manualReceiptDate")) {
     isFormValid = validateFields(
       `components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.g8Details.children.cardContent.children.receiptDetailsCardContainer.children`,
       state,
@@ -171,16 +162,10 @@ const callBackForPay = async (state, dispatch) => {
 
   //------------- Form related ----------------//
 
-  const ReceiptDataTemp = get(
-    state.screenConfiguration.preparedFinalObject,
-    "ReceiptTemp[0]"
-  );
+  const ReceiptDataTemp = get(state.screenConfiguration.preparedFinalObject, "ReceiptTemp[0]");
   let finalReceiptData = cloneDeep(ReceiptDataTemp);
 
-  allDateToEpoch(finalReceiptData, [
-    "Bill[0].billDetails[0].manualReceiptDate",
-    "instrument.transactionDateInput"
-  ]);
+  allDateToEpoch(finalReceiptData, ["Bill[0].billDetails[0].manualReceiptDate", "instrument.transactionDateInput"]);
 
   // if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
   //   convertDateFieldToEpoch(
@@ -196,19 +181,11 @@ const callBackForPay = async (state, dispatch) => {
   //   );
   // }
   if (get(finalReceiptData, "instrument.transactionDateInput")) {
-    set(
-      finalReceiptData,
-      "instrument.instrumentDate",
-      get(finalReceiptData, "instrument.transactionDateInput")
-    );
+    set(finalReceiptData, "instrument.instrumentDate", get(finalReceiptData, "instrument.transactionDateInput"));
   }
 
   if (get(finalReceiptData, "instrument.transactionNumber")) {
-    set(
-      finalReceiptData,
-      "instrument.instrumentNumber",
-      get(finalReceiptData, "instrument.transactionNumber")
-    );
+    set(finalReceiptData, "instrument.instrumentNumber", get(finalReceiptData, "instrument.transactionNumber"));
   }
 
   if (selectedPaymentType === "Card") {
@@ -217,9 +194,7 @@ const callBackForPay = async (state, dispatch) => {
       get(finalReceiptData, "instrument.transactionNumber") !==
       get(finalReceiptData, "instrument.transactionNumberConfirm")
     ) {
-      dispatch(
-        toggleSnackbar(true, "Transaction numbers don't match !", "error")
-      );
+      dispatch(toggleSnackbar(true, "Transaction numbers don't match !", "error"));
       return;
     }
   }
@@ -246,20 +221,14 @@ const callBackForPay = async (state, dispatch) => {
         [],
         {}
       );
-      let receiptNumber = get(
-        response,
-        "Receipt[0].Bill[0].billDetails[0].receiptNumber",
-        null
-      );
+      let receiptNumber = get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", null);
       moveToSuccess(href, dispatch, receiptNumber);
     } catch (e) {
       dispatch(toggleSnackbar(true, e.message, "error"));
       console.log(e);
     }
   } else {
-    dispatch(
-      toggleSnackbar(true, "Please fill all the mandatory fields", "warning")
-    );
+    dispatch(toggleSnackbar(true, "Please fill all the mandatory fields", "warning"));
   }
 };
 
@@ -305,7 +274,7 @@ export const footer = getCommonApplyFooter({
     },
     roleDefination: {
       rolePath: "user-info.roles",
-      //roles: ["TL_CEMP"]
+      roles: ["NOC_CEMP"],
       action: "PAY"
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
@@ -385,12 +354,12 @@ export const footer = getCommonApplyFooter({
         process.env.REACT_APP_SELF_RUNNING === "true"
           ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
           : `/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
-    }
-    // roleDefination: {
-    //   rolePath: "user-info.roles",
-    //   // roles: ["CITIZEN"]
-    //   action: "PAY"
-    // },
-    // visible: process.env.REACT_APP_NAME === "Citizen" ? true : false
+    },
+    roleDefination: {
+      rolePath: "user-info.roles",
+      // roles: ["CITIZEN"]
+      action: "PAY"
+    },
+    visible: process.env.REACT_APP_NAME === "Citizen" ? true : false
   }
 });

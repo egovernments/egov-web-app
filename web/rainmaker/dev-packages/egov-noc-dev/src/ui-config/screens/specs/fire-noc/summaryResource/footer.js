@@ -1,12 +1,12 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getCommonApplyFooter } from "../../utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
-import "./index.scss";
-import { createUpdateNocApplication } from "../../../../../ui-utils/commons";
 import get from "lodash/get";
+import { createUpdateNocApplication } from "../../../../../ui-utils/commons";
+import { getCommonApplyFooter } from "../../utils";
+import "./index.scss";
 
 const updateNocApplication = (state, dispatch) => {
-  let isValid = createUpdateNocApplication(state, dispatch, "SUBMIT");
+  let isValid = createUpdateNocApplication(state, dispatch, "APPLY");
   let applicationNumber = get(
     state,
     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicationNumber"

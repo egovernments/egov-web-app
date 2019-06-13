@@ -215,7 +215,7 @@ export const applicationSuccessFooter = (state, dispatch, applicationNumber, ten
         action: "page_change",
         path:
           process.env.REACT_APP_SELF_RUNNING === "true"
-            ? `/egov-ui-framework/fire-noc/pay`
+            ? `/egov-ui-framework/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=FIRENOC`
             : `/fire-noc/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=FIRENOC`
       },
       roleDefination: {

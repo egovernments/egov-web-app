@@ -1,22 +1,19 @@
 import {
+  getCommonCard,
   getCommonContainer,
   getCommonHeader,
-  getCommonCard,
-  getCommonTitle
+  getCommonTitle,
+  getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-
-import { footer } from "./payResource/footer";
-import estimateDetails from "./payResource/estimate-details";
-import g8Details from "./payResource/g8-details";
-import capturePaymentDetails from "./payResource/capture-payment-details";
-// import { adhocPopup } from "./applyResource/adhocPopup";
-// import { showHideAdhocPopup, getDialogButton } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-// import { fetchBill } from "../utils";
+import get from "lodash/get";
+import { getCurrentFinancialYear, searchBill, showHideAdhocPopup } from "../utils";
+import { adhocPopup } from "./payResource/adhocPopup";
+import capturePaymentDetails from "./payResource/capture-payment-details";
+import estimateDetails from "./payResource/estimate-details";
+import { footer } from "./payResource/footer";
+import g8Details from "./payResource/g8-details";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-// import store from "egov-ui-framework/ui-redux/store";
-import { getFinancialYearDates, getCurrentFinancialYear } from "../utils";
 
 const header = getCommonContainer({
   header: getCommonHeader({
@@ -33,13 +30,41 @@ const header = getCommonContainer({
   }
 });
 
+const fetchBill = async (state, dispatch, applicationNumber, tenantId) => {
+  await searchBill(dispatch, applicationNumber, tenantId);
+
+  let payload = get(state, "screenConfiguration.preparedFinalObject.ReceiptTemp[0].Bill[0].billDetails[0]");
+
+  //set amount paid as total amount from bill - destination changed in CS v1.1
+  payload &&
+    payload.totalAmount &&
+    dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid", payload.totalAmount));
+
+  //Collection Type Added in CS v1.1
+  payload && dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0].billDetails[0].collectionType", "COUNTER"));
+
+  //set total amount in instrument
+  payload &&
+    payload.totalAmount &&
+    dispatch(prepareFinalObject("ReceiptTemp[0].instrument.amount", payload.totalAmount));
+
+  //Initially select instrument type as Cash
+  dispatch(prepareFinalObject("ReceiptTemp[0].instrument.instrumentType.name", "Cash"));
+
+  //set tenantId
+  dispatch(prepareFinalObject("ReceiptTemp[0].tenantId", tenantId));
+
+  //set tenantId in instrument
+  dispatch(prepareFinalObject("ReceiptTemp[0].instrument.tenantId", tenantId));
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "pay",
   beforeInitScreen: (action, state, dispatch) => {
-    // dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", []));
-    // dispatch(prepareFinalObject("ReceiptTemp[0].instrument", {}));
-    // fetchBill(action, state, dispatch);
+    let applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    let tenantId = getQueryArg(window.location.href, "tenantId");
+    fetchBill(state, dispatch, applicationNumber, tenantId);
     return action;
   },
   components: {
@@ -77,23 +102,23 @@ const screenConfig = {
               //   labelName: ""
               // }),
               estimateDetails,
-              // addPenaltyRebateButton: {
-              //   componentPath: "Button",
-              //   props: {
-              //     color: "primary",
-              //     style: {}
-              //   },
-              //   children: {
-              //     previousButtonLabel: getLabel({
-              //       labelName: "ADD REBATE/PENALTY",
-              //       labelKey: "TL_PAYMENT_ADD_RBT_PEN"
-              //     })
-              //   },
-              //   onClickDefination: {
-              //     action: "condition",
-              //     callBack: showHideAdhocPopup
-              //   }
-              // },
+              addPenaltyRebateButton: {
+                componentPath: "Button",
+                props: {
+                  color: "primary",
+                  style: {}
+                },
+                children: {
+                  previousButtonLabel: getLabel({
+                    labelName: "ADD REBATE/PENALTY",
+                    labelKey: "NOC_PAYMENT_ADD_RBT_PEN"
+                  })
+                },
+                onClickDefination: {
+                  action: "condition",
+                  callBack: (state, dispatch) => showHideAdhocPopup(state, dispatch, "pay")
+                }
+              },
               // viewBreakupButton: getDialogButton(
               //   "VIEW BREAKUP",
               //   "TL_PAYMENT_VIEW_BREAKUP",
@@ -106,20 +131,20 @@ const screenConfig = {
         },
         footer
       }
+    },
+    adhocDialog: {
+      uiFramework: "custom-containers-local",
+      moduleName: "egov-tradelicence",
+      componentPath: "DialogContainer",
+      props: {
+        open: false,
+        maxWidth: "sm",
+        screenKey: "pay"
+      },
+      children: {
+        popup: adhocPopup
+      }
     }
-    // adhocDialog: {
-    //   uiFramework: "custom-containers-local",
-    //   moduleName: "egov-tradelicence",
-    //   componentPath: "DialogContainer",
-    //   props: {
-    //     open: false,
-    //     maxWidth: "sm",
-    //     screenKey: "pay"
-    //   },
-    //   children: {
-    //     popup: adhocPopup
-    //   }
-    // },
     // breakUpDialog: {
     //   uiFramework: "custom-containers-local",
     //   moduleName: "egov-tradelicence",
