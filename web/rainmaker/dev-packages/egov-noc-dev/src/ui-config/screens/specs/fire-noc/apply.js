@@ -16,7 +16,7 @@ import { httpRequest } from "../../../../ui-utils";
 import { sampleSearch, sampleSingleSearch, sampleDocUpload } from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
-import { prepareDocumentsUploadData, getSearchResults } from "../../../../ui-utils/commons";
+import { prepareDocumentsUploadData, getSearchResults, furnishNocResponse } from "../../../../ui-utils/commons";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -177,7 +177,7 @@ const setCardsIfMultipleBuildings = (state, dispatch) => {
 const prepareEditFlow = async (state, dispatch, applicationNumber) => {
   const nocs = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
   if (applicationNumber && nocs.length == 0) {
-    const response = await getSearchResults([
+    let response = await getSearchResults([
       {
         key: "tenantId",
         value: getTenantId()
@@ -186,31 +186,7 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
     ]);
     // let response = sampleSingleSearch();
 
-    // Handle applicant ownership dependent dropdowns
-    let ownershipType = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType");
-    set(
-      response,
-      "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
-      ownershipType == undefined ? "SINGLE" : ownershipType.split(".")[0]
-    );
-
-    // Prepare UOMS and Usage Type Dropdowns in required format
-    let buildings = get(response, "FireNOCs[0].fireNOCDetails.buildings", []);
-    buildings.forEach((building, index) => {
-      let uoms = get(building, "uoms", []);
-      let uomMap = {};
-      uoms.forEach(uom => {
-        uomMap[uom.code] = parseInt(uom.value);
-      });
-      set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomMap);
-
-      let usageType = get(building, "usageType");
-      set(
-        response,
-        `FireNOCs[0].fireNOCDetails.buildings[${index}].usageTypeMajor`,
-        usageType == undefined ? "" : usageType.split(".")[0]
-      );
-    });
+    response = furnishNocResponse(response);
 
     dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
 
@@ -240,7 +216,7 @@ const prepareEditFlow = async (state, dispatch, applicationNumber) => {
     // setCardsIfMultipleBuildings(state, dispatch);
 
     // Set sample docs upload
-    dispatch(prepareFinalObject("documentsUploadRedux", sampleDocUpload()));
+    // dispatch(prepareFinalObject("documentsUploadRedux", sampleDocUpload()));
   }
 };
 

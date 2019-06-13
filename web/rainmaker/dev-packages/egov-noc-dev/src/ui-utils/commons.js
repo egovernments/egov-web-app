@@ -121,13 +121,17 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail.documents", ownerDocuments);
     set(payload[0], "fireNOCDetails.additionalDetail.documents", otherDocuments);
 
+    let response;
     if (method === "CREATE") {
-      const response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
+      response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
+      response = furnishNocResponse(response);
       dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     } else if (method === "UPDATE") {
-      const response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], { FireNOCs: payload });
+      response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], { FireNOCs: payload });
+      response = furnishNocResponse(response);
       dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     }
+
     return true;
   } catch (error) {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
@@ -232,4 +236,34 @@ export const prepareDocumentsUploadRedux = (state, dispatch) => {
       });
   });
   prepareFinalObject("documentsUploadRedux", documentsUploadRedux);
+};
+
+export const furnishNocResponse = response => {
+  // Handle applicant ownership dependent dropdowns
+  let ownershipType = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType");
+  set(
+    response,
+    "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
+    ownershipType == undefined ? "SINGLE" : ownershipType.split(".")[0]
+  );
+
+  // Prepare UOMS and Usage Type Dropdowns in required format
+  let buildings = get(response, "FireNOCs[0].fireNOCDetails.buildings", []);
+  buildings.forEach((building, index) => {
+    let uoms = get(building, "uoms", []);
+    let uomMap = {};
+    uoms.forEach(uom => {
+      uomMap[uom.code] = parseInt(uom.value);
+    });
+    set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomMap);
+
+    let usageType = get(building, "usageType");
+    set(
+      response,
+      `FireNOCs[0].fireNOCDetails.buildings[${index}].usageTypeMajor`,
+      usageType == undefined ? "" : usageType.split(".")[0]
+    );
+  });
+
+  return response;
 };
