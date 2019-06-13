@@ -77,12 +77,10 @@ export const searchApiCall = async (state, dispatch) => {
     console.log(responseFromAPI);
     const bills = (responseFromAPI && responseFromAPI.Bills) || [];
     dispatch(
-      prepareFinalObject("searchScreenMdmsData.groupBillSearchResponse", bills)
+      prepareFinalObject("searchScreenMdmsData.billSearchResponse", bills)
     );
     const response = [];
-    debugger;
     for (let i = 0; i < bills.length; i++) {
-      debugger;
       response[i] = {
         consumerId: get(bills[i], `billDetails[0].consumerCode`),
         assessmentNumber: get(bills[i], `billDetails[0].consumerCode`),
@@ -94,7 +92,7 @@ export const searchApiCall = async (state, dispatch) => {
     console.log("Response:", response);
     try {
       let data = response.map(item => ({
-        [get(textToLocalMapping, "Consumer ID")]: item.consumerCode || "-",
+        [get(textToLocalMapping, "Consumer ID")]: item.consumerId || "-",
         [get(textToLocalMapping, "Assessment No")]:
           item.assessmentNumber || "-",
         [get(textToLocalMapping, "Owner Name")]: item.ownerName || "-",
