@@ -86,49 +86,6 @@ export const abgSearchCard = getCommonCard({
         xs: 12,
         sm: 4
       }
-      // beforeFieldChange: async (action, state, dispatch) => {
-      //   let requestBody = {
-      //     MdmsCriteria: {
-      //       tenantId: action.value,
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "BillingService",
-      //           masterDetails: [
-      //             {
-      //               name: "BusinessService",
-      //               filter: "[?(@.type=='Adhoc')]"
-      //             },
-      //             {
-      //               name: "TaxHeadMaster"
-      //             },
-      //             {
-      //               name: "TaxPeriod"
-      //             }
-      //           ]
-      //         }
-      //       ]
-      //     }
-      //   };
-      //   try {
-      //     let payload = null;
-      //     payload = await httpRequest(
-      //       "post",
-      //       "/egov-mdms-service/v1/_search",
-      //       "_search",
-      //       [],
-      //       requestBody
-      //     );
-      //     dispatch(
-      //       prepareFinalObject(
-      //         "searchScreenMdmsData.BillingService",
-      //         payload.MdmsRes
-      //       )
-      //     );
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-      //   return action;
-      // }
     }),
     locMohalla: getSelectField({
       label: {

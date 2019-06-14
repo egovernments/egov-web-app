@@ -47,6 +47,14 @@ const getMDMSData = async (action, state, dispatch) => {
               name: "TaxPeriod"
             }
           ]
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants"
+            }
+          ]
         }
       ]
     }
