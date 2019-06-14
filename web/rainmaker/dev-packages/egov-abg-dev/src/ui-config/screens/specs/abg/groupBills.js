@@ -30,14 +30,6 @@ const getMDMSData = async (action, state, dispatch) => {
       tenantId: tenantId,
       moduleDetails: [
         {
-          moduleName: "BillingService",
-          masterDetails: [
-            {
-              name: "BusinessService"
-            }
-          ]
-        },
-        {
           moduleName: "egf-master",
           masterDetails: [{ name: "FinancialYear" }]
         },
@@ -45,8 +37,8 @@ const getMDMSData = async (action, state, dispatch) => {
           moduleName: "BillingService",
           masterDetails: [
             {
-              name: "BusinessService",
-              filter: "[?(@.type=='Adhoc')]"
+              name: "BusinessService"
+              // filter: "[?(@.type=='Adhoc')]"
             },
             {
               name: "TaxHeadMaster"
