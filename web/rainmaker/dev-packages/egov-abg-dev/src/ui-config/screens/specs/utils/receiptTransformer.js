@@ -76,12 +76,15 @@ export const loadPtBillData = response => {
   );
   // }
   const taxes = get(response, "billDetails[0].billAccountDetails", []);
-  data.taxHeads = getTaxHeads(taxes);
+  data.taxHeads = getTaxHeads(
+    taxes,
+    get(response, "billDetails[0].totalAmount", 0)
+  );
   return data;
   // store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
 };
 
-const getTaxHeads = taxes => {
+const getTaxHeads = (taxes, totalAmount) => {
   let taxHeads = [];
   taxes.forEach(i => {
     if (i.amount !== 0) {
@@ -94,6 +97,14 @@ const getTaxHeads = taxes => {
         amount: i.amount
       });
     }
+  });
+  taxHeads.push({
+    taxHeadCode: getLocaleLabels(
+      "",
+      "TOTAL_PAYABLE",
+      getTransformedLocalStorgaeLabels()
+    ),
+    amount: totalAmount
   });
   return taxHeads;
 };

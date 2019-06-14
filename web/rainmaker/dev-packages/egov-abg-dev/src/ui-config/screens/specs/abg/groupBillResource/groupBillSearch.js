@@ -26,7 +26,7 @@ const tenantId = "pb.amritsar";
 const resetFields = (state, dispatch) => {
   dispatch(
     handleField(
-      "search",
+      "groupBills",
       "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.locMohalla",
       "props.value",
       ""
@@ -34,7 +34,7 @@ const resetFields = (state, dispatch) => {
   );
   dispatch(
     handleField(
-      "search",
+      "groupBills",
       "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.financialYear",
       "props.value",
       ""
@@ -42,7 +42,7 @@ const resetFields = (state, dispatch) => {
   );
   dispatch(
     handleField(
-      "search",
+      "groupBills",
       "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.serviceCategory",
       "props.value",
       ""
@@ -50,7 +50,7 @@ const resetFields = (state, dispatch) => {
   );
   dispatch(
     handleField(
-      "search",
+      "groupBills",
       "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.consumerId",
       "props.value",
       ""

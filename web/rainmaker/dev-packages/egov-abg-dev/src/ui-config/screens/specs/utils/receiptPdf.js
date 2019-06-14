@@ -455,7 +455,6 @@ export const generateMultipleBill = async (state, dispatch, type) => {
     };
   });
   const multipleBills = getMutlipleBillsData(transformedData);
-  debugger;
   pdfMake.createPdf(multipleBills).open();
 };
 
@@ -464,7 +463,6 @@ export const generateMultipleBill = async (state, dispatch, type) => {
 //For single bill
 
 const getSingleBillData = transformedData => {
-  debugger;
   let singleBillData = {
     content: [
       {
@@ -806,7 +804,8 @@ export const generateSingleBill = async rowData => {
   );
   let billData = {};
   const data = allBills.find(
-    item => get(item, "billDetails[0].billNumber", "") === rowData["Bill No."]
+    item =>
+      get(item, "billDetails[0].consumerCode", "") === rowData["Consumer ID"]
   );
   if (isEmpty(data)) {
     alert("Bill not found !");
@@ -837,7 +836,6 @@ export const generateSingleBill = async rowData => {
     ...data2
   };
   const singleBillData = getSingleBillData(billData);
-  debugger;
   pdfMake.createPdf(singleBillData).open();
 };
 
