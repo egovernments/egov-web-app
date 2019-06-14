@@ -14,7 +14,7 @@ import get from "lodash/get";
 
 const header = getCommonContainer({
   header: getCommonHeader({
-    labelName: "New universal Collection",
+    labelName: "New miscellaneous collection",
     labelKey: "UC_PAY_HEADER"
   })
 });

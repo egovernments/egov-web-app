@@ -74,7 +74,6 @@ export const searchApiCall = async (state, dispatch) => {
   } else {
     searchScreenObject.tenantId = tenantId;
     const responseFromAPI = await getGroupBillSearch(searchScreenObject);
-    console.log(responseFromAPI);
     const bills = (responseFromAPI && responseFromAPI.Bills) || [];
     dispatch(
       prepareFinalObject("searchScreenMdmsData.billSearchResponse", bills)
@@ -83,21 +82,19 @@ export const searchApiCall = async (state, dispatch) => {
     for (let i = 0; i < bills.length; i++) {
       response[i] = {
         consumerId: get(bills[i], `billDetails[0].consumerCode`),
-        assessmentNumber: get(bills[i], `billDetails[0].consumerCode`),
+        billNo: get(bills[i], `billDetails[0].billNumber`),
         ownerName: get(bills[i], `payerName`),
-        dateCreated: get(bills[i], `billDetails[0].billDate`)
+        billDate: get(bills[i], `billDetails[0].billDate`),
+        tenantId: tenantId
       };
     }
-
-    console.log("Response:", response);
     try {
       let data = response.map(item => ({
+        [get(textToLocalMapping, "Bill No.")]: item.billNo || "-",
         [get(textToLocalMapping, "Consumer ID")]: item.consumerId || "-",
-        [get(textToLocalMapping, "Assessment No")]:
-          item.assessmentNumber || "-",
         [get(textToLocalMapping, "Owner Name")]: item.ownerName || "-",
-        [get(textToLocalMapping, "Date Created")]:
-          convertEpochToDate(item.dateCreated) || "-",
+        [get(textToLocalMapping, "Bill Date")]:
+          convertEpochToDate(item.billDate) || "-",
         tenantId: item.tenantId
       }));
 
@@ -109,9 +106,9 @@ export const searchApiCall = async (state, dispatch) => {
           data
         )
       );
-      dispatch(
-        handleField("groupBills", "components.div.children.searchResults")
-      );
+      // dispatch(
+      //   handleField("groupBills", "components.div.children.searchResults")
+      // );
       showHideTable(true, dispatch);
     } catch (error) {
       dispatch(toggleSnackbar(true, error.message, "error"));

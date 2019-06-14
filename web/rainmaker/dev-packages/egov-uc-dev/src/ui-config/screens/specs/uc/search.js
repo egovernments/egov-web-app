@@ -14,7 +14,7 @@ import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const tenantId = getTenantId();
 const header = getCommonHeader({
-  labelName: "Universal Collection",
+  labelName: "Miscellaneous Collection",
   labelKey: "UC_COMMON_HEADER_SEARCH"
 });
 

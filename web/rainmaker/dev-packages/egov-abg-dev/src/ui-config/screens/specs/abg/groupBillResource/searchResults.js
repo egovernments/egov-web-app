@@ -111,14 +111,14 @@ const onDownloadClick = async rowData => {
 };
 
 export const textToLocalMapping = {
-  "Property ID": getLocaleLabels(
-    "Property ID",
-    "ABG_COMMON_TABLE_COL_PROPERTY_ID",
+  "Consumer ID": getLocaleLabels(
+    "Consumer ID",
+    "ABG_COMMON_TABLE_COL_CONSUMER_ID",
     getTransformedLocalStorgaeLabels()
   ),
-  "Assessment No": getLocaleLabels(
-    "Assessment No",
-    "ABG_COMMON_TABLE_COL_ASS_NO",
+  "Bill No.": getLocaleLabels(
+    "Bill No.",
+    "ABG_COMMON_TABLE_COL_BILL_NO",
     getTransformedLocalStorgaeLabels()
   ),
   "Owner Name": getLocaleLabels(
@@ -126,13 +126,18 @@ export const textToLocalMapping = {
     "ABG_COMMON_TABLE_COL_OWN_NAME",
     getTransformedLocalStorgaeLabels()
   ),
-  "Date Created": getLocaleLabels(
-    "Date Created",
-    "ABG_COMMON_TABLE_COL_CREATE_DATE",
+  "Bill Date": getLocaleLabels(
+    "Bill Date",
+    "ABG_COMMON_TABLE_COL_BILL_DATE",
     getTransformedLocalStorgaeLabels()
   ),
-  Download: getLocaleLabels("Download", "ABG_COMMON_TABLE_COL_DOWNLOAD_BUTTON")
-  //Download button
+  Download: getLocaleLabels("Download", "ABG_COMMON_TABLE_COL_DOWNLOAD_BUTTON"),
+  //Download button,
+  "View button": getLocaleLabels(
+    "View",
+    "ABG_COMMON_TABLE_COL_VIEW_BUTTON",
+    getTransformedLocalStorgaeLabels()
+  )
 };
 
 export const searchResults = {
@@ -143,11 +148,11 @@ export const searchResults = {
   props: {
     // data: [],
     columns: {
-      [get(textToLocalMapping, "Property ID")]: {},
-      [get(textToLocalMapping, "Assessment No")]: {},
+      [get(textToLocalMapping, "Bill No.")]: {},
+      [get(textToLocalMapping, "Consumer ID")]: {},
       [get(textToLocalMapping, "Owner Name")]: {},
-      [get(textToLocalMapping, "Date Created")]: {},
-      [get(textToLocalMapping, "Download")]: {
+      [get(textToLocalMapping, "Bill Date")]: {},
+      [get(textToLocalMapping, "View button")]: {
         format: rowData => {
           return (
             <Button
@@ -155,8 +160,10 @@ export const searchResults = {
               primary={true}
               onClick={() => generateSingleBill(rowData)}
             >
-              <DownloadIcon fill="#FE7A51" />
-              {get(textToLocalMapping, "Download Button")}
+              {"View"}
+
+              {/* <DownloadIcon fill="#FE7A51" />
+              {get(textToLocalMapping, "View button")} */}
             </Button>
           );
         }

@@ -1,12 +1,18 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import get from "lodash/get";
 import store from "../../../../ui-redux/store";
 import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
+import {
+  loadPtBillData,
+  loadUlbLogo,
+  loadMdmsData
+} from "./receiptTransformer";
+import isEmpty from "lodash/isEmpty";
+import get from "lodash/get";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const billTableWidthForConsumeDetails = ["*", "*", "*", "*"];
@@ -697,45 +703,7 @@ export const generateBill = async (state, dispatch, type) => {
 };
 
 //For single bill
-const getSingleBillData = () => {
-  const transformedData = {
-    billDate: 1558089742296,
-    financialYr: "2017-18",
-    billNumber: null,
-    dueDate: 1558089742296,
-    propertyId: "PT-107-016855",
-    AssessNo: "AS-2019-05-17-044116",
-    payerName: "Tanvir",
-    mobileNumber: "8218189127",
-    payerAddress:
-      "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-    locality: null,
-    businessService: "PT",
-    totalAmount: 82,
-    collectedAmount: null,
-    taxHeads: [
-      {
-        taxHeadCode: "PT_FIRE_CESS",
-        amount: 4.1
-      },
-      {
-        taxHeadCode: "PT_ROUNDOFF",
-        amount: 0.05
-      },
-      {
-        taxHeadCode: "PT_CANCER_CESS",
-        amount: 4.1
-      },
-      {
-        taxHeadCode: "PT_TIME_REBATE",
-        amount: -8.2
-      },
-      {
-        taxHeadCode: "PT_TAX",
-        amount: 81.95
-      }
-    ]
-  };
+const getSingleBillData = transformedData => {
   let singleBillData = {
     content: [
       {
@@ -1142,8 +1110,86 @@ const getSingleBillData = () => {
   return singleBillData;
 };
 
-export const generateSingleBill = async (state, dispatch, type) => {
-  pdfMake.createPdf(getSingleBillData()).open();
+const transformedData = {
+  billDate: 1558089742296,
+  financialYr: "2017-18",
+  billNumber: null,
+  dueDate: 1558089742296,
+  propertyId: "PT-107-016855",
+  AssessNo: "AS-2019-05-17-044116",
+  payerName: "Tanvir",
+  mobileNumber: "8218189127",
+  payerAddress:
+    "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
+  locality: null,
+  businessService: "PT",
+  totalAmount: 82,
+  collectedAmount: null,
+  taxheads: [
+    {
+      taxHeadCode: "PT_FIRE_CESS",
+      amount: 4.1
+    },
+    {
+      taxHeadCode: "PT_ROUNDOFF",
+      amount: 0.05
+    },
+    {
+      taxHeadCode: "PT_CANCER_CESS",
+      amount: 4.1
+    },
+    {
+      taxHeadCode: "PT_TIME_REBATE",
+      amount: -8.2
+    },
+    {
+      taxHeadCode: "PT_TAX",
+      amount: 81.95
+    }
+  ]
+};
+
+export const generateSingleBill = async rowData => {
+  console.log(rowData);
+  const state = store.getState();
+  const allBills = get(
+    state.screenConfiguration,
+    "preparedFinalObject.searchScreenMdmsData.billSearchResponse",
+    []
+  );
+  let billData = {};
+  const data = allBills.find(
+    item => get(item, "billDetails[0].billNumber", "") === rowData["Bill No."]
+  );
+  if (isEmpty(data)) {
+    alert("Bill not found !");
+    return;
+  }
+  const tenant = get(data, "tenantId");
+  loadUlbLogo(tenant);
+  let transformedData = await loadPtBillData(data);
+  await loadMdmsData(tenant);
+
+  // data1 is for ULB logo from loadUlbLogo
+  let data1 = get(
+    state.screenConfiguration.preparedFinalObject,
+    "base64UlbLogo",
+    {}
+  );
+
+  // data2 is for corporation Name from loadMdmsData
+  let data2 = get(
+    state.screenConfiguration.preparedFinalObject,
+    "mdmsDataForReceipt",
+    {}
+  );
+  billData = {
+    ...transformedData,
+    ulbLogo: data1,
+    ...data2
+  };
+  const singleBillData = getSingleBillData(billData);
+  pdfMake.createPdf(singleBillData).open();
 };
 
 //Tranformed data is to be given from the row data bill response and then fed to the billdata and then generate PDF using that bill data

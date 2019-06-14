@@ -36,43 +36,56 @@ export const loadUlbLogo = tenantid => {
   img.src = `/pb-egov-assets/${tenantid}/logo.png`;
 };
 
-export const loadBillData = response => {
+export const loadPtBillData = response => {
   let data = {};
 
-  if (response.Bill && response.Bill.length > 0) {
-    data.billDate = epochToDate(
-      get(response, "Bill[0].billDetails[0].billDate")
-    );
-    const fromDate = epochToDate(
-      get(response, "Bill[0].billDetails[0].fromPeriod")
-    );
-    const toDate = epochToDate(
-      get(response, "Bill[0].billDetails[0].toPeriod")
-    );
-    data.taxPeriod = `${fromDate} - ${toDate}`;
-    data.consumerName = get(response, "Bill[0].payerName");
-    data.mobileNumber = get(response, "Bill[0].mobileNumber");
-    data.serviceCategory = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[0];
-    const serviceType = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[1];
-    data.serviceType = serviceType ? serviceType : "NONE";
-    data.amountPaid = get(response, "Bill[0].billDetails[0].amountPaid", 0);
-    data.totalAmount = get(response, "Bill[0].billDetails[0].totalAmount", 0);
-    data.amountDue = data.totalAmount - data.amountPaid;
-    data.paymentMode = nullToNa(
-      get(response, "instrument.instrumentType.name", "NA")
-    );
-    data.g8ReceiptNo = nullToNa(
-      get(response, "Bill[0].billDetails[0].manualReceiptNumber", "None")
-    );
-  }
+  // if (response.Bill && response.Bill.length > 0) {
+  data.billDate = epochToDate(get(response, "billDetails[0].billDate"));
+  const fromDate = epochToDate(get(response, "billDetails[0].fromPeriod"));
+  const toDate = epochToDate(get(response, "billDetails[0].toPeriod"));
+  data.taxPeriod = `${fromDate} - ${toDate}`;
+  data.billNumber = get(response, "billDetails[0].billNumber");
+  data.consumerName = get(response, "payerName");
+  data.mobileNumber = get(response, "mobileNumber");
+  data.businessService = get(response, "billDetails[0].businessService").split(
+    "."
+  )[0];
+  const serviceType = get(response, "billDetails[0].businessService").split(
+    "."
+  )[1];
+  data.serviceType = serviceType ? serviceType : "NONE";
+  data.amountPaid = get(response, "billDetails[0].amountPaid", 0);
+  data.totalAmount = get(response, "billDetails[0].totalAmount", 0);
+  data.amountDue = data.totalAmount - data.amountPaid;
+  data.dueDate = get(response, "billDetails[0].expiryDate");
+  data.payerAddress = get(response, "payerAddress");
+  data.propertyId = get(response, "billDetails[0].consumerCode").split(":")[0];
+  data.AssessNo = get(response, "billDetails[0].consumerCode").split(":")[1];
+  data.locality = null;
+  data.paymentMode = nullToNa(
+    get(response, "instrument.instrumentType.name", "NA")
+  );
+  data.g8ReceiptNo = nullToNa(
+    get(response, "billDetails[0].manualReceiptNumber", "None")
+  );
+  // }
+  const taxes = get(response, "billDetails[0].billAccountDetails", []);
+  data.taxHeads = getTaxHeads(taxes);
   return data;
   // store.dispatch(prepareFinalObject("receiptDataForReceipt", data));
+};
+
+const getTaxHeads = taxes => {
+  let taxHeads = [];
+  taxes.forEach(i => {
+    if (i.amount !== 0) {
+      taxHeads.push({
+        taxHeadCode: i.taxHeadCode,
+        amount: i.amount
+      });
+    }
+  });
+  return taxHeads;
 };
 
 export const loadMdmsData = async tenantid => {
