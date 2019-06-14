@@ -1,6 +1,5 @@
 import React from "react";
 import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
-// import { cityPicker } from "./citypicker";
 import FireNocIcon from "../../../../ui-atoms-local/Icons/FireNocIcon";
 import MyApplicationIcon from "../../../../ui-atoms-local/Icons/MyApplicationIcon";
 
@@ -16,10 +15,7 @@ const cardItems = [
       labelName: "Apply for Fire Noc"
     },
     icon: <FireNocIcon />,
-    route: {
-      screenKey: "home",
-      jsonPath: "components.cityPickerDialog"
-    }
+    route: "apply"
   },
   {
     label: {
