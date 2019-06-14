@@ -50,28 +50,31 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     let reduxDocuments = get(state, "screenConfiguration.preparedFinalObject.documentsUploadRedux", {});
 
     let buildings = get(payload, "[0].fireNOCDetails.buildings", []);
-    buildings.forEach((item, index) => {
+    buildings.forEach((building, index) => {
       // GET UOMS FOR THE SELECTED BUILDING TYPE
-      let uoms = get(
+      let requiredUoms = get(
         state,
         "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
         []
       ).filter(buildingType => {
-        return buildingType.code === item.usageType;
+        return buildingType.code === building.usageType;
       });
-      uoms = get(uoms, "[0].uom", []);
+      requiredUoms = get(requiredUoms, "[0].uom", []);
       // GET UNIQUE UOMS LIST INCLUDING THE DEFAULT
-      uoms = [
-        ...new Set([...uoms, ...["NO_OF_FLOORS", "NO_OF_BASEMENTS", "PLOT_SIZE", "BUILTUP_AREA", "HEIGHT_OF_BUILDING"]])
+      let allUoms = [
+        ...new Set([
+          ...requiredUoms,
+          ...["NO_OF_FLOORS", "NO_OF_BASEMENTS", "PLOT_SIZE", "BUILTUP_AREA", "HEIGHT_OF_BUILDING"]
+        ])
       ];
       let finalUoms = [];
-      uoms.forEach(uom => {
-        let value = get(item.uoms, uom);
+      allUoms.forEach(uom => {
+        let value = get(building.uoms, uom);
         value &&
           finalUoms.push({
             code: uom,
             value: parseInt(value),
-            isActiveUom: true,
+            isActiveUom: requiredUoms.includes(uom) ? true : false,
             active: true
           });
       });
@@ -82,7 +85,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       jp.query(reduxDocuments, "$.*").forEach(doc => {
         if (doc.documents && doc.documents.length > 0) {
           if (doc.documentSubCode && doc.documentSubCode.startsWith("BUILDING.BUILDING_PLAN")) {
-            if (doc.documentCode === item.name) {
+            if (doc.documentCode === building.name) {
               uploadedDocs = [
                 ...uploadedDocs,
                 {
@@ -135,6 +138,12 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     return true;
   } catch (error) {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
+
+    // Revert the changed pfo in case of request failure
+    let fireNocData = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
+    fireNocData = furnishNocResponse({ FireNOCs: fireNocData });
+    dispatch(prepareFinalObject("FireNOCs", fireNocData.FireNOCs));
+
     return false;
   }
 };
