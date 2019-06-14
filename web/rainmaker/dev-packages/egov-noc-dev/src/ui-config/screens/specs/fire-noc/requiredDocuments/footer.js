@@ -1,4 +1,6 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import "./index.css";
 
 const printDiv = () => {
@@ -13,6 +15,13 @@ const printDiv = () => {
   printWindow.focus();
   printWindow.print();
   printWindow.close();
+};
+
+const startApplyFlow = (state, dispatch) => {
+  dispatch(prepareFinalObject("FireNOCs", []));
+  const applyUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework/fire-noc/apply` : `/fire-noc/apply`;
+  dispatch(setRoute(applyUrl));
 };
 
 export const footer = {
@@ -77,11 +86,8 @@ export const footer = {
       },
       visible: true,
       onClickDefination: {
-        action: "page_change",
-        path:
-          process.env.REACT_APP_SELF_RUNNING === "true"
-            ? `/egov-ui-framework/fire-noc/apply`
-            : `/fire-noc/apply`
+        action: "condition",
+        callBack: startApplyFlow
       }
       //Add onClickDefinition:
     }
