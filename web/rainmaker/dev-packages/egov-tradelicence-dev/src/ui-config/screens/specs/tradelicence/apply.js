@@ -169,7 +169,7 @@ export const getMdmsData = async (action, state, dispatch) => {
       payload,
       "MdmsRes.egf-master.FinancialYear",
       []
-    ).filter(item => item.module === "TL");
+    ).filter(item => item.module === "TL" && item.active === true);
     set(payload, "MdmsRes.egf-master.FinancialYear", financialYearData);
   } catch (e) {
     console.log(e);
