@@ -45,7 +45,7 @@ export const loadPtBillData = response => {
   const toDate = epochToDate(get(response, "billDetails[0].toPeriod"));
   data.taxPeriod = `${fromDate} - ${toDate}`;
   data.billNumber = get(response, "billDetails[0].billNumber");
-  data.consumerName = get(response, "payerName");
+  data.consumerName = nullToNa(get(response, "payerName"));
   data.mobileNumber = get(response, "mobileNumber");
   data.businessService = get(response, "billDetails[0].businessService").split(
     "."
@@ -61,7 +61,9 @@ export const loadPtBillData = response => {
   data.payerAddress = get(response, "payerAddress");
   data.propertyId = get(response, "billDetails[0].consumerCode").split(":")[0];
   data.AssessNo = get(response, "billDetails[0].consumerCode").split(":")[1];
-  data.locality = null;
+  data.locality = nullToNa(
+    get(response, "billDetails[0].address.locality", "NA")
+  );
   data.paymentMode = nullToNa(
     get(response, "instrument.instrumentType.name", "NA")
   );
@@ -140,9 +142,9 @@ export const loadMdmsData = async tenantid => {
 };
 
 /** Data used for creation of receipt is generated and stored in local storage here */
-export const loadReceiptGenerationData = (applicationNumber, tenant) => {
-  /** Logo loaded and stored in local storage in base64 */
-  // loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
-  loadBillData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
-  loadMdmsData(tenant);
-};
+// export const loadReceiptGenerationData = (applicationNumber, tenant) => {
+//   /** Logo loaded and stored in local storage in base64 */
+//   // loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
+//   loadBillData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
+//   loadMdmsData(tenant);
+// };
