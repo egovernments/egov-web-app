@@ -15,6 +15,7 @@ import {
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../../ui-utils";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -22,7 +23,7 @@ let enableButton = true;
 //enableInbox = hasApproval && hasApproval === "false" ? false : true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
-const tenantId = "pb.amritsar";
+const tenantId = getTenantId();
 const resetFields = (state, dispatch) => {
   dispatch(
     handleField(

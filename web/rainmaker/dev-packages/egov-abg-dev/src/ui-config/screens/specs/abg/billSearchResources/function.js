@@ -11,7 +11,7 @@ import { validateFields } from "../../utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 // const tenantId = JSON.parse(getUserInfo()).tenantId;
-const tenantId = "pb.amritsar";
+const tenantId = getTenantId();
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);

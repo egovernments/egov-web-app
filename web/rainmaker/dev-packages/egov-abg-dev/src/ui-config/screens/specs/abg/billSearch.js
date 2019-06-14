@@ -20,7 +20,7 @@ let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const getMDMSData = async (action, state, dispatch) => {
-  const tenantId = "pb.amritsar";
+  const tenantId = getTenantId();
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: tenantId,

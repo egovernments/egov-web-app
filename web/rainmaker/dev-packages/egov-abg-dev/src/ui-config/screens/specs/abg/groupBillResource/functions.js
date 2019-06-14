@@ -15,8 +15,7 @@ import { getUserInfo, getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { prepareFinalBodyData } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 
 // const tenantId = getTenantId();
-const tenantId = "pb.amritsar";
-
+const tenantId = getTenantId();
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
   let queryObject = [
