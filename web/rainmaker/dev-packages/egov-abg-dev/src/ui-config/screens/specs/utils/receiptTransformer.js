@@ -4,6 +4,10 @@ import store from "../../../../ui-redux/store";
 import { getMdmsData } from "../utils";
 import { getLocalization } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "../../../../ui-utils";
+import {
+  getTransformedLocalStorgaeLabels,
+  getLocaleLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -44,21 +48,21 @@ export const loadPtBillData = response => {
   const fromDate = epochToDate(get(response, "billDetails[0].fromPeriod"));
   const toDate = epochToDate(get(response, "billDetails[0].toPeriod"));
   data.taxPeriod = `${fromDate} - ${toDate}`;
-  data.billNumber = get(response, "billDetails[0].billNumber");
+  data.billNumber = nullToNa(get(response, "billDetails[0].billNumber"));
   data.consumerName = nullToNa(get(response, "payerName"));
-  data.mobileNumber = get(response, "mobileNumber");
+  data.mobileNumber = nullToNa(get(response, "mobileNumber"));
   data.businessService = get(response, "billDetails[0].businessService").split(
     "."
   )[0];
   const serviceType = get(response, "billDetails[0].businessService").split(
     "."
   )[1];
-  data.serviceType = serviceType ? serviceType : "NONE";
+  data.serviceType = serviceType ? serviceType : "NA";
   data.amountPaid = get(response, "billDetails[0].amountPaid", 0);
   data.totalAmount = get(response, "billDetails[0].totalAmount", 0);
   data.amountDue = data.totalAmount - data.amountPaid;
   data.dueDate = get(response, "billDetails[0].expiryDate");
-  data.payerAddress = get(response, "payerAddress");
+  data.payerAddress = nullToNa(get(response, "payerAddress"));
   data.propertyId = get(response, "billDetails[0].consumerCode").split(":")[0];
   data.AssessNo = get(response, "billDetails[0].consumerCode").split(":")[1];
   data.locality = nullToNa(
@@ -82,7 +86,11 @@ const getTaxHeads = taxes => {
   taxes.forEach(i => {
     if (i.amount !== 0) {
       taxHeads.push({
-        taxHeadCode: i.taxHeadCode,
+        taxHeadCode: getLocaleLabels(
+          "",
+          i.taxHeadCode,
+          getTransformedLocalStorgaeLabels()
+        ),
         amount: i.amount
       });
     }

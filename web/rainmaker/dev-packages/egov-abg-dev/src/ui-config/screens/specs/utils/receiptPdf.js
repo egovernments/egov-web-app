@@ -5,7 +5,7 @@ import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import {
   loadPtBillData,
   loadUlbLogo,
@@ -13,10 +13,11 @@ import {
 } from "./receiptTransformer";
 import isEmpty from "lodash/isEmpty";
 import get from "lodash/get";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const billTableWidthForConsumeDetails = ["*", "*", "*", "*"];
-const billTableWidthForBillDetails = ["*", "*", "*", "*", "*", "*"];
+// const billTableWidthForBillDetails = ["*", "*", "*", "*", "*", "*"];
 const stylesForBills = {
   "tl-head": {
     fillColor: "#F2F2F2",
@@ -89,199 +90,7 @@ const stylesForBills = {
 };
 
 // For mutliple bills
-const getMutlipleBillsData = () => {
-  const transformedData = [
-    {
-      billDate: 1558089742296,
-      financialYr: "2017-18",
-      billNumber: null,
-      dueDate: 1558089742296,
-      propertyId: "PT-107-016855",
-      AssessNo: "AS-2019-05-17-044116",
-      payerName: "Tanvir",
-      mobileNumber: "8218189127",
-      payerAddress:
-        "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-      locality: null,
-      businessService: "PT",
-      totalAmount: 82,
-      collectedAmount: null,
-      taxHeads: [
-        {
-          taxHeadCode: "PT_FIRE_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_ROUNDOFF",
-          amount: 0.05
-        },
-        {
-          taxHeadCode: "PT_CANCER_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_TIME_REBATE",
-          amount: -8.2
-        },
-        {
-          taxHeadCode: "PT_TAX",
-          amount: 81.95
-        }
-      ]
-    },
-    {
-      billDate: 1558089742296,
-      financialYr: "2017-18",
-      billNumber: null,
-      dueDate: 1558089742296,
-      propertyId: "PT-107-016856",
-      AssessNo: "AS-2019-05-17-044116",
-      payerName: "Tanvir",
-      mobileNumber: "8218189127",
-      payerAddress:
-        "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-      locality: null,
-      businessService: "PT",
-      totalAmount: 82,
-      collectedAmount: null,
-      taxHeads: [
-        {
-          taxHeadCode: "PT_FIRE_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_ROUNDOFF",
-          amount: 0.05
-        },
-        {
-          taxHeadCode: "PT_CANCER_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_TIME_REBATE",
-          amount: -8.2
-        },
-        {
-          taxHeadCode: "PT_TAX",
-          amount: 81.95
-        }
-      ]
-    },
-    {
-      billDate: 1558089742296,
-      financialYr: "2017-18",
-      billNumber: null,
-      dueDate: 1558089742296,
-      propertyId: "PT-107-016857",
-      AssessNo: "AS-2019-05-17-044116",
-      payerName: "Tanvir",
-      mobileNumber: "8218189127",
-      payerAddress:
-        "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-      locality: null,
-      businessService: "PT",
-      totalAmount: 82,
-      collectedAmount: null,
-      taxHeads: [
-        {
-          taxHeadCode: "PT_FIRE_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_ROUNDOFF",
-          amount: 0.05
-        },
-        {
-          taxHeadCode: "PT_CANCER_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_TIME_REBATE",
-          amount: -8.2
-        },
-        {
-          taxHeadCode: "PT_TAX",
-          amount: 81.95
-        }
-      ]
-    },
-    {
-      billDate: 1558089742296,
-      financialYr: "2017-18",
-      billNumber: null,
-      dueDate: 1558089742296,
-      propertyId: "PT-107-016858",
-      AssessNo: "AS-2019-05-17-044116",
-      payerName: "Tanvir",
-      mobileNumber: "8218189127",
-      payerAddress:
-        "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-      locality: null,
-      businessService: "PT",
-      totalAmount: 82,
-      collectedAmount: null,
-      taxHeads: [
-        {
-          taxHeadCode: "PT_FIRE_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_ROUNDOFF",
-          amount: 0.05
-        },
-        {
-          taxHeadCode: "PT_CANCER_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_TIME_REBATE",
-          amount: -8.2
-        },
-        {
-          taxHeadCode: "PT_TAX",
-          amount: 81.95
-        }
-      ]
-    },
-    {
-      billDate: 1558089742296,
-      financialYr: "2017-18",
-      billNumber: null,
-      dueDate: 1558089742296,
-      propertyId: "PT-107-016859",
-      AssessNo: "AS-2019-05-17-044116",
-      payerName: "Tanvir",
-      mobileNumber: "8218189127",
-      payerAddress:
-        "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-      locality: null,
-      businessService: "PT",
-      totalAmount: 82,
-      collectedAmount: null,
-      taxHeads: [
-        {
-          taxHeadCode: "PT_FIRE_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_ROUNDOFF",
-          amount: 0.05
-        },
-        {
-          taxHeadCode: "PT_CANCER_CESS",
-          amount: 4.1
-        },
-        {
-          taxHeadCode: "PT_TIME_REBATE",
-          amount: -8.2
-        },
-        {
-          taxHeadCode: "PT_TAX",
-          amount: 81.95
-        }
-      ]
-    }
-  ];
+const getMutlipleBillsData = transformedData => {
   let multipleBillData = transformedData.map(item => {
     return [
       {
@@ -449,86 +258,11 @@ const getMutlipleBillsData = () => {
         style: "pt-reciept-citizen-table",
         table: {
           //Give Auto-fit widths
-          widths: billTableWidthForBillDetails,
+          widths: getTaxHeadtable(item.taxHeads).billTableWidthForBillDetails,
           //taxHeads thing
           body: [
-            [
-              {
-                text: "Property Tax",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Interest",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Fire Cess",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Cancer Cess",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Rebate/Penalty",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Total Payable",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              }
-            ],
-            [
-              {
-                text: item.taxHeads[0].taxHeadCode.amount,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 1500,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: "0.00",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-
-              {
-                text: "0.00",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 1500,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 3000,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              }
-            ]
+            [...getTaxHeadtable(item.taxHeads).taxTableTitles],
+            [...getTaxHeadtable(item.taxHeads).taxTableAmounts]
           ]
         },
         layout: {}
@@ -682,7 +416,6 @@ const getMutlipleBillsData = () => {
       }
     ];
   });
-  console.log("All Bills: ", multipleBillData);
   let finalMultipleBillData = {
     content: multipleBillData,
     styles: stylesForBills
@@ -691,13 +424,39 @@ const getMutlipleBillsData = () => {
 };
 
 //generateMutlipleBills PDF
-export const generateBill = async (state, dispatch, type) => {
+export const generateMultipleBill = async (state, dispatch, type) => {
   const allBills = get(
     state.screenConfiguration,
     "preparedFinalObject.searchScreenMdmsData.billSearchResponse",
     []
   );
-  pdfMake.createPdf(getMutlipleBillsData()).open();
+  const tenant = getTenantId();
+  loadUlbLogo(tenant);
+  await loadMdmsData(tenant);
+  // data1 is for ULB logo from loadUlbLogo
+  let data1 = get(
+    state.screenConfiguration.preparedFinalObject,
+    "base64UlbLogo",
+    {}
+  );
+
+  // data2 is for corporation Name from loadMdmsData
+  let data2 = get(
+    state.screenConfiguration.preparedFinalObject,
+    "mdmsDataForReceipt",
+    {}
+  );
+  let transformedData = allBills.map(item => {
+    const billData = loadPtBillData(item);
+    return {
+      ...billData,
+      ulbLogo: data1,
+      ...data2
+    };
+  });
+  const multipleBills = getMutlipleBillsData(transformedData);
+  debugger;
+  pdfMake.createPdf(multipleBills).open();
 };
 
 /************************************************SingleBill***********************************************************************/
@@ -874,86 +633,12 @@ const getSingleBillData = transformedData => {
         style: "pt-reciept-citizen-table",
         table: {
           //Give Auto-fit widths
-          widths: billTableWidthForBillDetails,
+          widths: getTaxHeadtable(transformedData.taxHeads)
+            .billTableWidthForBillDetails,
           //taxHeads thing
           body: [
-            [
-              {
-                text: "Property Tax",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Interest",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Fire Cess",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Cancer Cess",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Rebate/Penalty",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              },
-              {
-                text: "Total Payable",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-key",
-                alignment: "center"
-              }
-            ],
-            [
-              {
-                text: transformedData.taxHeads[0].taxHeadCode.amount,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 1500,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: "0.00",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-
-              {
-                text: "0.00",
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 1500,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              },
-              {
-                text: 3000,
-                border: [true, true, true, true, true, true, true],
-                style: "receipt-table-value",
-                alignment: "center"
-              }
-            ]
+            [...getTaxHeadtable(transformedData.taxHeads).taxTableTitles],
+            [...getTaxHeadtable(transformedData.taxHeads).taxTableAmounts]
           ]
         },
         layout: {}
@@ -1112,47 +797,7 @@ const getSingleBillData = transformedData => {
   return singleBillData;
 };
 
-const transformedData = {
-  billDate: 1558089742296,
-  financialYr: "2017-18",
-  billNumber: null,
-  dueDate: 1558089742296,
-  propertyId: "PT-107-016855",
-  AssessNo: "AS-2019-05-17-044116",
-  payerName: "Tanvir",
-  mobileNumber: "8218189127",
-  payerAddress:
-    "Shimla Khadi bhandar, Allahabad bank ke niche, Dildar Patehpur bazar",
-  locality: null,
-  businessService: "PT",
-  totalAmount: 82,
-  collectedAmount: null,
-  taxheads: [
-    {
-      taxHeadCode: "PT_FIRE_CESS",
-      amount: 4.1
-    },
-    {
-      taxHeadCode: "PT_ROUNDOFF",
-      amount: 0.05
-    },
-    {
-      taxHeadCode: "PT_CANCER_CESS",
-      amount: 4.1
-    },
-    {
-      taxHeadCode: "PT_TIME_REBATE",
-      amount: -8.2
-    },
-    {
-      taxHeadCode: "PT_TAX",
-      amount: 81.95
-    }
-  ]
-};
-
 export const generateSingleBill = async rowData => {
-  console.log(rowData);
   const state = store.getState();
   const allBills = get(
     state.screenConfiguration,
@@ -1185,13 +830,42 @@ export const generateSingleBill = async rowData => {
     "mdmsDataForReceipt",
     {}
   );
+  getTaxHeadtable(transformedData.taxHeads);
   billData = {
     ...transformedData,
     ulbLogo: data1,
     ...data2
   };
   const singleBillData = getSingleBillData(billData);
+  debugger;
   pdfMake.createPdf(singleBillData).open();
 };
 
 //Tranformed data is to be given from the row data bill response and then fed to the billdata and then generate PDF using that bill data
+
+export const getTaxHeadtable = taxHeads => {
+  const taxtableData = taxHeads.reduce(
+    (acc, item) => {
+      acc.taxTableTitles.push({
+        text: item.taxHeadCode,
+        border: [true, true, true, true, true, true, true],
+        style: "receipt-table-key",
+        alignment: "center"
+      });
+      acc.taxTableAmounts.push({
+        text: item.amount,
+        border: [true, true, true, true, true, true, true],
+        style: "receipt-table-value",
+        alignment: "center"
+      });
+      return acc;
+    },
+    {
+      taxTableTitles: [],
+      taxTableAmounts: []
+    }
+  );
+  taxtableData.count = taxHeads.length;
+  taxtableData.billTableWidthForBillDetails = taxHeads.map(item => "*");
+  return taxtableData;
+};

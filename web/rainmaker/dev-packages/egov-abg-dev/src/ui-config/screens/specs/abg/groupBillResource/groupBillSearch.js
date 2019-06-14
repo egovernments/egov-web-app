@@ -9,7 +9,7 @@ import {
 import { getFinancialYearDates } from "../../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
-import { generateBill } from "../../utils/receiptPdf";
+import { generateMultipleBill } from "../../utils/receiptPdf";
 import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
@@ -268,7 +268,7 @@ export const mergeDownloadButton = {
       },
       onClickDefination: {
         action: "condition",
-        callBack: generateBill
+        callBack: generateMultipleBill
       }
     }
   }
