@@ -1,4 +1,5 @@
 import { getSearchResults } from "../../../../../ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
 export const fetchData = async (action, state, dispatch) => {
   const response = await getSearchResults();
@@ -18,9 +19,7 @@ export const fetchData = async (action, state, dispatch) => {
   try {
     if (response && response.Licenses && response.FireNOCs.length > 0) {
       dispatch(prepareFinalObject("searchResults", response.FireNOCs));
-      dispatch(
-        prepareFinalObject("myApplicationsCount", response.FireNOCs.length)
-      );
+      dispatch(prepareFinalObject("myApplicationsCount", response.FireNOCs.length));
     }
   } catch (error) {
     console.log(error);
