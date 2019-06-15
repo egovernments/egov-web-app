@@ -7,6 +7,7 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getSearchResults } from "../../../../../ui-utils/commons";
 // import { getBill } from "../../utils";
 
 // export const callPGService = async (state, dispatch) => {
@@ -66,9 +67,9 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 //   }
 // };
 
-const moveToSuccess = (href, dispatch, receiptNumber) => {
-  const applicationNo = getQueryArg(href, "applicationNumber");
-  const tenantId = getQueryArg(href, "tenantId");
+const moveToSuccess = (dispatch, receiptNumber) => {
+  const applicationNo = getQueryArg(window.location, "applicationNumber");
+  const tenantId = getQueryArg(window.location, "tenantId");
   const purpose = "pay";
   const status = "success";
   const appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
@@ -127,8 +128,29 @@ const allDateToEpoch = (finalObj, jsonPaths) => {
   });
 };
 
+const updatePayAction = async (state, dispatch, applicationNo, tenantId, receiptNumber) => {
+  try {
+    let response = await getSearchResults([
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      { key: "applicationNumber", value: applicationNo }
+    ]);
+    set(response, "FireNOCs[0].fireNOCDetails.action", "PAY");
+    response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], {
+      FireNOCs: get(response, "FireNOCs", [])
+    });
+    if (get(response, "FireNOCs", []).length > 0) {
+      moveToSuccess(dispatch, receiptNumber);
+    }
+  } catch (e) {
+    dispatch(toggleSnackbar(true, e.message, "error"));
+    console.log(e);
+  }
+};
+
 const callBackForPay = async (state, dispatch) => {
-  const { href } = window.location;
   let isFormValid = true;
 
   // --- Validation related -----//
@@ -223,7 +245,11 @@ const callBackForPay = async (state, dispatch) => {
         {}
       );
       let receiptNumber = get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", null);
-      moveToSuccess(href, dispatch, receiptNumber);
+
+      // Search NOC application and update action to PAY
+      const applicationNo = getQueryArg(window.location, "applicationNumber");
+      const tenantId = getQueryArg(window.location, "tenantId");
+      await updatePayAction(state, dispatch, applicationNo, tenantId, receiptNumber);
     } catch (e) {
       dispatch(toggleSnackbar(true, e.message, "error"));
       console.log(e);
