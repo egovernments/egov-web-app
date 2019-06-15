@@ -130,7 +130,7 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_SERVICE_CATEGORY_LABEL"
       },
       placeholder: {
-        labelName: "Select Service Type",
+        labelName: "Select Service Category",
         labelKey: "ABG_SERVICE_CATEGORY_PLACEHOLDER"
       },
       required: true,
@@ -147,7 +147,7 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_CONSUMER_ID_LABEL"
       },
       placeholder: {
-        labelName: "Enter Property ID",
+        labelName: "Enter Consumer ID",
         labelKey: "ABG_CONSUMER_ID_PLACEHOLDER"
       },
       gridDefination: {
