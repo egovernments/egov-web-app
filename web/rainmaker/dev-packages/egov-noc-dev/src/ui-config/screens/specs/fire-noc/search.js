@@ -52,7 +52,7 @@ const NOCSearchAndResult = {
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
     const tenantId = getTenantId();
-    const BSqueryObject = [{ key: "tenantId", value: tenantId }, { key: "businessService", value: "FIRENOC" }];
+    const BSqueryObject = [{ key: "tenantId", value: tenantId }, { key: "businessServices", value: "FIRENOC" }];
     setBusinessServiceDataToLocalStorage(BSqueryObject, dispatch);
     const businessServiceData = JSON.parse(localStorageGet("businessServiceData"));
     const data = find(businessServiceData, { businessService: "FIRENOC" });
