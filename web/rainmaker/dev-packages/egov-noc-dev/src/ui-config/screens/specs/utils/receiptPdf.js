@@ -4,7 +4,19 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const getApplicationData = (transformedData, ulbLogo) => {
+const getApplicationData = (transformedData, ulbLogo, type) => {
+  let headerText = "";
+  switch (type) {
+    case "application":
+      headerText = "Application Confirmation";
+      break;
+    case "receipt":
+      headerText = "Payment Receipt";
+      break;
+    case "certificate":
+      headerText = "Certificate";
+      break;
+  }
   let dd = {
     content: [
       {
@@ -26,7 +38,7 @@ const getApplicationData = (transformedData, ulbLogo) => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: "Fire-NOC Application Confirmation",
+                    text: `Fire-NOC ${headerText}`,
                     style: "receipt-logo-sub-header"
                   }
                 ],
@@ -723,13 +735,13 @@ const getApplicationData = (transformedData, ulbLogo) => {
 };
 
 const generatePdf = async (state, dispatch, type) => {
-  let data1 = get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
-  let data2 = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
+  let applicationData = get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
+  let mdmsData = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
   let ulbLogo = get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
-  if (isEmpty(data1)) {
+  if (isEmpty(applicationData)) {
     console.log("Error in application data");
     return;
-  } else if (isEmpty(data2)) {
+  } else if (isEmpty(mdmsData)) {
     console.log("Error in mdms data");
     return;
   } else if (isEmpty(ulbLogo)) {
@@ -737,18 +749,35 @@ const generatePdf = async (state, dispatch, type) => {
     return;
   }
   let transformedData = {
-    ...data1,
-    ...data2
+    ...applicationData,
+    ...mdmsData
   };
   switch (type) {
     case "application_download":
-      let application_data = getApplicationData(transformedData, ulbLogo);
+      let application_data = getApplicationData(transformedData, ulbLogo, "application");
       application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "application_print":
-      application_data = getApplicationData(transformedData, ulbLogo);
+      application_data = getApplicationData(transformedData, ulbLogo, "application");
       application_data && pdfMake.createPdf(application_data).print();
       break;
+    case "receipt_download":
+      application_data = getApplicationData(transformedData, ulbLogo, "receipt");
+      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
+      break;
+    case "receipt_print":
+      application_data = getApplicationData(transformedData, ulbLogo, "receipt");
+      application_data && pdfMake.createPdf(application_data).print();
+      break;
+    case "certificate_download":
+      application_data = getApplicationData(transformedData, ulbLogo, "certificate");
+      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
+      break;
+    case "certificate_print":
+      application_data = getApplicationData(transformedData, ulbLogo, "certificate");
+      application_data && pdfMake.createPdf(application_data).print();
+      break;
+
     default:
       break;
   }

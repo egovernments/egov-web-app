@@ -11,7 +11,7 @@ import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 // import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
-import { loadReceiptGenerationData } from "../utils/receiptTransformer";
+import { loadPdfGenerationData } from "../utils/receiptTransformer";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -31,7 +31,7 @@ export const header = getCommonContainer({
 
 const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNumber, secondNumber, tenant) => {
   if (purpose === "apply" && status === "success") {
-    loadReceiptGenerationData(applicationNumber, tenant);
+    loadPdfGenerationData(applicationNumber, tenant, "application");
     return {
       header,
       applicationSuccessCard: {
@@ -65,7 +65,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
       applicationSuccessFooter: applicationSuccessFooter(state, dispatch, applicationNumber, tenant)
     };
   } else if (purpose === "pay" && status === "success") {
-    // loadReceiptGenerationData(applicationNumber, tenant);
+    loadPdfGenerationData(applicationNumber, tenant, "receipt");
     return {
       header,
       applicationSuccessCard: {
@@ -95,7 +95,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
       paymentSuccessFooter: paymentSuccessFooter()
     };
   } else if (purpose === "approve" && status === "success") {
-    // loadReceiptGenerationData(applicationNumber, tenant);
+    loadPdfGenerationData(applicationNumber, tenant, "certificate");
     return {
       header,
       applicationSuccessCard: {

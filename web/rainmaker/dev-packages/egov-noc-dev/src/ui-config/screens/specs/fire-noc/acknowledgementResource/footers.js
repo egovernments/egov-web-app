@@ -314,54 +314,54 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
 export const paymentSuccessFooter = () => {
   return getCommonApplyFooter({
     //call gotoHome
-    // downloadReceiptButton: {
-    //   componentPath: "Button",
-    //   props: {
-    //     variant: "outlined",
-    //     color: "primary",
-    //     style: {
-    //       minWidth: "200px",
-    //       height: "48px",
-    //       marginRight: "16px"
-    //     }
-    //   },
-    //   children: {
-    //     downloadReceiptButtonLabel: getLabel({
-    //       labelName: "DOWNLOAD RECEIPT",
-    //       labelKey: "NOC_CONFIRMATION_BUTTON_DOWNLOAD_RECEIPT"
-    //     })
-    //   },
-    //   onClickDefination: {
-    //     action: "condition",
-    //     callBack: (state, dispatch) => {
-    //       generateReceipt(state, dispatch, "receipt_download");
-    //     }
-    //   }
-    // },
-    // printReceiptButton: {
-    //   componentPath: "Button",
-    //   props: {
-    //     variant: "contained",
-    //     color: "primary",
-    //     style: {
-    //       minWidth: "200px",
-    //       height: "48px",
-    //       marginRight: "40px"
-    //     }
-    //   },
-    //   children: {
-    //     printReceiptButtonLabel: getLabel({
-    //       labelName: "PRINT RECEIPT",
-    //       labelKey: "NOC_CONFIRMATION_BUTTON_PRINT_RECEIPT"
-    //     })
-    //   },
-    //   onClickDefination: {
-    //     action: "condition",
-    //     callBack: (state, dispatch) => {
-    //       generateReceipt(state, dispatch, "receipt_print");
-    //     }
-    //   }
-    // },
+    downloadReceiptButton: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        downloadReceiptButtonLabel: getLabel({
+          labelName: "DOWNLOAD RECEIPT",
+          labelKey: "NOC_CONFIRMATION_BUTTON_DOWNLOAD_RECEIPT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          generatePdf(state, dispatch, "receipt_download");
+        }
+      }
+    },
+    printReceiptButton: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "40px"
+        }
+      },
+      children: {
+        printReceiptButtonLabel: getLabel({
+          labelName: "PRINT RECEIPT",
+          labelKey: "NOC_CONFIRMATION_BUTTON_PRINT_RECEIPT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: (state, dispatch) => {
+          generatePdf(state, dispatch, "receipt_print");
+        }
+      }
+    },
     gotoHome: {
       componentPath: "Button",
       props: {
