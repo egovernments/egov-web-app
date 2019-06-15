@@ -105,6 +105,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.mohalla = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code", "NA"));
     data.pincode = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode", "NA"));
     data.gis = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude", "NA"));
+    data.address = nullToNa(createAddress(data.door, data.buildingName, data.street, data.mohalla, data.city));
 
     // Applicant Details
     let owners = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.owners", []);

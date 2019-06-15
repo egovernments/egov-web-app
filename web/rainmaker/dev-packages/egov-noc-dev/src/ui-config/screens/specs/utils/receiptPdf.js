@@ -2,9 +2,10 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import QRCode from "qrcode";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const getApplicationData = (transformedData, ulbLogo, type) => {
+const getApplicationData = async (transformedData, ulbLogo, type) => {
   let borderLayout = {
     hLineWidth: function(i, node) {
       return i === 0 || i === node.table.body.length ? 0.1 : 0.1;
@@ -472,7 +473,6 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
     }
   ];
   let documents = [];
-
   let owners = transformedData.owners.map(owner => [
     {
       text: "Applicant Name",
@@ -498,7 +498,6 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       layout: borderLayout
     }
   ];
-
   let amountPaid = [
     { text: "AMOUNT PAID", style: "noc-title" },
     {
@@ -595,7 +594,6 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       layout: borderLayout
     }
   ];
-
   let generatedApprovedBy = [
     {
       style: "receipt-approver",
@@ -625,6 +623,11 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       ]
     }
   ];
+  let qrText = `Application: ${transformedData.applicationNumber}, Date: ${
+    transformedData.applicationDate
+  }, Buildings: ${transformedData.propertyType}, Applicant: ${transformedData.owners[0].name}, Address: ${
+    transformedData.address
+  }`;
 
   switch (type) {
     case "application":
@@ -683,24 +686,125 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       propertyLocationDetails = [];
       applicantDetails = [];
       documents = [];
+      qrText = `Application: ${transformedData.applicationNumber}, Receipt: ${transformedData.receiptNumber}, Date: ${
+        transformedData.paymentDate
+      }, Fees Paid: ${transformedData.amountPaid}, Payment mode: ${transformedData.paymentMode}, Transaction ID: ${
+        transformedData.transactionNumber
+      }`;
       break;
     case "certificate":
       headerText = "Certificate";
+      nocSubheadOne = [
+        {
+          text: [
+            {
+              text: "Fire NOC No. ",
+              bold: true
+            },
+            {
+              text: transformedData.fireNOCNumber,
+              bold: false
+            }
+          ],
+          alignment: "left"
+        },
+        {
+          text: [
+            {
+              text: "Application No. ",
+              bold: true
+            },
+            {
+              text: transformedData.applicationNumber,
+              bold: false
+            }
+          ],
+          alignment: "right"
+        }
+      ];
+      nocSubheadTwo = [
+        {
+          text: [
+            {
+              text: "Date of Issue ",
+              bold: true
+            },
+            {
+              text: transformedData.issuedDate,
+              bold: false
+            }
+          ],
+          alignment: "left"
+        },
+        {
+          text: [
+            {
+              text: "Valid Till ",
+              bold: true
+            },
+            {
+              text: transformedData.validTo,
+              bold: false
+            }
+          ],
+          alignment: "right"
+        }
+      ];
+      applicantDetails = [];
+      documents = [];
+      generatedApprovedBy = [
+        {
+          style: "receipt-approver",
+          columns: [
+            {
+              text: [
+                {
+                  text: "Approved by: ",
+                  bold: true
+                },
+                {
+                  text: transformedData.auditorName,
+                  bold: false
+                }
+              ],
+              alignment: "left"
+            },
+            {
+              text: [
+                {
+                  text: "Commissioner/EO",
+                  bold: true
+                }
+              ],
+              alignment: "right"
+            }
+          ]
+        }
+      ];
+      qrText = `Application: ${transformedData.applicationNumber}, NOC Number: ${
+        transformedData.fireNOCNumber
+      }, Date of Issue: ${transformedData.issuedDate}, Valid Till: ${transformedData.validTo}, Buildings: ${
+        transformedData.propertyType
+      }, Applicant: ${transformedData.owners[0].name}`;
       break;
   }
+
+  // Generate QR code base64 image
+  let qrcode = await QRCode.toDataURL(qrText);
+
   let dd = {
     content: [
       {
         style: "noc-head",
         table: {
-          widths: [100, "*", 18],
+          widths: [120, "*", 120],
           body: [
             [
               {
                 image: ulbLogo,
                 width: 60,
                 height: 61.25,
-                margin: [41, 12, 10, 10]
+                margin: [51, 12, 10, 10]
               },
               {
                 stack: [
@@ -715,6 +819,13 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
                 ],
                 alignment: "left",
                 margin: [10, 23, 0, 0]
+              },
+              {
+                image: qrcode,
+                width: 70,
+                height: 70,
+                margin: [50, 8, 8, 8],
+                alignment: "right"
               }
             ]
           ]
@@ -750,7 +861,8 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         fontFamily: "Roboto",
         fontSize: 16,
         bold: true,
-        letterSpacing: 0.74
+        letterSpacing: 0.74,
+        margin: [0, 0, 0, 5]
       },
       "receipt-logo-sub-header": {
         color: "#484848",
@@ -841,27 +953,27 @@ const generatePdf = async (state, dispatch, type) => {
   };
   switch (type) {
     case "application_download":
-      let application_data = getApplicationData(transformedData, ulbLogo, "application");
+      let application_data = await getApplicationData(transformedData, ulbLogo, "application");
       application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "application_print":
-      application_data = getApplicationData(transformedData, ulbLogo, "application");
+      application_data = await getApplicationData(transformedData, ulbLogo, "application");
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "receipt_download":
-      application_data = getApplicationData(transformedData, ulbLogo, "receipt");
+      application_data = await getApplicationData(transformedData, ulbLogo, "receipt");
       application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "receipt_print":
-      application_data = getApplicationData(transformedData, ulbLogo, "receipt");
+      application_data = await getApplicationData(transformedData, ulbLogo, "receipt");
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "certificate_download":
-      application_data = getApplicationData(transformedData, ulbLogo, "certificate");
+      application_data = await getApplicationData(transformedData, ulbLogo, "certificate");
       application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "certificate_print":
-      application_data = getApplicationData(transformedData, ulbLogo, "certificate");
+      application_data = await getApplicationData(transformedData, ulbLogo, "certificate");
       application_data && pdfMake.createPdf(application_data).print();
       break;
 
