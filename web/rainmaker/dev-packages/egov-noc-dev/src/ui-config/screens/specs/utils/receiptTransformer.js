@@ -123,6 +123,9 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
 
     // Documents
 
+    // User Data
+    loadUserNameData(get(response, "FireNOCs[0].auditDetails.lastModifiedBy"));
+
     console.log("+++++++++", data);
   }
   store.dispatch(prepareFinalObject("applicationDataForPdf", data));

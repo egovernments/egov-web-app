@@ -816,6 +816,7 @@ const generatePdf = async (state, dispatch, type) => {
   let paymentData = get(state.screenConfiguration.preparedFinalObject, "receiptDataForPdf", {});
   let mdmsData = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
   let ulbLogo = get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
+  let auditorData = get(state.screenConfiguration.preparedFinalObject, "userDataForPdf", {});
   if (isEmpty(applicationData)) {
     console.log("Error in application data");
     return;
@@ -825,6 +826,9 @@ const generatePdf = async (state, dispatch, type) => {
   } else if (isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
+  } else if (isEmpty(auditorData)) {
+    console.log("Error in auditor user data");
+    return;
   } else if (type.startsWith("receipt") && isEmpty(paymentData)) {
     console.log("Error in payment data");
     return;
@@ -832,7 +836,8 @@ const generatePdf = async (state, dispatch, type) => {
   let transformedData = {
     ...applicationData,
     ...paymentData,
-    ...mdmsData
+    ...mdmsData,
+    ...auditorData
   };
   switch (type) {
     case "application_download":
