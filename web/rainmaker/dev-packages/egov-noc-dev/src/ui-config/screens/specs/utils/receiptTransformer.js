@@ -3,7 +3,12 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import store from "../../../../ui-redux/store";
 import { getMdmsData, getReceiptData, getUserDataFromUuid, getFinancialYearDates } from "../utils";
 import { getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
-import { getUlbGradeLabel, getTranslatedLabel, transformById } from "egov-ui-framework/ui-utils/commons";
+import {
+  getUlbGradeLabel,
+  getTranslatedLabel,
+  transformById,
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
 import { getSearchResults } from "../../../../ui-utils/commons";
 
 const ifNotNull = value => {
@@ -33,7 +38,7 @@ const epochToDate = et => {
 
 const getMessageFromLocalization = code => {
   let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(item => {
-    return item.code == "TL_" + code;
+    return item.code == code;
   });
   return messageObject ? messageObject.message : code;
 };
@@ -79,8 +84,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       });
       return {
         name: get(building, "name", "NA"),
-        usageType: get(building, "usageType", "NA").split(".")[0],
-        usageSubType: get(building, "usageType", "NA"),
+        usageType: getMessageFromLocalization(
+          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(get(building, "usageType", "NA").split(".")[0])}`
+        ),
+        usageSubType: getMessageFromLocalization(
+          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(get(building, "usageType", "NA"))}`
+        ),
         ...uomsObject
       };
     });

@@ -5,6 +5,33 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getApplicationData = (transformedData, ulbLogo, type) => {
+  let borderLayout = {
+    hLineWidth: function(i, node) {
+      return i === 0 || i === node.table.body.length ? 0.1 : 0.1;
+    },
+    vLineWidth: function(i, node) {
+      return i === 0 || i === node.table.widths.length ? 0.1 : 0.1;
+    },
+    hLineColor: function(i, node) {
+      return i === 0 || i === node.table.body.length ? "#979797" : "#979797";
+    },
+    vLineColor: function(i, node) {
+      return i === 0 || i === node.table.widths.length ? "#979797" : "#979797";
+    }
+    // paddingLeft: function(i, node) {
+    //   return 5;
+    // },
+    // paddingRight: function(i, node) {
+    //   return 5;
+    // },
+    // paddingTop: function(i, node) {
+    //   return 5;
+    // },
+    // paddingBottom: function(i, node) {
+    //   return 5;
+    // }
+  };
+
   let headerText = "Application Confirmation";
   let nocSubheadOne = [
     {
@@ -49,7 +76,554 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       alignment: "left"
     }
   ];
+  let nocDetails = [
+    {
+      text: "NOC DETAILS",
+      style: "noc-title"
+    },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*"],
+        body: [
+          [
+            {
+              text: "NOC Type",
+              border: [true, true, false, false],
+              style: "noc-table-key"
+            },
+            {
+              text: "Provisional NOC No.",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Applicable Fire station",
+              border: [false, true, true, false]
+            }
+          ],
+          [
+            {
+              text: transformedData.nocType,
+              border: [true, false, false, true],
+              style: "receipt-table-value"
+            },
+            {
+              text: transformedData.provisionalNocNumber,
+              border: [false, false, false, true],
+              style: "receipt-table-value"
+            },
+            {
+              text: transformedData.fireStationId,
+              border: [false, false, true, true],
+              style: "receipt-table-value"
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+  let propertyDetails = [
+    {
+      text: "PROPERTY DETAILS",
+      style: "noc-title"
+    },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: [
+          [
+            {
+              text: "Property Type",
+              border: [true, true, false, false]
+            },
+            {
+              text: " Name of Building",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Building Usage Type",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Building Usage Subtype",
+              border: [false, true, true, false]
+            }
+          ],
+          [
+            {
+              text: transformedData.propertyType,
+              style: "receipt-table-value",
+              border: [true, false, false, false]
+            },
+            {
+              text: get(transformedData, "buildings[0].name", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "buildings[0].usageType", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "buildings[0].usageSubType", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "No. of Floors",
+              border: [true, false, false, false]
+            },
+            {
+              text: " No. of Basements",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Plot Size (Sq mtrs)",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Builtup Area (sq mtrs)",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: get(transformedData, "NO_OF_FLOORS", "NA"),
+              style: "receipt-table-value",
+              border: [true, false, false, false]
+            },
+            {
+              text: get(transformedData, "NO_OF_BASEMENTS", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "PLOT_SIZE", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "BUILTUP_AREA", "NA"),
+              style: "receipt-table-value",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "Height of Building (in mtrs)",
+              border: [true, false, false, false]
+            },
+            {
+              text: "",
+              border: [false, false, false, false]
+            },
+            {
+              text: "",
+              border: [false, false, false, false]
+            },
+
+            {
+              text: "",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: get(transformedData, "HEIGHT_OF_BUILDING", "NA"),
+              style: "receipt-table-value",
+              border: [true, false, false, true]
+            },
+            {
+              text: "",
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: "",
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+
+            {
+              text: "",
+              style: "receipt-table-value",
+              border: [false, false, true, true]
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+  let propertyLocationDetails = [
+    {
+      text: "PROPERTY LOCATION DETAILS",
+      style: "noc-title"
+    },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: [
+          [
+            {
+              text: "Property Id",
+              border: [true, true, false, false]
+            },
+            {
+              text: "City",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Door/House No.",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Building/Company Name",
+              border: [false, true, true, false]
+            }
+          ],
+          [
+            {
+              text: transformedData.propertyId,
+              style: "receipt-table-value",
+              border: [true, false, false, false]
+            },
+            {
+              text: transformedData.city,
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: transformedData.door,
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: transformedData.buildingName,
+              style: "receipt-table-value",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "Street Name",
+              border: [true, false, false, false]
+            },
+
+            {
+              text: " Mohalla",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Pincode",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Location on Map",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: transformedData.street,
+              style: "receipt-table-value",
+              border: [true, false, false, true]
+            },
+            {
+              text: transformedData.mohalla,
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: transformedData.pincode,
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: transformedData.gis,
+              style: "receipt-table-value",
+              border: [false, false, true, true]
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+  let applicantDetails = [
+    {
+      text: "APPLICANT DETAILS",
+      style: "noc-title"
+    },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: [
+          [
+            {
+              text: "Mobile No.",
+              border: [true, true, false, false]
+            },
+            {
+              text: "Name",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Gender",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Father/Husband's Name",
+              border: [false, true, true, false]
+            }
+          ],
+          [
+            {
+              text: get(transformedData, "owners[0].mobileNumber"),
+              style: "receipt-table-value",
+              border: [true, false, false, false]
+            },
+            {
+              text: get(transformedData, "owners[0].name"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "owners[0].gender"),
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: get(transformedData, "owners[0].fatherHusbandName"),
+              style: "receipt-table-value",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "",
+              border: [true, false, false, false]
+            },
+            {
+              text: "",
+              border: [false, false, false, false]
+            },
+            {
+              text: "",
+              border: [false, false, false, false]
+            },
+
+            {
+              text: "",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "Date of Birth",
+              border: [true, false, false, false]
+            },
+            {
+              text: "Email",
+              border: [false, false, false, false]
+            },
+            {
+              text: "PAN No.",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Correspondence Address",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: get(transformedData, "owners[0].dob"),
+              style: "receipt-table-value",
+              border: [true, false, false, true]
+            },
+            {
+              text: get(transformedData, "owners[0].email"),
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: get(transformedData, "owners[0].pan"),
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+
+            {
+              text: get(transformedData, "owners[0].address"),
+              style: "receipt-table-value",
+              border: [false, false, true, true]
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+  let documents = [];
+
+  let owners = transformedData.owners.map(owner => [
+    {
+      text: "Applicant Name",
+      border: [true, true, false, true],
+      style: "receipt-table-value"
+    },
+    { text: owner.name, border: [false, true, true, true] },
+    {
+      text: "Mobile No.",
+      border: [true, true, false, true],
+      style: "receipt-table-value"
+    },
+    { text: owner.mobile, border: [false, true, true, true] }
+  ]);
+  let applicantInformation = [
+    { text: "APPLICANT INFORMATION", style: "noc-title" },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: owners
+      },
+      layout: borderLayout
+    }
+  ];
+
+  let amountPaid = [
+    { text: "AMOUNT PAID", style: "noc-title" },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: [
+          [
+            {
+              text: "NOC Fee",
+              border: [true, true, true, true],
+              style: "receipt-table-value"
+            },
+            {
+              text: "Rebate/Penalty",
+              border: [true, true, true, true],
+              style: "receipt-table-value"
+            },
+            { text: "Adhoc Penalty/Rebate", border: [true, true, true, true], style: "receipt-table-value" },
+            { text: "TOTAL", border: [true, true, true, true], style: "receipt-table-value" }
+          ],
+          [
+            {
+              text: transformedData.totalAmount,
+              border: [true, true, true, true]
+            },
+            { text: transformedData.totalAmount, border: [true, true, true, true] },
+            {
+              text: transformedData.totalAmount,
+              border: [true, true, true, true]
+            },
+            { text: transformedData.totalAmount, border: [true, true, true, true] }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+  let paymentInformation = [
+    { text: "PAYMENT INFORMATION", style: "noc-title" },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*"],
+        body: [
+          [
+            {
+              text: "Payment Mode",
+              border: [true, true, true, true],
+              style: "receipt-table-value",
+              alignment: "center"
+            },
+            {
+              text: "Transaction ID/ Cheque/ DD No.",
+              border: [true, true, true, true],
+              style: "receipt-table-value",
+              alignment: "center"
+            },
+            {
+              text: "Bank Name & Branch",
+              border: [true, true, true, true],
+              style: "receipt-table-value",
+              alignment: "center"
+            }
+          ],
+          [
+            {
+              text: transformedData.paymentMode,
+              border: [true, true, true, true],
+              alignment: "center"
+            },
+            {
+              text: transformedData.transactionNumber,
+              border: [true, true, true, true],
+              alignment: "center"
+            },
+            {
+              text: transformedData.bankAndBranch,
+              border: [true, true, true, true],
+              alignment: "center"
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
+
+  let generatedApprovedBy = [
+    {
+      style: "receipt-approver",
+      columns: [
+        {
+          text: [
+            {
+              text: "Generated by: ",
+              bold: true
+            },
+            {
+              text: transformedData.auditorName,
+              bold: false
+            }
+          ],
+          alignment: "left"
+        },
+        {
+          text: [
+            {
+              text: "Commissioner/EO",
+              bold: true
+            }
+          ],
+          alignment: "right"
+        }
+      ]
+    }
+  ];
+
   switch (type) {
+    case "application":
+      applicantInformation = [];
+      amountPaid = [];
+      paymentInformation = [];
+      generatedApprovedBy = [];
+      break;
     case "receipt":
       headerText = "Payment Receipt";
       nocSubheadOne = [
@@ -84,17 +658,22 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         {
           text: [
             {
-              text: "Application Mode ",
+              text: "Payment Receipt No. ",
               bold: true
             },
             {
-              text: transformedData.applicationMode,
+              text: transformedData.receiptNumber,
               bold: false
             }
           ],
           alignment: "left"
         }
       ];
+      nocDetails = [];
+      propertyDetails = [];
+      propertyLocationDetails = [];
+      applicantDetails = [];
+      documents = [];
       break;
     case "certificate":
       headerText = "Certificate";
@@ -141,540 +720,15 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         style: "noc-subhead",
         columns: nocSubheadTwo
       },
-      {
-        text: "NOC DETAILS",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: ["*", "*", "*"],
-          body: [
-            [
-              {
-                text: "NOC Type",
-                border: [true, true, false, false],
-                style: "receipt-table-key",
-                " alignment": "left"
-              },
-
-              {
-                text: "Provisional NOC No.",
-                border: [false, true, false, false]
-              },
-              {
-                text: "Applicable Fire station",
-                border: [
-                  false, //left
-                  true, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: transformedData.nocType,
-                border: [true, false, false, true],
-                style: "receipt-table-value",
-                " alignment": "center"
-              },
-              {
-                text: transformedData.provisionalNocNumber,
-                style: "receipt-table-value",
-                border: [false, false, false, true],
-                style: "receipt-table-value"
-              },
-              {
-                text: transformedData.fireStationId,
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, true, true],
-
-                style: "receipt-table-value",
-                " alignment": "center"
-              }
-            ]
-          ]
-        }
-      },
-      {
-        text: "PROPERTY DETAILS",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: ["*", "*", "*", "*"],
-          body: [
-            [
-              {
-                text: "Property Type",
-                border: [true, true, false, false]
-              },
-
-              {
-                text: " Name of Building",
-                border: [false, true, false, false]
-              },
-              {
-                text: "Building Usage Type",
-                border: [
-                  false, //left
-                  true, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Building Usage Subtype",
-                border: [
-                  false, //left
-                  true, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: transformedData.propertyType,
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: get(transformedData, "buildings[0].name", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: get(transformedData, "buildings[0].usageType", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: get(transformedData, "buildings[0].usageSubType", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "",
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: "",
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: "",
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: "",
-                style: "receipt-table-value",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "No. of Floors",
-                border: [true, false, false, false]
-              },
-              {
-                text: " No. of Basements",
-                border: [false, false, false, false]
-              },
-              {
-                text: "Plot Size (Sq mtrs)",
-                border: [
-                  false, //left
-                  false, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Builtup Area (sq mtrs)",
-                border: [
-                  false, //left
-                  false, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: get(transformedData, "NO_OF_FLOORS", "NA"),
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: get(transformedData, "NO_OF_BASEMENTS", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: get(transformedData, "PLOT_SIZE", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: get(transformedData, "BUILTUP_AREA", "NA"),
-                style: "receipt-table-value",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [true, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "Height of Building (in mtrs)",
-                style: "pt-reciept-citizen-table-row",
-                border: [true, false, false, false]
-              },
-              {
-                text: "",
-                border: [false, false, false, false]
-              },
-              {
-                text: "",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: "",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: get(transformedData, "HEIGHT_OF_BUILDING", "NA"),
-                style: "receipt-table-value",
-                border: [true, false, false, true]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, true]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, true]
-              },
-
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, true, true]
-              }
-            ]
-          ]
-        }
-      },
-      {
-        text: "PROPERTY LOCATION DETAILS",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: ["*", "*", "*", "*"],
-          body: [
-            [
-              {
-                text: "Property Id",
-                border: [true, true, false, false]
-              },
-              {
-                text: "City",
-                border: [false, true, false, false]
-              },
-              {
-                text: "Door/House No.",
-                border: [
-                  false, //left
-                  true, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Building/Company Name",
-                border: [
-                  false, //left
-                  true, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: transformedData.propertyId,
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: transformedData.city,
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: transformedData.door,
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: transformedData.buildingName,
-                style: "receipt-table-value",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [true, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "Street Name",
-                border: [true, false, false, false]
-              },
-
-              {
-                text: " Mohalla",
-                border: [false, false, false, false]
-              },
-              {
-                text: "Pincode",
-                border: [
-                  false, //left
-                  false, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Location on Map",
-                border: [
-                  false, //left
-                  false, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: transformedData.street,
-                style: "receipt-table-value",
-                border: [true, false, false, true]
-              },
-              {
-                text: transformedData.mohalla,
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-              {
-                text: transformedData.pincode,
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-              {
-                text: transformedData.gis,
-                style: "receipt-table-value",
-                border: [false, false, true, true]
-              }
-            ]
-          ]
-        }
-      },
-      {
-        text: "APPLICANT DETAILS",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        style: "pt-reciept-citizen-table",
-        table: {
-          widths: ["*", "*", "*", "*"],
-          body: [
-            [
-              {
-                text: "Mobile No.",
-                border: [true, true, false, false]
-              },
-
-              {
-                text: "Name",
-                border: [false, true, false, false]
-              },
-              {
-                text: "Gender",
-                border: [
-                  false, //left
-                  true, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Father/Husband's Name",
-                border: [
-                  false, //left
-                  true, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-
-            [
-              {
-                text: get(transformedData, "owners[0].mobileNumber"),
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: get(transformedData, "owners[0].name"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-              {
-                text: get(transformedData, "owners[0].gender"),
-                style: "receipt-table-value",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: get(transformedData, "owners[0].fatherHusbandName"),
-                style: "receipt-table-value",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "",
-                style: "receipt-table-value",
-                border: [true, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, false, false]
-              },
-
-              {
-                text: "",
-                style: "pt-reciept-citizen-table-row",
-                border: [false, false, true, false]
-              }
-            ],
-            [
-              {
-                text: "Date of Birth",
-                border: [true, false, false, false]
-              },
-
-              {
-                text: "Email",
-                border: [false, false, false, false]
-              },
-              {
-                text: "PAN No.",
-                border: [
-                  false, //left
-                  false, //top
-                  false, //right
-                  false //bottom
-                ]
-              },
-              {
-                text: "Correspondence Address",
-                border: [
-                  false, //left
-                  false, //top
-                  true, //right
-                  false //bottom
-                ]
-              }
-            ],
-            [
-              {
-                text: get(transformedData, "owners[0].dob"),
-                style: "receipt-table-value",
-                border: [true, false, false, true]
-              },
-              {
-                text: get(transformedData, "owners[0].email"),
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-              {
-                text: get(transformedData, "owners[0].pan"),
-                style: "receipt-table-value",
-                border: [false, false, false, true]
-              },
-
-              {
-                text: get(transformedData, "owners[0].address"),
-                style: "receipt-table-value",
-                border: [false, false, true, true]
-              }
-            ]
-          ]
-        }
-      }
+      ...nocDetails,
+      ...propertyDetails,
+      ...propertyLocationDetails,
+      ...applicantDetails,
+      ...documents,
+      ...applicantInformation,
+      ...amountPaid,
+      ...paymentInformation,
+      ...generatedApprovedBy
     ],
     footer: [],
     styles: {
@@ -701,13 +755,14 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         margin: [-18, 8, 10, 0],
         color: "#484848"
       },
-      "pt-reciept-citizen-subheader": {
-        fontSize: 12,
+      "noc-title": {
+        fontSize: 10,
         bold: true,
         margin: [-18, 16, 8, 8],
-        color: "#484848"
+        color: "#484848",
+        fontWeight: 500
       },
-      "pt-reciept-citizen-table": {
+      "noc-table": {
         fontSize: 10,
         color: "#484848",
         margin: [-20, -2, -8, -8]
@@ -717,7 +772,7 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         margin: [0, 0, 0, 8],
         color: "#484848"
       },
-      "receipt-table-key": {
+      "noc-table-key": {
         color: "#484848",
         bold: false,
         fontSize: 10
@@ -726,11 +781,6 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         color: "#484848",
         bold: true,
         fontSize: 12
-      },
-      "pt-reciept-citizen-footer": {
-        color: "#484848",
-        fontSize: 12,
-        margin: [15, -5, 10, 5]
       },
       "receipt-footer": {
         color: "#484848",
@@ -744,7 +794,7 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       "receipt-approver": {
         fontSize: 12,
         bold: true,
-        margin: [-10, -60, 10, -8],
+        margin: [-20, 30, -10, 0],
         color: "#484848"
       }
     }
