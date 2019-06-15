@@ -1,5 +1,13 @@
-import { getCommonCard, getCommonContainer, getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  getCommonCard,
+  getCommonContainer,
+  getCommonHeader,
+  getLabelWithValue
+} from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  prepareFinalObject,
+  handleScreenConfigurationFieldChange as handleField
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getFileUrlFromAPI, getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import jp from "jsonpath";
 import get from "lodash/get";
@@ -46,7 +54,7 @@ const prepareDocumentsView = async (state, dispatch) => {
     });
   });
   let fileStoreIds = jp.query(documentsPreview, "$.*.fileStoreId");
-  let fileUrls = fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : [];
+  let fileUrls = fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : {};
   documentsPreview = documentsPreview.map((doc, index) => {
     doc["link"] = fileUrls[doc.fileStoreId];
     doc["name"] =
@@ -65,6 +73,18 @@ const prepareDocumentsView = async (state, dispatch) => {
   dispatch(prepareFinalObject("documentsPreview", documentsPreview));
 };
 
+const prepareUoms = (state, dispatch) => {
+  let buildings = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings", []);
+  buildings.forEach((building, index) => {
+    let uoms = get(building, "uoms", []);
+    let uomsMap = {};
+    uoms.forEach(uom => {
+      uomsMap[uom.code] = uom.value;
+    });
+    dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomsMap));
+  });
+};
+
 // const prepareDocumentsUploadRedux = (state, dispatch) => {
 //   dispatch(prepareFinalObject("documentsUploadRedux", documentsUploadRedux));
 // };
@@ -80,6 +100,7 @@ const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) =
   // const response = sampleSingleSearch();
   dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
   prepareDocumentsView(state, dispatch);
+  prepareUoms(state, dispatch);
 };
 
 const screenConfig = {
