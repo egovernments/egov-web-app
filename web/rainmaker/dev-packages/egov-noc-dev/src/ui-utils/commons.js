@@ -43,7 +43,12 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
   let method = nocId ? "UPDATE" : "CREATE";
   try {
     let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
-    set(payload[0], "tenantId", getTenantId());
+    let tenantId = get(
+      state.screenConfiguration.preparedFinalObject,
+      "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+      getTenantId()
+    );
+    set(payload[0], "tenantId", tenantId);
     set(payload[0], "fireNOCDetails.action", status);
 
     // Get uploaded documents from redux
@@ -89,7 +94,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
               uploadedDocs = [
                 ...uploadedDocs,
                 {
-                  tenantId: getTenantId(),
+                  tenantId: tenantId,
                   documentType: doc.documentSubCode,
                   fileStoreId: doc.documents[0].fileStoreId
                 }
@@ -109,13 +114,13 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
         if (doc.documentType === "OWNER") {
           ownerDocuments = [
             ...ownerDocuments,
-            { tenantId: getTenantId(), documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
+            { tenantId: tenantId, documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
           ];
         } else if (!doc.documentSubCode) {
           // SKIP BUILDING PLAN DOCS
           otherDocuments = [
             ...otherDocuments,
-            { tenantId: getTenantId(), documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
+            { tenantId: tenantId, documentType: doc.documentCode, fileStoreId: doc.documents[0].fileStoreId }
           ];
         }
       }
