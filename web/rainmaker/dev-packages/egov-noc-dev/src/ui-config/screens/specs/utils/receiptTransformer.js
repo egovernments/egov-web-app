@@ -157,23 +157,21 @@ export const loadReceiptData = async (consumerCode, tenant) => {
     data.paymentDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)));
     data.g8ReceiptNo = nullToNa(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber", "NA"));
     data.g8ReceiptDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)));
-    /** START TL Fee, Adhoc Penalty/Rebate Calculation */
-    var tlAdhocPenalty = 0,
-      tlAdhocRebate = 0;
+    /** START NOC Fee, Adhoc Penalty/Rebate Calculation */
+    let nocAdhocPenalty = 0,
+      nocAdhocRebate = 0;
     response.Receipt[0].Bill[0].billDetails[0].billAccountDetails.map(item => {
       let desc = item.taxHeadCode ? item.taxHeadCode : "";
-      if (desc === "TL_TAX") {
-        data.tlFee = item.amount;
-      } else if (desc === "TL_ADHOC_PENALTY") {
-        tlAdhocPenalty = item.amount;
-      } else if (desc === "TL_ADHOC_REBATE") {
-        tlAdhocRebate = item.amount;
+      if (desc === "FIRENOC_FEES") {
+        data.nocFee = item.amount;
+      } else if (desc === "NOC_ADHOC_PENALTY") {
+        nocAdhocPenalty = item.amount;
+      } else if (desc === "NOC_ADHOC_REBATE") {
+        nocAdhocRebate = item.amount;
       }
     });
-    data.tlPenalty = "NA";
-    data.tlRebate = "NA";
-    data.tlAdhocPenalty = tlAdhocPenalty;
-    data.tlAdhocRebate = tlAdhocRebate;
+    data.nocPenaltyRebate = "NA";
+    data.nocAdhocPenaltyRebate = nocAdhocPenalty - nocAdhocRebate;
     /** END */
   }
   store.dispatch(prepareFinalObject("receiptDataForPdf", data));

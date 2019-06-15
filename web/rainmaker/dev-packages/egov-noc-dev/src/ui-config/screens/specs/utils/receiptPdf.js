@@ -510,27 +510,36 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
             {
               text: "NOC Fee",
               border: [true, true, true, true],
-              style: "receipt-table-value"
+              style: "receipt-table-value",
+              alignment: "center"
             },
             {
               text: "Rebate/Penalty",
               border: [true, true, true, true],
-              style: "receipt-table-value"
+              style: "receipt-table-value",
+              alignment: "center"
             },
-            { text: "Adhoc Penalty/Rebate", border: [true, true, true, true], style: "receipt-table-value" },
-            { text: "TOTAL", border: [true, true, true, true], style: "receipt-table-value" }
+            {
+              text: "Adhoc Penalty/Rebate",
+              border: [true, true, true, true],
+              style: "receipt-table-value",
+              alignment: "center"
+            },
+            { text: "TOTAL", border: [true, true, true, true], style: "receipt-table-value", alignment: "center" }
           ],
           [
             {
-              text: transformedData.totalAmount,
-              border: [true, true, true, true]
+              text: transformedData.nocFee,
+              border: [true, true, true, true],
+              alignment: "center"
             },
-            { text: transformedData.totalAmount, border: [true, true, true, true] },
+            { text: transformedData.nocPenaltyRebate, border: [true, true, true, true], alignment: "center" },
             {
-              text: transformedData.totalAmount,
-              border: [true, true, true, true]
+              text: transformedData.nocAdhocPenaltyRebate,
+              border: [true, true, true, true],
+              alignment: "center"
             },
-            { text: transformedData.totalAmount, border: [true, true, true, true] }
+            { text: transformedData.totalAmount, border: [true, true, true, true], alignment: "center" }
           ]
         ]
       },
@@ -780,7 +789,7 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
       "receipt-table-value": {
         color: "#484848",
         bold: true,
-        fontSize: 12
+        fontSize: 10
       },
       "receipt-footer": {
         color: "#484848",
