@@ -60,7 +60,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
 
   if (response && response.FireNOCs && response.FireNOCs.length > 0) {
     data.applicationNumber = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.applicationNumber", "NA"));
-    data.applicationDate = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.applicationDate", "NA"));
+    data.applicationDate = nullToNa(epochToDate(get(response, "FireNOCs[0].fireNOCDetails.applicationDate", "NA")));
     data.applicationMode = getMessageFromLocalization(
       nullToNa(get(response, "FireNOCs[0].fireNOCDetails.channel", "NA"))
     );
@@ -105,7 +105,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         name: get(owner, "name", "NA"),
         gender: get(owner, "gender", "NA"),
         fatherHusbandName: get(owner, "fatherOrHusbandName", "NA"),
-        dob: get(owner, "dob", "NA"),
+        dob: epochToDate(get(owner, "dob", "NA")),
         email: get(owner, "emailId", "NA"),
         pan: get(owner, "pan", "NA"),
         address: get(owner, "correspondenceAddress", "NA")

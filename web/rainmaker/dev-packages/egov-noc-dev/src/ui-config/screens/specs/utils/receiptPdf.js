@@ -5,13 +5,96 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getApplicationData = (transformedData, ulbLogo, type) => {
-  let headerText = "";
+  let headerText = "Application Confirmation";
+  let nocSubheadOne = [
+    {
+      text: [
+        {
+          text: "Application No. ",
+          bold: true
+        },
+        {
+          text: transformedData.applicationNumber,
+          bold: false
+        }
+      ],
+      alignment: "left"
+    },
+    {
+      text: [
+        {
+          text: "Date of Application ",
+          bold: true
+        },
+        {
+          text: transformedData.applicationDate,
+          bold: false
+        }
+      ],
+      alignment: "right"
+    }
+  ];
+  let nocSubheadTwo = [
+    {
+      text: [
+        {
+          text: "Application Mode ",
+          bold: true
+        },
+        {
+          text: transformedData.applicationMode,
+          bold: false
+        }
+      ],
+      alignment: "left"
+    }
+  ];
   switch (type) {
-    case "application":
-      headerText = "Application Confirmation";
-      break;
     case "receipt":
       headerText = "Payment Receipt";
+      nocSubheadOne = [
+        {
+          text: [
+            {
+              text: "Application No. ",
+              bold: true
+            },
+            {
+              text: transformedData.applicationNumber,
+              bold: false
+            }
+          ],
+          alignment: "left"
+        },
+        {
+          text: [
+            {
+              text: "Date of Payment ",
+              bold: true
+            },
+            {
+              text: transformedData.paymentDate,
+              bold: false
+            }
+          ],
+          alignment: "right"
+        }
+      ];
+      nocSubheadTwo = [
+        {
+          text: [
+            {
+              text: "Application Mode ",
+              bold: true
+            },
+            {
+              text: transformedData.applicationMode,
+              bold: false
+            }
+          ],
+          alignment: "left"
+        }
+      ];
       break;
     case "certificate":
       headerText = "Certificate";
@@ -20,7 +103,7 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
   let dd = {
     content: [
       {
-        style: "tl-head",
+        style: "noc-head",
         table: {
           widths: [100, "*", 18],
           body: [
@@ -38,67 +121,25 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
                     style: "receipt-logo-header"
                   },
                   {
-                    text: `Fire-NOC ${headerText}`,
+                    text: `Fire NOC ${headerText}`,
                     style: "receipt-logo-sub-header"
                   }
                 ],
                 alignment: "left",
-
                 margin: [10, 23, 0, 0]
               }
             ]
           ]
         },
-        layout: {}
+        layout: "noBorders"
       },
       {
-        style: "pt-reciept-citizen-header",
-        columns: [
-          {
-            text: [
-              {
-                text: "Application No.  ",
-                bold: true
-              },
-              {
-                text: transformedData.applicationNumber,
-                bold: false
-              }
-            ],
-            alignment: "left"
-          },
-          {
-            text: [
-              {
-                text: "Date of Application ",
-                bold: true
-              },
-              {
-                text: transformedData.applicationDate,
-                bold: false
-              }
-            ],
-            alignment: "right"
-          }
-        ]
+        style: "noc-subhead",
+        columns: nocSubheadOne
       },
       {
-        style: "pt-reciept-citizen-header",
-        columns: [
-          {
-            text: [
-              {
-                text: "Application Mode ",
-                bold: true
-              },
-              {
-                text: transformedData.applicationMode,
-                bold: false
-              }
-            ],
-            alignment: "left"
-          }
-        ]
+        style: "noc-subhead",
+        columns: nocSubheadTwo
       },
       {
         text: "NOC DETAILS",
@@ -633,37 +674,28 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
             ]
           ]
         }
-      },
-      {
-        text: "",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        text: "",
-        style: "pt-reciept-citizen-subheader"
-      },
-      {
-        style: "pt-reciept-citizen-header",
-        columns: [
-          {
-            text: [
-              {
-                text: "",
-                bold: true
-              }
-            ]
-          }
-        ]
       }
     ],
     footer: [],
-
     styles: {
-      "tl-head": {
+      "noc-head": {
         fillColor: "#F2F2F2",
         margin: [-70, -41, -81, 0]
       },
-      "pt-reciept-citizen-header": {
+      "receipt-logo-header": {
+        color: "#484848",
+        fontFamily: "Roboto",
+        fontSize: 16,
+        bold: true,
+        letterSpacing: 0.74
+      },
+      "receipt-logo-sub-header": {
+        color: "#484848",
+        fontFamily: "Roboto",
+        fontSize: 13,
+        letterSpacing: 0.6
+      },
+      "noc-subhead": {
         fontSize: 12,
         bold: true,
         margin: [-18, 8, 10, 0],
@@ -695,20 +727,6 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
         bold: true,
         fontSize: 12
       },
-      "receipt-logo-header": {
-        color: "#484848",
-        fontFamily: "Roboto",
-        fontSize: 16,
-        bold: true,
-
-        letterSpacing: 0.74
-      },
-      "receipt-logo-sub-header": {
-        color: "#484848",
-        fontFamily: "Roboto",
-        fontSize: 13,
-        letterSpacing: 0.6
-      },
       "pt-reciept-citizen-footer": {
         color: "#484848",
         fontSize: 12,
@@ -736,6 +754,7 @@ const getApplicationData = (transformedData, ulbLogo, type) => {
 
 const generatePdf = async (state, dispatch, type) => {
   let applicationData = get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
+  let paymentData = get(state.screenConfiguration.preparedFinalObject, "receiptDataForPdf", {});
   let mdmsData = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
   let ulbLogo = get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
   if (isEmpty(applicationData)) {
@@ -747,9 +766,13 @@ const generatePdf = async (state, dispatch, type) => {
   } else if (isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
+  } else if (type.startsWith("receipt") && isEmpty(paymentData)) {
+    console.log("Error in payment data");
+    return;
   }
   let transformedData = {
     ...applicationData,
+    ...paymentData,
     ...mdmsData
   };
   switch (type) {
