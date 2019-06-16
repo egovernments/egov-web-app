@@ -31,7 +31,9 @@ const getMDMSData = async (action, state, dispatch) => {
       moduleDetails: [
         {
           moduleName: "egf-master",
-          masterDetails: [{ name: "FinancialYear" }]
+          masterDetails: [
+            { name: "FinancialYear", filter: "[?(@.module=='PT')]" } //FY Filter hardcoded for PT
+          ]
         },
         {
           moduleName: "BillingService",
@@ -85,6 +87,8 @@ const abgSearchAndResult = {
       const queryObj = [{ key: "tenantId", value: tenantId }];
       getBoundaryData(action, state, dispatch, queryObj);
     });
+    //setting service category to PT for now. -- Hardcoding alert!!
+    dispatch(prepareFinalObject("searchCriteria.serviceCategory", "PT"));
     return action;
   },
   components: {

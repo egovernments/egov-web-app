@@ -55,8 +55,7 @@ export const searchApiCall = async (state, dispatch) => {
         "warning"
       )
     );
-  }
-  if (
+  } else if (
     Object.keys(searchScreenObject).length == 0 ||
     Object.values(searchScreenObject).every(x => x === "")
   ) {

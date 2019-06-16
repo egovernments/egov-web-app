@@ -41,14 +41,14 @@ const resetFields = (state, dispatch) => {
       ""
     )
   );
-  dispatch(
-    handleField(
-      "groupBills",
-      "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.serviceCategory",
-      "props.value",
-      ""
-    )
-  );
+  // dispatch(
+  //   handleField(
+  //     "groupBills",
+  //     "components.div.children.abgSearchCard.children.cardContent.children.searchContainer.children.serviceCategory",
+  //     "props.value",
+  //     ""
+  //   )
+  // );
   dispatch(
     handleField(
       "groupBills",
@@ -135,6 +135,10 @@ export const abgSearchCard = getCommonCard({
       },
       required: true,
       jsonPath: "searchCriteria.serviceCategory",
+      props: {
+        disabled: true,
+        value: "PT" //Hardcoded!!
+      },
       gridDefination: {
         xs: 12,
         sm: 4

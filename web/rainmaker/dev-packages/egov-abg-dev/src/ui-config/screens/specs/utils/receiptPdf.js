@@ -391,7 +391,7 @@ const getMutlipleBillsData = transformedData => {
                 bold: true
               },
               {
-                text: item.collectedAmount,
+                text: item.totalAmount,
                 bold: false
               }
             ],
@@ -765,7 +765,7 @@ const getSingleBillData = transformedData => {
                 bold: true
               },
               {
-                text: transformedData.collectedAmount,
+                text: transformedData.totalAmount,
                 bold: false
               }
             ],
