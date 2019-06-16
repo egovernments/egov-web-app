@@ -20,6 +20,8 @@ import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
 import { sampleSingleSearch } from "../../../../ui-utils/sampleResponses";
 import { searchBill } from "../utils/index";
+import { loadPdfGenerationData } from "../utils/receiptTransformer";
+import generatePdf from "../utils/receiptPdf";
 
 const titlebar = getCommonContainer({
   header: getCommonHeader({
@@ -32,6 +34,32 @@ const titlebar = getCommonContainer({
     componentPath: "ApplicationNoContainer",
     props: {
       number: getQueryArg(window.location.href, "applicationNumber")
+    }
+  },
+  downloadMenu: {
+    uiFramework: "custom-atoms",
+    componentPath: "MenuButton",
+    props: {
+      data: {
+        label: "Download",
+        leftIcon: "cloud_download",
+        rightIcon: "arrow_drop_down",
+        props: { variant: "outlined", style: { marginLeft: 10 } },
+        menu: []
+      }
+    }
+  },
+  printMenu: {
+    uiFramework: "custom-atoms",
+    componentPath: "MenuButton",
+    props: {
+      data: {
+        label: "Print",
+        leftIcon: "print",
+        rightIcon: "arrow_drop_down",
+        props: { variant: "outlined", style: { marginLeft: 10 } },
+        menu: []
+      }
     }
   }
 });
@@ -89,6 +117,91 @@ const prepareUoms = (state, dispatch) => {
 //   dispatch(prepareFinalObject("documentsUploadRedux", documentsUploadRedux));
 // };
 
+const setDownloadMenu = (state, dispatch) => {
+  /** MenuButton data based on status */
+  let status = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.status");
+  let downloadMenu = [];
+  let printMenu = [];
+  let certificateDownloadObject = {
+    label: { labelName: "NOC Certificate", labelKey: "NOC_CERTIFICATE" },
+    link: () => {
+      generatePdf(state, dispatch, "certificate_download");
+    },
+    leftIcon: "book"
+  };
+  let certificatePrintObject = {
+    label: { labelName: "NOC Certificate", labelKey: "NOC_CERTIFICATE" },
+    link: () => {
+      generatePdf(state, dispatch, "certificate_print");
+    },
+    leftIcon: "book"
+  };
+  let receiptDownloadObject = {
+    label: { labelName: "Receipt", labelKey: "NOC_RECEIPT" },
+    link: () => {
+      generatePdf(state, dispatch, "receipt_download");
+    },
+    leftIcon: "receipt"
+  };
+  let receiptPrintObject = {
+    label: { labelName: "Receipt", labelKey: "NOC_RECEIPT" },
+    link: () => {
+      generatePdf(state, dispatch, "receipt_print");
+    },
+    leftIcon: "receipt"
+  };
+  let applicationDownloadObject = {
+    label: { labelName: "Application", labelKey: "NOC_APPLICATION" },
+    link: () => {
+      generatePdf(state, dispatch, "application_download");
+    },
+    leftIcon: "assignment"
+  };
+  let applicationPrintObject = {
+    label: { labelName: "Application", labelKey: "NOC_APPLICATION" },
+    link: () => {
+      generatePdf(state, dispatch, "application_print");
+    },
+    leftIcon: "assignment"
+  };
+  switch (status) {
+    case "APPROVED":
+      downloadMenu = [certificateDownloadObject, receiptDownloadObject, applicationDownloadObject];
+      printMenu = [certificatePrintObject, receiptPrintObject, applicationPrintObject];
+      break;
+    case "DOCUMENTVERIFY":
+    case "FIELDINSPECTION":
+      downloadMenu = [receiptDownloadObject, applicationDownloadObject];
+      printMenu = [receiptPrintObject, applicationPrintObject];
+      break;
+    case "CANCELLED":
+    case "REJECTED":
+    case "PENDINGPAYMENT":
+      downloadMenu = [applicationDownloadObject];
+      printMenu = [applicationPrintObject];
+      break;
+    default:
+      break;
+  }
+  dispatch(
+    handleField(
+      "search-preview",
+      "components.div.children.headerDiv.children.header.children.downloadMenu",
+      "props.data.menu",
+      downloadMenu
+    )
+  );
+  dispatch(
+    handleField(
+      "search-preview",
+      "components.div.children.headerDiv.children.header.children.printMenu",
+      "props.data.menu",
+      printMenu
+    )
+  );
+  /** END */
+};
+
 const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) => {
   const response = await getSearchResults([
     {
@@ -101,6 +214,8 @@ const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) =
   dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
   prepareDocumentsView(state, dispatch);
   prepareUoms(state, dispatch);
+  await loadPdfGenerationData(applicationNumber, tenantId);
+  setDownloadMenu(state, dispatch);
 };
 
 const screenConfig = {
