@@ -139,7 +139,7 @@ class TableData extends Component {
     }
     prepareFinalObject("InboxData", inboxData);
 
-    this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: getTenantId() }, { key: "businessService", value: "newTL" }]);
+    this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: getTenantId() }]);
   };
 
   onModuleFilter = (event) => {

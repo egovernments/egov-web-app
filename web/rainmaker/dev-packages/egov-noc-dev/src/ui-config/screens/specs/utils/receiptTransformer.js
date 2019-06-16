@@ -1,8 +1,16 @@
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "../../../../ui-redux/store";
-import { getMdmsData, getReceiptData, getUserDataFromUuid, getFinancialYearDates } from "../utils";
-import { getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getMdmsData,
+  getReceiptData,
+  getUserDataFromUuid,
+  getFinancialYearDates
+} from "../utils";
+import {
+  getLocalization,
+  getLocale
+} from "egov-ui-kit/utils/localStorageUtils";
 import {
   getUlbGradeLabel,
   getTranslatedLabel,
@@ -32,14 +40,17 @@ const createAddress = (doorNo, buildingName, street, locality, city) => {
 const epochToDate = et => {
   if (!et) return null;
   var date = new Date(Math.round(Number(et)));
-  var formattedDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+  var formattedDate =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   return formattedDate;
 };
 
 const getMessageFromLocalization = code => {
-  let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(item => {
-    return item.code == code;
-  });
+  let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
+    item => {
+      return item.code == code;
+    }
+  );
   return messageObject ? messageObject.message : code;
 };
 
@@ -52,7 +63,9 @@ export const loadUlbLogo = tenantid => {
     canvas.height = this.height;
     canvas.width = this.width;
     ctx.drawImage(this, 0, 0);
-    store.dispatch(prepareFinalObject("base64UlbLogoForPdf", canvas.toDataURL()));
+    store.dispatch(
+      prepareFinalObject("base64UlbLogoForPdf", canvas.toDataURL())
+    );
     canvas = null;
   };
   img.src = `/pb-egov-assets/${tenantid}/logo.png`;
@@ -60,21 +73,39 @@ export const loadUlbLogo = tenantid => {
 
 export const loadApplicationData = async (applicationNumber, tenant) => {
   let data = {};
-  let queryObject = [{ key: "tenantId", value: tenant }, { key: "applicationNumber", value: applicationNumber }];
+  let queryObject = [
+    { key: "tenantId", value: tenant },
+    { key: "applicationNumber", value: applicationNumber }
+  ];
   let response = await getSearchResults(queryObject);
 
   if (response && response.FireNOCs && response.FireNOCs.length > 0) {
-    data.applicationNumber = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.applicationNumber", "NA"));
-    data.applicationDate = nullToNa(epochToDate(get(response, "FireNOCs[0].fireNOCDetails.applicationDate", "NA")));
+    data.applicationNumber = nullToNa(
+      get(response, "FireNOCs[0].fireNOCDetails.applicationNumber", "NA")
+    );
+    data.applicationStatus = get(response, "FireNOCs[0].fireNOCDetails.status");
+    data.applicationDate = nullToNa(
+      epochToDate(
+        get(response, "FireNOCs[0].fireNOCDetails.applicationDate", "NA")
+      )
+    );
     data.applicationMode = getMessageFromLocalization(
       nullToNa(get(response, "FireNOCs[0].fireNOCDetails.channel", "NA"))
     );
-    data.nocType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NA"));
-    data.provisionalNocNumber = nullToNa(get(response, "FireNOCs[0].provisionFireNOCNumber", "NA"));
-    data.fireStationId = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA"));
+    data.nocType = nullToNa(
+      get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NA")
+    );
+    data.provisionalNocNumber = nullToNa(
+      get(response, "FireNOCs[0].provisionFireNOCNumber", "NA")
+    );
+    data.fireStationId = nullToNa(
+      get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA")
+    );
 
     // Buildings Data
-    data.propertyType = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "NA"));
+    data.propertyType = nullToNa(
+      get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "NA")
+    );
     let buildings = get(response, "FireNOCs[0].fireNOCDetails.buildings", []);
     data.buildings = buildings.map(building => {
       let uoms = get(building, "uoms", []);
@@ -85,30 +116,83 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       return {
         name: get(building, "name", "NA"),
         usageType: getMessageFromLocalization(
-          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(get(building, "usageType", "NA").split(".")[0])}`
+          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(
+            get(building, "usageType", "NA").split(".")[0]
+          )}`
         ),
         usageSubType: getMessageFromLocalization(
-          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(get(building, "usageType", "NA"))}`
+          `FIRENOC_BUILDINGTYPE_${getTransformedLocale(
+            get(building, "usageType", "NA")
+          )}`
         ),
         ...uomsObject
       };
     });
 
     // Property Location
-    data.propertyId = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.propertyId", "NA"));
-    data.city = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.city", "NA"));
-    data.door = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo", "NA"));
-    data.buildingName = nullToNa(
-      get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName", "NA")
+    data.propertyId = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.propertyId",
+        "NA"
+      )
     );
-    data.street = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.street", "NA"));
-    data.mohalla = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code", "NA"));
-    data.pincode = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode", "NA"));
-    data.gis = nullToNa(get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude", "NA"));
-    data.address = nullToNa(createAddress(data.door, data.buildingName, data.street, data.mohalla, data.city));
+    data.city = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+        "NA"
+      )
+    );
+    data.door = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo",
+        "NA"
+      )
+    );
+    data.buildingName = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName",
+        "NA"
+      )
+    );
+    data.street = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.street",
+        "NA"
+      )
+    );
+    data.mohalla = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+        "NA"
+      )
+    );
+    data.pincode = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode",
+        "NA"
+      )
+    );
+    data.gis = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude",
+        "NA"
+      )
+    );
 
     // Applicant Details
-    let owners = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.owners", []);
+    let owners = get(
+      response,
+      "FireNOCs[0].fireNOCDetails.applicantDetails.owners",
+      []
+    );
     data.owners = owners.map(owner => {
       return {
         mobile: get(owner, "mobileNumber", "NA"),
@@ -147,20 +231,50 @@ export const loadReceiptData = async (consumerCode, tenant) => {
   let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt && response.Receipt.length > 0) {
-    data.receiptNumber = nullToNa(get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", "NA"));
-    data.amountPaid = get(response, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
-    data.totalAmount = get(response, "Receipt[0].Bill[0].billDetails[0].totalAmount", 0);
+    data.receiptNumber = nullToNa(
+      get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", "NA")
+    );
+    data.amountPaid = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].amountPaid",
+      0
+    );
+    data.totalAmount = get(
+      response,
+      "Receipt[0].Bill[0].billDetails[0].totalAmount",
+      0
+    );
     data.amountDue = data.totalAmount - data.amountPaid;
-    data.paymentMode = nullToNa(get(response, "Receipt[0].instrument.instrumentType.name", "NA"));
-    data.transactionNumber = nullToNa(get(response, "Receipt[0].instrument.transactionNumber", "NA"));
+    data.paymentMode = nullToNa(
+      get(response, "Receipt[0].instrument.instrumentType.name", "NA")
+    );
+    data.transactionNumber = nullToNa(
+      get(response, "Receipt[0].instrument.transactionNumber", "NA")
+    );
     data.bankName = get(response, "Receipt[0].instrument.bank.name", "NA");
     data.branchName = get(response, "Receipt[0].instrument.branchName", null);
     data.bankAndBranch = nullToNa(
-      data.bankName && data.branchName ? data.bankName + ", " + data.branchName : get(data, "bankName", "NA")
+      data.bankName && data.branchName
+        ? data.bankName + ", " + data.branchName
+        : get(data, "bankName", "NA")
     );
-    data.paymentDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)));
-    data.g8ReceiptNo = nullToNa(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber", "NA"));
-    data.g8ReceiptDate = nullToNa(epochToDate(get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)));
+    data.paymentDate = nullToNa(
+      epochToDate(
+        get(response, "Receipt[0].Bill[0].billDetails[0].receiptDate", 0)
+      )
+    );
+    data.g8ReceiptNo = nullToNa(
+      get(
+        response,
+        "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber",
+        "NA"
+      )
+    );
+    data.g8ReceiptDate = nullToNa(
+      epochToDate(
+        get(response, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate", 0)
+      )
+    );
     /** START NOC Fee, Adhoc Penalty/Rebate Calculation */
     let nocAdhocPenalty = 0,
       nocAdhocRebate = 0;
@@ -182,7 +296,9 @@ export const loadReceiptData = async (consumerCode, tenant) => {
 };
 
 export const loadMdmsData = async tenantid => {
-  let localStorageLabels = JSON.parse(window.localStorage.getItem(`localization_${getLocale()}`));
+  let localStorageLabels = JSON.parse(
+    window.localStorage.getItem(`localization_${getLocale()}`)
+  );
   let localizationLabels = transformById(localStorageLabels, "code");
   let data = {};
   let queryObject = [
@@ -201,7 +317,11 @@ export const loadMdmsData = async tenantid => {
   ];
   let response = await getMdmsData(queryObject);
 
-  if (response && response.MdmsRes && response.MdmsRes.tenant.tenants.length > 0) {
+  if (
+    response &&
+    response.MdmsRes &&
+    response.MdmsRes.tenant.tenants.length > 0
+  ) {
     let ulbData = response.MdmsRes.tenant.tenants.find(item => {
       return item.code == tenantid;
     });
@@ -214,10 +334,10 @@ export const loadMdmsData = async tenantid => {
       .toUpperCase()
       .replace(/[.]/g, "_")}`;
 
-    data.corporationName = `${getTranslatedLabel(cityKey, localizationLabels).toUpperCase()} ${getTranslatedLabel(
-      ulbGrade,
+    data.corporationName = `${getTranslatedLabel(
+      cityKey,
       localizationLabels
-    )}`;
+    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
 
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");

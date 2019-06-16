@@ -3,7 +3,9 @@ import { ifUserRoleExists } from "../../utils";
 import generatePdf from "../../utils/receiptPdf";
 
 export const getRedirectionURL = () => {
-  const redirectionURL = ifUserRoleExists("CITIZEN") ? "/fire-noc-citizen/home" : "/inbox";
+  const redirectionURL = ifUserRoleExists("CITIZEN")
+    ? "/fire-noc-citizen/home"
+    : "/inbox";
   return redirectionURL;
 };
 
@@ -143,7 +145,12 @@ export const gotoHomeFooter = getCommonApplyFooter({
 });
 
 //Function for application success(show those 3 buttons )
-export const applicationSuccessFooter = (state, dispatch, applicationNumber, tenant) => {
+export const applicationSuccessFooter = (
+  state,
+  dispatch,
+  applicationNumber,
+  tenant
+) => {
   return getCommonApplyFooter({
     downloadFormButton: {
       componentPath: "Button",
@@ -220,8 +227,8 @@ export const applicationSuccessFooter = (state, dispatch, applicationNumber, ten
       },
       roleDefination: {
         rolePath: "user-info.roles",
-        action: "PAY",
-        roles: ["NOC_CEMP", "SUPERUSER"]
+        action: "PAY"
+        // roles: ["NOC_CEMP", "SUPERUSER"]
       }
     }
   });
@@ -381,7 +388,10 @@ export const paymentSuccessFooter = () => {
       },
       onClickDefination: {
         action: "page_change",
-        path: process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework/fire-noc/search` : `/fire-noc/search`
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/search`
+            : `/fire-noc/search`
       }
       // visible: false
     }
