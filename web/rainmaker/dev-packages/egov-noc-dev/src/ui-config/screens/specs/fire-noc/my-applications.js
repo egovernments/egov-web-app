@@ -29,7 +29,30 @@ const screenConfig = {
         applicationsCard: {
           uiFramework: "custom-molecules",
           componentPath: "SingleApplication",
-          visible: true
+          visible: true,
+          props: {
+            applicationName: {
+              label: "NOC_COMMON_TABLE_COL_BUILDING_NAME_LABEL",
+              jsonPath: "fireNOCDetails.buildings[0].name"
+            },
+            applicationNumber: {
+              label: "NOC_COMMON_TABLE_COL_APP_NO_LABEL",
+              jsonPath: "fireNOCDetails.applicationNumber"
+            },
+            ownerName: {
+              label: "NOC_COMMON_TABLE_COL_OWN_NAME_LABEL",
+              jsonPath: "applicantDetails.owners.name"
+            },
+            moduleNumber: {
+              label: "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
+              jsonPath: "fireNOCNumber"
+            },
+            status: {
+              label: "NOC_COMMON_TABLE_COL_STATUS_LABEL",
+              jsonPath: "fireNOCDetails.status"
+            },
+            moduleName: "FIRENOC"
+          }
         }
       }
     }

@@ -98,6 +98,10 @@ span[class^="MuiFormLabel-asterisk"] {
   display: none;
 }
 
+.common-header-cont {
+  display: none;
+}
+
 /* div[class^="MuiGrid-item"]   {
     padding-right: 80px
 } */
@@ -113,5 +117,10 @@ span[class^="MuiFormLabel-asterisk"] {
 @media only screen and (min-width: 768px) {
   .common-div-css {
     margin: 30px 16px 88px 16px;
+  }
+
+  .common-header-cont {
+    display: inherit;
+    padding: 44px 0px 0px 8px;
   }
 }

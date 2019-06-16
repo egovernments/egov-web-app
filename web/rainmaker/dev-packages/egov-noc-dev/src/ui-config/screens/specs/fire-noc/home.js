@@ -3,10 +3,17 @@ import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils
 import FireNocIcon from "../../../../ui-atoms-local/Icons/FireNocIcon";
 import MyApplicationIcon from "../../../../ui-atoms-local/Icons/MyApplicationIcon";
 
-const header = getCommonHeader({
-  labelName: "Fire Noc",
-  labelKey: "Fire Noc"
-});
+const header = getCommonHeader(
+  {
+    labelName: "Fire Noc",
+    labelKey: "ACTION_TEST_FIRE_NOC"
+  },
+  {
+    classes: {
+      root: "common-header-cont"
+    }
+  }
+);
 
 const cardItems = [
   {
