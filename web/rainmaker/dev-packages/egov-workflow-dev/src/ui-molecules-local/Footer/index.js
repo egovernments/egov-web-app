@@ -91,13 +91,14 @@ class Footer extends React.Component {
   };
 
   render() {
-    const { color, variant, contractData, handleFieldChange, onDialogButtonClick, dataPath } = this.props;
+    const { color, variant, contractData, handleFieldChange, onDialogButtonClick, dataPath, moduleName } = this.props;
     const { open, data, employeeList } = this.state;
     const { getPrintData, getDownloadData } = this;
+    let displayValue = moduleName === "FIRENOC" ? "none" : "block";
     return (
       <div className="apply-wizard-footer" id="custom-atoms-footer" style={{ textAlign: "right" }}>
         <Container>
-          <Item xs={12} sm={4} style={{ paddingLeft: "20px" }}>
+          <Item xs={12} sm={4} style={{ paddingLeft: "20px", display: displayValue }}>
             <Container>
               <Item xs={12} sm={6}>
                 <MenuButton data={getDownloadData()} />
