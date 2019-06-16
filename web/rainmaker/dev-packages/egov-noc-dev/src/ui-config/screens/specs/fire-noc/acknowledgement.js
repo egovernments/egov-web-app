@@ -31,7 +31,7 @@ export const header = getCommonContainer({
 
 const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNumber, secondNumber, tenant) => {
   if (purpose === "apply" && status === "success") {
-    loadPdfGenerationData(applicationNumber, tenant, "application");
+    loadPdfGenerationData(applicationNumber, tenant);
     return {
       header,
       applicationSuccessCard: {
@@ -65,7 +65,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
       applicationSuccessFooter: applicationSuccessFooter(state, dispatch, applicationNumber, tenant)
     };
   } else if (purpose === "pay" && status === "success") {
-    loadPdfGenerationData(applicationNumber, tenant, "receipt");
+    loadPdfGenerationData(applicationNumber, tenant);
     return {
       header,
       applicationSuccessCard: {
@@ -95,7 +95,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
       paymentSuccessFooter: paymentSuccessFooter()
     };
   } else if (purpose === "approve" && status === "success") {
-    loadPdfGenerationData(applicationNumber, tenant, "certificate");
+    loadPdfGenerationData(applicationNumber, tenant);
     return {
       header,
       applicationSuccessCard: {
