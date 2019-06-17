@@ -84,10 +84,10 @@ export const searchApiCall = async (state, dispatch) => {
         response &&
         get(response, "FireNOCs", []).map(item => ({
           [get(textToLocalMapping, "Application No")]: item.fireNOCDetails.applicationNumber || "-",
-          [get(textToLocalMapping, "NOC No")]: "" || "-",
+          [get(textToLocalMapping, "NOC No")]: item.fireNOCNumber || "-",
           [get(textToLocalMapping, "NOC Type")]: item.fireNOCDetails.fireNOCType || "-",
           [get(textToLocalMapping, "Owner Name")]: get(item, "fireNOCDetails.applicantDetails.owners[0].name") || "-",
-          [get(textToLocalMapping, "Application Date")]: convertEpochToDate(item.applicationdate) || "-",
+          [get(textToLocalMapping, "Application Date")]: convertEpochToDate(parseInt(item.dateOfApplied)) || "-",
           tenantId: item.tenantId,
           [get(textToLocalMapping, "Status")]: get(textToLocalMapping, item.fireNOCDetails.status) || "-"
         }));

@@ -18,7 +18,7 @@ export const textToLocalMapping = {
   "NOC No": getLocaleLabels("NOC No", "NOC_COMMON_TABLE_COL_NOC_NO_LABEL", getTransformedLocalStorgaeLabels()),
   "NOC Type": getLocaleLabels(
     "NOC Type",
-    "NOC_COMMON_TABLE_COL_BUILDING_NAME_LABEL",
+    "NOC_TYPE_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
   "Owner Name": getLocaleLabels(
