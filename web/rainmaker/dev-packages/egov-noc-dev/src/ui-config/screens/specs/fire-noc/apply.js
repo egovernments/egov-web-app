@@ -174,9 +174,9 @@ const setCardsIfMultipleBuildings = (state, dispatch) => {
   }
 };
 
-const prepareEditFlow = async (state, dispatch, applicationNumber, tenantId) => {
-  const nocs = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
-  if (applicationNumber && nocs.length == 0) {
+export const prepareEditFlow = async (state, dispatch, applicationNumber, tenantId) => {
+  const buildings = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings", []);
+  if (applicationNumber && buildings.length == 0) {
     let response = await getSearchResults([
       {
         key: "tenantId",

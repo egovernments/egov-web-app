@@ -7,6 +7,8 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { prepareEditFlow } from "../apply";
+import get from "lodash/get";
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
@@ -94,7 +96,12 @@ export const nocDetails = getCommonCard({
           onClickDefination: {
             action: "condition",
             callBack: (state, dispatch, fieldInfo) => {
-              console.log("ASDASDSAD");
+              let applicationNumber = get(
+                state,
+                "screenConfiguration.preparedFinalObject.FireNOCs[0].provisionFireNOCNumber",
+                ""
+              );
+              prepareEditFlow(state, dispatch, applicationNumber, "pb");
             }
           }
         }
