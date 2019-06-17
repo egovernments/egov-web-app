@@ -66,8 +66,16 @@ class MyProperties extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, fetchProperties, userInfo } = this.props;
+    const {
+      addBreadCrumbs,
+      title,
+      fetchProperties,
+      userInfo,
+      renderCustomTitle,
+      numProperties
+    } = this.props;
     fetchProperties([{ key: "accountId", value: userInfo.uuid }]); //Unnecessary API call to prevent page break on reload
+    renderCustomTitle(numProperties);
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 

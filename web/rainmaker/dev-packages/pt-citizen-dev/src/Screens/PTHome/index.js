@@ -62,7 +62,7 @@ class PTHome extends Component {
     const { numProperties, numDrafts } = this.props;
     return [
       {
-        label: "PT_PAYMENT_ASSESS_AND_PAY",
+        label: "PT_PAYMENT_PAY_PROPERTY_TAX",
         icon: (
           <Icon style={iconStyle} action="custom" name="home-city-outline" />
         ),
@@ -78,68 +78,61 @@ class PTHome extends Component {
     ];
   };
 
-  listItems = [
-    {
-      primaryText: (
-        <Label label="PT_COMPLETED_ASSESSMENTS" labelStyle={labelStyle} />
-      ),
-      route: "/property-tax/completed-assessments",
-      // leftIcon: (
-      //   <div style={listIconStyle}>
-      //     <Icon action="action" name="done" />
-      //   </div>
-      // ),
-      rightIcon: (
-        <div style={listIconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" />
-        </div>
-      )
-    },
-    {
-      primaryText: (
-        <Label label="PT_INCOMPLETE_ASSESSMENT" labelStyle={labelStyle} />
-      ),
-      route: "/property-tax/incomplete-assessments",
-      // leftIcon: (
-      //   <div style={listIconStyle}>
-      //     <Icon action="custom" name="pt-example" />
-      //   </div>
-      // ),
-      rightIcon: (
-        <div style={listIconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" />
-        </div>
-      )
-    },
-    {
-      primaryText: <Label label="PT_HOW_IT_WORKS" labelStyle={labelStyle} />,
-      route: "/property-tax/how-it-works",
-      // leftIcon: (
-      //   <div style={listIconStyle}>
-      //     <Icon action="action" name="help" />
-      //   </div>
-      // ),
-      rightIcon: (
-        <div style={listIconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" />
-        </div>
-      )
-    },
-    {
-      primaryText: <Label label="PT_EXAMPLE" labelStyle={labelStyle} />,
-      route: "/property-tax/pt-examples",
-      // leftIcon: (
-      //   <div style={listIconStyle}>
-      //     <Icon action="custom" name="pt-example" />
-      //   </div>
-      // ),
-      rightIcon: (
-        <div style={listIconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" />
-        </div>
-      )
-    }
-  ];
+  getlistItems = () => {
+    const { numDrafts } = this.props;
+    return [
+      {
+        primaryText: (
+          <Label label="PT_COMPLETED_ASSESSMENTS" labelStyle={labelStyle} />
+        ),
+        route: "/property-tax/completed-assessments",
+        // leftIcon: (
+        //   <div style={listIconStyle}>
+        //     <Icon action="action" name="done" />
+        //   </div>
+        // ),
+        rightIcon: (
+          <div style={listIconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" />
+          </div>
+        )
+      },
+      {
+        primaryText: (
+          <Label
+            label="PT_INCOMPLETE_ASSESSMENT"
+            dynamicArray={[numDrafts]}
+            labelStyle={labelStyle}
+          />
+        ),
+        route: "/property-tax/incomplete-assessments",
+        rightIcon: (
+          <div style={listIconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" />
+          </div>
+        )
+      },
+      {
+        primaryText: <Label label="PT_HOW_IT_WORKS" labelStyle={labelStyle} />,
+        route: "/property-tax/how-it-works",
+        rightIcon: (
+          <div style={listIconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" />
+          </div>
+        )
+      },
+      {
+        primaryText: <Label label="PT_EXAMPLE" labelStyle={labelStyle} />,
+        route: "/property-tax/pt-examples",
+        rightIcon: (
+          <div style={listIconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" />
+          </div>
+        )
+      }
+    ];
+  };
+
   componentDidMount = () => {
     const {
       addBreadCrumbs,
@@ -173,8 +166,8 @@ class PTHome extends Component {
   };
 
   render() {
-    let { listItems, handleItemClick, getCardItems } = this;
-    const { numProperties, numDrafts, loading, history } = this.props;
+    let { getlistItems, handleItemClick, getCardItems } = this;
+    const { loading, history } = this.props;
     return (
       <Screen loading={loading} className="pt-home-screen">
         <ModuleLandingPage items={getCardItems()} history={history} />
@@ -263,7 +256,7 @@ class PTHome extends Component {
                 nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
                 autoGenerateNestedIndicator={false}
                 primaryTogglesNestedList={true}
-                items={listItems}
+                items={getlistItems()}
               />
             }
           />
@@ -316,7 +309,6 @@ const mapStateToProps = state => {
     },
     []
   );
-
   const numDrafts = transformedDrafts.length + numFailedPayments;
   return { numProperties, numDrafts, loading };
 };

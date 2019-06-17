@@ -72,9 +72,10 @@ const routes = [
     needsAuthentication: true,
     options: {
       isHomeScreen: true,
-      title: "COMMON_BOTTOM_NAVIGATION_HOME",
+      title: "CS_HOME_HEADER_HOME",
       hideTitle: true,
       redirectionUrl: "/user/login",
+      notificationButton: true,
     },
   },
   {

@@ -35,13 +35,13 @@ class Home extends Component {
     return [
       {
         label: "CS_HOME_FILE_COMPLAINT",
-        icon: <Icon style={iconStyle} action="custom" name="account-alert" />,
+        icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
         route: "/add-complaint"
       },
       {
         label: "CS_HOME_MY_COMPLAINTS_CARD_LABEL",
         dynamicArray: [updates.length],
-        icon: <Icon style={iconStyle} action="custom" name="comment-plus" />,
+        icon: <Icon style={iconStyle} action="custom" name="account-alert" />,
         route: "/my-complaints"
       }
     ];

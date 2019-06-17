@@ -98,6 +98,8 @@ const withAuthorization = (options = {}) => (Component) => {
         refreshButton,
         sortButton,
         searchButton,
+        helpButton,
+        notificationButton,
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints, hasLocalisation } = this.props;
@@ -144,6 +146,8 @@ const withAuthorization = (options = {}) => (Component) => {
               refreshButton={refreshButton}
               sortButton={sortButton}
               searchButton={searchButton}
+              helpButton={helpButton}
+              notificationButton={notificationButton}
               className={isHomeScreen ? "rainmaker-header-home-small-screen" : "rainmaker-header"}
             />
           ) : null}

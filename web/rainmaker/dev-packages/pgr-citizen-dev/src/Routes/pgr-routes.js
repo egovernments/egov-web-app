@@ -121,7 +121,8 @@ const routes = [
       // isHomeScreen: true,
       title: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
       hideTitle: true,
-      redirectionUrl: "/user/register"
+      redirectionUrl: "/user/register",
+      helpButton: true
     }
   },
   {

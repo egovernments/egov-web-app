@@ -222,11 +222,14 @@ class SearchProperty extends Component {
           ) : null}
         </Hidden>
         <Hidden smUp>
-          <Label
-            label="PT_SEARCH_RESULTS"
-            fontSize={16}
-            color="rgba(0, 0, 0, 0.87)"
-          />
+          {searchResult && searchResult.length > 0 && (
+            <Label
+              label="PT_SEARCH_RESULTS"
+              dynamicArray={[searchResult.length]}
+              fontSize={16}
+              color="rgba(0, 0, 0, 0.87)"
+            />
+          )}
           <SingleProperty
             data={searchResult}
             action={"PT_PAYMENT_ACCESSANDPAY"}

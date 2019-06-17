@@ -34,6 +34,8 @@ const EgovAppBar = ({
   refreshButton,
   sortButton,
   searchButton,
+  helpButton,
+  notificationButton,
   sortDialogOpen,
   history,
   handleItemClick,
@@ -103,7 +105,19 @@ const EgovAppBar = ({
               <Icon action="action" name="search" color="#fff" />
             </IconButton>
           )}
+          {helpButton && role === "citizen" && (
+            <IconButton style={iconButtonStyle}>
+              <Icon action="action" name="help" color="#fff" />
+            </IconButton>
+          )}
         </div>
+        {notificationButton && role === "citizen" && (
+          <div className="notification-icon">
+            <IconButton style={iconButtonStyle}>
+              <Icon action="social" name="notifications-none" color="#fff" />
+            </IconButton>
+          </div>
+        )}
       </AppBar>
     </div>
   );

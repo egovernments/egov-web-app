@@ -124,8 +124,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PT_PAY_PROPERTY_TAX"
-      // hideBackButton: true,
+      title: "PT_PAY_PROPERTY_TAX",
+      helpButton: true
     }
   },
   {

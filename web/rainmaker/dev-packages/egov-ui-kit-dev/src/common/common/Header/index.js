@@ -154,6 +154,8 @@ class Header extends Component {
       refreshButton,
       sortButton,
       searchButton,
+      helpButton,
+      notificationButton,
       activeRoutePath,
       hasLocalisation,
     } = this.props;
@@ -173,6 +175,8 @@ class Header extends Component {
           refreshButton={refreshButton}
           sortButton={sortButton}
           searchButton={searchButton}
+          helpButton={helpButton}
+          notificationButton={notificationButton}
           sortDialogOpen={onSortClick}
           history={this.props.history}
           handleItemClick={_handleItemClick}
