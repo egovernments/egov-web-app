@@ -70,7 +70,6 @@ class ActionDialog extends React.Component {
       case "REJECT":
         return "Reject";
       case "CANCEL":
-        return "purpose=application&status=cancelled";
       case "APPROVE":
         return "APPROVE";
       case "PAY":
@@ -83,13 +82,15 @@ class ActionDialog extends React.Component {
   };
 
   render() {
-    const { open, onClose, dropDownData, handleFieldChange, onButtonClick, dialogData, dataPath } = this.props;
+    const { open, onClose, dropDownData, handleFieldChange, onButtonClick, dialogData } = this.props;
+    let { dataPath } = this.props;
     const { buttonLabel, showEmployeeList, dialogHeader, moduleName, isDocRequired } = dialogData;
     const { getButtonLabelName } = this;
     let fullscreen = false;
     if (window.innerWidth <= 768) {
       fullscreen = true;
     }
+    dataPath = dataPath === "FireNOCs" ? `fireNOCDetails.${dataPath}` : dataPath;
     return (
       <Dialog fullScreen={fullscreen} open={open} onClose={onClose} maxWidth={false}>
         <DialogContent
