@@ -387,11 +387,11 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Name& Address. ",
+                text: "Name & Address. ",
                 bold: true
               },
               {
-                text: item.payerAddress,
+                text: item.consumerName + ", " + "\n" + item.payerAddress,
                 bold: false
               }
             ],
@@ -774,11 +774,15 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Name& Address. ",
+                text: "Name & Address. ",
                 bold: true
               },
               {
-                text: transformedData.payerAddress,
+                text:
+                  transformedData.consumerName +
+                  ", " +
+                  "\n" +
+                  transformedData.payerAddress,
                 bold: false
               }
             ],
