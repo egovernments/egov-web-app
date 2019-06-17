@@ -88,7 +88,7 @@ const abgSearchAndResult = {
       getBoundaryData(action, state, dispatch, queryObj);
     });
     //setting service category to PT for now. -- Hardcoding alert!!
-    dispatch(prepareFinalObject("searchCriteria.serviceCategory", "PT"));
+    dispatch(prepareFinalObject("searchCriteria.businessservice", "PT"));
     return action;
   },
   components: {

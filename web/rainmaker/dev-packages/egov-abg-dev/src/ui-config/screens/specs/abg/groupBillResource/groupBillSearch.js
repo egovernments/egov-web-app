@@ -76,7 +76,7 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_ULB_PLACEHOLDER"
       },
       sourceJsonPath: "searchScreenMdmsData.tenant.tenants",
-      jsonPath: "searchCriteria.ulb",
+      jsonPath: "searchCriteria.tenantId",
       required: false,
       disabled: false,
       props: {
@@ -134,7 +134,7 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_SERVICE_CATEGORY_PLACEHOLDER"
       },
       required: true,
-      jsonPath: "searchCriteria.serviceCategory",
+      jsonPath: "searchCriteria.businessservice",
       props: {
         disabled: true,
         value: "PT" //Hardcoded!!
