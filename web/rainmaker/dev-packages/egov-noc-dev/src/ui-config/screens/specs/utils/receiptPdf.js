@@ -938,10 +938,10 @@ const generatePdf = async (state, dispatch, type) => {
   } else if (isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
-  } else if (isEmpty(auditorData)) {
+  } else if ((type.startsWith("receipt") || type.startsWith("certificate")) && isEmpty(auditorData)) {
     console.log("Error in auditor user data");
     return;
-  } else if (type.startsWith("receipt") && isEmpty(paymentData)) {
+  } else if ((type.startsWith("receipt") || type.startsWith("certificate")) && isEmpty(paymentData)) {
     console.log("Error in payment data");
     return;
   }
