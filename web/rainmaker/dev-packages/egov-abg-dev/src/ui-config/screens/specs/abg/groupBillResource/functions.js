@@ -18,6 +18,7 @@ import { prepareFinalBodyData } from "egov-ui-framework/ui-redux/screen-configur
 const tenantId = getTenantId();
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
+  showHideMergeButton(false, dispatch);
   let queryObject = [
     {
       key: "tenantId",
@@ -108,6 +109,7 @@ export const searchApiCall = async (state, dispatch) => {
       //   handleField("groupBills", "components.div.children.searchResults")
       // );
       showHideTable(true, dispatch);
+      showHideMergeButton(true, dispatch);
     } catch (error) {
       dispatch(toggleSnackbar(true, error.message, "error"));
       console.log(error);
@@ -120,6 +122,17 @@ const showHideTable = (booleanHideOrShow, dispatch) => {
     handleField(
       "groupBills",
       "components.div.children.searchResults",
+      "visible",
+      booleanHideOrShow
+    )
+  );
+};
+
+const showHideMergeButton = (booleanHideOrShow, dispatch) => {
+  dispatch(
+    handleField(
+      "groupBills",
+      "components.div.children.mergeDownloadButton.children.mergeButton",
       "visible",
       booleanHideOrShow
     )
