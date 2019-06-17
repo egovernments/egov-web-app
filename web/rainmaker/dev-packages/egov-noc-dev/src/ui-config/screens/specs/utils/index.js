@@ -388,6 +388,15 @@ export const getUserDataFromUuid = async bodyObject => {
   }
 };
 
+export const getBill = async queryObject => {
+  try {
+    const response = await httpRequest("post", "/firenoc-calculator/v1/_getbill", "", queryObject);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const searchBill = async (dispatch, applicationNumber, tenantId) => {
   try {
     let payload = await httpRequest(

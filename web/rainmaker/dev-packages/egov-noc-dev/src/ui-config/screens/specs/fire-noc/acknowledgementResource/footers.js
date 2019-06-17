@@ -1,109 +1,71 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { ifUserRoleExists } from "../../utils";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import get from "lodash/get";
+import { getBill, ifUserRoleExists } from "../../utils";
 import generatePdf from "../../utils/receiptPdf";
 
 export const getRedirectionURL = () => {
-  const redirectionURL = ifUserRoleExists("CITIZEN")
-    ? "/fire-noc-citizen/home"
-    : "/inbox";
+  const redirectionURL = ifUserRoleExists("CITIZEN") ? "/fire-noc/home" : "/inbox";
   return redirectionURL;
 };
 
-// export const generatePdfAndDownload = (
-//   state,
-//   dispatch,
-//   action,
-//   applicationNumber,
-//   tenant
-// ) => {
-//   dispatch(
-//     toggleSnackbar(true, "Preparing confirmation form, please wait...", "info")
-//   );
-//   var iframe = document.createElement("iframe");
-//   iframe.src =
-//     window.origin +
-//     `/fire-noc/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
-//   var hasIframeLoaded = false,
-//     hasEstimateLoaded = false;
-//   iframe.onload = function(e) {
-//     hasIframeLoaded = true;
-//     if (hasEstimateLoaded) {
-//       downloadConfirmationForm();
-//     }
-//   };
-//   window.document.addEventListener("estimateLoaded", handleEvent, false);
-//   function handleEvent(e) {
-//     if (e.detail && iframe.contentDocument) {
-//       hasEstimateLoaded = true;
-//       if (hasIframeLoaded) {
-//         downloadConfirmationForm();
-//       }
-//     }
-//   }
-//   function downloadConfirmationForm() {
-//     let target = iframe.contentDocument.querySelector(
-//       "#material-ui-NOCReviewDetails"
-//     );
-//     html2canvas(target).then(function(canvas) {
-//       document.querySelector("#custom-atoms-iframeForPdf").removeChild(iframe);
-//       var data = canvas.toDataURL("image/jpeg", 1);
-//       var imgWidth = 200;
-//       var pageHeight = 295;
-//       var imgHeight = (canvas.height * imgWidth) / canvas.width;
-//       var heightLeft = imgHeight;
-//       var doc = new jsPDF("p", "mm");
-//       var position = 0;
-
-//       doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-//       heightLeft -= pageHeight;
-
-//       while (heightLeft >= 0) {
-//         position = heightLeft - imgHeight;
-//         doc.addPage();
-//         doc.addImage(data, "PNG", 5, 5 + position, imgWidth, imgHeight);
-//         heightLeft -= pageHeight;
-//       }
-//       if (action === "download") {
-//         doc.save(`application_summary_${applicationNumber}.pdf`);
-//       } else if (action === "print") {
-//         doc.autoPrint();
-//         window.open(doc.output("bloburl"), "_blank");
-//       }
-//     });
-//   }
-
-//   // To hide the iframe
-//   iframe.style.cssText =
-//     "position: absolute; opacity:0; z-index: -9999; width: 900px; height: 100%";
-//   document.querySelector("#custom-atoms-iframeForPdf").appendChild(iframe);
-
-//   // let iframe = document.querySelector("#custom-containers-local-iframe");
-//   // let target = iframe.contentDocument.querySelector(
-//   //   "#material-ui-tradeReviewDetails"
-//   // );
-//   // html2canvas(target, {
-//   //   onclone: function(clonedDoc) {
-//   //     clonedDoc.getElementById(
-//   //       "material-ui-tradeReviewDetails"
-//   //     ).style.display = "block";
-//   //   }
-//   // }).then(canvas => {
-//   //   var data = canvas.toDataURL();
-//   //   var docDefinition = {
-//   //     content: [
-//   //       {
-//   //         image: data,
-//   //         width: 500
-//   //       }
-//   //     ]
-//   //   };
-//   //   if (action === "download") {
-//   //     pdfMake.createPdf(docDefinition).download("application_summary.pdf");
-//   //   } else if (action === "print") {
-//   //     pdfMake.createPdf(docDefinition).print();
-//   //   }
-//   // });
-// };
+export const callPGService = async (state, dispatch) => {
+  const tenantId = getQueryArg(window.location.href, "tenantId");
+  // let callbackUrl = "/fire-noc/paymentRedirectPage";
+  let callbackUrl = `${window.origin}/egov-ui-framework/fire-noc/paymentRedirectPage`;
+  try {
+    const queryObj = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "consumerCode",
+        value: getQueryArg(window.location.href, "applicationNumber")
+      },
+      {
+        key: "businessService",
+        value: "FIRENOC"
+      }
+    ];
+    const billPayload = await getBill(queryObj);
+    const taxAndPayments = get(billPayload, "Bill[0].taxAndPayments", []).map(item => {
+      if (item.businessService === "FIRENOC") {
+        item.amountPaid = get(billPayload, "Bill[0].billDetails[0].totalAmount");
+      }
+      return item;
+    });
+    try {
+      const requestBody = {
+        Transaction: {
+          tenantId,
+          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
+          module: "FIRENOC",
+          taxAndPayments,
+          billId: get(billPayload, "Bill[0].id"),
+          consumerCode: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
+          productInfo: "Fire NOC Payment",
+          gateway: "AXIS",
+          callbackUrl
+        }
+      };
+      const goToPaymentGateway = await httpRequest(
+        "post",
+        "pg-service/transaction/v1/_create",
+        "_create",
+        [],
+        requestBody
+      );
+      const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+      window.location = redirectionUrl;
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const getCommonApplyFooter = children => {
   return {
@@ -145,12 +107,7 @@ export const gotoHomeFooter = getCommonApplyFooter({
 });
 
 //Function for application success(show those 3 buttons )
-export const applicationSuccessFooter = (
-  state,
-  dispatch,
-  applicationNumber,
-  tenant
-) => {
+export const applicationSuccessFooter = (state, dispatch, applicationNumber, tenant) => {
   return getCommonApplyFooter({
     downloadFormButton: {
       componentPath: "Button",
@@ -230,6 +187,34 @@ export const applicationSuccessFooter = (
         action: "PAY"
         // roles: ["NOC_CEMP", "SUPERUSER"]
       }
+    },
+    makePayment: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "45px"
+        }
+      },
+      children: {
+        submitButtonLabel: getLabel({
+          labelName: "MAKE PAYMENT",
+          labelKey: "NOC_COMMON_BUTTON_CITIZEN_MAKE_PAYMENT"
+        })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: callPGService
+      },
+      roleDefination: {
+        rolePath: "user-info.roles",
+        roles: ["CITIZEN"],
+        action: "PAY"
+      },
+      visible: process.env.REACT_APP_NAME === "Citizen" ? true : true
     }
   });
 };
@@ -388,10 +373,7 @@ export const paymentSuccessFooter = () => {
       },
       onClickDefination: {
         action: "page_change",
-        path:
-          process.env.REACT_APP_SELF_RUNNING === "true"
-            ? `/egov-ui-framework/fire-noc/search`
-            : `/fire-noc/search`
+        path: process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework/fire-noc/search` : `/fire-noc/search`
       }
       // visible: false
     }
