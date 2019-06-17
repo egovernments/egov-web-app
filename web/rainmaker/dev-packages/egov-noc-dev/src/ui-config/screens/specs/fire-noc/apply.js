@@ -174,13 +174,13 @@ const setCardsIfMultipleBuildings = (state, dispatch) => {
   }
 };
 
-const prepareEditFlow = async (state, dispatch, applicationNumber) => {
+const prepareEditFlow = async (state, dispatch, applicationNumber, tenantId) => {
   const nocs = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
   if (applicationNumber && nocs.length == 0) {
     let response = await getSearchResults([
       {
         key: "tenantId",
-        value: getTenantId()
+        value: tenantId
       },
       { key: "applicationNumber", value: applicationNumber }
     ]);
@@ -225,6 +225,7 @@ const screenConfig = {
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
     const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const tenantId = getQueryArg(window.location.href, "tenantId");
     const step = getQueryArg(window.location.href, "step");
 
     //Set Module Name
@@ -253,10 +254,10 @@ const screenConfig = {
     });
 
     // Search in case of EDIT flow
-    prepareEditFlow(state, dispatch, applicationNumber);
+    prepareEditFlow(state, dispatch, applicationNumber, tenantId);
 
-    // Set Property City
-    dispatch(prepareFinalObject("FireNOCs[0].fireNOCDetails.propertyDetails.address.city", getTenantId()));
+    // // Set Property City
+    // dispatch(prepareFinalObject("FireNOCs[0].fireNOCDetails.propertyDetails.address.city", getTenantId()));
 
     // // Handle dependent dropdowns in edit flow
     // set(
