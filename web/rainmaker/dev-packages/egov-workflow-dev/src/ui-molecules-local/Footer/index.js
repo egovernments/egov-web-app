@@ -94,7 +94,7 @@ class Footer extends React.Component {
     const { color, variant, contractData, handleFieldChange, onDialogButtonClick, dataPath, moduleName } = this.props;
     const { open, data, employeeList } = this.state;
     const { getPrintData, getDownloadData } = this;
-    let visibility = moduleName === "FIRENOC" ? "none" : "block";
+    let visibility = moduleName === "FIRENOC" ? "hidden" : "visible";
     return (
       <div className="apply-wizard-footer" id="custom-atoms-footer" style={{ textAlign: "right" }}>
         <Container>
