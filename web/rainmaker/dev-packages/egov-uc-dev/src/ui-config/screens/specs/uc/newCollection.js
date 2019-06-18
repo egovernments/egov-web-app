@@ -5,6 +5,7 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { setServiceCategory } from "../utils";
+import commonConfig from "config/common.js";
 import get from "lodash/get";
 
 const header = getCommonHeader({
@@ -16,8 +17,7 @@ const tenantId = getTenantId();
 const getData = async (action, state, dispatch) => {
   let requestBody = {
     MdmsCriteria: {
-      tenantId: tenantId,
-
+      tenantId: commonConfig.tenantId,
       moduleDetails: [
         {
           moduleName: "tenant",
@@ -81,6 +81,11 @@ const getData = async (action, state, dispatch) => {
   } catch (e) {
     console.log(e);
   }
+  const liveTenants = get(state, "common.citiesByModule.UC.tenants", []);
+  dispatch(
+    prepareFinalObject("applyScreenMdmsData.tenant.citiesByModule", liveTenants)
+  );
+  // return action;
 };
 
 const newCollection = {

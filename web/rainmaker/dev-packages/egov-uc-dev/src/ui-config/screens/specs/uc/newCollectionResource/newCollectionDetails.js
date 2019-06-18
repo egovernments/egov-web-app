@@ -36,7 +36,7 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "City",
               labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
             },
-            labelPrefix: {
+            localePrefix: {
               moduleName: "TENANT",
               masterName: "TENANTS"
             },
@@ -45,18 +45,25 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "Select City",
               labelKey: "TL_SELECT_CITY"
             },
-            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+            sourceJsonPath: "applyScreenMdmsData.tenant.citiesByModule",
+            // "applyScreenMdmsData.common-masters.citiesByModule.UC.tenants",
             jsonPath: "Demands[0].tenantId",
             required: true,
-            disabled: true,
             props: {
               required: true,
-              disabled: false,
               value: tenantId,
               disabled: true
             }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
+            const citiesByModule = get(
+              state,
+              "common.citiesByModule.UC.tenants",
+              []
+            );
+            if (!citiesByModule.find(item => item.code === action.value)) {
+              return action;
+            }
             let requestBody = {
               MdmsCriteria: {
                 tenantId: action.value,
