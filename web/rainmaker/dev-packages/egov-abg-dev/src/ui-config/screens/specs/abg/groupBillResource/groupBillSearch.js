@@ -114,7 +114,7 @@ export const abgSearchCard = getCommonCard({
         labelName: "Select Financial Year",
         labelKey: "ABG_FINANCIAL_YEAR_PLACEHOLDER"
       },
-      required: false,
+      required: true,
       visible: true,
       jsonPath: "searchCriteria.financialYear",
       gridDefination: {
@@ -134,7 +134,7 @@ export const abgSearchCard = getCommonCard({
         labelKey: "ABG_SERVICE_CATEGORY_PLACEHOLDER"
       },
       required: true,
-      jsonPath: "searchCriteria.businessservice",
+      jsonPath: "searchCriteria.businesService",
       props: {
         disabled: true,
         value: "PT" //Hardcoded!!
@@ -161,7 +161,7 @@ export const abgSearchCard = getCommonCard({
       required: false,
       // pattern: getPattern("PropertyID"),
       // errorMessage: "Invalid Property ID",
-      jsonPath: "searchCriteria.consumercode[0]"
+      jsonPath: "searchCriteria.consumerCode[0]"
     })
   }),
 
