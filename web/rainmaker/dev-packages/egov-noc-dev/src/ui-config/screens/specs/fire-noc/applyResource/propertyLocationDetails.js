@@ -410,10 +410,8 @@ export const propertyLocationDetails = getCommonCard(
           labelName: "Select Applicable Fire Station",
           labelKey: "NOC_PROPERTY_DETAILS_FIRESTATION_PLACEHOLDER"
         },
-        // pattern: getPattern("Name"),
-        // errorMessage:"Invalid Fire-Station Name",
         jsonPath: "FireNOCs[0].fireNOCDetails.firestationId",
-        // sourceJsonPath: "applyScreenMdmsData.firenoc.FireStations",
+        required: true,
         localePrefix: {
           moduleName: "firenoc",
           masterName: "FireStations"

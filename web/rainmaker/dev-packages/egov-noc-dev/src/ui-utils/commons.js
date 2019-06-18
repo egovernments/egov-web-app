@@ -1,7 +1,4 @@
-import {
-  prepareFinalObject,
-  toggleSnackbar
-} from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import jp from "jsonpath";
@@ -33,37 +30,19 @@ export const findItemInArrayOfObject = (arr, conditionCheckerFn) => {
 
 export const getSearchResults = async (queryObject, dispatch) => {
   try {
-    const response = await httpRequest(
-      "post",
-      "/firenoc-services/v1/_search",
-      "",
-      queryObject
-    );
+    const response = await httpRequest("post", "/firenoc-services/v1/_search", "", queryObject);
     return response;
   } catch (error) {
-    store.dispatch(
-      toggleSnackbar(
-        true,
-        { labelName: error.message, labelKey: error.message },
-        "error"
-      )
-    );
+    store.dispatch(toggleSnackbar(true, { labelName: error.message, labelKey: error.message }, "error"));
     throw error;
   }
 };
 
 export const createUpdateNocApplication = async (state, dispatch, status) => {
-  let nocId = get(
-    state,
-    "screenConfiguration.preparedFinalObject.FireNOCs[0].id"
-  );
+  let nocId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].id");
   let method = nocId ? "UPDATE" : "CREATE";
   try {
-    let payload = get(
-      state.screenConfiguration.preparedFinalObject,
-      "FireNOCs",
-      []
-    );
+    let payload = get(state.screenConfiguration.preparedFinalObject, "FireNOCs", []);
     let tenantId = get(
       state.screenConfiguration.preparedFinalObject,
       "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
@@ -73,11 +52,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     set(payload[0], "fireNOCDetails.action", status);
 
     // Get uploaded documents from redux
-    let reduxDocuments = get(
-      state,
-      "screenConfiguration.preparedFinalObject.documentsUploadRedux",
-      {}
-    );
+    let reduxDocuments = get(state, "screenConfiguration.preparedFinalObject.documentsUploadRedux", {});
 
     let buildings = get(payload, "[0].fireNOCDetails.buildings", []);
     buildings.forEach((building, index) => {
@@ -94,13 +69,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       let allUoms = [
         ...new Set([
           ...requiredUoms,
-          ...[
-            "NO_OF_FLOORS",
-            "NO_OF_BASEMENTS",
-            "PLOT_SIZE",
-            "BUILTUP_AREA",
-            "HEIGHT_OF_BUILDING"
-          ]
+          ...["NO_OF_FLOORS", "NO_OF_BASEMENTS", "PLOT_SIZE", "BUILTUP_AREA", "HEIGHT_OF_BUILDING"]
         ])
       ];
       let finalUoms = [];
@@ -120,10 +89,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       let uploadedDocs = [];
       jp.query(reduxDocuments, "$.*").forEach(doc => {
         if (doc.documents && doc.documents.length > 0) {
-          if (
-            doc.documentSubCode &&
-            doc.documentSubCode.startsWith("BUILDING.BUILDING_PLAN")
-          ) {
+          if (doc.documentSubCode && doc.documentSubCode.startsWith("BUILDING.BUILDING_PLAN")) {
             if (doc.documentCode === building.name) {
               uploadedDocs = [
                 ...uploadedDocs,
@@ -137,11 +103,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
           }
         }
       });
-      set(
-        payload[0],
-        `fireNOCDetails.buildings[${index}].applicationDocuments`,
-        uploadedDocs
-      );
+      set(payload[0], `fireNOCDetails.buildings[${index}].applicationDocuments`, uploadedDocs);
     });
 
     // Set owners & other documents
@@ -172,36 +134,20 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       }
     });
 
-    set(
-      payload[0],
-      "fireNOCDetails.applicantDetails.additionalDetail.documents",
-      ownerDocuments
-    );
-    set(
-      payload[0],
-      "fireNOCDetails.additionalDetail.documents",
-      otherDocuments
-    );
+    set(payload[0], "fireNOCDetails.applicantDetails.additionalDetail.documents", ownerDocuments);
+    set(payload[0], "fireNOCDetails.additionalDetail.documents", otherDocuments);
+
+    // Set Channel and Financial Year
+    set(payload[0], "fireNOCDetails.channel", "COUNTER");
+    set(payload[0], "fireNOCDetails.financialYear", "2019-20");
 
     let response;
     if (method === "CREATE") {
-      response = await httpRequest(
-        "post",
-        "/firenoc-services/v1/_create",
-        "",
-        [],
-        { FireNOCs: payload }
-      );
+      response = await httpRequest("post", "/firenoc-services/v1/_create", "", [], { FireNOCs: payload });
       response = furnishNocResponse(response);
       dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     } else if (method === "UPDATE") {
-      response = await httpRequest(
-        "post",
-        "/firenoc-services/v1/_update",
-        "",
-        [],
-        { FireNOCs: payload }
-      );
+      response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], { FireNOCs: payload });
       response = furnishNocResponse(response);
       dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     }
@@ -211,11 +157,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
 
     // Revert the changed pfo in case of request failure
-    let fireNocData = get(
-      state,
-      "screenConfiguration.preparedFinalObject.FireNOCs",
-      []
-    );
+    let fireNocData = get(state, "screenConfiguration.preparedFinalObject.FireNOCs", []);
     fireNocData = furnishNocResponse({ FireNOCs: fireNocData });
     dispatch(prepareFinalObject("FireNOCs", fireNocData.FireNOCs));
 
@@ -224,11 +166,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
 };
 
 export const prepareDocumentsUploadData = (state, dispatch) => {
-  let documents = get(
-    state,
-    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.Documents",
-    []
-  );
+  let documents = get(state, "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.Documents", []);
   documents = documents.filter(item => {
     return item.active;
   });
@@ -244,11 +182,7 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
 
   documents.forEach(doc => {
     // Handle the case for multiple muildings
-    if (
-      doc.code === "BUILDING.BUILDING_PLAN" &&
-      doc.hasMultipleRows &&
-      doc.options
-    ) {
+    if (doc.code === "BUILDING.BUILDING_PLAN" && doc.hasMultipleRows && doc.options) {
       let buildingsData = get(
         state,
         "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings",
@@ -295,34 +229,17 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
 };
 
 export const prepareDocumentsUploadRedux = (state, dispatch) => {
-  const {
-    documentsList,
-    documentsUploadRedux = {},
-    prepareFinalObject
-  } = this.props;
+  const { documentsList, documentsUploadRedux = {}, prepareFinalObject } = this.props;
   let index = 0;
   documentsList.forEach(docType => {
     docType.cards &&
       docType.cards.forEach(card => {
         if (card.subCards) {
           card.subCards.forEach(subCard => {
-            let oldDocType = get(
-              documentsUploadRedux,
-              `[${index}].documentType`
-            );
-            let oldDocCode = get(
-              documentsUploadRedux,
-              `[${index}].documentCode`
-            );
-            let oldDocSubCode = get(
-              documentsUploadRedux,
-              `[${index}].documentSubCode`
-            );
-            if (
-              oldDocType != docType.code ||
-              oldDocCode != card.name ||
-              oldDocSubCode != subCard.name
-            ) {
+            let oldDocType = get(documentsUploadRedux, `[${index}].documentType`);
+            let oldDocCode = get(documentsUploadRedux, `[${index}].documentCode`);
+            let oldDocSubCode = get(documentsUploadRedux, `[${index}].documentSubCode`);
+            if (oldDocType != docType.code || oldDocCode != card.name || oldDocSubCode != subCard.name) {
               documentsUploadRedux[index] = {
                 documentType: docType.code,
                 documentCode: card.name,
@@ -349,10 +266,7 @@ export const prepareDocumentsUploadRedux = (state, dispatch) => {
 
 export const furnishNocResponse = response => {
   // Handle applicant ownership dependent dropdowns
-  let ownershipType = get(
-    response,
-    "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType"
-  );
+  let ownershipType = get(response, "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType");
   set(
     response,
     "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipMajorType",
@@ -367,11 +281,7 @@ export const furnishNocResponse = response => {
     uoms.forEach(uom => {
       uomMap[uom.code] = parseInt(uom.value);
     });
-    set(
-      response,
-      `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`,
-      uomMap
-    );
+    set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomMap);
 
     let usageType = get(building, "usageType");
     set(
