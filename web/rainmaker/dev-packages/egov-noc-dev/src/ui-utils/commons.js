@@ -154,7 +154,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
             ...ownerDocuments,
             {
               tenantId: tenantId,
-              documentType: doc.documentCode,
+              documentType: doc.documentSubCode ? doc.documentSubCode : doc.documentCode,
               fileStoreId: doc.documents[0].fileStoreId
             }
           ];
