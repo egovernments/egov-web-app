@@ -61,7 +61,7 @@ export const loadPtBillData = response => {
   data.amountPaid = get(response, "billDetails[0].amountPaid", 0);
   data.totalAmount = get(response, "billDetails[0].totalAmount", 0);
   data.amountDue = data.totalAmount - data.amountPaid;
-  data.dueDate = get(response, "billDetails[0].expiryDate");
+  data.dueDate = epochToDate(get(response, "billDetails[0].expiryDate"));
   data.payerAddress = nullToNa(get(response, "payerAddress"));
   data.propertyId = get(response, "billDetails[0].consumerCode").split(":")[0];
   data.AssessNo = get(response, "billDetails[0].consumerCode").split(":")[1];

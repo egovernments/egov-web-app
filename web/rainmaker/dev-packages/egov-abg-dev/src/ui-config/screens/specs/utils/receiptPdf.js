@@ -132,7 +132,7 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Bill Date ",
+                text: "Bill Date  ",
                 bold: true
               },
               {
@@ -145,7 +145,7 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Bill No. ",
+                text: "Bill No.  ",
                 bold: true
               },
               {
@@ -163,7 +163,7 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Financial Year ",
+                text: "Tax Period  ",
                 bold: true
               },
               {
@@ -172,6 +172,19 @@ const getMutlipleBillsData = transformedData => {
               }
             ],
             alignment: "left"
+          },
+          {
+            text: [
+              {
+                text: "Due Date   ",
+                bold: true
+              },
+              {
+                text: item.dueDate,
+                bold: false
+              }
+            ],
+            alignment: "right"
           }
         ]
       },
@@ -216,7 +229,7 @@ const getMutlipleBillsData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "mobile no.",
+                text: "Mobile No.",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
@@ -237,7 +250,7 @@ const getMutlipleBillsData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "locality",
+                text: "Locality",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
@@ -301,7 +314,7 @@ const getMutlipleBillsData = transformedData => {
       },
       {
         text:
-          "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ",
+          "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ",
 
         style: "pt-reciept-citizen-subheader"
       },
@@ -343,7 +356,7 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Consumer ID No. ",
+                text: "Consumer ID ",
                 bold: true
               },
               {
@@ -374,11 +387,11 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: "Name& Address. ",
+                text: "Name & Address. ",
                 bold: true
               },
               {
-                text: item.payerAddress,
+                text: item.consumerName + ", " + "\n" + item.payerAddress,
                 bold: false
               }
             ],
@@ -505,7 +518,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Bill Date ",
+                text: "Bill Date  ",
                 bold: true
               },
               {
@@ -518,7 +531,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Bill No. ",
+                text: "Bill No.  ",
                 bold: true
               },
               {
@@ -536,7 +549,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Financial Year ",
+                text: "Tax Period  ",
                 bold: true
               },
               {
@@ -545,6 +558,19 @@ const getSingleBillData = transformedData => {
               }
             ],
             alignment: "left"
+          },
+          {
+            text: [
+              {
+                text: "Due Date   ",
+                bold: true
+              },
+              {
+                text: transformedData.dueDate,
+                bold: false
+              }
+            ],
+            alignment: "right"
           }
         ]
       },
@@ -589,7 +615,7 @@ const getSingleBillData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "mobile no.",
+                text: "Mobile No.",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
@@ -610,7 +636,7 @@ const getSingleBillData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "locality",
+                text: "Locality",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
@@ -717,7 +743,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Consumer ID No. ",
+                text: "Consumer ID ",
                 bold: true
               },
               {
@@ -730,7 +756,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Bill No. ",
+                text: "Bill No.  ",
                 bold: true
               },
               {
@@ -748,11 +774,15 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: "Name& Address. ",
+                text: "Name & Address. ",
                 bold: true
               },
               {
-                text: transformedData.payerAddress,
+                text:
+                  transformedData.consumerName +
+                  ", " +
+                  "\n" +
+                  transformedData.payerAddress,
                 bold: false
               }
             ],

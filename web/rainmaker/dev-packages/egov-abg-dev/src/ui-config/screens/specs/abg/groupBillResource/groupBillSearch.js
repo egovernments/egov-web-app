@@ -3,25 +3,12 @@ import {
   getTextField,
   getSelectField,
   getCommonContainer,
-  getPattern,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getFinancialYearDates } from "../../utils";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { searchApiCall } from "./functions";
 import { generateMultipleBill } from "../../utils/receiptPdf";
-import {
-  handleScreenConfigurationFieldChange as handleField,
-  prepareFinalObject
-} from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { httpRequest } from "../../../../../ui-utils";
+import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-
-const hasButton = getQueryArg(window.location.href, "hasButton");
-//const hasApproval = getQueryArg(window.location.href, "hasApproval");
-let enableButton = true;
-//enableInbox = hasApproval && hasApproval === "false" ? false : true;
-enableButton = hasButton && hasButton === "false" ? false : true;
 
 const tenantId = getTenantId();
 const resetFields = (state, dispatch) => {
@@ -254,7 +241,7 @@ export const mergeDownloadButton = {
   children: {
     mergeButton: {
       componentPath: "Button",
-      visible: enableButton,
+      visible: false,
       props: {
         variant: "contained",
         color: "primary",
