@@ -1,4 +1,7 @@
-import { getCommonHeader, getCommonContainer } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonHeader,
+  getCommonContainer
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
   applicationSuccessFooter,
   paymentSuccessFooter,
@@ -8,11 +11,13 @@ import {
 } from "./acknowledgementResource/footers";
 import acknowledgementCard from "./acknowledgementResource/acknowledgementUtils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getSearchResults } from "../../../../ui-utils/commons";
 // import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
+import get from "lodash/get";
 import { getCurrentFinancialYear } from "../utils";
 import { loadPdfGenerationData } from "../utils/receiptTransformer";
-
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 export const header = getCommonContainer({
   header: getCommonHeader({
     labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
@@ -29,7 +34,15 @@ export const header = getCommonContainer({
   }
 });
 
-const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNumber, secondNumber, tenant) => {
+const getAcknowledgementCard = (
+  state,
+  dispatch,
+  purpose,
+  status,
+  applicationNumber,
+  secondNumber,
+  tenant
+) => {
   if (purpose === "apply" && status === "success") {
     loadPdfGenerationData(applicationNumber, tenant);
     return {
@@ -62,7 +75,12 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
         uiFramework: "custom-atoms",
         componentPath: "Div"
       },
-      applicationSuccessFooter: applicationSuccessFooter(state, dispatch, applicationNumber, tenant)
+      applicationSuccessFooter: applicationSuccessFooter(
+        state,
+        dispatch,
+        applicationNumber,
+        tenant
+      )
     };
   } else if (purpose === "pay" && status === "success") {
     loadPdfGenerationData(applicationNumber, tenant);
@@ -192,7 +210,8 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
               labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_MAIN"
             },
             body: {
-              labelName: "A notification regarding payment failure has been sent to the building owner and applicant.",
+              labelName:
+                "A notification regarding payment failure has been sent to the building owner and applicant.",
               labelKey: "NOC_PAYMENT_FAILURE_MESSAGE_SUB"
             }
           })
@@ -259,6 +278,21 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
   }
 };
 
+const setApplicationData = async (dispatch, applicationNumber, tenant) => {
+  const queryObject = [
+    {
+      key: "tenantId",
+      value: tenant
+    },
+    {
+      key: "applicationNumber",
+      value: applicationNumber
+    }
+  ];
+  const response = await getSearchResults(queryObject);
+  dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "acknowledgement",
@@ -274,10 +308,22 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const purpose = getQueryArg(window.location.href, "purpose");
     const status = getQueryArg(window.location.href, "status");
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
     const secondNumber = getQueryArg(window.location.href, "secondNumber");
     const tenant = getQueryArg(window.location.href, "tenantId");
-    const data = getAcknowledgementCard(state, dispatch, purpose, status, applicationNumber, secondNumber, tenant);
+    const data = getAcknowledgementCard(
+      state,
+      dispatch,
+      purpose,
+      status,
+      applicationNumber,
+      secondNumber,
+      tenant
+    );
+    setApplicationData(dispatch, applicationNumber, tenant);
     set(action, "screenConfig.components.div.children", data);
     return action;
   }

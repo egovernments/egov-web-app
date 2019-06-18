@@ -194,7 +194,7 @@ const mapStateToProps = state => {
   const moduleName = getModuleName(window.location.pathname);
   let jsonPath = "";
   if (moduleName === "FIRENOC") {
-    jsonPath = "applicationDataForPdf.applicationStatus";
+    jsonPath = "FireNOCs[0].fireNOCDetails.status";
   } else if (moduleName === "NewTL") {
     jsonPath = "Licenses[0].status";
   }
