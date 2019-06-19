@@ -246,7 +246,7 @@ class ShowForm extends Component {
 
   // set the value here, introduce the disabled
   handleFormFields = () => {
-    let { metaData, searchForm } = this.props;
+    let { metaData, searchForm ,labels} = this.props;
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
         item["value"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
@@ -268,6 +268,7 @@ class ShowForm extends Component {
               dateField={this.state.datefield}
               dateError={this.state.dateError}
               handler={this.handleChange}
+              localizationLabels = {labels}
             />
           )
         );
@@ -696,6 +697,7 @@ class ShowForm extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const labels = get(state.app , "localizationLabels")
   return {
     searchForm: state.formtemp.form,
     fieldErrors: state.formtemp.fieldErrors,
@@ -705,6 +707,7 @@ const mapStateToProps = (state) => {
     metaData: state.report.metaData,
     reportHistory: state.report.reportHistory,
     reportIndex: state.report.reportIndex,
+    labels
   };
 };
 
