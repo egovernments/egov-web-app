@@ -21,7 +21,9 @@ export const paymentSuccessFooter = (
   applicationNumber
 ) => {
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  // const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  /* Mseva 2.0 changes */
+  const redirectionURL = roleExists ? "/" : "/inbox";
 
   /** MenuButton data based on status */
   let downloadMenu = [];

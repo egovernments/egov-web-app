@@ -15,7 +15,8 @@ const ReopenAcknowledgement = ({ history, userInfo }) => {
       <div className="responsive-action-button-cont">
         <Button
           id="success-message-acknowledgement"
-          onClick={() => (role === "citizen" ? history.push("pgr-home") : history.push("all-complaints"))}
+          /* Mseva 2.0 changes */
+          onClick={() => (role === "citizen" ? history.push("/") : history.push("all-complaints"))}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
           fullWidth={true}
