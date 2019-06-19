@@ -50,13 +50,7 @@ const getDetailsFromProperty = async (state, dispatch) => {
 
     const tenantId = getTenantId();
     if (!tenantId) {
-      dispatch(
-        toggleSnackbar(
-          true,
-          "Please select city to search by property id !!",
-          "warning"
-        )
-      );
+      dispatch(toggleSnackbar(true, "Please select city to search by property id !!", "warning"));
       return;
     }
     if (propertyId) {
@@ -67,19 +61,9 @@ const getDetailsFromProperty = async (state, dispatch) => {
         [],
         {}
       );
-      if (
-        payload &&
-        payload.Properties &&
-        payload.Properties.hasOwnProperty("length")
-      ) {
+      if (payload && payload.Properties && payload.Properties.hasOwnProperty("length")) {
         if (payload.Properties.length === 0) {
-          dispatch(
-            toggleSnackbar(
-              true,
-              "Property is not found with this Property Id",
-              "info"
-            )
-          );
+          dispatch(toggleSnackbar(true, "Property is not found with this Property Id", "info"));
           dispatch(
             handleField(
               "apply",
@@ -101,10 +85,7 @@ const getDetailsFromProperty = async (state, dispatch) => {
             )
           );
           dispatch(
-            prepareFinalObject(
-              "FireNOCs[0].fireNOCDetails.propertyDetails.address",
-              payload.Properties[0].address
-            )
+            prepareFinalObject("FireNOCs[0].fireNOCDetails.propertyDetails.address", payload.Properties[0].address)
           );
           // dispatch(
           //   handleField(
@@ -187,12 +168,7 @@ export const propertyLocationDetails = getCommonCard(
         }),
         beforeFieldChange: async (action, state, dispatch) => {
           //Below only runs for citizen - not required here in employee
-          dispatch(
-            prepareFinalObject(
-              "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
-              action.value
-            )
-          );
+          dispatch(prepareFinalObject("FireNOCs[0].fireNOCDetails.propertyDetails.address.city", action.value));
           try {
             let payload = await httpRequest(
               "post",
@@ -262,8 +238,7 @@ export const propertyLocationDetails = getCommonCard(
         pattern: getPattern("BuildingStreet"),
         errorMessage: "Invalid Name",
 
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
       }),
       propertyStreetName: getTextField({
         label: {
@@ -279,23 +254,9 @@ export const propertyLocationDetails = getCommonCard(
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.street"
       }),
       propertyMohalla: {
-        // label: {
-        //   labelName: "Mohalla",
-        //   labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
-        // },
-        // placeholder: {
-        //   labelName: "Enter Mohalla",
-        //   labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
-        // },
-        // pattern: getPattern("BuildingStreet"),
-        // jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
-        // required: true,
-
-        uiFramework: "custom-containers-local",
-        moduleName: "egov-noc",
+        uiFramework: "custom-containers",
         componentPath: "AutosuggestContainer",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
         required: true,
         props: {
           style: {
@@ -310,8 +271,7 @@ export const propertyLocationDetails = getCommonCard(
             labelName: "Select Mohalla",
             labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER"
           },
-          jsonPath:
-            "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+          jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
           sourceJsonPath: "applyScreenMdmsData.tenant.localities",
           labelsFromLocalisation: true,
           suggestions: [],
@@ -346,7 +306,7 @@ export const propertyLocationDetails = getCommonCard(
         },
         pattern: getPattern("Pincode"),
         errorMessage: "Invalid Pincode",
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode",
+        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode"
         // required: true
       }),
       propertyGisCoordinates: {
@@ -358,8 +318,7 @@ export const propertyLocationDetails = getCommonCard(
             width: "100%",
             cursor: "pointer"
           },
-          jsonPath:
-            "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
+          jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
         },
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
         onClickDefination: {
@@ -381,8 +340,7 @@ export const propertyLocationDetails = getCommonCard(
                 labelName: "Select your property location on map",
                 labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_PLACEHOLDER"
               },
-              jsonPath:
-                "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
+              jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude",
               iconObj: {
                 iconName: "gps_fixed",
                 position: "end"
@@ -394,8 +352,7 @@ export const propertyLocationDetails = getCommonCard(
               props: {
                 disabled: true,
                 cursor: "pointer",
-                jsonPath:
-                  "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
+                jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.latitude"
               }
             })
           }
