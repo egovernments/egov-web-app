@@ -16,11 +16,7 @@ export const textToLocalMapping = {
     getTransformedLocalStorgaeLabels()
   ),
   "NOC No": getLocaleLabels("NOC No", "NOC_COMMON_TABLE_COL_NOC_NO_LABEL", getTransformedLocalStorgaeLabels()),
-  "NOC Type": getLocaleLabels(
-    "NOC Type",
-    "NOC_TYPE_LABEL",
-    getTransformedLocalStorgaeLabels()
-  ),
+  "NOC Type": getLocaleLabels("NOC Type", "NOC_TYPE_LABEL", getTransformedLocalStorgaeLabels()),
   "Owner Name": getLocaleLabels(
     "Owner Name",
     "NOC_COMMON_TABLE_COL_OWN_NAME_LABEL",
@@ -34,7 +30,7 @@ export const textToLocalMapping = {
   Status: getLocaleLabels("Status", "NOC_COMMON_TABLE_COL_STATUS_LABEL", getTransformedLocalStorgaeLabels()),
   INITIATED: getLocaleLabels("Initiated,", "NOC_INITIATED", getTransformedLocalStorgaeLabels()),
   APPLIED: getLocaleLabels("Applied", "NOC_APPLIED", getTransformedLocalStorgaeLabels()),
-  PAID: getLocaleLabels("Paid", "WF_NEWNOC_PAID", getTransformedLocalStorgaeLabels()),
+  DOCUMENTVERIFY: getLocaleLabels("Pending for Document Verification", "WF_NEWNOC_DOCUMENTVERIFY", getTransformedLocalStorgaeLabels()),
   APPROVED: getLocaleLabels("Approved", "NOC_APPROVED", getTransformedLocalStorgaeLabels()),
   REJECTED: getLocaleLabels("Rejected", "NOC_REJECTED", getTransformedLocalStorgaeLabels()),
   CANCELLED: getLocaleLabels("Cancelled", "NOC_CANCELLED", getTransformedLocalStorgaeLabels()),
@@ -118,11 +114,11 @@ const onRowClick = rowData => {
     case get(textToLocalMapping, "APPLIED"):
     case get(textToLocalMapping, "PENDINGPAYMENT"):
     case get(textToLocalMapping, "APPROVED"):
-    case get(textToLocalMapping, "PAID"):
     case get(textToLocalMapping, "PENDINGAPPROVAL"):
     case get(textToLocalMapping, "FIELDINSPECTION"):
     case get(textToLocalMapping, "REJECTED"):
     case get(textToLocalMapping, "CANCELLED"):
+    case get(textToLocalMapping, "DOCUMENTVERIFY"):
       return `${appendUrl}/fire-noc/search-preview?applicationNumber=${
         rowData[get(textToLocalMapping, "Application No")]
       }&tenantId=${rowData["tenantId"]}`;
