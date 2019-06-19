@@ -198,6 +198,9 @@ class TableData extends Component {
               <MenuItem value={"PT"}>
                 <Label label="CS_COMMON_INBOX_PT" />
               </MenuItem>
+              <MenuItem value={"FIRENOC"}>
+                <Label label="CS_COMMON_INBOX_FIRENOC" />
+              </MenuItem>
             </Select>
           </div>
           <InboxData data={inboxData[value]} />
