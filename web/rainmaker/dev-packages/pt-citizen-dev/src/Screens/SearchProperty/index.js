@@ -59,9 +59,7 @@ class SearchProperty extends Component {
     const { propertiesFound } = this.props;
     const { city, ids, oldpropertyids, mobileNumber } = form.fields || {};
     const tableData = this.extractTableData(propertiesFound);
-    this.setState({
-      searchResult: tableData
-    });
+
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
@@ -90,6 +88,9 @@ class SearchProperty extends Component {
       if (mobileNumber.value) {
         queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
       }
+      this.setState({
+        searchResult: tableData
+      });
       this.props.fetchProperties(queryParams);
       this.setState({ showTable: true });
     }
