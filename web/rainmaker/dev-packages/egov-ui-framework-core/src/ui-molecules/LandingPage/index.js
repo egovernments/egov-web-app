@@ -68,7 +68,7 @@ class LandingPage extends React.Component {
                         fontSize: 14,
                         color: "rgba(0, 0, 0, 0.8700000047683716)"
                       }}
-                      dynamicArray={[applicationCount]}
+                      dynamicArray={applicationCount ? [applicationCount] : [0]}
                     />
                   </div>
                 </CardContent>

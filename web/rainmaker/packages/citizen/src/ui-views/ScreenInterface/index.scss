@@ -28,7 +28,8 @@ body {
 }
 
 .apply-wizard-footer,
-.apply-success-footer {
+.apply-success-footer,
+.pay-success-footer {
   background-color: #ffffff;
   box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24);
   padding: 8px;
@@ -108,14 +109,17 @@ span[class^="MuiFormLabel-asterisk"] {
 } */
 
 @media only screen and (max-width: 768px) {
-  .apply-success-footer {
+  .apply-success-footer,
+  .pay-success-footer {
     width: 100vw;
     height: 150px;
     display: inline-block !important;
     text-align: center;
   }
+  .pay-success-footer {
+    height: 120px;
+  }
 }
-
 @media only screen and (min-width: 953px) {
   .app-container-iframe {
     position: fixed;

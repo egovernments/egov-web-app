@@ -1,7 +1,5 @@
 import React from "react";
 import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { showCityPicker } from "../utils";
-import { searchResults } from "./citizenSearchResource/citizenSearchResults";
 import { fetchData } from "./citizenSearchResource/citizenFunctions";
 import { cityPicker } from "./citypicker";
 import FormIcon from "../../../../ui-atoms-local/Icons/FormIcon";
