@@ -48,7 +48,7 @@ const screenConfig = {
       getQueryArg(window.location.href, "applicationNumber") ||
       get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].fireNOCDetails.applicationNumber");
     let tenantId =
-      getQueryArg(window.location.href, "applicationNumber") ||
+      getQueryArg(window.location.href, "tenantId") ||
       get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].tenantId");
     generateBill(dispatch, applicationNumber, tenantId);
     prepareDocumentsView(state, dispatch);
