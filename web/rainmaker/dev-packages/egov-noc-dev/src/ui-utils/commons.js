@@ -6,6 +6,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import store from "ui-redux/store";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -140,6 +141,12 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     // Set Channel and Financial Year
     set(payload[0], "fireNOCDetails.channel", "COUNTER");
     set(payload[0], "fireNOCDetails.financialYear", "2019-20");
+
+    // Set Dates to Epoch
+    let owners = get(payload[0], "fireNOCDetails.applicantDetails.owners", []);
+    owners.forEach((owner, index) => {
+      set(payload[0], `fireNOCDetails.applicantDetails.owners[${index}].dob`, convertDateToEpoch(get(owner, "dob")));
+    });
 
     let response;
     if (method === "CREATE") {
