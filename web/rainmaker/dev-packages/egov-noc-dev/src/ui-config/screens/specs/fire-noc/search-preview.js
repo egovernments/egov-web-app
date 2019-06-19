@@ -213,7 +213,7 @@ const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) =
   // const response = sampleSingleSearch();
   dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
   prepareDocumentsView(state, dispatch);
-  // prepareUoms(state, dispatch);
+  prepareUoms(state, dispatch);
   await loadPdfGenerationData(applicationNumber, tenantId);
   setDownloadMenu(state, dispatch);
 };
