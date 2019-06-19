@@ -148,7 +148,7 @@ export const abgSearchCard = getCommonCard({
       required: false,
       // pattern: getPattern("PropertyID"),
       // errorMessage: "Invalid Property ID",
-      jsonPath: "searchCriteria.consumerCode[0]"
+      jsonPath: "searchCriteria.consumerCode"
     })
   }),
 

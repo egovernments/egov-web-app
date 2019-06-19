@@ -71,6 +71,14 @@ export const searchApiCall = async (state, dispatch) => {
       )
     );
   } else {
+    for (var key in searchScreenObject) {
+      if (
+        searchScreenObject.hasOwnProperty(key) &&
+        searchScreenObject[key] === ""
+      ) {
+        delete searchScreenObject[key];
+      }
+    }
     searchScreenObject.tenantId = tenantId;
     const responseFromAPI = await getGroupBillSearch(searchScreenObject);
     const bills = (responseFromAPI && responseFromAPI.Bills) || [];
