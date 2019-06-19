@@ -109,7 +109,7 @@ const prepareUoms = (state, dispatch) => {
     uoms.forEach(uom => {
       uomsMap[uom.code] = uom.value;
     });
-    dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomsMap));
+    dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.buildings[${index}].uomsMap`, uomsMap));
   });
 };
 

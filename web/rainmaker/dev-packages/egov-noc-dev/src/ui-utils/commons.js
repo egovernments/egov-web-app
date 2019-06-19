@@ -74,7 +74,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       ];
       let finalUoms = [];
       allUoms.forEach(uom => {
-        let value = get(building.uoms, uom);
+        let value = get(building.uomsMap, uom);
         value &&
           finalUoms.push({
             code: uom,
@@ -281,7 +281,7 @@ export const furnishNocResponse = response => {
     uoms.forEach(uom => {
       uomMap[uom.code] = parseInt(uom.value);
     });
-    set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uoms`, uomMap);
+    set(response, `FireNOCs[0].fireNOCDetails.buildings[${index}].uomsMap`, uomMap);
 
     let usageType = get(building, "usageType");
     set(

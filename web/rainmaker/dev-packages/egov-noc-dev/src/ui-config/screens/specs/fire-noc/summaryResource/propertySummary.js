@@ -84,7 +84,7 @@ const propertyDetails = {
           { labelName: "No. of Floors", labelKey: "NOC_NO_OF_FLOORS_LABEL" },
           {
             jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uoms.NO_OF_FLOORS"
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_FLOORS"
           }
         ),
         noOfBasements: getLabelWithValue(
@@ -94,7 +94,7 @@ const propertyDetails = {
           },
           {
             jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uoms.NO_OF_BASEMENTS"
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_BASEMENTS"
           }
         ),
         plotSize: getLabelWithValue(
@@ -103,7 +103,7 @@ const propertyDetails = {
             labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
           },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uoms.PLOT_SIZE"
+            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.PLOT_SIZE"
           }
         ),
         groundBuiltupArea: getLabelWithValue(
@@ -113,7 +113,7 @@ const propertyDetails = {
           },
           {
             jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uoms.BUILTUP_AREA"
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.BUILTUP_AREA"
           }
         ),
         heightOfBuilding: getLabelWithValue(
@@ -123,7 +123,7 @@ const propertyDetails = {
           },
           {
             jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uoms.HEIGHT_OF_BUILDING"
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.HEIGHT_OF_BUILDING"
           }
         )
       })

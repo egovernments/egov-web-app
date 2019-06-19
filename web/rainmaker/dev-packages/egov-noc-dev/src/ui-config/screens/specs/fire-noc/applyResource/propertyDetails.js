@@ -26,7 +26,7 @@ const dynamic = (uom, path, buildingIndex) => {
         labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
       },
       pattern: /^[0-9]*$/i,
-      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uoms.${uom}`,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uomsMap.${uom}`,
       required: true,
       gridDefination: {
         xs: 12,
@@ -45,7 +45,7 @@ const dynamic = (uom, path, buildingIndex) => {
 const prepareSelectField = (uom, limit) => {
   let data = [];
   for (let i = 0; i <= limit; i++) {
-    data.push({ code: i });
+    data.push({ code: `${i}` });
   }
   return {
     ...getSelectField({
@@ -58,7 +58,7 @@ const prepareSelectField = (uom, limit) => {
       pattern: /^[0-9]*$/i,
       errorMessage: "Invalid number",
       required: true,
-      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uoms.${uom}`,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${uom}`,
       data: data,
       gridDefination: {
         xs: 12,
@@ -81,7 +81,7 @@ const prepareTextField = uom => {
       pattern: /^[0-9]*$/i,
       errorMessage: "Invalid Area",
       // required: true,
-      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uoms.${uom}`,
+      jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${uom}`,
       gridDefination: {
         xs: 12,
         sm: 12,
