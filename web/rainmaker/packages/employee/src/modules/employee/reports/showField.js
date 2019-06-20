@@ -27,6 +27,7 @@ export default class ShowField extends Component {
 
   renderFields = (obj) => {
     let des = getLocaleLabels(obj.label, obj.label);
+    const {localizationLabels} =this.props;
     let { maxDate } = this.state;
     let description = des;
 
@@ -289,7 +290,7 @@ export default class ShowField extends Component {
                   checked={obj.value && obj.value.indexOf(dd.value) > -1 ? true : false}
                   value={translate(dd.value)}
                   key={index}
-                  primaryText={translate(dd.label)}
+                  primaryText={getLocaleLabels(dd.label,dd.label,localizationLabels)}
                 />
               ))}
             </SelectField>
