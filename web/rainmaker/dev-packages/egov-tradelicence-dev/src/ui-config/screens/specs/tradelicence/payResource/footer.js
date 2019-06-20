@@ -33,17 +33,19 @@ export const callPGService = async (state, dispatch) => {
       }
     ];
     const billPayload = await getBill(queryObj);
-    const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
-      item => {
-        if (item.businessService === "TL") {
-          item.amountPaid = get(
-            billPayload,
-            "billResponse.Bill[0].billDetails[0].totalAmount"
-          );
-        }
-        return item;
+    const taxAndPayments = get(
+      billPayload,
+      "billResponse.Bill[0].taxAndPayments",
+      []
+    ).map(item => {
+      if (item.businessService === "TL") {
+        item.amountPaid = get(
+          billPayload,
+          "billResponse.Bill[0].billDetails[0].totalAmount"
+        );
       }
-    );
+      return item;
+    });
     try {
       const requestBody = {
         Transaction: {

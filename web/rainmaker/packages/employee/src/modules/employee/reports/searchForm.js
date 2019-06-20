@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
+import Grid from '@material-ui/core/Grid';
 import { Card, Button } from "components";
 import { CardHeader, CardText } from "material-ui/Card";
 import { brown500, red500, white, orange800 } from "material-ui/styles/colors";
@@ -245,7 +246,7 @@ class ShowForm extends Component {
 
   // set the value here, introduce the disabled
   handleFormFields = () => {
-    let { metaData, searchForm } = this.props;
+    let { metaData, searchForm ,labels} = this.props;
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
         item["value"] = !_.isEmpty(searchForm) ? (searchForm[item.name] ? searchForm[item.name] : "") : "";
@@ -267,6 +268,7 @@ class ShowForm extends Component {
               dateField={this.state.datefield}
               dateError={this.state.dateError}
               handler={this.handleChange}
+              localizationLabels = {labels}
             />
           )
         );
@@ -641,7 +643,7 @@ class ShowForm extends Component {
               textChildren={
                 <div>
                   <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
-                  <Row>{this.handleFormFields()}</Row>
+                  <Grid container spacing={8}>{this.handleFormFields()}</Grid>
                   <Row>
                     <div style={{ marginTop: "16px", textAlign: "center" }} className="col-xs-12">
                       <RaisedButton
@@ -695,6 +697,7 @@ class ShowForm extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const labels = get(state.app , "localizationLabels")
   return {
     searchForm: state.formtemp.form,
     fieldErrors: state.formtemp.fieldErrors,
@@ -704,6 +707,7 @@ const mapStateToProps = (state) => {
     metaData: state.report.metaData,
     reportHistory: state.report.reportHistory,
     reportIndex: state.report.reportIndex,
+    labels
   };
 };
 

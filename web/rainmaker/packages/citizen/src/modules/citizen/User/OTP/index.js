@@ -55,7 +55,8 @@ class OTP extends Component {
 
   resendOTP = () => {
     const { sendOTP, intent } = this.props;
-    sendOTP(intent);
+    if (intent) sendOTP(intent);
+    else if (getQueryArg("", "smsLink")) this.sendOtpForAutoLogin();
   };
 
   render() {

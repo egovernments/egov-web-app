@@ -36,7 +36,7 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "City",
               labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
             },
-            labelPrefix: {
+            localePrefix: {
               moduleName: "TENANT",
               masterName: "TENANTS"
             },
@@ -45,18 +45,25 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "Select City",
               labelKey: "TL_SELECT_CITY"
             },
-            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+            sourceJsonPath: "applyScreenMdmsData.tenant.citiesByModule",
+            // "applyScreenMdmsData.common-masters.citiesByModule.UC.tenants",
             jsonPath: "Demands[0].tenantId",
             required: true,
-            disabled: true,
             props: {
               required: true,
-              disabled: false,
               value: tenantId,
               disabled: true
             }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
+            const citiesByModule = get(
+              state,
+              "common.citiesByModule.UC.tenants",
+              []
+            );
+            if (!citiesByModule.find(item => item.code === action.value)) {
+              return action;
+            }
             let requestBody = {
               MdmsCriteria: {
                 tenantId: action.value,
@@ -354,13 +361,21 @@ const setTaxHeadFields = (action, state, dispatch) => {
       "preparedFinalObject.Demands[0].demandDetails",
       []
     ).length;
+    const taxFields = get(
+      state.screenConfiguration,
+      "screenConfig.newCollection.components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+      {}
+    );
+    const taxFieldKeys = Object.keys(taxFields).filter(item =>
+      item.startsWith("taxheadField_")
+    );
     if (noOfPreviousTaxHeads > 0) {
-      for (let i = 0; i < noOfPreviousTaxHeads; i++) {
+      for (let i = 0; i < taxFieldKeys.length; i++) {
         dispatch(
           handleField(
             "newCollection",
             "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-            `taxheadField_${i}.props.value`,
+            `${taxFieldKeys[i]}.props.value`,
             ""
           )
         );
@@ -368,7 +383,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
           handleField(
             "newCollection",
             "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-            `taxheadField_${i}.visible`,
+            `${taxFieldKeys[i]}.visible`,
             false
           )
         );
@@ -393,7 +408,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
         handleField(
           "newCollection",
           "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-          `taxheadField_${index}`,
+          `taxheadField_${item.code.split(".").join("_")}`,
           getTextField({
             label: {
               labelName: "Tax Amount",
@@ -403,8 +418,10 @@ const setTaxHeadFields = (action, state, dispatch) => {
               labelName: "Enter Tax Amount",
               labelKey: "UC_AMOUNT_TO_BE_COLLECTED_PLACEHOLDER"
             },
-            componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${index}`,
-            required: item.required || false,
+            componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${item.code
+              .split(".")
+              .join("_")}`,
+            required: item.isRequired || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
             visible: true,

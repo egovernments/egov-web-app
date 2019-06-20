@@ -3,7 +3,21 @@ import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configurat
 import store from "../../../../ui-redux/store";
 import { getEmployeeName } from "../utils/index";
 import { getMdmsData } from "../utils";
+import {
+  getLocalization,
+  getLocale
+} from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getUlbGradeLabel,
+  getTranslatedLabel,
+  transformById,
+  getTransformedLocale,
+  getLocaleLabels
+} from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+
+const localizationLabels = JSON.parse(getLocalization("localization_en_IN"));
+const transfomedKeys = transformById(localizationLabels, "code");
 
 const ifNotNull = value => {
   return !["", "NA", "null", null].includes(value);
@@ -52,15 +66,25 @@ export const loadReceiptData = async response => {
     data.taxPeriod = `${fromDate} - ${toDate}`;
     data.consumerName = get(response, "Bill[0].payerName");
     data.mobileNumber = get(response, "Bill[0].mobileNumber");
-    data.serviceCategory = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[0];
-    const serviceType = get(
-      response,
-      "Bill[0].billDetails[0].businessService"
-    ).split(".")[1];
-    data.serviceType = serviceType ? serviceType : "NONE";
+
+    const serviceCatLabel = getTransformedLocale(
+      get(response, "Bill[0].billDetails[0].businessService").split(".")[0]
+    );
+    data.serviceCategory = getLocaleLabels(
+      "",
+      `BILLINGSERVICE_BUSINESSSERVICE_${serviceCatLabel}`,
+      transfomedKeys
+    );
+
+    const serviceTypeLabel = getTransformedLocale(
+      get(response, "Bill[0].billDetails[0].businessService")
+    );
+    const serviceType = getLocaleLabels(
+      "",
+      `BILLINGSERVICE_BUSINESSSERVICE_${serviceTypeLabel}`,
+      transfomedKeys
+    );
+    data.serviceType = serviceType ? serviceType : "NA";
     data.amountPaid = get(response, "Bill[0].billDetails[0].amountPaid", 0);
     data.totalAmount = get(response, "Bill[0].billDetails[0].totalAmount", 0);
     data.amountDue = data.totalAmount - data.amountPaid;
@@ -100,6 +124,11 @@ export const loadReceiptData = async response => {
 };
 
 export const loadMdmsData = async tenantid => {
+  let localStorageLabels = JSON.parse(
+    window.localStorage.getItem(`localization_${getLocale()}`)
+  );
+  let localizationLabels = transformById(localStorageLabels, "code");
+
   let data = {};
   let queryObject = [
     {
@@ -126,21 +155,37 @@ export const loadMdmsData = async tenantid => {
       return item.code == tenantid;
     });
     /** START Corporation name generation logic */
-    let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
-    let name = get(ulbData, "city.name", "NA");
-    if (ulbGrade) {
-      if (ulbGrade === "NP") {
-        data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
-      } else if (ulbGrade === "Municipal Corporation") {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      } else if (ulbGrade.includes("MC Class")) {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
-      } else {
-        data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-      }
-    } else {
-      data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
-    }
+    // let ulbGrade = get(ulbData, "city.ulbGrade", "NA");
+    // let name = get(ulbData, "city.name", "NA");
+    // if (ulbGrade) {
+    //   if (ulbGrade === "NP") {
+    //     data.corporationName = `${name.toUpperCase()} NAGAR PANCHAYAT`;
+    //   } else if (ulbGrade === "Municipal Corporation") {
+    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    //   } else if (ulbGrade.includes("MC Class")) {
+    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL COUNCIL`;
+    //   } else {
+    //     data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    //   }
+    // } else {
+    //   data.corporationName = `${name.toUpperCase()} MUNICIPAL CORPORATION`;
+    // }
+    const ulbGrade = get(ulbData, "city.ulbGrade", "NA")
+      ? getUlbGradeLabel(get(ulbData, "city.ulbGrade", "NA"))
+      : "MUNICIPAL CORPORATION";
+
+    const cityKey = `TENANT_TENANTS_${get(ulbData, "code", "NA")
+      .toUpperCase()
+      .replace(/[.]/g, "_")}`;
+
+    data.corporationName = `${getTranslatedLabel(
+      cityKey,
+      localizationLabels
+    ).toUpperCase()} ${getTranslatedLabel(
+      ulbGrade,
+      localizationLabels
+    ).toUpperCase()}`;
+
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
     data.corporationContact = get(ulbData, "contactNumber", "NA");
@@ -151,9 +196,3 @@ export const loadMdmsData = async tenantid => {
 };
 
 /** Data used for creation of receipt is generated and stored in local storage here */
-export const loadReceiptGenerationData = (applicationNumber, tenant) => {
-  /** Logo loaded and stored in local storage in base64 */
-  // loadApplicationData(applicationNumber, tenant); //PB-TL-2018-09-27-000004
-  loadReceiptData(applicationNumber, tenant); //PT-107-001330:AS-2018-08-29-001426     //PT consumerCode
-  loadMdmsData(tenant);
-};
