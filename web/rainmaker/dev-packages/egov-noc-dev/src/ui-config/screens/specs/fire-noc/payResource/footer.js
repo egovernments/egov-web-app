@@ -72,7 +72,8 @@ const moveToSuccess = (dispatch, receiptNumber) => {
   const tenantId = getQueryArg(window.location, "tenantId");
   const purpose = "pay";
   const status = "success";
-  const appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
+  const appendUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
   dispatch(
     setRoute(
       `${appendUrl}/fire-noc/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}&secondNumber=${receiptNumber}`
@@ -128,7 +129,13 @@ const allDateToEpoch = (finalObj, jsonPaths) => {
   });
 };
 
-const updatePayAction = async (state, dispatch, applicationNo, tenantId, receiptNumber) => {
+const updatePayAction = async (
+  state,
+  dispatch,
+  applicationNo,
+  tenantId,
+  receiptNumber
+) => {
   try {
     let response = await getSearchResults([
       {
@@ -138,14 +145,26 @@ const updatePayAction = async (state, dispatch, applicationNo, tenantId, receipt
       { key: "applicationNumber", value: applicationNo }
     ]);
     set(response, "FireNOCs[0].fireNOCDetails.action", "PAY");
-    response = await httpRequest("post", "/firenoc-services/v1/_update", "", [], {
-      FireNOCs: get(response, "FireNOCs", [])
-    });
+    response = await httpRequest(
+      "post",
+      "/firenoc-services/v1/_update",
+      "",
+      [],
+      {
+        FireNOCs: get(response, "FireNOCs", [])
+      }
+    );
     if (get(response, "FireNOCs", []).length > 0) {
       moveToSuccess(dispatch, receiptNumber);
     }
   } catch (e) {
-    dispatch(toggleSnackbar(true, e.message, "error"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: e.message, labelKey: e.message },
+        "error"
+      )
+    );
     console.log(e);
   }
 };
@@ -159,7 +178,11 @@ const callBackForPay = async (state, dispatch) => {
     state.screenConfiguration.preparedFinalObject,
     "ReceiptTemp[0].instrument.instrumentType.name"
   );
-  const { selectedTabIndex, selectedPaymentMode, fieldsToValidate } = getSelectedTabIndex(selectedPaymentType);
+  const {
+    selectedTabIndex,
+    selectedPaymentMode,
+    fieldsToValidate
+  } = getSelectedTabIndex(selectedPaymentType);
 
   isFormValid =
     fieldsToValidate
@@ -172,7 +195,12 @@ const callBackForPay = async (state, dispatch) => {
         );
       })
       .indexOf(false) === -1;
-  if (get(state.screenConfiguration.preparedFinalObject, "Bill[0].billDetails[0].manualReceiptDate")) {
+  if (
+    get(
+      state.screenConfiguration.preparedFinalObject,
+      "Bill[0].billDetails[0].manualReceiptDate"
+    )
+  ) {
     isFormValid = validateFields(
       `components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.g8Details.children.cardContent.children.receiptDetailsCardContainer.children`,
       state,
@@ -185,10 +213,16 @@ const callBackForPay = async (state, dispatch) => {
 
   //------------- Form related ----------------//
 
-  const ReceiptDataTemp = get(state.screenConfiguration.preparedFinalObject, "ReceiptTemp[0]");
+  const ReceiptDataTemp = get(
+    state.screenConfiguration.preparedFinalObject,
+    "ReceiptTemp[0]"
+  );
   let finalReceiptData = cloneDeep(ReceiptDataTemp);
 
-  allDateToEpoch(finalReceiptData, ["Bill[0].billDetails[0].manualReceiptDate", "instrument.transactionDateInput"]);
+  allDateToEpoch(finalReceiptData, [
+    "Bill[0].billDetails[0].manualReceiptDate",
+    "instrument.transactionDateInput"
+  ]);
 
   // if (get(finalReceiptData, "Bill[0].billDetails[0].manualReceiptDate")) {
   //   convertDateFieldToEpoch(
@@ -204,11 +238,19 @@ const callBackForPay = async (state, dispatch) => {
   //   );
   // }
   if (get(finalReceiptData, "instrument.transactionDateInput")) {
-    set(finalReceiptData, "instrument.instrumentDate", get(finalReceiptData, "instrument.transactionDateInput"));
+    set(
+      finalReceiptData,
+      "instrument.instrumentDate",
+      get(finalReceiptData, "instrument.transactionDateInput")
+    );
   }
 
   if (get(finalReceiptData, "instrument.transactionNumber")) {
-    set(finalReceiptData, "instrument.instrumentNumber", get(finalReceiptData, "instrument.transactionNumber"));
+    set(
+      finalReceiptData,
+      "instrument.instrumentNumber",
+      get(finalReceiptData, "instrument.transactionNumber")
+    );
   }
 
   if (selectedPaymentType === "Card") {
@@ -217,7 +259,16 @@ const callBackForPay = async (state, dispatch) => {
       get(finalReceiptData, "instrument.transactionNumber") !==
       get(finalReceiptData, "instrument.transactionNumberConfirm")
     ) {
-      dispatch(toggleSnackbar(true, "Transaction numbers don't match !", "error"));
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Transaction numbers don't match !",
+            labelKey: "ERR_TRANSACTION_NO_DONT_MATCH"
+          },
+          "error"
+        )
+      );
       return;
     }
   }
@@ -244,18 +295,43 @@ const callBackForPay = async (state, dispatch) => {
         [],
         {}
       );
-      let receiptNumber = get(response, "Receipt[0].Bill[0].billDetails[0].receiptNumber", null);
+      let receiptNumber = get(
+        response,
+        "Receipt[0].Bill[0].billDetails[0].receiptNumber",
+        null
+      );
 
       // Search NOC application and update action to PAY
       const applicationNo = getQueryArg(window.location, "applicationNumber");
       const tenantId = getQueryArg(window.location, "tenantId");
-      await updatePayAction(state, dispatch, applicationNo, tenantId, receiptNumber);
+      await updatePayAction(
+        state,
+        dispatch,
+        applicationNo,
+        tenantId,
+        receiptNumber
+      );
     } catch (e) {
-      dispatch(toggleSnackbar(true, e.message, "error"));
+      dispatch(
+        toggleSnackbar(
+          true,
+          { labelName: e.message, labelKey: e.message },
+          "error"
+        )
+      );
       console.log(e);
     }
   } else {
-    dispatch(toggleSnackbar(true, "Please fill all the mandatory fields", "warning"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Please fill all the mandatory fields",
+          labelKey: "ERR_FILL_ALL_FIELDS"
+        },
+        "warning"
+      )
+    );
   }
 };
 

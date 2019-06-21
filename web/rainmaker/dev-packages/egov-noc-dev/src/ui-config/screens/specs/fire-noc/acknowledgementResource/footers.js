@@ -6,14 +6,18 @@ import { getBill, ifUserRoleExists } from "../../utils";
 import generatePdf from "../../utils/receiptPdf";
 
 export const getRedirectionURL = () => {
-  const redirectionURL = ifUserRoleExists("CITIZEN") ? "/fire-noc/home" : "/inbox";
+  const redirectionURL = ifUserRoleExists("CITIZEN")
+    ? "/fire-noc/home"
+    : "/inbox";
   return redirectionURL;
 };
 
 export const callPGService = async (state, dispatch) => {
   const tenantId = getQueryArg(window.location.href, "tenantId");
   // let callbackUrl = "/fire-noc/paymentRedirectPage";
-  let callbackUrl = `${window.origin}/egov-ui-framework/fire-noc/paymentRedirectPage`;
+  let callbackUrl = `${
+    window.origin
+  }/egov-ui-framework/fire-noc/paymentRedirectPage`;
   try {
     const queryObj = [
       {
@@ -30,12 +34,17 @@ export const callPGService = async (state, dispatch) => {
       }
     ];
     const billPayload = await getBill(queryObj);
-    const taxAndPayments = get(billPayload, "Bill[0].taxAndPayments", []).map(item => {
-      if (item.businessService === "FIRENOC") {
-        item.amountPaid = get(billPayload, "Bill[0].billDetails[0].totalAmount");
+    const taxAndPayments = get(billPayload, "Bill[0].taxAndPayments", []).map(
+      item => {
+        if (item.businessService === "FIRENOC") {
+          item.amountPaid = get(
+            billPayload,
+            "Bill[0].billDetails[0].totalAmount"
+          );
+        }
+        return item;
       }
-      return item;
-    });
+    );
     try {
       const requestBody = {
         Transaction: {
@@ -79,36 +88,65 @@ const getCommonApplyFooter = children => {
 };
 
 //Function for go to home button
-export const gotoHomeFooter = getCommonApplyFooter({
-  gotoHome: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "16px"
-      }
-    },
-    children: {
-      //downloadReceiptButtonLabel: getLabel
-      goToHomeButtonLabel: getLabel({
-        labelName: "GO TO HOME",
-        labelKey: "NOC_COMMON_BUTTON_HOME"
-      })
-    },
-    // Check this onClickDefinition later again
-    onClickDefination: {
-      action: "page_change",
-      path: `${getRedirectionURL()}`
-    }
-  }
-});
+// export const gotoHomeFooter = getCommonApplyFooter({
+//   gotoHome: {
+//     componentPath: "Button",
+//     props: {
+//       variant: "outlined",
+//       color: "primary",
+//       style: {
+//         minWidth: "200px",
+//         height: "48px",
+//         marginRight: "16px"
+//       }
+//     },
+//     children: {
+//       //downloadReceiptButtonLabel: getLabel
+//       goToHomeButtonLabel: getLabel({
+//         labelName: "GO TO HOME",
+//         labelKey: "NOC_COMMON_BUTTON_HOME"
+//       })
+//     },
+//     // Check this onClickDefinition later again
+//     onClickDefination: {
+//       action: "page_change",
+//       path: `${getRedirectionURL()}`
+//     }
+//   }
+// });
 
 //Function for application success(show those 3 buttons )
-export const applicationSuccessFooter = (state, dispatch, applicationNumber, tenant) => {
+export const applicationSuccessFooter = (
+  state,
+  dispatch,
+  applicationNumber,
+  tenant
+) => {
   return getCommonApplyFooter({
+    gotoHome: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "16px"
+        }
+      },
+      children: {
+        //downloadReceiptButtonLabel: getLabel
+        goToHomeButtonLabel: getLabel({
+          labelName: "GO TO HOME",
+          labelKey: "NOC_COMMON_BUTTON_HOME"
+        })
+      },
+      // Check this onClickDefinition later again
+      onClickDefination: {
+        action: "page_change",
+        path: `${getRedirectionURL()}`
+      }
+    },
     downloadFormButton: {
       componentPath: "Button",
       props: {
@@ -373,7 +411,10 @@ export const paymentSuccessFooter = () => {
       },
       onClickDefination: {
         action: "page_change",
-        path: process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework/fire-noc/search` : `/fire-noc/search`
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/search`
+            : `/fire-noc/search`
       }
       // visible: false
     }

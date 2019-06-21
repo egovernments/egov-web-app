@@ -8,7 +8,11 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils/api";
 import isUndefined from "lodash/isUndefined";
-import { getCommonCard, getCommonValue, getCommonCaption } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonCard,
+  getCommonValue,
+  getCommonCaption
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { sampleGetBill } from "../../../../ui-utils/sampleResponses";
 
 export const getCommonApplyFooter = children => {
@@ -39,26 +43,43 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
   let translatedLabel = null;
   if (localizationLabels && localizationLabels.hasOwnProperty(labelKey)) {
     translatedLabel = localizationLabels[labelKey];
-    if (translatedLabel && typeof translatedLabel === "object" && translatedLabel.hasOwnProperty("message"))
+    if (
+      translatedLabel &&
+      typeof translatedLabel === "object" &&
+      translatedLabel.hasOwnProperty("message")
+    )
       translatedLabel = translatedLabel.message;
   }
   return translatedLabel || labelKey;
 };
 
-export const validateFields = (objectJsonPath, state, dispatch, screen = "apply") => {
-  const fields = get(state.screenConfiguration.screenConfig[screen], objectJsonPath, {});
+export const validateFields = (
+  objectJsonPath,
+  state,
+  dispatch,
+  screen = "apply"
+) => {
+  const fields = get(
+    state.screenConfiguration.screenConfig[screen],
+    objectJsonPath,
+    {}
+  );
   let isFormValid = true;
   for (var variable in fields) {
     if (fields.hasOwnProperty(variable)) {
       if (
         fields[variable] &&
         fields[variable].props &&
-        (fields[variable].props.disabled === undefined || !fields[variable].props.disabled) &&
+        (fields[variable].props.disabled === undefined ||
+          !fields[variable].props.disabled) &&
         !validate(
           screen,
           {
             ...fields[variable],
-            value: get(state.screenConfiguration.preparedFinalObject, fields[variable].jsonPath)
+            value: get(
+              state.screenConfiguration.preparedFinalObject,
+              fields[variable].jsonPath
+            )
           },
           dispatch,
           true
@@ -158,11 +179,15 @@ export const getFinancialYearDates = (format, et) => {
   } else {
     switch (format) {
       case "dd/mm/yyyy":
-        financialDates.startDate = `01/04/${(date.getFullYear() - 1).toString()}`;
+        financialDates.startDate = `01/04/${(
+          date.getFullYear() - 1
+        ).toString()}`;
         financialDates.endDate = `31/03/${date.getFullYear().toString()}`;
         break;
       case "yyyy-mm-dd":
-        financialDates.startDate = `${(date.getFullYear() - 1).toString()}-04-01`;
+        financialDates.startDate = `${(
+          date.getFullYear() - 1
+        ).toString()}-04-01`;
         financialDates.endDate = `${date.getFullYear().toString()}-03-31`;
         break;
     }
@@ -171,8 +196,13 @@ export const getFinancialYearDates = (format, et) => {
 };
 
 export const gotoApplyWithStep = (state, dispatch, step) => {
-  const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
-  const applicationNumberQueryString = applicationNumber ? `&applicationNumber=${applicationNumber}` : ``;
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  const applicationNumberQueryString = applicationNumber
+    ? `&applicationNumber=${applicationNumber}`
+    : ``;
   const applyUrl =
     process.env.REACT_APP_SELF_RUNNING === "true"
       ? `/egov-ui-framework/fire-noc/apply?step=${step}${applicationNumberQueryString}`
@@ -181,8 +211,14 @@ export const gotoApplyWithStep = (state, dispatch, step) => {
 };
 
 export const showHideAdhocPopup = (state, dispatch, screenKey) => {
-  let toggle = get(state.screenConfiguration.screenConfig[screenKey], "components.adhocDialog.props.open", false);
-  dispatch(handleField(screenKey, "components.adhocDialog", "props.open", !toggle));
+  let toggle = get(
+    state.screenConfiguration.screenConfig[screenKey],
+    "components.adhocDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField(screenKey, "components.adhocDialog", "props.open", !toggle)
+  );
 };
 
 export const getCommonGrayCard = children => {
@@ -237,7 +273,9 @@ export const getLabelOnlyValue = (value, props = {}) => {
 export const convertDateTimeToEpoch = dateTimeString => {
   //example input format : "26-07-2018 17:43:21"
   try {
-    const parts = dateTimeString.match(/(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/);
+    const parts = dateTimeString.match(
+      /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/
+    );
     return Date.UTC(+parts[3], parts[2] - 1, +parts[1], +parts[4], +parts[5]);
   } catch (e) {
     return dateTimeString;
@@ -279,9 +317,14 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
     }
 
     //Same no search in whole array
-    const matchingOwnerIndex = owners.findIndex(item => item.userName === ownerNo);
+    const matchingOwnerIndex = owners.findIndex(
+      item => item.userName === ownerNo
+    );
     if (matchingOwnerIndex > -1) {
-      if (!isUndefined(owners[matchingOwnerIndex].userActive) && owners[matchingOwnerIndex].userActive === false) {
+      if (
+        !isUndefined(owners[matchingOwnerIndex].userActive) &&
+        owners[matchingOwnerIndex].userActive === false
+      ) {
         //rearrange
         dispatch(
           prepareFinalObject(
@@ -290,12 +333,24 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
           )
         );
         dispatch(
-          prepareFinalObject(`FireNOCs[0].fireNOCDetails.applicantDetails.owners[${cardIndex}].userActive`, false)
+          prepareFinalObject(
+            `FireNOCs[0].fireNOCDetails.applicantDetails.owners[${cardIndex}].userActive`,
+            false
+          )
         );
         //Delete if current card was not part of oldOwners array - no need to save.
-        if (oldOwnersArr.findIndex(item => owners[cardIndex].userName === item.userName) == -1) {
+        if (
+          oldOwnersArr.findIndex(
+            item => owners[cardIndex].userName === item.userName
+          ) == -1
+        ) {
           owners.splice(cardIndex, 1);
-          dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.applicantDetails.owners`, owners));
+          dispatch(
+            prepareFinalObject(
+              `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
+              owners
+            )
+          );
         }
       } else {
         dispatch(
@@ -312,10 +367,16 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       return;
     } else {
       //New number search only
-      let payload = await httpRequest("post", "/user/_search?tenantId=pb", "_search", [], {
-        tenantId: "pb",
-        userName: `${ownerNo}`
-      });
+      let payload = await httpRequest(
+        "post",
+        "/user/_search?tenantId=pb",
+        "_search",
+        [],
+        {
+          tenantId: "pb",
+          userName: `${ownerNo}`
+        }
+      );
       if (payload && payload.user && payload.user.hasOwnProperty("length")) {
         if (payload.user.length === 0) {
           dispatch(
@@ -329,11 +390,18 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
             )
           );
         } else {
-          const userInfo = payload.user && payload.user[0] && JSON.parse(JSON.stringify(payload.user[0]));
+          const userInfo =
+            payload.user &&
+            payload.user[0] &&
+            JSON.parse(JSON.stringify(payload.user[0]));
           if (userInfo && userInfo.createdDate) {
             userInfo.createdDate = convertDateTimeToEpoch(userInfo.createdDate);
-            userInfo.lastModifiedDate = convertDateTimeToEpoch(userInfo.lastModifiedDate);
-            userInfo.pwdExpiryDate = convertDateTimeToEpoch(userInfo.pwdExpiryDate);
+            userInfo.lastModifiedDate = convertDateTimeToEpoch(
+              userInfo.lastModifiedDate
+            );
+            userInfo.pwdExpiryDate = convertDateTimeToEpoch(
+              userInfo.pwdExpiryDate
+            );
           }
           let currOwnersArr = get(
             state.screenConfiguration.preparedFinalObject,
@@ -348,18 +416,34 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
           //     userActive: false
           //   });
           // }
-          dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.applicantDetails.owners`, currOwnersArr));
+          dispatch(
+            prepareFinalObject(
+              `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
+              currOwnersArr
+            )
+          );
         }
       }
     }
   } catch (e) {
-    dispatch(toggleSnackbar(true, e.message, "info"));
+    dispatch(
+      toggleSnackbar(
+        true,
+        { labelName: e.message, labelKey: e.message },
+        "info"
+      )
+    );
   }
 };
 
 export const getReceiptData = async queryObject => {
   try {
-    const response = await httpRequest("post", "collection-services/receipts/_search", "", queryObject);
+    const response = await httpRequest(
+      "post",
+      "collection-services/receipts/_search",
+      "",
+      queryObject
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -369,7 +453,12 @@ export const getReceiptData = async queryObject => {
 
 export const getMdmsData = async queryObject => {
   try {
-    const response = await httpRequest("post", "egov-mdms-service/v1/_get", "", queryObject);
+    const response = await httpRequest(
+      "post",
+      "egov-mdms-service/v1/_get",
+      "",
+      queryObject
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -380,7 +469,13 @@ export const getMdmsData = async queryObject => {
 // Get user data from uuid API call
 export const getUserDataFromUuid = async bodyObject => {
   try {
-    const response = await httpRequest("post", "/user/_search", "", [], bodyObject);
+    const response = await httpRequest(
+      "post",
+      "/user/_search",
+      "",
+      [],
+      bodyObject
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -390,7 +485,12 @@ export const getUserDataFromUuid = async bodyObject => {
 
 export const getBill = async queryObject => {
   try {
-    const response = await httpRequest("post", "/firenoc-calculator/v1/_getbill", "", queryObject);
+    const response = await httpRequest(
+      "post",
+      "/firenoc-calculator/v1/_getbill",
+      "",
+      queryObject
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -412,7 +512,12 @@ export const searchBill = async (dispatch, applicationNumber, tenantId) => {
       const estimateData = createEstimateData(payload.Bill[0]);
       estimateData &&
         estimateData.length &&
-        dispatch(prepareFinalObject("applyScreenMdmsData.estimateCardData", estimateData));
+        dispatch(
+          prepareFinalObject(
+            "applyScreenMdmsData.estimateCardData",
+            estimateData
+          )
+        );
     }
   } catch (e) {
     console.log(e);
@@ -450,7 +555,12 @@ export const generateBill = async (dispatch, applicationNumber, tenantId) => {
         const estimateData = createEstimateData(payload.Bill[0]);
         estimateData &&
           estimateData.length &&
-          dispatch(prepareFinalObject("applyScreenMdmsData.estimateCardData", estimateData));
+          dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.estimateCardData",
+              estimateData
+            )
+          );
       }
     }
   } catch (e) {

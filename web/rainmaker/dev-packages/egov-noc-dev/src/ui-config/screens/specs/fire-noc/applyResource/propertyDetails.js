@@ -45,7 +45,7 @@ const dynamic = (uom, path, buildingIndex) => {
 const prepareSelectField = (uom, limit) => {
   let data = [];
   for (let i = 0; i <= limit; i++) {
-    data.push({ code: `${i}` });
+    data.push({ code: i });
   }
   return {
     ...getSelectField({
@@ -92,7 +92,15 @@ const prepareTextField = uom => {
 };
 
 const checkUomIsDefault = uom => {
-  if (["NO_OF_FLOORS", "NO_OF_BASEMENTS", "PLOT_SIZE", "BUILTUP_AREA", "HEIGHT_OF_BUILDING"].indexOf(uom) >= 0) {
+  if (
+    [
+      "NO_OF_FLOORS",
+      "NO_OF_BASEMENTS",
+      "PLOT_SIZE",
+      "BUILTUP_AREA",
+      "HEIGHT_OF_BUILDING"
+    ].indexOf(uom) >= 0
+  ) {
     return true;
   }
   return false;
@@ -190,7 +198,10 @@ const commonBuildingData = buildingType => {
         }
       }),
       beforeFieldChange: (action, state, dispatch) => {
-        let path = action.componentJsonpath.replace(/.buildingUsageType$/, ".buildingSubUsageType");
+        let path = action.componentJsonpath.replace(
+          /.buildingUsageType$/,
+          ".buildingSubUsageType"
+        );
         let buildingUsageTypeData = get(
           state,
           "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
@@ -199,7 +210,9 @@ const commonBuildingData = buildingType => {
         let buildingSubUsageTypeData = buildingUsageTypeData.filter(item => {
           return item.active && item.code.startsWith(action.value);
         });
-        dispatch(handleField("apply", path, "props.data", buildingSubUsageTypeData));
+        dispatch(
+          handleField("apply", path, "props.data", buildingSubUsageTypeData)
+        );
       }
     },
     buildingSubUsageType: {
@@ -236,14 +249,18 @@ const commonBuildingData = buildingType => {
         let uoms = get(uomsList, "[0].uom", []);
 
         // Get the path of the current childrens
-        let path = action.componentJsonpath.replace(/.buildingSubUsageType$/, "");
+        let path = action.componentJsonpath.replace(
+          /.buildingSubUsageType$/,
+          ""
+        );
 
         // Get the index in case on multi-item
         let buildingIndex = get(path.match(/\d+/), "[0]", 0);
 
         // Remove previous dynamic uoms
         previousUoms.forEach(uom => {
-          !checkUomIsDefault(uom) && dispatch(handleField("apply", `${path}.${uom}`, "visible", false));
+          !checkUomIsDefault(uom) &&
+            dispatch(handleField("apply", `${path}.${uom}`, "visible", false));
         });
 
         // Set required fields defaults
@@ -256,7 +273,9 @@ const commonBuildingData = buildingType => {
           if (checkUomIsDefault(uom)) {
             setMandatory(dispatch, `${path}.${uom}`, true);
           } else {
-            dispatch(handleField("apply", path, uom, dynamic(uom, path, buildingIndex)));
+            dispatch(
+              handleField("apply", path, uom, dynamic(uom, path, buildingIndex))
+            );
           }
         });
 
@@ -319,11 +338,39 @@ export const propertyDetails = getCommonCard({
         let multipleBuildingContainerJsonPath =
           "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.multipleBuildingContainer";
         if (action.value === "SINGLE") {
-          dispatch(handleField("apply", singleBuildingContainerJsonPath, "props.style", {}));
-          dispatch(handleField("apply", multipleBuildingContainerJsonPath, "props.style", { display: "none" }));
+          dispatch(
+            handleField(
+              "apply",
+              singleBuildingContainerJsonPath,
+              "props.style",
+              {}
+            )
+          );
+          dispatch(
+            handleField(
+              "apply",
+              multipleBuildingContainerJsonPath,
+              "props.style",
+              { display: "none" }
+            )
+          );
         } else if (action.value === "MULTIPLE") {
-          dispatch(handleField("apply", singleBuildingContainerJsonPath, "props.style", { display: "none" }));
-          dispatch(handleField("apply", multipleBuildingContainerJsonPath, "props.style", {}));
+          dispatch(
+            handleField(
+              "apply",
+              singleBuildingContainerJsonPath,
+              "props.style",
+              { display: "none" }
+            )
+          );
+          dispatch(
+            handleField(
+              "apply",
+              multipleBuildingContainerJsonPath,
+              "props.style",
+              {}
+            )
+          );
         }
       }
     },
@@ -357,7 +404,9 @@ export const propertyDetails = getCommonCard({
             componentPath: "MultiItem",
             props: {
               scheama: getCommonGrayCard({
-                multipleBuildingCard: getCommonContainer(commonBuildingData("MULTIPLE"))
+                multipleBuildingCard: getCommonContainer(
+                  commonBuildingData("MULTIPLE")
+                )
               }),
               items: [],
               addItemLabel: {
@@ -367,7 +416,8 @@ export const propertyDetails = getCommonCard({
               sourceJsonPath: "FireNOCs[0].fireNOCDetails.buildings",
               // prefixSourceJsonPath:
               //   "children.cardContent.children.buildingDataCard.children.multipleBuildingContainer.children",
-              prefixSourceJsonPath: "children.cardContent.children.multipleBuildingCard.children"
+              prefixSourceJsonPath:
+                "children.cardContent.children.multipleBuildingCard.children"
             },
             type: "array"
           }

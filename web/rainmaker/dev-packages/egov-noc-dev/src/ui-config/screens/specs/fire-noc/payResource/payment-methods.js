@@ -31,7 +31,14 @@ const onIconClick = (state, dispatch, index) => {
             prepareFinalObject("ReceiptTemp[0].instrument.branchName", "")
           );
           dispatch(
-            toggleSnackbar(true, "Bankdetails not found for this IFSC", "error")
+            toggleSnackbar(
+              true,
+              {
+                labelName: "Bankdetails not found for this IFSC",
+                labelKey: "ERR_BANK_DETAILS_NOT_FOUND_FOR_IFSC"
+              },
+              "error"
+            )
           );
           dispatch(toggleSpinner());
         } else {
@@ -124,8 +131,14 @@ export const chequeDetails = getCommonContainer({
     required: true
   }),
   chequeDate: getDateField({
-    label: { labelName: "Cheque Date", labelKey: "NOC_PAYMENT_CHEQUE_DATE_LABEL" },
-    placeholder: { labelName: "dd/mm/yy", labelKey: "NOC_PAYMENT_CHEQUE_DATE_PLACEHOLDER" },
+    label: {
+      labelName: "Cheque Date",
+      labelKey: "NOC_PAYMENT_CHEQUE_DATE_LABEL"
+    },
+    placeholder: {
+      labelName: "dd/mm/yy",
+      labelKey: "NOC_PAYMENT_CHEQUE_DATE_PLACEHOLDER"
+    },
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"
   }),
@@ -205,7 +218,10 @@ export const demandDraftDetails = getCommonContainer({
   }),
   ddDate: getDateField({
     label: { labelName: "DD Date", labelKey: "NOC_PAYMENT_DD_DATE_LABEL" },
-    placeholder: { labelName: "dd/mm/yy", labelKey: "NOC_PAYMENT_DD_DATE_PLACEHOLDER" },
+    placeholder: {
+      labelName: "dd/mm/yy",
+      labelKey: "NOC_PAYMENT_DD_DATE_PLACEHOLDER"
+    },
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.transactionDateInput"
   }),
@@ -282,7 +298,7 @@ export const cardDetails = getCommonContainer({
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.instrumentNumber",
     pattern: "^([0-9]){4}$",
-    errorMessage: "Invalid",
+    errorMessage: "Invalid"
   }),
   TrxNo: getTextField({
     label: {
