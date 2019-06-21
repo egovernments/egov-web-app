@@ -2,11 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
-import { getLocalization, getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import { getLocaleLabels, getTransformedLocalStorgaeLabels } from "egov-ui-framework/ui-utils/commons";
+import {
+  getLocalization,
+  getTenantId
+} from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getLocaleLabels,
+  getTransformedLocalStorgaeLabels
+} from "egov-ui-framework/ui-utils/commons";
 
 const getLocalTextFromCode = localCode => {
-  return JSON.parse(getLocalization("localization_en_IN")).find(item => item.code === localCode);
+  return JSON.parse(getLocalization("localization_en_IN")).find(
+    item => item.code === localCode
+  );
 };
 
 export const textToLocalMapping = {
@@ -15,8 +23,16 @@ export const textToLocalMapping = {
     "NOC_COMMON_TABLE_COL_APP_NO_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
-  "NOC No": getLocaleLabels("NOC No", "NOC_COMMON_TABLE_COL_NOC_NO_LABEL", getTransformedLocalStorgaeLabels()),
-  "NOC Type": getLocaleLabels("NOC Type", "NOC_TYPE_LABEL", getTransformedLocalStorgaeLabels()),
+  "NOC No": getLocaleLabels(
+    "NOC No",
+    "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
+    getTransformedLocalStorgaeLabels()
+  ),
+  "NOC Type": getLocaleLabels(
+    "NOC Type",
+    "NOC_TYPE_LABEL",
+    getTransformedLocalStorgaeLabels()
+  ),
   "Owner Name": getLocaleLabels(
     "Owner Name",
     "NOC_COMMON_TABLE_COL_OWN_NAME_LABEL",
@@ -27,22 +43,54 @@ export const textToLocalMapping = {
     "NOC_COMMON_TABLE_COL_APP_DATE_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
-  Status: getLocaleLabels("Status", "NOC_COMMON_TABLE_COL_STATUS_LABEL", getTransformedLocalStorgaeLabels()),
-  INITIATED: getLocaleLabels("Initiated,", "NOC_INITIATED", getTransformedLocalStorgaeLabels()),
-  APPLIED: getLocaleLabels("Applied", "NOC_APPLIED", getTransformedLocalStorgaeLabels()),
-  DOCUMENTVERIFY: getLocaleLabels("Pending for Document Verification", "WF_NEWNOC_DOCUMENTVERIFY", getTransformedLocalStorgaeLabels()),
-  APPROVED: getLocaleLabels("Approved", "NOC_APPROVED", getTransformedLocalStorgaeLabels()),
-  REJECTED: getLocaleLabels("Rejected", "NOC_REJECTED", getTransformedLocalStorgaeLabels()),
-  CANCELLED: getLocaleLabels("Cancelled", "NOC_CANCELLED", getTransformedLocalStorgaeLabels()),
-  PENDINGAPPROVAL: getLocaleLabels(
-    "Pending for Approval",
-    "WF_NEWNOC_PENDINGAPPROVAL",
+  Status: getLocaleLabels(
+    "Status",
+    "NOC_COMMON_TABLE_COL_STATUS_LABEL",
     getTransformedLocalStorgaeLabels()
   ),
-  PENDINGPAYMENT: getLocaleLabels("Pending payment", "WF_NEWNOC_PENDINGPAYMENT", getTransformedLocalStorgaeLabels()),
+  INITIATED: getLocaleLabels(
+    "Initiated,",
+    "NOC_INITIATED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  APPLIED: getLocaleLabels(
+    "Applied",
+    "NOC_APPLIED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  DOCUMENTVERIFY: getLocaleLabels(
+    "Pending for Document Verification",
+    "WF_FIRENOC_DOCUMENTVERIFY",
+    getTransformedLocalStorgaeLabels()
+  ),
+  APPROVED: getLocaleLabels(
+    "Approved",
+    "NOC_APPROVED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  REJECTED: getLocaleLabels(
+    "Rejected",
+    "NOC_REJECTED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  CANCELLED: getLocaleLabels(
+    "Cancelled",
+    "NOC_CANCELLED",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGAPPROVAL: getLocaleLabels(
+    "Pending for Approval",
+    "WF_FIRENOC_PENDINGAPPROVAL",
+    getTransformedLocalStorgaeLabels()
+  ),
+  PENDINGPAYMENT: getLocaleLabels(
+    "Pending payment",
+    "WF_FIRENOC_PENDINGPAYMENT",
+    getTransformedLocalStorgaeLabels()
+  ),
   FIELDINSPECTION: getLocaleLabels(
     "Pending for Field Inspection",
-    "WF_NEWNOC_FIELDINSPECTION",
+    "WF_FIRENOC_FIELDINSPECTION",
     getTransformedLocalStorgaeLabels()
   ),
   "Search Results for Fire-NOC Applications": getLocaleLabels(
@@ -109,7 +157,8 @@ export const searchResults = {
 };
 
 const onRowClick = rowData => {
-  let appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
+  let appendUrl =
+    process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
   switch (rowData[get(textToLocalMapping, "Status")]) {
     case get(textToLocalMapping, "APPLIED"):
     case get(textToLocalMapping, "PENDINGPAYMENT"):

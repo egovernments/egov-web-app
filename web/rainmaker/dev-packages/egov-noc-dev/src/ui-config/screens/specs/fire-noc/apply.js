@@ -1,4 +1,8 @@
-import { getCommonContainer, getCommonHeader, getStepperObject } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonContainer,
+  getCommonHeader,
+  getStepperObject
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getCurrentFinancialYear } from "../utils";
 import { footer } from "./applyResource/footer";
 import { nocDetails } from "./applyResource/nocDetails";
@@ -13,10 +17,19 @@ import {
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "../../../../ui-utils";
-import { sampleSearch, sampleSingleSearch, sampleDocUpload } from "../../../../ui-utils/sampleResponses";
+import {
+  sampleSearch,
+  sampleSingleSearch,
+  sampleDocUpload
+} from "../../../../ui-utils/sampleResponses";
 import set from "lodash/set";
 import get from "lodash/get";
-import { prepareDocumentsUploadData, getSearchResults, furnishNocResponse } from "../../../../ui-utils/commons";
+import {
+  prepareDocumentsUploadData,
+  getSearchResults,
+  furnishNocResponse,
+  setApplicationNumberBox
+} from "../../../../ui-utils/commons";
 
 export const stepsData = [
   { labelName: "NOC Details", labelKey: "NOC_COMMON_NOC_DETAILS" },
@@ -24,10 +37,16 @@ export const stepsData = [
   { labelName: "Applicant Details", labelKey: "NOC_COMMON_APPLICANT_DETAILS" },
   { labelName: "Documents", labelKey: "NOC_COMMON_DOCUMENTS" }
 ];
-export const stepper = getStepperObject({ props: { activeStep: 0 } }, stepsData);
+export const stepper = getStepperObject(
+  { props: { activeStep: 0 } },
+  stepsData
+);
 
 const applicationNumberContainer = () => {
-  const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
   if (applicationNumber)
     return {
       uiFramework: "custom-atoms-local",
@@ -47,7 +66,16 @@ export const header = getCommonContainer({
     labelName: `Application for Fire NOC (${getCurrentFinancialYear()})`, //later use getFinancialYearDates
     labelKey: "NOC_COMMON_APPLY_NOC"
   }),
-  applicationNumber: applicationNumberContainer()
+  //applicationNumber: applicationNumberContainer()
+  applicationNumber: {
+    uiFramework: "custom-atoms-local",
+    moduleName: "egov-noc",
+    componentPath: "ApplicationNoContainer",
+    props: {
+      number: "NA"
+    },
+    visible: false
+  }
 });
 
 export const formwizardFirstStep = {
@@ -134,7 +162,13 @@ const getMdmsData = async (action, state, dispatch) => {
   };
   try {
     let payload = null;
-    payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
     dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
@@ -154,7 +188,12 @@ const getFirstListFromDotSeparated = list => {
 };
 
 const setCardsIfMultipleBuildings = (state, dispatch) => {
-  if (get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings") === "MULTIPLE") {
+  if (
+    get(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
+    ) === "MULTIPLE"
+  ) {
     dispatch(
       handleField(
         "apply",
@@ -174,8 +213,17 @@ const setCardsIfMultipleBuildings = (state, dispatch) => {
   }
 };
 
-export const prepareEditFlow = async (state, dispatch, applicationNumber, tenantId) => {
-  const buildings = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings", []);
+export const prepareEditFlow = async (
+  state,
+  dispatch,
+  applicationNumber,
+  tenantId
+) => {
+  const buildings = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings",
+    []
+  );
   if (applicationNumber && buildings.length == 0) {
     let response = await getSearchResults([
       {
@@ -189,10 +237,15 @@ export const prepareEditFlow = async (state, dispatch, applicationNumber, tenant
     response = furnishNocResponse(response);
 
     dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
-
+    if (applicationNumber) {
+      setApplicationNumberBox(state, dispatch, applicationNumber);
+    }
     // Set no of buildings radiobutton and eventually the cards
     let noOfBuildings =
-      get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "SINGLE") === "MULTIPLE" ? "MULTIPLE" : "SINGLE";
+      get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "SINGLE") ===
+      "MULTIPLE"
+        ? "MULTIPLE"
+        : "SINGLE";
     dispatch(
       handleField(
         "apply",
@@ -203,7 +256,10 @@ export const prepareEditFlow = async (state, dispatch, applicationNumber, tenant
     );
 
     // Set no of buildings radiobutton and eventually the cards
-    let nocType = get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NEW") === "NEW" ? "NEW" : "PROVISIONAL";
+    let nocType =
+      get(response, "FireNOCs[0].fireNOCDetails.fireNOCType", "NEW") === "NEW"
+        ? "NEW"
+        : "PROVISIONAL";
     dispatch(
       handleField(
         "apply",
@@ -224,7 +280,10 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "apply",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
     const tenantId = getQueryArg(window.location.href, "tenantId");
     const step = getQueryArg(window.location.href, "step");
 
@@ -239,15 +298,27 @@ const screenConfig = {
         "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.BuildingType",
         []
       );
-      buildingUsageTypeData = getFirstListFromDotSeparated(buildingUsageTypeData);
-      dispatch(prepareFinalObject("applyScreenMdmsData.DropdownsData.BuildingUsageType", buildingUsageTypeData));
+      buildingUsageTypeData = getFirstListFromDotSeparated(
+        buildingUsageTypeData
+      );
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.BuildingUsageType",
+          buildingUsageTypeData
+        )
+      );
       let ownershipCategory = get(
         state,
         "screenConfiguration.preparedFinalObject.applyScreenMdmsData.common-masters.OwnerShipCategory",
         []
       );
       ownershipCategory = getFirstListFromDotSeparated(ownershipCategory);
-      dispatch(prepareFinalObject("applyScreenMdmsData.DropdownsData.OwnershipCategory", ownershipCategory));
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.DropdownsData.OwnershipCategory",
+          ownershipCategory
+        )
+      );
 
       // Set Documents Data (TEMP)
       prepareDocumentsUploadData(state, dispatch);
@@ -282,7 +353,11 @@ const screenConfig = {
     // Code to goto a specific step through URL
     if (step && step.match(/^\d+$/)) {
       let intStep = parseInt(step);
-      set(action.screenConfig, "components.div.children.stepper.props.activeStep", intStep);
+      set(
+        action.screenConfig,
+        "components.div.children.stepper.props.activeStep",
+        intStep
+      );
       let formWizardNames = [
         "formwizardFirstStep",
         "formwizardSecondStep",
@@ -290,8 +365,16 @@ const screenConfig = {
         "formwizardFourthStep"
       ];
       for (let i = 0; i < 4; i++) {
-        set(action.screenConfig, `components.div.children.${formWizardNames[i]}.visible`, i == step);
-        set(action.screenConfig, `components.div.children.footer.children.previousButton.visible`, step != 0);
+        set(
+          action.screenConfig,
+          `components.div.children.${formWizardNames[i]}.visible`,
+          i == step
+        );
+        set(
+          action.screenConfig,
+          `components.div.children.footer.children.previousButton.visible`,
+          step != 0
+        );
       }
     }
 
@@ -301,16 +384,29 @@ const screenConfig = {
       "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings",
       "SINGLE"
     );
-    set(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings", noOfBuildings);
+    set(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings",
+      noOfBuildings
+    );
     let nocType = get(
       state,
       "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType",
       "PROVISIONAL"
     );
-    set(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType", nocType);
+    set(
+      state,
+      "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType",
+      nocType
+    );
 
     // Preset multi-cards (CASE WHEN DATA PRE-LOADED)
-    if (get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings") === "MULTIPLE") {
+    if (
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.noOfBuildings"
+      ) === "MULTIPLE"
+    ) {
       set(
         action.screenConfig,
         "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingDataCard.children.singleBuildingContainer.props.style",
@@ -323,7 +419,10 @@ const screenConfig = {
       );
     }
     if (
-      get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType") === "PROVISIONAL"
+      get(
+        state,
+        "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.fireNOCType"
+      ) === "PROVISIONAL"
     ) {
       set(
         action.screenConfig,
