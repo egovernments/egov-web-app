@@ -58,7 +58,7 @@ export const newCollectionDetailsCard = getCommonCard(
           beforeFieldChange: async (action, state, dispatch) => {
             const citiesByModule = get(
               state,
-              "common.citiesByModule.UC.tenants",
+              "common.citiesByModule.TL.tenants",
               []
             );
             if (!citiesByModule.find(item => item.code === action.value)) {
@@ -136,12 +136,11 @@ export const newCollectionDetailsCard = getCommonCard(
             label: "+91 |",
             position: "start"
           },
-
           required: true,
           visible: true,
           pattern: getPattern("MobileNo"),
           errorMessage: "Invalid Mobile No.",
-          jsonPath: "Demands[0].mobileNo"
+          jsonPath: "Demands[0].mobileNumber"
         }),
         ConsumerName: getTextField({
           label: {
@@ -241,8 +240,13 @@ export const newCollectionDetailsCard = getCommonCard(
                     false
                   )
                 );
+                const demandId = get(
+                  state.screenConfiguration.preparedFinalObject,
+                  "Demands[0].id",
+                  null
+                );
                 //Set tax head fields if there is no service type available
-                if (serviceData[action.value]) {
+                if (!demandId && serviceData[action.value]) {
                   const taxHeads = setTaxHeadFields(action, state, dispatch);
                 }
               }
@@ -273,7 +277,12 @@ export const newCollectionDetailsCard = getCommonCard(
             }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
-            if (action.value) {
+            const demandId = get(
+              state.screenConfiguration.preparedFinalObject,
+              "Demands[0].id",
+              null
+            );
+            if (!demandId && action.value) {
               const taxHeads = setTaxHeadFields(action, state, dispatch);
               console.log(taxHeads);
             }

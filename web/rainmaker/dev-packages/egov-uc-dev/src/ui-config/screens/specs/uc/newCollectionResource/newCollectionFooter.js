@@ -111,10 +111,12 @@ const createDemand = async (state, dispatch) => {
     )
   );
   set(demands[0], "consumerType", demands[0].businessService);
-  const taxHeadsFilled =
-    demands[0].demandDetails &&
-    demands[0].demandDetails.filter(item => item.taxAmount >= 0);
-  set(demands[0], "demandDetails", taxHeadsFilled);
+  demands[0].demandDetails &&
+    demands[0].demandDetails.forEach(item => {
+      if (!item.taxAmount) {
+        item.taxAmount = 0;
+      }
+    });
   demands[0].serviceType &&
     set(demands[0], "businessService", demands[0].serviceType);
   set(
@@ -123,54 +125,52 @@ const createDemand = async (state, dispatch) => {
     convertDateToEpoch(demands[0].taxPeriodFrom)
   );
   set(demands[0], "taxPeriodTo", convertDateToEpoch(demands[0].taxPeriodTo));
-
+  const mobileNumber = demands[0].mobileNumber;
+  const consumerName = demands[0].consumerName;
   //Check if tax period fall between the tax periods coming from MDMS -- Not required as of now
   const taxPeriodValid = isTaxPeriodValid(dispatch, demands[0], state);
 
-  if (taxHeadsFilled.length) {
-    if (taxPeriodValid) {
-      try {
-        const payload = await httpRequest(
-          "post",
-          "/billing-service/demand/_create",
-          "",
-          [],
-          {
-            Demands: demands
-          }
+  if (taxPeriodValid) {
+    const url = get(
+      state.screenConfiguration.preparedFinalObject,
+      "Demands[0].id",
+      null
+    )
+      ? "/billing-service/demand/_update"
+      : "/billing-service/demand/_create";
+    try {
+      const payload = await httpRequest("post", url, "", [], {
+        Demands: demands
+      });
+      if (payload.Demands.length > 0) {
+        const consumerCode = get(payload, "Demands[0].consumerCode");
+        const businessService = get(payload, "Demands[0].businessService");
+        set(payload, "Demands[0].mobileNumber", mobileNumber);
+        set(payload, "Demands[0].consumerName", consumerName);
+        set(payload, "Demands[0].serviceType", businessService);
+        set(
+          payload,
+          "Demands[0].businessService",
+          businessService.split(".")[0]
         );
-        if (payload.Demands.length > 0) {
-          const consumerCode = get(payload, "Demands[0].consumerCode");
-          const businessService = get(payload, "Demands[0].businessService");
-          await generateBill(consumerCode, tenantId, businessService, dispatch);
-        } else {
-          alert("Empty response!!");
-        }
-      } catch (e) {
-        console.log(e.message);
-        dispatch(
-          toggleSnackbar(
-            true,
-            {
-              labelName: e.message,
-              labelKey: e.message
-            },
-            "error"
-          )
-        );
+        dispatch(prepareFinalObject("Demands", payload.Demands));
+        await generateBill(consumerCode, tenantId, businessService, dispatch);
+      } else {
+        alert("Empty response!!");
       }
+    } catch (e) {
+      console.log(e.message);
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: e.message,
+            labelKey: e.message
+          },
+          "error"
+        )
+      );
     }
-  } else {
-    dispatch(
-      toggleSnackbar(
-        true,
-        {
-          labelName: "Please fill atleast one tax amount",
-          labelKey: "UC_NEW_COLLECTION_ATLEAST_ONE_TAX_MSG"
-        },
-        "warning"
-      )
-    );
   }
   console.log("Demands:", demands);
 };
