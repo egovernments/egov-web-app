@@ -5,7 +5,7 @@ import "./index.css";
 
 const Updates = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons, route } = notification;
+    const { title, dueTime, buttons} = notification;
     return (
       <Card
         className="home-notification"
@@ -21,7 +21,7 @@ const Updates = ({ notifications = [], history }) => {
                 return (
                   <div
                     onClick={() => {
-                      history.push(route);
+                      history.push(button.route);
                     }}
                     style={{ cursor: "pointer" }}
                   >
