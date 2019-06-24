@@ -21,7 +21,10 @@ class Footer extends React.Component {
 
   getDownloadData = () => {
     const { dataPath, state } = this.props;
-    const data = get(state, `screenConfiguration.preparedFinalObject.${dataPath}`);
+    const data = get(
+      state,
+      `screenConfiguration.preparedFinalObject.${dataPath}`
+    );
     const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Download",
@@ -35,7 +38,10 @@ class Footer extends React.Component {
 
   getPrintData = () => {
     const { dataPath, state } = this.props;
-    const data = get(state, `screenConfiguration.preparedFinalObject.${dataPath}`);
+    const data = get(
+      state,
+      `screenConfiguration.preparedFinalObject.${dataPath}`
+    );
     const { status, applicationNumber } = (data && data[0]) || "";
     return {
       label: "Print",
@@ -69,7 +75,12 @@ class Footer extends React.Component {
           value: tenantId
         }
       ];
-      const payload = await httpRequest("post", "/egov-hrms/employees/_search", "", queryObj);
+      const payload = await httpRequest(
+        "post",
+        "/egov-hrms/employees/_search",
+        "",
+        queryObj
+      );
       employeeList =
         payload &&
         payload.Employees.map((item, index) => {
@@ -91,14 +102,26 @@ class Footer extends React.Component {
   };
 
   render() {
-    const { color, variant, contractData, handleFieldChange, onDialogButtonClick, dataPath, moduleName } = this.props;
+    const {
+      color,
+      variant,
+      contractData,
+      handleFieldChange,
+      onDialogButtonClick,
+      dataPath,
+      moduleName
+    } = this.props;
     const { open, data, employeeList } = this.state;
     const { getPrintData, getDownloadData } = this;
     let visibility = moduleName === "FIRENOC" ? "hidden" : "visible";
     return (
-      <div className="apply-wizard-footer" id="custom-atoms-footer" style={{ textAlign: "right" }}>
+      <div
+        className="apply-wizard-footer"
+        id="custom-atoms-footer"
+        style={{ textAlign: "right" }}
+      >
         <Container>
-          <Item xs={12} sm={4} style={{ paddingLeft: "20px", visibility: visibility }}>
+          {/* <Item xs={12} sm={4} style={{ paddingLeft: "20px", visibility: visibility }}>
             <Container>
               <Item xs={12} sm={6}>
                 <MenuButton data={getDownloadData()} />
@@ -108,8 +131,8 @@ class Footer extends React.Component {
                 <MenuButton data={getPrintData()} />
               </Item>
             </Container>
-          </Item>
-          <Item xs={12} sm={8}>
+          </Item> */}
+          <Item xs={12} sm={12}>
             {contractData &&
               contractData.map(item => {
                 const { buttonLabel, moduleName } = item;
