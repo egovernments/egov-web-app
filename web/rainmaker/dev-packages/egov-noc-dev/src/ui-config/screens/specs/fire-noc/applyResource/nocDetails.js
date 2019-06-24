@@ -27,7 +27,6 @@ export const nocDetails = getCommonCard({
   nocDetailsContainer: getCommonContainer({
     nocRadioGroup: {
       uiFramework: "custom-containers",
-      moduleName: "egov-noc",
       componentPath: "RadioGroupContainer",
       gridDefination: {
         xs: 12

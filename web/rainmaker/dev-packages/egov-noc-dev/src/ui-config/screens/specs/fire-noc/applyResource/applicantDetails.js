@@ -114,7 +114,6 @@ const commonApplicantInformation = () => {
       }),
       genderRadioGroup: {
         uiFramework: "custom-containers",
-        moduleName: "egov-noc",
         componentPath: "RadioGroupContainer",
         gridDefination: {
           xs: 12,
@@ -143,8 +142,8 @@ const commonApplicantInformation = () => {
             }
           ],
           jsonPath:
-            "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender",
-          required: true
+            "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].gender"
+          // required: true
         },
         type: "array"
       },
@@ -208,7 +207,6 @@ const commonApplicantInformation = () => {
       }),
       relationshipRadioGroup: {
         uiFramework: "custom-containers",
-        moduleName: "egov-noc",
         componentPath: "RadioGroupContainer",
         gridDefination: {
           xs: 12,
@@ -238,6 +236,7 @@ const commonApplicantInformation = () => {
             "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
           required: true
         },
+        required: true,
         type: "array"
       },
       applicantPan: getTextField({
