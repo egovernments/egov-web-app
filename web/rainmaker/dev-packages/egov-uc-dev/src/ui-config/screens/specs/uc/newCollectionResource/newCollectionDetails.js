@@ -195,7 +195,6 @@ export const newCollectionDetailsCard = getCommonCard(
             }
           },
           beforeFieldChange: async (action, state, dispatch) => {
-            console.log(action);
             //Reset service type value, if any
             dispatch(
               handleField(

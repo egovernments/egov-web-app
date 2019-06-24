@@ -105,7 +105,6 @@ const newCollection = {
         state.screenConfiguration,
         "screenConfig.newCollection"
       );
-      debugger;
       set(
         screenConfigForUpdate,
         "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.serviceCategory.props.disabled",

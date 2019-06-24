@@ -196,6 +196,7 @@ class IntegrationReactSelect extends React.Component {
       required = true,
       value,
       className,
+      disabled = false,
       inputLabelProps = {
         shrink: true
       },
@@ -224,6 +225,7 @@ class IntegrationReactSelect extends React.Component {
           menuProps={{
             className: className
           }}
+          isDisabled={disabled}
           options={getSuggestions(suggestions) || []}
           components={components}
           value={value ? value : this.state.single}
