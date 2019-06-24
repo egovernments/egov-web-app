@@ -225,7 +225,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       dispatch(prepareFinalObject("FireNOCs", response.FireNOCs));
     }
 
-    return true;
+    return { status: "success", message: response };
   } catch (error) {
     dispatch(toggleSnackbar(true, { labelName: error.message }, "error"));
 
@@ -238,7 +238,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
     fireNocData = furnishNocResponse({ FireNOCs: fireNocData });
     dispatch(prepareFinalObject("FireNOCs", fireNocData.FireNOCs));
 
-    return false;
+    return { status: "failure", message: error };
   }
 };
 

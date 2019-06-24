@@ -72,7 +72,7 @@ const callBackForNext = async (state, dispatch) => {
   );
   // console.log(activeStep);
   let isFormValid = true;
-  let hasFieldToaster = true;
+  let hasFieldToaster = false;
 
   if (activeStep === 1) {
     let isPropertyLocationCardValid = validateFields(
@@ -125,6 +125,7 @@ const callBackForNext = async (state, dispatch) => {
       !isMultiplePropertyCardValid
     ) {
       isFormValid = false;
+      hasFieldToaster = true;
     }
   }
 
@@ -192,8 +193,8 @@ const callBackForNext = async (state, dispatch) => {
       !isMultipleApplicantCardValid
     ) {
       isFormValid = false;
+      hasFieldToaster = true;
     }
-    getMdmsData(state, dispatch);
   }
 
   if (activeStep === 3) {
@@ -201,18 +202,21 @@ const callBackForNext = async (state, dispatch) => {
   }
 
   if (activeStep !== 3) {
-    if (activeStep === 2) {
-      isFormValid = await createUpdateNocApplication(
-        state,
-        dispatch,
-        "INITIATE"
-      );
-    }
     if (isFormValid) {
+      let responseStatus = "success";
       if (activeStep === 1) {
         prepareDocumentsUploadData(state, dispatch);
       }
-      changeStep(state, dispatch);
+      if (activeStep === 2) {
+        getMdmsData(state, dispatch);
+        let response = await createUpdateNocApplication(
+          state,
+          dispatch,
+          "INITIATE"
+        );
+        responseStatus = get(response, "status", "");
+      }
+      responseStatus === "success" && changeStep(state, dispatch);
     } else if (hasFieldToaster) {
       let errorMessage = {
         labelName: "Please fill all mandatory fields and upload the documents!",

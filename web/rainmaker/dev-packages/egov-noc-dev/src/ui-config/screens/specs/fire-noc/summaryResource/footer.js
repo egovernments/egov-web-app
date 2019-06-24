@@ -5,14 +5,17 @@ import { createUpdateNocApplication } from "../../../../../ui-utils/commons";
 import { getCommonApplyFooter } from "../../utils";
 import "./index.scss";
 
-const updateNocApplication = (state, dispatch) => {
-  let isValid = createUpdateNocApplication(state, dispatch, "APPLY");
+const updateNocApplication = async (state, dispatch) => {
+  let response = await createUpdateNocApplication(state, dispatch, "APPLY");
   let applicationNumber = get(
     state,
     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.applicationNumber"
   );
-  let tenantId = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].tenantId");
-  if (isValid) {
+  let tenantId = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].tenantId"
+  );
+  if (get(response, "status", "") === "success") {
     const acknowledgementUrl =
       process.env.REACT_APP_SELF_RUNNING === "true"
         ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=apply&status=success&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
