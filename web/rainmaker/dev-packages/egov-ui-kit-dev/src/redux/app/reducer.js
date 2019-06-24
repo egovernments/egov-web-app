@@ -84,6 +84,9 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.SET_PREVIOUS_ROUTE: {
       return { ...state, previousRoute: action.route };
     }
+    case actionTypes.GET_NOTIFICATION_COUNT: {
+      return { ...state, notificationsCount: action.payload };
+    }
     default:
       return state;
   }

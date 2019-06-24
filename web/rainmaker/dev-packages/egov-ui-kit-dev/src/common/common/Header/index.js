@@ -158,6 +158,7 @@ class Header extends Component {
       notificationButton,
       activeRoutePath,
       hasLocalisation,
+      notificationsCount,
     } = this.props;
     return (
       <div>
@@ -182,6 +183,7 @@ class Header extends Component {
           handleItemClick={_handleItemClick}
           activeRoutePath={activeRoutePath}
           hasLocalisation={hasLocalisation}
+          notificationsCount={notificationsCount}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -217,6 +219,7 @@ const getUlbGradeLabel = (ulbGrade) => {
 
 const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
+  const notificationsCount = get(state.app, "notificationsCount");
   const { role } = ownProps;
   const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
@@ -225,7 +228,7 @@ const mapStateToProps = (state, ownProps) => {
   const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
   const screenKey = window.location.pathname.split("/").pop();
   const headerTitle = get(state.screenConfiguration.screenConfig, `${screenKey}.components.div.children.header.children.key.props.labelKey`);
-  return { cities, defaultTitle, name, headerTitle };
+  return { cities, defaultTitle, name, headerTitle, notificationsCount };
 };
 
 const mapDispatchToProps = (dispatch) => {

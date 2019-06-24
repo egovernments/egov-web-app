@@ -73,6 +73,7 @@ const setActionItems = (payload) => {
     payload,
   };
 };
+
 const setCurrentLocation = (currentLocation) => {
   return {
     type: actionTypes.SET_USER_CURRENT_LOCATION,
@@ -173,5 +174,12 @@ export const fetchUiCommonConstants = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const getNotificationCount = (payload) => {
+  return {
+    type: actionTypes.GET_NOTIFICATION_COUNT,
+    payload,
   };
 };

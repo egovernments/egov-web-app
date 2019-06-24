@@ -3,6 +3,7 @@ import { AppBar, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
+import Badge from "@material-ui/core/Badge";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
 import IconButton from "material-ui/IconButton";
@@ -40,6 +41,7 @@ const EgovAppBar = ({
   history,
   handleItemClick,
   hasLocalisation,
+  notificationsCount,
   ...rest
 }) => {
   return (
@@ -112,9 +114,16 @@ const EgovAppBar = ({
           )}
         </div>
         {notificationButton && role === "citizen" && (
-          <div className="notification-icon">
-            <IconButton style={iconButtonStyle}>
-              <Icon action="social" name="notifications-none" color="#fff" />
+          <div
+            className="notification-icon"
+            onClick={() => {
+              history.push("/notifications");
+            }}
+          >
+            <IconButton aria-label="4 pending messages">
+              <Badge badgeContent={notificationsCount} color="primary">
+                <Icon action="social" name="notifications-none" color="#fff" />
+              </Badge>
             </IconButton>
           </div>
         )}

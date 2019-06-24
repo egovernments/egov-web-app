@@ -16,6 +16,7 @@ import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
 import PrivacyPolicy from "egov-ui-kit/common/common/PrivacyPolicy";
 import Dashboard from "egov-ui-kit/common/common/Dashboard";
 import ModuleLandingPage from "egov-ui-kit/common/common/ModuleLandingPage";
+import Notifications from "egov-ui-kit/common/common/Notifications";
 
 //pgr common components
 import ComplaintSubmited from "egov-ui-kit/common/pgr/ComplaintSubmited";
@@ -87,4 +88,5 @@ export {
   Property,
   ModuleLandingPage,
   SingleProperty,
+  Notifications,
 };
