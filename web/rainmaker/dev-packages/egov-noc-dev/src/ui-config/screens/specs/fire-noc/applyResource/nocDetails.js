@@ -9,6 +9,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { prepareEditFlow } from "../apply";
 import get from "lodash/get";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
@@ -101,7 +102,12 @@ export const nocDetails = getCommonCard({
                 "screenConfiguration.preparedFinalObject.FireNOCs[0].provisionFireNOCNumber",
                 ""
               );
-              prepareEditFlow(state, dispatch, applicationNumber, "pb");
+              prepareEditFlow(
+                state,
+                dispatch,
+                applicationNumber,
+                getTenantId()
+              );
             }
           }
         }
