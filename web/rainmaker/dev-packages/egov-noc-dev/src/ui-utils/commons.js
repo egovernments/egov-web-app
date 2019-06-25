@@ -11,6 +11,7 @@ import store from "ui-redux/store";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -299,6 +300,9 @@ export const prepareDocumentsUploadData = (state, dispatch) => {
         dropdown.required = true;
         dropdown.menu = doc.dropdownData.filter(item => {
           return item.active;
+        });
+        dropdown.menu = dropdown.menu.map(item => {
+          return { code: item.code, label: getTransformedLocale(item.code) };
         });
         card["dropdown"] = dropdown;
       }

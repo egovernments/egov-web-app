@@ -3,7 +3,7 @@ import Icon from "@material-ui/core/Icon";
 import { withStyles } from "@material-ui/core/styles";
 import { LabelContainer, TextFieldContainer } from "egov-ui-framework/ui-containers";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getFileUrlFromAPI, handleFileUpload } from "egov-ui-framework/ui-utils/commons";
+import { getFileUrlFromAPI, handleFileUpload, getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
@@ -211,18 +211,18 @@ class DocumentList extends Component {
           )}
         </Grid>
         <Grid item={true} xs={10} sm={5} md={4} align="left" className={classes.descriptionDiv}>
-          <LabelContainer labelKey={card.name} style={styles.documentName} />
+          <LabelContainer labelKey={getTransformedLocale(card.name)} style={styles.documentName} />
           {card.required && requiredIcon}
         </Grid>
         <Grid item={true} xs={12} sm={6} md={4}>
           {card.dropdown && (
             <TextFieldContainer
               select={true}
-              label={{ labelKey: card.dropdown.label }}
+              label={{ labelKey: getTransformedLocale(card.dropdown.label) }}
               placeholder={{ labelKey: card.dropdown.label }}
               data={card.dropdown.menu}
               optionValue="code"
-              optionLabel="code"
+              optionLabel="label"
               required={true}
               onChange={event => this.handleChange(key, event)}
               jsonPath={jsonPath}
@@ -254,11 +254,11 @@ class DocumentList extends Component {
           documentsList.map(container => {
             return (
               <div>
-                <LabelContainer labelKey={container.title} style={styles.documentTitle} />
+                <LabelContainer labelKey={getTransformedLocale(container.title)} style={styles.documentTitle} />
                 {container.cards.map(card => {
                   return (
                     <div className={classes.documentContainer}>
-                      {card.hasSubCards && <LabelContainer labelKey={card.name} style={styles.documentTitle} />}
+                      {card.hasSubCards && <LabelContainer labelKey={getTransformedLocale(card.name)} style={styles.documentTitle} />}
                       {card.hasSubCards &&
                         card.subCards.map(subCard => {
                           return <div className={classes.documentSubCard}>{this.getUploadCard(subCard, index++)}</div>;
