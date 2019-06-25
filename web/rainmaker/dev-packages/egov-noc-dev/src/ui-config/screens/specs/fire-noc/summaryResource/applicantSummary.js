@@ -4,7 +4,8 @@ import {
   getCommonGrayCard,
   getCommonSubHeader,
   getLabel,
-  getLabelWithValue
+  getLabelWithValue,
+  convertEpochToDate
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { gotoApplyWithStep } from "../../utils/index";
 
@@ -120,7 +121,10 @@ export const applicantSummary = getCommonGrayCard({
             },
             {
               jsonPath:
-                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].dob"
+                "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].dob",
+              callBack: value => {
+                return convertEpochToDate(value);
+              }
             }
           ),
           applicantEmail: getLabelWithValue(
