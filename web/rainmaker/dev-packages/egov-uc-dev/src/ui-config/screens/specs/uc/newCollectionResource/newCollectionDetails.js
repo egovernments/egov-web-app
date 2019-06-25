@@ -58,7 +58,7 @@ export const newCollectionDetailsCard = getCommonCard(
           beforeFieldChange: async (action, state, dispatch) => {
             const citiesByModule = get(
               state,
-              "common.citiesByModule.TL.tenants",
+              "common.citiesByModule.UC.tenants",
               []
             );
             if (!citiesByModule.find(item => item.code === action.value)) {

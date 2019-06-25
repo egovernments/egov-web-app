@@ -84,7 +84,7 @@ const getData = async (action, state, dispatch, demandId) => {
       console.log(e);
     }
   }
-  const liveTenants = get(state, "common.citiesByModule.TL.tenants", []);
+  const liveTenants = get(state, "common.citiesByModule.UC.tenants", []);
   dispatch(
     prepareFinalObject("applyScreenMdmsData.tenant.citiesByModule", liveTenants)
   );
