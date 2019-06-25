@@ -45,8 +45,8 @@ const LanguageSelectionForm = ({ items, onLanguageSelect, value, onClick }) => {
               <Label bold={true} label="LANGUAGE" className="language-label" />
               <span>|</span>
               <Label bold={true} label="भाषा" className="language-label" />
-              <span>|</span>
-              <Label bold={true} label="ਭਾਸ਼ਾ" className="language-label" />
+              {/* <span>|</span>
+              <Label bold={true} label="ਭਾਸ਼ਾ" className="language-label" /> */}
             </div>
             <div className="button-toggle-container">
               <ButtonGroup
