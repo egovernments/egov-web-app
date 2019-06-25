@@ -10,7 +10,8 @@ import {
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getFileUrlFromAPI,
-  getQueryArg
+  getQueryArg,
+  getTransformedLocale
 } from "egov-ui-framework/ui-utils/commons";
 import jp from "jsonpath";
 import get from "lodash/get";
@@ -96,7 +97,7 @@ const prepareDocumentsView = async (state, dispatch) => {
 
   allDocuments.forEach(doc => {
     documentsPreview.push({
-      title: doc.documentType,
+      title: getTransformedLocale(doc.documentType),
       fileStoreId: doc.fileStoreId,
       linkText: "View"
     });

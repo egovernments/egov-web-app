@@ -1,6 +1,14 @@
-import { getCommonCard, getCommonContainer, getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonCard,
+  getCommonContainer,
+  getCommonHeader
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getFileUrlFromAPI, getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getFileUrlFromAPI,
+  getQueryArg,
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
 import jp from "jsonpath";
 import get from "lodash/get";
 import { applicantSummary } from "./summaryResource/applicantSummary";
@@ -20,11 +28,15 @@ const header = getCommonContainer({
 
 const prepareDocumentsView = async (state, dispatch) => {
   let documentsPreview = [];
-  let reduxDocuments = get(state, "screenConfiguration.preparedFinalObject.documentsUploadRedux", {});
+  let reduxDocuments = get(
+    state,
+    "screenConfiguration.preparedFinalObject.documentsUploadRedux",
+    {}
+  );
   jp.query(reduxDocuments, "$.*").forEach(doc => {
     if (doc.documents && doc.documents.length > 0) {
       documentsPreview.push({
-        title: doc.documentCode,
+        title: getTransformedLocale(doc.documentCode),
         name: doc.documents[0].fileName,
         fileStoreId: doc.documents[0].fileStoreId,
         linkText: "View"
@@ -32,7 +44,8 @@ const prepareDocumentsView = async (state, dispatch) => {
     }
   });
   let fileStoreIds = jp.query(documentsPreview, "$.*.fileStoreId");
-  let fileUrls = fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : [];
+  let fileUrls =
+    fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : [];
   documentsPreview = documentsPreview.map(doc => {
     doc["link"] = fileUrls[doc.fileStoreId];
     return doc;
@@ -46,10 +59,16 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     let applicationNumber =
       getQueryArg(window.location.href, "applicationNumber") ||
-      get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].fireNOCDetails.applicationNumber");
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "FireNOCs[0].fireNOCDetails.applicationNumber"
+      );
     let tenantId =
       getQueryArg(window.location.href, "tenantId") ||
-      get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].tenantId");
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "FireNOCs[0].tenantId"
+      );
     generateBill(dispatch, applicationNumber, tenantId);
     prepareDocumentsView(state, dispatch);
     return action;
