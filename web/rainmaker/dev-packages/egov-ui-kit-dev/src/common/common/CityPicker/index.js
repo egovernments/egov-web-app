@@ -4,6 +4,8 @@ import { getCityNameByCode } from "egov-ui-kit/utils/commons";
 import { List, Dialog, TextFieldIcon, AutoSuggest } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import Label from "egov-ui-kit/utils/translationNode";
+import get from "lodash/get";
+import { getTranslatedLabel } from "../../../utils/commons";
 
 class CityPickerDialog extends Component {
   state = { results: [], searchTerm: "", open: false };
@@ -18,11 +20,16 @@ class CityPickerDialog extends Component {
     document.getElementById("person-city").removeEventListener("focus", null);
   }
 
+  getLocalizedLabel = (label) => {
+    const { localizationLabels } = this.props;
+    return getTranslatedLabel(label, localizationLabels);
+  };
+
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
       const mappedResult = {};
       mappedResult.key = result.key;
-      mappedResult.primaryText = result.text;
+      mappedResult.primaryText = this.getLocalizedLabel(`TENANT_TENANTS_${result.key.toUpperCase().replace(/[.:-\s\/]/g, "_")}`);
       mappedResult.id = result.key;
       return mappedResult;
     });
@@ -94,7 +101,7 @@ class CityPickerDialog extends Component {
           <AutoSuggest
             id="city-picker-search"
             dataSource={cities}
-            searchInputText="Search"
+            searchInputText={<Label label="ACTION_TEST_SEARCH" />}
             searchKey="text"
             autoFocus={false}
             callback={autoSuggestCallback}
@@ -113,7 +120,8 @@ class CityPickerDialog extends Component {
 
 const mapStateToProps = (state) => {
   const cities = state.common.cities || [];
-  return { cities };
+  const localizationLabels = get(state.app, "localizationLabels", {});
+  return { cities, localizationLabels };
 };
 
 export default connect(mapStateToProps)(CityPickerDialog);

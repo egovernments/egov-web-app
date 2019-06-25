@@ -420,7 +420,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
-                    errorText={errorText}
+                    errorText={<Label label={errorText} color="red" />}
                     floatingLabelText={
                       <Label
                         key={1}
@@ -430,8 +430,14 @@ class AllComplaints extends Component {
                       />
                     }
                     onChange={(e, value) => this.onComplaintChange(e)}
-                    underlineStyle={{ bottom: 7 }}
-                    underlineFocusStyle={{ bottom: 7 }}
+                    underlineStyle={{
+                      bottom: 7,
+                      borderBottom: "1px solid #e0e0e0"
+                    }}
+                    underlineFocusStyle={{
+                      bottom: 7,
+                      borderBottom: "1px solid #e0e0e0"
+                    }}
                     hintStyle={{ width: "100%" }}
                   />
                 </div>
@@ -564,7 +570,7 @@ class AllComplaints extends Component {
                         labelStyle={hintTextStyle}
                       />
                     }
-                    errorText={errorText}
+                    errorText={<Label label={errorText} color="red" />}
                     floatingLabelText={
                       <Label
                         key={1}
@@ -574,8 +580,14 @@ class AllComplaints extends Component {
                       />
                     }
                     onChange={(e, value) => this.onComplaintChange(e)}
-                    underlineStyle={{ bottom: 7 }}
-                    underlineFocusStyle={{ bottom: 7 }}
+                    underlineStyle={{
+                      bottom: 7,
+                      borderBottom: "1px solid #e0e0e0"
+                    }}
+                    underlineFocusStyle={{
+                      bottom: 7,
+                      borderBottom: "1px solid #e0e0e0"
+                    }}
                     hintStyle={{ width: "100%" }}
                   />
                 </div>

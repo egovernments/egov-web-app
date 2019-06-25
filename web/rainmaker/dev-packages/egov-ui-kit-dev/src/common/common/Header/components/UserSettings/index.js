@@ -20,10 +20,10 @@ class UserSettings extends Component {
       label: "हिंदी",
       value: "hi_IN",
     },
-    {
-      label: "ਪੰਜਾਬੀ",
-      value: "pn_IN",
-    },
+    // {
+    //   label: "ਪੰਜਾਬੀ",
+    //   value: "pn_IN",
+    // },
   ];
   style = {
     baseStyle: {
