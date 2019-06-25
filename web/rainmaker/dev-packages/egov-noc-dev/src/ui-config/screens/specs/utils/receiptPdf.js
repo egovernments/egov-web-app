@@ -5,6 +5,252 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import QRCode from "qrcode";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+const getOwners = data => {
+  let retowners=[];
+  data.owners.forEach((owner) =>{
+    retowners.push(
+    [
+      {
+        text: "Mobile No.",
+        border: [true, true, false, false]
+      },
+      {
+        text: "Name",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Gender",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Father/Husband's Name",
+        border: [false, true, true, false]
+      }
+    ]);
+    retowners.push(
+    [
+      {
+        text: get(owner, "mobile"),
+        style: "receipt-table-value",
+        border: [true, false, false, false]
+      },
+      {
+        text: get(owner, "name"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(owner, "gender"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(owner, "fatherHusbandName"),
+        style: "receipt-table-value",
+        border: [false, false, true, false]
+      }
+    ]);
+    retowners.push(
+    [
+      {
+        text: "",
+        border: [true, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+
+      {
+        text: "",
+        border: [false, false, true, false]
+      }
+    ]);
+    retowners.push(
+    [
+      {
+        text: "Date of Birth",
+        border: [true, false, false, false]
+      },
+      {
+        text: "Email",
+        border: [false, false, false, false]
+      },
+      {
+        text: "PAN No.",
+        border: [false, false, false, false]
+      },
+      {
+        text: "Correspondence Address",
+        border: [false, false, true, false]
+      }
+    ]);
+    retowners.push(
+    [
+      {
+        text: get(owner, "dob"),
+        style: "receipt-table-value",
+        border: [true, false, false, true]
+      },
+      {
+        text: get(owner, "email"),
+        style: "receipt-table-value",
+        border: [false, false, false, true]
+      },
+      {
+        text: get(owner, "pan"),
+        style: "receipt-table-value",
+        border: [false, false, false, true]
+      },
+
+      {
+        text: get(owner, "address"),
+        style: "receipt-table-value",
+        border: [false, false, true, true]
+      }
+    ]);
+});
+
+return retowners;
+};
+
+const getBuildings = data => {
+  let retbuildings=[];
+  data && data.buildings.forEach((building)=> {
+    retbuildings.push([
+      {
+        text: "Property Type",
+        border: [true, true, false, false]
+      },
+      {
+        text: " Name of Building",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Building Usage Type",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Building Usage Subtype",
+        border: [false, true, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: data.propertyType,
+        style: "receipt-table-value",
+        border: [true, false, false, false]
+      },
+      {
+        text: get(building, "name", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "usageType", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "usageSubType", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: "No. of Floors",
+        border: [true, false, false, false]
+      },
+      {
+        text: " No. of Basements",
+        border: [false, false, false, false]
+      },
+      {
+        text: "Plot Size (Sq mtrs)",
+        border: [false, false, false, false]
+      },
+      {
+        text: "Builtup Area (sq mtrs)",
+        border: [false, false, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: get(building, "NO_OF_FLOORS", "NA"),
+        style: "receipt-table-value",
+        border: [true, false, false, false]
+      },
+      {
+        text: get(building, "NO_OF_BASEMENTS", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "PLOT_SIZE", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "BUILTUP_AREA", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: "Height of Building (in mtrs)",
+        border: [true, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+
+      {
+        text: "",
+        border: [false, false, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: get(building, "HEIGHT_OF_BUILDING", "NA"),
+        style: "receipt-table-value",
+        border: [true, false, false, true]
+      },
+      {
+        text: "",
+        style: "receipt-table-value",
+        border: [false, false, false, true]
+      },
+      {
+        text: "",
+        style: "receipt-table-value",
+        border: [false, false, false, true]
+      },
+
+      {
+        text: "",
+        style: "receipt-table-value",
+        border: [false, false, true, true]
+      }
+    ]);
+    });
+    return retbuildings;
+};
 const getApplicationData = async (transformedData, ulbLogo, type) => {
   let borderLayout = {
     hLineWidth: function(i, node) {
@@ -133,130 +379,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       style: "noc-table",
       table: {
         widths: ["*", "*", "*", "*"],
-        body: [
-          [
-            {
-              text: "Property Type",
-              border: [true, true, false, false]
-            },
-            {
-              text: " Name of Building",
-              border: [false, true, false, false]
-            },
-            {
-              text: "Building Usage Type",
-              border: [false, true, false, false]
-            },
-            {
-              text: "Building Usage Subtype",
-              border: [false, true, true, false]
-            }
-          ],
-          [
-            {
-              text: transformedData.propertyType,
-              style: "receipt-table-value",
-              border: [true, false, false, false]
-            },
-            {
-              text: get(transformedData, "buildings[0].name", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "buildings[0].usageType", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "buildings[0].usageSubType", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: "No. of Floors",
-              border: [true, false, false, false]
-            },
-            {
-              text: " No. of Basements",
-              border: [false, false, false, false]
-            },
-            {
-              text: "Plot Size (Sq mtrs)",
-              border: [false, false, false, false]
-            },
-            {
-              text: "Builtup Area (sq mtrs)",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: get(transformedData, "NO_OF_FLOORS", "NA"),
-              style: "receipt-table-value",
-              border: [true, false, false, false]
-            },
-            {
-              text: get(transformedData, "NO_OF_BASEMENTS", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "PLOT_SIZE", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "BUILTUP_AREA", "NA"),
-              style: "receipt-table-value",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: "Height of Building (in mtrs)",
-              border: [true, false, false, false]
-            },
-            {
-              text: "",
-              border: [false, false, false, false]
-            },
-            {
-              text: "",
-              border: [false, false, false, false]
-            },
-
-            {
-              text: "",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: get(transformedData, "HEIGHT_OF_BUILDING", "NA"),
-              style: "receipt-table-value",
-              border: [true, false, false, true]
-            },
-            {
-              text: "",
-              style: "receipt-table-value",
-              border: [false, false, false, true]
-            },
-            {
-              text: "",
-              style: "receipt-table-value",
-              border: [false, false, false, true]
-            },
-
-            {
-              text: "",
-              style: "receipt-table-value",
-              border: [false, false, true, true]
-            }
-          ]
-        ]
+        body: getBuildings(transformedData)
       },
       layout: borderLayout
     }
@@ -366,108 +489,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       style: "noc-table",
       table: {
         widths: ["*", "*", "*", "*"],
-        body: [
-          [
-            {
-              text: "Mobile No.",
-              border: [true, true, false, false]
-            },
-            {
-              text: "Name",
-              border: [false, true, false, false]
-            },
-            {
-              text: "Gender",
-              border: [false, true, false, false]
-            },
-            {
-              text: "Father/Husband's Name",
-              border: [false, true, true, false]
-            }
-          ],
-          [
-            {
-              text: get(transformedData, "owners[0].mobileNumber"),
-              style: "receipt-table-value",
-              border: [true, false, false, false]
-            },
-            {
-              text: get(transformedData, "owners[0].name"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "owners[0].gender"),
-              style: "receipt-table-value",
-              border: [false, false, false, false]
-            },
-            {
-              text: get(transformedData, "owners[0].fatherHusbandName"),
-              style: "receipt-table-value",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: "",
-              border: [true, false, false, false]
-            },
-            {
-              text: "",
-              border: [false, false, false, false]
-            },
-            {
-              text: "",
-              border: [false, false, false, false]
-            },
-
-            {
-              text: "",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: "Date of Birth",
-              border: [true, false, false, false]
-            },
-            {
-              text: "Email",
-              border: [false, false, false, false]
-            },
-            {
-              text: "PAN No.",
-              border: [false, false, false, false]
-            },
-            {
-              text: "Correspondence Address",
-              border: [false, false, true, false]
-            }
-          ],
-          [
-            {
-              text: get(transformedData, "owners[0].dob"),
-              style: "receipt-table-value",
-              border: [true, false, false, true]
-            },
-            {
-              text: get(transformedData, "owners[0].email"),
-              style: "receipt-table-value",
-              border: [false, false, false, true]
-            },
-            {
-              text: get(transformedData, "owners[0].pan"),
-              style: "receipt-table-value",
-              border: [false, false, false, true]
-            },
-
-            {
-              text: get(transformedData, "owners[0].address"),
-              style: "receipt-table-value",
-              border: [false, false, true, true]
-            }
-          ]
-        ]
+        body: getOwners(transformedData)
       },
       layout: borderLayout
     }
@@ -524,7 +546,12 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
               style: "receipt-table-value",
               alignment: "center"
             },
-            { text: "TOTAL", border: [true, true, true, true], style: "receipt-table-value", alignment: "center" }
+            {
+              text: "TOTAL",
+              border: [true, true, true, true],
+              style: "receipt-table-value",
+              alignment: "center"
+            }
           ],
           [
             {
@@ -532,13 +559,21 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
               border: [true, true, true, true],
               alignment: "center"
             },
-            { text: transformedData.nocPenaltyRebate, border: [true, true, true, true], alignment: "center" },
+            {
+              text: transformedData.nocPenaltyRebate,
+              border: [true, true, true, true],
+              alignment: "center"
+            },
             {
               text: transformedData.nocAdhocPenaltyRebate,
               border: [true, true, true, true],
               alignment: "center"
             },
-            { text: transformedData.totalAmount, border: [true, true, true, true], alignment: "center" }
+            {
+              text: transformedData.totalAmount,
+              border: [true, true, true, true],
+              alignment: "center"
+            }
           ]
         ]
       },
@@ -625,9 +660,9 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
   ];
   let qrText = `Application: ${transformedData.applicationNumber}, Date: ${
     transformedData.applicationDate
-  }, Buildings: ${transformedData.propertyType}, Applicant: ${transformedData.owners[0].name}, Address: ${
-    transformedData.address
-  }`;
+  }, Buildings: ${transformedData.propertyType}, Applicant: ${
+    transformedData.owners[0].name
+  }, Address: ${transformedData.address}`;
 
   switch (type) {
     case "application":
@@ -686,9 +721,11 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       propertyLocationDetails = [];
       applicantDetails = [];
       documents = [];
-      qrText = `Application: ${transformedData.applicationNumber}, Receipt: ${transformedData.receiptNumber}, Date: ${
-        transformedData.paymentDate
-      }, Fees Paid: ${transformedData.amountPaid}, Payment mode: ${transformedData.paymentMode}, Transaction ID: ${
+      qrText = `Application: ${transformedData.applicationNumber}, Receipt: ${
+        transformedData.receiptNumber
+      }, Date: ${transformedData.paymentDate}, Fees Paid: ${
+        transformedData.amountPaid
+      }, Payment mode: ${transformedData.paymentMode}, Transaction ID: ${
         transformedData.transactionNumber
       }`;
       break;
@@ -781,9 +818,11 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
           ]
         }
       ];
-      qrText = `Application: ${transformedData.applicationNumber}, NOC Number: ${
-        transformedData.fireNOCNumber
-      }, Date of Issue: ${transformedData.issuedDate}, Valid Till: ${transformedData.validTo}, Buildings: ${
+      qrText = `Application: ${
+        transformedData.applicationNumber
+      }, NOC Number: ${transformedData.fireNOCNumber}, Date of Issue: ${
+        transformedData.issuedDate
+      }, Valid Till: ${transformedData.validTo}, Buildings: ${
         transformedData.propertyType
       }, Applicant: ${transformedData.owners[0].name}`;
       break;
@@ -924,11 +963,31 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
 };
 
 const generatePdf = async (state, dispatch, type) => {
-  let applicationData = get(state.screenConfiguration.preparedFinalObject, "applicationDataForPdf", {});
-  let paymentData = get(state.screenConfiguration.preparedFinalObject, "receiptDataForPdf", {});
-  let mdmsData = get(state.screenConfiguration.preparedFinalObject, "mdmsDataForPdf", {});
-  let ulbLogo = get(state.screenConfiguration.preparedFinalObject, "base64UlbLogoForPdf", "");
-  let auditorData = get(state.screenConfiguration.preparedFinalObject, "userDataForPdf", {});
+  let applicationData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "applicationDataForPdf",
+    {}
+  );
+  let paymentData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "receiptDataForPdf",
+    {}
+  );
+  let mdmsData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "mdmsDataForPdf",
+    {}
+  );
+  let ulbLogo = get(
+    state.screenConfiguration.preparedFinalObject,
+    "base64UlbLogoForPdf",
+    ""
+  );
+  let auditorData = get(
+    state.screenConfiguration.preparedFinalObject,
+    "userDataForPdf",
+    {}
+  );
   if (isEmpty(applicationData)) {
     console.log("Error in application data");
     return;
@@ -938,10 +997,16 @@ const generatePdf = async (state, dispatch, type) => {
   } else if (isEmpty(ulbLogo)) {
     console.log("Error in image data");
     return;
-  } else if ((type.startsWith("receipt") || type.startsWith("certificate")) && isEmpty(auditorData)) {
+  } else if (
+    (type.startsWith("receipt") || type.startsWith("certificate")) &&
+    isEmpty(auditorData)
+  ) {
     console.log("Error in auditor user data");
     return;
-  } else if ((type.startsWith("receipt") || type.startsWith("certificate")) && isEmpty(paymentData)) {
+  } else if (
+    (type.startsWith("receipt") || type.startsWith("certificate")) &&
+    isEmpty(paymentData)
+  ) {
     console.log("Error in payment data");
     return;
   }
@@ -953,27 +1018,54 @@ const generatePdf = async (state, dispatch, type) => {
   };
   switch (type) {
     case "application_download":
-      let application_data = await getApplicationData(transformedData, ulbLogo, "application");
-      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
+      let application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "application"
+      );
+      application_data &&
+        pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "application_print":
-      application_data = await getApplicationData(transformedData, ulbLogo, "application");
+      application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "application"
+      );
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "receipt_download":
-      application_data = await getApplicationData(transformedData, ulbLogo, "receipt");
-      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
+      application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "receipt"
+      );
+      application_data &&
+        pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "receipt_print":
-      application_data = await getApplicationData(transformedData, ulbLogo, "receipt");
+      application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "receipt"
+      );
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "certificate_download":
-      application_data = await getApplicationData(transformedData, ulbLogo, "certificate");
-      application_data && pdfMake.createPdf(application_data).download("noc_application.pdf");
+      application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "certificate"
+      );
+      application_data &&
+        pdfMake.createPdf(application_data).download("noc_application.pdf");
       break;
     case "certificate_print":
-      application_data = await getApplicationData(transformedData, ulbLogo, "certificate");
+      application_data = await getApplicationData(
+        transformedData,
+        ulbLogo,
+        "certificate"
+      );
       application_data && pdfMake.createPdf(application_data).print();
       break;
 

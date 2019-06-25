@@ -99,7 +99,11 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       get(response, "FireNOCs[0].provisionFireNOCNumber", "NA")
     );
     data.fireStationId = nullToNa(
-      get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA")
+      getMessageFromLocalization(
+        `FIRENOC_FIRESTATIONS_${getTransformedLocale(
+          get(response, "FireNOCs[0].fireNOCDetails.firestationId", "NA")
+        )}`
+      )
     );
 
     // Certificate Data
@@ -149,10 +153,10 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       )
     );
     data.city = nullToNa(
-      get(
-        response,
-        "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
-        "NA"
+      getMessageFromLocalization(
+        `TENANT_TENANTS_${getTransformedLocale(
+          get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.city", "NA")
+        )}`
       )
     );
     data.door = nullToNa(
@@ -177,10 +181,10 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       )
     );
     data.mohalla = nullToNa(
-      get(
-        response,
-        "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
-        "NA"
+      getMessageFromLocalization(
+        `revenue.locality.${getTransformedLocale(
+          get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code", "NA")
+        )}`
       )
     );
     data.pincode = nullToNa(
