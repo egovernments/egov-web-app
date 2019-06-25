@@ -167,7 +167,6 @@ export const getBoundaryData = async (
     //       "Licenses[0].tradeLicenseDetail.address.city"
     //     )
     //   : getQueryArg(window.location.href, "tenantId");
-    console.log("LOLOLOLOL:", tenantId);
     const mohallaData =
       payload &&
       payload.TenantBoundary[0] &&
@@ -185,11 +184,7 @@ export const getBoundaryData = async (
       }, []);
 
     dispatch(
-      prepareFinalObject(
-        "searchScreenMdmsData.localities",
-        // payload.TenantBoundary && payload.TenantBoundary[0].boundary,
-        mohallaData
-      )
+      prepareFinalObject("searchScreenMdmsData.localities", mohallaData)
     );
 
     // dispatch(

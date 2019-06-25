@@ -58,11 +58,11 @@ const getBillDetails = billResponse => {
     requiredData.push(obj);
   }
 
-  console.log(requiredData);
+  // console.log(requiredData);
 };
 
 const onDownloadClick = async rowData => {
-  console.log(rowData);
+  // console.log(rowData);
   const queryObject1 = [
     {
       key: "ids",
@@ -93,7 +93,7 @@ const onDownloadClick = async rowData => {
     "",
     queryObject1
   );
-  console.log(propertyResponse);
+  // console.log(propertyResponse);
 
   const billendpoint = "/collection-services-v1/receipts/_search";
   const billResponse = await httpRequest(
@@ -102,12 +102,9 @@ const onDownloadClick = async rowData => {
     "",
     queryObject2
   );
-  console.log(billResponse);
 
   const consumerDetails = getConsumerDetail(propertyResponse);
-  console.log(consumerDetails);
   const billDetails = getBillDetails(billResponse);
-  console.log(billDetails);
 };
 
 export const textToLocalMapping = {
@@ -132,9 +129,8 @@ export const textToLocalMapping = {
     getTransformedLocalStorgaeLabels()
   ),
   Download: getLocaleLabels("Download", "ABG_COMMON_TABLE_COL_DOWNLOAD_BUTTON"),
-  //Download button,
   "View button": getLocaleLabels(
-    "View",
+    "Action",
     "ABG_COMMON_TABLE_COL_VIEW_BUTTON",
     getTransformedLocalStorgaeLabels()
   )
