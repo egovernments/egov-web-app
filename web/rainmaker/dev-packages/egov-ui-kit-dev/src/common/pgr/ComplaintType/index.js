@@ -106,7 +106,7 @@ class ComplaintType extends Component {
           containerStyle={this.props.containerStyle || baseContainerStyle}
           textFieldStyle={this.props.textFieldStyle || baseTextStyle}
           dataSource={transformedDataSource}
-          searchInputText="Search"
+          searchInputText={<Label label="ACTION_TEST_SEARCH" />}
           searchKey="text"
           callback={autoSuggestCallback}
           autoFocus={false}
