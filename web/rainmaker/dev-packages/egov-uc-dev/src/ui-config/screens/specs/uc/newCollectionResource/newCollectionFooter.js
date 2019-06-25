@@ -238,7 +238,7 @@ const isTaxPeriodValid = (dispatch, demand, state) => {
   );
   const selectedFrom = new Date(demand.taxPeriodFrom);
   const selectedTo = new Date(demand.taxPeriodTo);
-  if (selectedFrom < selectedTo) {
+  if (selectedFrom <= selectedTo) {
     return true;
   } else {
     dispatch(
