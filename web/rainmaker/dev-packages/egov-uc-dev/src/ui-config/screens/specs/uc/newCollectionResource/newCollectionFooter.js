@@ -172,7 +172,6 @@ const createDemand = async (state, dispatch) => {
       );
     }
   }
-  console.log("Demands:", demands);
 };
 
 const generateBill = async (

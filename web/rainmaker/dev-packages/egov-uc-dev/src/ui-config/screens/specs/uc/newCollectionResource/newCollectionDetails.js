@@ -339,7 +339,21 @@ export const newCollectionDetailsCard = getCommonCard(
           overflow: "visible"
         }
       }
-    )
+    ),
+    commentsContainer: getCommonContainer({
+      comments: getTextField({
+        label: {
+          labelName: "Comments",
+          labelKey: "UC_COMMENT_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Comment ",
+          labelKey: "UC_COMMENT_PLACEHOLDER"
+        },
+        Required: false,
+        jsonPath: "Demands[0].additionalDetails.comment"
+      })
+    })
   },
   {
     style: {
@@ -442,26 +456,26 @@ const setTaxHeadFields = (action, state, dispatch) => {
         )
       );
     });
-    dispatch(
-      handleField(
-        "newCollection",
-        "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-        `comment`,
-        getTextField({
-          label: {
-            labelName: "Comments",
-            labelKey: "UC_COMMENT_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Comment ",
-            labelKey: "UC_COMMENT_PLACEHOLDER"
-          },
-          Required: false,
-          jsonPath: "Demands[0].comment",
-          componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
-        })
-      )
-    );
+    // dispatch(
+    //   handleField(
+    //     "newCollection",
+    //     "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+    //     `comment`,
+    //     getTextField({
+    //       label: {
+    //         labelName: "Comments",
+    //         labelKey: "UC_COMMENT_LABEL"
+    //       },
+    //       placeholder: {
+    //         labelName: "Enter Comment ",
+    //         labelKey: "UC_COMMENT_PLACEHOLDER"
+    //       },
+    //       Required: false,
+    //       jsonPath: "Demands[0].comment",
+    //       componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
+    //     })
+    //   )
+    // );
   }
 };
 
@@ -489,7 +503,6 @@ const setServiceCategory = (businessServiceData, dispatch) => {
       set(nestedServiceData, `${item.code}`, item);
     }
   });
-  console.log(nestedServiceData);
   dispatch(
     prepareFinalObject(
       "applyScreenMdmsData.nestedServiceData",
