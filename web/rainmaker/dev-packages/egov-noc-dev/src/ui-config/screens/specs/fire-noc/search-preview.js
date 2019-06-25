@@ -8,7 +8,10 @@ import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getFileUrlFromAPI, getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import {
+  getFileUrlFromAPI,
+  getQueryArg
+} from "egov-ui-framework/ui-utils/commons";
 import jp from "jsonpath";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -68,11 +71,28 @@ const prepareDocumentsView = async (state, dispatch) => {
   let documentsPreview = [];
 
   // Get all documents from response
-  let firenoc = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0]", {});
-  let buildingDocuments = jp.query(firenoc, "$.fireNOCDetails.buildings.*.applicationDocuments.*");
-  let applicantDocuments = jp.query(firenoc, "$.fireNOCDetails.applicantDetails.additionalDetail.documents.*");
-  let otherDocuments = jp.query(firenoc, "$.fireNOCDetails.additionalDetail.documents.*");
-  let allDocuments = [...buildingDocuments, ...applicantDocuments, ...otherDocuments];
+  let firenoc = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0]",
+    {}
+  );
+  let buildingDocuments = jp.query(
+    firenoc,
+    "$.fireNOCDetails.buildings.*.applicationDocuments.*"
+  );
+  let applicantDocuments = jp.query(
+    firenoc,
+    "$.fireNOCDetails.applicantDetails.additionalDetail.documents.*"
+  );
+  let otherDocuments = jp.query(
+    firenoc,
+    "$.fireNOCDetails.additionalDetail.documents.*"
+  );
+  let allDocuments = [
+    ...buildingDocuments,
+    ...applicantDocuments,
+    ...otherDocuments
+  ];
 
   allDocuments.forEach(doc => {
     documentsPreview.push({
@@ -82,9 +102,14 @@ const prepareDocumentsView = async (state, dispatch) => {
     });
   });
   let fileStoreIds = jp.query(documentsPreview, "$.*.fileStoreId");
-  let fileUrls = fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : {};
+  let fileUrls =
+    fileStoreIds.length > 0 ? await getFileUrlFromAPI(fileStoreIds) : {};
   documentsPreview = documentsPreview.map((doc, index) => {
-    doc["link"] = fileUrls[doc.fileStoreId];
+    doc["link"] =
+      (fileUrls &&
+        fileUrls[doc.fileStoreId] &&
+        fileUrls[doc.fileStoreId].split(",")[0]) ||
+      "";
     doc["name"] =
       (fileUrls[doc.fileStoreId] &&
         decodeURIComponent(
@@ -102,14 +127,23 @@ const prepareDocumentsView = async (state, dispatch) => {
 };
 
 const prepareUoms = (state, dispatch) => {
-  let buildings = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings", []);
+  let buildings = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.buildings",
+    []
+  );
   buildings.forEach((building, index) => {
     let uoms = get(building, "uoms", []);
     let uomsMap = {};
     uoms.forEach(uom => {
       uomsMap[uom.code] = uom.value;
     });
-    dispatch(prepareFinalObject(`FireNOCs[0].fireNOCDetails.buildings[${index}].uomsMap`, uomsMap));
+    dispatch(
+      prepareFinalObject(
+        `FireNOCs[0].fireNOCDetails.buildings[${index}].uomsMap`,
+        uomsMap
+      )
+    );
   });
 };
 
@@ -119,7 +153,10 @@ const prepareUoms = (state, dispatch) => {
 
 const setDownloadMenu = (state, dispatch) => {
   /** MenuButton data based on status */
-  let status = get(state, "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.status");
+  let status = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.status"
+  );
   let downloadMenu = [];
   let printMenu = [];
   let certificateDownloadObject = {
@@ -166,8 +203,16 @@ const setDownloadMenu = (state, dispatch) => {
   };
   switch (status) {
     case "APPROVED":
-      downloadMenu = [certificateDownloadObject, receiptDownloadObject, applicationDownloadObject];
-      printMenu = [certificatePrintObject, receiptPrintObject, applicationPrintObject];
+      downloadMenu = [
+        certificateDownloadObject,
+        receiptDownloadObject,
+        applicationDownloadObject
+      ];
+      printMenu = [
+        certificatePrintObject,
+        receiptPrintObject,
+        applicationPrintObject
+      ];
       break;
     case "DOCUMENTVERIFY":
     case "FIELDINSPECTION":
@@ -202,7 +247,12 @@ const setDownloadMenu = (state, dispatch) => {
   /** END */
 };
 
-const setSearchResponse = async (state, dispatch, applicationNumber, tenantId) => {
+const setSearchResponse = async (
+  state,
+  dispatch,
+  applicationNumber,
+  tenantId
+) => {
   const response = await getSearchResults([
     {
       key: "tenantId",
@@ -222,7 +272,10 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "search-preview",
   beforeInitScreen: (action, state, dispatch) => {
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
     const tenantId = getQueryArg(window.location.href, "tenantId");
     searchBill(dispatch, applicationNumber, tenantId);
 
