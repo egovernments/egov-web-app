@@ -209,6 +209,13 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         "NA"
       )
     );
+    data.address = createAddress(
+      data.door,
+      data.buildingName,
+      data.street,
+      data.mohalla,
+      data.city
+    );
 
     // Applicant Details
     let owners = get(
