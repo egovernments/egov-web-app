@@ -6,10 +6,9 @@ import QRCode from "qrcode";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getOwners = data => {
-  let retowners=[];
-  data.owners.forEach((owner) =>{
-    retowners.push(
-    [
+  let retowners = [];
+  data.owners.forEach(owner => {
+    retowners.push([
       {
         text: "Mobile No.",
         border: [true, true, false, false]
@@ -27,8 +26,7 @@ const getOwners = data => {
         border: [false, true, true, false]
       }
     ]);
-    retowners.push(
-    [
+    retowners.push([
       {
         text: get(owner, "mobile"),
         style: "receipt-table-value",
@@ -50,8 +48,7 @@ const getOwners = data => {
         border: [false, false, true, false]
       }
     ]);
-    retowners.push(
-    [
+    retowners.push([
       {
         text: "",
         border: [true, false, false, false]
@@ -70,8 +67,7 @@ const getOwners = data => {
         border: [false, false, true, false]
       }
     ]);
-    retowners.push(
-    [
+    retowners.push([
       {
         text: "Date of Birth",
         border: [true, false, false, false]
@@ -89,8 +85,7 @@ const getOwners = data => {
         border: [false, false, true, false]
       }
     ]);
-    retowners.push(
-    [
+    retowners.push([
       {
         text: get(owner, "dob"),
         style: "receipt-table-value",
@@ -113,143 +108,139 @@ const getOwners = data => {
         border: [false, false, true, true]
       }
     ]);
-});
+  });
 
-return retowners;
+  return retowners;
 };
 
 const getBuildings = data => {
-  let retbuildings=[];
-  data && data.buildings.forEach((building)=> {
-    retbuildings.push([
-      {
-        text: "Property Type",
-        border: [true, true, false, false]
-      },
-      {
-        text: " Name of Building",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Building Usage Type",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Building Usage Subtype",
-        border: [false, true, true, false]
-      }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: data.propertyType,
-        style: "receipt-table-value",
-        border: [true, false, false, false]
-      },
-      {
-        text: get(building, "name", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "usageType", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "usageSubType", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, true, false]
-      }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: "No. of Floors",
-        border: [true, false, false, false]
-      },
-      {
-        text: " No. of Basements",
-        border: [false, false, false, false]
-      },
-      {
-        text: "Plot Size (Sq mtrs)",
-        border: [false, false, false, false]
-      },
-      {
-        text: "Builtup Area (sq mtrs)",
-        border: [false, false, true, false]
-      }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: get(building, "NO_OF_FLOORS", "NA"),
-        style: "receipt-table-value",
-        border: [true, false, false, false]
-      },
-      {
-        text: get(building, "NO_OF_BASEMENTS", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "PLOT_SIZE", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "BUILTUP_AREA", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, true, false]
-      }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: "Height of Building (in mtrs)",
-        border: [true, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
+  let retbuildings = [];
+  data &&
+    data.buildings.forEach(building => {
+      retbuildings.push([
+        {
+          text: "Property Type",
+          border: [true, true, false, false]
+        },
+        {
+          text: " Name of Building",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Building Usage Type",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Building Usage Subtype",
+          border: [false, true, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: data.propertyType,
+          style: "receipt-table-value",
+          border: [true, false, false, false]
+        },
+        {
+          text: get(building, "name", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "usageType", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "usageSubType", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: "No. of Floors",
+          border: [true, false, false, false]
+        },
+        {
+          text: " No. of Basements",
+          border: [false, false, false, false]
+        },
+        {
+          text: "Plot Size (Sq mtrs)",
+          border: [false, false, false, false]
+        },
+        {
+          text: "Builtup Area (sq mtrs)",
+          border: [false, false, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: get(building, "NO_OF_FLOORS", "NA"),
+          style: "receipt-table-value",
+          border: [true, false, false, false]
+        },
+        {
+          text: get(building, "NO_OF_BASEMENTS", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "PLOT_SIZE", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "BUILTUP_AREA", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: "Height of Building (in mtrs)",
+          border: [true, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
 
-      {
-        text: "",
-        border: [false, false, true, false]
-      }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: get(building, "HEIGHT_OF_BUILDING", "NA"),
-        style: "receipt-table-value",
-        border: [true, false, false, true]
-      },
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, false, true]
-      },
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, false, true]
-      },
+        {
+          text: "",
+          border: [false, false, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: get(building, "HEIGHT_OF_BUILDING", "NA"),
+          style: "receipt-table-value",
+          border: [true, false, false, true]
+        },
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, false, true]
+        },
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, false, true]
+        },
 
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, true, true]
-      }
-    ]);
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, true, true]
+        }
+      ]);
     });
-    return retbuildings;
+  return retbuildings;
 };
 const getApplicationData = async (transformedData, ulbLogo, type) => {
   let borderLayout = {
@@ -535,7 +526,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
               alignment: "center"
             },
             {
-              text: "Rebate/Penalty",
+              text: "NOC Taxes",
               border: [true, true, true, true],
               style: "receipt-table-value",
               alignment: "center"
@@ -560,7 +551,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
               alignment: "center"
             },
             {
-              text: transformedData.nocPenaltyRebate,
+              text: transformedData.nocTaxes,
               border: [true, true, true, true],
               alignment: "center"
             },

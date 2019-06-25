@@ -155,7 +155,11 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.city = nullToNa(
       getMessageFromLocalization(
         `TENANT_TENANTS_${getTransformedLocale(
-          get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.city", "NA")
+          get(
+            response,
+            "FireNOCs[0].fireNOCDetails.propertyDetails.address.city",
+            "NA"
+          )
         )}`
       )
     );
@@ -183,7 +187,11 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     data.mohalla = nullToNa(
       getMessageFromLocalization(
         `revenue.locality.${getTransformedLocale(
-          get(response, "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code", "NA")
+          get(
+            response,
+            "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+            "NA"
+          )
         )}`
       )
     );
@@ -296,9 +304,11 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       if (desc === "FIRENOC_FEES") {
         data.nocFee = item.amount;
       } else if (desc === "NOC_ADHOC_PENALTY") {
-        nocAdhocPenalty = item.amount;
+        data.nocAdhocPenalty = item.amount;
       } else if (desc === "NOC_ADHOC_REBATE") {
-        nocAdhocRebate = item.amount;
+        data.nocAdhocRebate = item.amount;
+      } else if (desc === "FIRENOC_TAXES") {
+        data.nocTaxes = item.amount;
       }
     });
     data.nocPenaltyRebate = "NA";
