@@ -107,7 +107,7 @@ export const NOCApplication = getCommonCard({
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "Invalid NOC No.",
-      jsonPath: "searchScreen.NOCNumber"
+      jsonPath: "searchScreen.fireNOCNumber"
     }),
     ownerMobNo: getTextField({
       label: {
