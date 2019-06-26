@@ -288,7 +288,7 @@ const getMutlipleBillsData = transformedData => {
               text: [
                 {
                   text:
-                    "Note:\n1. Payment received by cheque/demand draft shall be subject to realization.\n2. This document is not a proof of Property Ownership.\n3. This is a computer generated document, hence requires no signature.",
+                    "Note:\n1. The citizen can make either full or partial payment for the bill. \n2. Bill can be paid online through - mSeva app, (site link) or at the ULB using cash, cheque and DD.\n3. Pay your bill before 30th September to avail rebate. \n4. Please bring the bill while paying at the counter. \n5. Bill is as per your property details declared and Punjab Municipal Act 1911.",
                   bold: false
                 }
               ],
@@ -324,7 +324,7 @@ const getMutlipleBillsData = transformedData => {
           {
             text: [
               {
-                text: " Acknowedgement (For Official use only) ",
+                text: " Acknowledgement (For Official use only) ",
                 bold: true
               }
             ],
@@ -675,7 +675,7 @@ const getSingleBillData = transformedData => {
               text: [
                 {
                   text:
-                    "Note:\n1. Payment received by cheque/demand draft shall be subject to realization.\n2. This document is not a proof of Property Ownership.\n3. This is a computer generated document, hence requires no signature.",
+                    "Note:\n1. The citizen can make either full or partial payment for the bill. \n2. Bill can be paid online through - mSeva app, (site link) or at the ULB using cash, cheque and DD.\n3. Pay your bill before 30th September to avail rebate. \n4. Please bring the bill while paying at the counter. \n5. Bill is as per your property details declared and Punjab Municipal Act 1911.",
                   bold: false
                 }
               ],
@@ -711,7 +711,7 @@ const getSingleBillData = transformedData => {
           {
             text: [
               {
-                text: " Acknowedgement (For Official use only) ",
+                text: " Acknowledgement (For Official use only) ",
                 bold: true
               }
             ],

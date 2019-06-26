@@ -64,7 +64,7 @@ export const abgSearchCard = getCommonCard({
       },
       sourceJsonPath: "searchScreenMdmsData.tenant.tenants",
       jsonPath: "searchCriteria.tenantId",
-      required: false,
+      required: true,
       disabled: false,
       props: {
         value: tenantId,
@@ -75,23 +75,39 @@ export const abgSearchCard = getCommonCard({
         sm: 4
       }
     }),
-    locMohalla: getSelectField({
-      label: {
-        labelName: "Location/Mohalla",
-        labelKey: "ABG_LOCMOHALLA_LABEL"
-      },
-      placeholder: {
-        labelName: "Select Location/Mohalla",
-        labelKey: "ABG_LOCMOHALLA_PLACEHOLDER"
-      },
-      required: false,
-      jsonPath: "searchCriteria.locality",
+    locMohalla: {
+      uiFramework: "custom-containers",
+      componentPath: "AutosuggestContainer",
       gridDefination: {
         xs: 12,
         sm: 4
       },
-      sourceJsonPath: "searchScreenMdmsData.localities"
-    }),
+      jsonPath: "searchCriteria.locality",
+      props: {
+        style: {
+          width: "100%",
+          cursor: "pointer"
+        },
+        label: {
+          labelName: "Location/Mohalla",
+          labelKey: "ABG_LOCMOHALLA_LABEL"
+        },
+        placeholder: {
+          labelName: "Select Location/Mohalla",
+          labelKey: "ABG_LOCMOHALLA_PLACEHOLDER"
+        },
+        jsonPath: "searchCriteria.locality",
+        sourceJsonPath: "searchScreenMdmsData.localities",
+        labelsFromLocalisation: true,
+        suggestions: [],
+        visible: true,
+        fullwidth: true,
+        required: false,
+        inputLabelProps: {
+          shrink: true
+        }
+      }
+    },
     financialYear: getSelectField({
       label: {
         labelName: "Financial Year",

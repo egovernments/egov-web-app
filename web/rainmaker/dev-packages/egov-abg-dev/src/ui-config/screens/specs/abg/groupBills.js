@@ -11,7 +11,8 @@ import { searchResults } from "./groupBillResource/searchResults";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getTenantId, getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 const tenantId = getTenantId();
 
@@ -85,7 +86,8 @@ const abgSearchAndResult = {
   beforeInitScreen: (action, state, dispatch) => {
     getData(action, state, dispatch).then(responseAction => {
       const queryObj = [{ key: "tenantId", value: tenantId }];
-      getBoundaryData(action, state, dispatch, queryObj);
+      dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
+      getBoundaryData(action, state, dispatch, queryObj, tenantId);
     });
     //setting service category to PT for now. -- Hardcoding alert!!
     dispatch(prepareFinalObject("searchCriteria.businessservice", "PT"));

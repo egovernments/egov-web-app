@@ -149,8 +149,8 @@ export const getBoundaryData = async (
   state,
   dispatch,
   queryObject,
-  code,
-  componentPath
+  tenantId
+  // componentPath
 ) => {
   try {
     let payload = await httpRequest(
@@ -160,7 +160,6 @@ export const getBoundaryData = async (
       queryObject,
       {}
     );
-    const tenantId = "pb.amritsar";
     // process.env.REACT_APP_NAME === "Employee"
     //   ? get(
     //       state.screenConfiguration.preparedFinalObject,
@@ -195,21 +194,21 @@ export const getBoundaryData = async (
     //     mohallaData
     //   )
     // );
-    if (code) {
-      let data = payload.TenantBoundary[0].boundary;
-      let messageObject =
-        data &&
-        data.find(item => {
-          return item.code == code;
-        });
-      if (messageObject)
-        dispatch(
-          prepareFinalObject(
-            "Licenses[0].tradeLicenseDetail.address.locality.name",
-            messageObject.name
-          )
-        );
-    }
+    // if (code) {
+    //   let data = payload.TenantBoundary[0].boundary;
+    //   let messageObject =
+    //     data &&
+    //     data.find(item => {
+    //       return item.code == code;
+    //     });
+    //   if (messageObject)
+    //     dispatch(
+    //       prepareFinalObject(
+    //         "Licenses[0].tradeLicenseDetail.address.locality.name",
+    //         messageObject.name
+    //       )
+    //     );
+    // }
   } catch (e) {
     console.log(e);
   }
