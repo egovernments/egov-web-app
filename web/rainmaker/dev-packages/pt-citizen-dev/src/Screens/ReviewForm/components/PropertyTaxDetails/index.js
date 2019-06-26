@@ -66,7 +66,7 @@ class PropertyTaxDetails extends React.Component {
                     ? `${
                         !(optionSelected === "Partial_Amount")
                           ? totalAmount
-                          : totalAmount +
+                          : totalAmount -
                             get(
                               taxHeadEstimates[
                                 taxHeadEstimates.findIndex(
@@ -169,7 +169,7 @@ class PropertyTaxDetails extends React.Component {
                         ? `${
                             !(optionSelected === "Partial_Amount")
                               ? totalAmount
-                              : totalAmount +
+                              : totalAmount -
                                 get(
                                   taxHeadEstimates[
                                     taxHeadEstimates.findIndex(
