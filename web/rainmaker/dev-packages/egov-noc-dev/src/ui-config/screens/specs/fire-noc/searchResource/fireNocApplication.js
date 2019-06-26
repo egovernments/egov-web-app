@@ -232,7 +232,7 @@ export const NOCApplication = getCommonCard({
         children: {
           buttonLabel: getLabel({
             labelName: "Reset",
-            labelKey: "HRMS_SEARCH_RESET_BUTTON"
+            labelKey: "NOC_HOME_SEARCH_RESET_BUTTON"
           })
         },
         onClickDefination: {
