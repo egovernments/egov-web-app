@@ -276,13 +276,13 @@ export const approvalSuccessFooter = getCommonApplyFooter({
         labelName: "DOWNLOAD FIRE-NOC",
         labelKey: "NOC_APPROVAL_CHECKLIST_BUTTON_DOWN_LIC"
       })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        generatePdf(state, dispatch, "certificate_download");
+      }
     }
-    // onClickDefination: {
-    //   action: "condition",
-    //   callBack: (state, dispatch) => {
-    //     generateReceipt(state, dispatch, "certificate_download");
-    //   }
-    // }
   },
   printNOCButton: {
     componentPath: "Button",
@@ -300,13 +300,13 @@ export const approvalSuccessFooter = getCommonApplyFooter({
         labelName: "PRINT FIRE-NOC",
         labelKey: "NOC_APPROVAL_CHECKLIST_PRINT_LIC"
       })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        generatePdf(state, dispatch, "certificate_print");
+      }
     }
-    // onClickDefination: {
-    //   action: "condition",
-    //   callBack: (state, dispatch) => {
-    //     generateReceipt(state, dispatch, "certificate_print");
-    //   }
-    // }
   }
 });
 
