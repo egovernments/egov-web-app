@@ -30,37 +30,37 @@ export const getRedirectionURL = receiptNumber => {
   return redirectionURL;
 };
 export const footer = getCommonApplyFooter({
-  // prevButton: {
-  //   componentPath: "Button",
-  //   props: {
-  //     variant: "contained",
-  //     color: "primary",
-  //     style: {
-  //       minWidth: "200px",
-  //       height: "48px",
-  //       marginRight: "16px"
-  //     }
-  //   },
-  //   children: {
-  //     downloadReceiptButtonLabel: getLabel({
-  //       labelName: "GENERATE RECEIPT",
-  //       labelKey: "UC_BUTTON_GENERATE_RECEIPT"
-  //     }),
-  //     nextButtonIcon: {
-  //       uiFramework: "custom-atoms",
-  //       componentPath: "Icon",
-  //       props: {
-  //         iconName: "keyboard_arrow_right"
-  //       }
-  //     }
-  //   },
-  //   onClickDefination: {
-  //     action: "condition",
-  //     callBack: (state, dispatch) => {
-  //       goBack(state, dispatch);
-  //     }
-  //   }
-  // },
+  previousButton: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        minWidth: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      previousButtonIcon: {
+        uiFramework: "custom-atoms",
+        componentPath: "Icon",
+        props: {
+          iconName: "keyboard_arrow_left"
+        }
+      },
+      previousButtonLabel: getLabel({
+        labelName: "GO BACK",
+        labelKey: "UC_PAY_GO_BACK"
+      })
+    },
+    onClickDefination: {
+      action: "condition",
+      callBack: (state, dispatch) => {
+        goBack(state, dispatch);
+      }
+    }
+  },
   nextButton: {
     componentPath: "Button",
     props: {
@@ -172,7 +172,7 @@ const callBackForPay = async (state, dispatch) => {
     "Bill[0].mobileNumber",
     get(
       state.screenConfiguration,
-      "preparedFinalObject.Demands[0].mobileNo",
+      "preparedFinalObject.Demands[0].mobileNumber",
       ""
     )
   );
@@ -279,5 +279,16 @@ const convertDateFieldToEpoch = (finalObj, jsonPath) => {
 };
 
 const goBack = (state, dispatch) => {
-  dispatch(setRoute(`/uc/search`));
+  const demand = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Demands[0]",
+    []
+  );
+  const demandId = demand.id || null;
+  if (demandId) {
+    const serviceType = get(demand, "serviceType");
+    const serviceCategory = get(demand, "businessService");
+    // const businessService = get(demand[0], "businessService")
+  }
+  dispatch(setRoute(`/uc/newCollection`));
 };

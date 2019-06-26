@@ -6,6 +6,7 @@ import {
 import { UCSearchCard } from "./universalCollectionResources/ucSearch";
 import get from "lodash/get";
 import { setServiceCategory } from "../utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { searchResults } from "./universalCollectionResources/searchResults";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "../../../../ui-utils";
@@ -130,11 +131,10 @@ const ucSearchAndResult = {
                 })
               },
               onClickDefination: {
-                action: "page_change",
-                path:
-                  process.env.REACT_APP_SELF_RUNNING === "true"
-                    ? `/egov-ui-framework/uc/newCollection`
-                    : `/uc/newCollection`
+                action: "condition",
+                callBack: (state, dispatch) => {
+                  openNewCollectionForm(state, dispatch);
+                }
               }
             }
           }
@@ -148,3 +148,12 @@ const ucSearchAndResult = {
 };
 
 export default ucSearchAndResult;
+
+const openNewCollectionForm = (state, dispatch) => {
+  dispatch(prepareFinalObject("Demands", []));
+  const path =
+    process.env.REACT_APP_SELF_RUNNING === "true"
+      ? `/egov-ui-framework/uc/newCollection`
+      : `/uc/newCollection`;
+  dispatch(setRoute(path));
+};

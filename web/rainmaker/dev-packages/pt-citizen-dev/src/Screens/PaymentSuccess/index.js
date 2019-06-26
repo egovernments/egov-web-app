@@ -214,7 +214,8 @@ const mapStateToProps = (state, ownProps) => {
       cities,
       totalAmountToPay,
       true,
-      totalAmountPaid
+      totalAmountPaid,
+      latestPropertyDetails
     );
   const receiptDetails =
     selProperty &&
