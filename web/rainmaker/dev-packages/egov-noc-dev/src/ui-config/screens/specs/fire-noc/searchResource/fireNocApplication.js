@@ -145,7 +145,7 @@ export const NOCApplication = getCommonCard({
 
       localePrefix: {
         moduleName: "WF",
-        masterName: "NEWTL"
+        masterName: "FIRENOC"
       },
       jsonPath: "searchScreen.status",
       sourceJsonPath: "applyScreenMdmsData.searchScreen.status",
