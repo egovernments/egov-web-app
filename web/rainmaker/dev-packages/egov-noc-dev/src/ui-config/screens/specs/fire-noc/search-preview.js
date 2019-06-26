@@ -1,8 +1,7 @@
 import {
   getCommonCard,
   getCommonContainer,
-  getCommonHeader,
-  getLabelWithValue
+  getCommonHeader
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
   prepareFinalObject,
@@ -22,9 +21,10 @@ import { documentsSummary } from "./summaryResource/documentsSummary";
 import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
-import { sampleSingleSearch } from "../../../../ui-utils/sampleResponses";
 import { searchBill } from "../utils/index";
 import { loadPdfGenerationData } from "../utils/receiptTransformer";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import generatePdf from "../utils/receiptPdf";
 
 const titlebar = getCommonContainer({
@@ -278,6 +278,7 @@ const screenConfig = {
       "applicationNumber"
     );
     const tenantId = getQueryArg(window.location.href, "tenantId");
+    dispatch(fetchLocalizationLabel(getLocale(), tenantId, tenantId));
     searchBill(dispatch, applicationNumber, tenantId);
 
     setSearchResponse(state, dispatch, applicationNumber, tenantId);

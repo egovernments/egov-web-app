@@ -14,6 +14,8 @@ import {
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 import { httpRequest } from "../../../../../ui-utils/api";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
 const showHideMapPopup = (state, dispatch) => {
   let toggle = get(
@@ -207,19 +209,54 @@ export const propertyLocationDetails = getCommonCard(
               [{ key: "tenantId", value: action.value }],
               {}
             );
+            const mohallaData =
+              payload &&
+              payload.TenantBoundary[0] &&
+              payload.TenantBoundary[0].boundary &&
+              payload.TenantBoundary[0].boundary.reduce((result, item) => {
+                result.push({
+                  ...item,
+                  name: `${action.value
+                    .toUpperCase()
+                    .replace(
+                      /[.]/g,
+                      "_"
+                    )}_REVENUE_${item.code
+                    .toUpperCase()
+                    .replace(/[._:-\s\/]/g, "_")}`
+                });
+                return result;
+              }, []);
+
             dispatch(
               prepareFinalObject(
                 "applyScreenMdmsData.tenant.localities",
-                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+                mohallaData
               )
             );
             dispatch(
               handleField(
                 "apply",
-                "components.div.children.formwizardSecondStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
+                "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.propertyDetailsConatiner.children.propertyMohalla",
                 "props.suggestions",
-                payload.TenantBoundary && payload.TenantBoundary[0].boundary
+                mohallaData
               )
+            );
+            const mohallaLocalePrefix = {
+              moduleName: action.value,
+              masterName: "REVENUE"
+            };
+            dispatch(
+              handleField(
+                "apply",
+                "components.div.children.formwizardSecondStep.children.propertyLocationDetails.children.cardContent.children.propertyDetailsConatiner.children.propertyMohalla",
+                "props.localePrefix",
+                mohallaLocalePrefix
+              )
+            );
+
+            dispatch(
+              fetchLocalizationLabel(getLocale(), action.value, action.value)
             );
           } catch (e) {
             console.log(e);
