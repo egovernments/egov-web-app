@@ -55,7 +55,7 @@ class SingleApplication extends React.Component {
       ownerName,
       moduleNumber,
       status,
-      moduleName
+      statusPrefix
     } = this.props;
     return (
       <div className="application-card">
@@ -145,7 +145,10 @@ class SingleApplication extends React.Component {
                       </Grid>
                       <Grid item xs={6}>
                         <Label
-                          labelKey={get(item, status.jsonPath)}
+                          labelKey={`${statusPrefix}${get(
+                            item,
+                            status.jsonPath
+                          )}`}
                           style={{ fontSize: 14, color: "rgba(0, 0, 0, 0.87" }}
                         />
                       </Grid>

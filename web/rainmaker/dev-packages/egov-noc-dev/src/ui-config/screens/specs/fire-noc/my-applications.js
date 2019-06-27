@@ -41,7 +41,7 @@ const screenConfig = {
             },
             ownerName: {
               label: "NOC_COMMON_TABLE_COL_OWN_NAME_LABEL",
-              jsonPath: "applicantDetails.owners.name"
+              jsonPath: "fireNOCDetails.applicantDetails.owners[0].name"
             },
             moduleNumber: {
               label: "NOC_COMMON_TABLE_COL_NOC_NO_LABEL",
@@ -51,7 +51,8 @@ const screenConfig = {
               label: "NOC_COMMON_TABLE_COL_STATUS_LABEL",
               jsonPath: "fireNOCDetails.status"
             },
-            moduleName: "FIRENOC"
+            moduleName: "FIRENOC",
+            statusPrefix: "WF_FIRENOC_"
           }
         }
       }

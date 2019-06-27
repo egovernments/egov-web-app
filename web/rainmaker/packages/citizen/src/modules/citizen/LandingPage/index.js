@@ -76,7 +76,7 @@ class LandingPage extends Component {
     },
     FIRENOC: {
       moduleTitle: "ACTION_TEST_FIRENOC",
-      moduleDescription: "CS_LANDING_PAGE_TRADE_LICENSE_DESCRIPTION",
+      moduleDescription: "CS_LANDING_PAGE_NOC_DESCRIPTION",
       button1: "ACTION_TEST_FIRENOC",
       button2: "CS_HOME_HEADER_HOW_IT_WORKS",
       id: "citizen-tl-landingpage-button",
