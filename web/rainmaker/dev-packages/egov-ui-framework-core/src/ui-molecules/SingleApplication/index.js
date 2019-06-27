@@ -38,7 +38,7 @@ class SingleApplication extends React.Component {
             item.fireNOCDetails.applicationNumber
           }&tenantId=${item.tenantId}`;
         default:
-          return `/tradelicence/search-preview?applicationNumber=${
+          return `/fire-noc/search-preview?applicationNumber=${
             item.fireNOCDetails.applicationNumber
           }&tenantId=${item.tenantId}`;
       }
@@ -68,7 +68,7 @@ class SingleApplication extends React.Component {
                     <Grid container style={{ marginBottom: 12 }}>
                       <Grid item xs={6}>
                         <Label
-                          label={applicationName.label}
+                          labelKey={applicationName.label}
                           fontSize={14}
                           style={{ fontSize: 14, color: "rgba(0, 0, 0, 0.60" }}
                         />
