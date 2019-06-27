@@ -260,6 +260,30 @@ export const applicationSuccessFooter = (
 //Function for approval footer buttons
 export const approvalSuccessFooter = getCommonApplyFooter({
   //Call gotoHome
+  gotoHome: {
+    componentPath: "Button",
+    props: {
+      variant: "outlined",
+      color: "primary",
+      style: {
+        minWidth: "200px",
+        height: "48px",
+        marginRight: "16px"
+      }
+    },
+    children: {
+      //downloadReceiptButtonLabel: getLabel
+      goToHomeButtonLabel: getLabel({
+        labelName: "GO TO HOME",
+        labelKey: "NOC_COMMON_BUTTON_HOME"
+      })
+    },
+    // Check this onClickDefinition later again
+    onClickDefination: {
+      action: "page_change",
+      path: `${getRedirectionURL()}`
+    }
+  },
   downloadLicenseButton: {
     componentPath: "Button",
     props: {

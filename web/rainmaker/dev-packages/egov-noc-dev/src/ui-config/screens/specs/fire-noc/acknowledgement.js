@@ -275,6 +275,34 @@ const getAcknowledgementCard = (
       },
       gotoHomeFooter
     };
+  } else if (purpose === "sendback" && status === "success") {
+    return {
+      header,
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Application sent back Successfully",
+              labelKey: "NOC_SENDBACK_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName: "Application has been sent back successfully",
+              labelKey: "NOC_APPLICATION_SENDBACK_SUCCESS"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "NOC_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      gotoHomeFooter
+    };
   }
 };
 

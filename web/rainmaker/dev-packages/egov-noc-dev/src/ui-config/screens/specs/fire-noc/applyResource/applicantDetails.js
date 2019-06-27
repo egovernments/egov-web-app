@@ -51,7 +51,7 @@ const commonApplicantInformation = () => {
         },
         infoIcon: "info_circle",
         pattern: getPattern("MobileNo"),
-        errorMessage: "Invalid Mobile No.",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath:
           "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber",
         iconObj: {

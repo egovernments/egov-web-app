@@ -290,7 +290,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_PLOT_NO_PLACEHOLDER"
         },
         pattern: getPattern("DoorHouseNo"),
-        errorMessage: "Invalid number",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.doorNo"
       }),
       propertyBuilidingName: getTextField({
@@ -303,7 +303,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_BLDG_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        errorMessage: "Invalid Name",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
 
         jsonPath:
           "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
@@ -318,7 +318,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_SRT_NAME_PLACEHOLDER"
         },
         pattern: getPattern("BuildingStreet"),
-        errorMessage: "Invalid Name",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.street"
       }),
       propertyMohalla: {
@@ -344,6 +344,7 @@ export const propertyLocationDetails = getCommonCard(
             "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
           sourceJsonPath: "applyScreenMdmsData.tenant.localities",
           labelsFromLocalisation: true,
+          errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
           suggestions: [],
           fullwidth: true,
           required: true,
@@ -375,7 +376,7 @@ export const propertyLocationDetails = getCommonCard(
           labelKey: "NOC_PROPERTY_DETAILS_PIN_PLACEHOLDER"
         },
         pattern: getPattern("Pincode"),
-        errorMessage: "Invalid Pincode",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.pincode"
         // required: true
       }),

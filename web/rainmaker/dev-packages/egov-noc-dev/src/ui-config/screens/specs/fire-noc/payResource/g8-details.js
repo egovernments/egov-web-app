@@ -27,11 +27,15 @@ const g8Details = getCommonGrayCard({
     }),
     receiptIssueDate: getDateField({
       label: {
-         labelName: "GEN/G8 Receipt Issue Date",
-         labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_LABEL" },
-      placeholder: { labelName: "dd/mm/yy", labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_PLACEHOLDER" },
+        labelName: "GEN/G8 Receipt Issue Date",
+        labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_LABEL"
+      },
+      placeholder: {
+        labelName: "dd/mm/yy",
+        labelKey: "NOC_PAYMENT_RECEIPT_ISSUE_DATE_PLACEHOLDER"
+      },
       pattern: getPattern("Date"),
-      errorMessage: "Invalid Date Format",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       jsonPath: "ReceiptTemp[0].Bill[0].billDetails[0].manualReceiptDate"
     })
   })

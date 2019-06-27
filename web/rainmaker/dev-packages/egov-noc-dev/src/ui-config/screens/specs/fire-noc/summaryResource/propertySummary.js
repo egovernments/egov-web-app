@@ -7,7 +7,10 @@ import {
   getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { gotoApplyWithStep } from "../../utils/index";
-import { getQueryArg, getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
 
 const test = value => {
   value = value ? value.split(".")[0] : "";
@@ -86,7 +89,8 @@ const propertyDetails = {
         noOfFloors: getLabelWithValue(
           { labelName: "No. of Floors", labelKey: "NOC_NO_OF_FLOORS_LABEL" },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_FLOORS"
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_FLOORS"
           }
         ),
         noOfBasements: getLabelWithValue(
@@ -95,7 +99,8 @@ const propertyDetails = {
             labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
           },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_BASEMENTS"
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_BASEMENTS"
           }
         ),
         plotSize: getLabelWithValue(
@@ -104,7 +109,8 @@ const propertyDetails = {
             labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
           },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.PLOT_SIZE"
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.PLOT_SIZE"
           }
         ),
         groundBuiltupArea: getLabelWithValue(
@@ -113,7 +119,8 @@ const propertyDetails = {
             labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
           },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.BUILTUP_AREA"
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.BUILTUP_AREA"
           }
         ),
         heightOfBuilding: getLabelWithValue(
@@ -122,7 +129,8 @@ const propertyDetails = {
             labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
           },
           {
-            jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.HEIGHT_OF_BUILDING"
+            jsonPath:
+              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.HEIGHT_OF_BUILDING"
           }
         )
       })
@@ -131,7 +139,8 @@ const propertyDetails = {
     hasAddItem: false,
     isReviewPage: true,
     sourceJsonPath: "FireNOCs[0].fireNOCDetails.buildings",
-    prefixSourceJsonPath: "children.cardContent.children.propertyContainer.children",
+    prefixSourceJsonPath:
+      "children.cardContent.children.propertyContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
   },
   type: "array"
@@ -169,10 +178,11 @@ const propertyLocationDetails = getCommonGrayCard({
     buildingCompanyName: getLabelWithValue(
       {
         labelName: "Building/Company Name",
-        labelKey: "NOC_PROPERTY_DETAILS_NAME_OF_BUILDING_LABEL"
+        labelKey: "NOC_PROPERTY_DETAILS_BLDG_NAME_LABEL"
       },
       {
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.buildingName"
       }
     ),
     streetName: getLabelWithValue(
@@ -188,7 +198,8 @@ const propertyLocationDetails = getCommonGrayCard({
         labelKey: "NOC_PROPERTY_DETAILS_MOHALLA_LABEL"
       },
       {
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.code",
         callBack: value => {
           return `${getTransformedLocale(tenantId)}_REVENUE_${value}`;
         }
@@ -207,7 +218,8 @@ const propertyLocationDetails = getCommonGrayCard({
         labelKey: "NOC_PROPERTY_DETAILS_GIS_CORD_LABEL"
       },
       {
-        jsonPath: "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude"
+        jsonPath:
+          "FireNOCs[0].fireNOCDetails.propertyDetails.address.locality.latitude"
       }
     ),
     applicableFireStation: getLabelWithValue(

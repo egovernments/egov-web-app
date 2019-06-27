@@ -1,11 +1,18 @@
-import { getCommonHeader, getLabel, getBreak } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getCommonHeader,
+  getLabel,
+  getBreak
+} from "egov-ui-framework/ui-config/screens/specs/utils";
 import { NOCApplication } from "./searchResource/fireNocApplication";
-import { showHideAdhocPopup } from "../utils";
+import { showHideAdhocPopup, resetFields } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchResults } from "./searchResource/searchResults";
 import { setBusinessServiceDataToLocalStorage } from "egov-ui-framework/ui-utils/commons";
-import { getTenantId, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getTenantId,
+  localStorageGet
+} from "egov-ui-kit/utils/localStorageUtils";
 import find from "lodash/find";
 import set from "lodash/set";
 import get from "lodash/get";
@@ -40,7 +47,13 @@ const getMdmsData = async (action, state, dispatch) => {
   };
   try {
     let payload = null;
-    payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
+    payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
     dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
@@ -51,10 +64,16 @@ const NOCSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
+    resetFields(state, dispatch);
     const tenantId = getTenantId();
-    const BSqueryObject = [{ key: "tenantId", value: tenantId }, { key: "businessServices", value: "FIRENOC" }];
+    const BSqueryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "businessServices", value: "FIRENOC" }
+    ];
     setBusinessServiceDataToLocalStorage(BSqueryObject, dispatch);
-    const businessServiceData = JSON.parse(localStorageGet("businessServiceData"));
+    const businessServiceData = JSON.parse(
+      localStorageGet("businessServiceData")
+    );
     const data = find(businessServiceData, { businessService: "FIRENOC" });
     const { states } = data || [];
     if (states && states.length > 0) {
@@ -63,11 +82,24 @@ const NOCSearchAndResult = {
           code: item.state
         };
       });
-      dispatch(prepareFinalObject("applyScreenMdmsData.searchScreen.status", status.filter(item => item.code != null)));
+      dispatch(
+        prepareFinalObject(
+          "applyScreenMdmsData.searchScreen.status",
+          status.filter(item => item.code != null)
+        )
+      );
     }
     getMdmsData(action, state, dispatch).then(() => {
-      let documents = get(state, "screenConfiguration.preparedFinalObject.searchScreenMdmsData.FireNoc.Documents", []);
-      set(action, "screenConfig.components.adhocDialog.children.popup", getRequiredDocuments(documents));
+      let documents = get(
+        state,
+        "screenConfiguration.preparedFinalObject.searchScreenMdmsData.FireNoc.Documents",
+        []
+      );
+      set(
+        action,
+        "screenConfig.components.adhocDialog.children.popup",
+        getRequiredDocuments(documents)
+      );
     });
     return action;
   },
@@ -130,7 +162,8 @@ const NOCSearchAndResult = {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: (state, dispatch) => showHideAdhocPopup(state, dispatch, "search")
+                callBack: (state, dispatch) =>
+                  showHideAdhocPopup(state, dispatch, "search")
               },
               roleDefination: {
                 rolePath: "user-info.roles",

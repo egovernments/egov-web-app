@@ -88,7 +88,7 @@ export const NOCApplication = getCommonCard({
       },
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
-      errorMessage: "Invalid Application No.",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       jsonPath: "searchScreen.applicationNumber"
     }),
     NOCNo: getTextField({
@@ -106,7 +106,7 @@ export const NOCApplication = getCommonCard({
       },
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
-      errorMessage: "Invalid NOC No.",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       jsonPath: "searchScreen.fireNOCNumber"
     }),
     ownerMobNo: getTextField({
@@ -129,7 +129,7 @@ export const NOCApplication = getCommonCard({
       required: false,
       pattern: getPattern("MobileNo"),
       jsonPath: "searchScreen.mobileNumber",
-      errorMessage: "Invalid Mobile Number"
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG"
     })
   }),
   appStatusAndToFromDateContainer: getCommonContainer({
@@ -188,7 +188,7 @@ export const NOCApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage: "Invalid Date",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       required: false
     }),
 
@@ -204,7 +204,7 @@ export const NOCApplication = getCommonCard({
         sm: 4
       },
       pattern: getPattern("Date"),
-      errorMessage: "Invalid Date",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       required: false
     })
   }),
@@ -244,7 +244,7 @@ export const NOCApplication = getCommonCard({
         componentPath: "Button",
         gridDefination: {
           xs: 12,
-          sm: 6,
+          sm: 6
           // align: "center"
         },
         props: {

@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { Container } from "egov-ui-framework/ui-atoms";
-import { LabelContainer, TextFieldContainer } from "egov-ui-framework/ui-containers";
+import {
+  LabelContainer,
+  TextFieldContainer
+} from "egov-ui-framework/ui-containers";
 import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
@@ -82,22 +85,49 @@ class ActionDialog extends React.Component {
   };
 
   render() {
-    const { open, onClose, dropDownData, handleFieldChange, onButtonClick, dialogData } = this.props;
-    let { dataPath } = this.props;
-    const { buttonLabel, showEmployeeList, dialogHeader, moduleName, isDocRequired } = dialogData;
+    let {
+      open,
+      onClose,
+      dropDownData,
+      handleFieldChange,
+      onButtonClick,
+      dialogData,
+      dataPath
+    } = this.props;
+    console.log("========>", dataPath);
+    const {
+      buttonLabel,
+      showEmployeeList,
+      dialogHeader,
+      moduleName,
+      isDocRequired
+    } = dialogData;
     const { getButtonLabelName } = this;
     let fullscreen = false;
     if (window.innerWidth <= 768) {
       fullscreen = true;
     }
-    dataPath = dataPath === "FireNOCs" ? `fireNOCDetails.${dataPath}` : dataPath;
+    dataPath =
+      dataPath === "FireNOCs"
+        ? `${dataPath}[0].fireNOCDetails`
+        : `${dataPath}[0]`;
     return (
-      <Dialog fullScreen={fullscreen} open={open} onClose={onClose} maxWidth={false}>
+      <Dialog
+        fullScreen={fullscreen}
+        open={open}
+        onClose={onClose}
+        maxWidth={false}
+      >
         <DialogContent
           children={
             <Container
               children={
-                <Grid container="true" spacing={12} marginTop={16} className="action-container">
+                <Grid
+                  container="true"
+                  spacing={12}
+                  marginTop={16}
+                  className="action-container"
+                >
                   <Grid
                     style={{
                       alignItems: "center",
@@ -142,8 +172,13 @@ class ActionDialog extends React.Component {
                         optionLabel="label"
                         hasLocalization={false}
                         //onChange={e => this.onEmployeeClick(e)}
-                        onChange={e => handleFieldChange(`${dataPath}[0].assignee`, e.target.value)}
-                        jsonPath={`${dataPath}[0].assignee`}
+                        onChange={e =>
+                          handleFieldChange(
+                            `${dataPath}.assignee`,
+                            e.target.value
+                          )
+                        }
+                        jsonPath={`${dataPath}.assignee`}
                       />
                     </Grid>
                   )}
@@ -151,8 +186,10 @@ class ActionDialog extends React.Component {
                     <TextFieldContainer
                       InputLabelProps={{ shrink: true }}
                       label={fieldConfig.comments.label}
-                      onChange={e => handleFieldChange(`${dataPath}[0].comment`, e.target.value)}
-                      jsonPath={`${dataPath}[0].comment`}
+                      onChange={e =>
+                        handleFieldChange(`${dataPath}.comment`, e.target.value)
+                      }
+                      jsonPath={`${dataPath}.comment`}
                       placeholder={fieldConfig.comments.placeholder}
                     />
                   </Grid>
@@ -170,8 +207,13 @@ class ActionDialog extends React.Component {
                       }}
                     >
                       <div className="rainmaker-displayInline">
-                        <LabelContainer labelName="Supporting Documents" labelKey="WF_APPROVAL_UPLOAD_HEAD" />
-                        {isDocRequired && <span style={{ marginLeft: 5, color: "red" }}>*</span>}
+                        <LabelContainer
+                          labelName="Supporting Documents"
+                          labelKey="WF_APPROVAL_UPLOAD_HEAD"
+                        />
+                        {isDocRequired && (
+                          <span style={{ marginLeft: 5, color: "red" }}>*</span>
+                        )}
                       </div>
                     </Typography>
                     <div
@@ -194,7 +236,7 @@ class ActionDialog extends React.Component {
                         accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
-                      jsonPath={`${dataPath}[0].wfDocuments`}
+                      jsonPath={`${dataPath}.wfDocuments`}
                       maxFileSize={5000}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>
@@ -206,11 +248,17 @@ class ActionDialog extends React.Component {
                           height: "48px",
                           marginRight: "45px"
                         }}
-                        onClick={() => onButtonClick(buttonLabel, isDocRequired)}
+                        onClick={() =>
+                          onButtonClick(buttonLabel, isDocRequired)
+                        }
                       >
                         <LabelContainer
                           labelName={getButtonLabelName(buttonLabel)}
-                          labelKey={moduleName ? `WF_${moduleName.toUpperCase()}_${buttonLabel}` : ""}
+                          labelKey={
+                            moduleName
+                              ? `WF_${moduleName.toUpperCase()}_${buttonLabel}`
+                              : ""
+                          }
                         />
                       </Button>
                     </Grid>

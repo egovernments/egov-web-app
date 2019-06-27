@@ -56,7 +56,7 @@ const prepareSelectField = (uom, limit) => {
         labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
       },
       pattern: /^[0-9]*$/i,
-      errorMessage: "Invalid number",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       required: true,
       jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${uom}`,
       data: data,
@@ -79,7 +79,7 @@ const prepareTextField = uom => {
         labelKey: `NOC_PROPERTY_DETAILS_${uom}_PLACEHOLDER`
       },
       pattern: /^[0-9]*$/i,
-      errorMessage: "Invalid Area",
+      errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
       // required: true,
       jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${uom}`,
       gridDefination: {
@@ -125,7 +125,7 @@ const commonBuildingData = buildingType => {
           labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_PLACEHOLDER"
         },
         pattern: /^[0-9]*$/i,
-        errorMessage: "Invalid Plot size.",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].plotsize",
         gridDefination: {
           xs: 12,
@@ -148,7 +148,7 @@ const commonBuildingData = buildingType => {
         },
         required: true,
         pattern: getPattern("TradeName"),
-        errorMessage: "Invalid Name",
+        errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         jsonPath: "FireNOCs[0].fireNOCDetails.buildings[0].name",
         // props: {
         //   style: {

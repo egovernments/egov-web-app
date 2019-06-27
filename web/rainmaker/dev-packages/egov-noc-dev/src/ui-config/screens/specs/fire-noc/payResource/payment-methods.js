@@ -107,7 +107,7 @@ export const payeeDetails = getCommonContainer({
     },
     jsonPath: "ReceiptTemp[0].Bill[0].payerMobileNumber",
     pattern: getPattern("MobileNo"),
-    errorMessage: "Invalid Mobile No.",
+    errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
     iconObj: {
       position: "start",
       label: "+91 |"
@@ -298,7 +298,7 @@ export const cardDetails = getCommonContainer({
     required: true,
     jsonPath: "ReceiptTemp[0].instrument.instrumentNumber",
     pattern: "^([0-9]){4}$",
-    errorMessage: "Invalid"
+    errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG"
   }),
   TrxNo: getTextField({
     label: {
