@@ -110,6 +110,22 @@ const callBackForPay = async (state, dispatch) => {
     fieldsToValidate
   } = getSelectedTabIndex(selectedPaymentType);
 
+  if (selectedPaymentType === "Cheque" || selectedPaymentType === "DD") {
+    const bankName = get(
+      state.screenConfiguration.preparedFinalObject,
+      "ReceiptTemp[0].instrument.bank.name",
+      null
+    );
+    const branchName = get(
+      state.screenConfiguration.preparedFinalObject,
+      "ReceiptTemp[0].instrument.branchName",
+      null
+    );
+    if (!bankName && !branchName) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].instrument.ifscCode", null));
+    }
+  }
+
   isFormValid =
     fieldsToValidate
       .map(curr => {
