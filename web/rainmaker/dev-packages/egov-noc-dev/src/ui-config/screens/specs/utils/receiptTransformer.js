@@ -229,6 +229,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         name: get(owner, "name", "NA"),
         gender: get(owner, "gender", "NA"),
         fatherHusbandName: get(owner, "fatherOrHusbandName", "NA"),
+        relationship: get(owner,"relationship","NA"),
         dob: epochToDate(get(owner, "dob", "NA")),
         email: get(owner, "emailId", "NA"),
         pan: get(owner, "pan", "NA"),
@@ -255,7 +256,7 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       key: "consumerCode",
       value: consumerCode
     }
-  ];
+  ];  
   let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt && response.Receipt.length > 0) {

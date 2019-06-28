@@ -24,11 +24,11 @@ const getOwners = data => {
         border: [false, true, false, false]
       },
       {
-        text: "Father/Husband's Name",
+        text: "Date of Birth",
         border: [false, true, true, false]
-      }
-    ]);
-    retowners.push([
+      },
+    ],
+    [
       {
         text: get(owner, "mobile"),
         style: "receipt-table-value",
@@ -45,12 +45,12 @@ const getOwners = data => {
         border: [false, false, false, false]
       },
       {
-        text: get(owner, "fatherHusbandName"),
+        text: get(owner, "dob"),
         style: "receipt-table-value",
         border: [false, false, true, false]
       }
-    ]);
-    retowners.push([
+    ],
+    [
       {
         text: "",
         border: [true, false, false, false]
@@ -68,11 +68,15 @@ const getOwners = data => {
         text: "",
         border: [false, false, true, false]
       }
-    ]);
-    retowners.push([
+    ],
+    [
       {
-        text: "Date of Birth",
+        text: "Father/Husband's Name",
         border: [true, false, false, false]
+      },
+      {
+        text: "Relationship",
+        border: [false, false, false, false]
       },
       {
         text: "Email",
@@ -80,32 +84,88 @@ const getOwners = data => {
       },
       {
         text: "PAN No.",
-        border: [false, false, false, false]
-      },
-      {
-        text: "Correspondence Address",
         border: [false, false, true, false]
       }
-    ]);
-    retowners.push([
+    ],
+    [
       {
-        text: get(owner, "dob"),
+        text: get(owner, "fatherHusbandName"),
         style: "receipt-table-value",
-        border: [true, false, false, true]
+        border: [true, false, false, false]
+      },
+      {
+        text: get(owner, "relationship"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
       },
       {
         text: get(owner, "email"),
         style: "receipt-table-value",
-        border: [false, false, false, true]
+        border: [false, false, false, false]
       },
       {
         text: get(owner, "pan"),
+        style: "receipt-table-value",
+        border: [false, false, true, false]
+      },
+    ],
+    [
+      {
+        text: "",
+        border: [true, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+
+      {
+        text: "",
+        border: [false, false, true, false]
+      }
+    ],
+    [
+      {
+        text: "Correspondence Address",
+        border: [true, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, false, false]
+      },
+      {
+        text: "",
+        border: [false, false, true, false]
+      }
+    ],
+    [
+      
+      {
+        text: get(owner, "address"),
+        style: "receipt-table-value",
+        border: [true, false, false, true]
+      },
+      {
+        text: "",
+        style: "receipt-table-value",
+        border: [false, false, false, true]
+      },
+      {
+        text: "",
         style: "receipt-table-value",
         border: [false, false, false, true]
       },
 
       {
-        text: get(owner, "address"),
+        text: "",
         style: "receipt-table-value",
         border: [false, false, true, true]
       }
