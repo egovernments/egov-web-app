@@ -3,6 +3,8 @@ import isEmpty from "lodash/isEmpty";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import QRCode from "qrcode";
+import {getTransformedLocale} from "egov-ui-framework/ui-utils/commons";
+import {getMessageFromLocalization} from "./receiptTransformer";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getOwners = data => {
@@ -114,131 +116,111 @@ const getOwners = data => {
 };
 
 const getBuildings = data => {
-  let retbuildings = [];
-  data &&
-    data.buildings.forEach(building => {
-      retbuildings.push([
-        {
-          text: "Property Type",
-          border: [true, true, false, false]
-        },
-        {
-          text: " Name of Building",
-          border: [false, true, false, false]
-        },
-        {
-          text: "Building Usage Type",
-          border: [false, true, false, false]
-        },
-        {
-          text: "Building Usage Subtype",
-          border: [false, true, true, false]
-        }
-      ]);
-      retbuildings.push([
-        {
-          text: data.propertyType,
-          style: "receipt-table-value",
-          border: [true, false, false, false]
-        },
-        {
-          text: get(building, "name", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, false, false]
-        },
-        {
-          text: get(building, "usageType", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, false, false]
-        },
-        {
-          text: get(building, "usageSubType", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, true, false]
-        }
-      ]);
-      retbuildings.push([
-        {
-          text: "No. of Floors",
-          border: [true, false, false, false]
-        },
-        {
-          text: " No. of Basements",
-          border: [false, false, false, false]
-        },
-        {
-          text: "Plot Size (Sq mtrs)",
-          border: [false, false, false, false]
-        },
-        {
-          text: "Builtup Area (sq mtrs)",
-          border: [false, false, true, false]
-        }
-      ]);
-      retbuildings.push([
-        {
-          text: get(building, "NO_OF_FLOORS", "NA"),
-          style: "receipt-table-value",
-          border: [true, false, false, false]
-        },
-        {
-          text: get(building, "NO_OF_BASEMENTS", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, false, false]
-        },
-        {
-          text: get(building, "PLOT_SIZE", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, false, false]
-        },
-        {
-          text: get(building, "BUILTUP_AREA", "NA"),
-          style: "receipt-table-value",
-          border: [false, false, true, false]
-        }
-      ]);
-      retbuildings.push([
-        {
-          text: "Height of Building (in mtrs)",
-          border: [true, false, false, false]
-        },
-        {
-          text: "",
-          border: [false, false, false, false]
-        },
-        {
-          text: "",
-          border: [false, false, false, false]
-        },
+  let retbuildings=[];
+  data && data.buildings.forEach((building)=> {
+    retbuildings.push([
+      {
+        text: "Property Type",
+        border: [true, true, false, false]
+      },
+      {
+        text: " Name of Building",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Building Usage Type",
+        border: [false, true, false, false]
+      },
+      {
+        text: "Building Usage Subtype",
+        border: [false, true, true, false]
+      }
+    ]);
+    retbuildings.push(
+    [
+      {
+        text: data.propertyType,
+        style: "receipt-table-value",
+        border: [true, false, false, false]
+      },
+      {
+        text: get(building, "name", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "usageType", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, false, false]
+      },
+      {
+        text: get(building, "usageSubType", "NA"),
+        style: "receipt-table-value",
+        border: [false, false, true, false]
+      }
+    ]);
+    let headerrow=[]
+    let valuerow=[]
+    for (let [uomkey, uomvalue] of Object.entries(building.uoms)) 
+    {
+      headerrow.push({
+        text: getMessageFromLocalization(
+          `NOC_PROPERTY_DETAILS_${getTransformedLocale(
+            uomkey  
+          )}_LABEL`
+        ),
+        border: valuerow.length==0?[true, false, false, false]:valuerow.length==3?[false, false, true, false]:[false, false, false, false]
+      });
+      valuerow.push({
+        text: uomvalue,
+        style: "receipt-table-value",
+        border: valuerow.length==0?[true, false, false, false]:valuerow.length==3?[false, false, true, false]:[false, false, false, false]
+        // left, top ,right ,down
+      });
+      // draw when elements in one row are four
+      if(headerrow.length==4)
+      { 
+        retbuildings.push(
+          [headerrow[0],headerrow[1],headerrow[2],headerrow[3]],
+          [valuerow[0],valuerow[1],valuerow[2],valuerow[3]]
+        );
+        headerrow=[];
+        valuerow=[];
+      }
+    }
+    if(headerrow.length>0)
+    {
 
-        {
-          text: "",
-          border: [false, false, true, false]
-        }
-      ]);
-      retbuildings.push([
-        {
-          text: get(building, "HEIGHT_OF_BUILDING", "NA"),
-          style: "receipt-table-value",
-          border: [true, false, false, true]
-        },
-        {
-          text: "",
-          style: "receipt-table-value",
-          border: [false, false, false, true]
-        },
-        {
-          text: "",
-          style: "receipt-table-value",
-          border: [false, false, false, true]
-        },
-
-        {
-          text: "",
-          style: "receipt-table-value",
-          border: [false, false, true, true]
-        }
-      ]);
+      var i;
+      for(i=4-headerrow.length;i>0;i--)
+      {
+        headerrow.push(
+          {
+            text: "",
+            border: valuerow.length==3?[false, false, true, false]:[false, false, false, false]
+          }
+        );
+        valuerow.push(
+          {
+            text: "",
+            style: "receipt-table-value",
+            border: valuerow.length==3?[false, false, true, false]:[false, false, false, true]
+          }
+        );
+      }
+      retbuildings.push(
+        [headerrow[0],headerrow[1],headerrow[2],headerrow[3]],
+        [valuerow[0],valuerow[1],valuerow[2],valuerow[3]]
+      );
+      headerrow=[];
+      valuerow=[];
+    }
+    // set last row bottom border
+    retbuildings[retbuildings.length-1][0].border[3]=true;
+    retbuildings[retbuildings.length-1][1].border[3]=true;
+    retbuildings[retbuildings.length-1][2].border[3]=true;
+    retbuildings[retbuildings.length-1][3].border[3]=true;
+    
     });
   return retbuildings;
 };

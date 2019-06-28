@@ -45,7 +45,7 @@ const epochToDate = et => {
   return formattedDate;
 };
 
-const getMessageFromLocalization = code => {
+export const getMessageFromLocalization = code => {
   let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
     item => {
       return item.code == code;
@@ -140,7 +140,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
             get(building, "usageType", "NA")
           )}`
         ),
-        ...uomsObject
+        uoms:uomsObject
       };
     });
 
