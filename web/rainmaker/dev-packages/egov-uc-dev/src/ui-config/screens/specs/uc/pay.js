@@ -30,6 +30,26 @@ const screenConfig = {
       null
     );
     dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].paidBy",
+        get(
+          state.screenConfiguration,
+          "preparedFinalObject.Demands[0].consumerName",
+          null
+        )
+      )
+    );
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].payerMobileNumber",
+        get(
+          state.screenConfiguration,
+          "preparedFinalObject.Demands[0].mobileNumber",
+          null
+        )
+      )
+    );
+    dispatch(
       prepareFinalObject("ReceiptTemp[0].instrument", {
         amount: amount,
         instrumentType: { name: "Cash" },

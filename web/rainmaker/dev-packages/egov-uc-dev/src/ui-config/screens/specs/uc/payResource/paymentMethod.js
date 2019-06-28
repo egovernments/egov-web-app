@@ -31,6 +31,9 @@ const onIconClick = (state, dispatch, index) => {
             prepareFinalObject("ReceiptTemp[0].instrument.branchName", "")
           );
           dispatch(
+            prepareFinalObject("ReceiptTemp[0].instrument.ifscCode", null)
+          );
+          dispatch(
             toggleSnackbar(
               true,
               {
@@ -96,7 +99,8 @@ export const payeeDetails = getCommonContainer({
       labelKey: "TL_PAYMENT_PAYER_NAME_PLACEHOLDER"
     },
     jsonPath: "ReceiptTemp[0].Bill[0].paidBy",
-    required: true
+    required: true,
+    pattern: getPattern("Name")
   }),
   payerMobileNo: getTextField({
     label: {
