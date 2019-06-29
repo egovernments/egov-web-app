@@ -303,6 +303,34 @@ const getAcknowledgementCard = (
       },
       gotoHomeFooter
     };
+  } else if (purpose === "refer" && status === "success") {
+    return {
+      header,
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Application referred Successfully",
+              labelKey: "NOC_REFER_SUCCESS_MESSAGE_MAIN"
+            },
+            body: {
+              labelName: "Application has been referred successfully",
+              labelKey: "NOC_APPLICATION_REFER_SUCCESS"
+            },
+            tailText: {
+              labelName: "Application No.",
+              labelKey: "NOC_HOME_SEARCH_RESULTS_APP_NO_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      gotoHomeFooter
+    };
   }
 };
 

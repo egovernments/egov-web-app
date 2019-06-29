@@ -4,7 +4,7 @@ import {
   getBreak
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { NOCApplication } from "./searchResource/fireNocApplication";
-import { showHideAdhocPopup, resetFields } from "../utils";
+import { showHideAdhocPopup, resetFields, getRequiredDocData } from "../utils";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 import { searchResults } from "./searchResource/searchResults";
@@ -16,7 +16,6 @@ import {
 import find from "lodash/find";
 import set from "lodash/set";
 import get from "lodash/get";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import {
   prepareFinalObject,
   handleScreenConfigurationFieldChange as handleField
@@ -32,32 +31,11 @@ const header = getCommonHeader({
   labelKey: "NOC_COMMON_NOC"
 });
 
-const getMdmsData = async (action, state, dispatch) => {
-  let tenantId = getTenantId();
-  let mdmsBody = {
-    MdmsCriteria: {
-      tenantId: tenantId,
-      moduleDetails: [
-        {
-          moduleName: "FireNoc",
-          masterDetails: [{ name: "Documents" }]
-        }
-      ]
-    }
-  };
-  try {
-    let payload = null;
-    payload = await httpRequest(
-      "post",
-      "/egov-mdms-service/v1/_search",
-      "_search",
-      [],
-      mdmsBody
-    );
-    dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
-  } catch (e) {
-    console.log(e);
-  }
+const pageResetAndChange = (state, dispatch) => {
+  dispatch(
+    prepareFinalObject("FireNOCs", [{ "fireNOCDetails.fireNOCType": "NEW" }])
+  );
+  // dispatch(setRoute("/tradelicence/apply"));
 };
 
 const NOCSearchAndResult = {
@@ -89,7 +67,7 @@ const NOCSearchAndResult = {
         )
       );
     }
-    getMdmsData(action, state, dispatch).then(() => {
+    getRequiredDocData(action, state, dispatch).then(() => {
       let documents = get(
         state,
         "screenConfiguration.preparedFinalObject.searchScreenMdmsData.FireNoc.Documents",
@@ -162,8 +140,10 @@ const NOCSearchAndResult = {
               },
               onClickDefination: {
                 action: "condition",
-                callBack: (state, dispatch) =>
-                  showHideAdhocPopup(state, dispatch, "search")
+                callBack: (state, dispatch) => {
+                  pageResetAndChange(state, dispatch);
+                  showHideAdhocPopup(state, dispatch, "search");
+                }
               },
               roleDefination: {
                 rolePath: "user-info.roles",
@@ -181,7 +161,7 @@ const NOCSearchAndResult = {
     },
     adhocDialog: {
       uiFramework: "custom-containers-local",
-      moduleName: "egov-tradelicence",
+      moduleName: "egov-noc",
       componentPath: "DialogContainer",
       props: {
         open: false,

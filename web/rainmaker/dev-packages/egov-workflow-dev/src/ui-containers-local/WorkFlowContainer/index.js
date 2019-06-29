@@ -96,6 +96,8 @@ class WorkFlowContainer extends React.Component {
         return "purpose=approve&status=success";
       case "SENDBACK":
         return "purpose=sendback&status=success";
+      case "REFER":
+        return "purpose=refer&status=success";
     }
   };
 
@@ -182,7 +184,7 @@ class WorkFlowContainer extends React.Component {
     const { toggleSnackbar, dataPath, preparedFinalObject } = this.props;
     let data = get(preparedFinalObject, dataPath, []);
     //setting the action to send in RequestInfo
-    let appendToPath = dataPath === "FireNOCs"? "fireNOCDetails." : "";
+    let appendToPath = dataPath === "FireNOCs" ? "fireNOCDetails." : "";
     set(data[0], `${appendToPath}action`, label);
 
     if (isDocRequired) {
