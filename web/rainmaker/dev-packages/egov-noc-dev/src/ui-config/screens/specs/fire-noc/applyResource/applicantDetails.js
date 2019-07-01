@@ -377,8 +377,7 @@ const institutionInformation = () => {
         required: true,
         pattern: getPattern("Name"),
         errorMessage: "Invalid Name",
-        jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPerson",
+        jsonPath: "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].name",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -419,7 +418,7 @@ const institutionInformation = () => {
         errorMessage: "Invalid MobileNo.",
 
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonMobile",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].mobileNumber",
         gridDefination: {
           xs: 12,
           sm: 12,
@@ -439,7 +438,7 @@ const institutionInformation = () => {
         errorMessage: "Invalid Email",
         required: true,
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.authorizedPersonEmail",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].emailId",
         gridDefination: {
           xs: 12,
           sm: 12,
