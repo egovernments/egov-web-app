@@ -5,11 +5,66 @@ import {
   getCommonTitle,
   getTextField
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getRadioButton } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { prepareEditFlow } from "../apply";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
-import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  furnishNocResponse,
+  getSearchResults
+} from "../../../../../ui-utils/commons";
+
+const loadProvisionalNocData = async (state, dispatch) => {
+  let fireNOCNumber = get(
+    state,
+    "screenConfiguration.preparedFinalObject.FireNOCs[0].provisionFireNOCNumber",
+    ""
+  );
+  let response = await getSearchResults([
+    { key: "fireNOCNumber", value: fireNOCNumber }
+  ]);
+
+  response = furnishNocResponse(response);
+
+  dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+
+  // Set no of buildings radiobutton and eventually the cards
+  let noOfBuildings =
+    get(response, "FireNOCs[0].fireNOCDetails.noOfBuildings", "SINGLE") ===
+    "MULTIPLE"
+      ? "MULTIPLE"
+      : "SINGLE";
+  dispatch(
+    handleField(
+      "apply",
+      "components.div.children.formwizardSecondStep.children.propertyDetails.children.cardContent.children.propertyDetailsConatiner.children.buildingRadioGroup",
+      "props.value",
+      noOfBuildings
+    )
+  );
+
+  // Set noc type radiobutton to NEW
+  dispatch(
+    handleField(
+      "apply",
+      "components.div.children.formwizardFirstStep.children.nocDetails.children.cardContent.children.nocDetailsContainer.children.nocRadioGroup",
+      "props.value",
+      "NEW"
+    )
+  );
+
+  // Set provisional fire noc number
+  dispatch(
+    prepareFinalObject(
+      "FireNOCs[0].provisionFireNOCNumber",
+      get(response, "FireNOCs[0].fireNOCNumber", "")
+    )
+  );
+
+  // Set fire noc id to null
+  dispatch(prepareFinalObject("FireNOCs[0].id", undefined));
+};
 
 export const nocDetails = getCommonCard({
   header: getCommonTitle(
@@ -96,17 +151,7 @@ export const nocDetails = getCommonCard({
           onClickDefination: {
             action: "condition",
             callBack: (state, dispatch, fieldInfo) => {
-              let applicationNumber = get(
-                state,
-                "screenConfiguration.preparedFinalObject.FireNOCs[0].provisionFireNOCNumber",
-                ""
-              );
-              prepareEditFlow(
-                state,
-                dispatch,
-                applicationNumber,
-                getTenantId()
-              );
+              loadProvisionalNocData(state, dispatch);
             }
           }
         }
