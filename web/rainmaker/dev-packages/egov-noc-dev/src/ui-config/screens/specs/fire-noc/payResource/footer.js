@@ -1,71 +1,74 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
 import { httpRequest } from "../../../../../ui-utils/api";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
-import { convertDateToEpoch, validateFields } from "../../utils";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../../ui-utils/commons";
-// import { getBill } from "../../utils";
+import { convertDateToEpoch, getBill, validateFields } from "../../utils";
 
-// export const callPGService = async (state, dispatch) => {
-//   const tenantId = getQueryArg(window.location.href, "tenantId");
-//   let callbackUrl = `${window.origin}/${
-//     process.env.NODE_ENV === "production" ? "citizen" : ""
-//   }/tradelicense-citizen/PaymentRedirectPage`;
-//   try {
-//     const queryObj = [
-//       {
-//         key: "tenantId",
-//         value: tenantId
-//       },
-//       {
-//         key: "consumerCode",
-//         value: getQueryArg(window.location.href, "applicationNumber")
-//       },
-//       {
-//         key: "businessService",
-//         value: "TL"
-//       }
-//     ];
-//     const billPayload = await getBill(queryObj);
-//     try {
-//       const requestBody = {
-//         Transaction: {
-//           tenantId,
-//           txnAmount: get(
-//             billPayload,
-//             "billResponse.Bill[0].billDetails[0].totalAmount"
-//           ),
-//           module: "TL",
-//           billId: get(billPayload, "billResponse.Bill[0].id"),
-//           moduleId: get(
-//             billPayload,
-//             "billResponse.Bill[0].billDetails[0].consumerCode"
-//           ),
-//           productInfo: "Trade License Payment",
-//           gateway: "AXIS",
-//           callbackUrl
-//         }
-//       };
-//       const goToPaymentGateway = await httpRequest(
-//         "post",
-//         "pg-service/transaction/v1/_create",
-//         "_create",
-//         [],
-//         requestBody
-//       );
-//       const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-//       window.location = redirectionUrl;
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+export const callPGService = async (state, dispatch) => {
+  const tenantId = getQueryArg(window.location.href, "tenantId");
+  const applicationNumber = getQueryArg(
+    window.location.href,
+    "applicationNumber"
+  );
+  let callbackUrl = `${window.origin}/fire-noc/paymentRedirectPage`;
+  try {
+    const queryObj = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "applicationNumber",
+        value: applicationNumber
+      }
+    ];
+    const billPayload = await getBill(queryObj);
+    const taxAndPayments = get(billPayload, "Bill[0].taxAndPayments", []).map(
+      item => {
+        if (item.businessService === "FIRENOC") {
+          item.amountPaid = get(
+            billPayload,
+            "Bill[0].billDetails[0].totalAmount"
+          );
+        }
+        return item;
+      }
+    );
+    try {
+      const requestBody = {
+        Transaction: {
+          tenantId,
+          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
+          module: "FIRENOC",
+          taxAndPayments,
+          billId: get(billPayload, "Bill[0].id"),
+          consumerCode: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
+          productInfo: "Fire NOC Payment",
+          gateway: "AXIS",
+          callbackUrl
+        }
+      };
+      const goToPaymentGateway = await httpRequest(
+        "post",
+        "pg-service/transaction/v1/_create",
+        "_create",
+        [],
+        requestBody
+      );
+      const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+      window.location = redirectionUrl;
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const moveToSuccess = (dispatch, receiptNumber) => {
   const applicationNo = getQueryArg(window.location, "applicationNumber");
@@ -382,58 +385,6 @@ export const footer = getCommonApplyFooter({
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
   },
-  downloadConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "DOWNLOAD CONFIRMATION FORM",
-        labelKey: "NOC_APPLICATION_BUTTON_DOWN_CONF"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
-  printConfirmationform: {
-    componentPath: "Button",
-    props: {
-      variant: "outlined",
-      color: "primary",
-      style: {
-        minWidth: "200px",
-        height: "48px",
-        marginRight: "45px"
-      }
-    },
-    children: {
-      submitButtonLabel: getLabel({
-        labelName: "PRINT CONFIRMATION FORM",
-        labelKey: "NOC_APPLICATION_BUTTON_PRINT_CONF"
-      })
-    },
-    onClickDefination: {
-      action: "condition",
-      callBack: callBackForPay
-    },
-    roleDefination: {
-      rolePath: "user-info.roles",
-      roles: ["CITIZEN"]
-    }
-  },
   makePayment: {
     componentPath: "Button",
     props: {
@@ -452,15 +403,12 @@ export const footer = getCommonApplyFooter({
       })
     },
     onClickDefination: {
-      action: "page_change",
-      path:
-        process.env.REACT_APP_SELF_RUNNING === "true"
-          ? `/egov-ui-framework/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
-          : `/fire-noc/acknowledgement?purpose=pay&status=success&applicationNumber=NOC-JLD-2018-09-8786&secondNumber=NOC-RCPT-007652`
+      action: "condition",
+      callBack: callPGService
     },
     roleDefination: {
       rolePath: "user-info.roles",
-      // roles: ["CITIZEN"]
+      roles: ["CITIZEN"],
       action: "PAY"
     },
     visible: process.env.REACT_APP_NAME === "Citizen" ? true : false

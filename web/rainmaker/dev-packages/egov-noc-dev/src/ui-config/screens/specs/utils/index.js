@@ -542,13 +542,17 @@ export const createEstimateData = billObject => {
 export const generateBill = async (dispatch, applicationNumber, tenantId) => {
   try {
     if (applicationNumber && tenantId) {
-      let payload = await httpRequest(
-        "post",
-        `/billing-service/bill/_generate?consumerCode=${applicationNumber}&businessService=FIRENOC&tenantId=${tenantId}`,
-        "",
-        [],
-        {}
-      );
+      const queryObj = [
+        {
+          key: "tenantId",
+          value: tenantId
+        },
+        {
+          key: "applicationNumber",
+          value: applicationNumber
+        }
+      ];
+      const payload = await getBill(queryObj);
       // let payload = sampleGetBill();
       if (payload && payload.Bill[0]) {
         dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));

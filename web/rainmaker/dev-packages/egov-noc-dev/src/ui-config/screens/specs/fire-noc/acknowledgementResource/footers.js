@@ -1,8 +1,5 @@
 import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import get from "lodash/get";
-import { getBill, ifUserRoleExists } from "../../utils";
+import { ifUserRoleExists } from "../../utils";
 import generatePdf from "../../utils/receiptPdf";
 
 export const getRedirectionURL = () => {
@@ -10,70 +7,6 @@ export const getRedirectionURL = () => {
     ? "/fire-noc/home"
     : "/inbox";
   return redirectionURL;
-};
-
-export const callPGService = async (state, dispatch) => {
-  const tenantId = getQueryArg(window.location.href, "tenantId");
-  // let callbackUrl = "/fire-noc/paymentRedirectPage";
-  let callbackUrl = `${
-    window.origin
-  }/egov-ui-framework/fire-noc/paymentRedirectPage`;
-  try {
-    const queryObj = [
-      {
-        key: "tenantId",
-        value: tenantId
-      },
-      {
-        key: "consumerCode",
-        value: getQueryArg(window.location.href, "applicationNumber")
-      },
-      {
-        key: "businessService",
-        value: "FIRENOC"
-      }
-    ];
-    const billPayload = await getBill(queryObj);
-    const taxAndPayments = get(billPayload, "Bill[0].taxAndPayments", []).map(
-      item => {
-        if (item.businessService === "FIRENOC") {
-          item.amountPaid = get(
-            billPayload,
-            "Bill[0].billDetails[0].totalAmount"
-          );
-        }
-        return item;
-      }
-    );
-    try {
-      const requestBody = {
-        Transaction: {
-          tenantId,
-          txnAmount: get(billPayload, "Bill[0].billDetails[0].totalAmount"),
-          module: "FIRENOC",
-          taxAndPayments,
-          billId: get(billPayload, "Bill[0].id"),
-          consumerCode: get(billPayload, "Bill[0].billDetails[0].consumerCode"),
-          productInfo: "Fire NOC Payment",
-          gateway: "AXIS",
-          callbackUrl
-        }
-      };
-      const goToPaymentGateway = await httpRequest(
-        "post",
-        "pg-service/transaction/v1/_create",
-        "_create",
-        [],
-        requestBody
-      );
-      const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-      window.location = redirectionUrl;
-    } catch (e) {
-      console.log(e);
-    }
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 const getCommonApplyFooter = children => {
@@ -224,7 +157,8 @@ export const applicationSuccessFooter = (
         rolePath: "user-info.roles",
         action: "PAY"
         // roles: ["NOC_CEMP", "SUPERUSER"]
-      }
+      },
+      visible: process.env.REACT_APP_NAME === "Citizen" ? false : true
     },
     makePayment: {
       componentPath: "Button",
@@ -244,15 +178,18 @@ export const applicationSuccessFooter = (
         })
       },
       onClickDefination: {
-        action: "condition",
-        callBack: callPGService
+        action: "page_change",
+        path:
+          process.env.REACT_APP_SELF_RUNNING === "true"
+            ? `/egov-ui-framework/fire-noc/citizen-pay?applicationNumber=${applicationNumber}&tenantId=${tenant}`
+            : `/fire-noc/citizen-pay?applicationNumber=${applicationNumber}&tenantId=${tenant}`
       },
       roleDefination: {
         rolePath: "user-info.roles",
         roles: ["CITIZEN"],
         action: "PAY"
       },
-      visible: process.env.REACT_APP_NAME === "Citizen" ? true : true
+      visible: process.env.REACT_APP_NAME === "Citizen" ? true : false
     }
   });
 };
