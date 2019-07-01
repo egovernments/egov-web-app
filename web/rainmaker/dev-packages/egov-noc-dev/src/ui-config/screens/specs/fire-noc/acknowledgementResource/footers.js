@@ -375,7 +375,7 @@ export const paymentSuccessFooter = () => {
         path:
           process.env.REACT_APP_SELF_RUNNING === "true"
             ? `/egov-ui-framework/fire-noc/search`
-            : `/fire-noc/search`
+            : `/`
       }
       // visible: false
     }
