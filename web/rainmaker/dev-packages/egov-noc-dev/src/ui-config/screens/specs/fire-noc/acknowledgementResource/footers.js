@@ -291,12 +291,11 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
           labelName: "RETRY",
           labelKey: "NOC_PAYMENT_RETRY"
         })
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `/fire-noc/citizen-pay?applicationNumber=${applicationNumber}&tenantId=${tenant}`
       }
-      //Check this onclick later again
-      // onClickDefination: {
-      //   action: "page_change",
-      //   path: `${getRedirectionURL}/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
-      // }
     }
   });
 };

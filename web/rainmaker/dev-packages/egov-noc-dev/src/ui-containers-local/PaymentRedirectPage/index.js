@@ -15,13 +15,13 @@ class PaymentRedirect extends Component {
         [],
         {}
       );
-      let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
+      let consumerCode = get(pgUpdateResponse, "Transaction[0].consumerCode");
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-        window.location.href = `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${moduleId}&tenantId=${tenantId}`;
+        window.location.href = `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${consumerCode}&tenantId=${tenantId}`;
       } else {
         let transactionId = get(pgUpdateResponse, "Transaction[0].txnId");
-        window.location.href = `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${moduleId}&tenantId=${tenantId}&secondNumber=${transactionId}`;
+        window.location.href = `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${consumerCode}&tenantId=${tenantId}&secondNumber=${transactionId}`;
       }
     } catch (e) {
       alert(e);
