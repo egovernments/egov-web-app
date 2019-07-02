@@ -458,7 +458,7 @@ const institutionInformation = () => {
         pattern: getPattern("Address"),
         errorMessage: "Invalid Address",
         jsonPath:
-          "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.officialCorrespondenceAddress",
+          "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].correspondenceAddress",
         gridDefination: {
           xs: 12,
           sm: 12,
