@@ -3,13 +3,15 @@ import {
   getCommonCard,
   getCommonContainer,
   getCommonTitle,
-  getTextField
+  getTextField,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
   handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import get from "lodash/get";
+import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   furnishNocResponse,
   getSearchResults
@@ -21,6 +23,22 @@ const loadProvisionalNocData = async (state, dispatch) => {
     "screenConfiguration.preparedFinalObject.FireNOCs[0].provisionFireNOCNumber",
     ""
   );
+
+
+  if (!fireNOCNumber.match(getPattern("FireNOCNo"))) {
+    dispatch(
+      toggleSnackbar(
+        true,
+        {
+          labelName: "Incorrect FireNOC Number!",
+          labelKey: "ERR_FIRENOC_NUMBER_INCORRECT"
+        },
+        "error"
+      )
+    );
+    return;
+  }
+
   let response = await getSearchResults([
     { key: "fireNOCNumber", value: fireNOCNumber }
   ]);
@@ -139,7 +157,7 @@ export const nocDetails = getCommonCard({
           labelName: "Enter Provisional fire NoC number",
           labelKey: "NOC_PROVISIONAL_FIRE_NOC_NO_PLACEHOLDER"
         },
-        pattern: /^[a-zA-Z0-9-]*$/i,
+        pattern: getPattern("FireNOCNo"),
         errorMessage: "ERR_DEFAULT_INPUT_FIELD_MSG",
         // required: true,
         // pattern: getPattern("MobileNo"),

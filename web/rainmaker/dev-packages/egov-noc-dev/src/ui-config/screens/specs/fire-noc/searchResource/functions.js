@@ -23,14 +23,14 @@ export const searchApiCall = async (state, dispatch) => {
     {}
   );
   const isSearchBoxFirstRowValid = validateFields(
-    "components.div.children.fireNOCApplication.children.cardContent.children.appNOCAndMobNumContainer.children",
+    "components.div.children.NOCApplication.children.cardContent.children.appNOCAndMobNumContainer.children",
     state,
     dispatch,
     "search"
   );
 
   const isSearchBoxSecondRowValid = validateFields(
-    "components.div.children.fireNOCApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
+    "components.div.children.NOCApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
     state,
     dispatch,
     "search"
@@ -41,10 +41,10 @@ export const searchApiCall = async (state, dispatch) => {
       toggleSnackbar(
         true,
         {
-          labelName: "Please fill valid fields to start search",
-          labelKey: "ERR_FILL_VALID_FIELDS"
+          labelName: "Please fill valid fields to search",
+          labelKey: "ERR_FIRENOC_FILL_VALID_FIELDS"
         },
-        "warning"
+        "error"
       )
     );
   } else if (

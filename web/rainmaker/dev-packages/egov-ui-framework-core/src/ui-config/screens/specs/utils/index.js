@@ -497,5 +497,7 @@ export const getPattern = type => {
       return /^[a-zA-z0-9\s\\/\-]$/i;
     case "ElectricityConnNo":
       return /^[0-9]{15}$/i;
+    case "FireNOCNo":
+      return /^[a-zA-Z0-9-]*$/i;
   }
 };
