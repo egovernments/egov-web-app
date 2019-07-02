@@ -11,7 +11,8 @@ import isUndefined from "lodash/isUndefined";
 import {
   getCommonCard,
   getCommonValue,
-  getCommonCaption
+  getCommonCaption,
+  getPattern
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { sampleGetBill } from "../../../../ui-utils/sampleResponses";
 
@@ -290,6 +291,19 @@ export const getDetailsForOwner = async (state, dispatch, fieldInfo) => {
       `FireNOCs[0].fireNOCDetails.applicantDetails.owners[${cardIndex}].mobileNumber`,
       ""
     );
+    if (!ownerNo.match(getPattern("MobileNo"))) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Incorrect Number!",
+            labelKey: "ERR_MOBILE_NUMBER_INCORRECT"
+          },
+          "error"
+        )
+      );
+      return;
+    }
     const owners = get(
       state.screenConfiguration.preparedFinalObject,
       `FireNOCs[0].fireNOCDetails.applicantDetails.owners`,
