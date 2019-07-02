@@ -9,7 +9,10 @@ import get from "lodash/get";
 import set from "lodash/set";
 import store from "ui-redux/store";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  toggleSpinner
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
@@ -36,12 +39,14 @@ export const findItemInArrayOfObject = (arr, conditionCheckerFn) => {
 
 export const getSearchResults = async (queryObject, dispatch) => {
   try {
+    store.dispatch(toggleSpinner());
     const response = await httpRequest(
       "post",
       "/firenoc-services/v1/_search",
       "",
       queryObject
     );
+    store.dispatch(toggleSpinner());
     return response;
   } catch (error) {
     store.dispatch(
