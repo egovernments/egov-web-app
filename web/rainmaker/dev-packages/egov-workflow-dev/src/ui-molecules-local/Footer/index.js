@@ -121,17 +121,6 @@ class Footer extends React.Component {
         style={{ textAlign: "right" }}
       >
         <Container>
-          {/* <Item xs={12} sm={4} style={{ paddingLeft: "20px", visibility: visibility }}>
-            <Container>
-              <Item xs={12} sm={6}>
-                <MenuButton data={getDownloadData()} />
-              </Item>
-
-              <Item xs={12} sm={6}>
-                <MenuButton data={getPrintData()} />
-              </Item>
-            </Container>
-          </Item> */}
           <Item xs={12} sm={12}>
             {contractData &&
               contractData.map(item => {
@@ -144,7 +133,8 @@ class Footer extends React.Component {
                     style={{
                       minWidth: "200px",
                       height: "48px",
-                      marginRight: "45px"
+                      marginRight: "45px",
+                      display: buttonLabel === "REFER" ? "none" : "initial"
                     }}
                   >
                     <LabelContainer

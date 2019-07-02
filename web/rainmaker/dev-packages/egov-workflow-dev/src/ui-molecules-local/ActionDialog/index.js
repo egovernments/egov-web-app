@@ -94,7 +94,6 @@ class ActionDialog extends React.Component {
       dialogData,
       dataPath
     } = this.props;
-    console.log("========>", dataPath);
     const {
       buttonLabel,
       showEmployeeList,
