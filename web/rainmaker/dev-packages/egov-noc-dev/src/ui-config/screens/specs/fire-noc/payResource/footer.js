@@ -15,7 +15,11 @@ export const callPGService = async (state, dispatch) => {
     window.location.href,
     "applicationNumber"
   );
-  let callbackUrl = `${window.origin}/fire-noc/paymentRedirectPage`;
+  let callbackUrl = `${
+    process.env.NODE_ENV === "production"
+      ? `${window.origin}/citizen`
+      : window.origin
+  }/fire-noc/paymentRedirectPage`;
   try {
     const queryObj = [
       {

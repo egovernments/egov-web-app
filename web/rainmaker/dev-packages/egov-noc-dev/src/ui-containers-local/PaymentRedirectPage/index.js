@@ -1,13 +1,14 @@
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import get from "lodash/get";
 import set from "lodash/set";
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { getSearchResults } from "../../ui-utils/commons";
 
 class PaymentRedirect extends Component {
   componentDidMount = async () => {
-    //let { history } = this.props;
     let { search } = this.props.location;
     try {
       let pgUpdateResponse = await httpRequest(
@@ -20,7 +21,9 @@ class PaymentRedirect extends Component {
       let consumerCode = get(pgUpdateResponse, "Transaction[0].consumerCode");
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-        window.location.href = `/citizen/fire-noc/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${consumerCode}&tenantId=${tenantId}`;
+        this.props.setRoute(
+          `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${consumerCode}&tenantId=${tenantId}`
+        );
       } else {
         let response = await getSearchResults([
           {
@@ -41,7 +44,9 @@ class PaymentRedirect extends Component {
         );
 
         let transactionId = get(pgUpdateResponse, "Transaction[0].txnId");
-        window.location.href = `/citizen/fire-noc/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${consumerCode}&tenantId=${tenantId}&secondNumber=${transactionId}`;
+        this.props.setRoute(
+          `/fire-noc/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${consumerCode}&tenantId=${tenantId}&secondNumber=${transactionId}`
+        );
       }
     } catch (e) {
       alert(e);
@@ -52,4 +57,13 @@ class PaymentRedirect extends Component {
   }
 }
 
-export default withRouter(PaymentRedirect);
+const mapDispatchToProps = dispatch => {
+  return {
+    setRoute: route => dispatch(setRoute(route))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(PaymentRedirect));
