@@ -12,7 +12,9 @@
     "dev-packages/egov-noc-dev",
     "dev-packages/egov-abg-dev",
     "dev-packages/egov-uc-dev",
-    "packages/*"
+    "packages/citizen",
+    "packages/employee",
+    "packages/lib/*"
   ],
   "version": "0.0.2"
 }

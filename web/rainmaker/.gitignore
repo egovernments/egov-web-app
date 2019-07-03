@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/packages/lib/*
 /packages/egov-ui-kit
 /packages/egov-ui-framework
 /packages/pgr-citizen
