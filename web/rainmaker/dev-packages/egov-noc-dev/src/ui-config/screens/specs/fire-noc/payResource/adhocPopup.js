@@ -6,59 +6,121 @@ import {
   getCommonSubHeader,
   getLabel
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { showHideAdhocPopup } from "../../utils";
+import { showHideAdhocPopup, getBill } from "../../utils";
 import get from "lodash/get";
 import { httpRequest } from "../../../../../ui-utils/api";
 import cloneDeep from "lodash/cloneDeep";
 import { createEstimateData } from "../../utils";
-import { prepareFinalObject, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  prepareFinalObject,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import set from "lodash/set";
 
 const getEstimateDataAfterAdhoc = async (state, dispatch) => {
-  const NOCRequestBody = cloneDeep(get(state.screenConfiguration.preparedFinalObject, "FireNOCs"));
-  set(NOCRequestBody[0], "action", "ADHOC");
-  const NOCpayload = await httpRequest("post", "/firenoc-services/v1/_update", "", [], { FireNOCs: NOCRequestBody });
-
-  // clear data from form
-
-  const billPayload = await createEstimateData(
-    NOCpayload.FireNOCs[0],
-    "FireNOCsTemp[0].estimateCardData",
-    dispatch,
-    window.location.href
+  const NOCRequestBody = cloneDeep(
+    get(state.screenConfiguration.preparedFinalObject, "FireNOCs")
   );
+  set(NOCRequestBody[0], "fireNOCDetails.action", "ADHOC");
 
-  //get deep copy of bill in redux - merge new bill after adhoc
-  const billInRedux = cloneDeep(get(state.screenConfiguration.preparedFinalObject, "ReceiptTemp[0].Bill[0]"));
-  const mergedBillObj = { ...billInRedux, ...billPayload.billResponse.Bill[0] };
-
-  //merge bill in Receipt obj
-  billPayload && dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", mergedBillObj));
-
-  //set amount paid as total amount from bill
-  billPayload &&
-    dispatch(
-      prepareFinalObject(
-        "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
-        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
-      )
+  try {
+    const NOCpayload = await httpRequest(
+      "post",
+      "/firenoc-services/v1/_update",
+      "",
+      [],
+      { FireNOCs: NOCRequestBody }
     );
 
-  //set total amount in instrument
-  billPayload &&
-    dispatch(
-      prepareFinalObject(
-        "ReceiptTemp[0].instrument.amount",
-        billPayload.billResponse.Bill[0].billDetails[0].totalAmount
-      )
+    const applicationNumber = get(
+      NOCpayload,
+      "FireNOCs[0].fireNOCDetails.applicationNumber"
     );
+    const tenantId = get(NOCpayload, "FireNOCs[0].tenantId");
 
-  showHideAdhocPopup(state, dispatch, "pay");
+    if (applicationNumber && tenantId) {
+      const queryObj = [
+        {
+          key: "tenantId",
+          value: tenantId
+        },
+        {
+          key: "applicationNumber",
+          value: applicationNumber
+        }
+      ];
+      const billPayload = await getBill(queryObj);
+      // let payload = sampleGetBill();
+      if (billPayload && billPayload.Bill[0]) {
+        dispatch(prepareFinalObject("ReceiptTemp[0].Bill", billPayload.Bill));
+        const estimateData = createEstimateData(billPayload.Bill[0]);
+        estimateData &&
+          estimateData.length &&
+          dispatch(
+            prepareFinalObject(
+              "applyScreenMdmsData.estimateCardData",
+              estimateData
+            )
+          );
+      }
+
+      // const billPayload = await createEstimateData(
+      //   NOCpayload.FireNOCs[0],
+      //   "FireNOCsTemp[0].estimateCardData",
+      //   dispatch,
+      //   window.location.href
+      // );
+
+      //get deep copy of bill in redux - merge new bill after adhoc
+      const billInRedux = cloneDeep(
+        get(
+          state.screenConfiguration.preparedFinalObject,
+          "ReceiptTemp[0].Bill[0]"
+        )
+      );
+      const mergedBillObj = {
+        ...billInRedux,
+        ...billPayload.Bill[0]
+      };
+
+      //merge bill in Receipt obj
+      billPayload &&
+        dispatch(prepareFinalObject("ReceiptTemp[0].Bill[0]", mergedBillObj));
+
+      //set amount paid as total amount from bill
+      billPayload &&
+        dispatch(
+          prepareFinalObject(
+            "ReceiptTemp[0].Bill[0].billDetails[0].amountPaid",
+            billPayload.Bill[0].billDetails[0].totalAmount
+          )
+        );
+
+      //set total amount in instrument
+      billPayload &&
+        dispatch(
+          prepareFinalObject(
+            "ReceiptTemp[0].instrument.amount",
+            billPayload.Bill[0].billDetails[0].totalAmount
+          )
+        );
+
+      showHideAdhocPopup(state, dispatch, "pay");
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const updateAdhoc = (state, dispatch) => {
-  const adhocAmount = get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].fireNOCDetails.adhocPenalty");
-  const rebateAmount = get(state.screenConfiguration.preparedFinalObject, "FireNOCs[0].fireNOCDetails.adhocExemption");
+  const adhocAmount = get(
+    state.screenConfiguration.preparedFinalObject,
+    "FireNOCs[0].fireNOCDetails.additionalDetail.adhocPenalty"
+  );
+  const rebateAmount = get(
+    state.screenConfiguration.preparedFinalObject,
+    "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemption"
+  );
   if (adhocAmount || rebateAmount) {
     getEstimateDataAfterAdhoc(state, dispatch);
   } else {
@@ -147,7 +209,8 @@ export const adhocPopup = getCommonContainer({
             },
             onClickDefination: {
               action: "condition",
-              callBack: (state, dispatch) => showHideAdhocPopup(state, dispatch, "pay")
+              callBack: (state, dispatch) =>
+                showHideAdhocPopup(state, dispatch, "pay")
             }
           }
         }
@@ -182,7 +245,7 @@ export const adhocPopup = getCommonContainer({
               width: "90%"
             }
           },
-          jsonPath: "FireNOCs[0].fireNOCDetails.adhocPenalty"
+          jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.adhocPenalty"
         }),
         penaltyReason: getSelectField({
           label: {
@@ -212,7 +275,8 @@ export const adhocPopup = getCommonContainer({
               code: "NOC_ADHOC_OTHER"
             }
           ],
-          jsonPath: "FireNOCs[0].fireNOCDetails.adhocPenaltyReason"
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.additionalDetail.adhocPenaltyReason"
         })
       }),
       commentsField: getTextField({
@@ -233,7 +297,7 @@ export const adhocPopup = getCommonContainer({
             width: "90%"
           }
         },
-        jsonPath: "FireNOCs[0].fireNOCDetails.penaltyComments"
+        jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.penaltyComments"
       })
     },
     {
@@ -270,7 +334,7 @@ export const adhocPopup = getCommonContainer({
               width: "90%"
             }
           },
-          jsonPath: "FireNOCs[0].fireNOCDetails.adhocExemption"
+          jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemption"
         }),
         rebateReason: getSelectField({
           label: {
@@ -300,7 +364,8 @@ export const adhocPopup = getCommonContainer({
               code: "NOC_ADHOC_OTHER"
             }
           ],
-          jsonPath: "FireNOCs[0].fireNOCDetails.adhocExemptionReason"
+          jsonPath:
+            "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemptionReason"
         }),
         rebateCommentsField: getTextField({
           label: {
@@ -320,7 +385,7 @@ export const adhocPopup = getCommonContainer({
               width: "90%"
             }
           },
-          jsonPath: "FireNOCs[0].fireNOCDetails.rebateComments"
+          jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.rebateComments"
         })
       })
     },
@@ -359,7 +424,8 @@ export const adhocPopup = getCommonContainer({
         },
         onClickDefination: {
           action: "condition",
-          callBack: (state, dispatch) => showHideAdhocPopup(state, dispatch, "pay")
+          callBack: (state, dispatch) =>
+            showHideAdhocPopup(state, dispatch, "pay")
         }
       },
       addButton: {

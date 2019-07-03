@@ -145,7 +145,7 @@ const screenConfig = {
     },
     adhocDialog: {
       uiFramework: "custom-containers-local",
-      moduleName: "egov-tradelicence",
+      moduleName: "egov-noc",
       componentPath: "DialogContainer",
       props: {
         open: false,
