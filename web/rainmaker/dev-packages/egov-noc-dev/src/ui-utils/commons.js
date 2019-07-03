@@ -251,7 +251,7 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
 export const prepareDocumentsUploadData = (state, dispatch) => {
   let documents = get(
     state,
-    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.firenoc.Documents",
+    "screenConfiguration.preparedFinalObject.applyScreenMdmsData.FireNoc.Documents",
     []
   );
   documents = documents.filter(item => {

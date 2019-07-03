@@ -15,7 +15,7 @@ import {
 } from "../../../../../ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 
-const moveToReview = (state, dispatch) => {
+const setReviewPageRoute = (state, dispatch) => {
   let tenantId = get(
     state,
     "screenConfiguration.preparedFinalObject.FireNOCs[0].fireNOCDetails.propertyDetails.address.city"
@@ -28,6 +28,107 @@ const moveToReview = (state, dispatch) => {
     process.env.REACT_APP_SELF_RUNNING === "true" ? "/egov-ui-framework" : "";
   const reviewUrl = `${appendUrl}/fire-noc/summary?applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
   dispatch(setRoute(reviewUrl));
+};
+const moveToReview = (state, dispatch) => {
+  const identityProof = get(
+    state.screenConfiguration.preparedFinalObject,
+    "documentsUploadRedux.0.documents"
+  );
+
+  const addressProof = get(
+    state.screenConfiguration.preparedFinalObject,
+    "documentsUploadRedux.1.documents"
+  );
+  let hasIdentityProof = false;
+  let hasaddressProof = false;
+  if (
+    identityProof &&
+    identityProof.length > 0 &&
+    addressProof &&
+    addressProof.length > 0
+  ) {
+    if (
+      !get(
+        state.screenConfiguration.preparedFinalObject,
+        "documentsUploadRedux.0.dropdown.value"
+      )
+    ) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          { labelName: "Please select type of Document!", labelKey: "" },
+          "warning"
+        )
+      );
+    } else {
+      hasIdentityProof = true;
+    }
+    if (
+      !get(
+        state.screenConfiguration.preparedFinalObject,
+        "documentsUploadRedux.1.dropdown.value"
+      )
+    ) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          { labelName: "Please select type of Document!", labelKey: "" },
+          "warning"
+        )
+      );
+    } else {
+      hasaddressProof = true;
+    }
+
+    if (hasIdentityProof && hasaddressProof) {
+      setReviewPageRoute(state, dispatch);
+    }
+  } else if (
+    (identityProof && identityProof.length > 0) ||
+    (addressProof && addressProof.length > 0)
+  ) {
+    if (identityProof && identityProof.length > 0) {
+      if (
+        !get(
+          state.screenConfiguration.preparedFinalObject,
+          "documentsUploadRedux.0.dropdown.value"
+        )
+      ) {
+        dispatch(
+          toggleSnackbar(
+            true,
+            { labelName: "Please select type of Document!", labelKey: "" },
+            "warning"
+          )
+        );
+      } else {
+        hasIdentityProof = true;
+      }
+    } else if (addressProof && addressProof.length > 0) {
+      if (
+        !get(
+          state.screenConfiguration.preparedFinalObject,
+          "documentsUploadRedux.1.dropdown.value"
+        )
+      ) {
+        dispatch(
+          toggleSnackbar(
+            true,
+            { labelName: "Please select type of Document!", labelKey: "" },
+            "warning"
+          )
+        );
+      } else {
+        hasaddressProof = true;
+      }
+    }
+
+    if (hasIdentityProof || hasaddressProof) {
+      setReviewPageRoute(state, dispatch);
+    }
+  } else {
+    setReviewPageRoute(state, dispatch);
+  }
 };
 
 const getMdmsData = async (state, dispatch) => {

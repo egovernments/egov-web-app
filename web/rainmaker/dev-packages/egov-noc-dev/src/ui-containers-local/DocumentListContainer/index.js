@@ -22,36 +22,11 @@ class DocumentListContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  // const { screenConfiguration, documents } = state;
   let documentsList = get(
     state,
     "screenConfiguration.preparedFinalObject.documentsContract",
     []
   );
-  // documentsList.forEach(container => {
-  //   let index = 0;
-  //   container.cards.forEach((card, cardIndex) => {
-  //     if (card.code.startsWith("OWNER."))
-  //   });
-  // });
-  // console.log("++++++++", documentsList);
-  // const documentsList =
-  //   documents ||
-  //   get(
-  //     screenConfiguration.preparedFinalObject,
-  //     "LicensesTemp[0].applicationDocuments",
-  //     []
-  //   );
-  // const uploadedDocuments = get(
-  //   screenConfiguration.preparedFinalObject,
-  //   "LicensesTemp[0].uploadedDocsInRedux",
-  //   []
-  // );
-  // const tenantId = get(
-  //   screenConfiguration.preparedFinalObject,
-  //   "Licenses[0].tenantId",
-  //   ""
-  // );
   return { documentsList };
 };
 
