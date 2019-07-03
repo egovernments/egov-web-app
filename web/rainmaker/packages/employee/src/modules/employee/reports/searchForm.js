@@ -57,7 +57,7 @@ class ShowForm extends Component {
         }
         setSearchParams(searchParams);
       }
-      this.setState({ getResults: true, dateError: "" }, () => {
+      this.setState({ getResults: false, dateError: "" }, () => {
         resetForm();
       });
     }
