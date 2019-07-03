@@ -317,7 +317,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
     {
       text: [
         {
-          text: "Application No. ",
+          text: "Application No.     ",
           bold: true
         },
         {
@@ -710,7 +710,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
         {
           text: [
             {
-              text: "Application No. ",
+              text: "Application No.            ",
               bold: true
             },
             {
@@ -723,7 +723,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
         {
           text: [
             {
-              text: "Date of Payment ",
+              text: "Date of Payment   ",
               bold: true
             },
             {
@@ -738,7 +738,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
         {
           text: [
             {
-              text: "Payment Receipt No. ",
+              text: "Payment Receipt No.  ",
               bold: true
             },
             {
@@ -754,9 +754,9 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       propertyLocationDetails = [];
       applicantDetails = [];
       documents = [];
-      qrText = `Application: ${transformedData.applicationNumber}, Receipt: ${
+      qrText = `Application: ${transformedData.applicationNumber}, Receipt number: ${
         transformedData.receiptNumber
-      }, Date: ${transformedData.paymentDate}, Fees Paid: ${
+      }, Date of payment: ${transformedData.paymentDate}, Fees Paid: ${
         transformedData.amountPaid
       }, Payment mode: ${transformedData.paymentMode}, Transaction ID: ${
         transformedData.transactionNumber
@@ -945,7 +945,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       "noc-subhead": {
         fontSize: 12,
         bold: true,
-        margin: [-18, 8, 10, 0],
+        margin: [-18, 8, 0, 0],
         color: "#484848"
       },
       "noc-title": {
