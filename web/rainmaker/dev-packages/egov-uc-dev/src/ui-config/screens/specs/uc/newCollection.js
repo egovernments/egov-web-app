@@ -2,6 +2,7 @@ import { getCommonHeader } from "egov-ui-framework/ui-config/screens/specs/utils
 import { newCollectionDetailsCard } from "./newCollectionResource/newCollectionDetails";
 import { newCollectionFooter } from "./newCollectionResource/newCollectionFooter";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { setServiceCategory } from "../utils";
@@ -16,6 +17,21 @@ const header = getCommonHeader({
 const tenantId = getTenantId();
 
 const getData = async (action, state, dispatch, demandId) => {
+  const cityByModulueRequest = {
+    MdmsCriteria: {
+      tenantId: commonConfig.tenantId,
+      moduleDetails: [
+        {
+          moduleName: "tenant",
+          masterDetails: [{ name: "citymodule" }]
+        }
+      ]
+    }
+  };
+  dispatch(
+    fetchGeneralMDMSData(cityByModulueRequest, "tenant", ["citymodule"])
+  );
+
   let requestBody = {
     MdmsCriteria: {
       tenantId: commonConfig.tenantId,
