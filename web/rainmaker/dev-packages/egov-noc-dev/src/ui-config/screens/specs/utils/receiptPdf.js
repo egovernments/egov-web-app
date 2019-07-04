@@ -1051,13 +1051,14 @@ const generatePdf = async (state, dispatch, type) => {
   };
   switch (type) {
     case "application_download":
+      let fileName = `noc_application_${transformedData.applicationNumber}`;
       let application_data = await getApplicationData(
         transformedData,
         ulbLogo,
         "application"
       );
       application_data &&
-        pdfMake.createPdf(application_data).download("noc_application.pdf");
+        pdfMake.createPdf(application_data).download(fileName);
       break;
     case "application_print":
       application_data = await getApplicationData(
@@ -1068,13 +1069,14 @@ const generatePdf = async (state, dispatch, type) => {
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "receipt_download":
+      fileName = `noc_receipt_${transformedData.receiptNumber}`;
       application_data = await getApplicationData(
         transformedData,
         ulbLogo,
         "receipt"
       );
       application_data &&
-        pdfMake.createPdf(application_data).download("noc_application.pdf");
+        pdfMake.createPdf(application_data).download(fileName);
       break;
     case "receipt_print":
       application_data = await getApplicationData(
@@ -1085,13 +1087,14 @@ const generatePdf = async (state, dispatch, type) => {
       application_data && pdfMake.createPdf(application_data).print();
       break;
     case "certificate_download":
+      fileName = `noc_certificate_${transformedData.fireNOCNumber}`;
       application_data = await getApplicationData(
         transformedData,
         ulbLogo,
         "certificate"
       );
       application_data &&
-        pdfMake.createPdf(application_data).download("noc_application.pdf");
+        pdfMake.createPdf(application_data).download(fileName);
       break;
     case "certificate_print":
       application_data = await getApplicationData(
