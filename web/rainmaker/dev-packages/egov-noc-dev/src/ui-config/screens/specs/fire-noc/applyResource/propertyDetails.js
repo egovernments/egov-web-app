@@ -28,17 +28,14 @@ const dynamic = (uom, path, buildingIndex) => {
       pattern: /^[0-9]*$/i,
       jsonPath: `FireNOCs[0].fireNOCDetails.buildings[${buildingIndex}].uomsMap.${uom}`,
       required: true,
+      props: { type: "number" },
       gridDefination: {
         xs: 12,
         sm: 12,
         md: 6
       }
     }),
-    componentJsonpath: `${path}.${uom}`,
-    beforeFieldChange: (action, state, dispatch) => {
-      action.value = parseInt(action.value);
-      return action;
-    }
+    componentJsonpath: `${path}.${uom}`
   };
 };
 
