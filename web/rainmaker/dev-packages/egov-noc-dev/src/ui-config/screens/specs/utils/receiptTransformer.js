@@ -140,7 +140,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
             get(building, "usageType", "NA")
           )}`
         ),
-        uoms:uomsObject
+        uoms: uomsObject
       };
     });
 
@@ -229,7 +229,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         name: get(owner, "name", "NA"),
         gender: get(owner, "gender", "NA"),
         fatherHusbandName: get(owner, "fatherOrHusbandName", "NA"),
-        relationship: get(owner,"relationship","NA"),
+        relationship: get(owner, "relationship", "NA"),
         dob: epochToDate(get(owner, "dob", "NA")),
         email: get(owner, "emailId", "NA"),
         pan: get(owner, "pan", "NA"),
@@ -256,7 +256,7 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       key: "consumerCode",
       value: consumerCode
     }
-  ];  
+  ];
   let response = await getReceiptData(queryObject);
 
   if (response && response.Receipt && response.Receipt.length > 0) {
@@ -311,10 +311,10 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       let desc = item.taxHeadCode ? item.taxHeadCode : "";
       if (desc === "FIRENOC_FEES") {
         data.nocFee = item.amount;
-      } else if (desc === "NOC_ADHOC_PENALTY") {
-        data.nocAdhocPenalty = item.amount;
-      } else if (desc === "NOC_ADHOC_REBATE") {
-        data.nocAdhocRebate = item.amount;
+      } else if (desc === "FIRENOC_ADHOC_PENALTY") {
+        nocAdhocPenalty = item.amount;
+      } else if (desc === "FIRENOC_ADHOC_REBATE") {
+        nocAdhocRebate = item.amount;
       } else if (desc === "FIRENOC_TAXES") {
         data.nocTaxes = item.amount;
       }

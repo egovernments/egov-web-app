@@ -64,13 +64,6 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
           );
       }
 
-      // const billPayload = await createEstimateData(
-      //   NOCpayload.FireNOCs[0],
-      //   "FireNOCsTemp[0].estimateCardData",
-      //   dispatch,
-      //   window.location.href
-      // );
-
       //get deep copy of bill in redux - merge new bill after adhoc
       const billInRedux = cloneDeep(
         get(
@@ -105,6 +98,32 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
           )
         );
 
+      //Collection Type Added in CS v1.1
+      const collectionType = get(
+        billPayload,
+        "Bill[0].billDetails[0].totalAmount"
+      );
+      const totalAmount = get(
+        billPayload,
+        "Bill[0].billDetails[0].totalAmount"
+      );
+      collectionType &&
+        dispatch(
+          prepareFinalObject(
+            "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+            "COUNTER"
+          )
+        );
+      if (totalAmount) {
+        //set amount paid as total amount from bill - destination changed in CS v1.1
+        dispatch(
+          prepareFinalObject(
+            "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
+            totalAmount
+          )
+        );
+      }
+
       showHideAdhocPopup(state, dispatch, "pay");
     }
   } catch (e) {
@@ -119,7 +138,7 @@ const updateAdhoc = (state, dispatch) => {
   );
   const rebateAmount = get(
     state.screenConfiguration.preparedFinalObject,
-    "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemption"
+    "FireNOCs[0].fireNOCDetails.additionalDetail.adhocRebate"
   );
   if (adhocAmount || rebateAmount) {
     getEstimateDataAfterAdhoc(state, dispatch);
@@ -334,7 +353,7 @@ export const adhocPopup = getCommonContainer({
               width: "90%"
             }
           },
-          jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemption"
+          jsonPath: "FireNOCs[0].fireNOCDetails.additionalDetail.adhocRebate"
         }),
         rebateReason: getSelectField({
           label: {
@@ -365,7 +384,7 @@ export const adhocPopup = getCommonContainer({
             }
           ],
           jsonPath:
-            "FireNOCs[0].fireNOCDetails.additionalDetail.adhocExemptionReason"
+            "FireNOCs[0].fireNOCDetails.additionalDetail.adhocRebateReason"
         }),
         rebateCommentsField: getTextField({
           label: {
