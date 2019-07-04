@@ -127,7 +127,11 @@ export const formwizardFourthStep = {
 };
 
 const getMdmsData = async (action, state, dispatch) => {
-  let tenantId = getTenantId();
+  let tenantId =
+    get(
+      state.screenConfiguration.preparedFinalObject,
+      "FireNOCs[0].fireNOCDetails.propertyDetails.address.city"
+    ) || getTenantId();
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: tenantId,

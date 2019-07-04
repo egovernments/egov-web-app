@@ -365,7 +365,11 @@ export const prepareDocumentsUploadRedux = (state, dispatch) => {
           if (oldDocType != docType.code || oldDocCode != card.name) {
             documentsUploadRedux[index] = {
               documentType: docType.code,
-              documentCode: card.name
+              documentCode: card.name,
+              isDocumentRequired: card.required,
+              isDocumentTypeRequired: card.dropdown
+                ? card.dropdown.required
+                : false
             };
           }
         }

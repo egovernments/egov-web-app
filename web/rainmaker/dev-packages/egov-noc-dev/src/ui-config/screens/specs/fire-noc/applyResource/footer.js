@@ -30,103 +30,56 @@ const setReviewPageRoute = (state, dispatch) => {
   dispatch(setRoute(reviewUrl));
 };
 const moveToReview = (state, dispatch) => {
-  const identityProof = get(
-    state.screenConfiguration.preparedFinalObject,
-    "documentsUploadRedux.0.documents"
+  const documentsFormat = Object.values(
+    get(state.screenConfiguration.preparedFinalObject, "documentsUploadRedux")
   );
 
-  const addressProof = get(
-    state.screenConfiguration.preparedFinalObject,
-    "documentsUploadRedux.1.documents"
-  );
-  let hasIdentityProof = false;
-  let hasaddressProof = false;
-  if (
-    identityProof &&
-    identityProof.length > 0 &&
-    addressProof &&
-    addressProof.length > 0
-  ) {
-    if (
-      !get(
-        state.screenConfiguration.preparedFinalObject,
-        "documentsUploadRedux.0.dropdown.value"
-      )
-    ) {
-      dispatch(
-        toggleSnackbar(
-          true,
-          { labelName: "Please select type of Document!", labelKey: "" },
-          "warning"
-        )
-      );
-    } else {
-      hasIdentityProof = true;
-    }
-    if (
-      !get(
-        state.screenConfiguration.preparedFinalObject,
-        "documentsUploadRedux.1.dropdown.value"
-      )
-    ) {
-      dispatch(
-        toggleSnackbar(
-          true,
-          { labelName: "Please select type of Document!", labelKey: "" },
-          "warning"
-        )
-      );
-    } else {
-      hasaddressProof = true;
-    }
+  let validateDocumentField = false;
 
-    if (hasIdentityProof && hasaddressProof) {
-      setReviewPageRoute(state, dispatch);
-    }
-  } else if (
-    (identityProof && identityProof.length > 0) ||
-    (addressProof && addressProof.length > 0)
-  ) {
-    if (identityProof && identityProof.length > 0) {
-      if (
-        !get(
-          state.screenConfiguration.preparedFinalObject,
-          "documentsUploadRedux.0.dropdown.value"
-        )
-      ) {
+  for (let i = 0; i < documentsFormat.length; i++) {
+    let isDocumentRequired = get(documentsFormat[i], "isDocumentRequired");
+    let isDocumentTypeRequired = get(
+      documentsFormat[i],
+      "isDocumentTypeRequired"
+    );
+
+    let documents = get(documentsFormat[i], "documents");
+    if (isDocumentRequired) {
+      if (documents && documents.length > 0) {
+        if (isDocumentTypeRequired) {
+          if (get(documentsFormat[i], "dropdown.value")) {
+            validateDocumentField = true;
+          } else {
+            dispatch(
+              toggleSnackbar(
+                true,
+                { labelName: "Please select type of Document!", labelKey: "" },
+                "warning"
+              )
+            );
+            validateDocumentField = false;
+            break;
+          }
+        } else {
+          validateDocumentField = true;
+        }
+      } else {
         dispatch(
           toggleSnackbar(
             true,
-            { labelName: "Please select type of Document!", labelKey: "" },
+            { labelName: "Please uplaod mandatory documents!", labelKey: "" },
             "warning"
           )
         );
-      } else {
-        hasIdentityProof = true;
+        validateDocumentField = false;
+        break;
       }
-    } else if (addressProof && addressProof.length > 0) {
-      if (
-        !get(
-          state.screenConfiguration.preparedFinalObject,
-          "documentsUploadRedux.1.dropdown.value"
-        )
-      ) {
-        dispatch(
-          toggleSnackbar(
-            true,
-            { labelName: "Please select type of Document!", labelKey: "" },
-            "warning"
-          )
-        );
-      } else {
-        hasaddressProof = true;
-      }
+    } else {
+      validateDocumentField = true;
     }
+  }
 
-    if (hasIdentityProof || hasaddressProof) {
-      setReviewPageRoute(state, dispatch);
-    }
-  } else {
+  if (validateDocumentField) {
     setReviewPageRoute(state, dispatch);
   }
 };
@@ -155,7 +108,7 @@ const getMdmsData = async (state, dispatch) => {
 
     dispatch(
       prepareFinalObject(
-        "applyScreenMdmsData.firenoc.Documents",
+        "applyScreenMdmsData.FireNoc.Documents",
         payload.MdmsRes.FireNoc.Documents
       )
     );
