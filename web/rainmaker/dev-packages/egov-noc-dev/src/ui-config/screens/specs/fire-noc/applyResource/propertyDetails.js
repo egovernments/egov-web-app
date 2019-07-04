@@ -39,9 +39,9 @@ const dynamic = (uom, path, buildingIndex) => {
   };
 };
 
-const prepareSelectField = (uom, limit) => {
+const prepareSelectField = (uom, start, end) => {
   let data = [];
-  for (let i = 0; i <= limit; i++) {
+  for (let i = start; i <= end; i++) {
     data.push({ code: `${i}` });
   }
   return {
@@ -280,8 +280,8 @@ const commonBuildingData = buildingType => {
         previousUoms = uoms;
       }
     },
-    NO_OF_FLOORS: prepareSelectField("NO_OF_FLOORS", 20),
-    NO_OF_BASEMENTS: prepareSelectField("NO_OF_BASEMENTS", 5),
+    NO_OF_FLOORS: prepareSelectField("NO_OF_FLOORS", 1, 20),
+    NO_OF_BASEMENTS: prepareSelectField("NO_OF_BASEMENTS", 0, 5),
     PLOT_SIZE: prepareTextField("PLOT_SIZE"),
     BUILTUP_AREA: prepareTextField("BUILTUP_AREA"),
     HEIGHT_OF_BUILDING: prepareTextField("HEIGHT_OF_BUILDING")
