@@ -54,7 +54,7 @@ const getCitizenReceipetData = transformedData => {
                   },
                   {
                     text: transformedData.receiptNumber,
-                    style: "receipt-logo-header",
+                    style: "receipt-logo-header-value",
                     margin: [0, 10, 0, 0]
                   }
                 ],
@@ -256,7 +256,7 @@ const getCitizenReceipetData = transformedData => {
           {
             text: [
               {
-                text: "Commissioner/EO",
+                text: "Authorised signatory",
                 bold: true
               }
             ],
@@ -308,7 +308,13 @@ const getCitizenReceipetData = transformedData => {
         fontFamily: "Roboto",
         fontSize: 16,
         bold: true,
-
+        letterSpacing: 0.74
+      },
+      "receipt-logo-header-value": {
+        color: "#484848",
+        fontFamily: "Roboto",
+        fontSize: 16,
+        bold: true,
         letterSpacing: 0.74
       },
       "receipt-logo-sub-header": {
@@ -383,7 +389,7 @@ const getReceiptData = transformedData => {
                   },
                   {
                     text: transformedData.receiptNumber,
-                    style: "receipt-logo-header",
+                    style: "receipt-logo-header-value",
                     margin: [0, 10, 0, 0]
                   }
                 ],
@@ -585,7 +591,7 @@ const getReceiptData = transformedData => {
           {
             text: [
               {
-                text: "Commissioner/EO",
+                text: "Authorised signatory",
                 bold: true
               }
             ],
@@ -644,7 +650,7 @@ const getReceiptData = transformedData => {
                   },
                   {
                     text: transformedData.receiptNumber,
-                    style: "receipt-logo-header",
+                    style: "receipt-logo-header-value",
                     margin: [0, 10, 0, 0]
                   }
                 ],
@@ -846,7 +852,7 @@ const getReceiptData = transformedData => {
           {
             text: [
               {
-                text: "Commissioner/EO",
+                text: "Authorised signatory",
                 bold: true
               }
             ],
