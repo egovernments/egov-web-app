@@ -326,7 +326,7 @@ class DocumentList extends Component {
                     <div className={classes.documentContainer}>
                       {card.hasSubCards && (
                         <LabelContainer
-                          labelKey={getTransformedLocale(card.name)}
+                          labelKey={card.name}
                           style={styles.documentTitle}
                         />
                       )}
