@@ -85,53 +85,6 @@ const propertyDetails = {
               masterName: "BuildingType"
             }
           }
-        ),
-        noOfFloors: getLabelWithValue(
-          { labelName: "No. of Floors", labelKey: "NOC_NO_OF_FLOORS_LABEL" },
-          {
-            jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_FLOORS"
-          }
-        ),
-        noOfBasements: getLabelWithValue(
-          {
-            labelName: "No. of Basement",
-            labelKey: "NOC_PROPERTY_DETAILS_NO_OF_BASEMENTS_LABEL"
-          },
-          {
-            jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.NO_OF_BASEMENTS"
-          }
-        ),
-        plotSize: getLabelWithValue(
-          {
-            labelName: "Plot Size (in sq meters)",
-            labelKey: "NOC_PROPERTY_DETAILS_PLOT_SIZE_LABEL"
-          },
-          {
-            jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.PLOT_SIZE"
-          }
-        ),
-        groundBuiltupArea: getLabelWithValue(
-          {
-            labelName: "Ground Builtup Area (sq meters)",
-            labelKey: "NOC_PROPERTY_DETAILS_GROUND_FLOOR_BUILTUP_AREA_LABEL"
-          },
-          {
-            jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.BUILTUP_AREA"
-          }
-        ),
-        heightOfBuilding: getLabelWithValue(
-          {
-            labelName: "Height of Building (in meters)",
-            labelKey: "NOC_PROPERTY_DETAILS_HEIGHT_OF_BUILDING_LABEL"
-          },
-          {
-            jsonPath:
-              "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.HEIGHT_OF_BUILDING"
-          }
         )
       })
     }),
