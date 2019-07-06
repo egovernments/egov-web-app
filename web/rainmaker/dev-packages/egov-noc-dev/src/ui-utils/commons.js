@@ -1,20 +1,18 @@
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
+  handleScreenConfigurationFieldChange as handleField,
   prepareFinalObject,
-  toggleSnackbar
+  toggleSnackbar,
+  toggleSpinner
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import jp from "jsonpath";
 import get from "lodash/get";
 import set from "lodash/set";
 import store from "ui-redux/store";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
-import {
-  handleScreenConfigurationFieldChange as handleField,
-  toggleSpinner
-} from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
@@ -122,7 +120,31 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
             active: true
           });
       });
-      set(payload[0], `fireNOCDetails.buildings[${index}].uoms`, finalUoms);
+
+      // Quick fix to repair old uoms
+      let oldUoms = get(
+        payload[0],
+        `fireNOCDetails.buildings[${index}].uoms`,
+        []
+      );
+      oldUoms.forEach((oldUom, oldUomIndex) => {
+        set(
+          payload[0],
+          `fireNOCDetails.buildings[${index}].uoms[${oldUomIndex}].isActiveUom`,
+          false
+        );
+        set(
+          payload[0],
+          `fireNOCDetails.buildings[${index}].uoms[${oldUomIndex}].active`,
+          false
+        );
+      });
+      // End Quick Fix
+
+      set(payload[0], `fireNOCDetails.buildings[${index}].uoms`, [
+        ...finalUoms,
+        ...oldUoms
+      ]);
 
       // Set building documents
       let uploadedDocs = [];
