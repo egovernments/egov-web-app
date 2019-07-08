@@ -12,6 +12,7 @@ import get from "lodash/get";
 //import { translate } from "../../common/common";
 import { translate } from "./commons/common";
 import Label from "egov-ui-kit/utils/translationNode";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import jp from "jsonpath";
 import _ from "lodash";
 import { getResultUrl } from "./commons/url";
@@ -367,7 +368,7 @@ class ShowForm extends Component {
       changeButtonText,
       setReportResult,
       searchForm,
-      metaData,
+      metaData, 
       setFlag,
       setSearchParams,
       reportHistory,
@@ -425,13 +426,28 @@ class ShowForm extends Component {
       pushReportHistory,
       clearReportHistory,
       decreaseReportIndex,
+      toggleSnackbarAndSetText
     } = this.props;
     let searchParams = [];
     var tenantId = getTenantId() ? getTenantId() : commonConfig.tenantId;
     let self = this;
+    let mandatoryfields=[]
+    metaData.reportDetails.searchParams.forEach(param=>{
+      if(param.isMandatory){
+        mandatoryfields.push(param.name);
+      }
+    });
+    let filledMandatoryFieldsCount=searchForm ? Object.keys(searchForm)
+    .filter(param => mandatoryfields.includes(param)).length:0;
+    if(filledMandatoryFieldsCount!=mandatoryfields.length)
+    { 
+      toggleSnackbarAndSetText(true,{labelKey:"COMMON_MANDATORY_MISSING_ERROR",labelName:"Please fill all mandatory fields to search"},
+      true);
+      return;
+    }
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
-
+      
       searchForm = searchForm
         ? Object.keys(searchForm)
             .filter((param) => !_.includes(displayOnlyFields, param))
@@ -443,7 +459,7 @@ class ShowForm extends Component {
 
       for (var variable in searchForm) {
         let input;
-
+        
         if (this.state.moduleName == "pgr") {
           if (variable == "fromDate") {
             input =
@@ -753,6 +769,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setFlag: (flag) => {
     dispatch({ type: "SET_FLAG", flag });
+  },
+  toggleSnackbarAndSetText:(open,message,type)=>{
+   dispatch(toggleSnackbarAndSetText(
+    open,message,type
+  )) 
   },
   setMetaData: (metaData) => {
     dispatch({ type: "SET_META_DATA", metaData });
