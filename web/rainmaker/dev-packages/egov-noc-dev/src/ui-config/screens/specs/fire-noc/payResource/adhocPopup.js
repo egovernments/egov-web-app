@@ -132,7 +132,7 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
 };
 
 const updateAdhoc = (state, dispatch) => {
-  const adhocAmount = get(
+  const penaltyAmount = get(
     state.screenConfiguration.preparedFinalObject,
     "FireNOCs[0].fireNOCDetails.additionalDetail.adhocPenalty"
   );
@@ -140,8 +140,25 @@ const updateAdhoc = (state, dispatch) => {
     state.screenConfiguration.preparedFinalObject,
     "FireNOCs[0].fireNOCDetails.additionalDetail.adhocRebate"
   );
-  if (adhocAmount || rebateAmount) {
-    getEstimateDataAfterAdhoc(state, dispatch);
+  if (penaltyAmount || rebateAmount) {
+    const totalAmount = get(
+      state.screenConfiguration.preparedFinalObject,
+      "ReceiptTemp[0].Bill[0].billDetails[0].totalAmount"
+    );
+    if (rebateAmount && rebateAmount > totalAmount) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Rebate should be less than or equal to total amount!",
+            labelKey: "ERR_REBATE_GREATER_THAN_AMOUNT"
+          },
+          "warning"
+        )
+      );
+    } else {
+      getEstimateDataAfterAdhoc(state, dispatch);
+    }
   } else {
     dispatch(
       toggleSnackbar(
