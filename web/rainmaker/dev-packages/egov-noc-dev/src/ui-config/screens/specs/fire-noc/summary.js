@@ -14,6 +14,7 @@ import jp from "jsonpath";
 import get from "lodash/get";
 import set from "lodash/set";
 import { applicantSummary } from "./summaryResource/applicantSummary";
+import { institutionSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
 import { estimateSummary } from "./summaryResource/estimateSummary";
 import { footer } from "./summaryResource/footer";
@@ -72,32 +73,50 @@ const screenConfig = {
         "FireNOCs[0].tenantId"
       );
 
-    let uomsObject=get(
+    let uomsObject = get(
       state.screenConfiguration.preparedFinalObject,
       "FireNOCs[0].fireNOCDetails.buildings[0].uomsMap"
     );
-    if(uomsObject){
+    if (uomsObject) {
       for (const [key, value] of Object.entries(uomsObject)) {
-        let labelElement=getLabelWithValue(
+        let labelElement = getLabelWithValue(
           {
             labelName: key,
             labelKey: `NOC_PROPERTY_DETAILS_${key}_LABEL`
           },
           {
-            jsonPath:
-              `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${key}`
+            jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${key}`
           }
         );
         set(
           action,
           `screenConfig.components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.cardOne.props.scheama.children.cardContent.children.propertyContainer.children.${key}`,
           labelElement
-        );  
-        
+        );
       }
-
-      
     }
+
+    // Set Institution/Applicant info card visibility
+    if (
+      get(
+        state.screenConfiguration.preparedFinalObject,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+        ""
+      ).startsWith("INSTITUTION")
+    ) {
+      set(
+        action,
+        "screenConfig.components.div.children.body.children.cardContent.children.applicantSummary.visible",
+        false
+      );
+    } else {
+      set(
+        action,
+        "screenConfig.components.div.children.body.children.cardContent.children.institutionSummary.visible",
+        false
+      );
+    }
+
     generateBill(dispatch, applicationNumber, tenantId);
     prepareDocumentsView(state, dispatch);
     return action;
@@ -128,6 +147,7 @@ const screenConfig = {
           nocSummary: nocSummary,
           propertySummary: propertySummary,
           applicantSummary: applicantSummary,
+          institutionSummary: institutionSummary,
           documentsSummary: documentsSummary
         }),
         footer: footer

@@ -18,6 +18,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import { getSearchResults } from "../../../../ui-utils/commons";
 import { applicantSummary } from "./summaryResource/applicantSummary";
+import { institutionSummary } from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
 import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
@@ -265,32 +266,63 @@ const setSearchResponse = async (
   ]);
   // const response = sampleSingleSearch();
   dispatch(prepareFinalObject("FireNOCs", get(response, "FireNOCs", [])));
+
+  // Set Institution/Applicant info card visibility
+  if (
+    get(
+      response,
+      "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+      ""
+    ).startsWith("INSTITUTION")
+  ) {
+    dispatch(
+      handleField(
+        "search-preview",
+        "components.div.children.body.children.cardContent.children.applicantSummary",
+        "visible",
+        false
+      )
+    );
+  } else {
+    dispatch(
+      handleField(
+        "search-preview",
+        "components.div.children.body.children.cardContent.children.institutionSummary",
+        "visible",
+        false
+      )
+    );
+  }
+
   prepareDocumentsView(state, dispatch);
   prepareUoms(state, dispatch);
   await loadPdfGenerationData(applicationNumber, tenantId);
   setDownloadMenu(state, dispatch);
-  let uomsObject=get(response, "FireNOCs[0].fireNOCDetails.buildings[0].uoms", [])
-  
-  uomsObject.forEach(item=>{
-      let labelElement=getLabelWithValue(
-        {
-          labelName: item.code,
-          labelKey: `NOC_PROPERTY_DETAILS_${item.code}_LABEL`
-        },
-        {
-          jsonPath:
-            `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${item.code}`
-        }
-      );
-            
-      dispatch(
-        handleField(
-          "search-preview",
-          "components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.cardOne.props.scheama.children.cardContent.children",
-          `propertyContainer.children.${item.code}`,
-          labelElement
-        )
-      );
+  let uomsObject = get(
+    response,
+    "FireNOCs[0].fireNOCDetails.buildings[0].uoms",
+    []
+  );
+
+  uomsObject.forEach(item => {
+    let labelElement = getLabelWithValue(
+      {
+        labelName: item.code,
+        labelKey: `NOC_PROPERTY_DETAILS_${item.code}_LABEL`
+      },
+      {
+        jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${item.code}`
+      }
+    );
+
+    dispatch(
+      handleField(
+        "search-preview",
+        "components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.cardOne.props.scheama.children.cardContent.children",
+        `propertyContainer.children.${item.code}`,
+        labelElement
+      )
+    );
   });
 };
 
@@ -322,6 +354,11 @@ const screenConfig = {
     set(
       action,
       "screenConfig.components.div.children.body.children.cardContent.children.applicantSummary.children.cardContent.children.header.children.editSection.visible",
+      false
+    );
+    set(
+      action,
+      "screenConfig.components.div.children.body.children.cardContent.children.institutionSummary.children.cardContent.children.header.children.editSection.visible",
       false
     );
     set(
@@ -369,6 +406,7 @@ const screenConfig = {
           nocSummary: nocSummary,
           propertySummary: propertySummary,
           applicantSummary: applicantSummary,
+          institutionSummary: institutionSummary,
           documentsSummary: documentsSummary
         })
         // footer: footer
