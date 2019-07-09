@@ -237,6 +237,36 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       };
     });
 
+    // Institution Details
+    data.ownershipType = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.ownerShipType",
+        "NA"
+      )
+    );
+    data.institutionName = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionName",
+        "NA"
+      )
+    );
+    data.telephoneNumber = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.telephoneNumber",
+        "NA"
+      )
+    );
+    data.institutionDesignation = nullToNa(
+      get(
+        response,
+        "FireNOCs[0].fireNOCDetails.applicantDetails.additionalDetail.institutionDesignation",
+        "NA"
+      )
+    );
+
     // Documents
 
     // User Data

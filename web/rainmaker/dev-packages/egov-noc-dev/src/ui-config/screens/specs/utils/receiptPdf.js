@@ -3,284 +3,289 @@ import isEmpty from "lodash/isEmpty";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import QRCode from "qrcode";
-import {getTransformedLocale} from "egov-ui-framework/ui-utils/commons";
-import {getMessageFromLocalization} from "./receiptTransformer";
+import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
+import { getMessageFromLocalization } from "./receiptTransformer";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const getOwners = data => {
   let retowners = [];
   data.owners.forEach(owner => {
-    retowners.push([
-      {
-        text: "Mobile No.",
-        border: [true, true, false, false]
-      },
-      {
-        text: "Name",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Gender",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Date of Birth",
-        border: [false, true, true, false]
-      },
-    ],
-    [
-      {
-        text: get(owner, "mobile"),
-        style: "receipt-table-value",
-        border: [true, false, false, false]
-      },
-      {
-        text: get(owner, "name"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(owner, "gender"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(owner, "dob"),
-        style: "receipt-table-value",
-        border: [false, false, true, false]
-      }
-    ],
-    [
-      {
-        text: "",
-        border: [true, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
+    retowners.push(
+      [
+        {
+          text: "Mobile No.",
+          border: [true, true, false, false]
+        },
+        {
+          text: "Name",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Gender",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Date of Birth",
+          border: [false, true, true, false]
+        }
+      ],
+      [
+        {
+          text: get(owner, "mobile"),
+          style: "receipt-table-value",
+          border: [true, false, false, false]
+        },
+        {
+          text: get(owner, "name"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(owner, "gender"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(owner, "dob"),
+          style: "receipt-table-value",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: "",
+          border: [true, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
 
-      {
-        text: "",
-        border: [false, false, true, false]
-      }
-    ],
-    [
-      {
-        text: "Father/Husband's Name",
-        border: [true, false, false, false]
-      },
-      {
-        text: "Relationship",
-        border: [false, false, false, false]
-      },
-      {
-        text: "Email",
-        border: [false, false, false, false]
-      },
-      {
-        text: "PAN No.",
-        border: [false, false, true, false]
-      }
-    ],
-    [
-      {
-        text: get(owner, "fatherHusbandName"),
-        style: "receipt-table-value",
-        border: [true, false, false, false]
-      },
-      {
-        text: get(owner, "relationship"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(owner, "email"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(owner, "pan"),
-        style: "receipt-table-value",
-        border: [false, false, true, false]
-      },
-    ],
-    [
-      {
-        text: "",
-        border: [true, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
+        {
+          text: "",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: "Father/Husband's Name",
+          border: [true, false, false, false]
+        },
+        {
+          text: "Relationship",
+          border: [false, false, false, false]
+        },
+        {
+          text: "Email",
+          border: [false, false, false, false]
+        },
+        {
+          text: "PAN No.",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: get(owner, "fatherHusbandName"),
+          style: "receipt-table-value",
+          border: [true, false, false, false]
+        },
+        {
+          text: get(owner, "relationship"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(owner, "email"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(owner, "pan"),
+          style: "receipt-table-value",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: "",
+          border: [true, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
 
-      {
-        text: "",
-        border: [false, false, true, false]
-      }
-    ],
-    [
-      {
-        text: "Correspondence Address",
-        border: [true, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, false, false]
-      },
-      {
-        text: "",
-        border: [false, false, true, false]
-      }
-    ],
-    [
-      
-      {
-        text: get(owner, "address"),
-        style: "receipt-table-value",
-        border: [true, false, false, true]
-      },
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, false, true]
-      },
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, false, true]
-      },
+        {
+          text: "",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: "Correspondence Address",
+          border: [true, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, false, false]
+        },
+        {
+          text: "",
+          border: [false, false, true, false]
+        }
+      ],
+      [
+        {
+          text: get(owner, "address"),
+          style: "receipt-table-value",
+          border: [true, false, false, true]
+        },
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, false, true]
+        },
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, false, true]
+        },
 
-      {
-        text: "",
-        style: "receipt-table-value",
-        border: [false, false, true, true]
-      }
-    ]);
+        {
+          text: "",
+          style: "receipt-table-value",
+          border: [false, false, true, true]
+        }
+      ]
+    );
   });
 
   return retowners;
 };
 
 const getBuildings = data => {
-  let retbuildings=[];
-  data && data.buildings.forEach((building)=> {
-    retbuildings.push([
-      {
-        text: "Property Type",
-        border: [true, true, false, false]
-      },
-      {
-        text: " Name of Building",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Building Usage Type",
-        border: [false, true, false, false]
-      },
-      {
-        text: "Building Usage Subtype",
-        border: [false, true, true, false]
+  let retbuildings = [];
+  data &&
+    data.buildings.forEach(building => {
+      retbuildings.push([
+        {
+          text: "Property Type",
+          border: [true, true, false, false]
+        },
+        {
+          text: " Name of Building",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Building Usage Type",
+          border: [false, true, false, false]
+        },
+        {
+          text: "Building Usage Subtype",
+          border: [false, true, true, false]
+        }
+      ]);
+      retbuildings.push([
+        {
+          text: data.propertyType,
+          style: "receipt-table-value",
+          border: [true, false, false, false]
+        },
+        {
+          text: get(building, "name", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "usageType", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, false, false]
+        },
+        {
+          text: get(building, "usageSubType", "NA"),
+          style: "receipt-table-value",
+          border: [false, false, true, false]
+        }
+      ]);
+      let headerrow = [];
+      let valuerow = [];
+      for (let [uomkey, uomvalue] of Object.entries(building.uoms)) {
+        headerrow.push({
+          text: getMessageFromLocalization(
+            `NOC_PROPERTY_DETAILS_${getTransformedLocale(uomkey)}_LABEL`
+          ),
+          border:
+            valuerow.length == 0
+              ? [true, false, false, false]
+              : valuerow.length == 3
+              ? [false, false, true, false]
+              : [false, false, false, false]
+        });
+        valuerow.push({
+          text: uomvalue,
+          style: "receipt-table-value",
+          border:
+            valuerow.length == 0
+              ? [true, false, false, false]
+              : valuerow.length == 3
+              ? [false, false, true, false]
+              : [false, false, false, false]
+          // left, top ,right ,down
+        });
+        // draw when elements in one row are four
+        if (headerrow.length == 4) {
+          retbuildings.push(
+            [headerrow[0], headerrow[1], headerrow[2], headerrow[3]],
+            [valuerow[0], valuerow[1], valuerow[2], valuerow[3]]
+          );
+          headerrow = [];
+          valuerow = [];
+        }
       }
-    ]);
-    retbuildings.push(
-    [
-      {
-        text: data.propertyType,
-        style: "receipt-table-value",
-        border: [true, false, false, false]
-      },
-      {
-        text: get(building, "name", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "usageType", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, false, false]
-      },
-      {
-        text: get(building, "usageSubType", "NA"),
-        style: "receipt-table-value",
-        border: [false, false, true, false]
-      }
-    ]);
-    let headerrow=[]
-    let valuerow=[]
-    for (let [uomkey, uomvalue] of Object.entries(building.uoms)) 
-    {
-      headerrow.push({
-        text: getMessageFromLocalization(
-          `NOC_PROPERTY_DETAILS_${getTransformedLocale(
-            uomkey  
-          )}_LABEL`
-        ),
-        border: valuerow.length==0?[true, false, false, false]:valuerow.length==3?[false, false, true, false]:[false, false, false, false]
-      });
-      valuerow.push({
-        text: uomvalue,
-        style: "receipt-table-value",
-        border: valuerow.length==0?[true, false, false, false]:valuerow.length==3?[false, false, true, false]:[false, false, false, false]
-        // left, top ,right ,down
-      });
-      // draw when elements in one row are four
-      if(headerrow.length==4)
-      { 
-        retbuildings.push(
-          [headerrow[0],headerrow[1],headerrow[2],headerrow[3]],
-          [valuerow[0],valuerow[1],valuerow[2],valuerow[3]]
-        );
-        headerrow=[];
-        valuerow=[];
-      }
-    }
-    if(headerrow.length>0)
-    {
-
-      var i;
-      for(i=4-headerrow.length;i>0;i--)
-      {
-        headerrow.push(
-          {
+      if (headerrow.length > 0) {
+        var i;
+        for (i = 4 - headerrow.length; i > 0; i--) {
+          headerrow.push({
             text: "",
-            border: valuerow.length==3?[false, false, true, false]:[false, false, false, false]
-          }
-        );
-        valuerow.push(
-          {
+            border:
+              valuerow.length == 3
+                ? [false, false, true, false]
+                : [false, false, false, false]
+          });
+          valuerow.push({
             text: "",
             style: "receipt-table-value",
-            border: valuerow.length==3?[false, false, true, false]:[false, false, false, true]
-          }
+            border:
+              valuerow.length == 3
+                ? [false, false, true, false]
+                : [false, false, false, true]
+          });
+        }
+        retbuildings.push(
+          [headerrow[0], headerrow[1], headerrow[2], headerrow[3]],
+          [valuerow[0], valuerow[1], valuerow[2], valuerow[3]]
         );
+        headerrow = [];
+        valuerow = [];
       }
-      retbuildings.push(
-        [headerrow[0],headerrow[1],headerrow[2],headerrow[3]],
-        [valuerow[0],valuerow[1],valuerow[2],valuerow[3]]
-      );
-      headerrow=[];
-      valuerow=[];
-    }
-    // set last row bottom border
-    retbuildings[retbuildings.length-1][0].border[3]=true;
-    retbuildings[retbuildings.length-1][1].border[3]=true;
-    retbuildings[retbuildings.length-1][2].border[3]=true;
-    retbuildings[retbuildings.length-1][3].border[3]=true;
-    
+      // set last row bottom border
+      retbuildings[retbuildings.length - 1][0].border[3] = true;
+      retbuildings[retbuildings.length - 1][1].border[3] = true;
+      retbuildings[retbuildings.length - 1][2].border[3] = true;
+      retbuildings[retbuildings.length - 1][3].border[3] = true;
     });
   return retbuildings;
 };
@@ -527,6 +532,105 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       layout: borderLayout
     }
   ];
+  let institutionDetails = [
+    {
+      text: "INSTITUTION DETAILS",
+      style: "noc-title"
+    },
+    {
+      style: "noc-table",
+      table: {
+        widths: ["*", "*", "*", "*"],
+        body: [
+          [
+            {
+              text: "Type of Institution",
+              border: [true, true, false, false]
+            },
+            {
+              text: "Name of Institute",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Official Telephone No.",
+              border: [false, true, false, false]
+            },
+            {
+              text: "Authorized Person",
+              border: [false, true, true, false]
+            }
+          ],
+          [
+            {
+              text: getMessageFromLocalization(
+                `COMMON_MASTERS_OWNERSHIPCATEGORY_${getTransformedLocale(
+                  transformedData.ownershipType
+                )}`
+              ),
+              style: "receipt-table-value",
+              border: [true, false, false, false]
+            },
+            {
+              text: transformedData.institutionName,
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: transformedData.telephoneNumber,
+              style: "receipt-table-value",
+              border: [false, false, false, false]
+            },
+            {
+              text: transformedData.owners[0].name,
+              style: "receipt-table-value",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: "Designation in Institution",
+              border: [true, false, false, false]
+            },
+            {
+              text: "Mobile No. of Authorized Person",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Email of Authorized Person",
+              border: [false, false, false, false]
+            },
+            {
+              text: "Official Correspondence Address",
+              border: [false, false, true, false]
+            }
+          ],
+          [
+            {
+              text: transformedData.institutionDesignation,
+              style: "receipt-table-value",
+              border: [true, false, false, true]
+            },
+            {
+              text: transformedData.owners[0].mobile,
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: transformedData.owners[0].email,
+              style: "receipt-table-value",
+              border: [false, false, false, true]
+            },
+            {
+              text: transformedData.owners[0].address,
+              style: "receipt-table-value",
+              border: [false, false, true, true]
+            }
+          ]
+        ]
+      },
+      layout: borderLayout
+    }
+  ];
   let documents = [];
   let owners = transformedData.owners.map(owner => [
     {
@@ -697,6 +801,13 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
     transformedData.owners[0].name
   }, Address: ${transformedData.address}`;
 
+  if (transformedData.ownershipType.startsWith("INSTITUTION")) {
+    applicantDetails = [];
+    applicantInformation = [];
+  } else {
+    institutionDetails = [];
+  }
+
   switch (type) {
     case "application":
       applicantInformation = [];
@@ -754,13 +865,13 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       propertyLocationDetails = [];
       applicantDetails = [];
       documents = [];
-      qrText = `Application: ${transformedData.applicationNumber}, Receipt number: ${
-        transformedData.receiptNumber
-      }, Date of payment: ${transformedData.paymentDate}, Fees Paid: ${
-        transformedData.amountPaid
-      }, Payment mode: ${transformedData.paymentMode}, Transaction ID: ${
-        transformedData.transactionNumber
-      }`;
+      qrText = `Application: ${
+        transformedData.applicationNumber
+      }, Receipt number: ${transformedData.receiptNumber}, Date of payment: ${
+        transformedData.paymentDate
+      }, Fees Paid: ${transformedData.amountPaid}, Payment mode: ${
+        transformedData.paymentMode
+      }, Transaction ID: ${transformedData.transactionNumber}`;
       break;
     case "certificate":
       headerText = "Certificate";
@@ -918,6 +1029,7 @@ const getApplicationData = async (transformedData, ulbLogo, type) => {
       ...applicantDetails,
       ...documents,
       ...applicantInformation,
+      ...institutionDetails,
       ...amountPaid,
       ...paymentInformation,
       ...generatedApprovedBy
