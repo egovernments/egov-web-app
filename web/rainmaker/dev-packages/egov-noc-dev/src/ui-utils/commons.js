@@ -14,6 +14,20 @@ import set from "lodash/set";
 import store from "ui-redux/store";
 import { getTranslatedLabel } from "../ui-config/screens/specs/utils";
 
+const handleDeletedCards = (jsonObject, jsonPath, key) => {
+  let originalArray = get(jsonObject, jsonPath, []);
+  let modifiedArray = originalArray.filter(element => {
+    return element.hasOwnProperty(key) || !element.hasOwnProperty("isDeleted");
+  });
+  modifiedArray = modifiedArray.map(element => {
+    if (element.hasOwnProperty("isDeleted")) {
+      element["isActive"] = false;
+    }
+    return element;
+  });
+  set(jsonObject, jsonPath, modifiedArray);
+};
+
 export const getLocaleLabelsforTL = (label, labelKey, localizationLabels) => {
   if (labelKey) {
     let translatedLabel = getTranslatedLabel(labelKey, localizationLabels);
@@ -83,6 +97,13 @@ export const createUpdateNocApplication = async (state, dispatch, status) => {
       state,
       "screenConfiguration.preparedFinalObject.documentsUploadRedux",
       {}
+    );
+
+    handleDeletedCards(payload[0], "fireNOCDetails.buildings", "id");
+    handleDeletedCards(
+      payload[0],
+      "fireNOCDetails.applicantDetails.owners",
+      "id"
     );
 
     let buildings = get(payload, "[0].fireNOCDetails.buildings", []);
