@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { LOCALATION, ACTIONMENU, MDMS } from "egov-ui-kit/utils/endPoints";
+import { LOCALATION, ACTIONMENU, MDMS, EVENTSCOUNT, NOTIFICATIONS } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getCurrentAddress } from "egov-ui-kit/utils/commons";
 import commonConfig from "config/common";
@@ -177,9 +177,38 @@ export const fetchUiCommonConstants = () => {
   };
 };
 
-export const getNotificationCount = (payload) => {
+export const setNotificationCount = (count) => {
   return {
     type: actionTypes.GET_NOTIFICATION_COUNT,
+    count,
+  };
+};
+
+export const getNotificationCount = (queryObject, requestBody) => {
+  return async (dispatch, getState) => {
+    try {
+      const payload = await httpRequest(EVENTSCOUNT.GET.URL, EVENTSCOUNT.GET.ACTION, queryObject, requestBody);
+      dispatch(setNotificationCount(payload.unreadCount));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const setNotifications = (payload) => {
+  return {
+    type: actionTypes.GET_NOTIFICATIONS,
     payload,
+  };
+};
+
+export const getNotifications = (queryObject, requestBody) => {
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(NOTIFICATIONS.GET.URL, NOTIFICATIONS.GET.ACTION, queryObject, requestBody);
+      dispatch(setNotifications(payload.events));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

@@ -12,6 +12,7 @@ import CitizenDashboard from "modules/citizen/CitizenDashboard";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import MyNotifications from "modules/citizen/MyNotifications";
+import Events from "modules/citizen/Events";
 import { ImageModalDisplay } from "modules/common";
 
 // pgr specific screens
@@ -129,6 +130,16 @@ const routes = [
       hideFooter: true,
       hideBackButton: true,
       title: "Notifications",
+    },
+  },
+  {
+    path: "events",
+    component: Events,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "Events",
     },
   },
   ...pgrRoutes,

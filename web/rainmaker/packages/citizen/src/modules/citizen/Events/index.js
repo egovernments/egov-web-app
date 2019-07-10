@@ -4,12 +4,13 @@ import get from "lodash/get";
 import { connect } from "react-redux";
 import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
 
-class Updates extends React.Component {
+class Events extends React.Component {
   render() {
     const { notifications, history } = this.props;
+    let eventarray = notifications.filter((item) => item.eventType === "EVENTSONGROUND");
     return (
       <Screen>
-        <Notifications notifications={getTransformedNotifications(notifications)} history={history} />;
+        <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />;
       </Screen>
     );
   }
@@ -23,4 +24,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   null
-)(Updates);
+)(Events);

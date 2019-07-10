@@ -85,7 +85,10 @@ const appReducer = (state = initialState, action) => {
       return { ...state, previousRoute: action.route };
     }
     case actionTypes.GET_NOTIFICATION_COUNT: {
-      return { ...state, notificationsCount: action.payload };
+      return { ...state, notificationsCount: action.count };
+    }
+    case actionTypes.GET_NOTIFICATIONS: {
+      return { ...state, notifications: action.payload };
     }
     default:
       return state;

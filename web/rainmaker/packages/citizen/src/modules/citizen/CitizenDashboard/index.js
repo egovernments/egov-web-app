@@ -1,243 +1,76 @@
 import React, { Component } from "react";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
-import { getNotificationCount } from "egov-ui-kit/redux/app/actions";
+import { getNotificationCount, getNotifications } from "egov-ui-kit/redux/app/actions";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
-import Notifications from "./components/Notifications";
+import { Notifications } from "modules/common";
 import "./index.css";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
-import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
-const notifications = [
-  {
-    title: "Pay your Property Tax Dues before 31st March and get 10% rebate",
-    buttons: [
-      {
-        label: "PAY NOW",
-      },
-    ],
-    route: "property-tax",
-    dueTime: "1 Day ago",
-  },
-  {
-    title: "Trade License for Varna Textiles has been approved. Please pay your license fees and download your license certificate",
-    buttons: [
-      {
-        label: "PAY NOW",
-      },
-    ],
-    route: "tradelicense-citizen/home",
-    dueTime: "1 Day ago",
-  },
-  {
-    title: "Your complaint for Streetlight not working has been resolved. Please provide your valuable feedback.",
-    buttons: [
-      {
-        label: "RATE",
-      },
-      {
-        label: "RE-OPEN",
-      },
-    ],
-    dueTime: "1 Day ago",
-  },
-];
-
-const exresponse = {
-  ResponseInfo: {
-    apiId: "org.egov.pt",
-    ver: "1.0",
-    ts: 1502890899493,
-    resMsgId: "uief87324",
-    msgId: "654654",
-    status: "successful",
-  },
-  events: [
-    {
-      tenantId: "pb.amritsar",
-      eventType: "EVENTSONGROUND",
-      description: "Good Morning people of this city!",
-      status: "ACTIVE",
-      source: "",
-      actions: {
-        actionUrls: [
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org",
-            code: "DISPLAYCODE",
-          },
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/pgr-home",
-            code: "DISPLAYCODE",
-          },
-        ],
-      },
-      eventDetails: {
-        fromDate: 1560860792000,
-        toDate: 1560925645882,
-        latitude: 18.2345,
-        longitude: 20.2345,
-      },
-      recepient: {
-        toRoles: ["CITIZEN|pb.amritsar"],
-        toUsers: ["2dec8102-0e02-4d0a-b283-cd80d5dab089"],
-      },
-    },
-    {
-      tenantId: "pb.amritsar",
-      eventType: "EVENTSONGROUND",
-      description: "Good Morning people of this city!",
-      status: "ACTIVE",
-      source: "",
-      actions: {
-        actionUrls: [
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/property-tax/completed-assessments",
-            code: "DISPLAYCODE",
-          },
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/pgr-home",
-            code: "DISPLAYCODE",
-          },
-        ],
-      },
-      eventDetails: {
-        fromDate: 1560860792000,
-        toDate: 1560925645882,
-        latitude: 18.2345,
-        longitude: 20.2345,
-      },
-      recepient: {
-        toRoles: ["CITIZEN|pb.amritsar"],
-        toUsers: ["2dec8102-0e02-4d0a-b283-cd80d5dab089"],
-      },
-    },
-    {
-      tenantId: "pb.amritsar",
-      eventType: "EVENTSONGROUND",
-      description: "Good Morning people of this city!",
-      status: "ACTIVE",
-      source: "",
-      actions: {
-        actionUrls: [
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/property-tax/completed-assessments",
-            code: "DISPLAYCODE",
-          },
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/pgr-home",
-            code: "DISPLAYCODE",
-          },
-        ],
-      },
-      eventDetails: {
-        fromDate: 1560860792000,
-        toDate: 1560925645882,
-        latitude: 18.2345,
-        longitude: 20.2345,
-      },
-      recepient: {
-        toRoles: ["CITIZEN|pb.amritsar"],
-        toUsers: ["2dec8102-0e02-4d0a-b283-cd80d5dab089"],
-      },
-    },
-    {
-      tenantId: "pb.amritsar",
-      eventType: "EVENTSONGROUND",
-      description: "Good Morning people of this city!",
-      status: "ACTIVE",
-      source: "",
-      actions: {
-        actionUrls: [
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/property-tax/completed-assessments",
-            code: "DISPLAYCODE",
-          },
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/pgr-home",
-            code: "DISPLAYCODE",
-          },
-        ],
-      },
-      eventDetails: {
-        fromDate: 1560860792000,
-        toDate: 1560925645882,
-        latitude: 18.2345,
-        longitude: 20.2345,
-      },
-      recepient: {
-        toRoles: ["CITIZEN|pb.amritsar"],
-        toUsers: ["2dec8102-0e02-4d0a-b283-cd80d5dab089"],
-      },
-    },
-    {
-      tenantId: "pb.amritsar",
-      eventType: "EVENTSONGROUND",
-      description: "Good Morning people of this city!",
-      status: "ACTIVE",
-      source: "",
-      actions: {
-        actionUrls: [
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/property-tax/completed-assessments",
-            code: "DISPLAYCODE",
-          },
-          {
-            actionUrl: "https://egov-micro-qa.egovernments.org/pgr-home",
-            code: "DISPLAYCODE",
-          },
-        ],
-      },
-      eventDetails: {
-        fromDate: 1560860792000,
-        toDate: 1560925645882,
-        latitude: 18.2345,
-        longitude: 20.2345,
-      },
-      recepient: {
-        toRoles: ["CITIZEN|pb.amritsar"],
-        toUsers: ["2dec8102-0e02-4d0a-b283-cd80d5dab089"],
-      },
-    },
-  ],
-};
+import get from "lodash/get";
+import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
+import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
 class CitizenDashboard extends Component {
+  state = {
+    notifications: [],
+    onGroundEvents: [],
+  };
+
+  getEventResponse = () => {
+    const { notifications } = this.props;
+    let displayEvents = notifications && getTransformedNotifications(notifications).slice(0, Math.min(3, notifications.length));
+    this.setState({
+      notifications: displayEvents,
+    });
+  };
+
   componentDidMount = () => {
-    const { getNotificationCount } = this.props;
-    getNotificationCount(5);
+    const { getNotifications, getNotificationCount } = this.props;
+    let queryObject = [
+      {
+        key: "tenantId",
+        value: JSON.parse(getUserInfo()).permanentCity,
+      },
+    ];
+    const requestBody = {
+      RequestInfo: {
+        apiId: "org.egov.pt",
+        ver: "1.0",
+        ts: 1502890899493,
+        action: "asd",
+        did: "4354648646",
+        key: "xyz",
+        msgId: "654654",
+        requesterId: "61",
+        authToken: getAccessToken(),
+        userInfo: {
+          id: 1,
+          uuid: "2dec8102-0e02-4d0a-b283-cd80d5dab089",
+          type: "CITIZEN",
+          tenantId: "pb.amritsar",
+          roles: [
+            {
+              name: "Citizen",
+              code: "CITIZEN",
+              tenantId: "pb.amritsar",
+            },
+          ],
+        },
+      },
+    };
+    getNotifications(queryObject, requestBody);
+    getNotificationCount(queryObject, requestBody);
   };
 
-  getEndpointfromUrl = (url) => {
-    let result = url.match(/:\/\/.*?\/(.*)/);
-    if (result == undefined) {
-      return "";
-    }
-    return result[1];
-  };
-
-  convertResponse = (response) => {
-    let eventarray = response.events.filter((item) => item.eventType === "EVENTSONGROUND");
-    let arraylength = eventarray.length;
-    if (arraylength > 0) {
-      let displayEvents = eventarray.slice(0, Math.min(3, arraylength));
-      let data = displayEvents.map((item) => ({
-        title: item.description,
-        buttons: item.actions.actionUrls
-          ? item.actions.actionUrls.map((actionUrls) => ({
-              label: actionUrls.code,
-              route: this.getEndpointfromUrl(actionUrls.actionUrl),
-            }))
-          : [],
-      }));
-
-      return data;
-    }
-    return {};
-  };
+  componentWillReceiveProps() {
+    this.getEventResponse();
+  }
 
   render() {
     const { history } = this.props;
+    const { notifications } = this.state;
+
     return (
       <div>
         <SearchService />
@@ -257,25 +90,31 @@ class CitizenDashboard extends Component {
             color="rgba(0, 0, 0, 0.87"
             containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
           />
-          <ServicesNearby />
+          <ServicesNearby history={history} />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
             <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
           </div>
-          <Notifications notifications={this.convertResponse(exresponse)} history={history} />
+          <Notifications notifications={notifications} history={history} />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  const notifications = get(state.app, "notifications");
+  return { notifications };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    getNotificationCount: (count) => dispatch(getNotificationCount(count)),
+    getNotificationCount: (queryObject, requestBody) => dispatch(getNotificationCount(queryObject, requestBody)),
+    getNotifications: (queryObject, requestBody) => dispatch(getNotifications(queryObject, requestBody)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CitizenDashboard);

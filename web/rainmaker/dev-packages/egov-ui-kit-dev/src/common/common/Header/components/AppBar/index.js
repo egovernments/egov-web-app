@@ -7,6 +7,8 @@ import Badge from "@material-ui/core/Badge";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
 import IconButton from "material-ui/IconButton";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 const styles = {
@@ -114,12 +116,7 @@ const EgovAppBar = ({
           )}
         </div>
         {notificationButton && role === "citizen" && (
-          <div
-            className="notification-icon"
-            onClick={() => {
-              history.push("/notifications");
-            }}
-          >
+          <div className="notification-icon" onClick={(e) => onNotificationClick(history)}>
             <IconButton aria-label="4 pending messages">
               <Badge badgeContent={notificationsCount} color="primary">
                 <Icon action="social" name="notifications-none" color="#fff" />
@@ -134,5 +131,40 @@ const EgovAppBar = ({
 
 const onSearchClick = (history) => {
   history.push("search-complaint");
+};
+
+const onNotificationClick = async (history) => {
+  try {
+    const requestBody = {
+      RequestInfo: {
+        apiId: "org.egov.pt",
+        ver: "1.0",
+        ts: 1502890899493,
+        action: "asd",
+        did: "4354648646",
+        key: "xyz",
+        msgId: "654654",
+        requesterId: "61",
+        authToken: getAccessToken(),
+        userInfo: {
+          id: 1,
+          uuid: "2dec8102-0e02-4d0a-b283-cd80d5dab089",
+          type: "CITIZEN",
+          tenantId: "pb.amritsar",
+          roles: [
+            {
+              name: "Citizen",
+              code: "CITIZEN",
+              tenantId: "pb.amritsar",
+            },
+          ],
+        },
+      },
+    };
+    const response = await httpRequest("/egov-user-event/v1/events/llt/_update", "_update", [], requestBody, [], {});
+    history.push("/notifications");
+  } catch (e) {
+    console.log("======>");
+  }
 };
 export default EgovAppBar;

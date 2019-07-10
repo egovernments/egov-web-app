@@ -597,3 +597,27 @@ export const hasTokenExpired = (status, data) => {
   }
   return false;
 };
+
+const getEndpointfromUrl = (url) => {
+  let result = url.match(/:\/\/.*?\/(.*)/);
+  if (result == undefined) {
+    return "";
+  }
+  return result[1];
+};
+
+export const getTransformedNotifications = (notifications) => {
+  let data = [];
+  if (notifications.length > 0) {
+    data = notifications.map((item) => ({
+      title: item.description,
+      buttons: item.actions.actionUrls
+        ? item.actions.actionUrls.map((actionUrls) => ({
+            label: actionUrls.code,
+            route: getEndpointfromUrl(actionUrls.actionUrl),
+          }))
+        : [],
+    }));
+  }
+  return data;
+};
