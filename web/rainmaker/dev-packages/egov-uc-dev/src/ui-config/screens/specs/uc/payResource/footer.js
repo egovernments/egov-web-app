@@ -193,6 +193,17 @@ const callBackForPay = async (state, dispatch) => {
     )
   );
 
+  //Add comments
+  set(
+    finalReceiptData,
+    "Bill[0].billDetails[0].additionalDetails.comment",
+    get(
+      state.screenConfiguration,
+      "preparedFinalObject.Demands[0].additionalDetails.comment",
+      ""
+    )
+  );
+
   if (get(finalReceiptData, "instrument.transactionNumber")) {
     set(
       finalReceiptData,
