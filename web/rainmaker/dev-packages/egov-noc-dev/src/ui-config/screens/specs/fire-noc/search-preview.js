@@ -248,11 +248,11 @@ const setDownloadMenu = (state, dispatch) => {
     case "DOCUMENTVERIFY":
     case "FIELDINSPECTION":
     case "PENDINGAPPROVAL":
+    case "REJECTED":
       downloadMenu = [receiptDownloadObject, applicationDownloadObject];
       printMenu = [receiptPrintObject, applicationPrintObject];
       break;
     case "CANCELLED":
-    case "REJECTED":
     case "PENDINGPAYMENT":
       downloadMenu = [applicationDownloadObject];
       printMenu = [applicationPrintObject];

@@ -350,7 +350,7 @@ export const loadReceiptData = async (consumerCode, tenant) => {
       }
     });
     data.nocPenaltyRebate = "NA";
-    data.nocAdhocPenaltyRebate = nocAdhocPenalty - nocAdhocRebate;
+    data.nocAdhocPenaltyRebate = nocAdhocPenalty + nocAdhocRebate;
     /** END */
   }
   store.dispatch(prepareFinalObject("receiptDataForPdf", data));
