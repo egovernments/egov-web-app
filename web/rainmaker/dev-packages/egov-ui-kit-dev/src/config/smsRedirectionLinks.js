@@ -1,4 +1,4 @@
-import { getQueryArg } from "egov-ui-kit/utils/commons";
+import { getQueryArg } from "../utils/commons";
 
 const getSmsRedirectionLink = (url) => {
   const redirectionTo = getQueryArg(url, "redirectTo");
@@ -8,7 +8,9 @@ const getSmsRedirectionLink = (url) => {
     case "uc-citizen/smsViewReceipt":
       return `/${redirectionTo}?smsLink=true&mobileNo=${mobileNo}&tenantId=${params.split(",")[0]}&receiptNo=${params.split(",")[1]}`;
     default:
-      break;
+      //For generic redirections & no params
+      const redirectionUrl = url.split("redirectTo=")[1] + `&smsLink=true&mobileNo=${mobileNo}`;
+      return redirectionUrl;
   }
 };
 
