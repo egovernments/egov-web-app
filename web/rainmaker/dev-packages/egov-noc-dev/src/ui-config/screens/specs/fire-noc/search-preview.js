@@ -5,29 +5,33 @@ import {
   getLabelWithValue
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import {
-  prepareFinalObject,
-  handleScreenConfigurationFieldChange as handleField
+  handleScreenConfigurationFieldChange as handleField,
+  prepareFinalObject
 } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import {
   getFileUrlFromAPI,
   getQueryArg,
-  getTransformedLocale
+  getTransformedLocale,
+  setBusinessServiceDataToLocalStorage
 } from "egov-ui-framework/ui-utils/commons";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
+import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 import jp from "jsonpath";
 import get from "lodash/get";
 import set from "lodash/set";
 import { getSearchResults } from "../../../../ui-utils/commons";
-import { applicantSummary } from "./summaryResource/applicantSummary";
-import { institutionSummary } from "./summaryResource/applicantSummary";
+import { searchBill } from "../utils/index";
+import generatePdf from "../utils/receiptPdf";
+import { loadPdfGenerationData } from "../utils/receiptTransformer";
+import { citizenFooter } from "./searchResource/citizenFooter";
+import {
+  applicantSummary,
+  institutionSummary
+} from "./summaryResource/applicantSummary";
 import { documentsSummary } from "./summaryResource/documentsSummary";
 import { estimateSummary } from "./summaryResource/estimateSummary";
 import { nocSummary } from "./summaryResource/nocSummary";
 import { propertySummary } from "./summaryResource/propertySummary";
-import { searchBill } from "../utils/index";
-import { loadPdfGenerationData } from "../utils/receiptTransformer";
-import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
-import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
-import generatePdf from "../utils/receiptPdf";
 
 const titlebar = getCommonContainer({
   header: getCommonHeader({
@@ -340,6 +344,12 @@ const screenConfig = {
 
     setSearchResponse(state, dispatch, applicationNumber, tenantId);
 
+    const queryObject = [
+      { key: "tenantId", value: tenantId },
+      { key: "businessServices", value: "FIRENOC" }
+    ];
+    setBusinessServiceDataToLocalStorage(queryObject, dispatch);
+
     // Hide edit buttons
     set(
       action,
@@ -408,8 +418,9 @@ const screenConfig = {
           applicantSummary: applicantSummary,
           institutionSummary: institutionSummary,
           documentsSummary: documentsSummary
-        })
-        // footer: footer
+        }),
+        citizenFooter:
+          process.env.REACT_APP_NAME === "Citizen" ? citizenFooter : {}
       }
     }
   }
