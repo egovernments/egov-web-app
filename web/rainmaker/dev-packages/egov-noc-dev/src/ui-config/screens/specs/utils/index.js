@@ -513,17 +513,43 @@ export const getBill = async queryObject => {
 
 export const searchBill = async (dispatch, applicationNumber, tenantId) => {
   try {
+    let queryObject = [
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "consumerCode",
+        value: applicationNumber
+      }
+    ];
+
+    // Get Receipt
     let payload = await httpRequest(
       "post",
-      `/billing-service/bill/_search?tenantId=${tenantId}&limit=10&consumerCode=${applicationNumber}&service=FIRENOC`,
+      "/collection-services/receipts/_search",
       "",
-      [],
-      {}
+      queryObject
     );
-    // payload = sampleGetBill();
-    if (payload && payload.Bill[0]) {
-      dispatch(prepareFinalObject("ReceiptTemp[0].Bill", payload.Bill));
-      const estimateData = createEstimateData(payload.Bill[0]);
+
+    // Get Bill
+    const response = await getBill([
+      {
+        key: "tenantId",
+        value: tenantId
+      },
+      {
+        key: "applicationNumber",
+        value: applicationNumber
+      }
+    ]);
+
+    // If pending payment then get bill else get receipt
+    let billData = get(payload, "Receipt[0].Bill") || get(response, "Bill");
+
+    if (billData) {
+      dispatch(prepareFinalObject("ReceiptTemp[0].Bill", billData));
+      const estimateData = createEstimateData(billData[0]);
       estimateData &&
         estimateData.length &&
         dispatch(
