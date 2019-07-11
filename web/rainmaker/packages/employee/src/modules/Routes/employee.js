@@ -17,9 +17,9 @@ import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
 import EGFFinance from "modules/employee/Erp/EGF";
 
-import tlRoutes from "./tl";
 import pgrRoutes from "pgr-employee/Routes/pgr-routes";
 import ptRoutes from "pt-employee/Routes/pt-routes";
+import frameworkScreens from "./frameworkScreens";
 import externalRoutes from "./exterenalURL";
 
 // import PTHome from "modules/employee/PropertyTax/PTHome";
@@ -157,7 +157,7 @@ const routes = [
   },
   ...pgrRoutes,
   ...ptRoutes,
-  ...tlRoutes,
+  ...frameworkScreens,
   ...externalRoutes,
 ];
 

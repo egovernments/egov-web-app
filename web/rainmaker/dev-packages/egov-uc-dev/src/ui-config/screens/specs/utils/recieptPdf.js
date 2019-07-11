@@ -192,17 +192,6 @@ const getCitizenReceipetData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "Amount Due",
-                border: [true, true, false, true],
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.amountDue,
-                border: [false, true, true, true]
-              }
-            ],
-            [
-              {
                 text: "Payment Mode",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
@@ -210,7 +199,18 @@ const getCitizenReceipetData = transformedData => {
               {
                 text: transformedData.paymentMode,
                 border: [false, true, true, true]
-              },
+              }
+              // {
+              //   text: "Amount Due",
+              //   border: [true, true, false, true],
+              //   style: "receipt-table-key"
+              // },
+              // {
+              //   text: transformedData.amountDue,
+              //   border: [false, true, true, true]
+              // }
+            ],
+            [
               {
                 text: "G8 Receipt No.",
                 border: [true, true, false, true],
@@ -218,6 +218,15 @@ const getCitizenReceipetData = transformedData => {
               },
               {
                 text: transformedData.g8ReceiptNo,
+                border: [false, true, true, true]
+              },
+              {
+                text: "G8 Receipt Date",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: transformedData.g8ReceiptDate,
                 border: [false, true, true, true]
               }
             ],
@@ -232,12 +241,12 @@ const getCitizenReceipetData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "",
+                text: "Comments",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
               {
-                text: "",
+                text: transformedData.comments,
                 border: [false, true, true, true]
               }
             ]
@@ -527,17 +536,6 @@ const getReceiptData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "Amount Due",
-                border: [true, true, false, true],
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.amountDue,
-                border: [false, true, true, true]
-              }
-            ],
-            [
-              {
                 text: "Payment Mode",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
@@ -545,7 +543,18 @@ const getReceiptData = transformedData => {
               {
                 text: transformedData.paymentMode,
                 border: [false, true, true, true]
-              },
+              }
+              // {
+              //   text: "Amount Due",
+              //   border: [true, true, false, true],
+              //   style: "receipt-table-key"
+              // },
+              // {
+              //   text: transformedData.amountDue,
+              //   border: [false, true, true, true]
+              // }
+            ],
+            [
               {
                 text: "G8 Receipt No.",
                 border: [true, true, false, true],
@@ -553,6 +562,15 @@ const getReceiptData = transformedData => {
               },
               {
                 text: transformedData.g8ReceiptNo,
+                border: [false, true, true, true]
+              },
+              {
+                text: "G8 Receipt Date",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: transformedData.g8ReceiptDate,
                 border: [false, true, true, true]
               }
             ],
@@ -567,12 +585,12 @@ const getReceiptData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "",
+                text: "Comments",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
               {
-                text: "",
+                text: transformedData.comments,
                 border: [false, true, true, true]
               }
             ]
@@ -788,17 +806,6 @@ const getReceiptData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "Amount Due",
-                border: [true, true, false, true],
-                style: "receipt-table-key"
-              },
-              {
-                text: transformedData.amountDue,
-                border: [false, true, true, true]
-              }
-            ],
-            [
-              {
                 text: "Payment Mode",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
@@ -806,7 +813,18 @@ const getReceiptData = transformedData => {
               {
                 text: transformedData.paymentMode,
                 border: [false, true, true, true]
-              },
+              }
+              // {
+              //   text: "Amount Due",
+              //   border: [true, true, false, true],
+              //   style: "receipt-table-key"
+              // },
+              // {
+              //   text: transformedData.amountDue,
+              //   border: [false, true, true, true]
+              // }
+            ],
+            [
               {
                 text: "G8 Receipt No.",
                 border: [true, true, false, true],
@@ -814,6 +832,15 @@ const getReceiptData = transformedData => {
               },
               {
                 text: transformedData.g8ReceiptNo,
+                border: [false, true, true, true]
+              },
+              {
+                text: "G8 Receipt Date",
+                border: [true, true, false, true],
+                style: "receipt-table-key"
+              },
+              {
+                text: transformedData.g8ReceiptDate,
                 border: [false, true, true, true]
               }
             ],
@@ -828,12 +855,12 @@ const getReceiptData = transformedData => {
                 border: [false, true, true, true]
               },
               {
-                text: "",
+                text: "Comments",
                 border: [true, true, false, true],
                 style: "receipt-table-key"
               },
               {
-                text: "",
+                text: transformedData.comments,
                 border: [false, true, true, true]
               }
             ]
