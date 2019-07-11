@@ -38,7 +38,7 @@ const prepareInboxDataRows = (data) => {
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
     let dataRows = [
-      { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
+      { text: _.get(item, "moduleName", "--"), subtext: `CS_COMMON_INBOX_${item.businessService.toUpperCase()}` },
       { text: item.businessId },
       {
         text: item.state ? (
