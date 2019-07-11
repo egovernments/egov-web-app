@@ -151,6 +151,30 @@ const prepareUoms = (state, dispatch) => {
         uomsMap
       )
     );
+
+    // Display UOMS on search preview page
+    uoms.forEach(item => {
+      let labelElement = getLabelWithValue(
+        {
+          labelName: item.code,
+          labelKey: `NOC_PROPERTY_DETAILS_${item.code}_LABEL`
+        },
+        {
+          jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${
+            item.code
+          }`
+        }
+      );
+
+      dispatch(
+        handleField(
+          "search-preview",
+          "components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.cardOne.props.scheama.children.cardContent.children.propertyContainer.children",
+          item.code,
+          labelElement
+        )
+      );
+    });
   });
 };
 
@@ -302,32 +326,6 @@ const setSearchResponse = async (
   prepareUoms(state, dispatch);
   await loadPdfGenerationData(applicationNumber, tenantId);
   setDownloadMenu(state, dispatch);
-  let uomsObject = get(
-    response,
-    "FireNOCs[0].fireNOCDetails.buildings[0].uoms",
-    []
-  );
-
-  uomsObject.forEach(item => {
-    let labelElement = getLabelWithValue(
-      {
-        labelName: item.code,
-        labelKey: `NOC_PROPERTY_DETAILS_${item.code}_LABEL`
-      },
-      {
-        jsonPath: `FireNOCs[0].fireNOCDetails.buildings[0].uomsMap.${item.code}`
-      }
-    );
-
-    dispatch(
-      handleField(
-        "search-preview",
-        "components.div.children.body.children.cardContent.children.propertySummary.children.cardContent.children.cardOne.props.scheama.children.cardContent.children",
-        `propertyContainer.children.${item.code}`,
-        labelElement
-      )
-    );
-  });
 };
 
 const screenConfig = {
