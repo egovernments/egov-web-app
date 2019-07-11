@@ -48,10 +48,7 @@ const EgovAppBar = ({
         title={
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
-              <img
-                src={role && role.toLowerCase() === "citizen" ? pbLogo : ulbLogo ? ulbLogo : pbLogo}
-                onError={(event) => event.target.setAttribute("src", pbLogo)}
-              />
+              <img src={ulbLogo ? ulbLogo : pbLogo} onError={(event) => event.target.setAttribute("src", pbLogo)} />
             </div>
             <Label containerStyle={{ marginLeft: "0px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
             {titleAddon && (
