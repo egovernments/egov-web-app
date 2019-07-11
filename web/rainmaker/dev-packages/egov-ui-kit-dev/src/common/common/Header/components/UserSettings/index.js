@@ -3,6 +3,8 @@ import { DropDown, Icon, Image, List } from "components";
 import emptyFace from "egov-ui-kit/assets/images/download.png";
 import { CommonMenuItems } from "../NavigationDrawer/commonMenuItems";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { connect } from "react-redux";
+import get from "lodash/get";
 
 import "./index.css";
 
@@ -11,20 +13,6 @@ class UserSettings extends Component {
     languageSelected: getLocale(),
     displayAccInfo: false,
   };
-  items = [
-    {
-      label: "ENGLISH",
-      value: "en_IN",
-    },
-    {
-      label: "हिंदी",
-      value: "hi_IN",
-    },
-    // {
-    //   label: "ਪੰਜਾਬੀ",
-    //   value: "pn_IN",
-    // },
-  ];
   style = {
     baseStyle: {
       background: "#ffffff",
@@ -68,8 +56,8 @@ class UserSettings extends Component {
 
   render() {
     const { languageSelected, displayAccInfo } = this.state;
-    const { items, style } = this;
-    const { onIconClick, userInfo, handleItemClick, hasLocalisation } = this.props;
+    const { style } = this;
+    const { onIconClick, userInfo, handleItemClick, hasLocalisation, languages } = this.props;
     return (
       <div className="userSettingsContainer">
         {hasLocalisation && (
@@ -78,7 +66,7 @@ class UserSettings extends Component {
             listStyle={style.listStyle}
             style={style.baseStyle}
             labelStyle={style.label}
-            dropDownData={items}
+            dropDownData={languages}
             value={languageSelected}
             underlineStyle={{ borderBottom: "none" }}
           />
@@ -115,4 +103,13 @@ class UserSettings extends Component {
   }
 }
 
-export default UserSettings;
+const mapStateToProps = ({ common }) => {
+  const { stateInfoById } = common;
+  let languages = get(stateInfoById, "0.languages", []);
+  return { languages };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(UserSettings);

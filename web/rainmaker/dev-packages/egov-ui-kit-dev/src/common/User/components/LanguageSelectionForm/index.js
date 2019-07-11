@@ -41,12 +41,16 @@ const LanguageSelectionForm = ({ items, onLanguageSelect, value, onClick }) => {
             <Image className="mseva-logo" source={`${logo}`} />
           </div>
           <form>
-            <div className="text-center">
-              <Label bold={true} label="LANGUAGE" className="language-label" />
-              <span>|</span>
-              <Label bold={true} label="भाषा" className="language-label" />
-              {/* <span>|</span>
-              <Label bold={true} label="ਭਾਸ਼ਾ" className="language-label" /> */}
+            <div className="rainmaker-displayInline" style={{ justifyContent: "center" }}>
+              {items &&
+                items.map((item, index) => {
+                  return (
+                    <div>
+                      <Label bold={true} label={`LANGUAGE_${item.value.toUpperCase()}`} className="language-label" />
+                      {index !== items.length - 1 && <span>|</span>}
+                    </div>
+                  );
+                })}
             </div>
             <div className="button-toggle-container">
               <ButtonGroup
