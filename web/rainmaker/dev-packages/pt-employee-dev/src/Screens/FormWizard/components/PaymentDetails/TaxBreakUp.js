@@ -50,7 +50,7 @@ const AdditionalDetails = ({
                   ? `${
                       !(optionSelected === "Partial_Amount")
                         ? totalAmount
-                        : totalAmount +
+                        : totalAmount -
                           get(
                             taxHeadEstimates[
                               taxHeadEstimates.findIndex(
@@ -151,7 +151,7 @@ const AdditionalDetails = ({
                       ? `${
                           !(optionSelected === "Partial_Amount")
                             ? totalAmount
-                            : totalAmount +
+                            : totalAmount -
                               get(
                                 taxHeadEstimates[
                                   taxHeadEstimates.findIndex(

@@ -26,7 +26,7 @@ class Header extends Component {
 
   componentDidMount = () => {
     const { role, updateActiveRoute, userInfo } = this.props;
-    const tenantId = getTenantId();
+    const tenantId = role.toLowerCase() === "citizen" ? userInfo.permanentCity : getTenantId();
 
     if (role && role.toLowerCase() !== "citizen") {
       // const menupath = localStorageGet("menuPath");

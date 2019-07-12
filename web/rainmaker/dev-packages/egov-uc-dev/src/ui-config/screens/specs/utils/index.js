@@ -104,6 +104,21 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
   }
 };
 
+export const getMdmsData = async queryObject => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "egov-mdms-service/v1/_get",
+      "",
+      queryObject
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
+};
+
 export const getEpochForDate = date => {
   if (typeof date === "string") {
     const dateSplit = date.split("/");
@@ -310,21 +325,8 @@ export const setServiceCategory = (businessServiceData, dispatch) => {
       set(nestedServiceData, `${item.code}`, item);
     }
   });
-  // console.log(nestedServiceData);
-  // dispatch(
-  //   prepareFinalObject(
-  //     "applyScreenMdmsData.nestedServiceData",
-  //     nestedServiceData
-  //   )
-  // );
   let serviceCategories = Object.values(nestedServiceData).filter(
     item => item.code
   );
   return serviceCategories;
-  // dispatch(
-  //   prepareFinalObject(
-  //     "applyScreenMdmsData.serviceCategories",
-  //     serviceCategories
-  //   )
-  // );
 };

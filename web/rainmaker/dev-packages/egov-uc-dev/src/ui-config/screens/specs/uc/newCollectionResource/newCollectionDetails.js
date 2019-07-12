@@ -36,7 +36,7 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "City",
               labelKey: "TL_NEW_TRADE_DETAILS_CITY_LABEL"
             },
-            labelPrefix: {
+            localePrefix: {
               moduleName: "TENANT",
               masterName: "TENANTS"
             },
@@ -45,18 +45,25 @@ export const newCollectionDetailsCard = getCommonCard(
               labelName: "Select City",
               labelKey: "TL_SELECT_CITY"
             },
-            sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+            sourceJsonPath: "applyScreenMdmsData.tenant.citiesByModule",
+            // "applyScreenMdmsData.common-masters.citiesByModule.UC.tenants",
             jsonPath: "Demands[0].tenantId",
             required: true,
-            disabled: true,
             props: {
               required: true,
-              disabled: false,
               value: tenantId,
               disabled: true
             }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
+            const citiesByModule = get(
+              state,
+              "common.citiesByModule.UC.tenants",
+              []
+            );
+            if (!citiesByModule.find(item => item.code === action.value)) {
+              return action;
+            }
             let requestBody = {
               MdmsCriteria: {
                 tenantId: action.value,
@@ -129,12 +136,11 @@ export const newCollectionDetailsCard = getCommonCard(
             label: "+91 |",
             position: "start"
           },
-
           required: true,
           visible: true,
           pattern: getPattern("MobileNo"),
           errorMessage: "Invalid Mobile No.",
-          jsonPath: "Demands[0].mobileNo"
+          jsonPath: "Demands[0].mobileNumber"
         }),
         ConsumerName: getTextField({
           label: {
@@ -189,7 +195,6 @@ export const newCollectionDetailsCard = getCommonCard(
             }
           },
           beforeFieldChange: async (action, state, dispatch) => {
-            console.log(action);
             //Reset service type value, if any
             dispatch(
               handleField(
@@ -234,8 +239,13 @@ export const newCollectionDetailsCard = getCommonCard(
                     false
                   )
                 );
+                const demandId = get(
+                  state.screenConfiguration.preparedFinalObject,
+                  "Demands[0].id",
+                  null
+                );
                 //Set tax head fields if there is no service type available
-                if (serviceData[action.value]) {
+                if (!demandId && serviceData[action.value]) {
                   const taxHeads = setTaxHeadFields(action, state, dispatch);
                 }
               }
@@ -266,7 +276,12 @@ export const newCollectionDetailsCard = getCommonCard(
             }
           }),
           beforeFieldChange: async (action, state, dispatch) => {
-            if (action.value) {
+            const demandId = get(
+              state.screenConfiguration.preparedFinalObject,
+              "Demands[0].id",
+              null
+            );
+            if (!demandId && action.value) {
               const taxHeads = setTaxHeadFields(action, state, dispatch);
               console.log(taxHeads);
             }
@@ -324,7 +339,21 @@ export const newCollectionDetailsCard = getCommonCard(
           overflow: "visible"
         }
       }
-    )
+    ),
+    commentsContainer: getCommonContainer({
+      comments: getTextField({
+        label: {
+          labelName: "Comments",
+          labelKey: "UC_COMMENT_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Comment ",
+          labelKey: "UC_COMMENT_PLACEHOLDER"
+        },
+        Required: false,
+        jsonPath: "Demands[0].additionalDetails.comment"
+      })
+    })
   },
   {
     style: {
@@ -414,7 +443,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
             componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.taxheadField_${item.code
               .split(".")
               .join("_")}`,
-            required: item.required || false,
+            required: item.isRequired || false,
             pattern: getPattern("Amount"),
             errorMessage: "Invalid Amount",
             visible: true,
@@ -427,26 +456,26 @@ const setTaxHeadFields = (action, state, dispatch) => {
         )
       );
     });
-    dispatch(
-      handleField(
-        "newCollection",
-        "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
-        `comment`,
-        getTextField({
-          label: {
-            labelName: "Comments",
-            labelKey: "UC_COMMENT_LABEL"
-          },
-          placeholder: {
-            labelName: "Enter Comment ",
-            labelKey: "UC_COMMENT_PLACEHOLDER"
-          },
-          Required: false,
-          jsonPath: "Demands[0].comment",
-          componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
-        })
-      )
-    );
+    // dispatch(
+    //   handleField(
+    //     "newCollection",
+    //     "components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children",
+    //     `comment`,
+    //     getTextField({
+    //       label: {
+    //         labelName: "Comments",
+    //         labelKey: "UC_COMMENT_LABEL"
+    //       },
+    //       placeholder: {
+    //         labelName: "Enter Comment ",
+    //         labelKey: "UC_COMMENT_PLACEHOLDER"
+    //       },
+    //       Required: false,
+    //       jsonPath: "Demands[0].comment",
+    //       componentJsonpath: `components.div.children.newCollectionDetailsCard.children.cardContent.children.searchContainer.children.comment`
+    //     })
+    //   )
+    // );
   }
 };
 
@@ -474,7 +503,6 @@ const setServiceCategory = (businessServiceData, dispatch) => {
       set(nestedServiceData, `${item.code}`, item);
     }
   });
-  console.log(nestedServiceData);
   dispatch(
     prepareFinalObject(
       "applyScreenMdmsData.nestedServiceData",

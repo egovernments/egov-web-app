@@ -18,7 +18,7 @@ import { ImageModalDisplay } from "modules/common";
 // pgr specific screens
 
 import { TrackLocation } from "modules/common";
-import tlRoutes from "./tl";
+import frameworkScreens from "./frameworkScreens";
 import { PrivacyPolicy } from "modules/common";
 import TLHowItWorks from "../../ui-views/HowItWorks";
 import pgrRoutes from "pgr-citizen/Routes/pgr-routes";
@@ -144,7 +144,7 @@ const routes = [
   },
   ...pgrRoutes,
   ...ptRoutes,
-  ...tlRoutes,
+  ...frameworkScreens,
 ];
 
 export default routes;

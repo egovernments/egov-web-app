@@ -33,14 +33,19 @@ const resetFields = (state, dispatch) => {
       ""
     )
   );
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.serviceType",
-      "props.value",
-      ""
-    )
-  );
+  get(
+    state.screenConfiguration,
+    "preparedFinalObject.searchScreen.businessCodes",
+    null
+  ) &&
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.serviceType",
+        "props.value",
+        []
+      )
+    );
   dispatch(
     handleField(
       "search",
@@ -168,6 +173,7 @@ export const UCSearchCard = getCommonCard({
         labelKey: "UC_SELECT_FROM_DATE_PLACEHOLDER"
       },
       required: false,
+      visible: false,
       pattern: getPattern("Date"),
       jsonPath: "searchScreen.fromDate",
       gridDefination: {
@@ -185,6 +191,7 @@ export const UCSearchCard = getCommonCard({
         labelName: "Enter From Date",
         labelKey: "UC_SELECT_TO_DATE_PLACEHOLDER"
       },
+      visible: false,
       required: false,
       pattern: getPattern("Date"),
       jsonPath: "searchScreen.toDate",
