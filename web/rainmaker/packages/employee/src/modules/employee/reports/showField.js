@@ -11,6 +11,7 @@ import UiBoundary from "./components/boundary";
 import boundaryConfig from "./commons/config";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
+import AutoSuggestDropdown from "egov-ui-kit/components/AutoSuggestDropdown";
 import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 export default class ShowField extends Component {
@@ -179,7 +180,28 @@ export default class ShowField extends Component {
         const dataSourceConfig = { text: "label", value: "value" };
         return (
           <Grid item xs={12} sm={4} md={4} lg={4}>
-            <AutoComplete
+            <AutoSuggestDropdown
+            dataSource={dropDownData}
+            value={typeof obj.value === undefined ? "" : getDropdownLabel(obj.value, dropDownData)}
+            hintText="Select"
+            hintStyle={{fontSize: "14px",color: "#767676"}}
+            floatingLabelText={
+              <div className="rainmaker-displayInline">
+                <Label
+                  className="show-field-label"
+                  label={description}
+                  containerStyle={{ marginRight: "5px" }}
+                  style={{ fontSize: "16px !important" }}
+                />
+                <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+              </div>
+            }
+            onChange={(value) => {
+              const e = { target: { value: value.value } };
+              this.props.handler(e, obj.name, obj.isMandatory ? true : false, "");
+            }}
+          />
+            {/* <AutoComplete
               // className="custom-form-control-for-textfield"
 
               // floatingLabelStyle={{ fontSize: "20px"}}
@@ -213,9 +235,10 @@ export default class ShowField extends Component {
               dataSource={dropDownData}
               dataSourceConfig={dataSourceConfig}
               openOnFocus={true}
+              listStyle={{ maxHeight: 200, overflow: 'auto' }}
               maxSearchResults={200}
-              searchText={getDropdownLabel(obj.searchText, dropDownData)}
-            />
+              searchText={obj.searchText}
+            /> */}
           </Grid>
         );
 
@@ -234,7 +257,7 @@ export default class ShowField extends Component {
               floatingLabelText={
                 <span>
                   {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                </span>   
               }
               value={typeof obj.value == "undefined" ? "" : obj.value}
               onChange={(event, key, value) => {
