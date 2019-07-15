@@ -9,20 +9,6 @@ import get from "lodash/get";
 class LanguageSelection extends Component {
   state = {
     value: getLocale(),
-    items: [
-      {
-        label: "ENGLISH",
-        value: "en_IN",
-      },
-      {
-        label: "हिंदी",
-        value: "hi_IN",
-      },
-      {
-        label: "ਪੰਜਾਬੀ",
-        value: "pn_IN",
-      },
-    ],
   };
 
   onClick = (value) => {
@@ -35,13 +21,13 @@ class LanguageSelection extends Component {
   };
 
   render() {
-    const { items, value } = this.state;
+    const { value } = this.state;
     const { onLanguageSelect, onClick } = this;
-    const { bannerUrl, logoUrl } = this.props;
+    const { bannerUrl, logoUrl, languages } = this.props;
 
     return (
       <Banner className="language-selection" bannerUrl={bannerUrl} logoUrl={logoUrl}>
-        <LanguageSelectionForm items={items} value={value} onLanguageSelect={onLanguageSelect} onClick={onClick} />
+        <LanguageSelectionForm items={languages} value={value} onLanguageSelect={onLanguageSelect} onClick={onClick} />
       </Banner>
     );
   }
@@ -51,7 +37,8 @@ const mapStateToProps = ({ common }) => {
   const { stateInfoById } = common;
   let bannerUrl = get(stateInfoById, "0.bannerUrl");
   let logoUrl = get(stateInfoById, "0.logoUrl");
-  return { bannerUrl, logoUrl };
+  let languages = get(stateInfoById, "0.languages");
+  return { bannerUrl, logoUrl, languages };
 };
 
 const mapDispatchToProps = (dispatch) => {

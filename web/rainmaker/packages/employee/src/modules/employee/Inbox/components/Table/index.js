@@ -101,8 +101,8 @@ class InboxData extends React.Component {
                     if (item.subtext) {
                       return (
                         <TableCell className={classNames}>
-                          <div className="inbox-cell-text">{item.text}</div>
-                          <div className="inbox-cell-subtext">{item.subtext}</div>
+                          <div className="inbox-cell-text">{<Label label={item.text} />}</div>
+                          <div className="inbox-cell-subtext">{<Label label={item.subtext} />}</div>
                         </TableCell>
                       );
                     } else if (item.badge) {

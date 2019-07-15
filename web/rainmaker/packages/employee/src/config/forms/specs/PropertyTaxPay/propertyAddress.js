@@ -159,9 +159,18 @@ const formConfig = {
       let found = tenants.find((city) => {
         return city.code === tenantId;
       });
+
       if (found) {
+        const { cities } = state.common;
+        let tenantInfo = cities.find((t) => {
+          if (t.code == found.code)
+            return t;
+        })
+        let cityName = tenantId;
+        if (tenantInfo && tenantInfo.city && tenantInfo.city.name)
+            cityName = tenantInfo.city.name;
         dispatch(handleFieldChange("propertyAddress", "city", tenantId));
-        dispatch(prepareFormData("Properties[0].address.city", city));
+        dispatch(prepareFormData("Properties[0].address.city", cityName));
       }
     }
     set(action, "form.fields.city.required", true);

@@ -25,7 +25,7 @@ class OTP extends Component {
   sendOtpForAutoLogin = async () => {
     const { phoneNumber, setFieldProperty } = this.props;
     if (phoneNumber) {
-      await httpRequest(`/user-otp/v1/_send?tenantId=pb`, "_send", [], {
+      await httpRequest(`/user-otp/v1/_send`, "_send", [], {
         otp: { mobileNumber: phoneNumber, type: "login", tenantId: commonConfig.tenantId },
       });
       setFieldProperty("otp", "otp", "phone", phoneNumber);

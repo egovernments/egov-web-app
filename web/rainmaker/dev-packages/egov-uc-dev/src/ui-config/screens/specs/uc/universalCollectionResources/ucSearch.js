@@ -33,14 +33,19 @@ const resetFields = (state, dispatch) => {
       ""
     )
   );
-  dispatch(
-    handleField(
-      "search",
-      "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.serviceType",
-      "props.value",
-      ""
-    )
-  );
+  get(
+    state.screenConfiguration,
+    "preparedFinalObject.searchScreen.businessCodes",
+    null
+  ) &&
+    dispatch(
+      handleField(
+        "search",
+        "components.div.children.UCSearchCard.children.cardContent.children.searchContainer.children.serviceType",
+        "props.value",
+        []
+      )
+    );
   dispatch(
     handleField(
       "search",

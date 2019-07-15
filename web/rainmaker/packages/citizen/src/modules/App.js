@@ -7,7 +7,7 @@ import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText,
 import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
-import redirectionLink from "../config/smsRedirectionLinks";
+import redirectionLink from "egov-ui-kit/config/smsRedirectionLinks";
 import routes from "./Routes";
 import { LoadingIndicator } from "components";
 import { getLocale, localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";

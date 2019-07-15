@@ -91,6 +91,9 @@ export const loadReceiptData = async response => {
     data.paymentMode = nullToNa(
       get(response, "instrument.instrumentType.name", "NA")
     );
+    data.comments = nullToNa(
+      get(response, "Bill[0].billDetails[0].additionalDetails.comment", "NA")
+    );
     data.receiptNumber = get(
       response,
       "Bill[0].billDetails[0].receiptNumber",
@@ -98,6 +101,11 @@ export const loadReceiptData = async response => {
     );
     data.g8ReceiptNo = nullToNa(
       get(response, "Bill[0].billDetails[0].manualReceiptNumber", "None")
+    );
+    data.g8ReceiptDate = nullToNa(
+      epochToDate(
+        get(response, "Bill[0].billDetails[0].manualReceiptDate", null)
+      )
     );
 
     const queryObj = [
