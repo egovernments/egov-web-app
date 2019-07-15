@@ -68,7 +68,10 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
     );
 
   //Collection Type Added in CS v1.1
-  const totalAmount = get(billPayload, "Bill[0].billDetails[0].totalAmount");
+  const totalAmount = get(
+    billPayload,
+    "billResponse.Bill[0].billDetails[0].totalAmount"
+  );
   dispatch(
     prepareFinalObject(
       "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
