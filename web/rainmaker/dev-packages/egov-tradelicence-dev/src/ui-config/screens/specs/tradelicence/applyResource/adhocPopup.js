@@ -98,7 +98,24 @@ const updateAdhoc = (state, dispatch) => {
     "Licenses[0].tradeLicenseDetail.adhocExemption"
   );
   if (adhocAmount || rebateAmount) {
-    getEstimateDataAfterAdhoc(state, dispatch);
+    const totalAmount = get(
+      state.screenConfiguration.preparedFinalObject,
+      "ReceiptTemp[0].Bill[0].billDetails[0].totalAmount"
+    );
+    if (rebateAmount && rebateAmount > totalAmount) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Rebate should be less than or equal to total amount!",
+            labelKey: "ERR_REBATE_GREATER_THAN_AMOUNT"
+          },
+          "warning"
+        )
+      );
+    } else {
+      getEstimateDataAfterAdhoc(state, dispatch);
+    }
   } else {
     dispatch(
       toggleSnackbar(
