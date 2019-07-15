@@ -7,6 +7,9 @@ import {
   getDateField
   // getCommonTitle
 } from "egov-ui-framework/ui-config/screens/specs/utils";
+import {
+  getTransformedLocale
+} from "egov-ui-framework/ui-utils/commons";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import {
   handleScreenConfigurationFieldChange as handleField,
@@ -434,7 +437,7 @@ const setTaxHeadFields = (action, state, dispatch) => {
           getTextField({
             label: {
               labelName: "Tax Amount",
-              labelKey: `${item.code}`
+              labelKey: `${getTransformedLocale(item.code)}`
             },
             placeholder: {
               labelName: "Enter Tax Amount",
