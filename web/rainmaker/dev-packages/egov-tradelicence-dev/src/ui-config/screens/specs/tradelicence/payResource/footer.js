@@ -9,7 +9,10 @@ import {
 } from "egov-ui-framework/ui-utils/commons";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { convertDateToEpoch, validateFields } from "../../utils";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  toggleSnackbar,
+  toggleSpinner
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getBill } from "../../utils";
 
 export const callPGService = async (state, dispatch) => {
@@ -213,6 +216,7 @@ const callBackForPay = async (state, dispatch) => {
   //---------------- Create Receipt ------------------//
   if (isFormValid) {
     try {
+      dispatch(toggleSpinner());
       let response = await httpRequest(
         "post",
         "collection-services/receipts/_create",
@@ -227,9 +231,11 @@ const callBackForPay = async (state, dispatch) => {
         "Receipt[0].Bill[0].billDetails[0].receiptNumber",
         null
       );
+      dispatch(toggleSpinner());
       moveToSuccess(href, dispatch, receiptNumber);
     } catch (e) {
       dispatch(toggleSnackbar(true, { labelName: e.message }, "error"));
+      dispatch(toggleSpinner());
       console.log(e);
     }
   } else {
