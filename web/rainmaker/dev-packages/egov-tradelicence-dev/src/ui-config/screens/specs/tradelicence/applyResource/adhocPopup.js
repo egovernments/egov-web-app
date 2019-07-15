@@ -67,6 +67,24 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
       )
     );
 
+  //Collection Type Added in CS v1.1
+  const totalAmount = get(billPayload, "Bill[0].billDetails[0].totalAmount");
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+      "COUNTER"
+    )
+  );
+  if (totalAmount) {
+    //set amount paid as total amount from bill - destination changed in CS v1.1
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
+        totalAmount
+      )
+    );
+  }
+
   showHideAdhocPopup(state, dispatch);
 };
 
@@ -80,7 +98,24 @@ const updateAdhoc = (state, dispatch) => {
     "Licenses[0].tradeLicenseDetail.adhocExemption"
   );
   if (adhocAmount || rebateAmount) {
-    getEstimateDataAfterAdhoc(state, dispatch);
+    const totalAmount = get(
+      state.screenConfiguration.preparedFinalObject,
+      "ReceiptTemp[0].Bill[0].billDetails[0].totalAmount"
+    );
+    if (rebateAmount && rebateAmount > totalAmount) {
+      dispatch(
+        toggleSnackbar(
+          true,
+          {
+            labelName: "Rebate should be less than or equal to total amount!",
+            labelKey: "ERR_REBATE_GREATER_THAN_AMOUNT"
+          },
+          "warning"
+        )
+      );
+    } else {
+      getEstimateDataAfterAdhoc(state, dispatch);
+    }
   } else {
     dispatch(
       toggleSnackbar(
