@@ -8,7 +8,7 @@ import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
 import IconButton from "material-ui/IconButton";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+import { getAccessToken, getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 import "./index.css";
 
 const styles = {
@@ -132,6 +132,12 @@ const onSearchClick = (history) => {
 
 const onNotificationClick = async (history) => {
   try {
+    let queryObject = [
+      {
+        key: "tenantId",
+        value: process.env.REACT_APP_NAME === "Employee" ? getTenantId() : JSON.parse(getUserInfo()).permanentCity,
+      },
+    ];
     const requestBody = {
       RequestInfo: {
         apiId: "org.egov.pt",
@@ -143,25 +149,11 @@ const onNotificationClick = async (history) => {
         msgId: "654654",
         requesterId: "61",
         authToken: getAccessToken(),
-        userInfo: {
-          id: 1,
-          uuid: "2dec8102-0e02-4d0a-b283-cd80d5dab089",
-          type: "CITIZEN",
-          tenantId: "pb.amritsar",
-          roles: [
-            {
-              name: "Citizen",
-              code: "CITIZEN",
-              tenantId: "pb.amritsar",
-            },
-          ],
-        },
       },
     };
-    const response = await httpRequest("/egov-user-event/v1/events/llt/_update", "_update", [], requestBody, [], {});
+
+    const response = await httpRequest("/egov-user-event/v1/events/lat/_update", "_update", queryObject, requestBody);
     history.push("/notifications");
-  } catch (e) {
-    console.log("======>");
-  }
+  } catch (e) {}
 };
 export default EgovAppBar;

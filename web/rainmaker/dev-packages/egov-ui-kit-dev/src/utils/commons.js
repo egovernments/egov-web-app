@@ -599,16 +599,16 @@ export const hasTokenExpired = (status, data) => {
 };
 
 const getEndpointfromUrl = (url) => {
-  let result = url.match(/:\/\/.*?\/(.*)/);
+  let result = url;
   if (result == undefined) {
     return "";
   }
-  return result[1];
+  return result;
 };
 
 export const getTransformedNotifications = (notifications) => {
   let data = [];
-  if (notifications.length > 0) {
+  if (notifications && notifications.length > 0) {
     data = notifications.map((item) => ({
       title: item.description,
       buttons: item.actions.actionUrls

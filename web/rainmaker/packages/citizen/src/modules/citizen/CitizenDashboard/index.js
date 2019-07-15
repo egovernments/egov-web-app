@@ -44,19 +44,6 @@ class CitizenDashboard extends Component {
         msgId: "654654",
         requesterId: "61",
         authToken: getAccessToken(),
-        userInfo: {
-          id: 1,
-          uuid: "2dec8102-0e02-4d0a-b283-cd80d5dab089",
-          type: "CITIZEN",
-          tenantId: "pb.amritsar",
-          roles: [
-            {
-              name: "Citizen",
-              code: "CITIZEN",
-              tenantId: "pb.amritsar",
-            },
-          ],
-        },
       },
     };
     getNotifications(queryObject, requestBody);
@@ -95,7 +82,7 @@ class CitizenDashboard extends Component {
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
             <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
           </div>
-          <Notifications notifications={notifications} history={history} />
+          <Notifications notifications={notifications} />
         </div>
       </div>
     );

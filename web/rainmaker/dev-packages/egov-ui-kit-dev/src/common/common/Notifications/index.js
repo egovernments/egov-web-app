@@ -3,7 +3,7 @@ import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const Notifications = ({ notifications = [], history }) => {
+const Notifications = ({ notifications = [] }) => {
   const renderUpdate = (notification, index) => {
     const { title, dueTime, buttons } = notification;
     return (
@@ -21,12 +21,12 @@ const Notifications = ({ notifications = [], history }) => {
                 return (
                   <div
                     onClick={() => {
-                      history.push(button.route);
+                      window.location.href = button.route;
                     }}
                     style={{ cursor: "pointer" }}
                   >
                     <Label
-                      label={button.label}
+                      label={`CS_COMMON_${button.label}`}
                       color="#fe7a51"
                       fontSize={14}
                       containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
