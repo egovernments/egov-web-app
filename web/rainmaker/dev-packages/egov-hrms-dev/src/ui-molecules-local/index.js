@@ -51,5 +51,5 @@ export {
   UploadSingleFile,
   SwitchWithLabel,
   DividerWithLabel,
-  ActionDialog
+  ActionDialog,
 };
