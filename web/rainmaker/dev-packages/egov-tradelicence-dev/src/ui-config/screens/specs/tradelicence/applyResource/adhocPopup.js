@@ -67,6 +67,24 @@ const getEstimateDataAfterAdhoc = async (state, dispatch) => {
       )
     );
 
+  //Collection Type Added in CS v1.1
+  const totalAmount = get(billPayload, "Bill[0].billDetails[0].totalAmount");
+  dispatch(
+    prepareFinalObject(
+      "ReceiptTemp[0].Bill[0].billDetails[0].collectionType",
+      "COUNTER"
+    )
+  );
+  if (totalAmount) {
+    //set amount paid as total amount from bill - destination changed in CS v1.1
+    dispatch(
+      prepareFinalObject(
+        "ReceiptTemp[0].Bill[0].taxAndPayments[0].amountPaid",
+        totalAmount
+      )
+    );
+  }
+
   showHideAdhocPopup(state, dispatch);
 };
 
