@@ -128,8 +128,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
-      title: "Notifications",
+      title: "CS_HEADER_NOTIFICATIONS",
+      helpButton: true,
     },
   },
   {
@@ -138,8 +138,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      hideBackButton: true,
-      title: "Events",
+      title: "CS_HEADER_EVENTS",
+      helpButton: true,
     },
   },
   ...pgrRoutes,

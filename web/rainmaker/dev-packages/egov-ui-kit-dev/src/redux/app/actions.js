@@ -195,14 +195,36 @@ export const getNotificationCount = (queryObject, requestBody) => {
   };
 };
 
-export const setNotifications = (payload) => {
+export const setNotificationsComplete = (payload) => {
   return {
-    type: actionTypes.GET_NOTIFICATIONS,
+    type: actionTypes.GET_NOTIFICATIONS_COMPLETE,
     payload,
   };
 };
 
+const setNotificationsPending = () => {
+  return {
+    type: actionTypes.GET_NOTIFICATIONS_PENDING,
+  };
+};
+
+const setNotificationsError = () => {
+  return {
+    type: actionTypes.GET_NOTIFICATIONS_ERROR,
+  };
+};
+
 export const getNotifications = (queryObject, requestBody) => {
+  return async (dispatch, getState) => {
+    dispatch(setNotificationsPending());
+    try {
+      const payload = await httpRequest(NOTIFICATIONS.GET.URL, NOTIFICATIONS.GET.ACTION, queryObject, requestBody);
+      dispatch(setNotificationsComplete(payload.events));
+    } catch (error) {
+      dispatch(setNotificationsError(error.message));
+    }
+  };
+
   return async (dispatch) => {
     try {
       const payload = await httpRequest(NOTIFICATIONS.GET.URL, NOTIFICATIONS.GET.ACTION, queryObject, requestBody);

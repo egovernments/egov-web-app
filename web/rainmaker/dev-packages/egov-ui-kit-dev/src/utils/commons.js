@@ -598,11 +598,8 @@ export const hasTokenExpired = (status, data) => {
   return false;
 };
 
-const getEndpointfromUrl = (url) => {
-  let result = url;
-  if (result == undefined) {
-    return "";
-  }
+const getEndpointfromUrl = (url, name) => {
+  let result = url.split(`${name}=`)[1];
   return result;
 };
 
@@ -614,7 +611,7 @@ export const getTransformedNotifications = (notifications) => {
       buttons: item.actions.actionUrls
         ? item.actions.actionUrls.map((actionUrls) => ({
             label: actionUrls.code,
-            route: getEndpointfromUrl(actionUrls.actionUrl),
+            route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
           }))
         : [],
     }));

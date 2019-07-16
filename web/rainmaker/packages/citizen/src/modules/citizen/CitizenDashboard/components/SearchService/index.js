@@ -7,7 +7,7 @@ import "./index.css";
 const styles = (theme) => ({
   root: {
     padding: "2px 4px",
-    margin: "0px 8px",
+    // margin: "0px 8px",
     position: "fixed",
     top: "75px",
     height: "56px",

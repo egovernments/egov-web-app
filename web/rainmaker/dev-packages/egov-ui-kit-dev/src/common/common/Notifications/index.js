@@ -3,7 +3,7 @@ import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const Notifications = ({ notifications = [] }) => {
+const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
     const { title, dueTime, buttons } = notification;
     return (
@@ -21,7 +21,7 @@ const Notifications = ({ notifications = [] }) => {
                 return (
                   <div
                     onClick={() => {
-                      window.location.href = button.route;
+                      history.push(button.route);
                     }}
                     style={{ cursor: "pointer" }}
                   >

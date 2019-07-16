@@ -1,24 +1,28 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
 import { getNotificationCount, getNotifications } from "egov-ui-kit/redux/app/actions";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
-import { Notifications } from "modules/common";
+import { Notifications, Screen } from "modules/common";
 import "./index.css";
 import get from "lodash/get";
 import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
-import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
+import isEqual from "lodash/isEqual";
 
 class CitizenDashboard extends Component {
   state = {
     notifications: [],
     onGroundEvents: [],
+    queryObject: [],
   };
 
-  getEventResponse = () => {
-    const { notifications } = this.props;
+  getEventResponse = (props) => {
+    const { notifications } = props;
     let displayEvents = notifications && getTransformedNotifications(notifications).slice(0, Math.min(3, notifications.length));
     this.setState({
       notifications: displayEvents,
@@ -26,40 +30,72 @@ class CitizenDashboard extends Component {
   };
 
   componentDidMount = () => {
-    const { getNotifications, getNotificationCount } = this.props;
-    let queryObject = [
-      {
-        key: "tenantId",
-        value: JSON.parse(getUserInfo()).permanentCity,
-      },
-    ];
-    const requestBody = {
-      RequestInfo: {
-        apiId: "org.egov.pt",
-        ver: "1.0",
-        ts: 1502890899493,
-        action: "asd",
-        did: "4354648646",
-        key: "xyz",
-        msgId: "654654",
-        requesterId: "61",
-        authToken: getAccessToken(),
-      },
-    };
-    getNotifications(queryObject, requestBody);
-    getNotificationCount(queryObject, requestBody);
+    const { getNotificationCount, getNotifications, userInfo } = this.props;
+    if (get(userInfo, "permanentCity")) {
+      const queryObject = [
+        {
+          key: "tenantId",
+          value: get(userInfo, "permanentCity"),
+        },
+      ];
+      const requestBody = {
+        RequestInfo: {
+          apiId: "org.egov.pt",
+          ver: "1.0",
+          ts: 1502890899493,
+          action: "asd",
+          did: "4354648646",
+          key: "xyz",
+          msgId: "654654",
+          requesterId: "61",
+          authToken: getAccessToken(),
+        },
+      };
+
+      getNotifications(queryObject, requestBody);
+      getNotificationCount(queryObject, requestBody);
+    }
   };
 
-  componentWillReceiveProps() {
-    this.getEventResponse();
+  componentWillReceiveProps(nextProps) {
+    this.getEventResponse(nextProps);
+    if (!isEqual(nextProps, this.props)) {
+      const { userInfo, notifications } = nextProps;
+      if (get(userInfo, "permanentCity")) {
+        const { getNotifications, getNotificationCount } = this.props;
+        const queryObject = [
+          {
+            key: "tenantId",
+            value: get(userInfo, "permanentCity"),
+          },
+        ];
+        const requestBody = {
+          RequestInfo: {
+            apiId: "org.egov.pt",
+            ver: "1.0",
+            ts: 1502890899493,
+            action: "asd",
+            did: "4354648646",
+            key: "xyz",
+            msgId: "654654",
+            requesterId: "61",
+            authToken: getAccessToken(),
+          },
+        };
+
+        if (!notifications) {
+          getNotifications(queryObject, requestBody);
+          getNotificationCount(queryObject, requestBody);
+        }
+      }
+    }
   }
 
   render() {
-    const { history } = this.props;
+    const { history, loading } = this.props;
     const { notifications } = this.state;
-
     return (
-      <div>
+      <Screen loading={loading}>
         <SearchService />
         <div className="citizen-dashboard-cont">
           <Label
@@ -80,24 +116,29 @@ class CitizenDashboard extends Component {
           <ServicesNearby history={history} />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
+            <Link to="/notifications">
+              <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
+            </Link>
           </div>
-          <Notifications notifications={notifications} />
+          <Notifications notifications={notifications} history={history} />
         </div>
-      </div>
+      </Screen>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const notifications = get(state.app, "notifications");
-  return { notifications };
+  const notifications = get(state.app, "notificationObj.notifications");
+  const loading = get(state.app, "notificationObj.loading");
+  const userInfo = get(state.auth, "userInfo");
+  return { notifications, userInfo, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getNotificationCount: (queryObject, requestBody) => dispatch(getNotificationCount(queryObject, requestBody)),
     getNotifications: (queryObject, requestBody) => dispatch(getNotifications(queryObject, requestBody)),
+    toggleSpinner: () => dispatch(toggleSpinner()),
   };
 };
 

@@ -32,10 +32,10 @@ class Events extends React.Component {
   };
 
   render() {
-    const { notifications, history } = this.props;
+    const { notifications, history, loading } = this.props;
     let eventarray = notifications && notifications.filter((item) => item.eventType === "EVENTSONGROUND");
     return (
-      <Screen>
+      <Screen loading={loading}>
         <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />;
       </Screen>
     );
@@ -43,8 +43,9 @@ class Events extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const notifications = get(state.app, "notifications");
-  return { notifications };
+  const notifications = get(state.app, "notificationObj.notifications");
+  const loading = get(state.app, "notificationObj.loading");
+  return { notifications, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
