@@ -23,6 +23,13 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: "#4A90E2",
     color: "white"
+  },
+  menuItem:{
+    color: "#FFFFFF",
+    fontFamily: "Montserrat",
+    fontSize: "14px",
+    fontWeight: "500",
+    lineHeight: "17px"
   }
 });
 
@@ -35,9 +42,24 @@ class Menu extends React.Component {
     this.setState({ value });
   };
 
+   mylinkfunction=(e,target)=> {
+
+       window.location.href=target;
+
+       /* need to stop the form sending of the form
+
+        UPDATE as comment: This may not be exactly correct syntax
+        for stopping a form , look up preventing form submission */
+
+       e.preventDefault();
+       e.stopPropagation();
+
+  }
+
   render() {
     const { classes, menuItems } = this.props;
     const { value } = this.state;
+    const {mylinkfunction}=this;
 
     return (
       <div>
@@ -49,7 +71,9 @@ class Menu extends React.Component {
           >
             {menuItems.map((item,key) => {
               //console.log(item.label);
-              return <Tab key={key} label={item.label} />;
+              return <Tab key={key} classes={{root:classes.menuItem}} label={item.label} onClick={(e)=>{
+                mylinkfunction(e,item.target)
+              }}/>;
             })}
           </Tabs>
         </AppBar>

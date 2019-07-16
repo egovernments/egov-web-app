@@ -90,23 +90,18 @@ class WhatNew extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{ margin: "24px" }}>
-        <Grid container spacing="16">
+      <div style={{ margin: "24px" }} id="whatNewSection">
+        <Grid container spacing={16}>
           <Grid item xs={12} sm={6}>
             <div
-              className={classes.subtitle}
-              style={{
-                fontSize: "16px",
-                color: "#000000 - 60%"
-              }}
+              className={`${classes.subtitle} sectionSubheader`}
+
             >
-              Whats New
+              <span style={{color:"rgba(0, 0, 0, 0.6)"}}>Whats New</span>
             </div>
             <div
-              className={classes.subtitle}
+              className={`${classes.subtitle} sectionHeader`}
               style={{
-                fontSize: "34px",
-                color: "#4A90E2",
                 marginTop: "-21px"
               }}
             >
@@ -116,7 +111,7 @@ class WhatNew extends React.Component {
               <CardContent>
                 {newsobj.map((item, key) => {
                   return (
-                    <Grid container>
+                    <Grid container key={key}>
                       <Grid item xs={12} sm={3}>
                         <img
                           src={item.photoUrl}
@@ -129,23 +124,21 @@ class WhatNew extends React.Component {
                         <div className="combine">
                           <div
                             style={{
-                              color: "rgba(0, 0, 0, 0.87)",
-                              fontSize: "16px",
-                              fontWeight: "400",
+
                               marginLeft: "3px",
                               marginBottom: "5px"
                             }}
+                            className="wtsNewHeader"
                           >
                             {item.title}
                           </div>
 
                           <div
                             style={{
-                              fontSize: "14px",
-                              color: "rgba(0, 0, 0, 0.6)",
-                              fontWeight: "300",
+
                               marginLeft: "3px"
                             }}
+                            className="sectionPar"
                           >
                             {item.desc}
                           </div>
@@ -159,19 +152,14 @@ class WhatNew extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <div
-              className={classes.subtitle}
-              style={{
-                fontSize: "16px",
-                color: "#000000 - 60%"
-              }}
+              className={`${classes.subtitle} sectionSubheader`}
+
             >
-              Refer
+              <span style={{color:"rgba(0, 0, 0, 0.6)"}}>Refer</span>
             </div>
             <div
-              className={classes.subtitle}
+              className={`${classes.subtitle} sectionHeader`}
               style={{
-                fontSize: "34px",
-                color: "#4A90E2",
                 marginTop: "-21px"
               }}
             >
@@ -181,7 +169,7 @@ class WhatNew extends React.Component {
               <CardContent>
                 {casestudyObj.map((item, key) => {
                   return (
-                    <Grid container>
+                    <Grid container key={key}>
                       <Grid item xs={12} sm={3}>
                         <img
                           src={item.photoUrl}
@@ -194,23 +182,19 @@ class WhatNew extends React.Component {
                         <div className="combine">
                           <div
                             style={{
-                              color: "rgba(0, 0, 0, 0.87)",
-                              fontSize: "16px",
-                              fontWeight: "400",
                               marginLeft: "3px",
                               marginBottom: "5px"
                             }}
+                            className="wtsNewHeader"
                           >
                             {item.title}
                           </div>
 
                           <div
                             style={{
-                              fontSize: "14px",
-                              color: "rgba(0, 0, 0, 0.6)",
-                              fontWeight: "300",
                               marginLeft: "3px"
                             }}
+                            className="sectionPar"
                           >
                             {item.desc}
                           </div>
@@ -218,11 +202,9 @@ class WhatNew extends React.Component {
                             href={item.link}
                             target="_blank"
                             style={{
-                              color: "#4A90E2",
-                              fontSize: "14px",
-                              fontWeight: "500",
                               marginLeft: "3px"
                             }}
+                            className="read-case-study"
                           >
                             {item.case}
                           </a>

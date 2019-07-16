@@ -107,21 +107,15 @@ class How extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id="implementaionPlanSection">
         <div className={classes.tittleOne}>
           <div
-            style={{
-              fontSize: "16px",
-              color: "rgba(0, 0, 0, 0.6000000238418579)"
-            }}
+            className="sectionSubheader"
           >
             How
           </div>
           <div
-            style={{
-              fontSize: "34px",
-              color: "#4A90E2"
-            }}
+            className="sectionHeader"
           >
             Implementation Plan
           </div>
@@ -160,8 +154,8 @@ class How extends React.Component {
                         </div>
                       }
                     >
-                      <Typography variant="h6">{label.header}</Typography>
-                      <Typography>{label.subheader}</Typography>
+                      <Typography variant="h6" classes={{root:"stepHeader"}}>{label.header}</Typography>
+                      <Typography classes={{root:"stepSubheader"}}>{label.subheader}</Typography>
                     </StepLabel>
                   </Step>
                   // </div>
@@ -194,8 +188,8 @@ class How extends React.Component {
                       </div>
                     }
                     >
-                    <Typography variant="h6">{label.header}</Typography>
-                    <Typography>{label.subheader}</Typography>
+                    <Typography variant="h6" classes={{root:"stepHeader"}}>{label.header}</Typography>
+                    <Typography classes={{root:"stepSubheader"}}>{label.subheader}</Typography>
                     </StepLabel>
                   </Step>
                 );

@@ -29,30 +29,31 @@ class Banner extends React.Component {
               <div
                 style={{
                   position: "absolute",
-                  left: "50px",
-                  top: "100px",
-                  width: "400px",
-                  height: "150px",
                   background: "#ffffff",
-                  padding: "16px"
+                  padding: "16px 24px"
                 }}
+                className="bannerItemWidth"
               >
                 <div
                   style={{
-                    color: "black",
+                    color: "rgba(0, 0, 0, 0.87)",
                     textAlign: "left",
                     fontSize: "34px",
-                    fontFamily: "Montserrat"
+                    fontFamily: "Montserrat",
+                    fontWeight: 500,
+                    lineHeight: "41px"
                   }}
                 >
                   National Urban Stack
                 </div>
                 <div
                   style={{
-                    color: "black",
+                    color: "rgba(0, 0, 0, 0.6)",
                     textAlign: "left",
                     fontSize: "14px",
-                    fontFamily: "Montserrat"
+                    fontFamily: "Montserrat",
+                    fontWeight: 300,
+                    lineHeight: "20px"
                   }}
                 >
                   The National Urban Stack (NUS) is a national digital

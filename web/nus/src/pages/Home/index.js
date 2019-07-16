@@ -9,13 +9,13 @@ import Testimonials from "./components/Testimonials";
 import WhatNew from "./components/WhatNew";
 import Footer from "./components/Footer";
 const menuItems = [
-  { label: "HOME" },
-  { label: "ABOUT NUS" },
-  { label: "CORE COMPONENTS" },
-  { label: "IMPLEMENATION  PLAN" },
+  { label: "HOME",target:"#homeSection" },
+  { label: "ABOUT US" ,target:"#aboutNusNewSection"},
+  { label: "CORE COMPONENTS",target:"#coreComponentsSection" },
+  { label: "IMPLEMENATION  PLAN",target:"#implementaionPlanSection" },
   // { label: "TESTIMONIALS" },
-  { label: "NEWS & GALLERY" },
-  { label: "CASE STUDIES" }
+  { label: "NEWS & GALLERY",target:"#whatNewSection" },
+  { label: "CASE STUDIES",target:"#whatNewSection" }
 ];
 
 class Home extends React.Component {

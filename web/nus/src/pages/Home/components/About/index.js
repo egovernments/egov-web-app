@@ -35,7 +35,7 @@ class About extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className={classes.root}>
+			<div className={classes.root} id="aboutNusNewSection">
 				<Grid
 					style={{
 						marginTop: '8px'
@@ -65,21 +65,20 @@ class About extends React.Component {
 							<div className={classes.tittle1}>
 								<div
 									style={{
-										fontSize: '16px',
-										color: 'rgba(0, 0, 0, 0.6000000238418579)',
+
 										paddingTop: '5px',
-										textAlign: 'left',
+
 										marginLeft: '10px'
 									}}
+									className="sectionSubheader"
 								>
 									About
 								</div>
 								<div
 									style={{
-										fontSize: '34px',
-										color: '#4A90E2',
 										marginLeft: '10px'
 									}}
+									className="sectionHeader"
 								>
 									National Urban Stack
 								</div>
@@ -89,13 +88,9 @@ class About extends React.Component {
 								style={{
 									padding: '8px',
 									marginLeft: '-7px',
-									fontSize: '20px',
-									color: '#rgba(0, 0, 0, 0.8700000047683716)',
-									fontStyle: 'italic',
-									fontWeight: '400',
-									// width: '674px',
-									alignItems: 'left'
+
 								}}
+								className="sectionBoldPar"
 							>
 								The NUS vision is that municipalities/state governments can leverage the common national digital infrastructure to build locally relevant solutions.
 							</div>
@@ -104,12 +99,8 @@ class About extends React.Component {
 									padding: '8px',
 									marginLeft: '-7px',
 
-									fontSize: '16px',
-									color: 'rgba(0, 0, 0, 0.6000000238418579)',
-									fontFamily: 'Montserrat',
-									fontWeight: '300',
-									// width: '610px'
 								}}
+								className="sectionPar"
 							>
 								NUS aims to work with the State Urban Development Departments on top-down, large-scale, systemic reform projects with the goal to rapidly configure and deploy State-wide governance platforms with high priority applications available.
 							</div>
@@ -122,11 +113,7 @@ class About extends React.Component {
 												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
 											</ListItemIcon>
 											<ListItemText
-												style={{
-													color: 'rgba(0, 0, 0, 0.6000000238418579)',
-													fontFamily: 'Montserrat',
-													fontSize: '16px'
-												}}
+												classes={{root:"sectionPar"}}
 												primary="Open-source technology platform built for scale"
 											/>
 										</ListItem>
@@ -134,13 +121,13 @@ class About extends React.Component {
 											<ListItemIcon>
 												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
 											</ListItemIcon>
-											<ListItemText primary="Public good with federated architecture" />
+											<ListItemText classes={{root:"sectionPar"}} primary="Public good with federated architecture" />
 										</ListItem>
 										<ListItem button>
 											<ListItemIcon>
 												<StarIcon className={classes.icon} style={{ color: '#4A90E2' }} />
 											</ListItemIcon>
-											<ListItemText primary="Highly customizable for locally relevant solutions" />
+											<ListItemText classes={{root:"sectionPar"}} primary="Highly customizable for locally relevant solutions" />
 										</ListItem>
 										{/*<ListItem button>
 											<ListItemIcon>

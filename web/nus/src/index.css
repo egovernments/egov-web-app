@@ -32,9 +32,123 @@ body {
 	margin-left: 16px;
 }
 
+.sectionSubheader {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: left;
+}
+
+.sectionHeader {
+	color: #4A90E2;
+  font-family: Montserrat;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 41px;
+  text-align: left;
+}
+
+.sectionBoldPar {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 30px;
+  /* width: 674px; */
+  text-align: left;
+}
+
+.sectionPar{
+	color: rgba(0, 0, 0, 0.6);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  /* width: 610px; */
+  text-align: left;
+}
+
+.sectionSubHeadingBold {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.44px;
+  line-height: 19px;
+  text-align: left;
+}
+
+.centric-appl {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.44px;
+  line-height: 19px;
+  text-align: left;
+}
+
+.componentText {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: left;
+}
+
+.stepHeader {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+}
+
+.stepSubheader {
+	color: rgba(0, 0, 0, 0.87);
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: center;
+}
+
+.wtsNewHeader {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: left;
+}
+
+.read-case-study {
+  color: #4A90E2;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: left;
+}
+
+.bannerItemWidth {
+	width:400px;
+	left: 50px;
+	top: 100px;
+}
 @media only screen and (max-width: 600px) {
 	.combine {
 		margin-left: 0;
+	}
+	.bannerItemWidth {
+		width:280px;
+		left: 16px;
+    top: 16px;
 	}
 }
 

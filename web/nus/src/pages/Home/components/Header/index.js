@@ -35,8 +35,8 @@ class Header extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <AppBar classes={{ root: classes.appBarRoot1 }} position="static">
+      <div className={classes.root} id="homeSection">
+        {/*<AppBar classes={{ root: classes.appBarRoot1 }} position="static" >
           <Grid container>
             <Grid item xs={12} sm={6}>
               <div
@@ -115,10 +115,10 @@ class Header extends React.Component {
               </div>
             </Grid>
           </Grid>
-        </AppBar>
+        </AppBar>*/}
         <AppBar classes={{ root: classes.appBarRoot }} position="static">
           <Toolbar>
-            <img alt="logo1" src={logo1} width="162px" height="74px" />
+            <img alt="logo1" src="/assets/images/mohua-logo.jpg" width="162px" height="74px" />
             <Typography
               variant="h6"
               align="right"
