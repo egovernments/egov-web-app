@@ -13,7 +13,7 @@ const menuItems = [
   { label: "ABOUT NUS" },
   { label: "CORE COMPONENTS" },
   { label: "IMPLEMENATION  PLAN" },
-  { label: "TESTIMONIALS" },
+  // { label: "TESTIMONIALS" },
   { label: "NEWS & GALLERY" },
   { label: "CASE STUDIES" }
 ];
@@ -23,18 +23,18 @@ class Home extends React.Component {
     return (
       <div
         style={{
-          backgroundColor: " #F4F7FB"
+          backgroundColor: " #F4F7FB",
+          display:"flex",
+          flexDirection:"column"
         }}
       >
         <Header />
         <Menu menuItems={menuItems} />
         <Banner />
-        <br />
-        <br />
         <About />
         <Explore />
         <How />
-        <Testimonials />
+        {/*<Testimonials />*/}
         <WhatNew />
         <Footer />
       </div>

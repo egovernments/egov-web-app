@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import logo1 from "../../../../assets/logo1.png";
 import urban from "../../../../assets/urban.png";
@@ -38,69 +37,84 @@ class Header extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar classes={{ root: classes.appBarRoot1 }} position="static">
-      <div
-            className="leftdiv"
-            style={{
-              display: "flex",
-              width: "1280px",
-              height: "48px",
-              flexDirection: "row"
-            }}
-          >
-            <div
-              className="govt-name-parent"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "50px 24px",
-                paddingTop: "30px",
-                textAlign: "right",
-                fontSize: "14px"
-              }}
-            >
-              <div>भारत सरकार</div>
-              <div>GOVERNMENT OF INDIA</div>
-            </div>
-            <div
-              className="dept-name-parent"
-              style={{
-                display: "flex  ",
-                flexDirection: "column",
-                paddingTop: "30px",
-                marginLeft: "0px",
-                fontSize: "14px"
-              }}
-            >
-              <div>आवासन और शहरी कार्य मंत्रालय</div>
-              <div>Ministry Of Housing and Urban Affairs</div>
-            </div>
-          </div>
-          <div
-            className="rightDiv"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginLeft: "10px",
-              padding: "8px"
-            }}
-          >
-            <Toolbar>
-              <div className={classes.SearchIcon} style={{ display: "flex" }}>
-                <SearchIcon />
+          <Grid container>
+            <Grid item xs={12} sm={6}>
+              <div
+                className="leftdiv"
+                style={{
+                  display: "flex",
+                  // width: "1280px",
+                  // height: "48px",
+                  flexDirection: "row",
+                  padding: "8px 50px"
+                }}
+              >
                 <div
-                  className={classes.app}
-                  style={{ minWidth: "120px", justifyContent: "space-between" }}
+                  className="govt-name-parent"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    // padding: "50px 24px",
+                    // paddingTop: "30px",
+                    textAlign: "right",
+                    fontSize: "14px"
+                  }}
                 >
-                  <span>-A</span>
-                  <span>A</span>
-
-                  <span>+A</span>
-
-                  <span>हिंदी </span>
+                  <div>भारत सरकार</div>
+                  <div>GOVERNMENT OF INDIA</div>
+                </div>
+                <div
+                  className="dept-name-parent"
+                  style={{
+                    display: "flex  ",
+                    flexDirection: "column",
+                    // paddingTop: "30px",
+                    marginLeft: "24px",
+                    fontSize: "14px"
+                  }}
+                >
+                  <div>आवासन और शहरी कार्य मंत्रालय</div>
+                  <div>Ministry Of Housing and Urban Affairs</div>
                 </div>
               </div>
-            </Toolbar>
-          </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div
+                className="rightDiv"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "10px",
+                  alignItems:"center",
+                  justifyContent: "flex-end"
+                  // padding: "8px"
+                }}
+              >
+                <Toolbar>
+                  <div
+                    className={classes.SearchIcon}
+                    style={{ display: "flex" }}
+                  >
+                    <SearchIcon />
+                    <div
+                      className={classes.app}
+                      style={{
+                        minWidth: "120px",
+                        justifyContent: "space-between"
+                      }}
+                    >
+                      <span>-A</span>
+                      <span>A</span>
+
+                      <span>+A</span>
+
+                      <span>हिंदी </span>
+                    </div>
+                  </div>
+                </Toolbar>
+              </div>
+            </Grid>
+          </Grid>
         </AppBar>
         <AppBar classes={{ root: classes.appBarRoot }} position="static">
           <Toolbar>

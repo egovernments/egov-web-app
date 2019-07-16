@@ -7,6 +7,9 @@
 	max-width: 628px;
 	margin-bottom: -4px;
 } */
+body {
+	margin: 0
+}
 
 .aboutSection .leftSection .imgWrapper {
 	position: 'relative';
@@ -24,5 +27,17 @@
 	margin-top: 150px;
 	border: 6px solid #ffffff;
 }
+
+.combine {
+	margin-left: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+	.combine {
+		margin-left: 0;
+	}
+}
+
+
 
 /*css for What new component*/

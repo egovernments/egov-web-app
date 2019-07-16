@@ -55,11 +55,12 @@ class Banner extends React.Component {
                     fontFamily: "Montserrat"
                   }}
                 >
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries.
+                  The National Urban Stack (NUS) is a national digital
+                  infrastructure, planned to support urban transformation by the
+                  Ministry of Housing and Urban Affairs (MoHUA) and National
+                  Institute of Urban Affairs (NIUA). The aim is to transform
+                  national urban governance by empowering 4000+ ULBs by 2022
+                  using technology to drive citizen-centric governance.
                 </div>
               </div>
               <img
@@ -73,10 +74,11 @@ class Banner extends React.Component {
                   // height: "400px"
                 }}
                 src={sliderbanner}
+                alt="banner 1"
               />
             </div>
           </div>
-          <div style={{ padding: "0" }}>
+          {/*<div style={{ padding: "0" }}>
             <div style={{ position: "relative" }}>
               <div
                 style={{
@@ -157,7 +159,7 @@ class Banner extends React.Component {
               </div>
               <img style={{ width: "100%", height: "400px" }} src={banner3} />
             </div>
-          </div>
+          </div>*/}
         </Slider>
       </div>
     );

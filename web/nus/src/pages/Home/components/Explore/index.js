@@ -20,7 +20,8 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding:"24px"
   },
   paper: {
     // padding: theme.spacing,
@@ -47,13 +48,13 @@ const styles = theme => ({
     fontSize: 14,
     textAlign: "right"
   },
-  tittle1: {
+  tittleOne: {
     color: "#4A90E2",
     paddingleft: "10px",
     paddingBottom: "20px",
     paddingRight: "40px",
-    borderRight: "solid",
-    width: "4px",
+    borderLeft: "solid #4A90E2",
+    // width: "4px",
     height: "56px",
     margin: "0px 0px 5px 0px"
   },
@@ -121,17 +122,17 @@ class Explore extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div className={classes.tittle1}>
+        <div className={classes.tittleOne}>
           <div
             style={{
               fontSize: "16px",
               color: "black",
               fontFamily: "Montserrat",
-              width: "50px",
+              // width: "50px",
               height: "19px",
 
               textAlign: "left",
-              paddingLeft: "50px",
+              // paddingLeft: "50px",
               marginTop: "10px",
               marginLeft: "10px",
               // paddingBottom: "0px",
@@ -146,9 +147,9 @@ class Explore extends React.Component {
               fontSize: "34px",
               color: "#4A90E2",
               fontFamily: "Montserrat",
-              width: "363px",
-              height: "42px",
-              paddingLeft: "50px",
+              // width: "363px",
+              // height: "42px",
+              // paddingLeft: "50px",
               marginTop: "10px",
               marginLeft: "10px"
               // marginBottom: "10px"
@@ -158,10 +159,10 @@ class Explore extends React.Component {
           </div>
         </div>
 
-        <Grid container spacing={3} className={classes.card}>
+        <Grid container spacing={8} className={classes.card}>
           {this.getItems().map((item,key) => {
             return (
-              <Grid key={key} item xs={3} className={classes.card}>
+              <Grid key={key} item xs={12} sm={3} className={classes.card}>
                 <Card className={classes.card}>
                   <CardContent className={classes.CardContent}>
                     <div style={{ marginRight: "10px", marginLeft: "0px" }}>
@@ -170,10 +171,7 @@ class Explore extends React.Component {
 
                     <Typography
                       className={classes.title}
-                      color="#000000"
                       fontFamily="Montserrat"
-                      marginLeft="3px"
-                      paddingLeft="2px"
                       gutterBottom
                     >
                       {item.cardHeader}
@@ -183,26 +181,25 @@ class Explore extends React.Component {
               </Grid>
             );
           })}
-
-          <div>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              style={{
-                border: "1px solid #4A90E2",
-
-                borderRadius: "32px",
-                width: "292px",
-                height: "64px",
-                marginLeft: "450px",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-            >
-              Read More
-            </Button>
-          </div>
         </Grid>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <Button
+            variant="outlined"
+            className={classes.button}
+            style={{
+              border: "1px solid #4A90E2",
+
+              borderRadius: "32px",
+              width: "292px",
+              height: "64px",
+              // marginLeft: "450px",
+              marginTop: "10px",
+              cursor: "pointer"
+            }}
+          >
+            Read More
+          </Button>
+        </div>
       </div>
     );
   }

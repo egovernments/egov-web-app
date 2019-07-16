@@ -137,9 +137,9 @@ class Testimonials extends React.Component {
         </div>
 
         <Grid container spacing={0} className={classes.card}>
-          {this.getItems().map(item => {
+          {this.getItems().map((item,key) => {
             return (
-              <Grid item xs={4} className={classes.card} justify="left">
+              <Grid key={key} item xs={4} className={classes.card} justify="left">
                 <Card className={classes.card}>
                   <CardContent
                     //className={classes.avatar}
