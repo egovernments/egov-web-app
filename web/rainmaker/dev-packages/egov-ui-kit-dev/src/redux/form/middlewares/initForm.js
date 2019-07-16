@@ -23,7 +23,7 @@ const initFormMiddleware = (store) => (next) => async (action) => {
       return;
     } catch (error) {
       const { message } = error;
-      dispatch(toggleSnackbarAndSetText(true, { labelName: message, labelKey: message }, true));
+      // dispatch(toggleSnackbarAndSetText(true, { labelName: message, labelKey: message }, true));
       return;
     }
   }
