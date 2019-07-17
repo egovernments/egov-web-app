@@ -286,7 +286,6 @@ const dateDiffInDays = (a, b) => {
   var millsPerDay = 1000 * 60 * 60 * 24;
   var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
   var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
@@ -607,13 +606,17 @@ export const getTransformedNotifications = (notifications) => {
   let data = [];
   if (notifications && notifications.length > 0) {
     data = notifications.map((item) => ({
+      name: item.name,
       title: item.description,
-      buttons: item.actions.actionUrls
-        ? item.actions.actionUrls.map((actionUrls) => ({
-            label: actionUrls.code,
-            route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
-          }))
-        : [],
+      address: item.eventDetails && item.eventDetails.address,
+      //SLA: dateDiffInDays(new Date(Date.now()), new Date(item.auditDetails.lastModifiedTime)),
+      buttons:
+        item.actions && item.actions.actionUrls
+          ? item.actions.actionUrls.map((actionUrls) => ({
+              label: actionUrls.code,
+              route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
+            }))
+          : [],
     }));
   }
   return data;
