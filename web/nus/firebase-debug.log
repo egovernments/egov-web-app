@@ -1,0 +1,35 @@
+[debug] [2019-07-17T07:45:18.774Z] ----------------------------------------------------------------------
+[debug] [2019-07-17T07:45:18.777Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2019-07-17T07:45:18.777Z] CLI Version:   7.1.0
+[debug] [2019-07-17T07:45:18.777Z] Platform:      darwin
+[debug] [2019-07-17T07:45:18.777Z] Node Version:  v10.15.1
+[debug] [2019-07-17T07:45:18.783Z] Time:          Wed Jul 17 2019 13:15:18 GMT+0530 (India Standard Time)
+[debug] [2019-07-17T07:45:18.783Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-17T07:45:18.792Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-17T07:45:18.792Z] > authorizing via signed-in user
+[debug] [2019-07-17T07:45:18.792Z] [iam] checking project nus-demo-ee3e0 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-07-17T07:45:18.794Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-17T07:45:18.795Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-17T07:45:19.530Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-17T07:45:19.556Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/nus-demo-ee3e0:testIamPermissions  
+
+[debug] [2019-07-17T07:45:21.164Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-17T07:45:21.165Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/nus-demo-ee3e0  
+ 
+[debug] [2019-07-17T07:45:21.713Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'nus-demo-ee3e0'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-07-17T07:45:21.719Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/nus-demo-ee3e0/versions  
+
+[debug] [2019-07-17T07:45:24.544Z] <<< HTTP RESPONSE 200
+[info] i  hosting[nus-demo-ee3e0]: beginning deploy...
+[info] i  hosting[nus-demo-ee3e0]: found 52 files in build
+[debug] [2019-07-17T07:45:24.569Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-07-17T07:45:24.964Z] [hosting] hash cache [YnVpbGQ] stored for 52 files
+[debug] [2019-07-17T07:45:24.964Z] [hosting][hash queue][FINAL]
+[debug] [2019-07-17T07:45:24.964Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/nus-demo-ee3e0/versions/827fa056112a22af:populateFiles  
+ <request body omitted>

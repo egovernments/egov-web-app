@@ -118,7 +118,7 @@ class Header extends React.Component {
         </AppBar>*/}
         <AppBar classes={{ root: classes.appBarRoot }} position="static">
           <Toolbar>
-            <img alt="logo1" src="/assets/images/mohua-logo.jpg" width="50%" />
+            <img alt="logo1" src="/assets/images/mohua-logo.jpg" className="logo"/>
             <Typography
               variant="h6"
               align="right"

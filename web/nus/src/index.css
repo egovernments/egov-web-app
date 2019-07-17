@@ -141,6 +141,11 @@ body {
 	left: 50px;
 	top: 100px;
 }
+
+.logo {
+	width:30%
+}
+
 @media only screen and (max-width: 600px) {
 	.combine {
 		margin-left: 0;
@@ -149,6 +154,9 @@ body {
 		width:280px;
 		left: 16px;
     top: 16px;
+	}
+	.logo {
+		width:50%
 	}
 }
 

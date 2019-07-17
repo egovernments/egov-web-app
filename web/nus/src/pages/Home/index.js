@@ -12,7 +12,7 @@ const menuItems = [
   { label: "HOME",target:"#homeSection" },
   { label: "ABOUT US" ,target:"#aboutNusNewSection"},
   { label: "CORE COMPONENTS",target:"#coreComponentsSection" },
-  { label: "IMPLEMENATION  PLAN",target:"#implementaionPlanSection" },
+  { label: "IMPLEMENTATION PLAN",target:"#implementaionPlanSection" },
   // { label: "TESTIMONIALS" },
   { label: "NEWS & GALLERY",target:"#whatNewSection" },
   { label: "CASE STUDIES",target:"#whatNewSection" }
