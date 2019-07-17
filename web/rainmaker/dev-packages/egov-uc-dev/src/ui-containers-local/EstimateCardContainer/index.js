@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FeesEstimateCard } from "../../ui-molecules-local";
 import { connect } from "react-redux";
 import get from "lodash/get";
+import { getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
 class EstimateCardContainer extends Component {
   render() {
@@ -12,7 +13,15 @@ class EstimateCardContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { preparedFinalObject } = state.screenConfiguration || {};
   const { applyScreenMdmsData } = preparedFinalObject || {};
-  const { estimateCardData } = applyScreenMdmsData || [];
+  let { estimateCardData } = applyScreenMdmsData || [];
+
+  estimateCardData = estimateCardData.map(fees => {
+    if (fees.name && fees.name.labelKey)
+      fees.name.labelKey = getTransformedLocale(fees.name.labelKey);
+    if (fees.info && fees.info.labelKey)
+      fees.info.labelKey = getTransformedLocale(fees.name.labelKey);
+    return fees;
+  });
   // const estimateCardData = get(
   //   preparedFinalObject,
   //   "applyScreenMdmsData.estimateCardData",
