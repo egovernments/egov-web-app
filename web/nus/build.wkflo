@@ -1,7 +1,7 @@
 def build(path, ci_image) {
     stage("Build") {
         docker.image("egovio/ci-react:v8.15.0-alpine").inside {
-            sh "cd ${path} && npm install -> yarn install && yarn run build";
+            sh "cd ${path} && yarn install && yarn run build";
         }
     }
 }
