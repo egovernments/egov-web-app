@@ -1,11 +1,11 @@
 import React from "react";
-import { Card } from "components";
+import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons } = notification;
+    const { title, dueTime, buttons, address, name } = notification;
     return (
       <Card
         className="home-notification"
@@ -15,7 +15,35 @@ const Notifications = ({ notifications = [], history }) => {
         style={{ padding: "12px 8px" }}
         textChildren={
           <div className="update">
-            <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={title} labelStyle={{ width: "100%", wordWrap: "break-word" }} />
+            <Label
+              leftWrapperStyle
+              fontSize={14}
+              color="rgba(0, 0, 0, 0.60)"
+              label={name}
+              labelStyle={{ width: "100%", wordWrap: "break-word" }}
+              containerStyle={{ marginBottom: 5 }}
+            />
+            <Label
+              leftWrapperStyle
+              fontSize={14}
+              color="rgba(0, 0, 0, 0.87)"
+              label={title}
+              labelStyle={{ width: "100%", wordWrap: "break-word" }}
+              containerStyle={{ marginBottom: 5 }}
+            />
+            {address && (
+              <div className="rainmaker-displayInline">
+                <Icon name="place" action="maps" style={{ height: "20px", width: "35px", marginRight: 5 }} />
+                <Label
+                  leftWrapperStyle
+                  fontSize={14}
+                  color="rgba(0, 0, 0, 0.60)"
+                  label={address}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5 }}
+                />
+              </div>
+            )}
             <div style={{ marginTop: 5, display: "flex" }}>
               {buttons.map((button, index) => {
                 return (

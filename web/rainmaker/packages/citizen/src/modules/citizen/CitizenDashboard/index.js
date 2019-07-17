@@ -23,7 +23,13 @@ class CitizenDashboard extends Component {
 
   getEventResponse = (props) => {
     const { notifications } = props;
-    let displayEvents = notifications && getTransformedNotifications(notifications).slice(0, Math.min(3, notifications.length));
+    let filteredNotifications =
+      notifications &&
+      notifications.filter((item) => {
+        return item.eventType === "SYSTEMGENERATED" || item.eventType === "BROADCAST";
+      });
+    let displayEvents =
+      filteredNotifications && getTransformedNotifications(filteredNotifications).slice(0, Math.min(3, filteredNotifications.length));
     this.setState({
       notifications: displayEvents,
     });
