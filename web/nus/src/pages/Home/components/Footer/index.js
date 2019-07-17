@@ -167,8 +167,9 @@ export default class Footer extends React.Component {
                       marginRight: "20px"
                     }}
                     src={indportal}
+                    alt="indportal"
                   />
-                  <img style={{ width: "149px", height: "36px" }} src={img3} />
+                  <img style={{ height: "36px" }} src={img3} alt="img3"/>
                 </div>
                 <div
                   style={{
@@ -178,15 +179,19 @@ export default class Footer extends React.Component {
                 >
                   <img
                     style={{
-                      width: "246px",
+                      width: "50%",
                       height: "118px",
                       marginRight: "10px"
                     }}
                     src={digital}
+                    alt="digit"
                   />
                   <img
-                    style={{ width: "118px", height: "118px" }}
-                    src="/assets/images/amrut logo.jpg"
+                    style={{
+                      width: "50%", 
+                      height: "118px" }}
+                    src="/assets/images/amrut-logo.jpg"
+                    alt="amrut logo"
                   />
                 </div>
               </div>

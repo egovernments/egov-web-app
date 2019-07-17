@@ -39,7 +39,8 @@ const styles = theme => ({
     //marginBottom: "16px",
     paddingLeft: "20px",
     paddingTop: "5px",
-    paddingBottom: "-10px"
+    paddingBottom: "-10px",
+    cursor:"pointer"
     // display: "flex",
     // justifyContent: "left",
     // alignItems: "left"
