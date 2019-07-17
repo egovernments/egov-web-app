@@ -1,6 +1,8 @@
 ## Rainmaker
 Below are the steps to run project in dev and production, first time user should install lerna as global dependency, below is the command.
 
+Note : Node should be above version 8. 
+
 ```
 $ npm install --global lerna
 
@@ -15,7 +17,14 @@ $ lerna bootstrap
 
 ```
 
-+ Step 2 - if you want to run citizen
++ Step 2 - Compile all the apps
+
+```
+$ npm run go
+
+```
+
++ Step 3 - if you want to run citizen
 
 ```
 $ npm run dev:citizen
