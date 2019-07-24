@@ -609,7 +609,7 @@ export const getTransformedNotifications = (notifications) => {
       name: item.name,
       title: item.description,
       address: item.eventDetails && item.eventDetails.address,
-      //SLA: dateDiffInDays(new Date(Date.now()), new Date(item.auditDetails.lastModifiedTime)),
+      SLA: new Date(Date.now()).getHours() - new Date(item.auditDetails.lastModifiedTime).getHours(),
       buttons:
         item.actions && item.actions.actionUrls
           ? item.actions.actionUrls.map((actionUrls) => ({

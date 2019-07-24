@@ -8,7 +8,7 @@ import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils
 
 class Events extends React.Component {
   componentDidMount = () => {
-    const { getNotifications, getNotificationCount } = this.props;
+    const { getNotifications } = this.props;
     let queryObject = [
       {
         key: "tenantId",

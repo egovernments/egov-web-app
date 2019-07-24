@@ -1,7 +1,12 @@
 import React from "react";
 import { Icon, TextField } from "components";
+import filter from "lodash/filter";
+import isUndefined from "lodash/isUndefined";
+import AutoComplete from "material-ui/AutoComplete";
 import { withStyles } from "@material-ui/core/styles";
 import Label from "egov-ui-kit/utils/translationNode";
+import { connect } from "react-redux";
+import get from "lodash/get";
 import "./index.css";
 
 const styles = (theme) => ({
@@ -25,9 +30,67 @@ const styles = (theme) => ({
   },
 });
 
+// const items = [{ label: "shddff" }, { label: "sdhfnjn" }, { label: "djjdj" }];
+
+const items = [
+  {
+    label: "C",
+    value: 1972,
+  },
+  {
+    label: "C#",
+    value: 2000,
+  },
+  {
+    label: "C++",
+    value: 1983,
+  },
+  {
+    label: "Clojure",
+    value: 2007,
+  },
+  {
+    label: "Elm",
+    value: 2012,
+  },
+  {
+    label: "Go",
+    value: 2009,
+  },
+  {
+    label: "Haskell",
+    value: 1990,
+  },
+  {
+    label: "Java",
+    value: 1995,
+  },
+  {
+    label: "Javascript",
+    value: 1995,
+  },
+];
+
 class SearchService extends React.Component {
   state = {
-    searchValue: "",
+    searchText: "",
+  };
+  getNameById = (id, dropDownData) => {
+    //const { dropDownData } = this.props;
+    const filteredArray = filter(dropDownData, { value: id });
+    return filteredArray.length > 0 ? filteredArray[0].label : id;
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const { dropDownData } = nextProps;
+    let { getNameById } = this;
+    if (!isUndefined(nextProps.value)) {
+      this.setState({ searchText: getNameById(nextProps.value, dropDownData) });
+    }
+  }
+
+  onChangeText = (searchText, dataSource, params) => {
+    this.setState({ searchText });
   };
 
   onSearchClick = (e) => {
@@ -35,12 +98,36 @@ class SearchService extends React.Component {
       searchValue: e.target.value,
     });
   };
+
+  getTransformedItems = () => {
+    const { menu } = this.props;
+    const transformedItems =
+      menu &&
+      menu
+        .filter((item) => item.url === "url")
+        .map((item, index) => {
+          return {
+            label: item.displayName,
+            value: item.navigationURL,
+          };
+        });
+    return transformedItems;
+  };
+
   render() {
     const { classes } = this.props;
+    const { searchText } = this.state;
+    const { getNameById, onChangeText, getLocalizedLabel, getTransformedItems } = this;
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "Type 'c'",
+      value,
+      onChange: this.onChange,
+    };
     return (
       <div className={`${classes.root} dashboard-search-main-cont`}>
         <Icon action="action" name="search" style={{ marginLeft: 12 }} />
-        {/* <TextField InputProps={{ disableUnderline: true }} className={classes.input} placeholder={"Search Services & Information"} /> */}
+        {/* <TextField InputProps={{ disableUnderline: true }} className={classes.input} placeholder={"Search Services & Information"} />
         <TextField
           style={{ height: 56, padding: "0px 0px 20px 10px" }}
           id="dashboard-search"
@@ -55,6 +142,27 @@ class SearchService extends React.Component {
             />
           }
           onChange={(e) => this.onSearchClick(e)}
+        /> */}
+        <AutoComplete
+          hintText={
+            <Label
+              label="COMMON_SEARCH_SERVICE_INFORMATION"
+              color="rgba(0, 0, 0, 0.38)"
+              fontSize={16}
+              // containerStyle={{ marginLeft: 10, paddingBottom: 5 }}
+            />
+          }
+          searchText={searchText}
+          onUpdateInput={onChangeText}
+          dataSource={getTransformedItems() || []}
+          underlineFocusStyle={{ borderBottom: "none", borderTop: "none" }}
+          underlineStyle={{ borderBottom: "none", borderTop: "none" }}
+          // listStyle={{ padding: "20px 20px 20px 20px" }}
+          menuStyle={{ maxHeight: "150px", maxWidth: "600px", marginTop: 10, backgroundColor: "#fff", overflowY: "auto" }}
+          dataSourceConfig={{ text: "label", value: "value" }}
+          filter={(searchText, key) => {
+            return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+          }}
         />
 
         <Icon action="av" name="mic" style={{ marginRight: 12 }} />
@@ -63,4 +171,14 @@ class SearchService extends React.Component {
   }
 }
 
-export default withStyles(styles)(SearchService);
+const mapStateToprops = (state) => {
+  const menu = get(state.app, "menu");
+  return { menu };
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToprops,
+    null
+  )(SearchService)
+);

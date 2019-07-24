@@ -5,7 +5,7 @@ import "./index.css";
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons, address, name } = notification;
+    const { title, dueTime, buttons, address, name, SLA } = notification;
     return (
       <Card
         className="home-notification"
@@ -44,27 +44,41 @@ const Notifications = ({ notifications = [], history }) => {
                 />
               </div>
             )}
-            <div style={{ marginTop: 5, display: "flex" }}>
-              {buttons.map((button, index) => {
-                return (
-                  <div
-                    onClick={() => {
-                      history.push(button.route);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Label
-                      label={`CS_COMMON_${button.label}`}
-                      color="#fe7a51"
-                      fontSize={14}
-                      containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
-                    />
-                  </div>
-                );
-              })}
-            </div>
 
-            <Label label={dueTime} containerStyle={{ marginTop: 10 }} color="rgba(0, 0, 0, 0.60)" />
+            {buttons && (
+              <div style={{ marginTop: 5, display: "flex" }}>
+                {buttons.map((button, index) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        history.push(button.route);
+                      }}
+                      style={{ cursor: "pointer", marginBottom: 10 }}
+                    >
+                      <Label
+                        label={`CS_COMMON_${button.label}`}
+                        color="#fe7a51"
+                        fontSize={14}
+                        containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {SLA && (
+              // <div className="rainmaker-displayInline">
+              //   <Icon name="access-time" action="device" style={{ height: "20px", width: "35px", marginRight: 5 }} />
+              <Label
+                fontSize={14}
+                color="rgba(0, 0, 0, 0.60)"
+                label={"CS_SLA_TIME"}
+                dynamicArray={[SLA]}
+                labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                containerStyle={{ marginBottom: 5 }}
+              />
+              // </div>
+            )}
           </div>
         }
       />

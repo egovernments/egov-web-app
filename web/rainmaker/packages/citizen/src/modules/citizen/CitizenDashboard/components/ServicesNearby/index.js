@@ -2,7 +2,6 @@ import React from "react";
 import { Icon } from "components";
 import Grid from "@material-ui/core/Grid";
 import Label from "egov-ui-kit/utils/translationNode";
-import get from "lodash/get";
 import "./index.css";
 
 class ServicesNearby extends React.Component {
@@ -41,9 +40,9 @@ class ServicesNearby extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const notifications = get(state.app, "notifications");
-  return { notifications };
-};
+// const mapStateToProps = (state) => {
+//   const notifications = get(state.app, "notifications");
+//   return { notifications };
+// };
 
 export default ServicesNearby;

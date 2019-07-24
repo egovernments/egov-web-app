@@ -224,13 +224,4 @@ export const getNotifications = (queryObject, requestBody) => {
       dispatch(setNotificationsError(error.message));
     }
   };
-
-  return async (dispatch) => {
-    try {
-      const payload = await httpRequest(NOTIFICATIONS.GET.URL, NOTIFICATIONS.GET.ACTION, queryObject, requestBody);
-      dispatch(setNotifications(payload.events));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 };

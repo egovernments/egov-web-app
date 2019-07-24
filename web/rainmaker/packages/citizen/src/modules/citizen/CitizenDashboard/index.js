@@ -98,11 +98,11 @@ class CitizenDashboard extends Component {
   }
 
   render() {
-    const { history, loading } = this.props;
+    const { history, loading, cities } = this.props;
     const { notifications } = this.state;
     return (
       <Screen loading={loading}>
-        <SearchService />
+        <SearchService items={cities} />
         <div className="citizen-dashboard-cont">
           <Label
             label="DASHBOARD_CITIZEN_SERVICES_LABEL"
@@ -135,9 +135,10 @@ class CitizenDashboard extends Component {
 
 const mapStateToProps = (state) => {
   const notifications = get(state.app, "notificationObj.notifications");
+  const cities = state.common.cities || [];
   const loading = get(state.app, "notificationObj.loading");
   const userInfo = get(state.auth, "userInfo");
-  return { notifications, userInfo, loading };
+  return { notifications, userInfo, loading, cities };
 };
 
 const mapDispatchToProps = (dispatch) => {

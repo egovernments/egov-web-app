@@ -31,16 +31,16 @@ const styles = (theme) => ({
   },
 });
 
-const services = [
-  {
-    label: "Complaints",
-    icon: <Icon className="service-icon" action="custom" name="comment-plus" />,
-    route: "/pgr-home",
-  },
-  { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "/property-tax" },
-  { label: "Trade License", icon: <Icon className="service-icon" action="custom" name="trade-license" />, route: "/tradelicense-citizen/home" },
-  { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "fire-noc/home" },
-];
+// const services = [
+//   {
+//     label: "Complaints",
+//     icon: <Icon className="service-icon" action="custom" name="comment-plus" />,
+//     route: "/pgr-home",
+//   },
+//   { label: "Property Tax", icon: <Icon className="service-icon" action="custom" name="home-city-outline" />, route: "/property-tax" },
+//   { label: "Trade License", icon: <Icon className="service-icon" action="custom" name="trade-license" />, route: "/tradelicense-citizen/home" },
+//   { label: "Fire Noc", icon: <Icon className="service-icon" action="custom" name="fire" />, route: "fire-noc/home" },
+// ];
 
 class ServiceList extends React.Component {
   state = {
