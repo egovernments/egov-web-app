@@ -7,7 +7,15 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { getUserInfo, localStorageSet, localStorageGet, getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import {
+  getUserInfo,
+  localStorageSet,
+  localStorageGet,
+  getLocalization,
+  getAccessToken,
+  getLocale,
+  getTenantId,
+} from "egov-ui-kit/utils/localStorageUtils";
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -620,4 +628,38 @@ export const getTransformedNotifications = (notifications) => {
     }));
   }
   return data;
+};
+
+export const getEventsByType = async (eventType) => {
+  const queryObject = [
+    {
+      key: "tenantId",
+      value: getTenantId(),
+    },
+    {
+      key: "eventTypes",
+      value: eventType,
+    },
+  ];
+
+  const requestBody = {
+    apiId: "org.egov.pt",
+    ver: "1.0",
+    ts: 1502890899493,
+    action: "asd",
+    did: "4354648646",
+    key: "xyz",
+    msgId: "654654",
+    requesterId: "61",
+    authToken: getAccessToken(),
+  };
+
+  try {
+    const payload = await httpRequest("/egov-user-event/v1/events/_search", "_search", queryObject, requestBody);
+    if (payload) {
+      return payload.events;
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
 };

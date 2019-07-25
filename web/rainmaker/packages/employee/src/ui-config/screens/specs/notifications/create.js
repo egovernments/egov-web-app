@@ -12,6 +12,7 @@ import {
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import find from "lodash/find";
 
 const header = getCommonHeader({
@@ -19,7 +20,7 @@ const header = getCommonHeader({
   labelKey: "ADD_NEW_PUBLIC_MESSAGE",
 });
 
-export const footer = () => {
+const footer = (buttonLabel, callBack) => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Div",
@@ -39,10 +40,7 @@ export const footer = () => {
           },
         },
         children: {
-          submitButtonLabel: getLabel({
-            labelName: "Submit",
-            labelKey: "TL_COMMON_BUTTON_SUBMIT",
-          }),
+          submitButtonLabel: getLabel(buttonLabel),
           submitButtonIcon: {
             uiFramework: "custom-atoms",
             componentPath: "Icon",
@@ -55,7 +53,6 @@ export const footer = () => {
           action: "condition",
           // callBack: callBackForNext,
         },
-        visible: false,
       },
     },
   };
@@ -157,7 +154,7 @@ export const createForm = getCommonCard({
         labelName: "Message Content ( Character Length:280)",
         labelKey: "EVENTS_COMMENTS_PLACEHOLDER",
       },
-      required: false,
+      required: true,
       pattern: "",
       jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.comments",
       props: {
@@ -298,7 +295,7 @@ export const createForm = getCommonCard({
         label: { labelName: "To Date", labelKey: "TL_COMMON_TO_DATE_LABEL" },
         placeholder: {
           labelName: "Display To Date",
-          labelKey: "TL_TRADE_LICENCE_TO_DATE",
+          labelKey: "EVENTS_TO_DATE_LABEL",
         },
         required: true,
         pattern: getPattern("Date"),
@@ -315,7 +312,31 @@ export const createForm = getCommonCard({
   }),
 });
 
-const tradeLicenseSearchAndResult = {
+const getFooter = () => {
+  const queryValue = getQueryArg(window.location.href, "purpose");
+  let buttonLabel = {};
+  if (queryValue === "edit") {
+    buttonLabel = {
+      labelName: "Save",
+      // labelKey: "",
+    };
+    return footer(buttonLabel);
+  } else if (queryValue == "delete") {
+    buttonLabel = {
+      labelName: "Delete",
+      // labelKey: "",
+    };
+    return footer(buttonLabel);
+  } else {
+    buttonLabel = {
+      labelName: "Add Message",
+      // labelKey: "",
+    };
+    return footer(buttonLabel);
+  }
+};
+
+const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
   beforeInitScreen: (action, state, dispatch) => {
@@ -365,7 +386,7 @@ const tradeLicenseSearchAndResult = {
           },
           children: {
             createForm,
-            footer,
+            footer: getFooter(),
           },
         },
       },
@@ -373,4 +394,4 @@ const tradeLicenseSearchAndResult = {
   },
 };
 
-export default tradeLicenseSearchAndResult;
+export default screenConfig;
