@@ -9,9 +9,8 @@ let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const pageResetAndChange = (state, dispatch) => {
-  dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-  dispatch(prepareFinalObject("LicensesTemp", []));
-  dispatch(setRoute("/tradelicence/apply"));
+  // dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+  dispatch(setRoute("/notifications/create"));
 };
 
 const header = getCommonHeader({
