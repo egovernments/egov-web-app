@@ -78,7 +78,7 @@ const tradeLicenseSearchAndResult = {
 
                 buttonLabel: getLabel({
                   labelName: "NEW PUBLIC MESSAGE",
-                  labelKey: "TL_NEW_PUBLIC_MESSAGE_BUTTON_LABEL",
+                  labelKey: "EVENTS_NEW_PUBLIC_MESSAGE_BUTTON_LABEL",
                 }),
               },
               onClickDefination: {

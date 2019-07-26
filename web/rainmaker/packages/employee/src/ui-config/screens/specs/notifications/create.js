@@ -10,15 +10,70 @@ import {
   getCommonParagraph,
   getLabel,
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
-import find from "lodash/find";
+import { getTenantId, getAccessToken, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { prepareFinalObject, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
+import commonConfig from "config/common.js";
+import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import get from "lodash/get";
+import set from "lodash/set";
+import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils/index";
 
 const header = getCommonHeader({
   labelName: "Add New Public Message",
   labelKey: "ADD_NEW_PUBLIC_MESSAGE",
 });
+
+export const callBackForNext = async (state, dispatch) => {
+  const isNative = localStorageGet("isNative");
+  const isFormValid = validateFields(
+    "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children",
+    state,
+    dispatch,
+    "create"
+  );
+  const eventsData = get(state.screenConfiguration.preparedFinalObject, "events[0]");
+  let fromDate = get(eventsData, "eventDetails.fromDate");
+  let toDate = get(eventsData, "eventDetails.toDate");
+  if (fromDate) {
+    fromDate = convertDateToEpoch(fromDate);
+    set(eventsData, "eventDetails.fromDate", fromDate);
+  }
+  if (toDate) {
+    toDate = convertDateToEpoch(toDate);
+    set(eventsData, "eventDetails.toDate", toDate);
+  }
+  set(eventsData, "source", isNative ? "MOBILEAPP" : "WEBAPP");
+  set(eventsData, "recepient", null);
+  set(eventsData, "eventType", "BROADCAST");
+  const requestBody = {
+    RequestInfo: {
+      apiId: "org.egov.pt",
+      ver: "1.0",
+      ts: 1502890899493,
+      action: "asd",
+      did: "4354648646",
+      key: "xyz",
+      msgId: "654654",
+      requesterId: "61",
+      authToken: getAccessToken(),
+    },
+    events: [eventsData],
+  };
+  if (isFormValid) {
+    try {
+      await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
+      dispatch(
+        setRoute(
+          `/notifications/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&FY=${financialYear}&tenantId=${tenantId}`
+        )
+      );
+    } catch (e) {
+      toggleSnackbar(true, { labelKey: "Create error" }, "error");
+    }
+  }
+};
 
 const footer = (buttonLabel, callBack) => {
   return {
@@ -51,89 +106,95 @@ const footer = (buttonLabel, callBack) => {
         },
         onClickDefination: {
           action: "condition",
-          // callBack: callBackForNext,
+          callBack: callBackForNext,
         },
       },
     },
   };
 };
 
+export const getMdmsData = async (action, state, dispatch) => {
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: commonConfig.tenantId,
+      moduleDetails: [
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants",
+            },
+          ],
+        },
+      ],
+    },
+  };
+  try {
+    let payload = null;
+    payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
+    const localities = get(state.screenConfiguration, "preparedFinalObject.applyScreenMdmsData.tenant.localities", []);
+    if (localities && localities.length > 0) {
+      payload.MdmsRes.tenant.localities = localities;
+    }
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const createForm = getCommonCard({
-  Conatiner: getCommonContainer({
-    tradeLocCity: {
+  createContainer: getCommonContainer({
+    ulb: {
       ...getSelectField({
         label: {
           labelName: "ULB",
           labelKey: "EVENTS_ULB_LABEL",
         },
-        labelPrefix: {
+        localePrefix: {
           moduleName: "TENANT",
           masterName: "TENANTS",
         },
         optionLabel: "name",
         placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
         sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
-        jsonPath: "Licenses[0].tradeLicenseDetail.address.tenantId",
+        jsonPath: "events[0].tenantId",
         required: true,
         props: {
           required: true,
-          disabled: true,
+          // disabled: true,
           style: {
             marginBottom: 10,
           },
         },
       }),
-      // beforeFieldChange: async (action, state, dispatch) => {
-      //   //Below only runs for citizen - not required here in employee
-
-      //   dispatch(prepareFinalObject("Licenses[0].tradeLicenseDetail.address.city", action.value));
-      //   try {
-      //     let payload = await httpRequest(
-      //       "post",
-      //       "/egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
-      //       "_search",
-      //       [{ key: "tenantId", value: action.value }],
-      //       {}
-      //     );
-      //     const mohallaData =
-      //       payload &&
-      //       payload.TenantBoundary[0] &&
-      //       payload.TenantBoundary[0].boundary &&
-      //       payload.TenantBoundary[0].boundary.reduce((result, item) => {
-      //         result.push({
-      //           ...item,
-      //           name: `${action.value.toUpperCase().replace(/[.]/g, "_")}_REVENUE_${item.code.toUpperCase().replace(/[._:-\s\/]/g, "_")}`,
-      //         });
-      //         return result;
-      //       }, []);
-      //     dispatch(prepareFinalObject("applyScreenMdmsData.tenant.localities", mohallaData));
-      //     dispatch(
-      //       handleField(
-      //         "apply",
-      //         "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-      //         "props.suggestions",
-      //         mohallaData
-      //         // payload.TenantBoundary && payload.TenantBoundary[0].boundary
-      //       )
-      //     );
-      //     const mohallaLocalePrefix = {
-      //       moduleName: action.value,
-      //       masterName: "REVENUE",
-      //     };
-      //     dispatch(
-      //       handleField(
-      //         "apply",
-      //         "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocMohalla",
-      //         "props.localePrefix",
-      //         mohallaLocalePrefix
-      //       )
-      //     );
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-      // },
     },
-
+    dummyDiv5: {
+      uiFramework: "custom-atoms",
+      componentPath: "Div",
+      gridDefination: {
+        xs: 12,
+        sm: 6,
+      },
+      props: {
+        disabled: true,
+      },
+    },
+    title: getTextField({
+      label: {
+        labelName: "Title",
+        labelKey: "EVENTS_TITLE_LABEL",
+      },
+      placeholder: {
+        labelName: "Enter message title",
+        labelKey: "EVENTS_TITLE_LABEL_PLACEHOLDER",
+      },
+      required: true,
+      jsonPath: "events[0].name",
+      gridDefination: {
+        xs: 12,
+        sm: 6,
+      },
+    }),
     dummyDiv1: {
       uiFramework: "custom-atoms",
       componentPath: "Div",
@@ -156,7 +217,7 @@ export const createForm = getCommonCard({
       },
       required: true,
       pattern: "",
-      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.rejectDetail.comments",
+      jsonPath: "events[0].description",
       props: {
         multiline: true,
         rows: 6,
@@ -217,22 +278,10 @@ export const createForm = getCommonCard({
               accept: "image/*, .pdf, .png, .jpeg",
             },
             buttonLabel: { labelName: "UPLOAD FILES", labelKey: "EVENTS_UPLOAD_FILE" },
-            // jsonPath: "Licenses[0].wfDocuments",
+            jsonPath: "events[0].eventDetails.documents",
             maxFileSize: 5000,
           },
         },
-        // description: getCommonSubHeader(
-        //   {
-        //     labelName: "Only jpg, png, doc and pdf files. 5MB max file size.",
-        //   },
-        //   {
-        //     style: {
-        //       fontSize: "12px",
-        //       fontWeight: 500,
-        //       color: "rgba(0, 0, 0, 0.60)",
-        //     },
-        //   }
-        // ),
 
         uploadFileInfo: getCommonParagraph(
           {
@@ -261,7 +310,7 @@ export const createForm = getCommonCard({
         disabled: true,
       },
     },
-    tradeFromDate: {
+    fromDate: {
       ...getDateField({
         label: {
           labelName: "Display From Date",
@@ -269,7 +318,7 @@ export const createForm = getCommonCard({
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].validFrom",
+        jsonPath: "events[0].eventDetails.fromDate",
         props: {
           // inputProps: {
           //   min: getTodaysDateInYMD(),
@@ -290,7 +339,7 @@ export const createForm = getCommonCard({
         disabled: true,
       },
     },
-    tradeToDate: {
+    toDate: {
       ...getDateField({
         label: { labelName: "To Date", labelKey: "TL_COMMON_TO_DATE_LABEL" },
         placeholder: {
@@ -299,7 +348,7 @@ export const createForm = getCommonCard({
         },
         required: true,
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].validTo",
+        jsonPath: "events[0].eventDetails.toDate",
         props: {
           //   inputProps: {
           //     min: getNextMonthDateInYMD(),
@@ -340,19 +389,21 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
   beforeInitScreen: (action, state, dispatch) => {
-    const businessServiceData = JSON.parse(localStorageGet("businessServiceData"));
-    const data = find(businessServiceData, { businessService: "NewTL" });
-    const { states } = data || [];
-
-    if (states && states.length > 0) {
-      const status = states.map((item, index) => {
-        return {
-          code: item.state,
-        };
-      });
-      dispatch(prepareFinalObject("applyScreenMdmsData.searchScreen.status", status.filter((item) => item.code != null)));
-    }
-
+    const tenantId = getTenantId();
+    getMdmsData(action, state, dispatch);
+    let props = get(
+      action.screenConfig,
+      "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children.ulb.props",
+      {}
+    );
+    props.value = tenantId;
+    props.disabled = true;
+    set(
+      action.screenConfig,
+      "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children.ulb.props",
+      props
+    );
+    dispatch(prepareFinalObject("events[0].tenantId", tenantId));
     return action;
   },
   components: {
