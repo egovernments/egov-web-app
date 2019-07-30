@@ -95,7 +95,7 @@ const tradeLicenseSearchAndResult = {
           },
         },
         breakAfterSearch: getBreak(),
-        searchResults,
+        searchResults: searchResults(),
       },
     },
   },

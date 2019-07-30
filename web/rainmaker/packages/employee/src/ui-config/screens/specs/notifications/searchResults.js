@@ -15,24 +15,26 @@ export const searchApiCall = async (state, dispatch) => {
       value: getTenantId(),
     },
     { key: "eventTypes", value: "BROADCAST" },
+    { key: "status", value: ["ACTIVE,INACTIVE"] },
   ];
   const events = await getEventsByType(queryObject);
 
+  const localisationLabels = getTransformedLocalStorgaeLabels();
   try {
     let data =
       events &&
       events.map((item) => ({
-        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", getTransformedLocalStorgaeLabels())]: item.name,
-        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", getTransformedLocalStorgaeLabels())]: epochToYmd(
-          item.auditDetails.lastModifiedTime
-        ),
-        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
+        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: item.name,
+        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: epochToYmd(item.auditDetails.lastModifiedTime),
+        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
           ? epochToYmd(item.eventDetails.fromDate)
-          : "NA",
-        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
-          ? epochToYmd(item.eventDetails.toDate)
-          : "NA",
-        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", getTransformedLocalStorgaeLabels())]: item.status,
+          : "-",
+        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
+        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
+          item.status,
+          `EVENTS_${item.status}_LABEL`,
+          localisationLabels
+        ),
         id: item.id,
         tenantId: item.tenantId,
       }));
@@ -47,61 +49,64 @@ const onRowClick = (rowData) => {
   return `/notifications/create?edit=true&uuid=${rowData.id}&tenantId=${rowData.tenantId}`;
 };
 
-export const searchResults = {
-  uiFramework: "custom-molecules",
-  componentPath: "Table",
-  props: {
-    columns: {
-      [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", getTransformedLocalStorgaeLabels())]: {
-        format: (rowData) => {
-          return (
-            <Link to={onRowClick(rowData)}>
+export const searchResults = () => {
+  const localisationLabels = getTransformedLocalStorgaeLabels();
+  return {
+    uiFramework: "custom-molecules",
+    componentPath: "Table",
+    props: {
+      columns: {
+        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: {
+          format: (rowData) => {
+            return (
+              <Link to={onRowClick(rowData)}>
+                <span
+                  style={{
+                    color: "#2196F3",
+                  }}
+                >
+                  {rowData["Message"]}
+                </span>
+              </Link>
+            );
+          },
+        },
+        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: {},
+        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: {},
+        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: {},
+        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: {
+          format: (rowData) => {
+            return (
               <span
                 style={{
-                  color: "#2196F3",
+                  color: rowData["Status"] === "Active" ? "#4CAF50" : "#F44336",
                 }}
               >
-                {rowData["Message"]}
+                {rowData["Status"]}
               </span>
-            </Link>
-          );
+            );
+          },
         },
       },
-      [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", getTransformedLocalStorgaeLabels())]: {},
-      [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", getTransformedLocalStorgaeLabels())]: {},
-      [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", getTransformedLocalStorgaeLabels())]: {},
-      [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", getTransformedLocalStorgaeLabels())]: {
-        format: (rowData) => {
-          return (
-            <span
-              style={{
-                color: rowData["Status"] === "ACTIVE" ? "#4CAF50" : "#F44336",
-              }}
-            >
-              {rowData["Status"]}
-            </span>
-          );
-        },
-      },
-    },
-    title: (
-      <span
-        style={{
-          color: "rgba(0, 0, 0, 0.87)",
-          fontWeight: 900,
-        }}
-      >
-        {getLocaleLabels("Uploaded Messages", "EVENTS_UPLOADED_MESSAGES_HEADER", getTransformedLocalStorgaeLabels())}
-      </span>
-    ),
+      title: (
+        <span
+          style={{
+            color: "rgba(0, 0, 0, 0.87)",
+            fontWeight: 900,
+          }}
+        >
+          {getLocaleLabels("Uploaded Messages", "EVENTS_UPLOADED_MESSAGES_HEADER", localisationLabels)}
+        </span>
+      ),
 
-    options: {
-      filter: true,
-      download: false,
-      responsive: "stacked",
-      selectableRows: false,
-      hover: true,
-      rowsPerPageOptions: [10, 15, 20],
+      options: {
+        filter: true,
+        download: false,
+        responsive: "stacked",
+        selectableRows: false,
+        hover: true,
+        rowsPerPageOptions: [10, 15, 20],
+      },
     },
-  },
+  };
 };

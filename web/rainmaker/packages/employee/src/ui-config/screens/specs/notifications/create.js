@@ -161,6 +161,7 @@ export const createForm = getCommonCard({
             jsonPath: "events[0].eventDetails.documents",
             maxFileSize: 5000,
           },
+          jsonPath: "events[0].eventDetails.documents",
         },
 
         uploadFileInfo: getCommonParagraph(

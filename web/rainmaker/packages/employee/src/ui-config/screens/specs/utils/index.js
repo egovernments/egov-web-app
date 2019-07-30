@@ -61,7 +61,7 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
       toggleSnackbar(true, { labelKey: "Create error" }, "error");
     }
   } else if (uuid) {
-    const purpose = isDelete ? "delete" : "edit";
+    let purpose = isDelete ? "delete" : "edit";
     const status = "success";
     try {
       await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
