@@ -10,137 +10,17 @@ import {
   getCommonParagraph,
   getLabel,
 } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { getTenantId, getAccessToken, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
-import { prepareFinalObject, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
-import commonConfig from "config/common.js";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
 import set from "lodash/set";
-import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
-import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils/index";
+import { footer, getSingleMessage, getMdmsData, getDeleteButton } from "../utils";
 
 const header = getCommonHeader({
   labelName: "Add New Public Message",
   labelKey: "ADD_NEW_PUBLIC_MESSAGE",
 });
-
-export const callBackForNext = async (state, dispatch) => {
-  const isNative = localStorageGet("isNative");
-  const isFormValid = validateFields(
-    "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children",
-    state,
-    dispatch,
-    "create"
-  );
-  const eventsData = get(state.screenConfiguration.preparedFinalObject, "events[0]");
-  let fromDate = get(eventsData, "eventDetails.fromDate");
-  let toDate = get(eventsData, "eventDetails.toDate");
-  if (fromDate) {
-    fromDate = convertDateToEpoch(fromDate);
-    set(eventsData, "eventDetails.fromDate", fromDate);
-  }
-  if (toDate) {
-    toDate = convertDateToEpoch(toDate);
-    set(eventsData, "eventDetails.toDate", toDate);
-  }
-  set(eventsData, "source", isNative ? "MOBILEAPP" : "WEBAPP");
-  set(eventsData, "recepient", null);
-  set(eventsData, "eventType", "BROADCAST");
-  const requestBody = {
-    RequestInfo: {
-      apiId: "org.egov.pt",
-      ver: "1.0",
-      ts: 1502890899493,
-      action: "asd",
-      did: "4354648646",
-      key: "xyz",
-      msgId: "654654",
-      requesterId: "61",
-      authToken: getAccessToken(),
-    },
-    events: [eventsData],
-  };
-  if (isFormValid) {
-    try {
-      await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
-      dispatch(
-        setRoute(
-          `/notifications/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&FY=${financialYear}&tenantId=${tenantId}`
-        )
-      );
-    } catch (e) {
-      toggleSnackbar(true, { labelKey: "Create error" }, "error");
-    }
-  }
-};
-
-const footer = (buttonLabel, callBack) => {
-  return {
-    uiFramework: "custom-atoms",
-    componentPath: "Div",
-    props: {
-      className: "apply-wizard-footer",
-    },
-    children: {
-      payButton: {
-        componentPath: "Button",
-        props: {
-          variant: "contained",
-          color: "primary",
-          style: {
-            minWidth: "200px",
-            height: "48px",
-            marginRight: "45px",
-          },
-        },
-        children: {
-          submitButtonLabel: getLabel(buttonLabel),
-          submitButtonIcon: {
-            uiFramework: "custom-atoms",
-            componentPath: "Icon",
-            props: {
-              iconName: "keyboard_arrow_right",
-            },
-          },
-        },
-        onClickDefination: {
-          action: "condition",
-          callBack: callBackForNext,
-        },
-      },
-    },
-  };
-};
-
-export const getMdmsData = async (action, state, dispatch) => {
-  let mdmsBody = {
-    MdmsCriteria: {
-      tenantId: commonConfig.tenantId,
-      moduleDetails: [
-        {
-          moduleName: "tenant",
-          masterDetails: [
-            {
-              name: "tenants",
-            },
-          ],
-        },
-      ],
-    },
-  };
-  try {
-    let payload = null;
-    payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
-    const localities = get(state.screenConfiguration, "preparedFinalObject.applyScreenMdmsData.tenant.localities", []);
-    if (localities && localities.length > 0) {
-      payload.MdmsRes.tenant.localities = localities;
-    }
-    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 export const createForm = getCommonCard({
   createContainer: getCommonContainer({
@@ -361,35 +241,14 @@ export const createForm = getCommonCard({
   }),
 });
 
-const getFooter = () => {
-  const queryValue = getQueryArg(window.location.href, "purpose");
-  let buttonLabel = {};
-  if (queryValue === "edit") {
-    buttonLabel = {
-      labelName: "Save",
-      // labelKey: "",
-    };
-    return footer(buttonLabel);
-  } else if (queryValue == "delete") {
-    buttonLabel = {
-      labelName: "Delete",
-      // labelKey: "",
-    };
-    return footer(buttonLabel);
-  } else {
-    buttonLabel = {
-      labelName: "Add Message",
-      // labelKey: "",
-    };
-    return footer(buttonLabel);
-  }
-};
-
 const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
   beforeInitScreen: (action, state, dispatch) => {
     const tenantId = getTenantId();
+    //const isEditable = getQueryArg(window.location.href, "edit");
+    const uuid = getQueryArg(window.location.href, "uuid");
+    const messageTenant = getQueryArg(window.location.href, "tenantId");
     getMdmsData(action, state, dispatch);
     let props = get(
       action.screenConfig,
@@ -404,6 +263,9 @@ const screenConfig = {
       props
     );
     dispatch(prepareFinalObject("events[0].tenantId", tenantId));
+    if (uuid) {
+      getSingleMessage(state, dispatch, messageTenant, uuid);
+    }
     return action;
   },
   components: {
@@ -427,6 +289,7 @@ const screenConfig = {
               },
               ...header,
             },
+            newApplicationButton: getDeleteButton(),
           },
         },
         createCard: {
@@ -437,7 +300,7 @@ const screenConfig = {
           },
           children: {
             createForm,
-            footer: getFooter(),
+            footer: footer("BROADCAST"),
           },
         },
       },

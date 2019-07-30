@@ -1,32 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getEventsByType } from "egov-ui-kit/utils/commons";
 import { handleScreenConfigurationFieldChange as handleField, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getLocaleLabels, getTransformedLocalStorgaeLabels, epochToYmd } from "egov-ui-framework/ui-utils/commons";
-
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import { getEventsByType } from "../utils";
 // function sleep(ms) {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // }
 
 export const searchApiCall = async (state, dispatch) => {
-  const events = await getEventsByType("BROADCAST");
+  const queryObject = [
+    {
+      key: "tenantId",
+      value: getTenantId(),
+    },
+    { key: "eventTypes", value: "BROADCAST" },
+  ];
+  const events = await getEventsByType(queryObject);
 
   try {
-    let data = events.map((item) => ({
-      [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", getTransformedLocalStorgaeLabels())]: item.name,
-      [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", getTransformedLocalStorgaeLabels())]: epochToYmd(
-        item.auditDetails.lastModifiedTime
-      ),
-      [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
-        ? epochToYmd(item.eventDetails.fromDate)
-        : "NA",
-      [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
-        ? epochToYmd(item.eventDetails.toDate)
-        : "NA",
-      [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", getTransformedLocalStorgaeLabels())]: item.status,
-      id: item.id,
-      tenantId: item.tenantId,
-    }));
+    let data =
+      events &&
+      events.map((item) => ({
+        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", getTransformedLocalStorgaeLabels())]: item.name,
+        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", getTransformedLocalStorgaeLabels())]: epochToYmd(
+          item.auditDetails.lastModifiedTime
+        ),
+        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
+          ? epochToYmd(item.eventDetails.fromDate)
+          : "NA",
+        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", getTransformedLocalStorgaeLabels())]: item.eventDetails
+          ? epochToYmd(item.eventDetails.toDate)
+          : "NA",
+        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", getTransformedLocalStorgaeLabels())]: item.status,
+        id: item.id,
+        tenantId: item.tenantId,
+      }));
     dispatch(handleField("search", "components.div.children.searchResults", "props.data", data));
   } catch (error) {
     dispatch(toggleSnackbar(true, error.message, "error"));
@@ -35,7 +44,7 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  return `/notifications/create?purpose=edit&uuid=${rowData.id}&tenantId=${rowData.tenantId}`;
+  return `/notifications/create?edit=true&uuid=${rowData.id}&tenantId=${rowData.tenantId}`;
 };
 
 export const searchResults = {
@@ -87,7 +96,7 @@ export const searchResults = {
     ),
 
     options: {
-      filter: false,
+      filter: true,
       download: false,
       responsive: "stacked",
       selectableRows: false,
