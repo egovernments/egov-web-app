@@ -370,6 +370,7 @@ export const loadUserNameData = async uuid => {
   if (response && response.user && response.user.length > 0) {
     data.auditorName = get(response, "user[0].name", "NA");
   }
+  data.Disclaimer=getMessageFromLocalization("RECEIPT_FOOTER_1");
   store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };
 
