@@ -4,7 +4,6 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import Label from "../../utils/translationNode";
 import isEmpty from "lodash/isEmpty";
-import sortBy from "lodash/sortBy";
 import "./index.css";
 
 const floatingLabelStyle = {
@@ -88,8 +87,7 @@ const DropDownUi = ({
   };
 
   const renderSelectMenuItems = () => {
-    const sortData = sortBy(dropDownData, ["label"]);
-    return sortData.map((option, index) => {
+    return dropDownData.map((option, index) => {
       return (
         <MenuItem
           className="menu-class"
