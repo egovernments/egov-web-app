@@ -39,9 +39,9 @@ class AutoSuggestDropdown extends React.Component {
   };
 
   getNameById = (id, dropDownData) => {
-    //const { dropDownData } = this.props;
+    const { getLocalizedLabel } = this;
     const filteredArray = filter(dropDownData, { value: id });
-    return filteredArray.length > 0 ? filteredArray[0].label : id;
+    return filteredArray.length > 0 ? getLocalizedLabel(filteredArray[0].label) : id;
   };
 
   componentWillReceiveProps(nextProps) {
