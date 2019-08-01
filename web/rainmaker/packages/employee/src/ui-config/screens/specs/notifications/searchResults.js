@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { handleScreenConfigurationFieldChange as handleField, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getLocaleLabels, getTransformedLocalStorgaeLabels, epochToYmd } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { getEventsByType } from "../utils";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import TextField from "@material-ui/core/TextField";
+
 // function sleep(ms) {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // }
@@ -46,7 +48,8 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  return `/notifications/create?edit=true&uuid=${rowData.id}&tenantId=${rowData.tenantId}`;
+  let appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework` : ``;
+  window.location.href = `${appendUrl}/notifications/create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
 };
 
 export const searchResults = () => {
@@ -55,39 +58,31 @@ export const searchResults = () => {
     uiFramework: "custom-molecules",
     componentPath: "Table",
     props: {
-      columns: {
-        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: {
-          format: (rowData) => {
-            return (
-              <Link to={onRowClick(rowData)}>
-                <span
-                  style={{
-                    color: "#2196F3",
-                  }}
-                >
-                  {rowData["Message"]}
-                </span>
-              </Link>
-            );
+      columns: [
+        getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels),
+        getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels),
+        getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels),
+        getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels),
+        {
+          name: getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels),
+          options: {
+            filter: false,
+            customBodyRender: (value) => <span style={value === "Active" ? { color: "#4CAF50" } : { color: "#F44336" }}> {value}</span>,
           },
         },
-        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: {},
-        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: {},
-        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: {},
-        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: {
-          format: (rowData) => {
-            return (
-              <span
-                style={{
-                  color: rowData["Status"] === "Active" ? "#4CAF50" : "#F44336",
-                }}
-              >
-                {rowData["Status"]}
-              </span>
-            );
+        {
+          name: "tenantId",
+          options: {
+            display: false,
           },
         },
-      },
+        {
+          name: "id",
+          options: {
+            display: false,
+          },
+        },
+      ],
       title: (
         <span
           style={{
@@ -98,7 +93,6 @@ export const searchResults = () => {
           {getLocaleLabels("Uploaded Messages", "EVENTS_UPLOADED_MESSAGES_HEADER", localisationLabels)}
         </span>
       ),
-
       options: {
         filter: true,
         download: false,
@@ -106,6 +100,9 @@ export const searchResults = () => {
         selectableRows: false,
         hover: true,
         rowsPerPageOptions: [10, 15, 20],
+        onRowClick: (row, index) => {
+          onRowClick(row);
+        },
       },
     },
   };
