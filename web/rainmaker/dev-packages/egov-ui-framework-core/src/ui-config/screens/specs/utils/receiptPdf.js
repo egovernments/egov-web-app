@@ -773,9 +773,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
           },
           {
             width: "*",
-            text: `(${transformedData.accessories}) ${
-              transformedData.accessoriesList
-            }`
+            text: `${transformedData.accessoriesList}`
           }
         ]
       },
@@ -848,8 +846,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
     ],
     footer: [
       {
-        text:
-          "Disclaimer:\nThis license is not the proof of ownership.\nThis Trade License is issued under rule 10.39 of the Municipal Account Code 2017 with condition that the applicant shall obtain relevant NOC from concerned departments like Punjab Pollution control board / Fire Office /Health Department/ Excise Department/Deputy Commissioner (under Explosive Act) whichever applicable. The Municipal Council/Corporation reserves the right to cancel this Trade License for Breach of any condition in accordance with law.",
+        text:transformedData.Disclaimer,
         style: "receipt-footer"
       }
     ],
@@ -925,7 +922,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
       "receipt-footer": {
         color: "#484848",
         fontSize: 8,
-        margin: [10, -15, 5, 5]
+        margin: [10, -25, 5, 5]
       },
       "receipt-no": {
         color: "#484848",
