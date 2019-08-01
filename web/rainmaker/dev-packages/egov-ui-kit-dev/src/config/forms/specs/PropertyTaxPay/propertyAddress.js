@@ -5,6 +5,7 @@ import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-ki
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
+import sortBy from "lodash/sortBy";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
 
@@ -189,7 +190,7 @@ const formConfig = {
           dd.push({ label: getTranslatedLabel(label, localizationLabels), value: selected.code });
           return dd;
         }, []);
-        dispatch(setFieldProperty("propertyAddress", "city", "dropDownData", dd));
+        dispatch(setFieldProperty("propertyAddress", "city", "dropDownData", sortBy(dd, ["label"])));
       }
       return action;
     } catch (e) {
