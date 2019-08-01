@@ -11,10 +11,19 @@ import {
     getCommonParagraph,
     getLabel,
   } from "egov-ui-framework/ui-config/screens/specs/utils";
+  import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+  import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+  import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+  import get from "lodash/get";
+  import set from "lodash/set"; 
+  import { footer, getSingleMessage, getMdmsData, getDeleteButton } from "../utils";
+
   const header = getCommonHeader({
     labelName: "Add New Event",
     labelKey: "EVENT_ADD_NEW_LABEL"
   });
+
+
 
 
   export const createForm = getCommonCard({
@@ -88,12 +97,12 @@ import {
             labelKey: "EVENTS_CATEGORY_LABEL",
           },
           localePrefix: {
-            moduleName: "TENANT",
-            masterName: "TENANTS",
+            moduleName: "",
+            masterName: "",
           },
           optionLabel: "name",
           placeholder: { labelName: "Select Event Category", labelKey: "EVENTS_SELECT_CATEGORY_LABEL" },
-          sourceJsonPath: "applyScreenMdmsData.tenant.tenants",
+          sourceJsonPath: "",
           jsonPath: "events[0].tenantId",
           required: true,
           props: {
@@ -121,7 +130,7 @@ import {
         componentPath: "Div",
         gridDefination: {
           xs: 6,
-          sm: 2,
+          sm: 6,
         },
         children: {
           uploadButton: {
@@ -129,8 +138,11 @@ import {
                 componentPath: "Button",
                 props: {
                   color: "primary",
-                  fullWidth: true
-                 // allign: left
+                  fullWidth: true,
+                  style: {
+                    justifyContent: 'left',
+                  width : "30%"
+                  },
                 },
                 children: {
                   mihyLoginButtonText: getLabel({label:"ADD NEW CATEGORY"})
@@ -353,7 +365,11 @@ import {
                 componentPath: "Button",
                 props: {
                   color: "primary",
-                  fullWidth: true
+                  fullWidth: true,
+                  style:{
+                      border: "1px solid #F48841",
+                      width : "20%"
+                  }
                 },
                 children: {
                   mihyLoginButtonText: getLabel({label:"Locate On Map"})
@@ -381,11 +397,11 @@ import {
           labelName: "Enter Organizer Name",
           labelKey: "EVENTS_ENTER_ORGANIZER_NAME_PLACEHOLDER",
         },
-        required: true,
+        required: false,
         jsonPath: "events[0].name",
         gridDefination: {
           xs: 12,
-          sm: 6,
+          sm: 3,
         },
       }),
       title5: getTextField({
@@ -397,11 +413,11 @@ import {
           labelName: "Enter Entry Fee",
           labelKey: "EVENTS_ENTER_ENTRY_FEE_PLACEHOLDER",
         },
-        required: true,
+        required: false,
         jsonPath: "events[0].name",
         gridDefination: {
           xs: 12,
-          sm: 6,
+          sm: 3,
         },
       }),
     }),
@@ -410,6 +426,30 @@ import {
   const screenConfig={
     uiFramework: "material-ui",
     name: "create",
+    beforeInitScreen: (action, state, dispatch) => {
+      const tenantId = getTenantId();
+      //const isEditable = getQueryArg(window.location.href, "edit");
+      const uuid = getQueryArg(window.location.href, "uuid");
+      const messageTenant = getQueryArg(window.location.href, "tenantId");
+      getMdmsData(action, state, dispatch);
+      let props = get(
+        action.screenConfig,
+        "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children.ulb.props",
+        {}
+      );
+      props.value = tenantId;
+      props.disabled = true;
+      set(
+        action.screenConfig,
+        "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children.ulb.props",
+        props
+      );
+      dispatch(prepareFinalObject("events[0].tenantId", tenantId));
+      if (uuid) {
+        getSingleMessage(state, dispatch, messageTenant, uuid);
+      }
+      return action;
+    },
     components: {
         div:{
             uiFramework: "custom-atoms",
