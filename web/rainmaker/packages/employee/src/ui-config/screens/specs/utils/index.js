@@ -166,6 +166,14 @@ export const getMdmsData = async (action, state, dispatch) => {
             },
           ],
         },
+        {
+          "moduleName": "mseva",
+          "masterDetails": [
+            {
+              "name": "EventCategories"
+            }
+          ]
+        }
       ],
     },
   };
@@ -173,10 +181,7 @@ export const getMdmsData = async (action, state, dispatch) => {
     let payload = null;
     payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
     const localities = get(state.screenConfiguration, "preparedFinalObject.applyScreenMdmsData.tenant.localities", []);
-    if (localities && localities.length > 0) {
-      payload.MdmsRes.tenant.localities = localities;
-    }
-    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+       dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
   }

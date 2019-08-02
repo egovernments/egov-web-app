@@ -21,6 +21,7 @@ import {
   const header = getCommonHeader({
     labelName: "Add New Event",
     labelKey: "EVENT_ADD_NEW_LABEL"
+     
   });
 
 
@@ -97,13 +98,13 @@ import {
             labelKey: "EVENTS_CATEGORY_LABEL",
           },
           localePrefix: {
-            moduleName: "",
-            masterName: "",
+            moduleName: "MSEVA",
+            masterName: "EVENTCATEGORIES",
           },
           optionLabel: "name",
           placeholder: { labelName: "Select Event Category", labelKey: "EVENTS_SELECT_CATEGORY_LABEL" },
-          sourceJsonPath: "",
-          jsonPath: "events[0].tenantId",
+          sourceJsonPath: "applyScreenMdmsData.mseva.EventCategories",
+          jsonPath: "events[0].eventCategory",
           required: true,
           props: {
             required: true,
