@@ -3,8 +3,6 @@ import { handleScreenConfigurationFieldChange as handleField, toggleSnackbar } f
 import { getLocaleLabels, getTransformedLocalStorgaeLabels, epochToYmd } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { getEventsByType } from "../utils";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
 
 // function sleep(ms) {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -48,8 +46,7 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  let appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework` : ``;
-  window.location.href = `${appendUrl}/notifications/create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
+  window.location.href = `notifications/create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
 };
 
 export const searchResults = () => {
