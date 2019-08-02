@@ -1,9 +1,12 @@
 import get from "lodash/get";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
-import { convertEpochToDate, convertDateToEpoch } from "../../utils/index";
+import {
+  convertEpochToDate,
+  convertDateToEpoch,
+  getTextToLocalMapping
+} from "../../utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getTextToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 
@@ -14,7 +17,6 @@ export const searchApiCall = async (state, dispatch) => {
       key: "tenantId",
       value: JSON.parse(getUserInfo()).tenantId
     },
-    // { key: "limit", value: "10" },
     { key: "offset", value: "0" }
   ];
   let searchScreenObject = get(

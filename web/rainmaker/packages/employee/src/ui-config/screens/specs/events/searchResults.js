@@ -37,8 +37,7 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  let appendUrl = process.env.REACT_APP_SELF_RUNNING === "true" ? `/egov-ui-framework` : ``;
-  window.location.href = `${appendUrl}/notifications/create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
+  window.location.href = `create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
 };
 
 export const searchResults = () => {
