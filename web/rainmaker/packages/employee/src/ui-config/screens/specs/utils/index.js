@@ -117,8 +117,8 @@ export const footer = (eventType = "BROADCAST") => {
         },
         children: {
           submitButtonLabel: getLabel({
-            labelName: uuid ? "SAVE" : "ADD MESSAGE",
-            labelKey: uuid ? "MESSAGE_SAVE_BUTTOM" : "ADD_MESSAGE_BUTTON",
+            labelName:eventType === "EVENTSONGROUND" ? "CREATE EVENT" : uuid ? "SAVE" : "ADD MESSAGE",
+            labelKey: eventType === "EVENTSONGROUND" ? "EVENTS_CREATE_EVENT"  : uuid ? "MESSAGE_SAVE_BUTTOM" : "ADD_MESSAGE_BUTTON",
           }),
         },
         onClickDefination: {

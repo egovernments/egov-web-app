@@ -125,6 +125,7 @@ import {
           disabled: true,
         },
       },
+      /*
       AddCategory: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -149,7 +150,7 @@ import {
                 }, 
           },
         },
-      },
+      }, 
       dummyDiv8: {
         uiFramework: "custom-atoms",
         componentPath: "Div",
@@ -161,6 +162,7 @@ import {
           disabled: true,
         },
       },
+      */
       comments: getTextField({
         label: {
           labelName: "Description",
@@ -210,7 +212,7 @@ import {
           jsonPath: "events[0].eventDetails.fromDate",
           gridDefination: {
             xs: 12,
-            sm: 4,
+            sm: 3,
           },
           props: {
             // inputProps: {
@@ -218,7 +220,9 @@ import {
             //   max: getFinancialYearDates("yyyy-mm-dd").endDate,
             // },
             iconObj: { position: "end", iconName: "calendar_today" },
-            style: { marginBottom: 10 },
+            style: { marginBottom: 10 
+
+            },
           },
         }),
       },
@@ -233,16 +237,17 @@ import {
           jsonPath: "events[0].eventDetails.fromTime",
           gridDefination: {
             xs: 12,
-            sm: 2,
+            sm: 3,
           },
-          props: {
+                   props: {
             // inputProps: {
             //   min: getTodaysDateInYMD(),
             //   max: getFinancialYearDates("yyyy-mm-dd").endDate,
             // },
             iconObj: { position: "end", iconName: " access_time" },
            
-            style: { marginBottom: 10 },
+            style: { marginBottom: 10 ,paddingRight :80
+            },
           },
         }),
       },
@@ -266,7 +271,7 @@ import {
           jsonPath: "events[0].eventDetails.toDate",
           gridDefination: {
             xs: 12,
-            sm: 4,
+            sm: 3,
           },
           props: {
             //   inputProps: {
@@ -289,7 +294,7 @@ import {
           jsonPath: "events[0].eventDetails.fromTime",
           gridDefination: {
             xs: 12,
-            sm: 2,
+            sm: 3,
           },
           props: {
             // inputProps: {
@@ -297,7 +302,7 @@ import {
             //   max: getFinancialYearDates("yyyy-mm-dd").endDate,
             // },
             iconObj: { position: "end", iconName: " access_time" },
-            style: { marginBottom: 10 },
+            style: { marginBottom: 10 ,paddingRight :80},
           },
         }),
       },
@@ -357,6 +362,7 @@ import {
                     fontSize: "12px",
                     fontWeight: 500,
                     color: "rgba(0, 0, 0, 0.60)",
+                    marginBottom: 5
                   },
             }
           ),
@@ -368,7 +374,8 @@ import {
                   fullWidth: true,
                   style:{
                       border: "1px solid #F48841",
-                      width : "20%"
+                      width : "20%",
+                      marginBottom:10
                   }
                 },
                 children: {
@@ -414,11 +421,17 @@ import {
           labelKey: "EVENTS_ENTER_ENTRY_FEE_PLACEHOLDER",
         },
         required: false,
-        jsonPath: "events[0].name",
+        jsonPath: "events[0].fee",
         gridDefination: {
           xs: 12,
           sm: 3,
         },
+        props: {
+          style: {
+            paddingRight: 80,
+          },
+        },
+
       }),
     }),
   });
@@ -481,7 +494,7 @@ import {
                       },
                       children: {
                         createForm,
-                     //   footer: getFooter(),
+                        footer: footer("EVENTSONGROUND"),
                       },  
                   }
 
