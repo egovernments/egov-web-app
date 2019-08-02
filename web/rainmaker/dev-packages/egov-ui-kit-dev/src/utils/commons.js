@@ -1,9 +1,11 @@
+import React from "react";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import axios from "axios";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
+import Label from "egov-ui-kit/utils/translationNode";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
@@ -602,6 +604,17 @@ const getEndpointfromUrl = (url, name) => {
   return result;
 };
 
+const getEventSLA = (eventTime) => {
+  const days = (Date.now() - eventTime) / (1000 * 60 * 60 * 24);
+  let sla =
+    days > 1 ? (
+      <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />
+    ) : (
+      <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />
+    );
+  return sla;
+};
+
 export const getTransformedNotifications = (notifications) => {
   let data = [];
   if (notifications && notifications.length > 0) {
@@ -609,7 +622,7 @@ export const getTransformedNotifications = (notifications) => {
       name: item.name,
       title: item.description,
       address: item.eventDetails && item.eventDetails.address,
-      SLA: new Date(Date.now()).getHours() - new Date(item.auditDetails.lastModifiedTime).getHours(),
+      SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item.auditDetails.lastModifiedTime),
       buttons:
         item.actions && item.actions.actionUrls
           ? item.actions.actionUrls.map((actionUrls) => ({

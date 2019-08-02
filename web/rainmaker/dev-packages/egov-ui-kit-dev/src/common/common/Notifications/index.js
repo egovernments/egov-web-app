@@ -66,19 +66,7 @@ const Notifications = ({ notifications = [], history }) => {
                 })}
               </div>
             )}
-            {SLA && (
-              // <div className="rainmaker-displayInline">
-              //   <Icon name="access-time" action="device" style={{ height: "20px", width: "35px", marginRight: 5 }} />
-              <Label
-                fontSize={14}
-                color="rgba(0, 0, 0, 0.60)"
-                label={"CS_SLA_TIME"}
-                dynamicArray={[SLA]}
-                labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                containerStyle={{ marginBottom: 5 }}
-              />
-              // </div>
-            )}
+            {SLA}
           </div>
         }
       />
