@@ -3,13 +3,17 @@ import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { searchResults, searchApiCall } from "./searchResults";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
+import set from "lodash/set";
+import { ulbFilter } from "../utils";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const pageResetAndChange = (state, dispatch) => {
-  // dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+  dispatch(prepareFinalObject("events", []));
   dispatch(setRoute("/events/create"));
 };
 
@@ -22,6 +26,11 @@ const eventsSearchAndResult = {
   name: "search",
   beforeInitScreen: (action, state, dispatch) => {
     searchApiCall(state, dispatch);
+    const tenantId = getTenantId();
+    let props = get(action.screenConfig, "components.div.children.cityFilter.children.cardContent.children.container.children.ulb.props", {});
+    props.value = tenantId;
+    props.disabled = true;
+    set(action.screenConfig, "components.div.children.cityFilter.children.cardContent.children.container.children.ulb.props", props);
     return action;
   },
   components: {
@@ -90,8 +99,9 @@ const eventsSearchAndResult = {
             },
           },
         },
+        cityFilter: ulbFilter,
         breakAfterSearch: getBreak(),
-        searchResults,
+        searchResults: searchResults(),
       },
     },
   },

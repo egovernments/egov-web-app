@@ -1,11 +1,4 @@
-import {
-  getCommonHeader,
-  getLabel,
-  getSelectField,
-  getCommonContainer,
-  getBreak,
-  getCommonCard,
-} from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getCommonHeader, getLabel, getBreak } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -13,6 +6,7 @@ import { searchResults, searchApiCall } from "./searchResults";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import get from "lodash/get";
 import set from "lodash/set";
+import { ulbFilter } from "../utils";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 let enableButton = true;
@@ -26,37 +20,6 @@ const pageResetAndChange = (state, dispatch) => {
 const header = getCommonHeader({
   labelName: "Public Message Notice",
   labelKey: "EVENTS_PUBLIC_MESSAGE_NOTICE_HEADER",
-});
-
-export const ulbFilter = getCommonCard({
-  container: getCommonContainer({
-    ulb: getSelectField({
-      label: {
-        labelName: "ULB",
-        labelKey: "EVENTS_ULB_LABEL",
-      },
-      localePrefix: {
-        moduleName: "TENANT",
-        masterName: "TENANTS",
-      },
-      optionLabel: "name",
-      placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
-      gridDefination: {
-        xs: 12,
-        sm: 3,
-      },
-      props: {
-        data: [
-          {
-            value: "pb.amritsar",
-            label: "TENANT_TENANTS_PB_AMRITSAR",
-          },
-        ],
-        optionValue: "value",
-        optionLabel: "label",
-      },
-    }),
-  }),
 });
 
 const eventsSearchAndResult = {

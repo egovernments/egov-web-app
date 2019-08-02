@@ -1,8 +1,8 @@
 import get from "lodash/get";
 import set from "lodash/set";
-import { getLabel } from "egov-ui-framework/ui-config/screens/specs/utils";
-import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+import { getLabel, getSelectField, getCommonContainer, getCommonCard } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
@@ -231,3 +231,34 @@ export const getDeleteButton = () => {
     visible: uuid ? true : false,
   };
 };
+
+export const ulbFilter = getCommonCard({
+  container: getCommonContainer({
+    ulb: getSelectField({
+      label: {
+        labelName: "ULB",
+        labelKey: "EVENTS_ULB_LABEL",
+      },
+      localePrefix: {
+        moduleName: "TENANT",
+        masterName: "TENANTS",
+      },
+      optionLabel: "name",
+      placeholder: { labelName: "Select City", labelKey: "TL_SELECT_CITY" },
+      gridDefination: {
+        xs: 12,
+        sm: 3,
+      },
+      props: {
+        data: [
+          {
+            value: "pb.amritsar",
+            label: "TENANT_TENANTS_PB_AMRITSAR",
+          },
+        ],
+        optionValue: "value",
+        optionLabel: "label",
+      },
+    }),
+  }),
+});
