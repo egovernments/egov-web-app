@@ -175,9 +175,9 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
             getMessageFromLocalization(tradeSubType)
         );
         res.tradeTypeCertificate.push(
-          getMessageFromLocalization(tradeCategory) +
+          getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeCategory) +
             " / " +
-            getMessageFromLocalization(tradeType) +
+            getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeType) +
             " / " +
             getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+getTransformedLocale(tradeSubType))
         );
