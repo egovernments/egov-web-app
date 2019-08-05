@@ -20,7 +20,7 @@ export const searchApiCall = async (state, dispatch) => {
       events &&
       events.map((item) => ({
         [getLocaleLabels("Message", "EVENTS_EVENT_NAME_LABEL", localisationLabels)]: item.name,
-        [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: "-",
+        [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: item.eventCategory ? item.eventCategory : "-",
         [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
           ? epochToYmd(item.eventDetails.fromDate)
           : "-",

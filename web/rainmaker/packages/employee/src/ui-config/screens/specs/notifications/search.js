@@ -99,7 +99,7 @@ const eventsSearchAndResult = {
               },
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["TL_CEMP"],
+                roles: ["EMPLOYEE,SUPERUSER"],
               },
             },
           },
