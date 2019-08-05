@@ -38,6 +38,16 @@ const MenuButton = Loadable({
   loading: () => <Loading />
 });
 
+const FormIcon = Loadable({
+  loader: () => import("./Icons/FormIcon"),
+  loading: () => <Loading />
+});
+
+const TradeLicenseIcon = Loadable({
+  loader: () => import("./Icons/TradeLicenseIcon"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -45,5 +55,7 @@ export {
   MapLocation,
   AutoSuggest,
   Asteric,
-  MenuButton
+  MenuButton,
+  FormIcon,
+  TradeLicenseIcon
 };

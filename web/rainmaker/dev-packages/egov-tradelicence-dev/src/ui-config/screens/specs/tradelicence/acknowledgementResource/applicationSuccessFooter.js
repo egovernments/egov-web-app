@@ -8,7 +8,7 @@ const getCommonApplyFooter = children => {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     props: {
-      className: "apply-wizard-footer"
+      className: "apply-success-footer"
     },
     children
   };
@@ -126,7 +126,9 @@ export const applicationSuccessFooter = (
 ) => {
   //const baseURL = getBaseURL();
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  // const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  /* Mseva 2.0 changes */
+  const redirectionURL = roleExists ? "/" : "/inbox";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -134,7 +136,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          minWidth: "200px",
+          minWidth: "290px",
           height: "48px",
           marginRight: "16px"
         }
@@ -186,7 +188,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          minWidth: "250px",
+          minWidth: "290px",
           height: "48px",
           marginRight: "16px"
         }

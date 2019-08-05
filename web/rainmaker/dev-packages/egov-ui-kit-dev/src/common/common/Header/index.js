@@ -145,6 +145,7 @@ class Header extends Component {
       name,
       history,
       title,
+      headerTitle,
       titleAddon,
       fetchLocalizationLabel,
       userInfo,
@@ -153,14 +154,17 @@ class Header extends Component {
       refreshButton,
       sortButton,
       searchButton,
+      helpButton,
+      notificationButton,
       activeRoutePath,
       hasLocalisation,
+      notificationsCount,
     } = this.props;
     return (
       <div>
         <AppBar
           className={className}
-          title={title}
+          title={title ? title : headerTitle}
           ulbName={name}
           defaultTitle={defaultTitle}
           titleAddon={titleAddon}
@@ -172,11 +176,14 @@ class Header extends Component {
           refreshButton={refreshButton}
           sortButton={sortButton}
           searchButton={searchButton}
+          helpButton={helpButton}
+          notificationButton={notificationButton}
           sortDialogOpen={onSortClick}
           history={this.props.history}
           handleItemClick={_handleItemClick}
           activeRoutePath={activeRoutePath}
           hasLocalisation={hasLocalisation}
+          notificationsCount={notificationsCount}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -212,13 +219,16 @@ const getUlbGradeLabel = (ulbGrade) => {
 
 const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
+  const notificationsCount = get(state.app, "notificationsCount");
   const { role } = ownProps;
   const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "code");
   const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
-  return { cities, defaultTitle, name };
+  const screenKey = window.location.pathname.split("/").pop();
+  const headerTitle = get(state.screenConfiguration.screenConfig, `${screenKey}.components.div.children.header.children.key.props.labelKey`);
+  return { cities, defaultTitle, name, headerTitle, notificationsCount };
 };
 
 const mapDispatchToProps = (dispatch) => {

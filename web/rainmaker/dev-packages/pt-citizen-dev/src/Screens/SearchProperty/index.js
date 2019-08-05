@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import YearDialogue from "../common/YearDialogue";
-import { Screen } from "modules/common";
-import { BreadCrumbs, Button } from "components";
+import { Screen, SingleProperty } from "modules/common";
+import Hidden from "@material-ui/core/Hidden";
+import { BreadCrumbs, Button, Icon, Card } from "components";
+import Grid from "@material-ui/core/Grid";
 import {
   addBreadCrumbs,
   toggleSnackbarAndSetText
@@ -46,6 +48,7 @@ class SearchProperty extends Component {
     if (!(localStorageGet("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
+    this.setState({ searchResult: [] });
   };
 
   closeYearRangeDialogue = () => {
@@ -53,7 +56,10 @@ class SearchProperty extends Component {
   };
 
   onSearchClick = (form, formKey) => {
+    const { propertiesFound } = this.props;
     const { city, ids, oldpropertyids, mobileNumber } = form.fields || {};
+    const tableData = this.extractTableData(propertiesFound);
+
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldpropertyids.value && !ids.value && !mobileNumber.value) {
@@ -82,6 +88,9 @@ class SearchProperty extends Component {
       if (mobileNumber.value) {
         queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
       }
+      this.setState({
+        searchResult: tableData
+      });
       this.props.fetchProperties(queryParams);
       this.setState({ showTable: true });
     }
@@ -156,33 +165,79 @@ class SearchProperty extends Component {
     console.log(e);
   };
 
+  onAddButtonClick = () => {
+    this.setState({
+      dialogueOpen: true
+    });
+  };
+
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
     const { showTable, urlToAppend } = this.state;
     const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const { pathname } = location;
-    const tableData = this.extractTableData(propertiesFound);
+    // const tableData = this.extractTableData(propertiesFound);
+    const { searchResult } = this.state;
     if (urls.length == 0 && localStorageGet("path") === pathname) {
       urlArray = JSON.parse(localStorageGet("breadCrumbObject"));
     }
     return (
       <Screen loading={loading} className="screen-with-bredcrumb">
-        <BreadCrumbs
+        {/* <BreadCrumbs
           url={urls.length > 0 ? urls : urlArray}
           history={history}
-        />
+        /> */}
+        <div className="rainmaker-displayInline inner-header-style">
+          <Label
+            label="PT_SEARCH_PROPERTY"
+            dark={true}
+            fontSize={16}
+            fontWeight={900}
+            bold={true}
+          />
+          <div
+            className="rainmaker-displayInline"
+            onClick={this.onAddButtonClick}
+          >
+            <Icon
+              action="content"
+              name="add"
+              color="#fe7a51"
+              style={{ height: 22 }}
+            />
+            <Label label="ADD NEW PROPERTY" color="#fe7a51" />
+          </div>
+        </div>
+
         <PropertySearchFormHOC
           history={this.props.history}
           onSearchClick={this.onSearchClick}
         />
-        {tableData.length > 0 && showTable ? (
-          <PropertyTable
-            tableData={tableData}
-            onActionClick={this.onActionClick}
+        <Hidden xsDown>
+          {searchResult && searchResult.length > 0 && showTable ? (
+            <PropertyTable
+              tableData={searchResult}
+              onActionClick={this.onActionClick}
+            />
+          ) : null}
+        </Hidden>
+        <Hidden smUp>
+          {searchResult && searchResult.length > 0 && (
+            <Label
+              label="PT_SEARCH_RESULTS"
+              dynamicArray={[searchResult.length]}
+              fontSize={16}
+              color="rgba(0, 0, 0, 0.87)"
+            />
+          )}
+          <SingleProperty
+            data={searchResult}
+            action={"PT_PAYMENT_ACCESSANDPAY"}
+            onActionClick={this.onAddButtonClick}
           />
-        ) : null}
-        {showTable && tableData.length === 0 && (
+        </Hidden>
+        {showTable && searchResult.length === 0 && (
           <div className="search-no-property-found">
             <div className="no-search-text">
               <Label label="PT_NO_PROPERTY_RECORD" />

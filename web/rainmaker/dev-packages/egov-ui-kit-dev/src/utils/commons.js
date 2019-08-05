@@ -1,13 +1,15 @@
+import React from "react";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import axios from "axios";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
+import Label from "egov-ui-kit/utils/translationNode";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { getUserInfo, localStorageSet, localStorageGet, getLocalization, getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import { localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -286,7 +288,6 @@ const dateDiffInDays = (a, b) => {
   var millsPerDay = 1000 * 60 * 60 * 24;
   var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
   var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
@@ -596,4 +597,40 @@ export const hasTokenExpired = (status, data) => {
       return true;
   }
   return false;
+};
+
+const getEndpointfromUrl = (url, name) => {
+  let result = url.split(`${name}=`)[1];
+  return result;
+};
+
+const getEventSLA = (eventTime) => {
+  const days = (Date.now() - eventTime) / (1000 * 60 * 60 * 24);
+  let sla =
+    days > 1 ? (
+      <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />
+    ) : (
+      <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />
+    );
+  return sla;
+};
+
+export const getTransformedNotifications = (notifications) => {
+  let data = [];
+  if (notifications && notifications.length > 0) {
+    data = notifications.map((item) => ({
+      name: item.name,
+      title: item.description,
+      address: item.eventDetails && item.eventDetails.address,
+      SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item.auditDetails.lastModifiedTime),
+      buttons:
+        item.actions && item.actions.actionUrls
+          ? item.actions.actionUrls.map((actionUrls) => ({
+              label: actionUrls.code,
+              route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
+            }))
+          : [],
+    }));
+  }
+  return data;
 };

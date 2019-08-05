@@ -19,6 +19,11 @@
   justify-content: center;
   margin-top: 25px; }
 
+.pt-home-screen {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 75px !important; }
+
 @media only screen and (min-width: 768px) {
   .pt-home-screen {
     padding: 16px 16px 60px 16px !important; } }
@@ -32,7 +37,8 @@
     display: flex;
     flex-direction: column;
     padding: 0px; }
-  .pt-new-property, .pt-search-property {
+  .pt-new-property,
+  .pt-search-property {
     border-right: none;
     margin-bottom: 15px; }
   .pt-home-servicess {

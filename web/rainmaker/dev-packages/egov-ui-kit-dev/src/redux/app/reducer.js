@@ -24,6 +24,11 @@ const initialState = {
   },
   localizationLabels,
   activeRoutePath: "",
+  notificationObj: {
+    notificationCount: 0,
+    loading: false,
+    motifications: [],
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -84,6 +89,32 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.SET_PREVIOUS_ROUTE: {
       return { ...state, previousRoute: action.route };
     }
+    case actionTypes.GET_NOTIFICATION_COUNT: {
+      return { ...state, notificationsCount: action.count };
+    }
+    case actionTypes.GET_NOTIFICATIONS_COMPLETE: {
+      return {
+        ...state,
+        notificationObj: {
+          loading: false,
+          notifications: action.payload,
+        },
+      };
+    }
+    case actionTypes.GET_NOTIFICATIONS_PENDING:
+      return {
+        ...state,
+        notificationObj: {
+          loading: true,
+        },
+      };
+    case actionTypes.GET_NOTIFICATIONS_ERROR:
+      return {
+        ...state,
+        notificationObj: {
+          loading: false,
+        },
+      };
     default:
       return state;
   }

@@ -15,6 +15,8 @@ import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
 import PrivacyPolicy from "egov-ui-kit/common/common/PrivacyPolicy";
 import Dashboard from "egov-ui-kit/common/common/Dashboard";
+import ModuleLandingPage from "egov-ui-kit/common/common/ModuleLandingPage";
+import Notifications from "egov-ui-kit/common/common/Notifications";
 
 //pgr common components
 import ComplaintSubmited from "egov-ui-kit/common/pgr/ComplaintSubmited";
@@ -43,6 +45,7 @@ import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
 import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
 import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
 import Property from "egov-ui-kit/common/propertyTax/Property";
+import SingleProperty from "egov-ui-kit/common/propertyTax/SingleProperty";
 
 export {
   Banner,
@@ -83,4 +86,7 @@ export {
   AssessmentList,
   YearDialogue,
   Property,
+  ModuleLandingPage,
+  SingleProperty,
+  Notifications,
 };
