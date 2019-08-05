@@ -610,8 +610,10 @@ const getEventSLA = (eventTime) => {
     days > 1 ? (
       <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />
     ) : (
-      <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />
-    );
+      (days % 1) * 24 < 1  ? ( <Label label="CS_SLA_NOW"  />) :
+      (<Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />)
+      )
+    
   return sla;
 };
 
