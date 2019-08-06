@@ -112,13 +112,13 @@ const EgovAppBar = ({
             </IconButton>
           )}
         </div>
-        {notificationButton && role === "citizen" && (
+                {notificationButton && role === "citizen" && (
           <div className="notification-icon" onClick={(e) => onNotificationClick(history)}>
-            <IconButton aria-label="4 pending messages">
-              <Badge badgeContent={notificationsCount} color="primary">
+            {notificationsCount ? ( <IconButton aria-label="4 pending messages">
+             <Badge badgeContent={notificationsCount} color="primary"> 
                 <Icon action="social" name="notifications-none" color="#fff" />
-              </Badge>
-            </IconButton>
+              </Badge>          
+            </IconButton>) : (<Icon action="social" name="notifications-none" color="#fff" />)}
           </div>
         )}
       </AppBar>

@@ -17,8 +17,8 @@ const Notifications = ({ notifications = [], history }) => {
           <div className="update">
             <Label
               leftWrapperStyle
-              fontSize={14}
-              color="rgba(0, 0, 0, 0.60)"
+              fontSize={16}
+              color="rgba(0, 0, 0, 0.87)"
               label={name}
               labelStyle={{ width: "100%", wordWrap: "break-word" }}
               containerStyle={{ marginBottom: 5 }}
@@ -26,7 +26,7 @@ const Notifications = ({ notifications = [], history }) => {
             <Label
               leftWrapperStyle
               fontSize={14}
-              color="rgba(0, 0, 0, 0.87)"
+              color="rgba(0, 0, 0, 0.60)"
               label={title}
               labelStyle={{ width: "100%", wordWrap: "break-word" }}
               containerStyle={{ marginBottom: 5 }}
@@ -57,7 +57,7 @@ const Notifications = ({ notifications = [], history }) => {
                     >
                       <Label
                         label={`CS_COMMON_${button.label}`}
-                        color="#fe7a51"
+                        color="primary"
                         fontSize={14}
                         containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
                       />
@@ -66,7 +66,7 @@ const Notifications = ({ notifications = [], history }) => {
                 })}
               </div>
             )}
-            {SLA}
+            { SLA }
           </div>
         }
       />
