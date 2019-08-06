@@ -329,7 +329,31 @@ const OwnerInfoCard = {
           required: true,
           pattern: getPattern("Address"),
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-        })
+        }),
+        occupancyType: {
+          ...getSelectField({
+            label: {
+              labelName: "Relation Type",
+              labelKey: "TL_RELATION_TYPE_LABEL"
+            },
+            placeholder: {
+              labelName: "Select RELATION Type",
+              labelKey: "TL_RELATION_TYPE_PLACEHOLDER"
+            },
+            localePrefix: {
+              moduleName: "TradeLicense",
+              masterName: "RelationType"
+            },
+            jsonPath:
+              "Licenses[0].tradeLicenseDetail.additionalDetail.relationType",
+            sourceJsonPath: "applyScreenMdmsData.TradeLicense.RelationType",
+            gridDefination: {
+              xs: 12,
+              sm: 6
+            }
+          })
+        }
+
         // OwnerSpecialCategory: getSelectField({
         //   label: {
         //     labelName: "Special Owner Category",

@@ -1102,6 +1102,29 @@ export const tradeDetails = getCommonCard({
       jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees"
     })
   }),
+  occupancyType: {
+    ...getSelectField({
+      label: {
+        labelName: "Occupancy Type",
+        labelKey: "TL_OCCUPANCY_TYPE_LABEL"
+      },
+      placeholder: {
+        labelName: "Select OCCUPANCY Type",
+        labelKey: "TL_OCCUPANCY_TYPE_PLACEHOLDER"
+      },
+      localePrefix: {
+        moduleName: "TradeLicense",
+        masterName: "OccupancyType"
+      },
+      jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.occupancyType",
+      sourceJsonPath: "applyScreenMdmsData.TradeLicense.OccupancyType",
+      gridDefination: {
+        xs: 12,
+        sm: 6
+      }
+    })
+  },
+
   tradeUnitCard
   // accessoriesCard
 });

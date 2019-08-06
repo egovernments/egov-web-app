@@ -180,6 +180,20 @@ export const getReviewOwner = (isEditable = true) => {
                 jsonPath:
                   "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
               }
+            ),
+            reviewRelationType: getLabelWithValue(
+              {
+                labelName: "Relaltion Type",
+                labelKey: "TL_NEW_OWNER_DETAILS_RELATION_sTYPE_LABEL"
+              },
+              {
+                jsonPath:
+                  "Licenses[0].tradeLicenseDetail.additionalDetail.relationType",
+                localePrefix: {
+                  moduleName: "TradeLicense",
+                  masterName: "RelationType"
+                }
+              }
             )
             // reviewOwnerSpecialCat: getLabelWithValue(
             //   {
