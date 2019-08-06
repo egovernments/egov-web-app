@@ -91,8 +91,10 @@ class ShowField extends Component {
     const { reportResult, searchForm, tabLabel, metaData } = _this.props;
     const { reportName } = _this.state;
     const reportDetails = metaData.hasOwnProperty("reportDetails") ? metaData.reportDetails : {};
+    const additionalConfig = reportDetails.hasOwnProperty("additionalConfig") ? reportDetails.additionalConfig: {};
     const reportHeader = reportDetails.hasOwnProperty("reportHeader") ? reportDetails.reportHeader : [];
     const columns = ":visible";
+    const pageSize = (additionalConfig.print && additionalConfig.print.pdfPageSize)? additionalConfig.print.pdfPageSize: "LEGAL"
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
     let reportTitle = this.getReportTitle();
     let orientation = reportHeader.length > 6 ? "landscape" : "portrait";
@@ -108,7 +110,7 @@ class ShowField extends Component {
         messageTop: tabLabel,
         text: "PDF",
         orientation: orientation,
-        pageSize: "LEGAL",
+        pageSize: pageSize,
         footer: true,
         customize: function(doc) {
           doc.content[0].text = [];
