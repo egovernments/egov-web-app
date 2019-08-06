@@ -1102,8 +1102,8 @@ export const tradeDetails = getCommonCard({
       jsonPath: "Licenses[0].tradeLicenseDetail.noOfEmployees"
     })
   }),
-  tradeUnitCard,
-  accessoriesCard
+  tradeUnitCard
+  // accessoriesCard
 });
 
 const setFieldsOnAddItem = (state, multiItemContent) => {
