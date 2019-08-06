@@ -329,23 +329,23 @@ const OwnerInfoCard = {
           required: true,
           pattern: getPattern("Address"),
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-        }),
-        OwnerSpecialCategory: getSelectField({
-          label: {
-            labelName: "Special Owner Category",
-            labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
-          },
-          placeholder: {
-            labelName: "Select Special Owner Category",
-            labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
-          },
-          jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-          sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType",
-          localePrefix: {
-            moduleName: "common-masters",
-            masterName: "OwnerType"
-          }
         })
+        // OwnerSpecialCategory: getSelectField({
+        //   label: {
+        //     labelName: "Special Owner Category",
+        //     labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
+        //   },
+        //   placeholder: {
+        //     labelName: "Select Special Owner Category",
+        //     labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_PLACEHOLDER"
+        //   },
+        //   jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+        //   sourceJsonPath: "applyScreenMdmsData.common-masters.OwnerType",
+        //   localePrefix: {
+        //     moduleName: "common-masters",
+        //     masterName: "OwnerType"
+        //   }
+        // })
       })
     }),
     items: [],

@@ -180,20 +180,20 @@ export const getReviewOwner = (isEditable = true) => {
                 jsonPath:
                   "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
               }
-            ),
-            reviewOwnerSpecialCat: getLabelWithValue(
-              {
-                labelName: "Special Owner Category",
-                labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
-              },
-              {
-                jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
-                localePrefix: {
-                  moduleName: "common-masters",
-                  masterName: "OwnerType"
-                }
-              }
             )
+            // reviewOwnerSpecialCat: getLabelWithValue(
+            //   {
+            //     labelName: "Special Owner Category",
+            //     labelKey: "TL_NEW_OWNER_DETAILS_SPL_OWN_CAT_LABEL"
+            //   },
+            //   {
+            //     jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].ownerType",
+            //     localePrefix: {
+            //       moduleName: "common-masters",
+            //       masterName: "OwnerType"
+            //     }
+            //   }
+            // )
           })
         }),
 

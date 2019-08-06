@@ -312,8 +312,8 @@ export const getReviewTrade = (isEditable = true) => {
     }),
     div1: getDivider(),
     viewTwo: tradeTypeCard,
-    div2: getDivider(),
-    viewThree: accessoriesCard,
+    // div2: getDivider(),
+    // viewThree: accessoriesCard,
 
     div3: getDivider(),
     viewFour: getCommonContainer({
