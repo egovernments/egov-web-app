@@ -3,11 +3,10 @@ import set from "lodash/set";
 import { getLabel, getSelectField, getCommonContainer, getCommonCard } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
-import { convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils/index";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
-import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { prepareFinalObject, handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import commonConfig from "config/common.js";
 
 export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
@@ -22,14 +21,28 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   const eventsData = get(state.screenConfiguration.preparedFinalObject, "events[0]");
   let fromDate = get(eventsData, "eventDetails.fromDate");
   let toDate = get(eventsData, "eventDetails.toDate");
-  if (fromDate) {
-    fromDate = convertDateToEpoch(fromDate);
-    set(eventsData, "eventDetails.fromDate", fromDate);
+
+  let fromTime = get(eventsData, "eventDetails.fromTime") ? get(eventsData, "eventDetails.fromTime") : "";
+  let toTime = get(eventsData, "eventDetails.toTime") ? get(eventsData, "eventDetails.toTime") : "";
+
+  let fromDateTime = `${fromDate} ${fromTime}`;
+  let toDateTime = `${toDate} ${toTime}`;
+  if (fromDateTime) {
+    fromDateTime = convertDateTimeToEpoch(fromDateTime);
+    set(eventsData, "eventDetails.fromDate", fromDateTime);
   }
-  if (toDate) {
-    toDate = convertDateToEpoch(toDate);
-    set(eventsData, "eventDetails.toDate", toDate);
+  if (toDateTime) {
+    toDateTime = convertDateTimeToEpoch(toDateTime);
+    set(eventsData, "eventDetails.toDate", toDateTime);
   }
+  // if (fromDate) {
+  //   fromDate = convertDateToEpoch(fromDate);
+  //   set(eventsData, "eventDetails.fromDate", fromDate);
+  // }
+  // if (toDate) {
+  //   toDate = convertDateToEpoch(toDate);
+  //   set(eventsData, "eventDetails.toDate", toDate);
+  // }
   set(eventsData, "source", isNative ? "MOBILEAPP" : "WEBAPP");
   set(eventsData, "recepient", null);
   set(eventsData, "eventType", eventType);
@@ -117,8 +130,8 @@ export const footer = (eventType = "BROADCAST") => {
         },
         children: {
           submitButtonLabel: getLabel({
-            labelName:eventType === "EVENTSONGROUND" ? "CREATE EVENT" : uuid ? "SAVE" : "ADD MESSAGE",
-            labelKey: eventType === "EVENTSONGROUND" ? "EVENTS_CREATE_EVENT"  : uuid ? "MESSAGE_SAVE_BUTTOM" : "ADD_MESSAGE_BUTTON",
+            labelName: uuid ? "SAVE" : eventType === "EVENTSONGROUND" ? "CREATE EVENT" : "ADD MESSAGE",
+            labelKey: uuid ? "MESSAGE_SAVE_BUTTOM" : eventType === "EVENTSONGROUND" ? "EVENTS_CREATE_EVENT" : "ADD_MESSAGE_BUTTON",
           }),
         },
         onClickDefination: {
@@ -145,7 +158,7 @@ export const footer = (eventType = "BROADCAST") => {
         },
         onClickDefination: {
           action: "page_change",
-          path: "/notifications/search",
+          path: eventType === "EVENTSONGROUND" ? "/events/search" : "/notifications/search",
         },
         visible: uuid ? true : false,
       },
@@ -167,13 +180,13 @@ export const getMdmsData = async (action, state, dispatch) => {
           ],
         },
         {
-          "moduleName": "mseva",
-          "masterDetails": [
+          moduleName: "mseva",
+          masterDetails: [
             {
-              "name": "EventCategories"
-            }
-          ]
-        }
+              name: "EventCategories",
+            },
+          ],
+        },
       ],
     },
   };
@@ -181,7 +194,7 @@ export const getMdmsData = async (action, state, dispatch) => {
     let payload = null;
     payload = await httpRequest("post", "/egov-mdms-service/v1/_search", "_search", [], mdmsBody);
     const localities = get(state.screenConfiguration, "preparedFinalObject.applyScreenMdmsData.tenant.localities", []);
-       dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
   } catch (e) {
     console.log(e);
   }
@@ -267,3 +280,32 @@ export const ulbFilter = getCommonCard({
     }),
   }),
 });
+
+export const showHideMapPopup = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["create"],
+    "components.div.children.createCard.children.createForm.children.cardContent.children.mapsDialog.props.open",
+    false
+  );
+  dispatch(
+    handleField("create", "components.div.children.createCard.children.createForm.children.cardContent.children.mapsDialog", "props.open", !toggle)
+  );
+};
+
+export const getMapLocator = (textSchema) => {
+  return {
+    uiFramework: "custom-molecules-local",
+    moduleName: "employee",
+    componentPath: "MapLocator",
+    props: {},
+  };
+};
+
+export const convertDateTimeToEpoch = (dateTimeString) => {
+  //example input format : "2018-10-02 03:03"
+  try {
+    return new Date(dateTimeString).getTime();
+  } catch (e) {
+    return dateTimeString;
+  }
+};

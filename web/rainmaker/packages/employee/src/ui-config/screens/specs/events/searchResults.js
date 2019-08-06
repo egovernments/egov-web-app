@@ -20,12 +20,18 @@ export const searchApiCall = async (state, dispatch) => {
       events &&
       events.map((item) => ({
         [getLocaleLabels("Message", "EVENTS_EVENT_NAME_LABEL", localisationLabels)]: item.name,
-        [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: item.eventCategory ? item.eventCategory : "-",
+        [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: item.eventCategory
+          ? getLocaleLabels(item.eventCategory, `MSEVA_EVENTCATEGORIES_${item.eventCategory}`, localisationLabels)
+          : "-",
         [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
           ? epochToYmd(item.eventDetails.fromDate)
           : "-",
         [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
-        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: item.status,
+        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
+          item.status,
+          `EVENTS_${item.status}_LABEL`,
+          localisationLabels
+        ),
         id: item.id,
         tenantId: item.tenantId,
       }));

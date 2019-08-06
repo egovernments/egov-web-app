@@ -606,14 +606,27 @@ const getEndpointfromUrl = (url, name) => {
 
 const getEventSLA = (eventTime) => {
   const days = (Date.now() - eventTime) / (1000 * 60 * 60 * 24);
-  let sla =
-    days > 1 ? (
-      <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />
+  let sla;
+  if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+  else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+  else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
+  else {
+    if ((days % 1) * 24 > 1) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} fontSize={12} />;
+    else {
+      if ((days % 1) * 24 * 60 > 1) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24 * 60)]} fontSize={12} />;
+      else <Label label="CS_SLA_NOW" fontSize={12} />;
+    }
+  }
+
+  /* 
+    let sla = days > 1 ? (( days > 6) ? (<Label label="CS_SLA_WEEK" dynamicArray={[Math.ceil((days / 7))]} />):
+     ( <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />)
     ) : (
-      (days % 1) * 24 < 1  ? ( <Label label="CS_SLA_NOW"  />) :
+      (days % 1) * 24 < 1  ? ( (days % 1) * 24 * 60 < 1  ? (<Label label="CS_SLA_NOW"  />):(<Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24*60)]} />)) :
       (<Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />)
       )
-    
+   */
+
   return sla;
 };
 
