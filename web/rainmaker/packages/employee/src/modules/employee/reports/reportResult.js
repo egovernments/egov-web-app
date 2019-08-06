@@ -91,7 +91,7 @@ class ShowField extends Component {
     const { reportResult, searchForm, tabLabel, metaData } = _this.props;
     const { reportName } = _this.state;
     const reportDetails = metaData.hasOwnProperty("reportDetails") ? metaData.reportDetails : {};
-    const additionalConfig = reportDetails.hasOwnProperty("additionalConfig") ? reportDetails.additionalConfig: {};
+    const additionalConfig = reportDetails.hasOwnProperty("additionalConfig") && reportDetails.additionalConfig ? reportDetails.additionalConfig: {};
     const reportHeader = reportDetails.hasOwnProperty("reportHeader") ? reportDetails.reportHeader : [];
     const columns = ":visible";
     const pageSize = (additionalConfig.print && additionalConfig.print.pdfPageSize)? additionalConfig.print.pdfPageSize: "LEGAL"
