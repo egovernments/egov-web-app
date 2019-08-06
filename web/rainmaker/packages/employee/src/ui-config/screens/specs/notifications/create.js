@@ -284,7 +284,7 @@ const screenConfig = {
               },
               ...header,
             },
-            newApplicationButton: getDeleteButton(),
+            deleteButton: getDeleteButton(),
           },
         },
         createCard: {

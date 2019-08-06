@@ -10,7 +10,7 @@ import { LabelContainer } from "egov-ui-framework/ui-containers";
 import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 const pickBtn = {
-  display: "block"
+  display: "block",
 };
 
 var add = {};
@@ -21,7 +21,7 @@ class MapLocator extends Component {
     this.state = {
       showMyAddress: false,
       currLoc: {},
-      pickedLoc: {}
+      pickedLoc: {},
     };
   }
 
@@ -30,7 +30,7 @@ class MapLocator extends Component {
     //To set the map to any defined location.
     if (this.state.showMyAddress === true && myLocation) {
       this.setState({
-        currLoc: myLocation
+        currLoc: myLocation,
       });
     }
   }
@@ -39,12 +39,12 @@ class MapLocator extends Component {
   getMyLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           this.setState({
             currLoc: {
               lat: position.coords.latitude,
-              lng: position.coords.longitude
-            }
+              lng: position.coords.longitude,
+            },
           });
         },
         function(error) {
@@ -61,8 +61,8 @@ class MapLocator extends Component {
 
   closeMapPopup = () => {
     this.props.handleField(
-      "apply",
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.mapsDialog",
+      "create",
+      "components.div.children.createCard.children.createForm.children.cardContent.children.mapsDialog",
       "props.open",
       false
     );
@@ -70,59 +70,33 @@ class MapLocator extends Component {
 
   onClickPick = () => {
     this.props.handleField(
-      "apply",
-      "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocGISCoord.children.gisTextField",
+      "create",
+      "components.div.children.createCard.children.createForm.children.cardContent.children.createContainer.children.eventLocGISCoord.children.gisTextField",
       "props.value",
       `${add.lat}, ${add.lng}`
     );
-    this.props.prepareFinalObject(
-      "Licenses[0].tradeLicenseDetail.address.latitude",
-      add.lat
-    );
-    this.props.prepareFinalObject(
-      "Licenses[0].tradeLicenseDetail.address.longitude",
-      add.lng
-    );
+    this.props.prepareFinalObject("events[0].eventDetails.latitude", add.lat);
+    this.props.prepareFinalObject("events[0].eventDetails.longitude", add.lng);
 
     this.closeMapPopup();
-    // this.convertToAddress(add);
-    // this.setPrevPageFlag();
-    // this.props.history.goBack();
   };
 
-  convertToAddress = add => {
+  convertToAddress = (add) => {
     const { lat, lng } = add;
     this.setState({
-      currLoc: {}
+      currLoc: {},
     });
-    lat &&
-      this.props.handleFieldChange(
-        this.props.formKey,
-        "latitude",
-        parseFloat(lat).toFixed(6)
-      );
-    lng &&
-      this.props.handleFieldChange(
-        this.props.formKey,
-        "longitude",
-        parseFloat(lng).toFixed(6)
-      );
+    lat && this.props.handleFieldChange(this.props.formKey, "latitude", parseFloat(lat).toFixed(6));
+    lng && this.props.handleFieldChange(this.props.formKey, "longitude", parseFloat(lng).toFixed(6));
     var geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode(
-      { location: { lat: lat, lng: lng } },
-      (results, status) => {
-        if (status === "OK") {
-          if (results[0]) {
-            //Results[0] gives the nearest address
-            this.props.handleFieldChange(
-              this.props.formKey,
-              "address",
-              results[0].formatted_address
-            );
-          }
+    geocoder.geocode({ location: { lat: lat, lng: lng } }, (results, status) => {
+      if (status === "OK") {
+        if (results[0]) {
+          //Results[0] gives the nearest address
+          this.props.handleFieldChange(this.props.formKey, "address", results[0].formatted_address);
         }
       }
-    );
+    });
   };
 
   onCLickMapBackBtn = () => {
@@ -139,16 +113,8 @@ class MapLocator extends Component {
   render() {
     let { currLoc } = this.state;
     const { location, localizationLabels } = this.props;
-    var _currloc = !isEmpty(currLoc)
-      ? currLoc
-      : isEmpty(location)
-      ? defaultLocation
-      : location;
-    let translatedSearchPlaceholder = getLocaleLabels(
-      "Search Address",
-      "TL_SEARCH_ADDRESS_MAP_PLACEHOLDER",
-      localizationLabels
-    );
+    var _currloc = !isEmpty(currLoc) ? currLoc : isEmpty(location) ? defaultLocation : location;
+    let translatedSearchPlaceholder = getLocaleLabels("Search Address", "TL_SEARCH_ADDRESS_MAP_PLACEHOLDER", localizationLabels);
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
         <div className="back-btn">
@@ -157,7 +123,7 @@ class MapLocator extends Component {
             style={{
               width: "200px",
               height: "48px",
-              marginRight: "16px"
+              marginRight: "16px",
             }}
             variant={"outlined"}
             color={"primary"}
@@ -180,17 +146,12 @@ class MapLocator extends Component {
           <Button
             id="map-close-button"
             className="pick responsive-action-button"
-            children={
-              <LabelContainer
-                labelName={"Close"}
-                labelKey={"TL_MAP_CLOSE_LABEL"}
-              />
-            }
+            children={<LabelContainer labelName={"Close"} labelKey={"TL_MAP_CLOSE_LABEL"} />}
             style={{
               ...pickBtn,
               width: "200px",
               height: "48px",
-              marginRight: "16px"
+              marginRight: "16px",
             }}
             variant={"outlined"}
             color={"primary"}
@@ -199,17 +160,12 @@ class MapLocator extends Component {
           <Button
             id="map-pick-button"
             className="pick responsive-action-button"
-            children={
-              <LabelContainer
-                labelName={"Pick"}
-                labelKey={"TL_MAP_PICK_LABEL"}
-              />
-            }
+            children={<LabelContainer labelName={"Pick"} labelKey={"TL_MAP_PICK_LABEL"} />}
             style={{
               ...pickBtn,
               width: "200px",
               height: "48px",
-              marginRight: "16px"
+              marginRight: "16px",
             }}
             variant={"contained"}
             color={"primary"}
@@ -235,18 +191,16 @@ class MapLocator extends Component {
 // return { location, formKey, currentLocation };
 //};
 
-const mapSateToProps = state => {
+const mapSateToProps = (state) => {
   const { app } = state;
   const { localizationLabels } = app;
   return { localizationLabels };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    handleField: (formKey, path, props, value) =>
-      dispatch(handleField(formKey, path, props, value)),
-    prepareFinalObject: (path, value) =>
-      dispatch(prepareFinalObject(path, value))
+    handleField: (formKey, path, props, value) => dispatch(handleField(formKey, path, props, value)),
+    prepareFinalObject: (path, value) => dispatch(prepareFinalObject(path, value)),
   };
 };
 
