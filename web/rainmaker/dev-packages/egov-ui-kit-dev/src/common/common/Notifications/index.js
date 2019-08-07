@@ -2,11 +2,32 @@ import React from "react";
 import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
+import Grid from "@material-ui/core/Grid";
+
+
+const pStyle = {
+ 
+  backgroundColor: "#EEEEEE",
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex",
+  height: "65%",
+  width: '90%',
+};
+const divStyle = {
+
+  backgroundColor: "#FC8019",
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex",
+  height: "35%" ,
+  width: '90%',
+};
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons, address, name, SLA } = notification;
-    return (
+    const { title, dueTime, buttons, address, name, SLA ,eventDate} = notification;
+      return (
       <Card
         className="home-notification"
         style={{ margin: "8px 0px" }}
@@ -14,8 +35,21 @@ const Notifications = ({ notifications = [], history }) => {
         id={`home-notification${index}`}
         style={{ padding: "12px 8px" }}
         textChildren={
-          <div className="update">
+          <Grid container >
+            <Grid item xs={4} direction="column">
+              <div style={divStyle}>
+                 <Label label={eventDate.split(":")[0]} color="#fff"  fontSize='17px'/>
+              </div>
+              <div style={pStyle}>
+                 <Label label={eventDate.split(":")[1]}  color="#FC8019"   fontSize='34px'/>
+              </div> 
+
+            </Grid>
+            <Grid item xs={8} sm container>
+
+            <div className="update">
             <Label
+
               leftWrapperStyle
               fontSize={16}
               color="rgba(0, 0, 0, 0.87)"
@@ -68,6 +102,9 @@ const Notifications = ({ notifications = [], history }) => {
             )}
             { SLA }
           </div>
+            </Grid>
+          </Grid>
+         
         }
       />
     );

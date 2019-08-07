@@ -630,6 +630,12 @@ const getEventSLA = (eventTime) => {
   return sla;
 };
 
+const getEventDate = (eventDate) => {
+   const TheMonth = new Date(eventDate).toString().split(" ")[1].toUpperCase();
+   const TheDate = new Date(eventDate).getDate();
+   return TheMonth+":"+TheDate;
+}
+
 export const getTransformedNotifications = (notifications) => {
   let data = [];
   if (notifications && notifications.length > 0) {
@@ -645,6 +651,7 @@ export const getTransformedNotifications = (notifications) => {
               route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
             }))
           : [],
+          eventDate: getEventDate(item.eventDetails.fromDate)
     }));
   }
   return data;
