@@ -203,7 +203,13 @@ class SearchProperty extends Component {
             onClick={this.onAddButtonClick}
           >
             <Button
-                label={"New Property Assessment"}
+            Icon={<Icon
+              action="content"
+              name="add"
+              color="#fe7a51"
+              style={{ height: 22 }}
+            />}
+                label="PT_NEW_PROPERTY_BUTTON"
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
                 onClick={() => this.onAddButtonClick()}
