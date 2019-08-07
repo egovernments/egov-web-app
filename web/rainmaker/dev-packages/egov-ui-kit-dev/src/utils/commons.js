@@ -631,9 +631,9 @@ const getEventSLA = (eventTime) => {
 };
 
 const getEventDate = (eventDate) => {
-   const TheMonth = new Date(eventDate).toString().split(" ")[1].toUpperCase();
-   const TheDate = new Date(eventDate).getDate();
-   return TheMonth+":"+TheDate;
+   const month = new Date(eventDate).toString().split(" ")[1].toUpperCase();
+   const day = new Date(eventDate).getDate();
+      return month+":"+day;
 }
 
 export const getTransformedNotifications = (notifications) => {
@@ -651,7 +651,7 @@ export const getTransformedNotifications = (notifications) => {
               route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
             }))
           : [],
-          eventDate: getEventDate(item.eventDetails.fromDate),
+          eventDate: item.eventDetails && getEventDate(item.eventDetails.fromDate),
           type:item.eventType,
           id : item.id,
           tenantId:item.tenantId
