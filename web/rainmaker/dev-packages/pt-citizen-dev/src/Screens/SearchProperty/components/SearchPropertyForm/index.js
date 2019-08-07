@@ -30,10 +30,9 @@ const SearchPropertyForm = ({
           /> 
             <Label
             label="PT_SEARCHPROPERTY_SEARCH_CONDITION"
-            dark={true}
+            dark={false}
             fontSize={16}
-            fontWeight={800}
-            bold={true}
+            bold={false}
           /> 
           </div>
           <div className={`${formKey} col-xs-12`}>
@@ -78,9 +77,11 @@ const SearchPropertyForm = ({
                 labelStyle={{ color: "rgb(105, 105, 105)" }}
                 backgroundColor="white"
                 fullWidth={true}
+                border="1px solid gray"
                 style={{
                   backgroundColor: "white",
-                  color: "rgb(105, 105, 105)"
+                  color: "rgb(105, 105, 105)",
+                  border:"1px solid gray"
                 }}
                 
               />
