@@ -97,10 +97,6 @@ const eventsSearchAndResult = {
                   pageResetAndChange(state, dispatch);
                 },
               },
-              roleDefination: {
-                rolePath: "user-info.roles",
-                roles: ["EMPLOYEE,SUPERUSER"],
-              },
             },
           },
         },
