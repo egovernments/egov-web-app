@@ -27,7 +27,7 @@ const initialState = {
   notificationObj: {
     notificationCount: 0,
     loading: false,
-    motifications: [],
+    notifications: [],
   },
 };
 
