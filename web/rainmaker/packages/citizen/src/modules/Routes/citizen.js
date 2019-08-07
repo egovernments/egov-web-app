@@ -12,6 +12,7 @@ import CitizenDashboard from "modules/citizen/CitizenDashboard";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import MyNotifications from "modules/citizen/MyNotifications";
+import {EventDetails} from "modules/common"
 import Events from "modules/citizen/Events";
 import { ImageModalDisplay } from "modules/common";
 
@@ -140,6 +141,14 @@ const routes = [
       hideFooter: true,
       title: "CS_HEADER_EVENTS",
       helpButton: true,
+    },
+  },
+  {
+    path: "event-details",
+    component: EventDetails,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
     },
   },
   ...pgrRoutes,

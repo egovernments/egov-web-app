@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Icon } from "components";
-import Label from "egov-ui-kit/utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode"; 
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
 
@@ -26,8 +26,8 @@ const divStyle = {
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { title, dueTime, buttons, address, name, SLA ,eventDate} = notification;
-      return (
+    const { title, dueTime, buttons, address, name, SLA, type, id ,tenantId,eventDate } = notification;
+    return (
       <Card
         className="home-notification"
         style={{ margin: "8px 0px" }}
@@ -47,7 +47,7 @@ const Notifications = ({ notifications = [], history }) => {
             </Grid>
             <Grid item xs={8} sm container>
 
-            <div className="update">
+            <div className="update" onClick={() => type === "EVENTSONGROUND" ? history.push(`/event-details?uuid=${id}&tenantId=${tenantId}`) : {}} >
             <Label
 
               leftWrapperStyle
@@ -100,7 +100,7 @@ const Notifications = ({ notifications = [], history }) => {
                 })}
               </div>
             )}
-            { SLA }
+            {SLA}
           </div>
             </Grid>
           </Grid>

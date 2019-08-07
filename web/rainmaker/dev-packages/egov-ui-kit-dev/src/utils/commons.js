@@ -651,7 +651,11 @@ export const getTransformedNotifications = (notifications) => {
               route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
             }))
           : [],
-          eventDate: getEventDate(item.eventDetails.fromDate)
+          eventDate: getEventDate(item.eventDetails.fromDate),
+          type:item.eventType,
+          id : item.id,
+          tenantId:item.tenantId
+          
     }));
   }
   return data;
