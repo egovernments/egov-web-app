@@ -6,6 +6,7 @@ import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-fra
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { textToLocalMapping } from "./searchResults";
 import { validateFields, convertEpochToDate } from "../../utils";
+import { getLocaleLabels, getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 
 export const searchApiCall = async (state, dispatch) => {
   showHideTable(false, dispatch);
@@ -48,11 +49,12 @@ export const searchApiCall = async (state, dispatch) => {
     const response = await getSearchResults(requestBody);
     try {
       let data = response.TradeLicenses.map((item) => ({
-        [get(textToLocalMapping, "Application No")]: item.licensenumber || "-",
+        [get(textToLocalMapping, "Application No")]: item.applicationnumber || "-",
         [get(textToLocalMapping, "License No")]: item.licensenumber || "-",
         [get(textToLocalMapping, "Trade Name")]: item.tradename || "-",
         [get(textToLocalMapping, "Application Date")]: convertEpochToDate(item.applicationdate) || "-",
-        [get(textToLocalMapping, "Tenant")]: item.tenantid || "-",
+        [get(textToLocalMapping, "Tenant")]:
+          getLocaleLabels(item.tenantid, "TENANT_TENANTS_" + getTransformedLocale(item.tenantid), get(state, "app.localizationLabels", "-")) || "-",
         [get(textToLocalMapping, "Status")]: get(textToLocalMapping, item.status) || "-",
       }));
 
@@ -62,7 +64,7 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${textToLocalMapping["Search Results for Trade License Applications"]} (${response.Licenses.length})`
+          `${textToLocalMapping["Search Results for Trade License Applications"]} (${response.TradeLicenses.length})`
         )
       );
       showHideTable(true, dispatch);

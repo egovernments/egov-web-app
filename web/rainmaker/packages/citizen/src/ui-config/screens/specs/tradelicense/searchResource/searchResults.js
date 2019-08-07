@@ -39,19 +39,7 @@ export const searchResults = {
   props: {
     //data: [],
     columns: {
-      [get(textToLocalMapping, "Application No")]: {
-        format: (rowData) => {
-          return (
-            <span
-              style={{
-                color: "#FE7A51",
-              }}
-            >
-              {rowData[get(textToLocalMapping, "Application No")]}
-            </span>
-          );
-        },
-      },
+      [get(textToLocalMapping, "Application No")]: {},
       [get(textToLocalMapping, "License No")]: {},
       [get(textToLocalMapping, "Trade Name")]: {},
       [get(textToLocalMapping, "Application Date")]: {},
