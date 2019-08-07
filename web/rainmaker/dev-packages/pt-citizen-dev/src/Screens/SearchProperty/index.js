@@ -50,7 +50,10 @@ class SearchProperty extends Component {
     }
     this.setState({ searchResult: [] });
   };
-
+  onResetClick = () => {
+    const { resetForm } = this.props;
+    resetForm("searchProperty");
+  };
   closeYearRangeDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
@@ -115,11 +118,18 @@ class SearchProperty extends Component {
         : `${locality.name ? locality.name : ""}`;
       const latestAssessment = getLatestPropertyDetails(propertyDetails);
       let name = latestAssessment.owners[0].name;
+      const guardianName = latestAssessment.owners[0].fatherOrHusbandName;
       let assessmentNo = latestAssessment.assessmentNumber;
       const uuid = get(latestAssessment, "citizenInfo.uuid");
-
       let button = (
-        <Button
+        <a
+          style={{
+            height: 20,
+            lineHeight: "auto",
+            minWidth: "inherit",
+            cursor: "pointer",
+            textDecoration: "underline"
+          }}
           onClick={
             userType === "CITIZEN"
               ? () => {
@@ -134,26 +144,18 @@ class SearchProperty extends Component {
                   );
                 }
           }
-          label={
-            <Label
-              buttonLabel={true}
-              label="PT_PAYMENT_ASSESS_AND_PAY"
-              fontSize="12px"
-            />
-          }
-          value={propertyId}
-          primary={true}
-          className="pt-search-table-action"
-          style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
-        />
+        >
+          {propertyId}
+        </a>
       );
       let item = {
-        index: index + 1,
+        index:index+1,
+        propertyId: button,
         name: name,
-        propertyId: propertyId,
+        guardianName: guardianName,
         oldPropertyId: oldPropertyId,
         address: displayAddress,
-        action: button
+        status: status
       };
       tableData.push(item);
       return tableData;
@@ -190,29 +192,38 @@ class SearchProperty extends Component {
         /> */}
         <div className="rainmaker-displayInline inner-header-style">
           <Label
-            label="PT_SEARCH_PROPERTY"
+            label=""
             dark={true}
             fontSize={16}
             fontWeight={900}
             bold={true}
-          />
+          />              
           <div
             className="rainmaker-displayInline"
             onClick={this.onAddButtonClick}
           >
-            <Icon
+            <Button
+                label={"New Property Assessment"}
+                labelStyle={{ fontSize: 12 }}
+                className="new-property-assessment"
+                onClick={() => this.onAddButtonClick()}
+                primary={true}
+                fullWidth={true}
+              />
+            {/* <Icon
               action="content"
               name="add"
               color="#fe7a51"
               style={{ height: 22 }}
-            />
-            <Label label="ADD NEW PROPERTY" color="#fe7a51" />
+            /> */}
+            {/* <Label label="ADD NEW PROPERTY" color="#fe7a51" /> */}
           </div>
         </div>
 
         <PropertySearchFormHOC
           history={this.props.history}
           onSearchClick={this.onSearchClick}
+          onResetClick={this.onResetClick}
         />
         <Hidden xsDown>
           {searchResult && searchResult.length > 0 && showTable ? (
@@ -242,15 +253,22 @@ class SearchProperty extends Component {
             <div className="no-search-text">
               <Label label="PT_NO_PROPERTY_RECORD" />
             </div>
-            <div className="new-assess-btn">
-              <Button
+            <div className="new-assess-btn rainmaker-displayInline"  onClick={() => history.push("/property-tax/assess-pay")}>
+            {/* <Button
                 label={"New Property Assessment"}
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
                 onClick={() => history.push("/property-tax/assess-pay")}
                 primary={true}
                 fullWidth={true}
-              />
+              /> */}
+              <Icon
+              action="content"
+              name="add"
+              color="#fe7a51"
+              style={{ height: 22 }}
+            />
+            <Label label="ADD NEW PROPERTY" color="#fe7a51" />
             </div>
           </div>
         )}
