@@ -105,6 +105,7 @@ class SearchProperty extends Component {
     const tableData = properties.reduce((tableData, property, index) => {
       let {
         propertyId,
+        status,
         oldPropertyId,
         address,
         propertyDetails,
