@@ -5,6 +5,7 @@ import axios from "axios";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
+import { Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
@@ -604,19 +605,45 @@ const getEndpointfromUrl = (url, name) => {
   return result;
 };
 
-const getEventSLA = (eventTime) => {
-  const days = (Date.now() - eventTime) / (1000 * 60 * 60 * 24);
+const getTimeFormat = (epochTime) => {
+       epochTime = new Date(epochTime);
+       const Period = epochTime.getHours()<12? "AM" : "PM"
+       const Format = epochTime.getHours()%12 > 0 ? epochTime.getHours()%12 : 12;
+       return  Format.toString()+":"+epochTime.toString().split(":")[1]+" "+Period ;
+}
+
+const getEventSLA = (item) => {
+  const days = (Date.now() - item.auditDetails.lastModifiedTime) / (1000 * 60 * 60 * 24);
   let sla;
-  if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
-  else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
-  else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
-  else {
-    if ((days % 1) * 24 > 1) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} fontSize={12} />;
+
+  if(item.eventType === "EVENTSONGROUND"){
+    const disp = getTimeFormat(item.eventDetails.fromDate)+" "+"-"+" "+getTimeFormat(item.eventDetails.toDate);
+    sla = (<div style={{display : "flex"}}>
+      <Icon name="access-time" action="device" viewBox ="10 1.5 24 24" style={{ height: "20px", width: "35px" }} />
+      <Label
+            leftWrapperStyle
+            fontSize={14}
+            color="rgba(0, 0, 0, 0.60)"
+            label={disp}
+            labelStyle={{ width: "100%", wordWrap: "break-word" }}
+            containerStyle={{ marginBottom: 5 }}
+        />
+     </div>
+      );
+
+  }else{
+    if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+    else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+    else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
     else {
-      if ((days % 1) * 24 * 60 > 1) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24 * 60)]} fontSize={12} />;
-      else <Label label="CS_SLA_NOW" fontSize={12} />;
+      if ((days % 1) * 24 > 1) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} fontSize={12} />;
+      else {
+        if ((days % 1) * 24 * 60 > 1) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24 * 60)]} fontSize={12} />;
+        else <Label label="CS_SLA_NOW" fontSize={12} />;
+      }
     }
   }
+  
 
   /* 
     let sla = days > 1 ? (( days > 6) ? (<Label label="CS_SLA_WEEK" dynamicArray={[Math.ceil((days / 7))]} />):
@@ -641,9 +668,9 @@ export const getTransformedNotifications = (notifications) => {
   if (notifications && notifications.length > 0) {
     data = notifications.map((item) => ({
       name: item.name,
-      title: item.description,
+      description: item.description,
       address: item.eventDetails && item.eventDetails.address,
-      SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item.auditDetails.lastModifiedTime),
+      SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
       buttons:
         item.actions && item.actions.actionUrls
           ? item.actions.actionUrls.map((actionUrls) => ({
