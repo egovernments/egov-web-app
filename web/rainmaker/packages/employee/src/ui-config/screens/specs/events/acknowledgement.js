@@ -40,8 +40,8 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
   if (purpose === "apply" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: "Add New Public Message",
-        labelKey: "ADD_NEW_PUBLIC_MESSAGE",
+        labelName: "Add New Event",
+        labelKey: "ADD_NEW_EVENT",
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -51,12 +51,12 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Message added Submitted Successfully",
-              labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_MAIN",
+              labelName: "Event submitted successfully",
+              labelKey: "EVENT_ADD_SUCCESS_MESSAGE_MAIN",
             },
             body: {
-              labelName: "A notification regarding this message has been sent to citizen at registered Mobile No.",
-              labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_SUB",
+              labelName: "A notification regarding this event has been sent to citizen at registered Mobile No.",
+              labelKey: "EVENT_ADD_SUCCESS_MESSAGE_SUB",
             },
             number: applicationNumber,
           }),
@@ -71,8 +71,8 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
   } else if (purpose === "update" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: "pdate UPublic Message",
-        labelKey: "UPDATE_PUBLIC_MESSAGE",
+        labelName: "Update Event",
+        labelKey: "UPDATE_EVENT_LABEL",
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
@@ -82,12 +82,12 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Message updated Successfully",
-              labelKey: "MESSAGE_UPDATE_SUCCESS_MESSAGE_MAIN",
+              labelName: "Event updated successfully",
+              labelKey: "EVENT_UPDATE_SUCCESS_MESSAGE_MAIN",
             },
             body: {
-              labelName: "A notification regarding this message has been sent to citizen at registered Mobile No.",
-              labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_SUB",
+              labelName: "A notification regarding this event has been sent to citizen at registered Mobile No.",
+              labelKey: "EVENT_ADD_SUCCESS_MESSAGE_SUB",
             },
             number: applicationNumber,
           }),
@@ -102,7 +102,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
   } else if (purpose === "delete" && status === "success") {
     return {
       header: getCommonHeader({
-        labelName: "Delete Public Message",
+        labelName: "Delete Event",
         labelKey: "DELETE_PUBLIC_MESSAGE",
       }),
       applicationSuccessCard: {
@@ -113,12 +113,12 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
             icon: "done",
             backgroundColor: "#39CB74",
             header: {
-              labelName: "Message deleted Successfully",
-              labelKey: "MESSAGE_DELETE_SUCCESS_MESSAGE_MAIN",
+              labelName: "Event deleted Successfully",
+              labelKey: "EVENT_DELETE_SUCCESS_MESSAGE_MAIN",
             },
             body: {
-              labelName: "A notification regarding this message has been sent to citizen at registered Mobile No.",
-              labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_SUB",
+              labelName: "A notification regarding this event has been sent to citizen at registered Mobile No.",
+              labelKey: "EVENT_ADD_SUCCESS_MESSAGE_SUB",
             },
             number: applicationNumber,
           }),

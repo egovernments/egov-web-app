@@ -10,7 +10,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import { localStorageSet, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
+import { localStorageSet, localStorageGet, getTenantId, getUserInfo, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -658,10 +658,13 @@ const getEventSLA = (item) => {
 };
 
 const getEventDate = (eventDate) => {
-   const month = new Date(eventDate).toString().split(" ")[1].toUpperCase();
-   const day = new Date(eventDate).getDate();
-      return month+":"+day;
-}
+  const month = new Date(eventDate)
+    .toString()
+    .split(" ")[1]
+    .toUpperCase();
+  const day = new Date(eventDate).getDate();
+  return month + ":" + day;
+};
 
 export const getTransformedNotifications = (notifications) => {
   let data = [];
@@ -678,12 +681,40 @@ export const getTransformedNotifications = (notifications) => {
               route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
             }))
           : [],
-          eventDate: item.eventDetails && getEventDate(item.eventDetails.fromDate)  || "",
-          type:item.eventType,
-          id : item.id,
-          tenantId:item.tenantId
-          
+      eventDate: (item.eventDetails && getEventDate(item.eventDetails.fromDate)) || "",
+      type: item.eventType,
+      id: item.id,
+      tenantId: item.tenantId,
     }));
   }
   return data;
+};
+
+export const onNotificationClick = async (history) => {
+  try {
+    let queryObject = [
+      {
+        key: "tenantId",
+        value: process.env.REACT_APP_NAME === "Employee" ? getTenantId() : JSON.parse(getUserInfo()).permanentCity,
+      },
+    ];
+    const requestBody = {
+      RequestInfo: {
+        apiId: "org.egov.pt",
+        ver: "1.0",
+        ts: 1502890899493,
+        action: "asd",
+        did: "4354648646",
+        key: "xyz",
+        msgId: "654654",
+        requesterId: "61",
+        authToken: getAccessToken(),
+      },
+    };
+
+    await httpRequest("/egov-user-event/v1/events/lat/_update", "_update", queryObject, requestBody);
+    history.push("/notifications");
+  } catch (e) {
+    toggleSnackbarAndSetText(true, { labelName: "Count update error", labelKey: "Count update error" }, true);
+  }
 };

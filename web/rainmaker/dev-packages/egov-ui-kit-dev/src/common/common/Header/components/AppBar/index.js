@@ -7,8 +7,7 @@ import Badge from "@material-ui/core/Badge";
 import digitLogo from "egov-ui-kit/assets/images/Digit_logo.png";
 import pbLogo from "egov-ui-kit/assets/images/pblogo.png";
 import IconButton from "material-ui/IconButton";
-import { httpRequest } from "egov-ui-kit/utils/api";
-import { getAccessToken, getTenantId, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import { onNotificationClick } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const styles = {
@@ -112,13 +111,17 @@ const EgovAppBar = ({
             </IconButton>
           )}
         </div>
-                {notificationButton && role === "citizen" && (
+        {notificationButton && role === "citizen" && (
           <div className="notification-icon" onClick={(e) => onNotificationClick(history)}>
-            {notificationsCount ? ( <IconButton aria-label="4 pending messages">
-             <Badge badgeContent={notificationsCount} color="primary"> 
-                <Icon action="social" name="notifications-none" color="#fff" />
-              </Badge>          
-            </IconButton>) : (<Icon action="social" name="notifications-none" color="#fff" />)}
+            {notificationsCount ? (
+              <IconButton aria-label="4 pending messages">
+                <Badge badgeContent={notificationsCount} color="primary">
+                  <Icon action="social" name="notifications-none" color="#fff" />
+                </Badge>
+              </IconButton>
+            ) : (
+              <Icon action="social" name="notifications-none" color="#fff" />
+            )}
           </div>
         )}
       </AppBar>
@@ -130,30 +133,4 @@ const onSearchClick = (history) => {
   history.push("search-complaint");
 };
 
-const onNotificationClick = async (history) => {
-  try {
-    let queryObject = [
-      {
-        key: "tenantId",
-        value: process.env.REACT_APP_NAME === "Employee" ? getTenantId() : JSON.parse(getUserInfo()).permanentCity,
-      },
-    ];
-    const requestBody = {
-      RequestInfo: {
-        apiId: "org.egov.pt",
-        ver: "1.0",
-        ts: 1502890899493,
-        action: "asd",
-        did: "4354648646",
-        key: "xyz",
-        msgId: "654654",
-        requesterId: "61",
-        authToken: getAccessToken(),
-      },
-    };
-
-    const response = await httpRequest("/egov-user-event/v1/events/lat/_update", "_update", queryObject, requestBody);
-    history.push("/notifications");
-  } catch (e) {}
-};
 export default EgovAppBar;

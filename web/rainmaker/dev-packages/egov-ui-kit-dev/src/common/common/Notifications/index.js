@@ -91,7 +91,7 @@ const Notifications = ({ notifications = [], history }) => {
                         >
                           <Label
                             label={`CS_COMMON_${button.label}`}
-                            color="primary"
+                            color={"#FC8019"}
                             fontSize={14}
                             containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
                           />
