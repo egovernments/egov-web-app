@@ -21,7 +21,7 @@ const editIconStyle = {
 const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onButtonClick }) => {
   return (
     <div className="property-informtion">
-      <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
+      {/* <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
         <div className="receipt-displayInline assignment-title-half">
           <Icon action="action" name="assignment" color="#767676" className="assignment-icon" />
           <Label
@@ -33,15 +33,15 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
           />
         </div>
         <div className="receipt-displayInline text-right accesspay-button" style={{ cursor: "pointer", marginRight: 5 }}>
-          {/* <Button
-            onClick={onButtonClick}
-            label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
-            primary={true}
-            style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
-          /> */}
+          // { <Button
+          //   onClick={onButtonClick}
+          //   label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
+          //   primary={true}
+          //   style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
+          // /> }
         </div>
-      </div>
-      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+      </div> */}
+      {/* <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} /> */}
       <div>
         {items.map((item, index) => {
           return (

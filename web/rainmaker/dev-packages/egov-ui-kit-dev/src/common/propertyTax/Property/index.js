@@ -209,7 +209,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history, generalMDMSDataById, latestPropertyDetails } = this.props;
+    const { urls, location, history, generalMDMSDataById, latestPropertyDetails ,propertyId} = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
@@ -219,17 +219,29 @@ class Property extends Component {
     }
     //const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
     let clsName = appName === "Citizen" ? "screen-with-bredcrumb" : "";
+  
+    
     return (
       <Screen className={clsName}>
-        {appName === "Citizen" && 
+        {appName === "Citizen" &&
+        <div>
        <Label
        label="PT_PROPERTY_INFORMATION"
-       containerStyle={{ padding: "24px 0px 0px 0px", marginLeft: "16px" }}
+       containerStyle={{ padding: "24px 0px 0px 0px", marginLeft: "16px" ,display : "inline-block"}}
        dark={true}
        bold={true}
-       labelStyle={{ letterSpacing: 0 }}
+       labelStyle={{ letterSpacing: 0  }}
        fontSize={"20px"}
      />
+     <Label
+            bold={true}
+            label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyId}`}
+            containerStyle={{ marginLeft: "13px",display : "inline-block" }}
+            labelStyle={{ letterSpacing: 0 , backgroundColor:'lightgray', color:'white' }}
+            color="white"
+            fontSize={"16px"}
+          />
+          </div> 
         // <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         }
         {
