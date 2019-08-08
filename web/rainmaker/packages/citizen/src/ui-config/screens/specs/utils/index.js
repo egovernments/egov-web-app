@@ -1,6 +1,18 @@
 import get from "lodash/get";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 
+export const sortByEpoch = (data, order) => {
+  if (order) {
+    return data.sort((a, b) => {
+      return a[a.length - 1] - b[b.length - 1];
+    });
+  } else {
+    return data.sort((a, b) => {
+      return b[b.length - 1] - a[a.length - 1];
+    });
+  }
+};
+
 export const validateFields = (objectJsonPath, state, dispatch, screen = "apply") => {
   const fields = get(state.screenConfiguration.screenConfig[screen], objectJsonPath, {});
   let isFormValid = true;
