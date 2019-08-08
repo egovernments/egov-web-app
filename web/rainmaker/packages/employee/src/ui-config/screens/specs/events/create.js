@@ -7,15 +7,22 @@ import {
   getCommonContainer,
   getPattern,
   getTimeField,
-  getCommonSubHeader,
-  getLabel,
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import get from "lodash/get";
 import set from "lodash/set";
-import { footer, getSingleMessage, getMdmsData, getMapLocator, showHideMapPopup, getDeleteButton } from "../utils";
+import {
+  footer,
+  getSingleMessage,
+  getMdmsData,
+  getMapLocator,
+  getFinancialYearDates,
+  showHideMapPopup,
+  getDeleteButton,
+  getTodaysDateInYMD,
+} from "../utils";
 
 const header = getCommonHeader({
   labelName: "Add New Event",
@@ -121,44 +128,6 @@ export const createForm = getCommonCard({
         disabled: true,
       },
     },
-    /*
-      AddCategory: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 6,
-          sm: 6,
-        },
-        children: {
-          uploadButton: {
-
-                componentPath: "Button",
-                props: {
-                  color: "primary",
-                  fullWidth: true,
-                  style: {
-                    justifyContent: 'left',
-                  width : "30%"
-                  },
-                },
-                children: {
-                  mihyLoginButtonText: getLabel({label:"ADD NEW CATEGORY"})
-                }, 
-          },
-        },
-      }, 
-      dummyDiv8: {
-        uiFramework: "custom-atoms",
-        componentPath: "Div",
-        gridDefination: {
-          xs: 12,
-          sm: 6,
-        },
-        props: {
-          disabled: true,
-        },
-      },
-      */
     comments: getTextField({
       label: {
         labelName: "Description",
@@ -169,8 +138,10 @@ export const createForm = getCommonCard({
         labelKey: "EVENTS_DESCRIPTION_LIMIT_PLACEHOLDER",
       },
       pattern: "",
+      required: true,
       jsonPath: "events[0].description",
       props: {
+        required: true,
         multiline: true,
         rows: 6,
         InputProps: {

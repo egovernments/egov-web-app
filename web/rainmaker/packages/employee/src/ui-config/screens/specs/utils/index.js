@@ -8,6 +8,47 @@ import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons"
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { prepareFinalObject, handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import commonConfig from "config/common.js";
+import cloneDeep from "lodash/cloneDeep";
+
+export const getTodaysDateInYMD = () => {
+  let date = new Date();
+  let month = date.getMonth() + 1;
+  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  date = `${date.getFullYear()}-${month}-${day}`;
+  return date;
+};
+export const getFinancialYearDates = (format, et) => {
+  /** Return the starting date and ending date (1st April to 31st March)
+   *  of the financial year of the given date in ET. If no ET given then
+   *  return the dates for the current financial year */
+  var date = !et ? new Date() : new Date(et);
+  var curMonth = date.getMonth();
+  var financialDates = { startDate: "NA", endDate: "NA" };
+  if (curMonth > 3) {
+    switch (format) {
+      case "dd/mm/yyyy":
+        financialDates.startDate = `01/04/${date.getFullYear().toString()}`;
+        financialDates.endDate = `31/03/${(date.getFullYear() + 1).toString()}`;
+        break;
+      case "yyyy-mm-dd":
+        financialDates.startDate = `${date.getFullYear().toString()}-04-01`;
+        financialDates.endDate = `${(date.getFullYear() + 1).toString()}-03-31`;
+        break;
+    }
+  } else {
+    switch (format) {
+      case "dd/mm/yyyy":
+        financialDates.startDate = `01/04/${(date.getFullYear() - 1).toString()}`;
+        financialDates.endDate = `31/03/${date.getFullYear().toString()}`;
+        break;
+      case "yyyy-mm-dd":
+        financialDates.startDate = `${(date.getFullYear() - 1).toString()}-04-01`;
+        financialDates.endDate = `${date.getFullYear().toString()}-03-31`;
+        break;
+    }
+  }
+  return financialDates;
+};
 
 export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   const uuid = getQueryArg(window.location.href, "uuid");
@@ -18,7 +59,7 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
     dispatch,
     "create"
   );
-  const eventsData = get(state.screenConfiguration.preparedFinalObject, "events[0]");
+  const eventsData = cloneDeep(get(state.screenConfiguration.preparedFinalObject, "events[0]"));
   let fromDate = get(eventsData, "eventDetails.fromDate");
   let toDate = get(eventsData, "eventDetails.toDate");
 
@@ -71,7 +112,7 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
       await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
       dispatch(setRoute(`/notifications/acknowledgement?purpose=${purpose}&status=${status}`));
     } catch (e) {
-      toggleSnackbar(true, { labelKey: "Create error" }, "error");
+      dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
     }
   } else if (uuid) {
     let purpose = isDelete ? "delete" : "edit";
@@ -80,7 +121,7 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
       await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
       dispatch(setRoute(`/notifications/acknowledgement?purpose=${purpose}&status=${status}`));
     } catch (e) {
-      toggleSnackbar(true, { labelKey: "Create error" }, "error");
+      dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
     }
   }
 };
@@ -212,6 +253,18 @@ export const getSingleMessage = async (state, dispatch, messageTenant, uuid) => 
     },
   ];
   const messageResponse = await getEventsByType(queryObject);
+  //Thu Aug 08 2019 02:00:00 GMT+0530 (IST)
+  const fromTime = new Date(get(messageResponse[0], "eventDetails.fromDate"))
+    .toString()
+    .split(" ")[4]
+    .substring(0, 5);
+  const toTime = new Date(get(messageResponse[0], "eventDetails.toDate"))
+    .toString()
+    .split(" ")[4]
+    .substring(0, 5);
+  console.log("=====>", fromTime, toTime);
+  set(messageResponse[0], "eventDetails.fromTime", fromTime);
+  set(messageResponse[0], "eventDetails.toTime", toTime);
   messageResponse && dispatch(prepareFinalObject("events[0]", messageResponse[0]));
 };
 
