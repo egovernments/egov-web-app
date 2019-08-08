@@ -144,30 +144,38 @@ class Property extends Component {
     const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails, tenantId } = props;
     return [
       {
-        primaryText: <Label label="PT_PROPERTY_INFORMATION" labelClassName="property-info-title" />,
-        leftIcon: (
-          <div style={IconStyle}>
-            <Icon action="action" name="info" color="#484848" />
-          </div>
+        primaryText: (
+          <PropertyInformation
+            items={propertyItems}
+            propertyTaxAssessmentID={propertyId}
+            history={history}
+            tenantId={tenantId}
+            onButtonClick={this.onAssessPayClick}
+          />
         ),
-        nestedItems: [
-          {
-            secondaryText: (
-              <PropertyInformation
-                items={propertyItems}
-                propertyTaxAssessmentID={propertyId}
-                history={history}
-                tenantId={tenantId}
-                onButtonClick={this.onAssessPayClick}
-              />
-            ),
-          },
-        ],
-        rightIcon: (
-          <div style={IconStyle}>
-            <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
-          </div>
-        ),
+        // leftIcon: (
+        //   <div style={IconStyle}>
+        //     <Icon action="action" name="info" color="#484848" />
+        //   </div>
+        // ),
+        // nestedItems: [
+        //   {
+        //     secondaryText: (
+        //       <PropertyInformation
+        //         items={propertyItems}
+        //         propertyTaxAssessmentID={propertyId}
+        //         history={history}
+        //         tenantId={tenantId}
+        //         onButtonClick={this.onAssessPayClick}
+        //       />
+        //     ),
+        //   },
+        // ],
+        // rightIcon: (
+        //   <div style={IconStyle}>
+        //     <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+        //   </div>
+        // ),
         initiallyOpen: true,
       },
       {
@@ -184,6 +192,7 @@ class Property extends Component {
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
           </div>
         ),
+        initiallyOpen: true,
       },
     ];
   };
@@ -214,7 +223,7 @@ class Property extends Component {
       <Screen className={clsName}>
         {appName === "Citizen" && 
        <Label
-       label="PT_PROPERTY"
+       label="PT_PROPERTY_INFORMATION"
        containerStyle={{ padding: "24px 0px 0px 0px", marginLeft: "16px" }}
        dark={true}
        bold={true}
