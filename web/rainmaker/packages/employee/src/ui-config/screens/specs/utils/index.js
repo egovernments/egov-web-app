@@ -1,6 +1,6 @@
 import get from "lodash/get";
 import set from "lodash/set";
-import { getLabel, getSelectField, getCommonContainer, getCommonCard } from "egov-ui-framework/ui-config/screens/specs/utils";
+import { getLabel, getSelectField, getCommonContainer, getCommonCard, convertDateToEpoch } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -69,11 +69,11 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   let fromDateTime = `${fromDate} ${fromTime}`;
   let toDateTime = `${toDate} ${toTime}`;
   if (fromDateTime) {
-    fromDateTime = convertDateTimeToEpoch(fromDateTime);
+    fromDateTime = eventType === "EVENTSONGROUND" ? convertDateTimeToEpoch(fromDateTime) : convertDateToEpoch(fromDate, "dayend");
     set(eventsData, "eventDetails.fromDate", fromDateTime);
   }
   if (toDateTime) {
-    toDateTime = convertDateTimeToEpoch(toDateTime);
+    toDateTime = eventType === "EVENTSONGROUND" ? convertDateTimeToEpoch(toDateTime) : convertDateToEpoch(toDate, "dayend");
     set(eventsData, "eventDetails.toDate", toDateTime);
   }
   // if (fromDate) {
