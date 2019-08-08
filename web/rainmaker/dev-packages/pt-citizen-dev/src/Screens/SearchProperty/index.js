@@ -150,7 +150,7 @@ class SearchProperty extends Component {
         </a>
       );
       let item = {
-        index:index+1,
+        index: index + 1,
         propertyId: button,
         name: name,
         guardianName: guardianName,
@@ -191,32 +191,36 @@ class SearchProperty extends Component {
           url={urls.length > 0 ? urls : urlArray}
           history={history}
         /> */}
+        <br />
         <div className="rainmaker-displayInline inner-header-style">
           <Label
-            label=""
+            label="PT_PROPERTY_TAX"
             dark={true}
-            fontSize={16}
-            fontWeight={900}
+            fontSize={18}
+            fontWeight={500}
             bold={true}
-          />              
+            labelStyle={{ marginTop: "20px" }}
+          />
           <div
             className="rainmaker-displayInline"
             onClick={this.onAddButtonClick}
           >
             <Button
-            Icon={<Icon
-              action="content"
-              name="add"
-              color="#fe7a51"
-              style={{ height: 22 }}
-            />}
-                label="PT_NEW_PROPERTY_BUTTON"
-                labelStyle={{ fontSize: 12 }}
-                className="new-property-assessment"
-                onClick={() => this.onAddButtonClick()}
-                primary={true}
-                fullWidth={true}
-              />
+              Icon={
+                <Icon
+                  action="content"
+                  name="add"
+                  color="#fe7a51"
+                  style={{ height: 22 }}
+                />
+              }
+              label="PT_NEW_PROPERTY_BUTTON"
+              labelStyle={{ fontSize: 12 }}
+              className="new-property-assessment"
+              onClick={() => this.onAddButtonClick()}
+              primary={true}
+              fullWidth={true}
+            />
             {/* <Icon
               action="content"
               name="add"
@@ -260,8 +264,11 @@ class SearchProperty extends Component {
             <div className="no-search-text">
               <Label label="PT_NO_PROPERTY_RECORD" />
             </div>
-            <div className="new-assess-btn rainmaker-displayInline"  onClick={() => history.push("/property-tax/assess-pay")}>
-            {/* <Button
+            <div
+              className="new-assess-btn rainmaker-displayInline"
+              onClick={() => history.push("/property-tax/assess-pay")}
+            >
+              {/* <Button
                 label={"New Property Assessment"}
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
@@ -270,12 +277,12 @@ class SearchProperty extends Component {
                 fullWidth={true}
               /> */}
               <Icon
-              action="content"
-              name="add"
-              color="#fe7a51"
-              style={{ height: 22 }}
-            />
-            <Label label="ADD NEW PROPERTY" color="#fe7a51" />
+                action="content"
+                name="add"
+                color="#fe7a51"
+                style={{ height: 22 }}
+              />
+              <Label label="ADD NEW PROPERTY" color="#fe7a51" />
             </div>
           </div>
         )}
