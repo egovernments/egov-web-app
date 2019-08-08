@@ -114,7 +114,7 @@ class MapLocator extends Component {
     let { currLoc } = this.state;
     const { location, localizationLabels } = this.props;
     var _currloc = !isEmpty(currLoc) ? currLoc : isEmpty(location) ? defaultLocation : location;
-    let translatedSearchPlaceholder = getLocaleLabels("Search Address", "TL_SEARCH_ADDRESS_MAP_PLACEHOLDER", localizationLabels);
+    let translatedSearchPlaceholder = getLocaleLabels("Search Address", "SEARCH_ADDRESS_MAP_PLACEHOLDER", localizationLabels);
     return (
       <div style={{ height: "100vh", width: "100vw" }}>
         <div className="back-btn">
@@ -146,7 +146,7 @@ class MapLocator extends Component {
           <Button
             id="map-close-button"
             className="pick responsive-action-button"
-            children={<LabelContainer labelName={"Close"} labelKey={"TL_MAP_CLOSE_LABEL"} />}
+            children={<LabelContainer labelName={"Close"} labelKey={"MAP_CLOSE_LABEL"} />}
             style={{
               ...pickBtn,
               width: "200px",
@@ -160,7 +160,7 @@ class MapLocator extends Component {
           <Button
             id="map-pick-button"
             className="pick responsive-action-button"
-            children={<LabelContainer labelName={"Pick"} labelKey={"TL_MAP_PICK_LABEL"} />}
+            children={<LabelContainer labelName={"Pick"} labelKey={"MAP_PICK_LABEL"} />}
             style={{
               ...pickBtn,
               width: "200px",
