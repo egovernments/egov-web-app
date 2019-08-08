@@ -17,6 +17,8 @@ import orderby from "lodash/orderBy";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
 import { getLocale, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 import commonConfig from "config/common.js";
+import { Button } from "components";
+import "./index.css";
 
 const innerDivStyle = {
   padding: "0",
@@ -210,7 +212,17 @@ class Property extends Component {
     let clsName = appName === "Citizen" ? "screen-with-bredcrumb" : "";
     return (
       <Screen className={clsName}>
-        {appName === "Citizen" && <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />}
+        {appName === "Citizen" && 
+       <Label
+       label="PT_PROPERTY"
+       containerStyle={{ padding: "24px 0px 0px 0px", marginLeft: "16px" }}
+       dark={true}
+       bold={true}
+       labelStyle={{ letterSpacing: 0 }}
+       fontSize={"20px"}
+     />
+        // <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
+        }
         {
           <AssessmentList
             onItemClick={this.onListItemClick}
@@ -223,6 +235,35 @@ class Property extends Component {
             // citizenUserId={uuid}
           />
         }
+         <div className="rainmaker-displayInline property-info-access-btn">
+          <Label
+            label=""
+            dark={true}
+            fontSize={18}
+            fontWeight={500}
+            bold={true}
+            labelStyle={{ marginTop: "20px" }}
+          />
+          <div
+            className="rainmaker-displayInline"
+            onClick={this.onAssessPayClick}
+          >
+             <Button
+             onClick={() => this.onAssessPayClick()}
+            label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="16px" />}
+            primary={true}
+            style={{  lineHeight: "auto", minWidth: "inherit" }}
+          />
+          
+            {/* <Icon
+              action="content"
+              name="add"
+              color="#fe7a51"
+              style={{ height: 22 }}
+            /> */}
+            {/* <Label label="ADD NEW PROPERTY" color="#fe7a51" /> */}
+          </div>
+        </div>
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
       </Screen>
     );

@@ -8,7 +8,7 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
     <div className="form-without-button-cont-generic">
       {label && (
         <Label
-          label={label}
+          label={"PT_PROPERTY_INFORMATION"}
           containerStyle={{ padding: "24px 0px 24px 0", marginLeft: "16px" }}
           dark={true}
           bold={true}
@@ -30,6 +30,7 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
           />
         }
       />
+     
     </div>
   );
 };
