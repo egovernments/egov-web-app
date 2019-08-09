@@ -855,7 +855,9 @@ const getCertificateData = (transformedData, ulbLogo) => {
                 text: "Approved by: "
               },
               {
-                text: transformedData.auditorName
+                text: `${transformedData.auditorName}\n${
+                  transformedData.designation
+                }`
               }
             ],
             alignment: "left"

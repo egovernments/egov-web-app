@@ -6,7 +6,8 @@ import {
   getReceiptData,
   getSearchResults,
   getUserDataFromUuid,
-  getFinancialYearDates
+  getFinancialYearDates,
+  getEmployeeDataFromUuid
 } from "../utils";
 import {
   getLocalization,
@@ -48,6 +49,15 @@ const getMessageFromLocalization = code => {
   let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
     item => {
       return item.code == "TL_" + code;
+    }
+  );
+  return messageObject ? messageObject.message : code;
+};
+
+const getMessageFromLocalizationNonTLCodes = code => {
+  let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
+    item => {
+      return item.code == code;
     }
   );
   return messageObject ? messageObject.message : code;
@@ -231,7 +241,11 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
     } else {
       data.accessoriesList = "";
     }
-    loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
+    // loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
+    loadEmployeeDate(
+      response.Licenses[0].auditDetails.lastModifiedBy,
+      licenseIssueDate
+    );
   }
   store.dispatch(prepareFinalObject("applicationDataForReceipt", data));
 };
@@ -383,6 +397,36 @@ export const loadUserNameData = async uuid => {
 
   data.Disclaimer = getMessageFromLocalization("TL_RECEIPT_FOOTER_1");
   data.signature = getMessageFromLocalization("TL_RECEIPT_FOOTER_2");
+  store.dispatch(prepareFinalObject("userDataForReceipt", data));
+};
+
+export const loadEmployeeDate = async (uuid, licenseIssueDate) => {
+  let data = {};
+  let queryObject = [
+    {
+      key: "uuids",
+      value: [uuid]
+    }
+  ];
+  let res = await getEmployeeDataFromUuid(queryObject);
+
+  data.auditorName = get(res, "Employees[0].user.name", "NA");
+  const assignments = get(res, "Employees[0].assignments", []);
+  // Return employee assignment as per licenseissueDate
+  const assignmentWhileIssue = assignments.filter(assignment => {
+    return (
+      assignment.fromDate <= licenseIssueDate &&
+      (!assignment.toDate ||
+        (assignment.toDate && assignment.toDate >= licenseIssueDate))
+    );
+  });
+  if (assignmentWhileIssue && assignmentWhileIssue[0].designation)
+    data.designation = getMessageFromLocalizationNonTLCodes(
+      `COMMON_MASTERS_DESIGNATION_${assignmentWhileIssue[0].designation}`
+    );
+
+  data.Disclaimer = getMessageFromLocalizationNonTLCodes("TL_RECEIPT_FOOTER_1");
+  data.signature = getMessageFromLocalizationNonTLCodes("TL_RECEIPT_FOOTER_2");
   store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };
 
