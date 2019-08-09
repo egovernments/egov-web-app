@@ -30,47 +30,6 @@ const styles = (theme) => ({
   },
 });
 
-// const items = [{ label: "shddff" }, { label: "sdhfnjn" }, { label: "djjdj" }];
-
-const items = [
-  {
-    label: "C",
-    value: 1972,
-  },
-  {
-    label: "C#",
-    value: 2000,
-  },
-  {
-    label: "C++",
-    value: 1983,
-  },
-  {
-    label: "Clojure",
-    value: 2007,
-  },
-  {
-    label: "Elm",
-    value: 2012,
-  },
-  {
-    label: "Go",
-    value: 2009,
-  },
-  {
-    label: "Haskell",
-    value: 1990,
-  },
-  {
-    label: "Java",
-    value: 1995,
-  },
-  {
-    label: "Javascript",
-    value: 1995,
-  },
-];
-
 class SearchService extends React.Component {
   state = {
     searchText: "",
@@ -115,15 +74,10 @@ class SearchService extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { searchText } = this.state;
-    const { getNameById, onChangeText, getLocalizedLabel, getTransformedItems } = this;
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: "Type 'c'",
-      value,
-      onChange: this.onChange,
-    };
+    const { getNameById, onChangeText, getTransformedItems } = this;
+
     return (
       <div className={`${classes.root} dashboard-search-main-cont`}>
         <Icon action="action" name="search" style={{ marginLeft: 12 }} />
@@ -153,6 +107,9 @@ class SearchService extends React.Component {
             />
           }
           searchText={searchText}
+          onNewRequest={(chosenRequest, index) => {
+            history.push(chosenRequest.value);
+          }}
           onUpdateInput={onChangeText}
           dataSource={getTransformedItems() || []}
           underlineFocusStyle={{ borderBottom: "none", borderTop: "none" }}

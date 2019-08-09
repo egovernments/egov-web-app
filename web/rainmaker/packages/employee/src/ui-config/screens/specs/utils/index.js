@@ -50,7 +50,18 @@ export const getFinancialYearDates = (format, et) => {
   return financialDates;
 };
 
+export const convertEpochToDate = (dateEpoch) => {
+  const dateFromApi = new Date(dateEpoch);
+  let month = dateFromApi.getMonth() + 1;
+  let day = dateFromApi.getDate();
+  let year = dateFromApi.getFullYear();
+  month = (month > 9 ? "" : "0") + month;
+  day = (day > 9 ? "" : "0") + day;
+  return `${year}/${month}/${day}`;
+};
+
 export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
+  const isEvent = eventType === "EVENTSONGROUND" ? true : false;
   const uuid = getQueryArg(window.location.href, "uuid");
   const isNative = localStorageGet("isNative");
   const isFormValid = validateFields(
@@ -60,8 +71,11 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
     "create"
   );
   const eventsData = cloneDeep(get(state.screenConfiguration.preparedFinalObject, "events[0]"));
-  let fromDate = get(eventsData, "eventDetails.fromDate");
-  let toDate = get(eventsData, "eventDetails.toDate");
+  const fromEpochDate = get(eventsData, "eventDetails.fromDate");
+  const toEpochDate = get(eventsData, "eventDetails.toDate");
+
+  let fromDate = typeof fromEpochDate === "number" ? convertEpochToDate(fromEpochDate).replace(/[\/]/g, "-") : fromEpochDate;
+  let toDate = typeof toEpochDate === "number" ? convertEpochToDate(toEpochDate).replace(/[\/]/g, "-") : toEpochDate;
 
   let fromTime = get(eventsData, "eventDetails.fromTime") ? get(eventsData, "eventDetails.fromTime") : "";
   let toTime = get(eventsData, "eventDetails.toTime") ? get(eventsData, "eventDetails.toTime") : "";
@@ -69,21 +83,13 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   let fromDateTime = `${fromDate} ${fromTime}`;
   let toDateTime = `${toDate} ${toTime}`;
   if (fromDateTime) {
-    fromDateTime = eventType === "EVENTSONGROUND" ? convertDateTimeToEpoch(fromDateTime) : convertDateToEpoch(fromDate, "dayend");
+    fromDateTime = isEvent ? convertDateTimeToEpoch(fromDateTime) : convertDateToEpoch(fromDate, "dayend");
     set(eventsData, "eventDetails.fromDate", fromDateTime);
   }
   if (toDateTime) {
-    toDateTime = eventType === "EVENTSONGROUND" ? convertDateTimeToEpoch(toDateTime) : convertDateToEpoch(toDate, "dayend");
+    toDateTime = isEvent ? convertDateTimeToEpoch(toDateTime) : convertDateToEpoch(toDate, "dayend");
     set(eventsData, "eventDetails.toDate", toDateTime);
   }
-  // if (fromDate) {
-  //   fromDate = convertDateToEpoch(fromDate);
-  //   set(eventsData, "eventDetails.fromDate", fromDate);
-  // }
-  // if (toDate) {
-  //   toDate = convertDateToEpoch(toDate);
-  //   set(eventsData, "eventDetails.toDate", toDate);
-  // }
   set(eventsData, "source", isNative ? "MOBILEAPP" : "WEBAPP");
   set(eventsData, "recepient", null);
   set(eventsData, "eventType", eventType);
@@ -104,22 +110,23 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
     },
     events: [eventsData],
   };
-
+  const baseUrl = isEvent ? "/events" : "/notifications";
   if (isFormValid && !uuid) {
     let purpose = "apply";
     let status = "success";
+
     try {
       await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
-      dispatch(setRoute(`/notifications/acknowledgement?purpose=${purpose}&status=${status}`));
+      dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
     } catch (e) {
       dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
     }
   } else if (uuid) {
-    let purpose = isDelete ? "delete" : "edit";
+    let purpose = isDelete ? "delete" : "update";
     const status = "success";
     try {
       await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
-      dispatch(setRoute(`/notifications/acknowledgement?purpose=${purpose}&status=${status}`));
+      dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
     } catch (e) {
       dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
     }
@@ -254,15 +261,16 @@ export const getSingleMessage = async (state, dispatch, messageTenant, uuid) => 
   ];
   const messageResponse = await getEventsByType(queryObject);
   //Thu Aug 08 2019 02:00:00 GMT+0530 (IST)
-  const fromTime = new Date(get(messageResponse[0], "eventDetails.fromDate"))
+  const fromEpochDate = get(messageResponse[0], "eventDetails.fromDate");
+  const toEpochDate = get(messageResponse[0], "eventDetails.toDate");
+  const fromTime = new Date(fromEpochDate)
     .toString()
     .split(" ")[4]
     .substring(0, 5);
-  const toTime = new Date(get(messageResponse[0], "eventDetails.toDate"))
+  const toTime = new Date(toEpochDate)
     .toString()
     .split(" ")[4]
     .substring(0, 5);
-  console.log("=====>", fromTime, toTime);
   set(messageResponse[0], "eventDetails.fromTime", fromTime);
   set(messageResponse[0], "eventDetails.toTime", toTime);
   messageResponse && dispatch(prepareFinalObject("events[0]", messageResponse[0]));
@@ -297,7 +305,10 @@ export const getDeleteButton = () => {
     },
     onClickDefination: {
       action: "condition",
-      callBack: (state, dispatch) => callBackForNext(state, dispatch, "BROADCAST", isDelete),
+      callBack: (state, dispatch) => {
+        const eventType = get(state.screenConfiguration.preparedFinalObject, "events[0].eventType");
+        callBackForNext(state, dispatch, eventType, isDelete);
+      },
     },
     visible: uuid ? true : false,
   };
@@ -356,6 +367,8 @@ export const getMapLocator = (textSchema) => {
 
 export const convertDateTimeToEpoch = (dateTimeString) => {
   //example input format : "2018-10-02 03:03"
+  // const parts = dateString.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  // const DateObj = new Date(Date.UTC(parts[1], parts[2] - 1, parts[3]));
   try {
     return new Date(dateTimeString).getTime();
   } catch (e) {
