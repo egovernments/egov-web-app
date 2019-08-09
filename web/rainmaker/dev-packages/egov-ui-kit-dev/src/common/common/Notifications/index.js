@@ -22,15 +22,9 @@ const divStyle = {
   width: "90%",
 };
 
-<<<<<<< Updated upstream
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
     const { description, dueTime, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
-=======
-const Notifications = ({ notifications = [], history, flag }) => {
-  const renderUpdate = (notification, index) => {
-    const { description, dueTime, buttons, eventCategory, address, name, SLA, type, id, tenantId, eventDate } = notification;
->>>>>>> Stashed changes
     return (
       <Card
         className="home-notification"
@@ -64,7 +58,6 @@ const Notifications = ({ notifications = [], history, flag }) => {
                   containerStyle={{ marginBottom: 5 }}
                 />
 
-<<<<<<< Updated upstream
                 {type != "EVENTSONGROUND" && (
                   <Label
                     leftWrapperStyle
@@ -76,25 +69,6 @@ const Notifications = ({ notifications = [], history, flag }) => {
                   />
                 )}
                 {address && (
-=======
-                {type != "EVENTSONGROUND" && <Label
-                  leftWrapperStyle
-                  fontSize={14}
-                  color="rgba(0, 0, 0, 0.60)"
-                  label={description}
-                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                  containerStyle={{ marginBottom: 5 }}
-                />}
-                {flag === 1 && <Label
-                  leftWrapperStyle
-                  fontSize={13}
-                  color="rgba(0, 0, 0, 0.55)"
-                  label={"MSEVA_EVENTCATEGORIES_" + eventCategory}
-                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                  containerStyle={{ marginBottom: 5, marginTop: 10 }}
-                />}
-                {flag !== 1 && address && (
->>>>>>> Stashed changes
                   <div className="rainmaker-displayInline">
                     <Icon name="place" action="maps" viewBox="10 0 24 24" style={{ height: "20px", width: "35px", marginRight: "5" }} />
                     <Label
@@ -129,12 +103,8 @@ const Notifications = ({ notifications = [], history, flag }) => {
                     })}
                   </div>
                 )}
-<<<<<<< Updated upstream
 
                 {SLA}
-=======
-                {flag !== 1 && SLA}
->>>>>>> Stashed changes
               </div>
             </Grid>
           </Grid>
