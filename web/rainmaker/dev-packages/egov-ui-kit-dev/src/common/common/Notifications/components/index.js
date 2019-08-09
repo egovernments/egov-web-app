@@ -1,6 +1,7 @@
 import React , { Component } from "react";
 import {Screen} from "modules/common"
-import SingleEvent from  "../index"
+import SingleEvent from  "../index" 
+import {DescriptionCard} from  "../index" 
 import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import { renderComponent } from "recompose";
 import get from "lodash/get";
@@ -73,11 +74,15 @@ class EventDetails extends Component {
           
           const { response} = this.state;
         return (
+          <div>
             <Screen>
-               { response && response.length>0 && <SingleEvent notifications={getTransformedNotifications(response)} />}
-            </Screen>
+               { response && response.length>0 && <SingleEvent notifications={getTransformedNotifications(response)} flag={1} />}
+          
+             { response && response.length>0 && <DescriptionCard notifications={getTransformedNotifications(response)} />}
+          </Screen>
+          </div> 
         )
-        
+         
     }
     
 }

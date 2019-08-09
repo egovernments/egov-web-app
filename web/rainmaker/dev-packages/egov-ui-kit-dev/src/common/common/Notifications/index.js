@@ -21,9 +21,78 @@ const divStyle = {
   width: "90%",
 };
 
-const Notifications = ({ notifications = [], history }) => {
+export const DescriptionCard =  ({ notifications = [] }) => {
   const renderUpdate = (notification, index) => {
-    const { description, dueTime, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
+    const { description, name, SLA,address} = notification;
+    return (
+      <Card
+       // className="home-notification"
+        style={{ margin: "8px 0px" }}
+        key={index}
+        id={`home-notification${index}`}
+        style={{ padding: "12px 8px" }}
+        textChildren={
+          <Grid container>
+            <Grid item xs={8} sm container>
+              <div >
+               
+            <Label
+                  leftWrapperStyle
+                  fontSize={16}
+                  color="rgba(0, 0, 0, 0.60)"
+                  label={description}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5 }}
+                />
+        
+                {address && (
+                  <div className="rainmaker-displayInline">
+                    <Icon name="place" action="maps" style={{ height: "20px", width: "35px", marginRight: 5 }} />
+                    <Label
+                      leftWrapperStyle
+                      fontSize={14}
+                      color="rgba(0, 0, 0, 0.87)"
+                      label={address}
+                      labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                      containerStyle={{ marginBottom: 5 }}
+                    />
+                  </div>
+                )}
+
+                {
+                  <div
+                  // onClick={() => {
+                  //   history.push(button.route);
+                  // }}
+                  style={{ cursor: "pointer", marginBottom: 10 }}
+                >
+                  <Label
+                    label={`GET DIRECTIONS`}
+                    color="#FC8019"
+                    fontSize={14}
+                   // containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
+                  />
+                </div>
+                }
+
+             
+
+                {SLA}
+              </div>
+            </Grid>
+          </Grid>
+        }
+      />
+    );
+  };
+
+  return <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>;
+
+}
+
+const Notifications = ({ notifications = [], history ,flag})=> {
+  const renderUpdate = (notification, index) => {
+    const { description, dueTime, buttons,eventCategory, address, name, SLA, type, id, tenantId, eventDate } = notification;
     return (
       <Card
         className="home-notification"
@@ -64,8 +133,16 @@ const Notifications = ({ notifications = [], history }) => {
                   label={description}
                   labelStyle={{ width: "100%", wordWrap: "break-word" }}
                   containerStyle={{ marginBottom: 5 }}
+                 /> }
+                {  flag ===1  && <Label
+                  leftWrapperStyle
+                  fontSize={14}
+                  color="rgba(0, 0, 0, 0.60)"
+                  label={eventCategory}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5 }}
                 />}
-                {address && (
+                { flag !==1  && address && (
                   <div className="rainmaker-displayInline">
                     <Icon name="place" action="maps" viewBox ="10 0 24 24" style={{ height: "20px", width: "35px" ,  marginRight: "5"}} />
                     <Label
@@ -100,8 +177,7 @@ const Notifications = ({ notifications = [], history }) => {
                     })}
                   </div>
                 )}
-
-                {SLA }
+                { flag !==1  && SLA}
               </div>
             </Grid>
           </Grid>
@@ -113,4 +189,4 @@ const Notifications = ({ notifications = [], history }) => {
   return <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>;
 };
 
-export default Notifications;
+export default Notifications; 

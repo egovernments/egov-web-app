@@ -672,6 +672,7 @@ export const getTransformedNotifications = (notifications) => {
     data = notifications.map((item) => ({
       name: item.name,
       description: item.description,
+      eventCategory:item.eventCategory,
       address: item.eventDetails && item.eventDetails.address,
       SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
       buttons:
