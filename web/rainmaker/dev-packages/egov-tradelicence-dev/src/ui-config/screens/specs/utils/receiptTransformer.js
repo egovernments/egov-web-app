@@ -92,6 +92,16 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         )
       )
     );
+    data.occupancyType = getMessageFromLocalization(
+      nullToNa(
+        get(
+          response,
+          "Licenses[0].tradeLicenseDetail.additionalDetail.occupancyType",
+          "NA"
+        )
+      )
+    );
+
     data.licenseNumber = nullToNa(
       get(response, "Licenses[0].licenseNumber", "NA")
     );
@@ -370,6 +380,9 @@ export const loadUserNameData = async uuid => {
   if (response && response.user && response.user.length > 0) {
     data.auditorName = get(response, "user[0].name", "NA");
   }
+
+  data.Disclaimer = getMessageFromLocalization("TL_RECEIPT_FOOTER_1");
+  data.signature = getMessageFromLocalization("TL_RECEIPT_FOOTER_2");
   store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };
 
