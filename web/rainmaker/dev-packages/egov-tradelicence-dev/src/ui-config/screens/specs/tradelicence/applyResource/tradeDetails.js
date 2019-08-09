@@ -1109,13 +1109,14 @@ export const tradeDetails = getCommonCard({
         labelKey: "TL_OCCUPANCY_TYPE_LABEL"
       },
       placeholder: {
-        labelName: "Select OCCUPANCY Type",
+        labelName: "Select Occupancy Type",
         labelKey: "TL_OCCUPANCY_TYPE_PLACEHOLDER"
       },
       localePrefix: {
         moduleName: "TradeLicense",
         masterName: "OccupancyType"
       },
+      required: true,
       jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.occupancyType",
       sourceJsonPath: "applyScreenMdmsData.TradeLicense.OccupancyType",
       gridDefination: {
