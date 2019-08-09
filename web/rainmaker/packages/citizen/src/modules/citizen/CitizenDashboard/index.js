@@ -9,7 +9,7 @@ import ServicesNearby from "./components/ServicesNearby";
 import { Notifications, Screen } from "modules/common";
 import "./index.css";
 import get from "lodash/get";
-import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
+import { getTransformedNotifications, onNotificationClick } from "egov-ui-kit/utils/commons";
 import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import isEqual from "lodash/isEqual";
@@ -48,10 +48,10 @@ class CitizenDashboard extends Component {
   };
 
   render() {
-    const { history, loading, cities, whatsNewEvents } = this.props;
+    const { history, loading, whatsNewEvents } = this.props;
     return (
       <Screen loading={loading}>
-        <SearchService items={cities} />
+        <SearchService history={history} />
         <div className="citizen-dashboard-cont">
           <Label
             label="DASHBOARD_CITIZEN_SERVICES_LABEL"
@@ -71,9 +71,9 @@ class CitizenDashboard extends Component {
           <ServicesNearby history={history} />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <Link to="/notifications">
+            <div onClick={() => onNotificationClick(history)}>
               <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
-            </Link>
+            </div>
           </div>
           <Notifications notifications={whatsNewEvents} history={history} />
         </div>
@@ -84,7 +84,7 @@ class CitizenDashboard extends Component {
 
 const mapStateToProps = (state) => {
   const notifications = get(state.app, "notificationObj.notifications");
-  const cities = state.common.cities || [];
+  // const cities = state.common.cities || [];
   const userInfo = get(state.auth, "userInfo");
   const loading = get(state.app, "notificationObj.loading");
   let filteredNotifications =
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
   let whatsNewEvents =
     filteredNotifications && getTransformedNotifications(filteredNotifications).slice(0, Math.min(3, filteredNotifications.length));
 
-  return { notifications, userInfo, loading, cities, whatsNewEvents };
+  return { notifications, userInfo, loading, whatsNewEvents };
 };
 
 const mapDispatchToProps = (dispatch) => {

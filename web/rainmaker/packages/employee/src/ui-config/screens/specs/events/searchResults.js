@@ -2,7 +2,7 @@ import React from "react";
 import { handleScreenConfigurationFieldChange as handleField, toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getLocaleLabels, getTransformedLocalStorgaeLabels, epochToYmd } from "egov-ui-framework/ui-utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import { getEventsByType } from "../utils";
+import { getEventsByType, sortByEpoch, getEpochForDate } from "../utils";
 
 export const searchApiCall = async (state, dispatch) => {
   const localisationLabels = getTransformedLocalStorgaeLabels();
@@ -43,7 +43,7 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  window.location.href = `create?edit=true&uuid=${rowData[6]}&tenantId=${rowData[5]}`;
+  window.location.href = `create?uuid=${rowData[6]}&tenantId=${rowData[5]}`;
 };
 
 export const searchResults = () => {
@@ -97,6 +97,21 @@ export const searchResults = () => {
         rowsPerPageOptions: [10, 15, 20],
         onRowClick: (row, index) => {
           onRowClick(row);
+        },
+      },
+      customSortColumn: {
+        column: "Application Date",
+        sortingFn: (data, i, sortDateOrder) => {
+          const epochDates = data.reduce((acc, curr) => {
+            acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
+            return acc;
+          }, []);
+          const order = sortDateOrder === "asc" ? true : false;
+          const finalData = sortByEpoch(epochDates, !order).map((item) => {
+            item.pop();
+            return item;
+          });
+          return { data: finalData, currentOrder: !order ? "asc" : "desc" };
         },
       },
     },
