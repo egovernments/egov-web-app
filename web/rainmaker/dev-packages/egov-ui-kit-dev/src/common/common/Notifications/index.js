@@ -34,7 +34,7 @@ const Notifications = ({ notifications = [], history }) => {
         textChildren={
           <Grid container>
             {type === "EVENTSONGROUND" && (
-              <Grid item xs={4} direction="column" style={{ maxWidth: "100px", maxHeight: "100px",minWidth: "100px", minHeight: "100px" }}>
+              <Grid item xs={4} direction="column" style={{ maxWidth: "100px", maxHeight: "100px", minWidth: "100px", minHeight: "100px" }}>
                 <div style={divStyle}>
                   <Label label={eventDate.split(":")[0]} color="#fff" fontSize="17px" />
                 </div>
@@ -43,31 +43,33 @@ const Notifications = ({ notifications = [], history }) => {
                 </div>
               </Grid>
             )}
-            <Grid item xs={8} sm container>
+            <Grid item xs={type !== "EVENTSONGROUND" ? 12 : 8} sm container>
               <div
                 className="update"
                 onClick={() => (type === "EVENTSONGROUND" ? history.push(`/event-details?uuid=${id}&tenantId=${tenantId}`) : {})}
               >
+                <Label
+                  leftWrapperStyle
+                  fontSize={16}
+                  color="rgba(0, 0, 0, 0.87)"
+                  label={name}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5 }}
+                />
+
+                {type != "EVENTSONGROUND" && (
                   <Label
                     leftWrapperStyle
-                    fontSize={16}
-                    color="rgba(0, 0, 0, 0.87)"
-                    label={name}
+                    fontSize={14}
+                    color="rgba(0, 0, 0, 0.60)"
+                    label={description}
                     labelStyle={{ width: "100%", wordWrap: "break-word" }}
                     containerStyle={{ marginBottom: 5 }}
                   />
-                
-               { type != "EVENTSONGROUND" && <Label
-                  leftWrapperStyle
-                  fontSize={14}
-                  color="rgba(0, 0, 0, 0.60)"
-                  label={description}
-                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                  containerStyle={{ marginBottom: 5 }}
-                />}
+                )}
                 {address && (
                   <div className="rainmaker-displayInline">
-                    <Icon name="place" action="maps" viewBox ="10 0 24 24" style={{ height: "20px", width: "35px" ,  marginRight: "5"}} />
+                    <Icon name="place" action="maps" viewBox="10 0 24 24" style={{ height: "20px", width: "35px", marginRight: "5" }} />
                     <Label
                       leftWrapperStyle
                       fontSize={14}
@@ -101,7 +103,7 @@ const Notifications = ({ notifications = [], history }) => {
                   </div>
                 )}
 
-                {SLA }
+                {SLA}
               </div>
             </Grid>
           </Grid>

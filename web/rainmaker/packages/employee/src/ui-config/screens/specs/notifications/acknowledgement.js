@@ -116,10 +116,10 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
               labelName: "Message deleted Successfully",
               labelKey: "MESSAGE_DELETE_SUCCESS_MESSAGE_MAIN",
             },
-            body: {
-              labelName: "A notification regarding this message has been sent to citizen at registered Mobile No.",
-              labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_SUB",
-            },
+            // body: {
+            //   labelName: "A notification regarding this message has been sent to citizen at registered Mobile No.",
+            //   labelKey: "MESSAGE_ADD_SUCCESS_MESSAGE_SUB",
+            // },
             number: applicationNumber,
           }),
         },

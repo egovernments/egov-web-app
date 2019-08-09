@@ -103,7 +103,7 @@ const getAcknowledgementCard = (state, dispatch, purpose, status, applicationNum
     return {
       header: getCommonHeader({
         labelName: "Delete Event",
-        labelKey: "DELETE_PUBLIC_MESSAGE",
+        labelKey: "DELETE_EVENT_LABEL",
       }),
       applicationSuccessCard: {
         uiFramework: "custom-atoms",
