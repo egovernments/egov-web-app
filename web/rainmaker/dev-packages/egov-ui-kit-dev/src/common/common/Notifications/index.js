@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Icon } from "components";
+import { Card, Icon, MapLocation } from "components";
+import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
@@ -21,9 +22,15 @@ const divStyle = {
   width: "90%",
 };
 
+<<<<<<< Updated upstream
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
     const { description, dueTime, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
+=======
+const Notifications = ({ notifications = [], history, flag }) => {
+  const renderUpdate = (notification, index) => {
+    const { description, dueTime, buttons, eventCategory, address, name, SLA, type, id, tenantId, eventDate } = notification;
+>>>>>>> Stashed changes
     return (
       <Card
         className="home-notification"
@@ -57,6 +64,7 @@ const Notifications = ({ notifications = [], history }) => {
                   containerStyle={{ marginBottom: 5 }}
                 />
 
+<<<<<<< Updated upstream
                 {type != "EVENTSONGROUND" && (
                   <Label
                     leftWrapperStyle
@@ -68,6 +76,25 @@ const Notifications = ({ notifications = [], history }) => {
                   />
                 )}
                 {address && (
+=======
+                {type != "EVENTSONGROUND" && <Label
+                  leftWrapperStyle
+                  fontSize={14}
+                  color="rgba(0, 0, 0, 0.60)"
+                  label={description}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5 }}
+                />}
+                {flag === 1 && <Label
+                  leftWrapperStyle
+                  fontSize={13}
+                  color="rgba(0, 0, 0, 0.55)"
+                  label={"MSEVA_EVENTCATEGORIES_" + eventCategory}
+                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                  containerStyle={{ marginBottom: 5, marginTop: 10 }}
+                />}
+                {flag !== 1 && address && (
+>>>>>>> Stashed changes
                   <div className="rainmaker-displayInline">
                     <Icon name="place" action="maps" viewBox="10 0 24 24" style={{ height: "20px", width: "35px", marginRight: "5" }} />
                     <Label
@@ -94,7 +121,7 @@ const Notifications = ({ notifications = [], history }) => {
                           <Label
                             label={`CS_COMMON_${button.label}`}
                             color={"#FC8019"}
-                            fontSize={14}
+                            fontSize={12}
                             containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
                           />
                         </div>
@@ -102,8 +129,12 @@ const Notifications = ({ notifications = [], history }) => {
                     })}
                   </div>
                 )}
+<<<<<<< Updated upstream
 
                 {SLA}
+=======
+                {flag !== 1 && SLA}
+>>>>>>> Stashed changes
               </div>
             </Grid>
           </Grid>
