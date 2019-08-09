@@ -7,6 +7,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CommonMenuItems } from "../NavigationDrawer/commonMenuItems";
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
+import LogoutDialog from "../LogoutDialog";
 import "./index.css";
 
 class UserSettings extends Component {
@@ -14,6 +15,8 @@ class UserSettings extends Component {
     languageSelected: getLocale(),
     displayAccInfo: false,
     tenantSelected: getTenantId(),
+    tempTenantSelected: getTenantId(),
+    open: false,
   };
   style = {
     baseStyle: {
@@ -57,10 +60,25 @@ class UserSettings extends Component {
     this.props.fetchLocalizationLabel(value);
   };
 
-  onTenantChange = (event, index, value) => {
-    this.setState({ ...this.state, tenantSelected: value });
-    setTenantId(value);
+  handleTenantChange = () => {
+    let tenantSelected = this.state.tempTenantSelected;
+    this.setState({ ...this.state, tenantSelected: tenantSelected });
+    setTenantId(tenantSelected);
     this.props.setRoute("/");
+  };
+
+  onTenantChange = (event, index, value) => {
+    if (location.pathname.includes("/inbox")) {
+      this.setState({ ...this.state, tenantSelected: value });
+      setTenantId(value);
+      this.props.setRoute("/");
+    } else {
+      this.setState({ ...this.state, open: true, tempTenantSelected: value });
+    }
+  };
+
+  handleClose = () => {
+    this.setState({ ...this.state, open: false });
   };
 
   toggleAccInfo() {
@@ -70,7 +88,7 @@ class UserSettings extends Component {
   }
 
   render() {
-    const { languageSelected, displayAccInfo, tenantSelected } = this.state;
+    const { languageSelected, displayAccInfo, tenantSelected, open } = this.state;
     const { style } = this;
     const { onIconClick, userInfo, handleItemClick, hasLocalisation, languages, fetchLocalizationLabel } = this.props;
 
@@ -87,15 +105,26 @@ class UserSettings extends Component {
 
     return (
       <div className="userSettingsContainer">
-        <DropDown
-          onChange={this.onTenantChange}
-          listStyle={style.listStyle}
-          style={style.baseTenantStyle}
-          labelStyle={style.label}
-          dropDownData={tenantIdsList}
-          value={tenantSelected}
-          underlineStyle={{ borderBottom: "none" }}
+        <LogoutDialog
+          logoutPopupOpen={open}
+          closeLogoutDialog={this.handleClose}
+          logout={this.handleTenantChange}
+          oktext={"CORE_CHANGE_TENANT_OK"}
+          canceltext={"CORE_CHANGE_TENANT_CANCEL"}
+          title={"CORE_CHANGE_TENANT"}
+          body={"CORE_CHANGE_TENANT_DESCRIPTION"}
         />
+        {process.env.REACT_APP_NAME === "Employee" && (
+          <DropDown
+            onChange={this.onTenantChange}
+            listStyle={style.listStyle}
+            style={style.baseTenantStyle}
+            labelStyle={style.label}
+            dropDownData={tenantIdsList}
+            value={tenantSelected}
+            underlineStyle={{ borderBottom: "none" }}
+          />
+        )}
         {hasLocalisation && (
           <DropDown
             onChange={this.onChange}
