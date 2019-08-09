@@ -45,12 +45,12 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
       <div>
         {items.map((item, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="property-info-subsection">
               <div>
                 <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
                   <div className="receipt-displayInline">
-                    <Icon action={item.iconAction} name={item.iconName} color="#767676" />
-                    <Label label={item.heading} containerStyle={{ marginLeft: "13px" }} bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }} />
+                    {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
+                    <Label label={item.heading} containerStyle={{ marginLeft: "13px" }}  fontWeight="550" fontSize="19px" bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }}   />
                   </div>
                   {/* {process.env.REACT_APP_NAME === "Employee" &&
                     item.heading === "Property Address" && (
@@ -77,7 +77,8 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                 )}
               </div>
               {index < items.length - 1 && (
-                <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }} />
+                <div />
+                // <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }} />
               )}
             </div>
           );
