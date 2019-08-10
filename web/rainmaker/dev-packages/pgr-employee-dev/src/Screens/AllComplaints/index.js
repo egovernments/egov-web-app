@@ -12,6 +12,7 @@ import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import CountDetails from "./components/CountDetails"
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -282,7 +283,7 @@ class AllComplaints extends Component {
                     label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
-                  <Label
+                  {/*<Label
                     labelClassName={
                       this.state.value === 0
                         ? "selected-tab-label-text"
@@ -292,12 +293,13 @@ class AllComplaints extends Component {
                     bold={true}
                     label={`(${unassignedComplaints.length})`}
                     labelStyle={tabStyle}
-                  />
+                  />*/}
                 </div>
               ),
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab1-content form-without-button-cont-generic">
+                    <CountDetails count={unassignedComplaints.length} total="500" status="unassigned"/>
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"
@@ -327,7 +329,7 @@ class AllComplaints extends Component {
                     label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
-                  <Label
+                  {/*<Label
                     labelClassName={
                       this.state.value === 1
                         ? "selected-tab-label-text"
@@ -337,12 +339,13 @@ class AllComplaints extends Component {
                     bold={true}
                     label={`(${assignedComplaints.length})`}
                     labelStyle={tabStyle}
-                  />
+                  />*/}
                 </div>
               ),
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab2-content form-without-button-cont-generic">
+                    <CountDetails count={assignedComplaints.length} total="500" status="assigned"/>
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"
