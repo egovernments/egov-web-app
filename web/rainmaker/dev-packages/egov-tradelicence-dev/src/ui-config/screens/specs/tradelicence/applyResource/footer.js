@@ -47,6 +47,7 @@ export const generatePdfFromDiv = (action, applicationNumber) => {
       //   "data-html2canvas-ignore"
       // ] = "true";
       clonedDoc.getElementById("custom-atoms-footer").style.display = "none";
+      clonedDoc.getElementById("material-ui-ulbheader").style.display = "flex";
     }
   }).then(canvas => {
     var data = canvas.toDataURL("image/jpeg", 1);

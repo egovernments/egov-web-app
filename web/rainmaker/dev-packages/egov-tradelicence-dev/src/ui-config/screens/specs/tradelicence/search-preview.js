@@ -237,7 +237,7 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
       );
 
     setActionItems(action, obj);
-    loadReceiptGenerationData(applicationNumber, tenantId);
+    // loadReceiptGenerationData(applicationNumber, tenantId);
   }
 };
 
@@ -320,6 +320,26 @@ const estimate = getCommonGrayCard({
 
 const reviewTradeDetails = getReviewTrade(false);
 
+const getULBCard = () => {
+  return getCommonContainer(
+    {
+      headerDiv: {
+        uiFramework: "custom-containers-local",
+        moduleName: "egov-tradelicence",
+        componentPath: "ULBSummaryCard",
+        props: {
+          style: { marginBottom: "10px" },
+          sourceJsonPath: "mdmsDataForReceipt",
+          logopath: "base64UlbLogo"
+        }
+      }
+    },
+    { style: { justifyContent: "center", display: "none" } }
+  );
+};
+
+const ulbCard = getULBCard();
+
 const reviewOwnerDetails = getReviewOwner(false);
 
 const reviewDocumentDetails = getReviewDocuments(false, false);
@@ -376,7 +396,7 @@ const screenConfig = {
     );
     if (status !== "pending_payment") {
       set(
-        action.screenConfig,
+        action.screenConfgig,
         "components.div.children.tradeReviewDetails.children.cardContent.children.viewBreakupButton.visible",
         false
       );
@@ -387,6 +407,7 @@ const screenConfig = {
     ];
     setBusinessServiceDataToLocalStorage(queryObject, dispatch);
     beforeInitFn(action, state, dispatch, applicationNumber);
+    loadReceiptGenerationData(applicationNumber, tenantId);
     return action;
   },
 
@@ -398,6 +419,7 @@ const screenConfig = {
         className: "common-div-css search-preview"
       },
       children: {
+        ulbheader: ulbCard,
         headerDiv: {
           uiFramework: "custom-atoms",
           componentPath: "Container",
