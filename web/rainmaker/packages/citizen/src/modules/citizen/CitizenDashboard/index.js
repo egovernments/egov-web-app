@@ -7,16 +7,18 @@ import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
 import { Notifications, Screen } from "modules/common";
+import LogoutDialog from "egov-ui-kit/common/common/Header/components/LogoutDialog";
 import "./index.css";
 import get from "lodash/get";
 import { getTransformedNotifications, onNotificationClick } from "egov-ui-kit/utils/commons";
 import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import isEqual from "lodash/isEqual";
+import { setRoute } from "egov-ui-kit/redux/app/actions";
 
 class CitizenDashboard extends Component {
   state = {
     whatsNewEvents: [],
+    openDialog: false,
   };
 
   componentDidMount = () => {
@@ -44,11 +46,24 @@ class CitizenDashboard extends Component {
 
       getNotifications(queryObject, requestBody);
       getNotificationCount(queryObject, requestBody);
+    } else {
+      this.setState({
+        openDialog: true,
+      });
     }
+  };
+  handleClose = () => {
+    this.setState({ ...this.state, openDialog: false });
+  };
+
+  redirectToEditProfile = () => {
+    const { setRoute } = this.props;
+    setRoute("user/profile");
   };
 
   render() {
     const { history, loading, whatsNewEvents } = this.props;
+    const { openDialog } = this.state;
     return (
       <Screen loading={loading}>
         <SearchService history={history} />
@@ -77,6 +92,15 @@ class CitizenDashboard extends Component {
           </div>
           <Notifications notifications={whatsNewEvents} history={history} />
         </div>
+        <LogoutDialog
+          logoutPopupOpen={openDialog}
+          closeLogoutDialog={this.handleClose}
+          logout={this.redirectToEditProfile}
+          oktext={"CORE_CHANGE_TENANT_OK"}
+          canceltext={"CORE_CHANGE_TENANT_CANCEL"}
+          title={"Alert"}
+          body={"Please update your City"}
+        />
       </Screen>
     );
   }
@@ -103,6 +127,7 @@ const mapDispatchToProps = (dispatch) => {
     getNotificationCount: (queryObject, requestBody) => dispatch(getNotificationCount(queryObject, requestBody)),
     getNotifications: (queryObject, requestBody) => dispatch(getNotifications(queryObject, requestBody)),
     toggleSpinner: () => dispatch(toggleSpinner()),
+    setRoute: (path) => dispatch(setRoute(path)),
   };
 };
 
