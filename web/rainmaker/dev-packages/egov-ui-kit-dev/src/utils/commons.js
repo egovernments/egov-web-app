@@ -218,7 +218,7 @@ export const addBodyClass = (path) => {
   try {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
     bodyClass && document.body.classList.add(bodyClass);
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const prepareFormData = (form) => {
@@ -476,10 +476,10 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
         role === "citizen"
           ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter((complaint) => complaint.status)[0].action)
           : getTransformedStatus(complaintDetail.status) === "CLOSED"
-          ? complaintDetail.rating
-            ? displayStatus(`${complaintDetail.rating}/5`)
-            : displayStatus(complaintDetail.actions[0].status)
-          : displayStatus(
+            ? complaintDetail.rating
+              ? displayStatus(`${complaintDetail.rating}/5`)
+              : displayStatus(complaintDetail.actions[0].status)
+            : displayStatus(
               returnSLAStatus(
                 getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
                 getLatestCreationTime(complaintDetail)
@@ -497,7 +497,7 @@ export const startSMSRecevier = () => {
     if (typeof androidAppProxy !== "undefined") {
       window.androidAppProxy.requestSMS();
     }
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const upperCaseFirst = (word) => {
@@ -526,11 +526,11 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
       const dropdownData = boundary
         ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
-          payloadSpec.TenantBoundary[0].boundary
+        payloadSpec.TenantBoundary[0].boundary
         : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
-            dropdownData = [...dropdownData, ...get(payloadSpec, path)];
-            return dropdownData;
-          }, []);
+          dropdownData = [...dropdownData, ...get(payloadSpec, path)];
+          return dropdownData;
+        }, []);
       const ddData =
         dropdownData &&
         dropdownData.length > 0 &&
@@ -606,32 +606,32 @@ const getEndpointfromUrl = (url, name) => {
 };
 
 const getTimeFormat = (epochTime) => {
-       epochTime = new Date(epochTime);
-       const Period = epochTime.getHours()<12? "AM" : "PM"
-       const Format = epochTime.getHours()%12 > 0 ? epochTime.getHours()%12 : 12;
-       return  Format.toString()+":"+epochTime.toString().split(":")[1]+" "+Period ;
+  epochTime = new Date(epochTime);
+  const Period = epochTime.getHours() < 12 ? "AM" : "PM"
+  const Format = epochTime.getHours() % 12 > 0 ? epochTime.getHours() % 12 : 12;
+  return Format.toString() + ":" + epochTime.toString().split(":")[1] + " " + Period;
 }
 
 const getEventSLA = (item) => {
   const days = (Date.now() - item.auditDetails.lastModifiedTime) / (1000 * 60 * 60 * 24);
   let sla;
 
-  if(item.eventType === "EVENTSONGROUND"){
-    const disp = getTimeFormat(item.eventDetails.fromDate)+" "+"-"+" "+getTimeFormat(item.eventDetails.toDate);
-    sla = (<div style={{display : "flex"}}>
-      <Icon name="access-time" action="device" viewBox ="10 1.5 24 24" style={{ height: "20px", width: "35px" }} />
+  if (item.eventType === "EVENTSONGROUND") {
+    const disp = getTimeFormat(item.eventDetails.fromDate) + " " + "-" + " " + getTimeFormat(item.eventDetails.toDate);
+    sla = (<div style={{ display: "flex" }}>
+      <Icon name="access-time" action="device" viewBox="10 1.5 24 24" style={{ height: "20px", width: "35px" }} />
       <Label
-            leftWrapperStyle
-            fontSize={14}
-            color="rgba(0, 0, 0, 0.60)"
-            label={disp}
-            labelStyle={{ width: "100%", wordWrap: "break-word" }}
-            containerStyle={{ marginBottom: 5 }}
-        />
-     </div>
-      );
+        leftWrapperStyle
+        fontSize={14}
+        color="rgba(0, 0, 0, 0.60)"
+        label={disp}
+        labelStyle={{ width: "100%", wordWrap: "break-word" }}
+        containerStyle={{ marginBottom: 5 }}
+      />
+    </div>
+    );
 
-  }else{
+  } else {
     if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
     else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
     else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
@@ -643,7 +643,7 @@ const getEventSLA = (item) => {
       }
     }
   }
-  
+
 
   /* 
     let sla = days > 1 ? (( days > 6) ? (<Label label="CS_SLA_WEEK" dynamicArray={[Math.ceil((days / 7))]} />):
@@ -672,19 +672,21 @@ export const getTransformedNotifications = (notifications) => {
     data = notifications.map((item) => ({
       name: item.name,
       description: item.description,
+      eventCategory: item.eventCategory,
       address: item.eventDetails && item.eventDetails.address,
       SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
       buttons:
         item.actions && item.actions.actionUrls
           ? item.actions.actionUrls.map((actionUrls) => ({
-              label: actionUrls.code,
-              route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
-            }))
+            label: actionUrls.code,
+            route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
+          }))
           : [],
       eventDate: (item.eventDetails && getEventDate(item.eventDetails.fromDate)) || "",
       type: item.eventType,
       id: item.id,
       tenantId: item.tenantId,
+      locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
     }));
   }
   return data;
