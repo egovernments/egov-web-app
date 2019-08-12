@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Icon } from "components";
+import { Card, Icon, MapLocation } from "components";
+import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import Grid from "@material-ui/core/Grid";
@@ -94,7 +95,7 @@ const Notifications = ({ notifications = [], history }) => {
                           <Label
                             label={`CS_COMMON_${button.label}`}
                             color={"#FC8019"}
-                            fontSize={14}
+                            fontSize={12}
                             containerStyle={index != buttons.length - 1 ? { marginRight: 30 } : {}}
                           />
                         </div>
