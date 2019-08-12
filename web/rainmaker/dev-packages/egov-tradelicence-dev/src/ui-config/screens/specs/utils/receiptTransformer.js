@@ -57,7 +57,7 @@ const getMessageFromLocalization = code => {
 const getMessageFromLocalizationNonTLCodes = code => {
   let messageObject = JSON.parse(getLocalization("localization_en_IN")).find(
     item => {
-      return item.code == code;
+      return item.code == code.toUpperCase().replace(/[.]/g, "_");
     }
   );
   return messageObject ? messageObject.message : code;
@@ -102,14 +102,14 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         )
       )
     );
-    data.occupancyType = getMessageFromLocalization(
-      nullToNa(
+    data.occupancyType = getMessageFromLocalizationNonTLCodes(
+      `TRADELICENSE_OCCUPANCYTYPE_${nullToNa(
         get(
           response,
           "Licenses[0].tradeLicenseDetail.additionalDetail.occupancyType",
           "NA"
         )
-      )
+      )}`
     );
 
     data.licenseNumber = nullToNa(
