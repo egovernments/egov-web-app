@@ -236,16 +236,17 @@ class Property extends Component {
               bold={true}
               label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyId}`}
               containerStyle={{ marginLeft: "13px", display: "inline-block" }}
-              labelStyle={{     backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                color: 'rgba(255, 255, 255, 0.87)',
-                marginLeft: '8px',
-                paddingLeft: '19px',
-                paddingRight: '19px',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                lineHeight: '35px',
-                fontSize: '16px' }}
-              
+              labelStyle={{
+                backgroundColor: "rgba(0, 0, 0, 0.6)",
+                color: "rgba(255, 255, 255, 0.87)",
+                marginLeft: "8px",
+                paddingLeft: "19px",
+                paddingRight: "19px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                lineHeight: "35px",
+                fontSize: "16px",
+              }}
               fontSize={"16px"}
             />
           </div>
@@ -312,7 +313,7 @@ const getAddressInfo = (addressObj, extraItems) => {
           {
             key: getTranslatedLabel("PT_PROPERTY_ADDRESS_STREET_NAME", localizationLabelsData),
             value: addressObj.street || "NA",
-          },          
+          },
           {
             key: getTranslatedLabel("PT_PROPERTY_ADDRESS_MOHALLA", localizationLabelsData),
             value: addressObj.locality.name || "NA",
@@ -320,7 +321,7 @@ const getAddressInfo = (addressObj, extraItems) => {
           {
             key: getTranslatedLabel("PT_PROPERTY_ADDRESS_PINCODE", localizationLabelsData),
             value: addressObj.pincode || "NA",
-          },       
+          },
           ...extraItems,
         ],
       },
@@ -368,7 +369,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         tableHeaderItems: [
           {
             key: getTranslatedLabel("PT_ASSESMENT_INFO_USAGE_TYPE", localizationLabelsData),
-            value:propertyDetails.usageCategoryMajor ? propertyDetails.usageCategoryMajor:"NA",//noOfFloors
+            value: propertyDetails.usageCategoryMajor ? propertyDetails.usageCategoryMajor : "NA", //noOfFloors
           },
           {
             key: getTranslatedLabel("PT_ASSESMENT_INFO_TYPE_OF_BUILDING", localizationLabelsData),
@@ -393,7 +394,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
           },
           {
             key: getTranslatedLabel("PT_ASSESMENT_INFO_NO_OF_FLOOR", localizationLabelsData),
-            value:propertyDetails.noOfFloors ? `${propertyDetails.noOfFloors}`:"NA",//noOfFloors
+            value: propertyDetails.noOfFloors ? `${propertyDetails.noOfFloors}` : "NA", //noOfFloors
           },
         ],
         items: {
@@ -401,7 +402,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
             ? [
                 getTranslatedLabel("PT_ASSESMENT_INFO_FLOOR", localizationLabelsData),
                 getTranslatedLabel("PT_ASSESMENT_INFO_USAGE_TYPE", localizationLabelsData),
-                getTranslatedLabel("PT_ASSESMENT_INFO_SUB_USAGE_TYPE", localizationLabelsData),
+                // getTranslatedLabel("PT_ASSESMENT_INFO_SUB_USAGE_TYPE", localizationLabelsData),
                 getTranslatedLabel("PT_ASSESMENT_INFO_OCCUPLANCY", localizationLabelsData),
                 getTranslatedLabel("PT_ASSESMENT_INFO_AREA_RENT", localizationLabelsData),
               ]
@@ -433,15 +434,15 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
         iconName: "person",
         nestedItems: true,
         items: ownerDetails.map((owner) => {
-          console.log("jagan--<?",owner.dob);
-          
+          console.log("jagan--<?", owner.dob);
+
           return {
             items: [
               isInstitution
                 ? {
                     key: getTranslatedLabel("PT_OWNERSHIP_INFO_NAME_INSTI", localizationLabelsData),
                     value: (institution && institution.name) || "NA",
-                  }                         
+                  }
                 : {
                     key: getTranslatedLabel("PT_OWNERSHIP_INFO_NAME", localizationLabelsData),
                     value: owner.name || "NA",
@@ -470,7 +471,7 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
                     key: getTranslatedLabel("PT_OWNERSHIP_INFO_GENDER", localizationLabelsData),
                     value: owner.gender || "NA",
                   },
-                  isInstitution
+              isInstitution
                 ? {
                     // key: getTranslatedLabel("PT_OWNERSHIP_INFO_TYPE_INSTI", localizationLabelsData),
                     // value:
@@ -504,25 +505,24 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
                     value: owner.emailId || "NA",
                   },
               isInstitution
-                  ? {
-                      key: getTranslatedLabel("PT_OWNERSHIP_INFO_MOBILE_NO", localizationLabelsData),
-                      value: owner.mobileNumber || "NA",
-                    }
-                  : {
-                      key: getTranslatedLabel("PT_OWNERSHIP_INFO_USER_CATEGORY", localizationLabelsData),
-                      value:
-                        (owner &&
-                          owner.ownerType &&
-                          generalMDMSDataById &&
-                          generalMDMSDataById["OwnerType"] &&
-                          generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
-                        "NA",
-                    },
+                ? {
+                    key: getTranslatedLabel("PT_OWNERSHIP_INFO_MOBILE_NO", localizationLabelsData),
+                    value: owner.mobileNumber || "NA",
+                  }
+                : {
+                    key: getTranslatedLabel("PT_OWNERSHIP_INFO_USER_CATEGORY", localizationLabelsData),
+                    value:
+                      (owner &&
+                        owner.ownerType &&
+                        generalMDMSDataById &&
+                        generalMDMSDataById["OwnerType"] &&
+                        generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
+                      "NA",
+                  },
               {
                 key: getTranslatedLabel("PT_OWNERSHIP_INFO_CORR_ADDR", localizationLabelsData),
                 value: owner.permanentAddress || "NA",
               },
-              
             ],
           };
         }),
@@ -542,18 +542,18 @@ const mapStateToProps = (state, ownProps) => {
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const existingPropertyId = selPropertyDetails.propertyId;
-  console.log('Jagan',selPropertyDetails);
-  
+  console.log("Jagan", selPropertyDetails);
+
   const addressInfo =
     getAddressInfo(selPropertyDetails.address, [
       { key: getTranslatedLabel("PT_PROPERTY_ADDRESS_PROPERTY_ID", localizationLabels), value: selPropertyDetails.propertyId },
-    // ],[
-    //  , { key: getTranslatedLabel("PT_SEARCHPROPERTY_TABEL_EPID", localizationLabels), value : existingPropertyId}
+      // ],[
+      //  , { key: getTranslatedLabel("PT_SEARCHPROPERTY_TABEL_EPID", localizationLabels), value : existingPropertyId}
     ]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
-    { masterName: "UsageCategoryDetail", dataKey: "usageCategoryDetail" },
+    // { masterName: "UsageCategoryDetail", dataKey: "usageCategoryDetail" },
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];

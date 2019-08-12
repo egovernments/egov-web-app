@@ -11,12 +11,18 @@ const Receipt = ({ receiptItems, header }) => {
             return (
               <div key={index} className="col-sm-3 col-xs-12" style={{ marginBottom: 10 }}>
                 <div className="col-sm-12 col-xs-12" style={{ padding: 0 }}>
-        
-                  <Label  labelStyle={{ letterSpacing: 0 ,color :'rgba(0, 0, 0, 0.54)',fontWeight:'400' ,lineHeight:'1.375em'}} label={item.key} fontSize="12px"/>
+                  <Label
+                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
+                    label={item.key}
+                    fontSize="12px"
+                  />
                 </div>
-                <div className="col-sm-12 col-xs-12" style={{ padding:"5px 0px 0px 0px" }}>
-             
-    <Label  labelStyle={{ letterSpacing: '0.67px' ,color :'rgba(0, 0, 0, 0.87)',fontWeight:'400' ,lineHeight:'19px'}} label={item.value} fontSize="16px"/>
+                <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
+                  <Label
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    label={item.value}
+                    fontSize="16px"
+                  />
                   {/* <Label dark={true} labelStyle={{ letterSpacing: 0 }} label={item.value} fontSize="16px"/> */}
                 </div>
               </div>
