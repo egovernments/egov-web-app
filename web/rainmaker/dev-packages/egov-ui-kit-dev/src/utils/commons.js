@@ -218,7 +218,7 @@ export const addBodyClass = (path) => {
   try {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
     bodyClass && document.body.classList.add(bodyClass);
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const prepareFormData = (form) => {
@@ -476,10 +476,10 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
         role === "citizen"
           ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter((complaint) => complaint.status)[0].action)
           : getTransformedStatus(complaintDetail.status) === "CLOSED"
-            ? complaintDetail.rating
-              ? displayStatus(`${complaintDetail.rating}/5`)
-              : displayStatus(complaintDetail.actions[0].status)
-            : displayStatus(
+          ? complaintDetail.rating
+            ? displayStatus(`${complaintDetail.rating}/5`)
+            : displayStatus(complaintDetail.actions[0].status)
+          : displayStatus(
               returnSLAStatus(
                 getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
                 getLatestCreationTime(complaintDetail)
@@ -497,7 +497,7 @@ export const startSMSRecevier = () => {
     if (typeof androidAppProxy !== "undefined") {
       window.androidAppProxy.requestSMS();
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const upperCaseFirst = (word) => {
@@ -526,11 +526,11 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
       const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
       const dropdownData = boundary
         ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
-        payloadSpec.TenantBoundary[0].boundary
+          payloadSpec.TenantBoundary[0].boundary
         : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
-          dropdownData = [...dropdownData, ...get(payloadSpec, path)];
-          return dropdownData;
-        }, []);
+            dropdownData = [...dropdownData, ...get(payloadSpec, path)];
+            return dropdownData;
+          }, []);
       const ddData =
         dropdownData &&
         dropdownData.length > 0 &&
@@ -607,10 +607,10 @@ const getEndpointfromUrl = (url, name) => {
 
 const getTimeFormat = (epochTime) => {
   epochTime = new Date(epochTime);
-  const Period = epochTime.getHours() < 12 ? "AM" : "PM"
+  const Period = epochTime.getHours() < 12 ? "AM" : "PM";
   const Format = epochTime.getHours() % 12 > 0 ? epochTime.getHours() % 12 : 12;
   return Format.toString() + ":" + epochTime.toString().split(":")[1] + " " + Period;
-}
+};
 
 const getEventSLA = (item) => {
   const days = (Date.now() - item.auditDetails.lastModifiedTime) / (1000 * 60 * 60 * 24);
@@ -618,8 +618,9 @@ const getEventSLA = (item) => {
 
   if (item.eventType === "EVENTSONGROUND") {
     const disp = getTimeFormat(item.eventDetails.fromDate) + " " + "-" + " " + getTimeFormat(item.eventDetails.toDate);
-    sla = (<div style={{ display: "flex" }}>
-      <Icon name="access-time" action="device" viewBox="10 1.5 24 24" style={{ height: "20px", width: "35px" }} />
+    sla = (
+      // <div style={{ display: "flex" }}>
+      //   <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} />
       <Label
         leftWrapperStyle
         fontSize={14}
@@ -628,9 +629,8 @@ const getEventSLA = (item) => {
         labelStyle={{ width: "100%", wordWrap: "break-word" }}
         containerStyle={{ marginBottom: 5 }}
       />
-    </div>
+      // </div>
     );
-
   } else {
     if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
     else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
@@ -643,16 +643,6 @@ const getEventSLA = (item) => {
       }
     }
   }
-
-
-  /* 
-    let sla = days > 1 ? (( days > 6) ? (<Label label="CS_SLA_WEEK" dynamicArray={[Math.ceil((days / 7))]} />):
-     ( <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />)
-    ) : (
-      (days % 1) * 24 < 1  ? ( (days % 1) * 24 * 60 < 1  ? (<Label label="CS_SLA_NOW"  />):(<Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24*60)]} />)) :
-      (<Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />)
-      )
-   */
 
   return sla;
 };
@@ -678,9 +668,9 @@ export const getTransformedNotifications = (notifications) => {
       buttons:
         item.actions && item.actions.actionUrls
           ? item.actions.actionUrls.map((actionUrls) => ({
-            label: actionUrls.code,
-            route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
-          }))
+              label: actionUrls.code,
+              route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
+            }))
           : [],
       eventDate: (item.eventDetails && getEventDate(item.eventDetails.fromDate)) || "",
       type: item.eventType,
