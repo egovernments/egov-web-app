@@ -28,7 +28,7 @@ const Notifications = ({ notifications = [], history }) => {
     return (
       <Card
         className="home-notification"
-        style={{ margin: "8px 0px" }}
+        style={{ margin: "8px 0px", borderLeft: type === "EVENTSONGROUND" ? "none" : "4px solid #fe7a51" }}
         key={index}
         id={`home-notification${index}`}
         style={{ padding: "12px 8px" }}
@@ -55,7 +55,7 @@ const Notifications = ({ notifications = [], history }) => {
                   color="rgba(0, 0, 0, 0.87)"
                   label={name}
                   labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                  containerStyle={{ marginBottom: 5 }}
+                  containerStyle={{ marginBottom: 10 }}
                 />
 
                 {type != "EVENTSONGROUND" && (
@@ -65,24 +65,32 @@ const Notifications = ({ notifications = [], history }) => {
                     color="rgba(0, 0, 0, 0.60)"
                     label={description}
                     labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                    containerStyle={{ marginBottom: 5 }}
+                    containerStyle={{ marginBottom: 10 }}
                   />
                 )}
                 {address && (
-                  <div className="rainmaker-displayInline">
-                    <Icon name="place" action="maps" viewBox="10 0 24 24" style={{ height: "20px", width: "35px", marginRight: "5" }} />
+                  <div className="rainmaker-displayInline" style={{ marginBottom: 10 }}>
+                    <Icon
+                      name="place"
+                      action="maps"
+                      style={{
+                        height: 22,
+                        width: 33,
+                        color: "#484848",
+                      }}
+                      viewBox="10 0 24 24"
+                    />
                     <Label
                       leftWrapperStyle
                       fontSize={14}
                       color="rgba(0, 0, 0, 0.60)"
                       label={address}
                       labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                      containerStyle={{ marginBottom: 5 }}
+                      containerStyle={{ marginBottom: 10 }}
                     />
                   </div>
                 )}
-
-                {buttons && (
+                {buttons && buttons.length > 1 && (
                   <div style={{ marginTop: 5, display: "flex" }}>
                     {buttons.map((button, index) => {
                       return (
@@ -104,7 +112,13 @@ const Notifications = ({ notifications = [], history }) => {
                   </div>
                 )}
 
-                {SLA}
+                {type === "EVENTSONGROUND" ? (
+                  <div style={{ display: "flex" }}>
+                    <Icon name="access-time" action="device" viewBox="10 0 24 24" style={{ height: "20px", width: "35px" }} /> {SLA}
+                  </div>
+                ) : (
+                  SLA
+                )}
               </div>
             </Grid>
           </Grid>
