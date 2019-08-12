@@ -236,8 +236,16 @@ class Property extends Component {
               bold={true}
               label={`${getTranslatedLabel("PT_PROPERTY_PTUID", localizationLabelsData)} ${propertyId}`}
               containerStyle={{ marginLeft: "13px", display: "inline-block" }}
-              labelStyle={{ letterSpacing: 0, backgroundColor: "gray", padding: "2px", color: "white" }}
-              color="white"
+              labelStyle={{     backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                color: 'rgba(255, 255, 255, 0.87)',
+                marginLeft: '8px',
+                paddingLeft: '19px',
+                paddingRight: '19px',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                lineHeight: '35px',
+                fontSize: '16px' }}
+              
               fontSize={"16px"}
             />
           </div>

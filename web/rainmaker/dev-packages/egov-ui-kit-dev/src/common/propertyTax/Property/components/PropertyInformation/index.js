@@ -50,7 +50,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
                 <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
                   <div className="receipt-displayInline">
                     {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
-                    <Label label={item.heading} containerStyle={{ marginLeft: "13px" }}  fontWeight="550" fontSize="19px" bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }}   />
+                    <Label label={item.heading} containerStyle={{ marginLeft: "13px" }}  fontWeight="400" fontSize="18px"  labelStyle={{ letterSpacing: '0.75px' ,lineHeight:'20px' ,color:'rgba(0, 0, 0, 0.87)'}}   />
                   </div>
                   {/* {process.env.REACT_APP_NAME === "Employee" &&
                     item.heading === "Property Address" && (
