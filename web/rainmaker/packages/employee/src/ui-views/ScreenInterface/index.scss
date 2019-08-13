@@ -87,12 +87,6 @@ span[class^="MuiFormLabel-asterisk"] {
     position: sticky;
   }
 }
-.apply-wizard-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
 
 .apply-success-footer {
   background-color: #ffffff;
@@ -117,6 +111,13 @@ span[class^="MuiFormLabel-asterisk"] {
     display: inline-block !important;
     text-align: center;
   }
+
+  .apply-wizard-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 @media only screen and (min-width: 953px) {
   .app-container-iframe {
@@ -137,7 +138,7 @@ span[class^="MuiFormLabel-asterisk"] {
     position: fixed !important;
     bottom: 0;
     right: 0;
-    // width: 83.33vw;
+    width: 83.33vw;
     text-align: right;
   }
   .framework-responsive-button {
