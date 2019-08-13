@@ -47,11 +47,43 @@ class CitizenDashboard extends Component {
       getNotifications(queryObject, requestBody);
       getNotificationCount(queryObject, requestBody);
     } else {
-      this.setState({
-        openDialog: true,
-      });
+      // this.setState({
+      //   openDialog: true,
+      // });
     }
   };
+
+  componentWillReceiveProps = (nextProps) => {
+    const { getNotificationCount, getNotifications } = nextProps;
+    if (!get(this.props, "userInfo.permanentCity")) {
+      if (get(nextProps, "userInfo.permanentCity")) {
+        const permanentCity = get(nextProps, "userInfo.permanentCity");
+        const queryObject = [
+          {
+            key: "tenantId",
+            value: permanentCity,
+          },
+        ];
+        const requestBody = {
+          RequestInfo: {
+            apiId: "org.egov.pt",
+            ver: "1.0",
+            ts: 1502890899493,
+            action: "asd",
+            did: "4354648646",
+            key: "xyz",
+            msgId: "654654",
+            requesterId: "61",
+            authToken: getAccessToken(),
+          },
+        };
+
+        getNotifications(queryObject, requestBody);
+        getNotificationCount(queryObject, requestBody);
+      }
+    }
+  };
+
   handleClose = () => {
     this.setState({ ...this.state, openDialog: false });
   };

@@ -1,9 +1,8 @@
 import React from "react";
-import { Card, Icon, MapLocation } from "components";
-import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
+import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import "./index.css";
 import Grid from "@material-ui/core/Grid";
+import "./index.css";
 
 const pStyle = {
   backgroundColor: "#EEEEEE",
@@ -24,7 +23,7 @@ const divStyle = {
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { description, dueTime, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
+    const { description, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
     return (
       <Card
         className="home-notification"
@@ -90,7 +89,7 @@ const Notifications = ({ notifications = [], history }) => {
                     />
                   </div>
                 )}
-                {buttons && buttons.length > 1 && (
+                {buttons && buttons.length > 0 && (
                   <div style={{ marginTop: 5, display: "flex" }}>
                     {buttons.map((button, index) => {
                       return (

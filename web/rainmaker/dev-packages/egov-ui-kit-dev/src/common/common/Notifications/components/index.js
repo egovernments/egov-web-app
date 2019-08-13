@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Screen } from "modules/common";
-import { Card, Icon, MapLocation } from "components";
+import { Card, Icon, MapLocation, Button } from "components";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import Label from "egov-ui-kit/utils/translationNode";
 import "../index.css";
@@ -196,6 +196,15 @@ class EventDetails extends Component {
             </div>
           }
         />
+        {/* <div className="responsive-action-button-cont">
+          <Button
+            primary={true}
+            fullWidth={true}
+            style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
+            label="ADD TO MY CALENDAR"
+            className="responsive-action-button"
+          />
+        </div> */}
       </Screen>
     );
   }
