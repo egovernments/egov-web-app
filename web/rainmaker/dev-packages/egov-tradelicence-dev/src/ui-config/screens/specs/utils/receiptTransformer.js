@@ -242,7 +242,7 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
       data.accessoriesList = "";
     }
     // loadUserNameData(response.Licenses[0].auditDetails.lastModifiedBy);
-    loadEmployeeDate(
+    loadEmployeeData(
       response.Licenses[0].auditDetails.lastModifiedBy,
       licenseIssueDate
     );
@@ -400,7 +400,7 @@ export const loadUserNameData = async uuid => {
   store.dispatch(prepareFinalObject("userDataForReceipt", data));
 };
 
-export const loadEmployeeDate = async (uuid, licenseIssueDate) => {
+export const loadEmployeeData = async (uuid, licenseIssueDate) => {
   let data = {};
   let queryObject = [
     {
