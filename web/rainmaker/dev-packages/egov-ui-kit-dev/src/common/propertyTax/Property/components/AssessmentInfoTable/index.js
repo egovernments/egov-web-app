@@ -37,50 +37,59 @@ const AssessmentInfoTable = ({ items, tableHeaderItems }) => {
       <div>
         {items.values.map((value, index) => {
           return (
-            <div style={{ margin: "25px" }}>
-              <div style={{ backgroundColor: "white" , paddingBottom:'5px' }} className="row">
-           
-                {value.value.map((nestedValue, nestedIndex) => {
-                  return (
-                    <div>
-                      {nestedIndex != 0 && (
-                        <div className="col-sm-3 col-xs-12" style={{ marginBottom: 10 }}>
-                          <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
-                            <Label
-                              labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
-                              label={items.header[nestedIndex] ? items.header[nestedIndex] : "NA"}
-                              fontSize="12px"
-                            />
+            <div>
+              <div>
+                <div className="receipt-displayInline">
+                  <div style={{ marginLeft: "13px" }}>
+                    {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
+                    <Label
+                      labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                      label={value.value[0] ? value.value[0] : "NA"}
+                      fontSize="16px"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div style={{ margin: "25px" }}>
+                <div style={{ backgroundColor: "white", paddingBottom: "5px" }} className="row">
+                  {value.value.map((nestedValue, nestedIndex) => {
+                    return (
+                      <div>
+                        {nestedIndex != 0 && (
+                          <div className="col-sm-3 col-xs-12" style={{ marginBottom: 10 }}>
+                            <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
+                              <Label
+                                labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
+                                label={items.header[nestedIndex] ? items.header[nestedIndex] : "NA"}
+                                fontSize="12px"
+                              />
+                            </div>
+                            <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
+                              <Label
+                                labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                                label={nestedValue ? nestedValue : "NA"}
+                                fontSize="16px"
+                              />
+                            </div>
                           </div>
-                          <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
-                            <Label
-                              labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                              label={nestedValue ? nestedValue : "NA"}
-                              fontSize="16px"
-                            />
+                        )}
+                        {nestedIndex == 0 && (
+                          // <div  style={{ justifyContent: "space-between", alignItems: "center", display:'flex' ,margin:"10px 10px 10px "}}>
+                          <div className="receipt-displayInline">
+                            <div style={{ marginLeft: "13px" }}>
+                              {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
+                              <Label
+                                labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                                label={nestedValue ? 'Unit - 1' : "NA"}
+                                fontSize="14px"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      {nestedIndex == 0 && (
-                        // <div  style={{ justifyContent: "space-between", alignItems: "center", display:'flex' ,margin:"10px 10px 10px "}}>
-                        <div className="receipt-displayInline">
-                        <div style={{marginLeft:'13px'}}>
-                          {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
-                          <Label
-                            labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                            label={nestedValue ? nestedValue : "NA"}
-                            fontSize="16px"
-                          />
-                    
-                        </div>
-                       
-                          
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-               
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           );
