@@ -38,14 +38,14 @@ const AssessmentInfoTable = ({ items, tableHeaderItems }) => {
         {items.values.map((value, index) => {
           return (
             <div style={{ margin: "25px" }}>
-              <div style={{ backgroundColor: "white" }} className="row">
-                <br />
+              <div style={{ backgroundColor: "white" , paddingBottom:'5px' }} className="row">
+           
                 {value.value.map((nestedValue, nestedIndex) => {
                   return (
                     <div>
                       {nestedIndex != 0 && (
-                        <div className="col-sm-3 col-xs-12">
-                          <div className="col-sm-12 col-xs-12" style={{ padding: 0 }}>
+                        <div className="col-sm-3 col-xs-12" style={{ marginBottom: 10 }}>
+                          <div className="col-sm-12 col-xs-12" style={{ padding: "5px 0px 0px 0px" }}>
                             <Label
                               labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
                               label={items.header[nestedIndex] ? items.header[nestedIndex] : "NA"}
@@ -62,19 +62,25 @@ const AssessmentInfoTable = ({ items, tableHeaderItems }) => {
                         </div>
                       )}
                       {nestedIndex == 0 && (
-                        <div className="col-sm-12 col-xs-12">
+                        // <div  style={{ justifyContent: "space-between", alignItems: "center", display:'flex' ,margin:"10px 10px 10px "}}>
+                        <div className="receipt-displayInline">
+                        <div style={{marginLeft:'13px'}}>
+                          {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
                           <Label
                             labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
                             label={nestedValue ? nestedValue : "NA"}
                             fontSize="16px"
                           />
-                          <hr />
+                    
+                        </div>
+                       
+                          
                         </div>
                       )}
                     </div>
                   );
                 })}
-                <br />
+               
               </div>
             </div>
           );
