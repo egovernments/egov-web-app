@@ -621,14 +621,7 @@ const getEventSLA = (item) => {
     sla = (
       // <div style={{ display: "flex" }}>
       //   <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} />
-      <Label
-        leftWrapperStyle
-        fontSize={14}
-        color="rgba(0, 0, 0, 0.60)"
-        label={disp}
-        labelStyle={{ width: "100%", wordWrap: "break-word" }}
-        containerStyle={{ marginBottom: 5 }}
-      />
+      <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={disp} containerStyle={{ marginBottom: 5 }} />
       // </div>
     );
   } else {

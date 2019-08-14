@@ -2,6 +2,7 @@ import React from "react";
 import { Notifications, Screen } from "modules/common";
 import get from "lodash/get";
 import { connect } from "react-redux";
+import "../index.css";
 import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
 import { getNotifications } from "egov-ui-kit/redux/app/actions";
 import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
@@ -34,7 +35,7 @@ class Updates extends React.Component {
   render() {
     const { notifications, history, loading } = this.props;
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="notifications-screen-style">
         <Notifications notifications={getTransformedNotifications(notifications)} history={history} />;
       </Screen>
     );
