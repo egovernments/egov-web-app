@@ -956,7 +956,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
       "receipt-footer": {
         color: "#484848",
         fontSize: 8,
-        margin: [10, -15, 5, 5]
+        margin: [10, -35, 5, 5]
       },
       "receipt-no": {
         color: "#484848",
@@ -969,7 +969,7 @@ const getCertificateData = (transformedData, ulbLogo) => {
       },
       "tl-certificate-footer1": {
         fontSize: 14,
-        margin: [0, 20, 0, 0], //left top right bottom
+        margin: [0, 15, 0, 0], //left top right bottom
         color: "#1E1E1E"
       }
     }
