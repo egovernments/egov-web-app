@@ -19,6 +19,7 @@ const formConfig = {
         { label: "PT_PAYMENT_METHOD_CASH", value: "Cash" },
         { label: "PT_PAYMENT_METHOD_DD", value: "DD" },
         { label: "PT_PAYMENT_METHOD_CHEQUE", value: "Cheque" },
+        { label: "PT_PAYMENT_METHOD_CARD", value: "Card" },
       ],
       value: "Cash",
       beforeFieldChange: ({ dispatch, state, action }) => {
