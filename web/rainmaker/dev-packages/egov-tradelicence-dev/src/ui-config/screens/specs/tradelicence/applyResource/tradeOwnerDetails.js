@@ -148,6 +148,28 @@ export const getRelationshipRadioButton = getRadioButton(
   ""
 );
 
+export const relationType = {
+  ...getSelectField({
+    label: {
+      labelName: "Relation Type",
+      labelKey: "TL_RELATION_TYPE_LABEL"
+    },
+    placeholder: {
+      labelName: "Select RELATION Type",
+      labelKey: "TL_RELATION_TYPE_PLACEHOLDER"
+    },
+    localePrefix: {
+      moduleName: "TradeLicense",
+      masterName: "RelationType"
+    },
+    jsonPath: "Licenses[0].tradeLicenseDetail.additionalDetail.relationType",
+    sourceJsonPath: "applyScreenMdmsData.TradeLicense.RelationType",
+    gridDefination: {
+      xs: 12,
+      sm: 6
+    }
+  })
+};
 export const ownerInfoInstitutional = {
   ...getCommonGrayCard({
     header: getCommonSubHeader(
@@ -242,7 +264,8 @@ export const ownerInfoInstitutional = {
         required: true,
         pattern: getPattern("Address"),
         jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
-      })
+      }),
+      relationType
     })
   }),
   visible: false
@@ -330,29 +353,7 @@ const OwnerInfoCard = {
           pattern: getPattern("Address"),
           jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
         }),
-        occupancyType: {
-          ...getSelectField({
-            label: {
-              labelName: "Relation Type",
-              labelKey: "TL_RELATION_TYPE_LABEL"
-            },
-            placeholder: {
-              labelName: "Select RELATION Type",
-              labelKey: "TL_RELATION_TYPE_PLACEHOLDER"
-            },
-            localePrefix: {
-              moduleName: "TradeLicense",
-              masterName: "RelationType"
-            },
-            jsonPath:
-              "Licenses[0].tradeLicenseDetail.additionalDetail.relationType",
-            sourceJsonPath: "applyScreenMdmsData.TradeLicense.RelationType",
-            gridDefination: {
-              xs: 12,
-              sm: 6
-            }
-          })
-        }
+        relationType
 
         // OwnerSpecialCategory: getSelectField({
         //   label: {

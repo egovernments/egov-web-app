@@ -420,7 +420,11 @@ export const loadEmployeeData = async (uuid, licenseIssueDate) => {
         (assignment.toDate && assignment.toDate >= licenseIssueDate))
     );
   });
-  if (assignmentWhileIssue && assignmentWhileIssue[0].designation)
+  if (
+    assignmentWhileIssue &&
+    assignmentWhileIssue.length > 0 &&
+    assignmentWhileIssue[0].designation
+  )
     data.designation = getMessageFromLocalizationNonTLCodes(
       `COMMON_MASTERS_DESIGNATION_${assignmentWhileIssue[0].designation}`
     );
