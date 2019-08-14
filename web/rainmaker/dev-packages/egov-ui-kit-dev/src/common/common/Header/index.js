@@ -155,6 +155,7 @@ class Header extends Component {
       searchButton,
       activeRoutePath,
       hasLocalisation,
+      hideDigitLogo,
     } = this.props;
     return (
       <div>
@@ -177,6 +178,7 @@ class Header extends Component {
           handleItemClick={_handleItemClick}
           activeRoutePath={activeRoutePath}
           hasLocalisation={hasLocalisation}
+          hideDigitLogo={hideDigitLogo}
         />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
@@ -212,13 +214,14 @@ const getUlbGradeLabel = (ulbGrade) => {
 
 const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
+  const { hideDigitLogo } = state.common.stateInfoById || false;
   const { role } = ownProps;
   const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
   const ulbGrade = userTenant && get(userTenant[0], "city.ulbGrade");
   const name = userTenant && get(userTenant[0], "code");
   const defaultTitle = ulbGrade && getUlbGradeLabel(ulbGrade);
-  return { cities, defaultTitle, name };
+  return { cities, defaultTitle, name, hideDigitLogo };
 };
 
 const mapDispatchToProps = (dispatch) => {
