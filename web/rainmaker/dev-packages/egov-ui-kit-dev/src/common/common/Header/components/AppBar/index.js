@@ -43,6 +43,7 @@ const EgovAppBar = ({
   handleItemClick,
   hasLocalisation,
   notificationsCount,
+  hideDigitLogo,
   ...rest
 }) => {
   return (
@@ -85,10 +86,11 @@ const EgovAppBar = ({
             handleItemClick={handleItemClick}
           />
         </Toolbar>
-
-        <div className="appbar-right-logo">
-          <img src={digitLogo} />
-        </div>
+        {!hideDigitLogo && (
+          <div className="appbar-right-logo">
+            <img src={digitLogo} />
+          </div>
+        )}
         <div className="icon-button">
           {refreshButton && (
             <IconButton style={iconButtonStyle} onClick={(e) => location.reload()}>
