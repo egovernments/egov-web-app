@@ -214,7 +214,14 @@ class SearchProperty extends Component {
                   style={{ height: 22 }}
                 />
               }
-              label="PT_NEW_PROPERTY_BUTTON"
+              label={
+                <Label
+                  label="PT_NEW_PROPERTY_BUTTON"
+                  buttonLabel={true}
+                  fontSize="16px"
+                  color="white"
+                />
+              }
               labelStyle={{ fontSize: 12 }}
               className="new-property-assessment"
               onClick={() => this.onAddButtonClick()}
