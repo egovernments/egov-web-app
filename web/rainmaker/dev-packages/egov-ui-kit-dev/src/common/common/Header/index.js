@@ -214,7 +214,7 @@ const getUlbGradeLabel = (ulbGrade) => {
 
 const mapStateToProps = (state, ownProps) => {
   const cities = state.common.cities || [];
-  const { hideDigitLogo } = state.common.stateInfoById || false;
+  const { hideDigitLogo } = (state.common.stateInfoById && state.common.stateInfoById.length > 0 && state.common.stateInfoById[0]) || false;
   const { role } = ownProps;
   const tenantId = role && role.toLowerCase() === "citizen" ? JSON.parse(getUserInfo()).permanentCity : getTenantId();
   const userTenant = cities.filter((item) => item.code === tenantId);
