@@ -118,7 +118,7 @@ class CitizenDashboard extends Component {
           <ServicesNearby history={history} />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <div onClick={() => onNotificationClick(history)}>
+            <div onClick={() => onNotificationClick(history)} style={{ cursor: "pointer" }}>
               <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
             </div>
           </div>

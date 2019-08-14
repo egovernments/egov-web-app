@@ -82,9 +82,9 @@ class EventDetails extends Component {
     const { response, openMap } = this.state;
     const { openMapHandler } = this;
     const notification = getTransformedNotifications(response)[0];
-    const { description, SLA, address, locationObj, eventCategory, name, id, tenantId, eventDate } = notification || "";
+    const { description, SLA, address, locationObj, eventCategory, name, eventDate } = notification || "";
     return (
-      <Screen>
+      <Screen className="notifications-screen-style">
         <Card
           className="home-notification"
           style={{ margin: "8px 0px" }}
@@ -137,45 +137,37 @@ class EventDetails extends Component {
                 labelStyle={{ width: "100%", wordWrap: "break-word" }}
                 containerStyle={{ marginBottom: 20 }}
               />
-              <div>
-                {address && (
-                  <div className="rainmaker-displayInline">
-                    <Icon
-                      name="place"
-                      action="maps"
-                      style={{
-                        height: 28,
-                        width: 40,
-                        color: "#484848",
-                      }}
-                      viewBox="-5 0 24 24"
-                    />
-                    <Label
-                      leftWrapperStyle
-                      fontSize={14}
-                      color="rgba(0, 0, 0, 0.87)"
-                      label={address}
-                      labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                      containerStyle={{ marginBottom: 5, marginLeft: 12 }}
-                    />
-                  </div>
-                )}
-                <div
-                  onClick={() => {
-                    openMapHandler(true);
-                  }}
-                  style={{ cursor: "pointer", marginBottom: 20, marginLeft: 35 }}
-                >
-                  <Label label={`GET DIRECTIONS`} color="#FC8019" fontSize={14} />
+              {address && (
+                <div className="rainmaker-displayInline">
+                  <Icon
+                    name="place"
+                    action="maps"
+                    style={{
+                      height: 25,
+                      width: 100,
+                      maxWidth: 38,
+                      color: "#484848",
+                    }}
+                    viewBox="10 0 24 24"
+                  />
+                  <Label fontSize={14} color="rgba(0, 0, 0, 0.60)" label={address} containerStyle={{ marginLeft: 2, marginBottom: 10 }} />
                 </div>
+              )}
+              <div
+                onClick={() => {
+                  openMapHandler(true);
+                }}
+                style={{ cursor: "pointer", marginBottom: 20, marginLeft: 40 }}
+              >
+                <Label label={`GET DIRECTIONS`} color="#FC8019" fontSize={14} />
               </div>
 
-              <div style={{ display: "flex" }}>
-                <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} /> {SLA}
+              <div className="rainmaker-displayInline">
+                <Icon name="access-time" action="device" viewBox="10 0 24 24" style={{ height: "20px", width: "35px" }} />
+                {SLA}
               </div>
               {openMap && (
                 <div>
-                  {/* <div className="back-btn" style={{ top: 24 }}> */}
                   <Icon
                     className="mapBackBtn"
                     onClick={() => {
@@ -189,7 +181,6 @@ class EventDetails extends Component {
                     action="navigation"
                     name={"arrow-back"}
                   />
-                  {/* </div> */}
                   <MapLocation currLoc={locationObj} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
                 </div>
               )}

@@ -621,27 +621,21 @@ const getEventSLA = (item) => {
     sla = (
       // <div style={{ display: "flex" }}>
       //   <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} />
-      <Label
-        leftWrapperStyle
-        fontSize={14}
-        color="rgba(0, 0, 0, 0.60)"
-        label={disp}
-        labelStyle={{ width: "100%", wordWrap: "break-word" }}
-        containerStyle={{ marginBottom: 5 }}
-      />
+      <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={disp} containerStyle={{ marginBottom: 5 }} />
       // </div>
     );
   } else {
-    if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
-    else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
-    else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
-    else {
-      if ((days % 1) * 24 > 1) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} fontSize={12} />;
-      else {
-        if ((days % 1) * 24 * 60 > 1) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24 * 60)]} fontSize={12} />;
-        else <Label label="CS_SLA_NOW" fontSize={12} />;
-      }
-    }
+    if (days >= 60) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+    else if (days >= 30) sla = <Label label="CS_SLA_MONTH_ONE" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+    else if (days >= 14) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+    else if (days >= 7) sla = <Label label="CS_SLA_WEEK_ONE" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+    else if (days >= 2) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
+    else if (days >= 1) sla = <Label label="CS_SLA_DAY_ONE" dynamicArray={[Math.floor(days)]} fontSize={12} />;
+    else if ((days % 1) * 24 >= 2) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.floor((days % 1) * 24)]} fontSize={12} />;
+    else if ((days % 1) * 24 >= 1) sla = <Label label="CS_SLA_TIME_ONE" dynamicArray={[Math.floor((days % 1) * 24)]} fontSize={12} />;
+    else if ((days % 1) * 24 * 60 >= 2) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.floor((days % 1) * 24 * 60)]} fontSize={12} />;
+    else if ((days % 1) * 24 * 60 >= 1) sla = <Label label="CS_SLA_MINUTE_ONE" dynamicArray={[Math.floor((days % 1) * 24 * 60)]} fontSize={12} />;
+    else sla = <Label label="CS_SLA_NOW" fontSize={12} />;
   }
 
   return sla;
