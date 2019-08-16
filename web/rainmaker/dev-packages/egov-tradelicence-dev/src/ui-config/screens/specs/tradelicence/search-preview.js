@@ -114,19 +114,19 @@ const searchResults = async (action, state, dispatch, applicationNo) => {
   );
   set(payload, "Licenses[0].headerSideText", headerSideText);
 
-  get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory") &&
-  get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory").split(
-    "."
-  )[0] === "INDIVIDUAL"
-    ? setMultiOwnerForSV(action, true)
-    : setMultiOwnerForSV(action, false);
+  // get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory") &&
+  // get(payload, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory").split(
+  //   "."
+  // )[0] === "INDIVIDUAL"
+  //   ? setMultiOwnerForSV(action, true)
+  //   : setMultiOwnerForSV(action, false);
 
-  if (get(payload, "Licenses[0].licenseType")) {
-    setValidToFromVisibilityForSV(
-      action,
-      get(payload, "Licenses[0].licenseType")
-    );
-  }
+  // if (get(payload, "Licenses[0].licenseType")) {
+  //   setValidToFromVisibilityForSV(
+  //     action,
+  //     get(payload, "Licenses[0].licenseType")
+  //   );
+  // }
 
   await setDocuments(
     payload,
@@ -176,6 +176,20 @@ const beforeInitFn = async (action, state, dispatch, applicationNumber) => {
     );
 
     let data = get(state, "screenConfiguration.preparedFinalObject");
+
+    get(data, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory") &&
+    get(data, "Licenses[0].tradeLicenseDetail.subOwnerShipCategory").split(
+      "."
+    )[0] === "INDIVIDUAL"
+      ? setMultiOwnerForSV(action, true)
+      : setMultiOwnerForSV(action, false);
+
+    if (get(data, "Licenses[0].licenseType")) {
+      setValidToFromVisibilityForSV(
+        action,
+        get(data, "Licenses[0].licenseType")
+      );
+    }
 
     const obj = setStatusBasedValue(status);
 
