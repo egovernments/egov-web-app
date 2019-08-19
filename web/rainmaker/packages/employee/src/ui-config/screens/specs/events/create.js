@@ -76,6 +76,7 @@ export const createForm = getCommonCard({
         labelKey: "EVENTS_NAME_PLACEHOLDER",
       },
       required: true,
+      pattern: getPattern("eventName"),
       jsonPath: "events[0].name",
       gridDefination: {
         xs: 12,
@@ -137,7 +138,7 @@ export const createForm = getCommonCard({
         labelName: "Description (Max Char Limit : 500)",
         labelKey: "EVENTS_DESCRIPTION_LIMIT_PLACEHOLDER",
       },
-      pattern: "",
+      pattern: getPattern("eventDescription"),
       required: true,
       jsonPath: "events[0].description",
       props: {

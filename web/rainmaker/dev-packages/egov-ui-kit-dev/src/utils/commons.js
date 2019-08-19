@@ -606,53 +606,37 @@ const getEndpointfromUrl = (url, name) => {
 };
 
 const getTimeFormat = (epochTime) => {
-       epochTime = new Date(epochTime);
-       const Period = epochTime.getHours()<12? "AM" : "PM"
-       const Format = epochTime.getHours()%12 > 0 ? epochTime.getHours()%12 : 12;
-       return  Format.toString()+":"+epochTime.toString().split(":")[1]+" "+Period ;
-}
+  epochTime = new Date(epochTime);
+  const Period = epochTime.getHours() < 12 ? "AM" : "PM";
+  const Format = epochTime.getHours() % 12 > 0 ? epochTime.getHours() % 12 : 12;
+  return Format.toString() + ":" + epochTime.toString().split(":")[1] + " " + Period;
+};
 
 const getEventSLA = (item) => {
   const days = (Date.now() - item.auditDetails.lastModifiedTime) / (1000 * 60 * 60 * 24);
   let sla;
 
-  if(item.eventType === "EVENTSONGROUND"){
-    const disp = getTimeFormat(item.eventDetails.fromDate)+" "+"-"+" "+getTimeFormat(item.eventDetails.toDate);
-    sla = (<div style={{display : "flex"}}>
-      <Icon name="access-time" action="device" viewBox ="10 1.5 24 24" style={{ height: "20px", width: "35px" }} />
-      <Label
-            leftWrapperStyle
-            fontSize={14}
-            color="rgba(0, 0, 0, 0.60)"
-            label={disp}
-            labelStyle={{ width: "100%", wordWrap: "break-word" }}
-            containerStyle={{ marginBottom: 5 }}
-        />
-     </div>
-      );
-
-  }else{
-    if (days > 30) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
-    else if (days > 7) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
-    else if (days >= 1) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
-    else {
-      if ((days % 1) * 24 > 1) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} fontSize={12} />;
-      else {
-        if ((days % 1) * 24 * 60 > 1) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24 * 60)]} fontSize={12} />;
-        else <Label label="CS_SLA_NOW" fontSize={12} />;
-      }
-    }
+  if (item.eventType === "EVENTSONGROUND") {
+    const disp = getTimeFormat(item.eventDetails.fromDate) + " " + "-" + " " + getTimeFormat(item.eventDetails.toDate);
+    sla = (
+      // <div style={{ display: "flex" }}>
+      //   <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} />
+      <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={disp} containerStyle={{ marginBottom: 5 }} />
+      // </div>
+    );
+  } else {
+    if (days >= 60) sla = <Label label="CS_SLA_MONTH" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+    else if (days >= 30) sla = <Label label="CS_SLA_MONTH_ONE" dynamicArray={[Math.floor(days / 30)]} fontSize={12} />;
+    else if (days >= 14) sla = <Label label="CS_SLA_WEEK" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+    else if (days >= 7) sla = <Label label="CS_SLA_WEEK_ONE" dynamicArray={[Math.floor(days / 7)]} fontSize={12} />;
+    else if (days >= 2) sla = <Label label="CS_SLA_DAY" dynamicArray={[Math.floor(days)]} fontSize={12} />;
+    else if (days >= 1) sla = <Label label="CS_SLA_DAY_ONE" dynamicArray={[Math.floor(days)]} fontSize={12} />;
+    else if ((days % 1) * 24 >= 2) sla = <Label label="CS_SLA_TIME" dynamicArray={[Math.floor((days % 1) * 24)]} fontSize={12} />;
+    else if ((days % 1) * 24 >= 1) sla = <Label label="CS_SLA_TIME_ONE" dynamicArray={[Math.floor((days % 1) * 24)]} fontSize={12} />;
+    else if ((days % 1) * 24 * 60 >= 2) sla = <Label label="CS_SLA_MINUTE" dynamicArray={[Math.floor((days % 1) * 24 * 60)]} fontSize={12} />;
+    else if ((days % 1) * 24 * 60 >= 1) sla = <Label label="CS_SLA_MINUTE_ONE" dynamicArray={[Math.floor((days % 1) * 24 * 60)]} fontSize={12} />;
+    else sla = <Label label="CS_SLA_NOW" fontSize={12} />;
   }
-  
-
-  /* 
-    let sla = days > 1 ? (( days > 6) ? (<Label label="CS_SLA_WEEK" dynamicArray={[Math.ceil((days / 7))]} />):
-     ( <Label label="CS_SLA_DAY" dynamicArray={[Math.ceil(days)]} />)
-    ) : (
-      (days % 1) * 24 < 1  ? ( (days % 1) * 24 * 60 < 1  ? (<Label label="CS_SLA_NOW"  />):(<Label label="CS_SLA_MINUTE" dynamicArray={[Math.ceil((days % 1) * 24*60)]} />)) :
-      (<Label label="CS_SLA_TIME" dynamicArray={[Math.ceil((days % 1) * 24)]} />)
-      )
-   */
 
   return sla;
 };
@@ -672,6 +656,7 @@ export const getTransformedNotifications = (notifications) => {
     data = notifications.map((item) => ({
       name: item.name,
       description: item.description,
+      eventCategory: item.eventCategory,
       address: item.eventDetails && item.eventDetails.address,
       SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
       buttons:
@@ -685,6 +670,7 @@ export const getTransformedNotifications = (notifications) => {
       type: item.eventType,
       id: item.id,
       tenantId: item.tenantId,
+      locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
     }));
   }
   return data;

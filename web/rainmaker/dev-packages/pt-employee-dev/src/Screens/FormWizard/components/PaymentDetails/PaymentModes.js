@@ -6,12 +6,13 @@ import { Card, Icon } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import {
   setFieldProperty,
-  handleFieldChange
+  handleFieldChange,
+  initForm
 } from "egov-ui-kit/redux/form/actions";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 
 class PaymentModes extends Component {
-  // allFormkeys = ["demandInfo", "chequeInfo", "cardInfo", "cashInfo"];
+  allFormkeys = ["demandInfo", "chequeInfo", "cardInfo", "cashInfo"];
 
   FormDetails = ({ item }) => {
     return (
@@ -146,6 +147,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
+    initForm: form => dispatch(initForm(form)),
     removeForm: formKey => dispatch(removeForm(formKey)),
     setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) =>
       dispatch(

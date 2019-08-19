@@ -111,25 +111,29 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
     events: [eventsData],
   };
   const baseUrl = isEvent ? "/events" : "/notifications";
-  if (isFormValid && !uuid) {
-    let purpose = "apply";
-    let status = "success";
+  if (isFormValid) {
+    if (!uuid) {
+      let purpose = "apply";
+      let status = "success";
 
-    try {
-      await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
-      dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
-    } catch (e) {
-      dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
+      try {
+        await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
+        dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
+      } catch (e) {
+        dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
+      }
+    } else if (uuid) {
+      let purpose = isDelete ? "delete" : "update";
+      const status = "success";
+      try {
+        await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
+        dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
+      } catch (e) {
+        dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
+      }
     }
-  } else if (uuid) {
-    let purpose = isDelete ? "delete" : "update";
-    const status = "success";
-    try {
-      await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
-      dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
-    } catch (e) {
-      dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
-    }
+  } else {
+    dispatch(toggleSnackbar(true, { labelName: "Invalid Input!", labelKey: "Invalid Input!" }, "error"));
   }
 };
 
