@@ -167,12 +167,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         }
         /** End */
 
-        res.tradeCategory.push(getMessageFromLocalization(tradeCategory));
+        res.tradeCategory.push(getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeCategory));
 
         res.tradeTypeReceipt.push(
-          getMessageFromLocalization(tradeType) +
+          getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeType) +
             " / " +
-            getMessageFromLocalization(tradeSubType)
+            getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+getTransformedLocale(tradeSubType))
         );
         res.tradeTypeCertificate.push(
           getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeCategory) +
