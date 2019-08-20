@@ -189,16 +189,26 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         res.tradeCategory.push(getMessageFromLocalization(tradeCategory));
 
         res.tradeTypeReceipt.push(
-          getMessageFromLocalization(tradeType) +
+          getMessageFromLocalizationNonTLCodes(
+            `TRADELICENSE_TRADETYPE_${tradeType}`
+          ) +
             " / " +
-            getMessageFromLocalization(tradeSubType)
+            getMessageFromLocalizationNonTLCodes(
+              `TRADELICENSE_TRADETYPE_${tradeSubType}`
+            )
         );
         res.tradeTypeCertificate.push(
-          getMessageFromLocalization(tradeCategory) +
+          getMessageFromLocalizationNonTLCodes(
+            `TRADELICENSE_TRADETYPE_${tradeCategory}`
+          ) +
             " / " +
-            getMessageFromLocalization(tradeType) +
+            getMessageFromLocalizationNonTLCodes(
+              `TRADELICENSE_TRADETYPE_${tradeType}`
+            ) +
             " / " +
-            getMessageFromLocalization(tradeSubType)
+            getMessageFromLocalizationNonTLCodes(
+              `TRADELICENSE_TRADETYPE_${tradeSubType}`
+            )
         );
         return res;
       },
