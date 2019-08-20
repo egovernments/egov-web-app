@@ -123,6 +123,11 @@ const AutoSuggest = Loadable({
   loading: () => <Loading />
 });
 
+const MapLocation = Loadable({
+  loader: () => import("./MapLocation"),
+  loading: () => <Loading />
+});
+
 export {
   Div,
   Form,
@@ -153,5 +158,6 @@ export {
   UploadFile,
   UploadedDocument,
   MenuButton,
-  AutoSuggest
+  AutoSuggest,
+  MapLocation
 };

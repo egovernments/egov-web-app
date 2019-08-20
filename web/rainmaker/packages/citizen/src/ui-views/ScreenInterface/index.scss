@@ -27,7 +27,9 @@ body {
   margin-bottom: 32px;
 }
 
-.apply-wizard-footer {
+.apply-wizard-footer,
+.apply-success-footer,
+.pay-success-footer {
   background-color: #ffffff;
   box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24);
   padding: 8px;
@@ -40,6 +42,10 @@ body {
 
 .common-div-css {
   margin: 80px 16px 88px 16px;
+}
+
+.common-header-cont {
+  display: none;
 }
 
 .common-card-css {
@@ -106,6 +112,18 @@ span[class^="MuiFormLabel-asterisk"] {
     padding-right: 80px
 } */
 
+@media only screen and (max-width: 768px) {
+  .apply-success-footer,
+  .pay-success-footer {
+    width: 100vw;
+    height: 150px;
+    display: inline-block !important;
+    text-align: center;
+  }
+  .pay-success-footer {
+    height: 120px;
+  }
+}
 @media only screen and (min-width: 953px) {
   .app-container-iframe {
     position: fixed;

@@ -45,7 +45,7 @@ const WizardComponent = ({
           return (
             <Step key={label}>
               <StepLabel>
-                <Label label={label} />
+                <Label label={label} labelStyle={{ wordBreak: "inherit" }} />
               </StepLabel>
             </Step>
           );

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { ButtonGroup } from "components";
+import { ButtonGroup, Icon } from "components";
+import { connect } from "react-redux";
+import get from "lodash/get";
 import { getLocale } from "egov-ui-kit/utils/localStorageUtils";
+import Label from "egov-ui-kit/utils/translationNode";
 
 class LanguageSelection extends Component {
   state = {
@@ -11,21 +14,6 @@ class LanguageSelection extends Component {
     this.setState({ value });
     this.props.fetchLocalizationLabel(value);
   };
-
-  languages = [
-    {
-      label: "ENGLISH",
-      value: "en_IN",
-    },
-    {
-      label: "हिंदी",
-      value: "hi_IN",
-    },
-    {
-      label: "ਪੰਜਾਬੀ",
-      value: "pn_IN",
-    },
-  ];
 
   styles = {
     selectedLabelStyle: {
@@ -55,23 +43,44 @@ class LanguageSelection extends Component {
   };
 
   render() {
-    const { styles, languages, onClick } = this;
+    const { styles, onClick } = this;
+    const { languages } = this.props;
     const { value } = this.state;
     return (
-      <div className="drawer-button-toggle-container">
-        <ButtonGroup
-          items={languages}
-          onClick={onClick}
-          selected={value}
-          defaultStyle={styles.defaultStyle}
-          defaultLabelStyle={styles.defaultLabelStyle}
-          selectedStyle={styles.selectedStyle}
-          selectedLabelStyle={styles.selectedLabelStyle}
-          multiple={false}
-        />
+      // <div className="drawer-button-toggle-container">
+      <div className="rainmaker-displayInline" style={{ marginTop: 10, marginLeft: 4 }}>
+        <Icon style={{ height: "24px", width: "21px" }} action="action" name="language" />
+        <div style={{ marginLeft: 12 }}>
+          <Label
+            className="menuStyle with-childs"
+            containerStyle={{ marginLeft: 0, marginBottom: 10, marginRight: 80 }}
+            label={"ACTION_TEST_LANGUAGE"}
+            color="rgba(0, 0, 0, 0.87)"
+          />
+
+          <ButtonGroup
+            items={languages}
+            onClick={onClick}
+            selected={value}
+            defaultStyle={styles.defaultStyle}
+            defaultLabelStyle={styles.defaultLabelStyle}
+            selectedStyle={styles.selectedStyle}
+            selectedLabelStyle={styles.selectedLabelStyle}
+            multiple={false}
+          />
+        </div>
       </div>
     );
   }
 }
 
-export default LanguageSelection;
+const mapStateToProps = ({ common }) => {
+  const { stateInfoById } = common;
+  let languages = get(stateInfoById, "0.languages", []);
+  return { languages };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(LanguageSelection);
