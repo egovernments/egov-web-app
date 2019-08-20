@@ -140,7 +140,7 @@ class DropDown extends Component {
     const { imageUrl } = this.state;
     const userType = getUserInfo() && JSON.parse(getUserInfo()).type;
     return (
-      <div>
+      <div style={{float: 'right'}}>
         <SelectField
           autoWidth={true}
           className="pt-action-dropDown"
