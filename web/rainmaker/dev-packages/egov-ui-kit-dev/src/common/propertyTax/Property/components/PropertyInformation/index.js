@@ -46,7 +46,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, tenantId, onBut
         {items.map((item, index) => {
           return (
             <div key={index} className="property-info-subsection">
-              <div>
+              <div style={{backgroundColor:'rgb(248,248,248)' , marginBottom:'10px', marginTop:'10px'}}>
                 <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
                   <div className="receipt-displayInline">
                     {/* <Icon action={item.iconAction} name={item.iconName} color="#767676" /> */}
