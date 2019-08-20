@@ -2,6 +2,7 @@ import React from "react";
 import { Notifications, Screen } from "modules/common";
 import get from "lodash/get";
 import { connect } from "react-redux";
+import "../index.css";
 import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
 import { getNotifications } from "egov-ui-kit/redux/app/actions";
 import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
@@ -35,7 +36,7 @@ class Events extends React.Component {
     const { notifications, history, loading } = this.props;
     let eventarray = notifications && notifications.filter((item) => item.eventType === "EVENTSONGROUND");
     return (
-      <Screen loading={loading}>
+      <Screen className="notifications-screen-style" loading={loading}>
         <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />;
       </Screen>
     );

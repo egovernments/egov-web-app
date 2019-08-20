@@ -8,7 +8,7 @@ const getCommonApplyFooter = children => {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     props: {
-      className: "apply-success-footer"
+      className: "apply-wizard-footer"
     },
     children
   };
@@ -130,6 +130,7 @@ export const applicationSuccessFooter = (
   /* Mseva 2.0 changes */
   const redirectionURL = roleExists ? "/" : "/inbox";
   return getCommonApplyFooter({
+
     gotoHome: {
       componentPath: "Button",
       props: {
@@ -212,6 +213,7 @@ export const applicationSuccessFooter = (
         }
       }
     }
+
     // collectPaymentButton: {
     //   componentPath: "Button",
     //   props: {
@@ -265,5 +267,6 @@ export const applicationSuccessFooter = (
     //     roles: ["TL_CEMP"]
     //   }
     // }
+
   });
 };

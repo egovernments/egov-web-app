@@ -52,7 +52,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     renderCustomTitle = (numberOfComplaints) => {
-      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "(0)";
+      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "";
       this.setState({ titleAddon });
     };
 

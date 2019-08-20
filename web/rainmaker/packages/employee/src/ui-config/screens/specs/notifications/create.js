@@ -8,7 +8,6 @@ import {
   getPattern,
   getCommonSubHeader,
   getCommonParagraph,
-  getLabel,
 } from "egov-ui-framework/ui-config/screens/specs/utils";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -69,6 +68,7 @@ export const createForm = getCommonCard({
         labelKey: "EVENTS_TITLE_LABEL_PLACEHOLDER",
       },
       required: true,
+      pattern: getPattern("eventName"),
       jsonPath: "events[0].name",
       gridDefination: {
         xs: 12,
@@ -96,7 +96,7 @@ export const createForm = getCommonCard({
         labelKey: "EVENTS_COMMENTS_PLACEHOLDER",
       },
       required: true,
-      pattern: "",
+      pattern: getPattern("description"),
       jsonPath: "events[0].description",
       props: {
         multiline: true,

@@ -7,16 +7,18 @@ import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
 import { Notifications, Screen } from "modules/common";
+import LogoutDialog from "egov-ui-kit/common/common/Header/components/LogoutDialog";
 import "./index.css";
 import get from "lodash/get";
 import { getTransformedNotifications, onNotificationClick } from "egov-ui-kit/utils/commons";
 import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import isEqual from "lodash/isEqual";
+import { setRoute } from "egov-ui-kit/redux/app/actions";
 
 class CitizenDashboard extends Component {
   state = {
     whatsNewEvents: [],
+    openDialog: false,
   };
 
   componentDidMount = () => {
@@ -44,11 +46,56 @@ class CitizenDashboard extends Component {
 
       getNotifications(queryObject, requestBody);
       getNotificationCount(queryObject, requestBody);
+    } else {
+      // this.setState({
+      //   openDialog: true,
+      // });
     }
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    const { getNotificationCount, getNotifications } = nextProps;
+    if (!get(this.props, "userInfo.permanentCity")) {
+      if (get(nextProps, "userInfo.permanentCity")) {
+        const permanentCity = get(nextProps, "userInfo.permanentCity");
+        const queryObject = [
+          {
+            key: "tenantId",
+            value: permanentCity,
+          },
+        ];
+        const requestBody = {
+          RequestInfo: {
+            apiId: "org.egov.pt",
+            ver: "1.0",
+            ts: 1502890899493,
+            action: "asd",
+            did: "4354648646",
+            key: "xyz",
+            msgId: "654654",
+            requesterId: "61",
+            authToken: getAccessToken(),
+          },
+        };
+
+        getNotifications(queryObject, requestBody);
+        getNotificationCount(queryObject, requestBody);
+      }
+    }
+  };
+
+  handleClose = () => {
+    this.setState({ ...this.state, openDialog: false });
+  };
+
+  redirectToEditProfile = () => {
+    const { setRoute } = this.props;
+    setRoute("user/profile");
   };
 
   render() {
     const { history, loading, whatsNewEvents } = this.props;
+    const { openDialog } = this.state;
     return (
       <Screen loading={loading}>
         <SearchService history={history} />
@@ -71,12 +118,21 @@ class CitizenDashboard extends Component {
           <ServicesNearby history={history} />
           <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
             <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <div onClick={() => onNotificationClick(history)}>
+            <div onClick={() => onNotificationClick(history)} style={{ cursor: "pointer" }}>
               <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
             </div>
           </div>
           <Notifications notifications={whatsNewEvents} history={history} />
         </div>
+        <LogoutDialog
+          logoutPopupOpen={openDialog}
+          closeLogoutDialog={this.handleClose}
+          logout={this.redirectToEditProfile}
+          oktext={"CORE_CHANGE_TENANT_OK"}
+          canceltext={"CORE_CHANGE_TENANT_CANCEL"}
+          title={"Alert"}
+          body={"Please update your City"}
+        />
       </Screen>
     );
   }
@@ -103,6 +159,7 @@ const mapDispatchToProps = (dispatch) => {
     getNotificationCount: (queryObject, requestBody) => dispatch(getNotificationCount(queryObject, requestBody)),
     getNotifications: (queryObject, requestBody) => dispatch(getNotifications(queryObject, requestBody)),
     toggleSpinner: () => dispatch(toggleSpinner()),
+    setRoute: (path) => dispatch(setRoute(path)),
   };
 };
 
