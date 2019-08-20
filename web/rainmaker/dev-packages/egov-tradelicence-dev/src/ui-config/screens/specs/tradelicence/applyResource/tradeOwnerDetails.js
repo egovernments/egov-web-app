@@ -166,6 +166,40 @@ export const getRelationshipRadioButton = {
   type: "array"
 };
 
+export const getRelationshipRadioButtonInstitutionalOwner = {
+  uiFramework: "custom-containers",
+  componentPath: "RadioGroupContainer",
+  gridDefination: {
+    xs: 12,
+    sm: 12,
+    md: 6
+  },
+  jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].relationship",
+  props: {
+    label: {
+      name: "Relationship",
+      key: "TL_COMMON_RELATIONSHIP_LABEL"
+    },
+    buttons: [
+      {
+        labelName: "Father",
+        labelKey: "COMMON_RELATION_FATHER",
+        value: "FATHER"
+      },
+      {
+        label: "Husband",
+        labelKey: "COMMON_RELATION_HUSBAND",
+        value: "HUSBAND"
+      }
+    ],
+    jsonPath:
+      "FireNOCs[0].fireNOCDetails.applicantDetails.owners[0].relationship",
+    required: true
+  },
+  required: true,
+  type: "array"
+};
+
 // export const getRelationshipRadioButton = getRadioButton(
 //   [
 //     {
@@ -240,7 +274,7 @@ export const ownerInfoInstitutional = {
         jsonPath: "Licenses[0].tradeLicenseDetail.institution.designation"
       }),
       getFatherNameField,
-      getRelationshipRadioButton,
+      getRelationshipRadioButtonInstitutionalOwner,
       getOwnerGenderField,
       ownerDOB: {
         ...getDateField({
