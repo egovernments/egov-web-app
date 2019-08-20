@@ -4,6 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
+    
   return (
     <div className="form-without-button-cont-generic">
       {label && (
@@ -22,7 +23,7 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
           <List
             innerDivStyle={innerDivStyle}
             items={items}
-            listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px" }}
+            listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px"  }}
             nestedListStyle={{ padding: "0px" }}
             primaryTogglesNestedList={true}
             onItemClick={onItemClick}
