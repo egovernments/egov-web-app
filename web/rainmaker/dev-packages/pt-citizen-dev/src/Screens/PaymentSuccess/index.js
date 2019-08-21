@@ -160,6 +160,7 @@ class PaymentSuccess extends Component {
           noExistingPropertyId={!this.props.existingPropertyId}
           generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
           receiptImageUrl={imageUrl && imageUrl}
+          extraData={this.props.extraData}
         />
       </Screen>
     );
@@ -235,7 +236,11 @@ const mapStateToProps = (state, ownProps) => {
     receiptDetails,
     cities,
     existingPropertyId,
-    generalMDMSDataById
+    generalMDMSDataById,
+    extraData: {
+      property: selProperty,
+      receipt: rawReceiptDetails
+    }
   };
 };
 

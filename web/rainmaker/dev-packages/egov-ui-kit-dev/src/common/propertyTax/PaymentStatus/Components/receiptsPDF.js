@@ -1,9 +1,23 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
+import store from "redux/store";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, isEmployeeReceipt) => {
+const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, isEmployeeReceipt, extraData) => {
+  const state = store.getState();
+  if (extraData) 
+      {
+        var stateCopy = JSON.parse(JSON.stringify(state));
+        if (stateCopy.app)
+          delete stateCopy.app;
+        if (stateCopy.common)
+          delete stateCopy.common;
+
+        extraData.state = stateCopy;
+
+      }
   let data;
   let { owners, address, propertyDetails, tax, taxNew, receipts, header } = details;
   let tableborder = {
@@ -250,6 +264,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
           {
             style: "pt-reciept-citizen-table",
             table: {
+              widths: ["*", "*", "*", "*", "*", "auto"],
               body: [
                 [
                   { text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" },
@@ -451,7 +466,21 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
       break;
     default:
   }
-  data && pdfMake.createPdf(data).download(`${details.ReceiptNo}.pdf`);
+  if (data) {
+    if (window.appOverrides.validateForm)
+      {
+        window.appOverrides.validateForm("PTReceipt", {pdf: data, details: details, role:role, extraData: extraData})
+      }
+
+    var receiptPDF = pdfMake.createPdf(data)
+    var doNotDownloadReceipt = false;
+    if (window.appOverrides.submitForm) {
+      doNotDownloadReceipt = window.appOverrides.submitForm("PTReceipt", {pdf: receiptPDF});
+    }
+
+    if (doNotDownloadReceipt !== true)
+        receiptPDF.download(`${details.ReceiptNo}.pdf`);
+  }
 };
 
 export default generateReceipt;
