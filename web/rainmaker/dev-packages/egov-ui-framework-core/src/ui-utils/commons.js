@@ -11,7 +11,6 @@ import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/
 import orderBy from "lodash/orderBy";
 import get from "lodash/get";
 import set from "lodash/set";
-import get from "lodash/get";
 import commonConfig from "config/common.js";
 import { validate } from "egov-ui-framework/ui-redux/screen-configuration/utils";
 
