@@ -37,6 +37,7 @@ WebFont.load({
 
 // move it to a env file
 window.basename = process.env.NODE_ENV === "production" ? "/citizen" : "";
+window.__CURRENT_APP__ = "CITIZEN"
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>
