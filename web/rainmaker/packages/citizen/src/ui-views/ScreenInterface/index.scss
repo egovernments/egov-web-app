@@ -87,9 +87,11 @@ span[class^="MuiFormLabel-asterisk"] {
 .search-preview button[aria-label="Remove"] {
   display: none;
 }
-/* div[class^="MuiGrid-item"]   {
-    padding-right: 80px
-} */
+
+.common-header-cont {
+  display: none;
+}
+
 @media only screen and (max-width: 768px) {
   .apply-success-footer,
   .pay-success-footer {
@@ -127,6 +129,7 @@ span[class^="MuiFormLabel-asterisk"] {
   .common-div-css {
     margin: 30px 16px 88px 16px;
   }
+
   .common-header-cont {
     display: inherit;
     padding: 44px 0px 0px 8px;
