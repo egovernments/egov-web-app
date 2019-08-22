@@ -7,6 +7,8 @@ import {
   handleFieldChange
 } from "egov-ui-kit/redux/form/actions";
 import Label from "egov-ui-kit/utils/translationNode";
+
+import Property from "egov-ui-kit/common/propertyTax/Property";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -464,6 +466,8 @@ class FormWizard extends Component {
       termsError
     } = this.state;
     const { form, currentTenantId, search } = this.props;
+    console.log(this.props,'this.props');
+    
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     switch (selected) {
       case 0:
@@ -499,8 +503,17 @@ class FormWizard extends Component {
       case 3:
         return (
           <div className="review-pay-tab">
+             {/* {console.log(this.props,"location-jk")}
+            {console.log(this.props['prepareFormData']['Properties'][0]['propertyId'], 'props =jk   ---')}
+            {console.log(this.props['prepareFormData']['Properties'][0]['tenantId'], 'tenantId =jk   ---')}
+            <button onClick={()=>    this.onTabClick(0)  }>1</button>
+            <button onClick={()=>    this.onTabClick(1)  }>2</button>
+            <button onClick={()=>    this.onTabClick(2)  }>3</button> */}
+            {/* <Property tenantId={this.props['prepareFormData']['Properties'][0]['tenantId']} propertyId={this.props['prepareFormData']['Properties'][0]['propertyId']}></Property> */}
+
             <ReviewForm
               onTabClick={this.onTabClick}
+              properties={this.props['prepareFormData']['Properties'][0]}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
@@ -1180,6 +1193,8 @@ class FormWizard extends Component {
     const { formValidIndexArray, selected, propertyUUID } = this.state;
     const { location } = this.props;
     let { search } = location;
+   
+    
     let currentUUID = get(JSON.parse(getUserInfo()), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");

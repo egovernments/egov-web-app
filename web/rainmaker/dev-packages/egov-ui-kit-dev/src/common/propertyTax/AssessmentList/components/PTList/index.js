@@ -3,6 +3,12 @@ import { List, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
+import AssessmentInfo from '../../../Property/components/AssessmentInfo';
+import PropertyAddressInfo from '../../../Property/components/PropertyAddressInfo';
+import OwnerInfo from '../../../Property/components/OwnerInfo';
+
+// AssessmentInfo
+
 const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
     
   return (
@@ -17,7 +23,11 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
           fontSize={"20px"}
         />
       )}
-      <Card
+      <div>
+      <PropertyAddressInfo ></PropertyAddressInfo>
+      <AssessmentInfo editIcon='<h3> Edit is Disabled <h3>'></AssessmentInfo>
+      <OwnerInfo ></OwnerInfo>
+      {/* <Card
         className="property-tax-card"
         textChildren={
           <List
@@ -30,7 +40,8 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
             hoverColor={hoverColor}
           />
         }
-      />
+      /> */}
+      </div>
      
     </div>
   );

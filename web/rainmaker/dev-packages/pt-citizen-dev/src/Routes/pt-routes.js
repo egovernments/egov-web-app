@@ -120,6 +120,16 @@ const routes = [
     }
   },
   {
+    path: "property-tax/my-properties/reassess-property/:propertyId/:tenantId",
+    component: Property,
+    needsAuthentication: true,
+    options: {
+      hideTitle:true,
+      hideFooter: true
+      // hideBackButton: true,
+    }
+  },
+  {
     path: "property-tax/assess-pay/search-property",
     component: SearchProperty,
     needsAuthentication: true,

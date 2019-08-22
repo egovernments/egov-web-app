@@ -20,6 +20,7 @@ import commonConfig from "config/common.js";
 import { Button } from "components";
 import "./index.css";
 
+
 const innerDivStyle = {
   padding: "0",
   borderBottom: "1px solid #e0e0e0",
@@ -226,6 +227,7 @@ class Property extends Component {
           // <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         }
         {
+          
           <AssessmentList
             onItemClick={this.onListItemClick}
             items={this.getAssessmentListItems(this.props)}
@@ -241,6 +243,7 @@ class Property extends Component {
 
 
         <div className="flex-container">
+        
           <div className="property-info-access-btn" onClick={this.onAssessPayClick}>
             <Button
               onClick={() => this.onAssessPayClick()}
