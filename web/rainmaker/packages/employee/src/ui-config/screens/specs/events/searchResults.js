@@ -14,27 +14,30 @@ export const searchApiCall = async (state, dispatch) => {
     { key: "eventTypes", value: "EVENTSONGROUND" },
   ];
   const events = await getEventsByType(queryObject);
-
+  var currentDate = new Date().getTime();
   try {
     let data =
       events &&
-      events.map((item) => ({
-        [getLocaleLabels("Message", "EVENTS_EVENT_NAME_LABEL", localisationLabels)]: item.name,
-        [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: item.eventCategory
-          ? getLocaleLabels(item.eventCategory, `MSEVA_EVENTCATEGORIES_${item.eventCategory}`, localisationLabels)
-          : "-",
-        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
-          ? epochToYmd(item.eventDetails.fromDate)
-          : "-",
-        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
-        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
-          item.status,
-          `EVENTS_${item.status}_LABEL`,
-          localisationLabels
-        ),
-        id: item.id,
-        tenantId: item.tenantId,
-      }));
+      events.map((item) => {
+        const status = item.eventDetails.toDate > currentDate ? item.status : "INACTIVE";
+        return {
+          [getLocaleLabels("Message", "EVENTS_EVENT_NAME_LABEL", localisationLabels)]: item.name,
+          [getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels)]: item.eventCategory
+            ? getLocaleLabels(item.eventCategory, `MSEVA_EVENTCATEGORIES_${item.eventCategory}`, localisationLabels)
+            : "-",
+          [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
+            ? epochToYmd(item.eventDetails.fromDate)
+            : "-",
+          [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
+          [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
+            status,
+            `EVENTS_${status}_LABEL`,
+            localisationLabels
+          ),
+          id: item.id,
+          tenantId: item.tenantId,
+        };
+      });
     dispatch(handleField("search", "components.div.children.searchResults", "props.data", data));
   } catch (error) {
     dispatch(toggleSnackbar(true, error.message, "error"));
@@ -55,8 +58,8 @@ export const searchResults = () => {
       columns: [
         getLocaleLabels("Event Name", "EVENTS_EVENT_NAME_LABEL", localisationLabels),
         getLocaleLabels("Event Category", "EVENTS_EVENT_CATEGORY_LABEL", localisationLabels),
-        getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels),
         getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels),
+        getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels),
         {
           name: getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels),
           options: {

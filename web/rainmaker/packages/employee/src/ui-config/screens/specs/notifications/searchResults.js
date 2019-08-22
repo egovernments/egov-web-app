@@ -20,24 +20,28 @@ export const searchApiCall = async (state, dispatch) => {
   const events = await getEventsByType(queryObject);
 
   const localisationLabels = getTransformedLocalStorgaeLabels();
+  var currentDate = new Date().getTime();
   try {
     let data =
       events &&
-      events.map((item) => ({
-        [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: item.name,
-        [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: epochToYmd(item.auditDetails.lastModifiedTime),
-        [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
-          ? epochToYmd(item.eventDetails.fromDate)
-          : "-",
-        [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
-        [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
-          item.status,
-          `EVENTS_${item.status}_LABEL`,
-          localisationLabels
-        ),
-        id: item.id,
-        tenantId: item.tenantId,
-      }));
+      events.map((item) => {
+        const status = item.eventDetails && item.eventDetails.toDate > currentDate ? item.status : "INACTIVE";
+        return {
+          [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: item.name,
+          [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: epochToYmd(item.auditDetails.lastModifiedTime),
+          [getLocaleLabels("Start Date", "EVENTS_START_DATE_LABEL", localisationLabels)]: item.eventDetails
+            ? epochToYmd(item.eventDetails.fromDate)
+            : "-",
+          [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
+          [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
+            status,
+            `EVENTS_${status}_LABEL`,
+            localisationLabels
+          ),
+          id: item.id,
+          tenantId: item.tenantId,
+        };
+      });
     dispatch(handleField("search", "components.div.children.searchResults", "props.data", data));
   } catch (error) {
     dispatch(toggleSnackbar(true, error.message, "error"));
