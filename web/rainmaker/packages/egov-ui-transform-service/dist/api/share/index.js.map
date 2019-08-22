@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/api/share/index.js"],"names":["v1"],"mappings":";;;;;;;AAAA;;;;;;QAGEA,E,GAAAA,W","file":"index.js","sourcesContent":["import v1 from \"./v1.js\";\n\nexport {\n  v1\n}\n"]}
