@@ -9,7 +9,7 @@ import OwnerInfo from '../../../Property/components/OwnerInfo';
 
 // AssessmentInfo
 
-const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
+const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor ,properties}) => {
 
   return (
     <div className="form-without-button-cont-generic">
@@ -27,9 +27,9 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor }) => {
         <Card
           textChildren={
             <div className="col-sm-12 col-xs-12" style={{ alignItems: "center" }}>
-              <PropertyAddressInfo ></PropertyAddressInfo>
-              <AssessmentInfo editIcon='<h3> Edit is Disabled <h3>'></AssessmentInfo>
-              <OwnerInfo ></OwnerInfo>
+              <PropertyAddressInfo properties={properties}></PropertyAddressInfo>
+              <AssessmentInfo properties={properties} editIcon='<h3> Edit is Disabled <h3>'></AssessmentInfo>
+              <OwnerInfo properties={properties} ></OwnerInfo>
             </div>
           }
         />

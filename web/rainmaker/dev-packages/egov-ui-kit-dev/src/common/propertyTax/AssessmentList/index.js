@@ -147,7 +147,7 @@ const getListItems = (items, history, generalMDMSDataById) => {
   );
 };
 
-const AssessmentList = ({
+const AssessmentList = ({properties,
   items,
   history,
   onItemClick,
@@ -172,6 +172,7 @@ const AssessmentList = ({
     />
   ) : (
     <PTList
+    properties={properties}
       items={getListItems(items, history, generalMDMSDataById)}
       history={history}
       onItemClick={onItemClick}

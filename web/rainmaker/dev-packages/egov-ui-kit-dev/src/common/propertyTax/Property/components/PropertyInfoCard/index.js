@@ -3,7 +3,7 @@ import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'lightgray', items = [], subSection = [], subSectionHeader = [] }) => {
+const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 242)', items = [], subSection = [], subSectionHeader = [] }) => {
 
   return (
     <Card style={{ backgroundColor }}

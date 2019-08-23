@@ -182,7 +182,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history, generalMDMSDataById, latestPropertyDetails, propertyId } = this.props;
+    const { urls, location, history, generalMDMSDataById, latestPropertyDetails, propertyId,selPropertyDetails } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
@@ -235,6 +235,7 @@ class Property extends Component {
             listItemStyle={listItemStyle}
             history={history}
             hoverColor="#fff"
+            properties={selPropertyDetails}
             generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
           // citizenUserId={uuid}
           />
@@ -520,7 +521,7 @@ const mapStateToProps = (state, ownProps) => {
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const existingPropertyId = selPropertyDetails.propertyId;
-  console.log("Jagan", selPropertyDetails);
+  console.log("Jagan", latestPropertyDetails);
 
   const addressInfo =
     getAddressInfo(selPropertyDetails.address, [
