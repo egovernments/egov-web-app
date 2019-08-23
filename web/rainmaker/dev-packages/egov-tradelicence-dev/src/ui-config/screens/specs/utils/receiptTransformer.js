@@ -348,10 +348,10 @@ export const loadMdmsData = async tenantid => {
       .toUpperCase()
       .replace(/[.]/g, "_")}`;
 
-    data.corporationName = `${getTranslatedLabel(
+    data.corporationName = `${getTranslatedLabel(ulbGrade, localizationLabels)} ${getTranslatedLabel(
       cityKey,
       localizationLabels
-    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
+    ).toUpperCase()} `;
 
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
