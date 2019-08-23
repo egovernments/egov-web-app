@@ -9,14 +9,14 @@ const locale = getLocale() || "en_IN";
 const localizationLabelsData = initLocalizationLabels(locale);
 
 const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
-  const isInstitution = 
+  const isInstitution =
     latestPropertyDetails.ownershipCategory === "INSTITUTIONALPRIVATE" || latestPropertyDetails.ownershipCategory === "INSTITUTIONALGOVERNMENT";
-  const { institution, owners: ownerDetails=[] } = latestPropertyDetails || {};
-  let owner =  [];
-  if(ownerDetails&&(ownerDetails.length>0)){
-    owner =  ownerDetails[0];
+  const { institution, owners: ownerDetails = [] } = latestPropertyDetails || {};
+  let owner = [];
+  if (ownerDetails && (ownerDetails.length > 0)) {
+    owner = ownerDetails[0];
   }
- 
+
 
   return (
     ownerDetails && [
@@ -139,14 +139,14 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
 //   );
 // }
 
-const OwnerInfo= ({properties ,editIcon}) => {
- 
+const OwnerInfo = ({ properties, editIcon }) => {
+
   let ownerItems = [];
   const header = 'PT_OWNERSHIP_INFO_SUB_HEADER';
-  if(properties){
-    const {propertyDetails} = properties;
+  if (properties) {
+    const { propertyDetails } = properties;
     console.log(properties, 'OwnerInfo properties-----');
-    if(propertyDetails&&propertyDetails.length>0){
+    if (propertyDetails && propertyDetails.length > 0) {
       ownerItems = getOwnerInfo(propertyDetails[0]);
     }
   }

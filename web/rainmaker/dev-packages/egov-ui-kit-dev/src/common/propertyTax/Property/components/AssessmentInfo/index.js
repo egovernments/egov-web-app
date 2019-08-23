@@ -51,32 +51,32 @@ const localizationLabelsData = initLocalizationLabels(locale);
 //   );
 // };
 const transform = (floor, key, generalMDMSDataById, propertyDetails) => {
-    const { propertySubType, usageCategoryMajor } = propertyDetails;
-    const { masterName, dataKey } = key;
-    if (!masterName) {
-      return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${Math.round(floor[dataKey] * 100) / 100} sq yards`;
-    } else {
-      if (floor[dataKey]) {
-        if (dataKey === "usageCategoryDetail") {
-          return generalMDMSDataById["UsageCategoryDetail"]
-            ? generalMDMSDataById["UsageCategoryDetail"][floor[dataKey]].name
-            : generalMDMSDataById["UsageCategorySubMinor"]
-              ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name
-              : "NA";
-        }
-        // if (usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
-        //   return "NA";
-        // }
-        if (floor[dataKey] === "NONRESIDENTIAL") {
-          return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
-        } else {
-          return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
-        }
-      } else {
-        return "NA";
+  const { propertySubType, usageCategoryMajor } = propertyDetails;
+  const { masterName, dataKey } = key;
+  if (!masterName) {
+    return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${Math.round(floor[dataKey] * 100) / 100} sq yards`;
+  } else {
+    if (floor[dataKey]) {
+      if (dataKey === "usageCategoryDetail") {
+        return generalMDMSDataById["UsageCategoryDetail"]
+          ? generalMDMSDataById["UsageCategoryDetail"][floor[dataKey]].name
+          : generalMDMSDataById["UsageCategorySubMinor"]
+            ? generalMDMSDataById["UsageCategorySubMinor"][floor["usageCategorySubMinor"]].name
+            : "NA";
       }
+      // if (usageCategoryMajor === "RESIDENTIAL" && propertySubType === "SHAREDPROPERTY" && dataKey === "floorNo") {
+      //   return "NA";
+      // }
+      if (floor[dataKey] === "NONRESIDENTIAL") {
+        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "NA";
+      } else {
+        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
+      }
+    } else {
+      return "NA";
     }
-  };
+  }
+};
 // const getAssessmentInfo = (propertyDetails, keys=[], generalMDMSDataById) => {
 //     const { units } = propertyDetails || {};
 
@@ -142,7 +142,7 @@ const transform = (floor, key, generalMDMSDataById, propertyDetails) => {
 //       ]
 //     );
 //   };
-const getAssessmentInfo = (propertyDetails, keys=[], generalMDMSDataById) => {
+const getAssessmentInfo = (propertyDetails, keys = [], generalMDMSDataById) => {
   const { units } = propertyDetails || {};
 
   return (
@@ -180,22 +180,55 @@ const getAssessmentInfo = (propertyDetails, keys=[], generalMDMSDataById) => {
   );
 };
 
-const AssessmentInfo = ({properties,editIcon}) => {
- 
-  let assessmentItems = [];
-  const header = 'PT_ASSESMENT_INFO_SUB_HEADER';
-  if(properties){
-    console.log(properties, 'AssessmentInfo properties-----');
-    const {propertyDetails} = properties;
-    if(propertyDetails&&propertyDetails.length>0){
-      assessmentItems = getAssessmentInfo(propertyDetails[0]);
+const getUnitInfo = (units = []) => {
+  let floors = [];
+  units.map(unit => {
+    let floor = [{
+      key: getTranslatedLabel("PT_ASSESMENT_INFO_USAGE_TYPE", localizationLabelsData),
+      value: unit.usageCategoryMinor ? unit.usageCategoryMinor : "NA",
+    }, {
+
+      key: getTranslatedLabel("PT_ASSESMENT_INFO_OCCUPLANCY", localizationLabelsData),
+      value: unit.occupancyType ? unit.occupancyType : "NA",
+    }, {
+
+      key: getTranslatedLabel("PT_ASSESMENT_INFO_BUILT_UP_AREA", localizationLabelsData),
+      value: unit.unitArea ? unit.unitArea + '' : "NA",
+    }];
+    if (!floors[unit['floorNo']]) {
+      floors[unit['floorNo']] = [floor];
+    } else {
+      floors[unit['floorNo']].push(floor);
     }
-  
   }
- 
+  )
+  return floors;
+}
+
+
+
+
+
+const AssessmentInfo = ({ properties, editIcon }) => {
+
+  let assessmentItems = [];
+  let subUnitItems = [];
+  let subSectionHeader = [];
+  const header = 'PT_ASSESMENT_INFO_SUB_HEADER';
+  if (properties) {
+    console.log(properties, 'AssessmentInfo properties-----');
+    const { propertyDetails } = properties;
+    if (propertyDetails && propertyDetails.length > 0) {
+      assessmentItems = getAssessmentInfo(propertyDetails[0]);
+      subUnitItems = getUnitInfo(propertyDetails[0]['units']);
+      subSectionHeader = ["Ground Floor", "First Floor", "Second Floor"];
+      console.log(subUnitItems, 'subUnitItems');
+    }
+  }
+
   // assessmentItems = getAddressItems(properties);
   return (
-    <PropertyInfoCard editIcon={editIcon} items={assessmentItems} header={header}></PropertyInfoCard>
+    <PropertyInfoCard editIcon={editIcon} items={assessmentItems} header={header} subSection={subUnitItems} subSectionHeader={subSectionHeader}></PropertyInfoCard>
   );
 };
 

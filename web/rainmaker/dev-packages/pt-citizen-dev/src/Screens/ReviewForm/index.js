@@ -6,6 +6,7 @@ import CalculationDetails from "./components/CalculationDetails";
 // import AssessmentInfo from "./components/AssessmentInfo";
 // import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
+import { Card } from "components";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
@@ -18,9 +19,9 @@ import Label from "egov-ui-kit/utils/translationNode";
 
 import { SingleCheckbox } from "components";
 import "./index.css";
-import  PropertyAddressInfo from 'egov-ui-kit/common/propertyTax/Property/components/PropertyAddressInfo';
-import  AssessmentInfo from 'egov-ui-kit/common/propertyTax/Property/components/AssessmentInfo';
-import  OwnerInfo from 'egov-ui-kit/common/propertyTax/Property/components/OwnerInfo';
+import PropertyAddressInfo from 'egov-ui-kit/common/propertyTax/Property/components/PropertyAddressInfo';
+import AssessmentInfo from 'egov-ui-kit/common/propertyTax/Property/components/AssessmentInfo';
+import OwnerInfo from 'egov-ui-kit/common/propertyTax/Property/components/OwnerInfo';
 
 
 const defaultIconStyle = {
@@ -253,16 +254,22 @@ class ReviewForm extends Component {
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
+        <Card
+          textChildren={
+            <div className="col-sm-12 col-xs-12" style={{ alignItems: "center" }}>
+              <PropertyAddressInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />}></PropertyAddressInfo>
+              <AssessmentInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}></AssessmentInfo>
+              <OwnerInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}></OwnerInfo>
 
-<PropertyAddressInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />}></PropertyAddressInfo>
-      <AssessmentInfo properties={this.props.properties}  editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}></AssessmentInfo>
-      <OwnerInfo properties={this.props.properties}  editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}></OwnerInfo>
+            </div>
+          }
+        />
         {/* <PropertyAddress
           icon={PropAddressIcon}
           editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />}
           component={stepZero}
         /> */}
-      
+
         {/* <AssessmentInfo
           icon={AssessmentInfoIcon}
           editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}
