@@ -43,10 +43,14 @@ const getAddressItems = (addressObj) => {
 }
 
 const PropertyAddressInfo= ({properties ,editIcon}) => {
-  const {address} = properties;
+  
   let addressItems = [];
   const header = 'PT_PROPERTY_ADDRESS_SUB_HEADER';
-  addressItems = getAddressItems(address);
+  if(properties){
+    const {address} = properties;
+    addressItems = getAddressItems(address);
+  }
+  
   return (
     <PropertyInfoCard editIcon={editIcon} items={addressItems} header={header}></PropertyInfoCard>
   );

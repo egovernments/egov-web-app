@@ -140,11 +140,16 @@ const getOwnerInfo = (latestPropertyDetails, generalMDMSDataById) => {
 // }
 
 const OwnerInfo= ({properties ,editIcon}) => {
-  const {propertyDetails} = properties;
- console.log(properties, 'OwnerInfo properties-----');
+ 
   let ownerItems = [];
   const header = 'PT_OWNERSHIP_INFO_SUB_HEADER';
-  ownerItems = getOwnerInfo(propertyDetails[0]);
+  if(properties){
+    const {propertyDetails} = properties;
+    console.log(properties, 'OwnerInfo properties-----');
+    if(propertyDetails&&propertyDetails.length>0){
+      ownerItems = getOwnerInfo(propertyDetails[0]);
+    }
+  }
   return (
     <PropertyInfoCard editIcon={editIcon} items={ownerItems} header={header}></PropertyInfoCard>
   );

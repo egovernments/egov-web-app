@@ -181,11 +181,18 @@ const getAssessmentInfo = (propertyDetails, keys=[], generalMDMSDataById) => {
 };
 
 const AssessmentInfo = ({properties,editIcon}) => {
-  console.log(properties, 'AssessmentInfo properties-----');
-  const {propertyDetails} = properties;
+ 
   let assessmentItems = [];
   const header = 'PT_ASSESMENT_INFO_SUB_HEADER';
-  assessmentItems = getAssessmentInfo(propertyDetails[0]);
+  if(properties){
+    console.log(properties, 'AssessmentInfo properties-----');
+    const {propertyDetails} = properties;
+    if(propertyDetails&&propertyDetails.length>0){
+      assessmentItems = getAssessmentInfo(propertyDetails[0]);
+    }
+  
+  }
+ 
   // assessmentItems = getAddressItems(properties);
   return (
     <PropertyInfoCard editIcon={editIcon} items={assessmentItems} header={header}></PropertyInfoCard>
