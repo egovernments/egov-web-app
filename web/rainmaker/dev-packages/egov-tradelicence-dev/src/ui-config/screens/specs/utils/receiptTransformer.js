@@ -41,7 +41,7 @@ const epochToDate = et => {
   if (!et) return null;
   var date = new Date(Math.round(Number(et)));
   var formattedDate =
-    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    (date.getDate()<10? "0"+date.getDate() : date.getDate()) + "/" + ((date.getMonth() + 1)<10? "0"+(date.getMonth() + 1) : (date.getMonth() + 1)) + "/" + date.getFullYear();
   return formattedDate;
 };
 
