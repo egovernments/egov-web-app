@@ -129,7 +129,7 @@ class DropDown extends Component {
           totalAmountToPay,
           totalAmountPaid
         );
-      receiptDetails && generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, imageUrl, isEmployeeReceipt);
+      receiptDetails && generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, imageUrl, isEmployeeReceipt, {itemData: item, property: item.property, receipt: payload.Receipt});
     } catch (e) {
       console.log(e);
     }

@@ -131,7 +131,7 @@ class PaymentFailure extends Component {
     const { bill } = this.state;
     const { txnAmount } = this.props.match.params;
     const amountPaid = get(bill[0], "billDetails[0].totalAmount");
-    const { cities, selProperty, latestPropertyDetails } = this.props;
+    const { cities, selProperty, latestPropertyDetails, extraData } = this.props;
     const receiptUIDetails =
       selProperty &&
       bill &&
@@ -156,6 +156,7 @@ class PaymentFailure extends Component {
           messages={messages}
           buttons={buttons}
           primaryAction={this.redirectToReview}
+          extraData={extraData}
         />
       </Screen>
     );

@@ -19,6 +19,7 @@ const PaymentStatus = ({
   floatingButtonColor,
   icon,
   messages,
+  extraData,
   buttons,
   primaryAction
 }) => {

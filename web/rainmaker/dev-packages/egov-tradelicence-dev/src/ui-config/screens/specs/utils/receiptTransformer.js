@@ -167,12 +167,12 @@ export const loadApplicationData = async (applicationNumber, tenant) => {
         }
         /** End */
 
-        res.tradeCategory.push(getMessageFromLocalization(tradeCategory));
+        res.tradeCategory.push(getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeCategory));
 
         res.tradeTypeReceipt.push(
-          getMessageFromLocalization(tradeType) +
+          getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeType) +
             " / " +
-            getMessageFromLocalization(tradeSubType)
+            getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+getTransformedLocale(tradeSubType))
         );
         res.tradeTypeCertificate.push(
           getMessageFromLocalization("TRADELICENSE_TRADETYPE_"+tradeCategory) +
@@ -348,10 +348,10 @@ export const loadMdmsData = async tenantid => {
       .toUpperCase()
       .replace(/[.]/g, "_")}`;
 
-    data.corporationName = `${getTranslatedLabel(
+    data.corporationName = `${getTranslatedLabel(ulbGrade, localizationLabels)} ${getTranslatedLabel(
       cityKey,
       localizationLabels
-    ).toUpperCase()} ${getTranslatedLabel(ulbGrade, localizationLabels)}`;
+    ).toUpperCase()} `;
 
     /** END */
     data.corporationAddress = get(ulbData, "address", "NA");
