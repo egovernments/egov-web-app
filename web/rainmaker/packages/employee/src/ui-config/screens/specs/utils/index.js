@@ -280,7 +280,7 @@ export const getSingleMessage = async (state, dispatch, messageTenant, uuid) => 
   messageResponse && dispatch(prepareFinalObject("events[0]", messageResponse[0]));
 };
 
-export const getDeleteButton = () => {
+export const getDeleteButton = (eventType) => {
   const uuid = getQueryArg(window.location.href, "uuid");
   const isDelete = true;
   return {
@@ -303,8 +303,8 @@ export const getDeleteButton = () => {
 
     children: {
       buttonLabel: getLabel({
-        labelName: "DELETE MESSAGE",
-        labelKey: "MESSAGE_DELETE_BUTTON_LABEL",
+        labelName: eventType === "EVENTSONGROUND" ? "DELETE EVENT" : "DELETE MESSAGE",
+        labelKey: eventType === "EVENTSONGROUND" ? "DELETE_EVENT_LABEL" : "MESSAGE_DELETE_BUTTON_LABEL",
       }),
     },
     onClickDefination: {

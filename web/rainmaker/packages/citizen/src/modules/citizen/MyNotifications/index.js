@@ -36,7 +36,8 @@ class Updates extends React.Component {
     const { notifications, history, loading } = this.props;
     return (
       <Screen loading={loading} className="notifications-screen-style">
-        <Notifications notifications={getTransformedNotifications(notifications)} history={history} />;
+        {/* <Notifications notifications={getTransformedNotifications(notifications)} history={history} />; */}
+        <Notifications notifications={notifications} history={history} />;
       </Screen>
     );
   }

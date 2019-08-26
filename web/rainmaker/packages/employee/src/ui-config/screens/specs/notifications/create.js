@@ -17,8 +17,8 @@ import set from "lodash/set";
 import { footer, getSingleMessage, getMdmsData, getDeleteButton } from "../utils";
 
 const header = getCommonHeader({
-  labelName: "Add New Public Message",
-  labelKey: "ADD_NEW_PUBLIC_MESSAGE",
+  labelName: getQueryArg(window.location.href, "uuid") ? "Edit Public Message" : "Add New Public Message",
+  labelKey: getQueryArg(window.location.href, "uuid") ? "EDIT_NEW_PUBLIC_MESSAGE" : "ADD_NEW_PUBLIC_MESSAGE",
 });
 
 export const createForm = getCommonCard({
@@ -241,7 +241,6 @@ const screenConfig = {
   name: "create",
   beforeInitScreen: (action, state, dispatch) => {
     const tenantId = getTenantId();
-    //const isEditable = getQueryArg(window.location.href, "edit");
     const uuid = getQueryArg(window.location.href, "uuid");
     const messageTenant = getQueryArg(window.location.href, "tenantId");
     getMdmsData(action, state, dispatch);
@@ -284,7 +283,7 @@ const screenConfig = {
               },
               ...header,
             },
-            deleteButton: getDeleteButton(),
+            deleteButton: getDeleteButton("BROADCAST"),
           },
         },
         createCard: {

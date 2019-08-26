@@ -37,7 +37,8 @@ class Events extends React.Component {
     let eventarray = notifications && notifications.filter((item) => item.eventType === "EVENTSONGROUND");
     return (
       <Screen className="notifications-screen-style" loading={loading}>
-        <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />;
+        {/* <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />; */}
+        <Notifications notifications={eventarray} history={history} />;
       </Screen>
     );
   }

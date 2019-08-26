@@ -47,9 +47,9 @@ class CitizenDashboard extends Component {
       getNotifications(queryObject, requestBody);
       getNotificationCount(queryObject, requestBody);
     } else {
-      // this.setState({
-      //   openDialog: true,
-      // });
+      this.setState({
+        openDialog: true,
+      });
     }
   };
 
@@ -116,12 +116,14 @@ class CitizenDashboard extends Component {
             containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
           />
           <ServicesNearby history={history} />
-          <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
-            <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-            <div onClick={() => onNotificationClick(history)} style={{ cursor: "pointer" }}>
-              <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
+          {whatsNewEvents && whatsNewEvents.length > 0 && (
+            <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
+              <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
+              <div onClick={() => onNotificationClick(history)} style={{ cursor: "pointer" }}>
+                <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
+              </div>
             </div>
-          </div>
+          )}
           <Notifications notifications={whatsNewEvents} history={history} />
         </div>
         <LogoutDialog
@@ -140,17 +142,16 @@ class CitizenDashboard extends Component {
 
 const mapStateToProps = (state) => {
   const notifications = get(state.app, "notificationObj.notifications");
-  // const cities = state.common.cities || [];
   const userInfo = get(state.auth, "userInfo");
   const loading = get(state.app, "notificationObj.loading");
   let filteredNotifications =
     notifications &&
     notifications.filter((item) => {
-      return item.eventType === "SYSTEMGENERATED" || item.eventType === "BROADCAST";
+      return item.type === "BROADCAST" || (item.type === "SYSTEMGENERATED" && item.actions);
     });
-  let whatsNewEvents =
-    filteredNotifications && getTransformedNotifications(filteredNotifications).slice(0, Math.min(3, filteredNotifications.length));
-
+  // let whatsNewEvents =
+  //   filteredNotifications && getTransformedNotifications(filteredNotifications).slice(0, Math.min(3, filteredNotifications.length));
+  let whatsNewEvents = filteredNotifications && filteredNotifications.slice(0, Math.min(3, filteredNotifications.length));
   return { notifications, userInfo, loading, whatsNewEvents };
 };
 

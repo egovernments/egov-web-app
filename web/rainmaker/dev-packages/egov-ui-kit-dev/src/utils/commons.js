@@ -11,6 +11,8 @@ import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { localStorageSet, localStorageGet, getTenantId, getUserInfo, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+import { getFileUrlFromAPI } from "egov-ui-framework/ui-utils/commons";
+
 export const statusToMessageMapping = {
   rejected: "Rejected",
   closed: "Closed",
@@ -650,10 +652,44 @@ const getEventDate = (eventDate) => {
   return month + ":" + day;
 };
 
-export const getTransformedNotifications = (notifications) => {
+const setDocuments = async (documents) => {
+  const fileStoreIds =
+    documents &&
+    documents
+      .map((item) => {
+        return item.fileStoreId;
+      })
+      .join(",");
+  const fileUrlPayload = fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+  const reviewDocData =
+    documents &&
+    documents.map((item, index) => {
+      return {
+        title: "",
+        link: (fileUrlPayload && fileUrlPayload[item.fileStoreId] && fileUrlPayload[item.fileStoreId].split(",")[0]) || "",
+        linkText: "View",
+        name:
+          (fileUrlPayload &&
+            fileUrlPayload[item.fileStoreId] &&
+            decodeURIComponent(
+              fileUrlPayload[item.fileStoreId]
+                .split(",")[0]
+                .split("?")[0]
+                .split("/")
+                .pop()
+                .slice(13)
+            )) ||
+          `Document - ${index + 1}`,
+      };
+    });
+  return reviewDocData;
+};
+
+export const getTransformedNotifications = async (notifications) => {
   let data = [];
-  if (notifications && notifications.length > 0) {
-    data = notifications.map((item) => ({
+  for (var i = 0; i < notifications.length; i++) {
+    let item = notifications[i];
+    data.push({
       name: item.name,
       description: item.description,
       eventCategory: item.eventCategory,
@@ -671,8 +707,31 @@ export const getTransformedNotifications = (notifications) => {
       id: item.id,
       tenantId: item.tenantId,
       locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
-    }));
+      documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
+    });
   }
+  // if (notifications && notifications.length > 0) {
+  //   data = notifications.map((item) => ({
+  //     name: item.name,
+  //     description: item.description,
+  //     eventCategory: item.eventCategory,
+  //     address: item.eventDetails && item.eventDetails.address,
+  //     SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
+  //     buttons:
+  //       item.actions && item.actions.actionUrls
+  //         ? item.actions.actionUrls.map((actionUrls) => ({
+  //             label: actionUrls.code,
+  //             route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
+  //           }))
+  //         : [],
+  //     eventDate: (item.eventDetails && getEventDate(item.eventDetails.fromDate)) || "",
+  //     type: item.eventType,
+  //     id: item.id,
+  //     tenantId: item.tenantId,
+  //     locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
+  //     documents: item.eventDetails && item.eventDetails.documents,
+  //   }));
+  // }
   return data;
 };
 
