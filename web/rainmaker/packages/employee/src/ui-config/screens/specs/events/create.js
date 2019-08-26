@@ -25,8 +25,8 @@ import {
 } from "../utils";
 
 const header = getCommonHeader({
-  labelName: "Add New Event",
-  labelKey: "EVENT_ADD_NEW_LABEL",
+  labelName: getQueryArg(window.location.href, "uuid") ? "Edit Event" : "Add New Event",
+  labelKey: getQueryArg(window.location.href, "uuid") ? "EVENT_EDIT_LABEL" : "EVENT_ADD_NEW_LABEL",
 });
 
 export const createForm = getCommonCard({
@@ -515,7 +515,7 @@ const screenConfig = {
               },
               ...header,
             },
-            deleteButton: getDeleteButton(),
+            deleteButton: getDeleteButton("EVENTSONGROUND"),
           },
         },
         createCard: {

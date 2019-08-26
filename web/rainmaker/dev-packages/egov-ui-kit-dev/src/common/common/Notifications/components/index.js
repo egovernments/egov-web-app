@@ -83,6 +83,7 @@ class EventDetails extends Component {
     const { openMapHandler } = this;
     const notification = getTransformedNotifications(response)[0];
     const { description, SLA, address, locationObj, eventCategory, name, eventDate } = notification || "";
+
     return (
       <Screen className="notifications-screen-style">
         <Card

@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import Grid from "@material-ui/core/Grid";
+import { DownloadFileContainer } from "egov-ui-framework/ui-containers";
 import "./index.css";
 
 const pStyle = {
@@ -23,7 +24,7 @@ const divStyle = {
 
 const Notifications = ({ notifications = [], history }) => {
   const renderUpdate = (notification, index) => {
-    const { description, buttons, address, name, SLA, type, id, tenantId, eventDate } = notification;
+    const { description, buttons, address, name, SLA, type, id, tenantId, eventDate, documents } = notification;
     return (
       <Card
         className="home-notification"
@@ -110,6 +111,7 @@ const Notifications = ({ notifications = [], history }) => {
               ) : (
                 SLA
               )}
+              {documents && <DownloadFileContainer data={documents} className="review-documents" backgroundGrey={true} />}
             </Grid>
           </Grid>
         }
@@ -117,7 +119,13 @@ const Notifications = ({ notifications = [], history }) => {
     );
   };
 
-  return <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>;
+  return notifications && notifications.length > 0 ? (
+    <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>
+  ) : (
+    <div className="no-assessment-message-cont">
+      <Label label="EMPTY_NOTIFICATIONS" />
+    </div>
+  );
 };
 
 export default Notifications;

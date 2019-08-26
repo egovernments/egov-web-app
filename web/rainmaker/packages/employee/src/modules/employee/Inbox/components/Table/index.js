@@ -39,7 +39,10 @@ class InboxData extends React.Component {
         dialogOpen: true,
       });
     } else {
-      toggleSnackbarAndSetText(true, { labelName: "API error", labelKey: "ERR_API_ERROR" });
+      toggleSnackbarAndSetText(true, {
+        labelName: "API error",
+        labelKey: "ERR_API_ERROR",
+      });
     }
   };
 
@@ -64,11 +67,11 @@ class InboxData extends React.Component {
     let contextPath =
       status === "Initiated"
         ? process.env.NODE_ENV === "production"
-          ? `/employee${getWFConfig(row[0].subtext).INITIATED}`
-          : getWFConfig(row[0].subtext).INITIATED
+          ? `/employee${getWFConfig(row[0].text).INITIATED}`
+          : getWFConfig(row[0].text).INITIATED
         : process.env.NODE_ENV === "production"
-        ? `/employee${getWFConfig(row[0].subtext).DEFAULT}`
-        : getWFConfig(row[0].subtext).DEFAULT;
+        ? `/employee${getWFConfig(row[0].text).DEFAULT}`
+        : getWFConfig(row[0].text).DEFAULT;
 
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     window.location.href = `${baseUrl}${contextPath}?${queryParams}`;
