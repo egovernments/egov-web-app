@@ -9,10 +9,14 @@ import OwnerInfo from '../../../Property/components/OwnerInfo';
 
 // AssessmentInfo
 
-const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor ,properties}) => {
-
+const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor ,properties ,style}) => {
+  console.log(items,"jagan--items");
+  console.log(onItemClick,"jagan--onItemClick");
+  let val='';
+ 
+const items2=[items[1]];
   return (
-    <div className="form-without-button-cont-generic">
+    <div className="form-without-button-cont-generic" >
       {label && (
         <Label
           label={label}
@@ -28,10 +32,20 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor ,properti
           textChildren={
             <div className="col-sm-12 col-xs-12" style={{ alignItems: "center" }}>
               <PropertyAddressInfo properties={properties}></PropertyAddressInfo>
-              <AssessmentInfo properties={properties} editIcon='<h3> Edit is Disabled <h3>'></AssessmentInfo>
+              <AssessmentInfo properties={properties} ></AssessmentInfo>
               <OwnerInfo properties={properties} ></OwnerInfo>
+              <List
+            innerDivStyle={innerDivStyle}
+            items={items2}
+            listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px"  }}
+            nestedListStyle={{ padding: "0px" }}
+            primaryTogglesNestedList={true}
+            onItemClick={onItemClick}
+            hoverColor={hoverColor}
+          />
             </div>
           }
+          
         />
         {/* <Card
         className="property-tax-card"
@@ -47,6 +61,14 @@ const PTList = ({ items, label, onItemClick, innerDivStyle, hoverColor ,properti
           />
         }
       /> */}
+      <button onClick={()=>{val=onItemClick()}}>
+
+      </button>
+<div>
+{val}
+{console.log(val,'val')
+}
+</div>
       </div>
 
     </div>

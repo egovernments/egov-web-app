@@ -171,7 +171,7 @@ const AssessmentList = ({properties,
       history={history}
     />
   ) : (
-    <PTList
+    <PTList 
     properties={properties}
       items={getListItems(items, history, generalMDMSDataById)}
       history={history}

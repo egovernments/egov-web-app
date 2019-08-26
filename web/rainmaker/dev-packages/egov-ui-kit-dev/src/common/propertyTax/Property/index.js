@@ -17,7 +17,7 @@ import orderby from "lodash/orderBy";
 import { initLocalizationLabels } from "egov-ui-kit/redux/app/utils";
 import { getLocale, localStorageGet } from "egov-ui-kit/utils/localStorageUtils";
 import commonConfig from "config/common.js";
-import { Button } from "components";
+import { Button, Card } from "components";
 import "./index.css";
 
 
@@ -182,7 +182,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history, generalMDMSDataById, latestPropertyDetails, propertyId,selPropertyDetails } = this.props;
+    const { urls, location, history, generalMDMSDataById, latestPropertyDetails, propertyId, selPropertyDetails } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
@@ -227,7 +227,7 @@ class Property extends Component {
           // <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         }
         {
-          
+
           <AssessmentList
             onItemClick={this.onListItemClick}
             items={this.getAssessmentListItems(this.props)}
@@ -241,10 +241,7 @@ class Property extends Component {
           />
         }
 
-
-
-        <div className="flex-container">
-        
+        {/* <div className="flex-container">
           <div className="property-info-access-btn" onClick={this.onAssessPayClick}>
             <Button
               onClick={() => this.onAssessPayClick()}
@@ -252,15 +249,25 @@ class Property extends Component {
               primary={true}
               style={{ lineHeight: "auto", minWidth: "inherit" }}
             />
-
-            {/* <Icon
-              action="content"
-              name="add"
-              color="#fe7a51"
-              style={{ height: 22 }}
-            /> */}
-            {/* <Label label="ADD NEW PROPERTY" color="#fe7a51" /> */}
           </div>
+        </div> */}
+        <div
+          id="tax-wizard-buttons"
+          className="wizard-footer col-sm-12"
+          style={{ textAlign: "right" }}
+        >
+          <div className="button-container col-xs-6 property-info-access-btn" style={{ float: "right" }}>
+            <Button
+              onClick={() => this.onAssessPayClick()}
+              label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="16px" />}
+              primary={true}
+              style={{ lineHeight: "auto", minWidth: "inherit" }}
+            />
+          </div>
+        </div>
+
+        <div  >
+
         </div>
 
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
