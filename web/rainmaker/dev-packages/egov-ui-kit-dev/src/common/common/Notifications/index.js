@@ -122,9 +122,7 @@ const Notifications = ({ notifications = [], history }) => {
   return notifications && notifications.length > 0 ? (
     <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>
   ) : (
-    <div className="no-search-text search-no-property-found">
-      <Label label="PT_NO_PROPERTY_RECORD" />
-    </div>
+    <div className="no-assessment-message-cont">{/* <Label label="EMPTY_NOTIFICATIONS" /> */}</div>
   );
 };
 
