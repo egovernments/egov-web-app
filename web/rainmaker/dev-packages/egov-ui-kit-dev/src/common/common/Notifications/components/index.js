@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Screen } from "modules/common";
-import { Card, Icon, MapLocation, Button } from "components";
+import { Card, Icon, MapLocation } from "components";
+import { connect } from "react-redux";
+import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
+import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
+import { getNotifications } from "egov-ui-kit/redux/app/actions";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import Label from "egov-ui-kit/utils/translationNode";
-import "../index.css";
-import { getQueryArg } from "egov-ui-framework/ui-utils/commons";
 import Grid from "@material-ui/core/Grid";
-import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
-import { httpRequest } from "egov-ui-framework/ui-utils/api";
-import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
+import "../index.css";
 
 const pStyle = {
   backgroundColor: "#EEEEEE",
@@ -41,6 +42,7 @@ class EventDetails extends Component {
   };
 
   componentDidMount = async () => {
+    const { getNotifications } = this.props;
     const uuid = getQueryArg(window.location.href, "uuid");
     const tenantId = getQueryArg(window.location.href, "tenantId");
     const queryObject = [
@@ -53,7 +55,6 @@ class EventDetails extends Component {
         value: uuid,
       },
     ];
-
     const requestBody = {
       apiId: "org.egov.pt",
       ver: "1.0",
@@ -65,27 +66,17 @@ class EventDetails extends Component {
       requesterId: "61",
       authToken: getAccessToken(),
     };
-
-    try {
-      const response = await httpRequest("post", "/egov-user-event/v1/events/_search", "_search", queryObject, requestBody);
-      if (response) {
-        this.setState({
-          response: response.events,
-        });
-      }
-    } catch (e) {
-      console.log(e.message);
-    }
+    getNotifications(queryObject, requestBody);
   };
 
   render() {
-    const { response, openMap } = this.state;
+    const { openMap } = this.state;
     const { openMapHandler } = this;
-    const notification = getTransformedNotifications(response)[0];
-    const { description, SLA, address, locationObj, eventCategory, name, eventDate } = notification || "";
+    const { eventDetails, loading } = this.props;
+    const { description, SLA, address, locationObj, eventCategory, name, eventDate } = eventDetails || "";
 
     return (
-      <Screen className="notifications-screen-style">
+      <Screen className="notifications-screen-style" loading={loading}>
         <Card
           className="home-notification"
           style={{ margin: "8px 0px" }}
@@ -202,4 +193,21 @@ class EventDetails extends Component {
   }
 }
 
-export default EventDetails;
+const mapStateToProps = (state) => {
+  const notifications = get(state.app, "notificationObj.notificationsById");
+  const loading = get(state.app, "notificationObj.loading");
+  const uuid = getQueryArg(window.location.href, "uuid");
+  const eventDetails = notifications && notifications.hasOwnProperty(uuid) ? get(notifications, uuid) : {};
+  return { eventDetails, loading };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getNotifications: (queryObject, requestBody) => dispatch(getNotifications(queryObject, requestBody)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventDetails);
