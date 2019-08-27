@@ -45,11 +45,12 @@ class CitizenDashboard extends Component {
       };
       getNotifications(queryObject, requestBody);
       getNotificationCount(queryObject, requestBody);
-    } else {
-      this.setState({
-        openDialog: true,
-      });
     }
+    // else {
+    //   this.setState({
+    //     openDialog: true,
+    //   });
+    // }
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -79,6 +80,10 @@ class CitizenDashboard extends Component {
 
         getNotifications(queryObject, requestBody);
         getNotificationCount(queryObject, requestBody);
+      } else {
+        this.setState({
+          openDialog: true,
+        });
       }
     }
   };
