@@ -9,27 +9,29 @@ import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils
 
 class Updates extends React.Component {
   componentDidMount = () => {
-    const { getNotifications } = this.props;
-    let queryObject = [
-      {
-        key: "tenantId",
-        value: JSON.parse(getUserInfo()).permanentCity,
-      },
-    ];
-    const requestBody = {
-      RequestInfo: {
-        apiId: "org.egov.pt",
-        ver: "1.0",
-        ts: 1502890899493,
-        action: "asd",
-        did: "4354648646",
-        key: "xyz",
-        msgId: "654654",
-        requesterId: "61",
-        authToken: getAccessToken(),
-      },
-    };
-    getNotifications(queryObject, requestBody);
+    const { getNotifications, notifications } = this.props;
+    if (!notifications) {
+      let queryObject = [
+        {
+          key: "tenantId",
+          value: JSON.parse(getUserInfo()).permanentCity,
+        },
+      ];
+      const requestBody = {
+        RequestInfo: {
+          apiId: "org.egov.pt",
+          ver: "1.0",
+          ts: 1502890899493,
+          action: "asd",
+          did: "4354648646",
+          key: "xyz",
+          msgId: "654654",
+          requesterId: "61",
+          authToken: getAccessToken(),
+        },
+      };
+      getNotifications(queryObject, requestBody);
+    }
   };
 
   render() {
@@ -37,14 +39,14 @@ class Updates extends React.Component {
     return (
       <Screen loading={loading} className="notifications-screen-style">
         {/* <Notifications notifications={getTransformedNotifications(notifications)} history={history} />; */}
-        <Notifications notifications={notifications} history={history} />;
+        {notifications && <Notifications notifications={Object.values(notifications)} history={history} />}
       </Screen>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const notifications = get(state.app, "notificationObj.notifications");
+  const notifications = get(state.app, "notificationObj.notificationsById");
   const loading = get(state.app, "notificationObj.loading");
   return { notifications, loading };
 };

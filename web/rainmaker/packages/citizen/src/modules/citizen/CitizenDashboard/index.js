@@ -22,30 +22,31 @@ class CitizenDashboard extends Component {
   };
 
   componentDidMount = () => {
-    const { getNotificationCount, getNotifications, userInfo } = this.props;
+    const { getNotificationCount, getNotifications, userInfo, notifications } = this.props;
     if (get(userInfo, "permanentCity")) {
-      const queryObject = [
-        {
-          key: "tenantId",
-          value: get(userInfo, "permanentCity"),
-        },
-      ];
-      const requestBody = {
-        RequestInfo: {
-          apiId: "org.egov.pt",
-          ver: "1.0",
-          ts: 1502890899493,
-          action: "asd",
-          did: "4354648646",
-          key: "xyz",
-          msgId: "654654",
-          requesterId: "61",
-          authToken: getAccessToken(),
-        },
-      };
-
-      getNotifications(queryObject, requestBody);
-      getNotificationCount(queryObject, requestBody);
+      if (!notifications) {
+        const queryObject = [
+          {
+            key: "tenantId",
+            value: get(userInfo, "permanentCity"),
+          },
+        ];
+        const requestBody = {
+          RequestInfo: {
+            apiId: "org.egov.pt",
+            ver: "1.0",
+            ts: 1502890899493,
+            action: "asd",
+            did: "4354648646",
+            key: "xyz",
+            msgId: "654654",
+            requesterId: "61",
+            authToken: getAccessToken(),
+          },
+        };
+        getNotifications(queryObject, requestBody);
+        getNotificationCount(queryObject, requestBody);
+      }
     } else {
       this.setState({
         openDialog: true,
@@ -141,12 +142,12 @@ class CitizenDashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const notifications = get(state.app, "notificationObj.notifications");
+  const notifications = get(state.app, "notificationObj.notificationsById");
   const userInfo = get(state.auth, "userInfo");
   const loading = get(state.app, "notificationObj.loading");
   let filteredNotifications =
     notifications &&
-    notifications.filter((item) => {
+    Object.values(notifications).filter((item) => {
       return item.type === "BROADCAST" || (item.type === "SYSTEMGENERATED" && item.actions);
     });
   // let whatsNewEvents =
