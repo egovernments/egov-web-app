@@ -34,15 +34,19 @@ const items2=[items[1]];
               <PropertyAddressInfo properties={properties}></PropertyAddressInfo>
               <AssessmentInfo properties={properties} ></AssessmentInfo>
               <OwnerInfo properties={properties} ></OwnerInfo>
-              <List
+              <Card style={{ backgroundColor :'rgb(242,242,242)' }}
+      textChildren={
+        <div ><List
             innerDivStyle={innerDivStyle}
             items={items2}
-            listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px"  }}
-            nestedListStyle={{ padding: "0px" }}
-            primaryTogglesNestedList={true}
+           listItemStyle={{ padding: "0px",backgroundColor :'rgb(242,242,242)', borderWidth: "10px 10px 0px"  }}
+            nestedListStyle={{ padding: "0px" ,backgroundColor :'rgb(242,242,242)'}}
+            // primaryTogglesNestedList={true}
             onItemClick={onItemClick}
-            hoverColor={hoverColor}
+            // hoverColor={hoverColor}
           />
+          </div>} />
+
             </div>
           }
           
@@ -61,14 +65,7 @@ const items2=[items[1]];
           />
         }
       /> */}
-      <button onClick={()=>{val=onItemClick()}}>
-
-      </button>
-<div>
-{val}
-{console.log(val,'val')
-}
-</div>
+      
       </div>
 
     </div>
