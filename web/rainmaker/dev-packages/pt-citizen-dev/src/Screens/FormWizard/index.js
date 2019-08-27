@@ -368,12 +368,7 @@ class FormWizard extends Component {
 
       const titleObject = isReassesment
         ? [
-            "PT_PROPERTY_ASSESSMENT_HEADER",
-            `(${financialYearFromQuery})`,
-            ":",
-            "PT_UNIQUE_ID",
-            "-",
-            propertyId
+            "PT_REASSESS_PROPERTY",
           ]
         : [
             "PT_PROPERTY_ASSESSMENT_HEADER",

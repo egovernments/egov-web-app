@@ -176,7 +176,9 @@ const routes = [
     component: FormWizard,
     needsAuthentication: true,
     options: {
-      hideFooter: true
+      hideFooter: true,
+     
+      
       // hideBackButton: true,
     }
   },

@@ -221,7 +221,7 @@ const AssessmentInfo = ({ properties, editIcon }) => {
     if (propertyDetails && propertyDetails.length > 0) {
       assessmentItems = getAssessmentInfo(propertyDetails[0]);
       subUnitItems = getUnitInfo(propertyDetails[0]['units']);
-      subSectionHeader = ["Ground Floor", "First Floor", "Second Floor"];
+      subSectionHeader = ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "Fourth Floor"];
       console.log(subUnitItems, 'subUnitItems');
     }
   }

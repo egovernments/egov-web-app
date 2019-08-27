@@ -30,6 +30,8 @@ const WizardComponent = ({
   nextLabel,
   history
 }) => {
+  
+  
   return (
     <div className={`wizard-cont active-step-${selected}`}>
       {/*<BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />*/}
@@ -45,13 +47,15 @@ const WizardComponent = ({
           return (
             <Step key={label}>
               <StepLabel>
-                <Label label={label} labelStyle={{ wordBreak: "inherit" }} />
+                
+                <Label label={label} labelStyle={{ wordBreak: "inherit" }} /> 
               </StepLabel>
             </Step>
           );
         })}
       </Stepper>
-      {header}
+      { selected!=3 &&<div>{header}</div> } 
+      {/* //new-logic-needed */}
       <div className="wizard-content clearfix">{content}</div>
       {footer}
       <div

@@ -67,7 +67,7 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
     Object.values(assessmentsByStatus).map((item, index) => {
       return {
         primaryText: (
-          <div className="assesment-history-info" style={{ backgroundColor: 'rgb(248, 248, 248)' }}>
+          <div className="assesment-history-info" style={{ backgroundColor: 'rgb(242, 242, 242)' }}>
             {/* <Label
               label={`INR ${get(item, "receiptInfo.totalAmount")}`}
               fontSize="16px"
@@ -84,67 +84,79 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                 color="#484848"
               /> */}
               {/* <div className="col-sm-12 col-xs-12" > */}
-
-              <div style={{ padding: "5px 0px 0px 0px" }}  className="pt-assessment-info">
-                <Label
-                  labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
-                  label="PT_ASSESSMENT_YEAR"
-                  fontSize="12px"
-                />
-                <Label
-                  labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                  label={` : ${item && item.financialYear}`}
-                  fontSize="16px"
-                />
+              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
+                <div style={{ width: '30%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
+                    label="PT_ASSESSMENT_YEAR"
+                    fontSize="12px"
+                  /></div>
+                <div style={{ width: '50%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    label={`  ${item && item.financialYear}`}
+                    fontSize="16px"
+                  />
+                </div>
               </div>
               {/* </div> */}
 
 
               {/* <div className="col-sm-12 col-xs-12" > */}
 
-              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info">
-                <div >
+              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
+                <div style={{ width: '30%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
+                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_AMOUNT_PAID"
                     fontSize="12px"
                   />
                 </div>
-                <div>
+                <div style={{ width: '50%' }}>
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                    label={` : Rs ${get(item, "receiptInfo.totalAmount")}`}
+                    label={` Rs ${get(item, "receiptInfo.totalAmount")}`}
                     fontSize="16px"
                   />
                 </div>
               </div>
               {/* </div>
               <div className="col-sm-12 col-xs-12" > */}
+              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
+                <div style={{ width: '30%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
+                    label="PT_ASSESSMENT_NO"
+                    fontSize="12px"
+                  /></div>
+                <div style={{ width: '50%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    label={`  ${item.assessmentNumber}`}
+                    fontSize="16px"
+                  />
+                </div>
+              </div>
+              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
 
-              <div style={{ padding: "5px 0px 0px 0px" }}  className="pt-assessment-info">
-                <Label
-                  labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
-                  label="PT_ASSESSMENT_NO"
-                  fontSize="12px"
-                /> <Label
-                  labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                  label={` : ${item.assessmentNumber}`}
-                  fontSize="16px"
-                />
               </div>
               {/* </div>
               <div className="col-sm-12 col-xs-12" > */}
 
-              <div style={{ padding: "5px 0px 0px 0px" }}  className="pt-assessment-info">
-                <Label
-                  labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "1.375em" }}
-                  label="PT_ASSESSMENT_DATE"
-                  fontSize="12px"
-                /><Label
-                  labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                  label={` : ${getDateFromEpoch(item.assessmentDate)}`}
-                  fontSize="16px"
-                />
+              <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
+                <div style={{ width: '30%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
+                    label="PT_ASSESSMENT_DATE"
+                    fontSize="12px"
+                  /></div>
+                <div style={{ width: '50%' }}>
+                  <Label
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    label={`  ${getDateFromEpoch(item.assessmentDate)}`}
+                    fontSize="16px"
+                  />
+                </div>
               </div>
               {/* </div> */}
               {/* <Label
