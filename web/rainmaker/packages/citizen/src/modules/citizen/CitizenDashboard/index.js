@@ -24,29 +24,27 @@ class CitizenDashboard extends Component {
   componentDidMount = () => {
     const { getNotificationCount, getNotifications, userInfo, notifications } = this.props;
     if (get(userInfo, "permanentCity")) {
-      if (!notifications) {
-        const queryObject = [
-          {
-            key: "tenantId",
-            value: get(userInfo, "permanentCity"),
-          },
-        ];
-        const requestBody = {
-          RequestInfo: {
-            apiId: "org.egov.pt",
-            ver: "1.0",
-            ts: 1502890899493,
-            action: "asd",
-            did: "4354648646",
-            key: "xyz",
-            msgId: "654654",
-            requesterId: "61",
-            authToken: getAccessToken(),
-          },
-        };
-        getNotifications(queryObject, requestBody);
-        getNotificationCount(queryObject, requestBody);
-      }
+      const queryObject = [
+        {
+          key: "tenantId",
+          value: get(userInfo, "permanentCity"),
+        },
+      ];
+      const requestBody = {
+        RequestInfo: {
+          apiId: "org.egov.pt",
+          ver: "1.0",
+          ts: 1502890899493,
+          action: "asd",
+          did: "4354648646",
+          key: "xyz",
+          msgId: "654654",
+          requesterId: "61",
+          authToken: getAccessToken(),
+        },
+      };
+      getNotifications(queryObject, requestBody);
+      getNotificationCount(queryObject, requestBody);
     } else {
       this.setState({
         openDialog: true,
