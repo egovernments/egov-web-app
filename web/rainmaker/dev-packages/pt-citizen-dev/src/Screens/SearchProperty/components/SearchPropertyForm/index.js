@@ -60,8 +60,8 @@ const SearchPropertyForm = ({
                 </div>
                 </div>);
             })}
-              <div className="col-md-12">
-              <div className="reset-property-btn">
+              <div className="col-sm-12">
+              <div className="col-sm-6 reset-property-btn">
               <Button
                 label={
                   <Label
@@ -88,7 +88,7 @@ const SearchPropertyForm = ({
               </div>
             {/* </div>
             <div className="col-md-6"> */}
-            <div className="search-property-btn">
+            <div className=" col-sm-6  search-property-btn">
               <Button
                 label={
                   <Label

@@ -1226,6 +1226,8 @@ class FormWizard extends Component {
       termsAccepted,
       selected
     } = this.state;
+
+    //pay-method-jagan
     if (!termsAccepted) {
       this.setState({
         termsError: "PT_CHECK_DECLARATION_BOX"
