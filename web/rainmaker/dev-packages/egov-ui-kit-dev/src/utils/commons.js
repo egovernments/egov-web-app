@@ -690,6 +690,7 @@ export const getTransformedNotifications = async (notifications) => {
   for (var i = 0; i < notifications.length; i++) {
     let item = notifications[i];
     data.push({
+      actions: item.actions,
       name: item.name,
       description: item.description,
       eventCategory: item.eventCategory,
