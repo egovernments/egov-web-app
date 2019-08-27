@@ -6,7 +6,8 @@ import "./index.css";
 const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 242)', items = [], subSection = [], subSectionHeader = [] }) => {
 
   return (
-    <Card style={{ backgroundColor }}
+    <div>
+      {items.length!=0 && <Card style={{ backgroundColor }}
       textChildren={
         <div >
           <div className="pt-rf-title rainmaker-displayInline" style={{ justifyContent: "space-between", margin: '5px 0px 5px 0px' }}>
@@ -61,7 +62,8 @@ const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 2
           }
         </div>
       }
-    />
+    />}
+    </div>
   );
 };
 
