@@ -1,6 +1,7 @@
 import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import get from "lodash/get";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);
@@ -145,6 +146,9 @@ const transformer = (formKey, form = {}, state = {}) => {
         if (latitude.value && longitude.value) {
           const tenantId = await getTenantForLatLng(latitude.value, longitude.value);
           formData.services[0].tenantId = tenantId;
+        }
+        else {
+          formData.services[0].tenantId =get(formData,"services.0.addressDetail.city");
         }
       } catch (error) {
         throw new Error(error.message);
