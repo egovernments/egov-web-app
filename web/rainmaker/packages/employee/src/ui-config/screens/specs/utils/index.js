@@ -6,6 +6,8 @@ import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageU
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
+import store from "../../../../redux/store";
 import { prepareFinalObject, handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import commonConfig from "config/common.js";
 import cloneDeep from "lodash/cloneDeep";
@@ -61,6 +63,7 @@ export const convertEpochToDate = (dateEpoch) => {
 };
 
 export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
+  store.dispatch(toggleSpinner());
   const isEvent = eventType === "EVENTSONGROUND" ? true : false;
   const uuid = getQueryArg(window.location.href, "uuid");
   const isNative = localStorageGet("isNative");
@@ -113,26 +116,32 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   const baseUrl = isEvent ? "/events" : "/notifications";
   if (isFormValid) {
     if (!uuid) {
-      let purpose = "apply";
-      let status = "success";
-
+      let successMessage = eventType === "BROADCAST" ? "MESSAGE_ADD_SUCCESS_MESSAGE_MAIN" : "EVENT_ADD_SUCCESS_MESSAGE_MAIN";
       try {
         await httpRequest("post", "/egov-user-event/v1/events/_create", "_create", [], requestBody);
-        dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
+        store.dispatch(toggleSpinner());
+        // dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
+        dispatch(setRoute(`${baseUrl}/search`));
+        dispatch(toggleSnackbar(true, { labelKey: successMessage }, "success"));
       } catch (e) {
         dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
+        store.dispatch(toggleSpinner());
       }
     } else if (uuid) {
-      let purpose = isDelete ? "delete" : "update";
-      const status = "success";
+      let successMessage = isDelete ? "MESSAGE_DELETE_SUCCESS_LABEL" : "MESSAGE_UPDATE_SUCCESS_LABEL";
       try {
         await httpRequest("post", "/egov-user-event/v1/events/_update", "_update", [], requestBody);
-        dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
+        store.dispatch(toggleSpinner());
+        dispatch(setRoute(`${baseUrl}/search`));
+        dispatch(toggleSnackbar(true, { labelKey: successMessage }, "success"));
+        // dispatch(setRoute(`${baseUrl}/acknowledgement?purpose=${purpose}&status=${status}`));
       } catch (e) {
+        store.dispatch(toggleSpinner());
         dispatch(toggleSnackbar(true, { labelKey: e.message }, "error"));
       }
     }
   } else {
+    store.dispatch(toggleSpinner());
     dispatch(toggleSnackbar(true, { labelName: "Invalid Input!", labelKey: "Invalid Input!" }, "error"));
   }
 };

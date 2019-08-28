@@ -652,43 +652,70 @@ const getEventDate = (eventDate) => {
   return month + ":" + day;
 };
 
-const setDocuments = async (documents) => {
-  const fileStoreIds =
-    documents &&
-    documents
-      .map((item) => {
-        return item.fileStoreId;
-      })
-      .join(",");
-  const fileUrlPayload = fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-  const reviewDocData =
-    documents &&
-    documents.map((item, index) => {
-      return {
-        title: "",
-        link: (fileUrlPayload && fileUrlPayload[item.fileStoreId] && fileUrlPayload[item.fileStoreId].split(",")[0]) || "",
-        linkText: "View",
-        name:
-          (fileUrlPayload &&
-            fileUrlPayload[item.fileStoreId] &&
-            decodeURIComponent(
-              fileUrlPayload[item.fileStoreId]
-                .split(",")[0]
-                .split("?")[0]
-                .split("/")
-                .pop()
-                .slice(13)
-            )) ||
-          `Document - ${index + 1}`,
-      };
-    });
-  return reviewDocData;
+// const setDocuments = async (documents) => {
+//   const fileStoreIds =
+//     documents &&
+//     documents
+//       .map((item) => {
+//         return item.fileStoreId;
+//       })
+//       .join(",");
+//   const fileUrlPayload = fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
+//   const reviewDocData =
+//     documents &&
+//     documents.map((item, index) => {
+//       return {
+//         title: "",
+//         link: (fileUrlPayload && fileUrlPayload[item.fileStoreId] && fileUrlPayload[item.fileStoreId].split(",")[0]) || "",
+//         linkText: "View",
+//         name:
+//           (fileUrlPayload &&
+//             fileUrlPayload[item.fileStoreId] &&
+//             decodeURIComponent(
+//               fileUrlPayload[item.fileStoreId]
+//                 .split(",")[0]
+//                 .split("?")[0]
+//                 .split("/")
+//                 .pop()
+//                 .slice(13)
+//             )) ||
+//           `Document - ${index + 1}`,
+//       };
+//     });
+//   return reviewDocData;
+// };
+
+const setDocuments = (fileUrl) => {
+  return {
+    title: "",
+    link: (fileUrl && fileUrl.split(",")[0]) || "",
+    linkText: "View",
+    name:
+      decodeURIComponent(
+        fileUrl
+          .split(",")[0]
+          .split("?")[0]
+          .split("/")
+          .pop()
+          .slice(13)
+      ) || `Document`,
+  };
 };
 
 export const getTransformedNotifications = async (notifications) => {
   let data = [];
+  let fileStoreIdArray = {};
+  let fieStoreIdString = [];
   for (var i = 0; i < notifications.length; i++) {
     let item = notifications[i];
+    if (item.eventDetails && item.eventDetails.documents) {
+      item.eventDetails.documents.forEach((element) => {
+        fieStoreIdString.push(element.fileStoreId);
+        if (!get(fileStoreIdArray, item.id)) set(fileStoreIdArray, item.id, []);
+        fileStoreIdArray[item.id].push(element.fileStoreId);
+      });
+    }
+
     data.push({
       actions: item.actions,
       name: item.name,
@@ -708,9 +735,11 @@ export const getTransformedNotifications = async (notifications) => {
       id: item.id,
       tenantId: item.tenantId,
       locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
-      documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
+      // documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
     });
   }
+  const fileUrls = await getFileUrlFromAPI(fieStoreIdString.join(","));
+
   // if (notifications && notifications.length > 0) {
   //   data = notifications.map((item) => ({
   //     name: item.name,
@@ -733,7 +762,22 @@ export const getTransformedNotifications = async (notifications) => {
   //     documents: item.eventDetails && item.eventDetails.documents,
   //   }));
   // }
-  return data;
+
+  const finalArray =
+    data &&
+    data.reduce((result, item) => {
+      const doc =
+        get(fileStoreIdArray, item.id) &&
+        get(fileStoreIdArray, item.id).map((item, index) => {
+          return setDocuments(get(fileUrls, item));
+        });
+      result.push({
+        ...item,
+        documents: doc,
+      });
+      return result;
+    }, []);
+  return finalArray;
 };
 
 export const onNotificationClick = async (history) => {
