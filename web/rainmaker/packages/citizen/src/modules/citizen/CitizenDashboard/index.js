@@ -123,7 +123,7 @@ class CitizenDashboard extends Component {
           {whatsNewEvents && whatsNewEvents.length > 0 && (
             <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
               <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16} fontWeight={900} color="rgba(0, 0, 0, 0.8700000047683716)" />
-              <div onClick={() => onNotificationClick(history)} style={{ cursor: "pointer" }}>
+              <div onClick={() => history.push("whats-new")} style={{ cursor: "pointer" }}>
                 <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
               </div>
             </div>
@@ -153,8 +153,6 @@ const mapStateToProps = (state) => {
     Object.values(notifications).filter((item) => {
       return item.type === "BROADCAST" || (item.type === "SYSTEMGENERATED" && item.actions);
     });
-  // let whatsNewEvents =
-  //   filteredNotifications && getTransformedNotifications(filteredNotifications).slice(0, Math.min(3, filteredNotifications.length));
   let whatsNewEvents = filteredNotifications && filteredNotifications.slice(0, Math.min(3, filteredNotifications.length));
   return { notifications, userInfo, loading, whatsNewEvents };
 };

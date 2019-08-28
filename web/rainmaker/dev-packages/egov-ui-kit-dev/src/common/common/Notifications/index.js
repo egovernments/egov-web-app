@@ -102,7 +102,7 @@ const Notifications = ({ notifications = [], history }) => {
                   })}
                 </div>
               )}
-
+              {documents && <DownloadFileContainer data={documents} className="review-documents" backgroundGrey={true} />}
               {type === "EVENTSONGROUND" ? (
                 <div className="rainmaker-displayInline">
                   <Icon name="access-time" action="device" viewBox="10 0 24 24" style={{ height: "20px", width: "35px" }} />
@@ -111,7 +111,6 @@ const Notifications = ({ notifications = [], history }) => {
               ) : (
                 SLA
               )}
-              {documents && <DownloadFileContainer data={documents} className="review-documents" backgroundGrey={true} />}
             </Grid>
           </Grid>
         }
