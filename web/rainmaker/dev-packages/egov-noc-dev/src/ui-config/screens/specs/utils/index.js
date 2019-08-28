@@ -480,23 +480,6 @@ export const getMdmsData = async queryObject => {
   }
 };
 
-// Get user data from uuid API call
-export const getUserDataFromUuid = async bodyObject => {
-  try {
-    const response = await httpRequest(
-      "post",
-      "/user/_search",
-      "",
-      [],
-      bodyObject
-    );
-    return response;
-  } catch (error) {
-    console.log(error);
-    return {};
-  }
-};
-
 export const getBill = async queryObject => {
   try {
     const response = await httpRequest(

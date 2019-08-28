@@ -19,7 +19,8 @@ class Table extends React.Component {
         MUIDataTableBodyCell: {
           root: {
             "&:nth-child(2)": {
-              color: "#2196F3"
+              color: "#2196F3",
+              cursor: "pointer"
               //fontSize: 14
             }
           }

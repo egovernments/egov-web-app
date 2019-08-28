@@ -1,12 +1,7 @@
 import get from "lodash/get";
 import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import store from "../../../../ui-redux/store";
-import {
-  getMdmsData,
-  getReceiptData,
-  getUserDataFromUuid,
-  getFinancialYearDates
-} from "../utils";
+import { getMdmsData, getReceiptData, getFinancialYearDates } from "../utils";
 import {
   getLocalization,
   getLocale
@@ -15,7 +10,8 @@ import {
   getUlbGradeLabel,
   getTranslatedLabel,
   transformById,
-  getTransformedLocale
+  getTransformedLocale,
+  getUserDataFromUuid
 } from "egov-ui-framework/ui-utils/commons";
 import { getSearchResults } from "../../../../ui-utils/commons";
 
