@@ -2,6 +2,7 @@ import React from "react";
 import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
+import Divider from "@material-ui/core/Divider";
 import './index.css';
 
 const secondaryTextLabelStyle = {
@@ -89,13 +90,13 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_YEAR"
-                    fontSize="12px"
+                    fontSize="15px"
                   /></div>
                 <div style={{ width: '50%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${item && item.financialYear}`}
-                    fontSize="16px"
+                    fontSize="15px"
                   />
                 </div>
               </div>
@@ -109,14 +110,14 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_AMOUNT_PAID"
-                    fontSize="12px"
+                    fontSize="15px"
                   />
                 </div>
                 <div style={{ width: '50%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={` Rs ${get(item, "receiptInfo.totalAmount")}`}
-                    fontSize="16px"
+                    fontSize="15px"
                   />
                 </div>
               </div>
@@ -127,13 +128,13 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_NO"
-                    fontSize="12px"
+                    fontSize="15px"
                   /></div>
                 <div style={{ width: '50%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${item.assessmentNumber}`}
-                    fontSize="16px"
+                    fontSize="15px"
                   />
                 </div>
               </div>
@@ -146,15 +147,15 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
               <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
                 <div style={{ width: '30%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_DATE"
-                    fontSize="12px"
+                    fontSize="15px"
                   /></div>
                 <div style={{ width: '50%' }}>
                   <Label
-                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
+                    labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${getDateFromEpoch(item.assessmentDate)}`}
-                    fontSize="16px"
+                    fontSize="15px"
                   />
                 </div>
               </div>
@@ -172,6 +173,8 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                 color="#484848"
               /> */}
             </div>
+         { index!=0 && <Divider style={{ marginBottom: 0 }} />}
+    
           </div>
         ),
         // secondaryText: (
