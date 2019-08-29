@@ -73,7 +73,7 @@ class EventDetails extends Component {
     const { openMap } = this.state;
     const { openMapHandler } = this;
     const { eventDetails, loading } = this.props;
-    const { description, SLA, address, locationObj, eventCategory, name, eventDate } = eventDetails || "";
+    const { description, SLA, address, locationObj, eventCategory, name, eventDate, entryFees } = eventDetails || "";
 
     return (
       <Screen className="notifications-screen-style" loading={loading}>
@@ -158,6 +158,12 @@ class EventDetails extends Component {
                 <Icon name="access-time" action="device" viewBox="10 0 24 24" style={{ height: "20px", width: "35px" }} />
                 {SLA}
               </div>
+              {entryFees > 0 && (
+                <div className="rainmaker-displayInline" style={{ marginTop: 8 }}>
+                  <Icon name="access-time" action="device" viewBox="10 0 24 24" style={{ height: "20px", width: "35px" }} />
+                  <Label label="Rs 300" containerStyle={{ marginLeft: 5 }} />
+                </div>
+              )}
               {openMap && (
                 <div>
                   <Icon

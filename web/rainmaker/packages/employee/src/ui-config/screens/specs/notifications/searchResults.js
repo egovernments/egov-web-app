@@ -27,7 +27,7 @@ export const searchApiCall = async (state, dispatch) => {
   const events = await getEventsByType(queryObject);
 
   const localisationLabels = getTransformedLocalStorgaeLabels();
-  var currentDate = new Date().getTime();
+  //var currentDate = new Date().getTime();
   const uuidArray = [];
   events &&
     events.forEach((element) => {
@@ -43,7 +43,7 @@ export const searchApiCall = async (state, dispatch) => {
     let data =
       events &&
       events.map((item) => {
-        const status = item.eventDetails && item.eventDetails.toDate > currentDate ? item.status : "INACTIVE";
+        //const status = item.eventDetails && item.eventDetails.toDate > currentDate ? item.status : "INACTIVE";
         return {
           [getLocaleLabels("Message", "EVENTS_MESSAGE_LABEL", localisationLabels)]: item.name,
           [getLocaleLabels("Posting Date", "EVENTS_POSTING_DATE_LABEL", localisationLabels)]: epochToYmd(item.auditDetails.lastModifiedTime),
@@ -53,8 +53,8 @@ export const searchApiCall = async (state, dispatch) => {
           [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
           [getLocaleLabels("Posted By", "EVENTS_POSTEDBY_LABEL", localisationLabels)]: get(userResponse, item.postedBy).name,
           [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
-            status,
-            `EVENTS_${status}_LABEL`,
+            item.status,
+            `EVENTS_${item.status}_LABEL`,
             localisationLabels
           ),
           id: item.id,

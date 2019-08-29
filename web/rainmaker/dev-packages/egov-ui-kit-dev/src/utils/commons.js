@@ -623,7 +623,7 @@ const getEventSLA = (item) => {
     sla = (
       // <div style={{ display: "flex" }}>
       //   <Icon name="access-time" action="device" viewBox="0 0 24 24" style={{ height: "20px", width: "35px" }} />
-      <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={disp} containerStyle={{ marginBottom: 5 }} />
+      <Label leftWrapperStyle fontSize={14} color="rgba(0, 0, 0, 0.60)" label={disp} containerStyle={{ marginBottom: 5, marginLeft: 5 }} />
       // </div>
     );
   } else {
@@ -735,6 +735,7 @@ export const getTransformedNotifications = async (notifications) => {
       id: item.id,
       tenantId: item.tenantId,
       locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
+      entryFees: item.eventDetails && item.eventDetails.fees,
       // documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
     });
   }

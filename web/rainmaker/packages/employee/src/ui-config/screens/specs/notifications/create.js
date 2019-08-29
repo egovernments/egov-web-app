@@ -91,12 +91,16 @@ export const createForm = getCommonCard({
         labelName: "Message Content",
         labelKey: "EVENTS_COMMENTS_LABEL",
       },
+      // placeholder: {
+      //   labelName: "Message Content ( Character Length:280)",
+      //   labelKey: "EVENTS_COMMENTS_PLACEHOLDER",
+      // },
       placeholder: {
-        labelName: "Message Content ( Character Length:280)",
-        labelKey: "EVENTS_COMMENTS_PLACEHOLDER",
+        labelName: "Description (Max Char Limit : 500)",
+        labelKey: "EVENTS_DESCRIPTION_LIMIT_PLACEHOLDER",
       },
       required: true,
-      pattern: getPattern("description"),
+      pattern: getPattern("eventDescription"),
       jsonPath: "events[0].description",
       props: {
         multiline: true,
