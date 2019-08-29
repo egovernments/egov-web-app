@@ -21,8 +21,17 @@ class Table extends React.Component {
             "&:nth-child(2)": {
               color: "#2196F3",
               cursor: "pointer"
-              //fontSize: 14
             }
+          }
+        },
+        MuiTypography: {
+          caption: {
+            fontSize: "14px"
+          }
+        },
+        MuiFormLabel: {
+          root: {
+            fontSize: "14px"
           }
         },
         MuiTableCell: {

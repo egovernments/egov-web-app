@@ -4,10 +4,11 @@ import { getLabel, getSelectField, getCommonContainer, getCommonCard, convertDat
 import { setRoute } from "egov-ui-framework/ui-redux/app/actions";
 import { localStorageGet, getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { getQueryArg, validateFields } from "egov-ui-framework/ui-utils/commons";
+import { getQueryArg, validateFields, getTransformedLocale } from "egov-ui-framework/ui-utils/commons";
 import { httpRequest } from "egov-ui-framework/ui-utils/api";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import store from "../../../../redux/store";
+import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
 import { prepareFinalObject, handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import commonConfig from "config/common.js";
 import cloneDeep from "lodash/cloneDeep";
@@ -99,6 +100,11 @@ export const callBackForNext = async (state, dispatch, eventType, isDelete) => {
   if (isDelete) {
     set(eventsData, "status", "CANCELLED");
   }
+  if (uuid) {
+    if (toDateTime > new Date().getTime() && get(eventsData, "status") === "INACTIVE") {
+      set(eventsData, "status", "ACTIVE");
+    }
+  }
   const requestBody = {
     RequestInfo: {
       apiId: "org.egov.pt",
@@ -183,11 +189,12 @@ export const footer = (eventType = "BROADCAST") => {
         props: {
           variant: "contained",
           color: "primary",
-          style: {
-            minWidth: "200px",
-            height: "48px",
-            marginRight: "45px",
-          },
+          className: uuid ? "button-wizard-footer" : "single-button-wizard-footer",
+          // style: {
+          //   minWidth: "200px",
+          //   height: "48px",
+          //   marginRight: "45px",
+          // },
         },
         children: {
           submitButtonLabel: getLabel({
@@ -205,11 +212,12 @@ export const footer = (eventType = "BROADCAST") => {
         props: {
           variant: "contained",
           color: "primary",
-          style: {
-            minWidth: "200px",
-            height: "48px",
-            marginRight: "45px",
-          },
+          className: "button-wizard-footer",
+          // style: {
+          //   minWidth: "200px",
+          //   height: "48px",
+          //   marginRight: "45px",
+          // },
         },
         children: {
           submitButtonLabel: getLabel({
@@ -347,8 +355,8 @@ export const ulbFilter = getCommonCard({
       props: {
         data: [
           {
-            value: "pb.amritsar",
-            label: "TENANT_TENANTS_PB_AMRITSAR",
+            value: getTenantId(),
+            label: `TENANT_TENANTS_${getTransformedLocale(getTenantId())}`,
           },
         ],
         optionValue: "value",
