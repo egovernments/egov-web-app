@@ -42,7 +42,7 @@ const getAddressItems = (properties) => {
         value: address.pincode || "NA",
       },
       {
-        key: getTranslatedLabel("PT_PROPERTY_EXISTING_PUID", localizationLabelsData),
+        key: getTranslatedLabel("PT_PROPERTY_ADDRESS_EXISTING_PID", localizationLabelsData),
         value: properties.oldPropertyId || "NA",
       }
     ]

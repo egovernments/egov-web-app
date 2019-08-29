@@ -15,12 +15,14 @@
   float: right;
 }
 
-.property-info-title{
-  padding: 20px 56px 20px 50px;
-  font-weight: 500;
-  color: #484848;
-  font-size: 16px;  
-}
+.property-info-title {
+  padding: 15px;
+    letter-spacing: 0.67px;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 400;
+  line-height: 19px;
+  font-size: 18px!important;
+} 
 .property-informtion,.assesment-history-info{
   margin-left: 0px;
   padding: 20px 56px 20px 50px;

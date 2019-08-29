@@ -192,7 +192,7 @@ const getUnitInfo = (units = []) => {
       value: unit.occupancyType ? unit.occupancyType : "NA",
     }, {
 
-      key: getTranslatedLabel("PT_ASSESMENT_INFO_BUILT_UP_AREA", localizationLabelsData),
+      key: getTranslatedLabel("PT_FORM2_BUILT_AREA", localizationLabelsData),
       value: unit.unitArea ? unit.unitArea + '' : "NA",
     }];
     if (!floors[unit['floorNo']]) {

@@ -1223,13 +1223,13 @@ class FormWizard extends Component {
     } = this.state;
 
     //pay-method-jagan
-    if (!termsAccepted) {
-      this.setState({
-        termsError: "PT_CHECK_DECLARATION_BOX"
-      });
-      alert("Please check the declaration box to proceed futher");
-      return;
-    }
+    // if (!termsAccepted) {
+    //   this.setState({
+    //     termsError: "PT_CHECK_DECLARATION_BOX"
+    //   });
+    //   alert("Please check the declaration box to proceed futher");
+    //   return;
+    // }
     if (totalAmountToBePaid % 1 !== 0) {
       alert("Amount cannot be a fraction!");
       return;
@@ -1264,7 +1264,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"
-          nextLabel={selected === 3 ? "PT_HOME_PAY1" : "PT_COMMONS_NEXT"}
+          nextLabel={selected === 3 ? "PT_UPDATE_ASSESSMENT" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}

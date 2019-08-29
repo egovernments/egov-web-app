@@ -63,7 +63,7 @@ const WizardComponent = ({
         className="wizard-footer col-sm-10"
         style={{ textAlign: "right" }}
       >
-        <div className="button-container col-xs-6" style={{ float: "right" }}>
+        <div className="button-container col-xs-10" style={{ float: "right" }}>
           <Button
             label={
               <Label buttonLabel={true} label={backLabel} color="#fe7a51" />
@@ -75,11 +75,11 @@ const WizardComponent = ({
             }}
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
             buttonStyle={{ border: "1px solid #fe7a51" }}
-            style={{ marginRight: 45, width: "36%" }}
+            style={{ marginRight: 45, width: "30%" }}
           />
           <Button
             label={<Label buttonLabel={true} label={nextLabel} color="#fff" />}
-            style={{ width: "36%" }}
+            style={{ width: "30%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
             buttonStyle={{ border: 0 }}
