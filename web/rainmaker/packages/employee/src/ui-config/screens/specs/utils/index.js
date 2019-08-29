@@ -284,16 +284,19 @@ export const getSingleMessage = async (state, dispatch, messageTenant, uuid) => 
   //Thu Aug 08 2019 02:00:00 GMT+0530 (IST)
   const fromEpochDate = get(messageResponse[0], "eventDetails.fromDate");
   const toEpochDate = get(messageResponse[0], "eventDetails.toDate");
-  const fromTime = new Date(fromEpochDate)
-    .toString()
-    .split(" ")[4]
-    .substring(0, 5);
-  const toTime = new Date(toEpochDate)
-    .toString()
-    .split(" ")[4]
-    .substring(0, 5);
-  set(messageResponse[0], "eventDetails.fromTime", fromTime);
-  set(messageResponse[0], "eventDetails.toTime", toTime);
+
+  if (get(messageResponse[0], "eventType") === "EVENTSONGROUND") {
+    const fromTime = new Date(fromEpochDate)
+      .toString()
+      .split(" ")[4]
+      .substring(0, 5);
+    set(messageResponse[0], "eventDetails.fromTime", fromTime);
+    const toTime = new Date(toEpochDate)
+      .toString()
+      .split(" ")[4]
+      .substring(0, 5);
+    set(messageResponse[0], "eventDetails.toTime", toTime);
+  }
   messageResponse && dispatch(prepareFinalObject("events[0]", messageResponse[0]));
 };
 
