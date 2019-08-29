@@ -86,13 +86,13 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
               /> */}
               {/* <div className="col-sm-12 col-xs-12" > */}
               <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
-                <div style={{ width: '30%' }}>
+                <div className="pt-assessment-key">
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_YEAR"
                     fontSize="15px"
                   /></div>
-                <div style={{ width: '50%' }}>
+                <div className="pt-assessment-value">
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${item && item.financialYear}`}
@@ -106,14 +106,14 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
               {/* <div className="col-sm-12 col-xs-12" > */}
 
               <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
-                <div style={{ width: '30%' }}>
+                <div className="pt-assessment-key">
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_AMOUNT_PAID"
                     fontSize="15px"
                   />
                 </div>
-                <div style={{ width: '50%' }}>
+                <div className="pt-assessment-value">
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={` Rs ${get(item, "receiptInfo.totalAmount")}`}
@@ -124,13 +124,13 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
               {/* </div>
               <div className="col-sm-12 col-xs-12" > */}
               <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
-                <div style={{ width: '30%' }}>
+                <div className="pt-assessment-key">
                   <Label
                     labelStyle={{ letterSpacing: 0, color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_NO"
                     fontSize="15px"
                   /></div>
-                <div style={{ width: '50%' }}>
+                <div className="pt-assessment-value">
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${item.assessmentNumber}`}
@@ -145,13 +145,13 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
               <div className="col-sm-12 col-xs-12" > */}
 
               <div style={{ padding: "5px 0px 0px 0px" }} className="pt-assessment-info  ">
-                <div style={{ width: '30%' }}>
+                <div className="pt-assessment-key">
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 0.54)", fontWeight: "400", lineHeight: "19px" }}
                     label="PT_ASSESSMENT_DATE"
                     fontSize="15px"
                   /></div>
-                <div style={{ width: '50%' }}>
+                <div className="pt-assessment-value">
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", color: "rgba(0, 0, 0, 1.87)", fontWeight: "400", lineHeight: "19px" }}
                     label={`  ${getDateFromEpoch(item.assessmentDate)}`}
@@ -173,7 +173,7 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
                 color="#484848"
               /> */}
             </div>
-         { index!=0 && <Divider style={{ marginBottom: 0 }} />}
+         { index!=0 && <Divider style={{ marginBottom: 0 ,    marginTop: "15px" }} />}
     
           </div>
         ),

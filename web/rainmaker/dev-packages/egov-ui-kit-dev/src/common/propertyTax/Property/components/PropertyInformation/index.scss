@@ -24,13 +24,13 @@
   font-size: 18px!important;
 } 
 .property-informtion,.assesment-history-info{
-  margin-left: 0px;
-  padding: 20px 56px 20px 50px;
+  margin-left: 10px;
+  padding: 5px;
   
 }
 @media only screen and (max-width:768px){
   .property-informtion,.assesment-history-info{
-    padding: 15px 5px;
+    padding: 5px;
   }
   .assesment-history-info .label-container .label-text{
     width:60%;
