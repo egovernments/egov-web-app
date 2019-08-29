@@ -114,7 +114,7 @@ const routes = [
     component: Property,
     needsAuthentication: true,
     options: {
-      hideTitle:true,
+      // hideTitle:true,
       hideFooter: true
       // hideBackButton: true,
     }

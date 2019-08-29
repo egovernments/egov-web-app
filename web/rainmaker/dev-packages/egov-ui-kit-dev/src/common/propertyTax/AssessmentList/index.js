@@ -2,6 +2,8 @@ import React from "react";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "./components/PTList";
+import PTInformation from "./components/PTInformation";
+
 import BlankAssessment from "./components/BlankAssessment";
 import DropDown from "./components/DropDown";
 import "./index.css";
@@ -171,15 +173,29 @@ const AssessmentList = ({properties,
       history={history}
     />
   ) : (
-    <PTList 
-    properties={properties}
-      items={getListItems(items, history, generalMDMSDataById)}
-      history={history}
-      onItemClick={onItemClick}
-      innerDivStyle={innerDivStyle}
-      listItemStyle={listItemStyle}
-      hoverColor={hoverColor}
-    />
+ 
+    properties== null ? ( <PTList 
+      properties={properties}
+        items={getListItems(items, history, generalMDMSDataById)}
+        history={history}
+        onItemClick={onItemClick}
+        innerDivStyle={innerDivStyle}
+        listItemStyle={listItemStyle}
+        hoverColor={hoverColor}
+      />):( <PTInformation 
+      properties={properties}
+        items={getListItems(items, history, generalMDMSDataById)}
+        history={history}
+        onItemClick={onItemClick}
+        innerDivStyle={innerDivStyle}
+        listItemStyle={listItemStyle}
+        hoverColor={hoverColor}
+      />)
+   
+
+
+
+   
   );
 };
 
