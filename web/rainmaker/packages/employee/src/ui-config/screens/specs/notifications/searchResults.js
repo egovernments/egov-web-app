@@ -69,7 +69,7 @@ export const searchApiCall = async (state, dispatch) => {
 };
 
 const onRowClick = (rowData) => {
-  window.location.href = `create?uuid=${rowData[6]}&tenantId=${rowData[5]}`;
+  window.location.href = `create?uuid=${rowData[7]}&tenantId=${rowData[6]}`;
 };
 
 export const searchResults = () => {
