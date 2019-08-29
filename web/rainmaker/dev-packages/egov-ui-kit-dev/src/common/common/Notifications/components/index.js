@@ -42,31 +42,31 @@ class EventDetails extends Component {
   };
 
   componentDidMount = async () => {
-    const { getNotifications } = this.props;
     const uuid = getQueryArg(window.location.href, "uuid");
     const tenantId = getQueryArg(window.location.href, "tenantId");
-    const queryObject = [
-      {
-        key: "tenantId",
-        value: tenantId,
-      },
-      {
-        key: "ids",
-        value: uuid,
-      },
-    ];
-    const requestBody = {
-      apiId: "org.egov.pt",
-      ver: "1.0",
-      ts: 1502890899493,
-      action: "asd",
-      did: "4354648646",
-      key: "xyz",
-      msgId: "654654",
-      requesterId: "61",
-      authToken: getAccessToken(),
-    };
-    getNotifications(queryObject, requestBody);
+    const { getNotifications, notifications } = this.props;
+    if (!notifications) {
+      let queryObject = [
+        {
+          key: "tenantId",
+          value: tenantId,
+        },
+      ];
+      const requestBody = {
+        RequestInfo: {
+          apiId: "org.egov.pt",
+          ver: "1.0",
+          ts: 1502890899493,
+          action: "asd",
+          did: "4354648646",
+          key: "xyz",
+          msgId: "654654",
+          requesterId: "61",
+          authToken: getAccessToken(),
+        },
+      };
+      getNotifications(queryObject, requestBody);
+    }
   };
 
   render() {
