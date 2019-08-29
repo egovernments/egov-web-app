@@ -89,7 +89,7 @@ const getCitizenReceipetData = transformedData => {
                 bold: true
               },
               {
-                text: "+91 27272828222",
+                text:`${transformedData.corporationContact}`,
                 bold: false
               }
             ],
@@ -113,6 +113,7 @@ const getCitizenReceipetData = transformedData => {
               }
             ],
             alignment: "left"
+            
           },
           {
             text: [
@@ -121,12 +122,12 @@ const getCitizenReceipetData = transformedData => {
                 bold: true
               },
               {
-                text: "www.pmidc.com",
+                text:`${transformedData.corporationWebsite}`,
                 bold: false
               }
             ],
             alignment: "right",
-            margin: [100, 0, 0, 0]
+            margin: [0, 0, 0, 0]
           }
         ]
       },
@@ -433,7 +434,7 @@ const getReceiptData = transformedData => {
                 bold: true
               },
               {
-                text: "+91 27272828222",
+                text:`${transformedData.corporationContact}`,
                 bold: false
               }
             ],
@@ -465,12 +466,12 @@ const getReceiptData = transformedData => {
                 bold: true
               },
               {
-                text: "www.pmidc.com",
+                text:`${transformedData.corporationWebsite}`,
                 bold: false
               }
             ],
             alignment: "right",
-            margin: [100, 0, 0, 0]
+            margin: [0, 0, 0, 0]
           }
         ]
       },
@@ -703,7 +704,7 @@ const getReceiptData = transformedData => {
                 bold: true
               },
               {
-                text: "+91 27272828222",
+                text:`${transformedData.corporationContact}`,
                 bold: false
               }
             ],
@@ -735,12 +736,12 @@ const getReceiptData = transformedData => {
                 bold: true
               },
               {
-                text: "www.pmidc.com",
+                text:`${transformedData.corporationWebsite}`,
                 bold: false
               }
             ],
             alignment: "right",
-            margin: [100, 0, 0, 0]
+            margin: [0, 0, 0, 0]
           }
         ]
       },
