@@ -31,7 +31,7 @@ export const searchApiCall = async (state, dispatch) => {
   const uuidArray = [];
   events &&
     events.forEach((element) => {
-      return uuidArray.push(element.postedBy);
+      return uuidArray.push(element.auditDetails.lastModifiedBy);
     });
 
   let bodyObject = {
