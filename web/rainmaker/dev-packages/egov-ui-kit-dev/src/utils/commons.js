@@ -736,6 +736,7 @@ export const getTransformedNotifications = async (notifications) => {
       tenantId: item.tenantId,
       locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
       entryFees: item.eventDetails && item.eventDetails.fees,
+      referenceId: item.referenceId,
       // documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
     });
   }
