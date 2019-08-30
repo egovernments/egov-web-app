@@ -8,7 +8,7 @@ import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
@@ -39,7 +39,10 @@ class SearchProperty extends Component {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
   };
-
+  onResetClick = () => {
+    const { resetForm } = this.props;
+    resetForm("searchProperty");
+  };
   onSearchClick = (form, formKey) => {
     const { city, ids, oldpropertyids, mobileNumber } = form.fields || {};
     if (!validateForm(form)) {
@@ -83,30 +86,56 @@ class SearchProperty extends Component {
       let fatherOrHusbandName = latestAssessment.owners[0].fatherOrHusbandName || "";
       let assessmentNo = latestAssessment.assessmentNumber;
       const uuid = get(latestAssessment, "citizenInfo.uuid");
+      // let button = (
+      //   <Button
+      //     onClick={
+      //       userType === "CITIZEN"
+      //         ? () => {
+      //           // localStorageSet("draftId", "")
+      //           this.setState({
+      //             dialogueOpen: true,
+      //             urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
+      //           });
+      //         }
+      //         : (e) => {
+      //           // localStorageSet("draftId", "")
+      //           history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+      //         }
+      //     }
+      //     label={
+      //       <Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "PT_SEARCHPROPERTY_TABLE_VIEW"} fontSize="12px" />
+      //     }
+      //     value={propertyId}
+      //     primary={true}
+      //     style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
+      //   />
+      // );
       let button = (
-        <Button
-          onClick={
-            userType === "CITIZEN"
-              ? () => {
-                  // localStorageSet("draftId", "")
-                  this.setState({
-                    dialogueOpen: true,
-                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
-                  });
-                }
-              : (e) => {
-                  // localStorageSet("draftId", "")
-                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
-                }
-          }
-          label={
-            <Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "PT_SEARCHPROPERTY_TABLE_VIEW"} fontSize="12px" />
-          }
-          value={propertyId}
-          primary={true}
-          style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
-        />
-      );
+        <a
+        onClick={
+                userType === "CITIZEN"
+                  ? () => {
+                    // localStorageSet("draftId", "")
+                    this.setState({
+                      dialogueOpen: true,
+                      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
+                    });
+                  }
+                  : (e) => {
+                    // localStorageSet("draftId", "")
+                    history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+                  }
+              }
+          style={{
+            height: 20,
+            lineHeight: "auto",
+            minWidth: "inherit",
+            cursor: "pointer",
+            textDecoration: "underline"
+          }}>
+      {propertyId}
+      </a>);
+
       let item = {
         index: index + 1,
         name: name,
@@ -149,7 +178,7 @@ class SearchProperty extends Component {
     return (
       <Screen loading={loading}>
         {userType === "CITIZEN" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
-        <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
+        <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} onResetClick={this.onResetClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
         {showTable && tableData.length === 0 && (
           <div className="search-no-property-found">
@@ -188,6 +217,7 @@ const mapDispatchToProps = (dispatch) => {
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    resetForm: formKey => dispatch(resetForm(formKey))
   };
 };
 
