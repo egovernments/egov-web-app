@@ -47,7 +47,7 @@ export const searchApiCall = async (state, dispatch) => {
             ? epochToYmd(item.eventDetails.fromDate)
             : "-",
           [getLocaleLabels("End Date", "EVENTS_END_DATE_LABEL", localisationLabels)]: item.eventDetails ? epochToYmd(item.eventDetails.toDate) : "-",
-          [getLocaleLabels("Posted By", "EVENTS_POSTEDBY_LABEL", localisationLabels)]: get(userResponse, item.postedBy).name,
+          [getLocaleLabels("Posted By", "EVENTS_POSTEDBY_LABEL", localisationLabels)]: get(userResponse, item.auditDetails.lastModifiedBy).name,
           [getLocaleLabels("Status", "EVENTS_STATUS_LABEL", localisationLabels)]: getLocaleLabels(
             item.status,
             `EVENTS_${item.status}_LABEL`,
