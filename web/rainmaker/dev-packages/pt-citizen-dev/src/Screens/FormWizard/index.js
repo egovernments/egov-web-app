@@ -792,17 +792,17 @@ class FormWizard extends Component {
     let { history, toggleSpinner, location } = this.props;
     const { search } = location;
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
-    let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
+    let callbackUrl = `${document.location.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
       const userType =
         process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
       if (userType === "CITIZEN") {
         callbackUrl = `${
-          window.origin
+          document.location.origin
         }/citizen/property-tax/payment-redirect-page`;
       } else {
         callbackUrl = `${
-          window.origin
+          document.location.origin
         }/employee/property-tax/payment-redirect-page`;
       }
     }
