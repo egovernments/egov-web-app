@@ -33,7 +33,7 @@ const generatePdfAndDownload = (
   );
   var iframe = document.createElement("iframe");
   iframe.src =
-    window.origin +
+    document.location.origin +
     window.basename +
     `/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,

@@ -24,7 +24,7 @@ export const Taskboard = ({ data }) => {
 
 const onModuleCardClick = (route) => {
   const url = process.env.NODE_ENV === "production" ? `employee/${route}` : route;
-  window.location.href = window.origin + "/" + url;
+  window.location.href = document.location.origin + "/" + url;
 };
 
 const iconStyle = {
