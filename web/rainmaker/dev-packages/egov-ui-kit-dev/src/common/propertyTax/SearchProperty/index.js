@@ -75,7 +75,14 @@ class SearchProperty extends Component {
   extractTableData = (properties) => {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
-      let { propertyId, oldPropertyId, address, propertyDetails } = property;
+      let {
+        propertyId,
+        status,
+        oldPropertyId,
+        address,
+        propertyDetails,
+        tenantId
+      } = property;
       const { doorNo, buildingName, street, locality } = address;
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
@@ -83,7 +90,7 @@ class SearchProperty extends Component {
 
       const latestAssessment = getLatestPropertyDetails(propertyDetails);
       let name = latestAssessment.owners[0].name;
-      let fatherOrHusbandName = latestAssessment.owners[0].fatherOrHusbandName || "";
+      let guardianName = latestAssessment.owners[0].fatherOrHusbandName || "";
       let assessmentNo = latestAssessment.assessmentNumber;
       const uuid = get(latestAssessment, "citizenInfo.uuid");
       // let button = (
@@ -138,12 +145,13 @@ class SearchProperty extends Component {
 
       let item = {
         index: index + 1,
+        propertyId: button,
         name: name,
-        fatherOrHusbandName: fatherOrHusbandName,
-        propertyId: propertyId,
+        guardianName: guardianName,
         oldPropertyId: oldPropertyId,
         address: displayAddress,
-        action: button,
+        status: status
+      
       };
       tableData.push(item);
       return tableData;

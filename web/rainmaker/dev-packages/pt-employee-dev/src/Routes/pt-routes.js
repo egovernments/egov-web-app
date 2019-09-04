@@ -53,7 +53,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PT_SEARCH_PROPERTY_TITLE"
+      title: "PT_HOME_PROPERTY_TAX"
       // hideBackButton: true,
     }
   },

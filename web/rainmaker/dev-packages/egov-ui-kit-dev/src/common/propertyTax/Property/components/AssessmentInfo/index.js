@@ -149,7 +149,7 @@ const getAssessmentInfo = (propertyDetails, keys = [], generalMDMSDataById) => {
     propertyDetails && [
       {
         key: getTranslatedLabel("PT_ASSESMENT_INFO_USAGE_TYPE", localizationLabelsData),
-        value: propertyDetails.usageCategoryMajor ? propertyDetails.usageCategoryMajor : "NA", //noOfFloors
+        value:  propertyDetails.usageCategoryMajor ? 'PROPERTYTAX_BILLING_SLAB_'+propertyDetails.usageCategoryMajor : "NA", //noOfFloors
       },
       {
         key: getTranslatedLabel("PT_ASSESMENT_INFO_TYPE_OF_BUILDING", localizationLabelsData),
@@ -185,11 +185,11 @@ const getUnitInfo = (units = []) => {
   units.map(unit => {
     let floor = [{
       key: getTranslatedLabel("PT_ASSESMENT_INFO_USAGE_TYPE", localizationLabelsData),
-      value: unit.usageCategoryMinor ? unit.usageCategoryMinor : "NA",
+      value: unit.usageCategoryMinor ? 'PROPERTYTAX_BILLING_SLAB_'+unit.usageCategoryMinor : "NA",
     }, {
 
       key: getTranslatedLabel("PT_ASSESMENT_INFO_OCCUPLANCY", localizationLabelsData),
-      value: unit.occupancyType ? unit.occupancyType : "NA",
+      value: unit.occupancyType ? 'PROPERTYTAX_OCCUPANCYTYPE_'+unit.occupancyType : "NA",
     }, {
 
       key: getTranslatedLabel("PT_FORM2_BUILT_AREA", localizationLabelsData),
