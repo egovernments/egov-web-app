@@ -13,7 +13,7 @@ import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
-import CountDetails from "./components/CountDetails"
+import CountDetails from "./components/CountDetails";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -49,7 +49,7 @@ class AllComplaints extends Component {
       this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
     } else {
       let { fetchComplaints } = this.props;
-      
+
       let complaintCountRequest = [
         { key: "tenantId", value: getTenantId() },
         {
@@ -65,53 +65,50 @@ class AllComplaints extends Component {
         "_search",
         complaintCountRequest
       );
-      if(role === "csr")
-      {
+      if (role === "csr") {
         payloadCount
-        ? payloadCount.count
-          ? renderCustomTitle(payloadCount.count)
-          : renderCustomTitle("0")
-        : renderCustomTitle("0");
+          ? payloadCount.count
+            ? renderCustomTitle(payloadCount.count)
+            : renderCustomTitle("0")
+          : renderCustomTitle("0");
       }
-      
 
-       complaintCountRequest = [
-          { key: "tenantId", value: getTenantId() },
-          {
-            key: "status",
-            value:"assigned"
-          }
-        ];
-        let assignedTotalComplaints = await httpRequest(
-          "rainmaker-pgr/v1/requests/_count",
-          "_search",
-          complaintCountRequest
-        );
-        complaintCountRequest = [
-          { key: "tenantId", value: getTenantId() },
-          {
-            key: "status",
-            value:"open,reassignrequested"
-          }
-        ];
-        let unassignedTotalComplaints = await httpRequest(
-          "rainmaker-pgr/v1/requests/_count",
-          "_search",
-          complaintCountRequest
-        );
-        prepareFinalObject("pgrComplaintCount",{
-          assignedTotalComplaints:assignedTotalComplaints.count,
-          unassignedTotalComplaints:unassignedTotalComplaints.count,
-          employeeTotalComplaints:payloadCount.count
-        })
+      complaintCountRequest = [
+        { key: "tenantId", value: getTenantId() },
+        {
+          key: "status",
+          value: "assigned"
+        }
+      ];
+      let assignedTotalComplaints = await httpRequest(
+        "rainmaker-pgr/v1/requests/_count",
+        "_search",
+        complaintCountRequest
+      );
+      complaintCountRequest = [
+        { key: "tenantId", value: getTenantId() },
+        {
+          key: "status",
+          value: "open,reassignrequested"
+        }
+      ];
+      let unassignedTotalComplaints = await httpRequest(
+        "rainmaker-pgr/v1/requests/_count",
+        "_search",
+        complaintCountRequest
+      );
+      prepareFinalObject("pgrComplaintCount", {
+        assignedTotalComplaints: assignedTotalComplaints.count,
+        unassignedTotalComplaints: unassignedTotalComplaints.count,
+        employeeTotalComplaints: payloadCount.count
+      });
 
-        if(role==="ao")
-      {
+      if (role === "ao") {
         fetchComplaints(
           [
             {
               key: "status",
-              value:"assigned"
+              value: "assigned"
             }
           ],
           true,
@@ -121,22 +118,20 @@ class AllComplaints extends Component {
           [
             {
               key: "status",
-              value:"open,reassignrequested"
+              value: "open,reassignrequested"
             }
           ],
           true,
           false
         );
-      }
-      else
-      {
+      } else {
         fetchComplaints(
           [
             {
               key: "status",
               value:
                 rawRole === "EMPLOYEE"
-                  ? "assigned,open,reassignrequested,closed,rejected,resolved"
+                  ? "assigned,reassignrequested"
                   : "assigned,open,reassignrequested"
             }
           ],
@@ -144,7 +139,6 @@ class AllComplaints extends Component {
           true
         );
       }
-      
     }
     let inputType = document.getElementsByTagName("input");
     for (let input in inputType) {
@@ -367,7 +361,11 @@ class AllComplaints extends Component {
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab1-content form-without-button-cont-generic">
-                    <CountDetails count={unassignedComplaints.length} total={unassignedTotalComplaints} status="unassigned"/>
+                    <CountDetails
+                      count={unassignedComplaints.length}
+                      total={unassignedTotalComplaints}
+                      status="unassigned"
+                    />
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"
@@ -413,7 +411,11 @@ class AllComplaints extends Component {
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab2-content form-without-button-cont-generic">
-                    <CountDetails count={assignedComplaints.length} total={assignedTotalComplaints} status="assigned"/>
+                    <CountDetails
+                      count={assignedComplaints.length}
+                      total={assignedTotalComplaints}
+                      status="assigned"
+                    />
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"
@@ -434,7 +436,7 @@ class AllComplaints extends Component {
     ) : role === "csr" ? (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
-         
+
           <Card
             id="complaint-search-card"
             className="complaint-search-main-card"
@@ -707,7 +709,15 @@ class AllComplaints extends Component {
           />
         </div>
         <div className="form-without-button-cont-generic">
-          <CountDetails count={search ? searchFilterEmployeeComplaints.length : employeeComplaints.length} total={employeeTotalComplaints} status="open"/>
+          <CountDetails
+            count={
+              search
+                ? searchFilterEmployeeComplaints.length
+                : employeeComplaints.length
+            }
+            total={employeeTotalComplaints}
+            status="open"
+          />
           <Complaints
             noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
             onComplaintClick={onComplaintClick}
@@ -746,12 +756,16 @@ const displayStatus = (status = "") => {
 };
 
 const mapStateToProps = state => {
-  const { complaints, common,screenConfiguration={} } = state || {};
+  const { complaints, common, screenConfiguration = {} } = state || {};
   const { categoriesById, byId, order } = complaints;
   const { fetchSuccess } = complaints;
-  const {preparedFinalObject={}}=screenConfiguration;
-  const {pgrComplaintCount={}}=preparedFinalObject;
-  const {assignedTotalComplaints=0,unassignedTotalComplaints=0,employeeTotalComplaints=0}=pgrComplaintCount;
+  const { preparedFinalObject = {} } = screenConfiguration;
+  const { pgrComplaintCount = {} } = preparedFinalObject;
+  const {
+    assignedTotalComplaints = 0,
+    unassignedTotalComplaints = 0,
+    employeeTotalComplaints = 0
+  } = pgrComplaintCount;
   const loading = !isEmpty(categoriesById)
     ? fetchSuccess
       ? false
@@ -900,7 +914,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
     toggleSnackbarAndSetText: (open, message, error) =>
       dispatch(toggleSnackbarAndSetText(open, message, error)),
-      prepareFinalObject:(jsonPath,value)=>dispatch(prepareFinalObject(jsonPath,value))
+    prepareFinalObject: (jsonPath, value) =>
+      dispatch(prepareFinalObject(jsonPath, value))
   };
 };
 
