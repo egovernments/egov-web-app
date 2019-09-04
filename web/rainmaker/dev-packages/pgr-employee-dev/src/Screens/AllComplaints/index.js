@@ -436,6 +436,7 @@ class AllComplaints extends Component {
     ) : role === "csr" ? (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
+
           <Card
             id="complaint-search-card"
             className="complaint-search-main-card"

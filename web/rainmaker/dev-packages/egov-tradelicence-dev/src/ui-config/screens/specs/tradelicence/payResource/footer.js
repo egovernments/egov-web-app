@@ -17,7 +17,7 @@ import { getBill } from "../../utils";
 
 export const callPGService = async (state, dispatch) => {
   const tenantId = getQueryArg(window.location.href, "tenantId");
-  let callbackUrl = `${window.origin}/${
+  let callbackUrl = `${document.location.origin}/${
     process.env.NODE_ENV === "production" ? "citizen" : ""
   }/tradelicense-citizen/PaymentRedirectPage`;
   try {

@@ -1,6 +1,7 @@
 import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
+import sortBy from "lodash/sortBy";
 
 const formConfig = {
   name: "searchProperty",
@@ -77,7 +78,7 @@ const formConfig = {
           dd.push({ label: selected.name, value: selected.code });
           return dd;
         }, []);
-        dispatch(setFieldProperty("searchProperty", "city", "dropDownData", dd));
+        dispatch(setFieldProperty("searchProperty", "city", "dropDownData", sortBy(dd, ["label"])));
         if (process.env.REACT_APP_NAME !== "Citizen") {
           let found = tenants.find((city) => {
             return city.code === tenantId;
