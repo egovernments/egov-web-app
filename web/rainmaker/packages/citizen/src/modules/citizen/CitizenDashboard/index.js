@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
 import { getNotificationCount, getNotifications } from "egov-ui-kit/redux/app/actions";
@@ -8,12 +7,11 @@ import Label from "egov-ui-kit/utils/translationNode";
 import ServicesNearby from "./components/ServicesNearby";
 import { Notifications, Screen } from "modules/common";
 import LogoutDialog from "egov-ui-kit/common/common/Header/components/LogoutDialog";
-import "./index.css";
-import get from "lodash/get";
-import { getTransformedNotifications, onNotificationClick } from "egov-ui-kit/utils/commons";
 import { getAccessToken } from "egov-ui-kit/utils/localStorageUtils";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
+import get from "lodash/get";
+import "./index.css";
 
 class CitizenDashboard extends Component {
   state = {
@@ -22,7 +20,7 @@ class CitizenDashboard extends Component {
   };
 
   componentDidMount = () => {
-    const { getNotificationCount, getNotifications, userInfo, notifications } = this.props;
+    const { getNotificationCount, getNotifications, userInfo } = this.props;
     if (get(userInfo, "permanentCity")) {
       const queryObject = [
         {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { defaultLocation } from "egov-ui-framework/ui-config/app-config";
+import get from "lodash/get";
+// import { defaultLocation } from "egov-ui-framework/ui-config/app-config";
 import { Button, Icon, MapLocation } from "egov-ui-framework/ui-atoms";
 import isEmpty from "lodash/isEmpty";
 import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
@@ -112,7 +113,7 @@ class MapLocator extends Component {
 
   render() {
     let { currLoc } = this.state;
-    const { location, localizationLabels } = this.props;
+    const { location, localizationLabels, defaultLocation } = this.props;
     var _currloc = !isEmpty(currLoc) ? currLoc : isEmpty(location) ? defaultLocation : location;
     let translatedSearchPlaceholder = getLocaleLabels("Search Address", "SEARCH_ADDRESS_MAP_PLACEHOLDER", localizationLabels);
     return (
@@ -177,24 +178,18 @@ class MapLocator extends Component {
   }
 }
 
-//const mapStateToProps = state => {
-// const formKey = window.location.href.split("?")[1];
-// const form = state.form[formKey];
-// const fields = (form && form.fields) || {};
-// const currentLocation = state.app.currentLocation || {};
-// var location = {};
-// if (fields.latitude && fields.latitude.value)
-//   location = {
-//     lat: parseFloat(fields.latitude.value),
-//     lng: parseFloat(fields.longitude.value)
-//   };
-// return { location, formKey, currentLocation };
-//};
-
 const mapSateToProps = (state) => {
   const { app } = state;
   const { localizationLabels } = app;
-  return { localizationLabels };
+  const tenantId = get(state, "auth.tenantId");
+  const cities = get(state, "common.cities");
+  let selectedCity = cities.find((city) => {
+    return city.code === tenantId;
+  });
+  const lng = get(selectedCity, "city.longitude");
+  const lat = get(selectedCity, "city.latitude");
+  const defaultLocation = { lat, lng };
+  return { localizationLabels, defaultLocation };
 };
 
 const mapDispatchToProps = (dispatch) => {
