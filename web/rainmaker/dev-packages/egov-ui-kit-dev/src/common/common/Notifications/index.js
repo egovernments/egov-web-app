@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import ReadMore from "../ReadMore";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 import { DownloadFileContainer } from "egov-ui-framework/ui-containers";
 import "./index.css";
 
@@ -56,13 +58,28 @@ const Notifications = ({ notifications = [], history }) => {
               <Label fontSize={16} color="rgba(0, 0, 0, 0.87)" label={name} containerStyle={{ marginBottom: 10 }} />
 
               {type != "EVENTSONGROUND" && (
-                <Label
-                  fontSize={14}
-                  color="rgba(0, 0, 0, 0.60)"
-                  label={description}
-                  labelStyle={{ width: "100%", wordWrap: "break-word" }}
-                  containerStyle={{ marginBottom: 10 }}
-                />
+                <div>
+                  <Hidden xsDown>
+                    <Label
+                      fontSize={14}
+                      color="rgba(0, 0, 0, 0.60)"
+                      label={description}
+                      labelStyle={{ width: "100%", wordWrap: "break-word" }}
+                      containerStyle={{ marginBottom: 10 }}
+                    />
+                  </Hidden>
+                  <Hidden smUp>
+                    <ReadMore
+                      className="read-more-content"
+                      charLimit={90}
+                      readMoreText="CS_READ_MORE"
+                      readLessText="CS_READ_LESS"
+                      containerStyle={{ marginBottom: 10 }}
+                    >
+                      {description}
+                    </ReadMore>
+                  </Hidden>
+                </div>
               )}
               {address && (
                 <div className="rainmaker-displayInline">
