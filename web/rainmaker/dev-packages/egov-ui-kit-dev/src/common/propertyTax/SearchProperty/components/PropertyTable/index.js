@@ -15,6 +15,7 @@ const columnData = [
 ];
 
 const PropertyTable = ({ tableData, onActionClick }) => {
+  console.log(tableData,'tableData');
   return (
     <div className="form-without-button-cont-generic">
       <Card

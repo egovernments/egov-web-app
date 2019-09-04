@@ -3,7 +3,7 @@ import { Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 242)', items = [], subSection = [], subSectionHeader = [] }) => {
+const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 242)', items = [], subSection = [] }) => {
 
   return (
     <div>
@@ -50,7 +50,7 @@ const PropertyInfoCard = ({ editIcon, header, backgroundColor = 'rgb(242, 242, 2
                 return <div className="col-sm-12 col-xs-12" style={{ alignItems: "center" }}>
                   <Label
                     labelStyle={{ letterSpacing: "0.67px", marginTop: 15, color: "rgba(0, 0, 0, 0.87)", fontWeight: "400", lineHeight: "19px" }}
-                    label={subSectionHeader[unitIndex]}
+                    label={'PROPERTYTAX_FLOOR_'+unitIndex}
                     fontSize="18px"
                   />
                   {units.map((unit, index) => {

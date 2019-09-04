@@ -213,7 +213,6 @@ const AssessmentInfo = ({ properties, editIcon }) => {
 
   let assessmentItems = [];
   let subUnitItems = [];
-  let subSectionHeader = [];
   const header = 'PT_ASSESMENT_INFO_SUB_HEADER';
   if (properties) {
     console.log(properties, 'AssessmentInfo properties-----');
@@ -221,14 +220,13 @@ const AssessmentInfo = ({ properties, editIcon }) => {
     if (propertyDetails && propertyDetails.length > 0) {
       assessmentItems = getAssessmentInfo(propertyDetails[0]);
       subUnitItems = getUnitInfo(propertyDetails[0]['units']);
-      subSectionHeader = ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "Fourth Floor"];
       console.log(subUnitItems, 'subUnitItems');
     }
   }
 
   // assessmentItems = getAddressItems(properties);
   return (
-    <PropertyInfoCard editIcon={editIcon} items={assessmentItems} header={header} subSection={subUnitItems} subSectionHeader={subSectionHeader}></PropertyInfoCard>
+    <PropertyInfoCard editIcon={editIcon} items={assessmentItems} header={header} subSection={subUnitItems} ></PropertyInfoCard>
   );
 };
 
