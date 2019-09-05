@@ -373,3 +373,6 @@ div[class^="MuiPaper-root"] > div > span > span:nth-of-type(2) > span,
     display: block; }
   .MuiStepLabel-labelContainer-47 > span {
     font-size: 12px !important; } }
+    .rainmaker-card .rainmaker-card {
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important; }

@@ -42,6 +42,7 @@ class SearchProperty extends Component {
   onResetClick = () => {
     const { resetForm } = this.props;
     resetForm("searchProperty");
+   
   };
   onSearchClick = (form, formKey) => {
     const { city, ids, oldpropertyids, mobileNumber } = form.fields || {};
@@ -195,7 +196,7 @@ class SearchProperty extends Component {
             </div>
             <div className="new-assess-btn">
               <Button
-                label={<Label label="PT_SEARCH_PROPERTY_NEWPROP_ASSESSMENT" buttonLabel={true} />}
+                label={<Label label="PT_NEW_PROPERTY_BUTTON" buttonLabel={true} />}
                 labelStyle={{ fontSize: 12 }}
                 className="new-property-assessment"
                 onClick={() => history.push("/property-tax")}

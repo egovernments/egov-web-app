@@ -32,20 +32,20 @@
   }
 
   .search-property-btn {
-    position: fixed;
+    position: fixed!important;
     bottom: 0px;
-    width: 100%;
-    left: 0;
+    width: 50%!important;
+    left: 50%;
     height: auto !important;
     margin: 0px !important;
     padding: 0px !important;
   }
 
   .reset-property-btn {
-    position: fixed;
-    bottom: 48px;
-    width: 100%;
-    left: 0;
+    position: fixed !important;
+    bottom: 0px;
+    width: 50%!important;
+    left: 0px;
     height: auto !important;
     margin: 0px !important;
     padding: 0px !important;

@@ -127,7 +127,9 @@ div[class^="floorDetails_"] .text-left {
   letter-spacing: 0.7px;
   font-weight: 500;
   font-size: 16px; }
-
+  .rainmaker-card .rainmaker-card {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important; }
 div[class^="MuiPaper-root"] svg text,
 .stepper-container svg text {
   fill: #fff;
