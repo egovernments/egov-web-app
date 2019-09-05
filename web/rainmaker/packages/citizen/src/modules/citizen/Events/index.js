@@ -8,29 +8,32 @@ import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils
 
 class Events extends React.Component {
   componentDidMount = () => {
-    const { getNotifications, notifications } = this.props;
-    if (!notifications) {
-      let queryObject = [
-        {
-          key: "tenantId",
-          value: JSON.parse(getUserInfo()).permanentCity,
-        },
-      ];
-      const requestBody = {
-        RequestInfo: {
-          apiId: "org.egov.pt",
-          ver: "1.0",
-          ts: 1502890899493,
-          action: "asd",
-          did: "4354648646",
-          key: "xyz",
-          msgId: "654654",
-          requesterId: "61",
-          authToken: getAccessToken(),
-        },
-      };
-      getNotifications(queryObject, requestBody);
-    }
+    const { getNotifications } = this.props;
+
+    let queryObject = [
+      {
+        key: "tenantId",
+        value: JSON.parse(getUserInfo()).permanentCity,
+      },
+      {
+        key: "eventTypes",
+        value: "EVENTSONGROUND",
+      },
+    ];
+    const requestBody = {
+      RequestInfo: {
+        apiId: "org.egov.pt",
+        ver: "1.0",
+        ts: 1502890899493,
+        action: "asd",
+        did: "4354648646",
+        key: "xyz",
+        msgId: "654654",
+        requesterId: "61",
+        authToken: getAccessToken(),
+      },
+    };
+    getNotifications(queryObject, requestBody);
   };
 
   render() {
@@ -38,7 +41,6 @@ class Events extends React.Component {
     let eventarray = notifications && Object.values(notifications).filter((item) => item.type === "EVENTSONGROUND" && !item.referenceId);
     return (
       <Screen className="notifications-screen-style" loading={loading}>
-        {/* <Notifications notifications={getTransformedNotifications(eventarray)} history={history} />; */}
         <Notifications notifications={eventarray} history={history} />;
       </Screen>
     );
