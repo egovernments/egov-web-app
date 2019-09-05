@@ -33,7 +33,7 @@ const generatePdfAndDownload = (
   );
   var iframe = document.createElement("iframe");
   iframe.src =
-    window.origin +
+    document.location.origin +
     window.basename +
     `/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
@@ -126,15 +126,18 @@ export const applicationSuccessFooter = (
 ) => {
   //const baseURL = getBaseURL();
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  // const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  /* Mseva 2.0 changes */
+  const redirectionURL = roleExists ? "/" : "/inbox";
   return getCommonApplyFooter({
+
     gotoHome: {
       componentPath: "Button",
       props: {
         variant: "outlined",
         color: "primary",
         style: {
-          minWidth: "200px",
+          minWidth: "290px",
           height: "48px",
           marginRight: "16px"
         }
@@ -186,7 +189,7 @@ export const applicationSuccessFooter = (
         variant: "outlined",
         color: "primary",
         style: {
-          minWidth: "250px",
+          minWidth: "290px",
           height: "48px",
           marginRight: "16px"
         }
@@ -210,6 +213,7 @@ export const applicationSuccessFooter = (
         }
       }
     }
+
     // collectPaymentButton: {
     //   componentPath: "Button",
     //   props: {
@@ -263,5 +267,6 @@ export const applicationSuccessFooter = (
     //     roles: ["TL_CEMP"]
     //   }
     // }
+
   });
 };

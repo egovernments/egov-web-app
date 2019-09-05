@@ -144,7 +144,8 @@ class PaymentSuccess extends Component {
   };
 
   goToHome = () => {
-    this.props.history.push("/property-tax");
+    /* Mseva 2.0 changes */
+    this.props.history.push("/");
   };
 
   convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {

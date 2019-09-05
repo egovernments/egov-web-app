@@ -52,7 +52,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     renderCustomTitle = (numberOfComplaints) => {
-      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "(0)";
+      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "";
       this.setState({ titleAddon });
     };
 
@@ -98,6 +98,8 @@ const withAuthorization = (options = {}) => (Component) => {
         refreshButton,
         sortButton,
         searchButton,
+        helpButton,
+        notificationButton,
         showNumberOfComplaints,
       } = options;
       const { history, authenticated, userInfo, complaints, hasLocalisation } = this.props;
@@ -144,7 +146,9 @@ const withAuthorization = (options = {}) => (Component) => {
               refreshButton={refreshButton}
               sortButton={sortButton}
               searchButton={searchButton}
-              className="rainmaker-header"
+              helpButton={helpButton}
+              notificationButton={notificationButton}
+              className={isHomeScreen ? "rainmaker-header-home-small-screen" : "rainmaker-header"}
             />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>

@@ -1,12 +1,13 @@
 import get from "lodash/get";
 import find from "lodash/find";
-import { handleScreenConfigurationFieldChange as handleField } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import {
+  handleScreenConfigurationFieldChange as handleField,
+  toggleSnackbar
+} from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import { getSearchResults } from "../../../../..//ui-utils/commons";
-import { toggleSnackbar } from "egov-ui-framework/ui-redux/screen-configuration/actions";
-import { textToLocalMapping } from "./searchResults";
+import { getTextToLocalMapping } from "./searchResults";
 import { validateFields } from "../../utils";
 import { getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
-import { getLocaleLabels } from "egov-ui-framework/ui-utils/commons";
 
 export const getDeptName = (state, codes) => {
   let deptMdmsData = get(
@@ -113,20 +114,19 @@ export const searchApiCall = async (state, dispatch) => {
           });
 
         return {
-          [get(textToLocalMapping, "Employee ID")]:
-            get(item, "code", "-") || "-",
-          [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
-          [get(textToLocalMapping, "Role")]:
+          [getTextToLocalMapping("Employee ID")]: get(item, "code", "-") || "-",
+          [getTextToLocalMapping("Name")]: get(item, "user.name", "-") || "-",
+          [getTextToLocalMapping("Role")]:
             get(item, "user.roles", [])
               .map(role => {
                 return ` ${role.name}`;
               })
               .join() || "-",
-          [get(textToLocalMapping, "Designation")]:
+          [getTextToLocalMapping("Designation")]:
             getDesigName(state, currentDesignations) || "-",
-          [get(textToLocalMapping, "Department")]:
+          [getTextToLocalMapping("Department")]:
             getDeptName(state, currentDepartments) || "-",
-          [get(textToLocalMapping, "Tenant ID")]: get(item, "tenantId", "-")
+          ["tenantId"]: get(item, "tenantId", "-")
         };
       });
 
@@ -143,15 +143,13 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${textToLocalMapping["Search Results for Employee"]} (${
+          `${getTextToLocalMapping("Search Results for Employee")} (${
             response.Employees.length
           })`
         )
       );
-      // showHideProgress(false, dispatch);
       showHideTable(true, dispatch);
     } catch (error) {
-      // showHideProgress(false, dispatch);
       dispatch(
         toggleSnackbar(
           true,
@@ -162,16 +160,6 @@ export const searchApiCall = async (state, dispatch) => {
     }
   }
 };
-// const showHideProgress = (booleanHideOrShow, dispatch) => {
-//   dispatch(
-//     handleField(
-//       "search",
-//       "components.div.children.progressStatus",
-//       "visible",
-//       booleanHideOrShow
-//     )
-//   );
-// };
 
 const showHideTable = (booleanHideOrShow, dispatch) => {
   dispatch(

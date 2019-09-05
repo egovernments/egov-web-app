@@ -63,9 +63,8 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_HOME_PROPERTY_TAX",
-      // hideBackButton: true,
-      // isHomeScreen: true,
-      hideTitle: true
+      hideTitle: true,
+      helpButton: true
     }
   },
   {
@@ -124,8 +123,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PT_SEARCH_PROPERTY"
-      // hideBackButton: true,
+      title: "PT_PAY_PROPERTY_TAX",
+      helpButton: true
     }
   },
   {

@@ -3,6 +3,7 @@ import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Complaints, SortDialog, Screen } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -12,6 +13,7 @@ import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import { getTenantId } from "egov-ui-kit/utils/localStorageUtils";
+import CountDetails from "./components/CountDetails";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -37,7 +39,8 @@ class AllComplaints extends Component {
       userInfo,
       numCSRComplaint,
       numEmpComplaint,
-      renderCustomTitle
+      renderCustomTitle,
+      prepareFinalObject
     } = this.props;
     let rawRole =
       userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
@@ -46,20 +49,8 @@ class AllComplaints extends Component {
       this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
     } else {
       let { fetchComplaints } = this.props;
-      fetchComplaints(
-        [
-          {
-            key: "status",
-            value:
-              rawRole === "EMPLOYEE"
-                ? "assigned,open,reassignrequested,closed,rejected,resolved"
-                : "assigned,open,reassignrequested"
-          }
-        ],
-        true,
-        true
-      );
-      const complaintCountRequest = [
+
+      let complaintCountRequest = [
         { key: "tenantId", value: getTenantId() },
         {
           key: "status",
@@ -74,11 +65,80 @@ class AllComplaints extends Component {
         "_search",
         complaintCountRequest
       );
-      payloadCount
-        ? payloadCount.count
-          ? renderCustomTitle(payloadCount.count)
-          : renderCustomTitle("0")
-        : renderCustomTitle("0");
+      if (role === "csr") {
+        payloadCount
+          ? payloadCount.count
+            ? renderCustomTitle(payloadCount.count)
+            : renderCustomTitle("0")
+          : renderCustomTitle("0");
+      }
+
+      complaintCountRequest = [
+        { key: "tenantId", value: getTenantId() },
+        {
+          key: "status",
+          value: "assigned"
+        }
+      ];
+      let assignedTotalComplaints = await httpRequest(
+        "rainmaker-pgr/v1/requests/_count",
+        "_search",
+        complaintCountRequest
+      );
+      complaintCountRequest = [
+        { key: "tenantId", value: getTenantId() },
+        {
+          key: "status",
+          value: "open,reassignrequested"
+        }
+      ];
+      let unassignedTotalComplaints = await httpRequest(
+        "rainmaker-pgr/v1/requests/_count",
+        "_search",
+        complaintCountRequest
+      );
+      prepareFinalObject("pgrComplaintCount", {
+        assignedTotalComplaints: assignedTotalComplaints.count,
+        unassignedTotalComplaints: unassignedTotalComplaints.count,
+        employeeTotalComplaints: payloadCount.count
+      });
+
+      if (role === "ao") {
+        fetchComplaints(
+          [
+            {
+              key: "status",
+              value: "assigned"
+            }
+          ],
+          true,
+          true
+        );
+        fetchComplaints(
+          [
+            {
+              key: "status",
+              value: "open,reassignrequested"
+            }
+          ],
+          true,
+          false
+        );
+      } else {
+        fetchComplaints(
+          [
+            {
+              key: "status",
+              value:
+                rawRole === "EMPLOYEE"
+                  ? "assigned,reassignrequested"
+                  : "assigned,open,reassignrequested"
+            }
+          ],
+          true,
+          true
+        );
+      }
     }
     let inputType = document.getElementsByTagName("input");
     for (let input in inputType) {
@@ -100,7 +160,7 @@ class AllComplaints extends Component {
     ) {
       const numberOfComplaints =
         role === "employee"
-          ? nextProps.numEmpComplaint
+          ? 0
           : role === "csr"
           ? nextProps.numCSRComplaint
           : 0;
@@ -207,7 +267,10 @@ class AllComplaints extends Component {
       csrComplaints,
       employeeComplaints,
       role,
-      searchFilterEmployeeComplaints
+      searchFilterEmployeeComplaints,
+      assignedTotalComplaints,
+      unassignedTotalComplaints,
+      employeeTotalComplaints
     } = this.props;
     const hintTextStyle = {
       letterSpacing: "0.7px",
@@ -282,7 +345,7 @@ class AllComplaints extends Component {
                     label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
-                  <Label
+                  {/*<Label
                     labelClassName={
                       this.state.value === 0
                         ? "selected-tab-label-text"
@@ -292,12 +355,17 @@ class AllComplaints extends Component {
                     bold={true}
                     label={`(${unassignedComplaints.length})`}
                     labelStyle={tabStyle}
-                  />
+                  />*/}
                 </div>
               ),
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab1-content form-without-button-cont-generic">
+                    <CountDetails
+                      count={unassignedComplaints.length}
+                      total={unassignedTotalComplaints}
+                      status="unassigned"
+                    />
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"
@@ -327,7 +395,7 @@ class AllComplaints extends Component {
                     label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
                     labelStyle={tabStyle}
                   />
-                  <Label
+                  {/*<Label
                     labelClassName={
                       this.state.value === 1
                         ? "selected-tab-label-text"
@@ -337,12 +405,17 @@ class AllComplaints extends Component {
                     bold={true}
                     label={`(${assignedComplaints.length})`}
                     labelStyle={tabStyle}
-                  />
+                  />*/}
                 </div>
               ),
               children: (
                 <Screen className="gro-screen" loading={loading}>
                   <div className="tab2-content form-without-button-cont-generic">
+                    <CountDetails
+                      count={assignedComplaints.length}
+                      total={assignedTotalComplaints}
+                      status="assigned"
+                    />
                     <Complaints
                       noComplaintMessage={
                         "ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"
@@ -363,6 +436,7 @@ class AllComplaints extends Component {
     ) : role === "csr" ? (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
+
           <Card
             id="complaint-search-card"
             className="complaint-search-main-card"
@@ -635,6 +709,15 @@ class AllComplaints extends Component {
           />
         </div>
         <div className="form-without-button-cont-generic">
+          <CountDetails
+            count={
+              search
+                ? searchFilterEmployeeComplaints.length
+                : employeeComplaints.length
+            }
+            total={employeeTotalComplaints}
+            status="open"
+          />
           <Complaints
             noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
             onComplaintClick={onComplaintClick}
@@ -673,9 +756,16 @@ const displayStatus = (status = "") => {
 };
 
 const mapStateToProps = state => {
-  const { complaints, common } = state || {};
+  const { complaints, common, screenConfiguration = {} } = state || {};
   const { categoriesById, byId, order } = complaints;
   const { fetchSuccess } = complaints;
+  const { preparedFinalObject = {} } = screenConfiguration;
+  const { pgrComplaintCount = {} } = preparedFinalObject;
+  const {
+    assignedTotalComplaints = 0,
+    unassignedTotalComplaints = 0,
+    employeeTotalComplaints = 0
+  } = pgrComplaintCount;
   const loading = !isEmpty(categoriesById)
     ? fetchSuccess
       ? false
@@ -811,7 +901,10 @@ const mapStateToProps = state => {
     role,
     loading,
     transformedComplaints,
-    searchFilterEmployeeComplaints
+    searchFilterEmployeeComplaints,
+    assignedTotalComplaints,
+    unassignedTotalComplaints,
+    employeeTotalComplaints
   };
 };
 
@@ -820,7 +913,9 @@ const mapDispatchToProps = dispatch => {
     fetchComplaints: (criteria, hasUsers, overWrite) =>
       dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
     toggleSnackbarAndSetText: (open, message, error) =>
-      dispatch(toggleSnackbarAndSetText(open, message, error))
+      dispatch(toggleSnackbarAndSetText(open, message, error)),
+    prepareFinalObject: (jsonPath, value) =>
+      dispatch(prepareFinalObject(jsonPath, value))
   };
 };
 

@@ -8,6 +8,9 @@ Rainmaker Structural Diagram:
 
 Below are the steps to run project in dev and production, first time user should install lerna as global dependency, below is the command.
 
+Note : Node should be above version 8. 
+
+
 ```
 $ npm install --global lerna
 

@@ -8,7 +8,7 @@ const getCommonApplyFooter = children => {
     uiFramework: "custom-atoms",
     componentPath: "Div",
     props: {
-      className: "apply-wizard-footer"
+      className: "pay-success-footer"
     },
     children
   };
@@ -21,7 +21,9 @@ export const paymentSuccessFooter = (
   applicationNumber
 ) => {
   const roleExists = ifUserRoleExists("CITIZEN");
-  const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  // const redirectionURL = roleExists ? "/tradelicense-citizen/home" : "/inbox";
+  /* Mseva 2.0 changes */
+  const redirectionURL = roleExists ? "/" : "/inbox";
 
   /** MenuButton data based on status */
   let downloadMenu = [];
@@ -170,55 +172,55 @@ export const paymentSuccessFooter = (
                 action: "page_change",
                 path: redirectionURL
               }
-            },
-            downloadReceiptButton: {
-              componentPath: "Button",
-              props: {
-                variant: "outlined",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "16px"
-                }
-              },
-              children: {
-                downloadReceiptButtonLabel: getLabel({
-                  labelName: "DOWNLOAD RECEIPT",
-                  labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
-                })
-              },
-              onClickDefination: {
-                action: "condition",
-                callBack: (state, dispatch) => {
-                  generateReceipt(state, dispatch, "receipt_download");
-                }
-              }
-            },
-            printReceiptButton: {
-              componentPath: "Button",
-              props: {
-                variant: "contained",
-                color: "primary",
-                style: {
-                  minWidth: "200px",
-                  height: "48px",
-                  marginRight: "40px"
-                }
-              },
-              children: {
-                printReceiptButtonLabel: getLabel({
-                  labelName: "PRINT RECEIPT",
-                  labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
-                })
-              },
-              onClickDefination: {
-                action: "condition",
-                callBack: (state, dispatch) => {
-                  generateReceipt(state, dispatch, "receipt_print");
-                }
-              }
             }
+            // downloadReceiptButton: {
+            //   componentPath: "Button",
+            //   props: {
+            //     variant: "outlined",
+            //     color: "primary",
+            //     style: {
+            //       minWidth: "200px",
+            //       height: "48px",
+            //       marginRight: "16px"
+            //     }
+            //   },
+            //   children: {
+            //     downloadReceiptButtonLabel: getLabel({
+            //       labelName: "DOWNLOAD RECEIPT",
+            //       labelKey: "TL_CONFIRMATION_BUTTON_DOWN_REPT"
+            //     })
+            //   },
+            //   onClickDefination: {
+            //     action: "condition",
+            //     callBack: (state, dispatch) => {
+            //       generateReceipt(state, dispatch, "receipt_download");
+            //     }
+            //   }
+            // },
+            // printReceiptButton: {
+            //   componentPath: "Button",
+            //   props: {
+            //     variant: "contained",
+            //     color: "primary",
+            //     style: {
+            //       minWidth: "200px",
+            //       height: "48px",
+            //       marginRight: "40px"
+            //     }
+            //   },
+            //   children: {
+            //     printReceiptButtonLabel: getLabel({
+            //       labelName: "PRINT RECEIPT",
+            //       labelKey: "TL_CONFIRMATION_BUTTON_PRT_REPT"
+            //     })
+            //   },
+            //   onClickDefination: {
+            //     action: "condition",
+            //     callBack: (state, dispatch) => {
+            //       generateReceipt(state, dispatch, "receipt_print");
+            //     }
+            //   }
+            // }
           },
           gridDefination: {
             xs: 12,

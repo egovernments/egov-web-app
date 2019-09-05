@@ -48,9 +48,9 @@ class LandingPage extends React.Component {
   };
 
   render() {
-    const { classes, items } = this.props;
+    const { classes, items, applicationCount } = this.props;
     return (
-      <Grid container style={{ paddingTop: 45 }}>
+      <Grid container className="landing-page-main-grid">
         {items.map(obj => {
           return (
             <Grid className={classes.item} item xs={6} sm={6} align="center">
@@ -68,6 +68,7 @@ class LandingPage extends React.Component {
                         fontSize: 14,
                         color: "rgba(0, 0, 0, 0.8700000047683716)"
                       }}
+                      dynamicArray={applicationCount ? [applicationCount] : [0]}
                     />
                   </div>
                 </CardContent>
@@ -82,7 +83,11 @@ class LandingPage extends React.Component {
 
 const mapStateToProps = state => {
   const screenConfig = get(state.screenConfiguration, "screenConfig");
-  return { screenConfig };
+  const applicationCount = get(
+    state.screenConfiguration.preparedFinalObject,
+    "myApplicationsCount"
+  );
+  return { screenConfig, applicationCount };
 };
 
 const mapDispatchToProps = dispatch => {
