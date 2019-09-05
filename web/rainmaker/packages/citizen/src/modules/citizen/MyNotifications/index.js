@@ -3,7 +3,6 @@ import { Notifications, Screen } from "modules/common";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import "../index.css";
-import { getTransformedNotifications } from "egov-ui-kit/utils/commons";
 import { getNotifications } from "egov-ui-kit/redux/app/actions";
 import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils";
 

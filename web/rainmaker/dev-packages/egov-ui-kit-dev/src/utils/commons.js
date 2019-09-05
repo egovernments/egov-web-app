@@ -652,38 +652,8 @@ const getEventDate = (eventDate) => {
   return month + ":" + day;
 };
 
-// const setDocuments = async (documents) => {
-//   const fileStoreIds =
-//     documents &&
-//     documents
-//       .map((item) => {
-//         return item.fileStoreId;
-//       })
-//       .join(",");
-//   const fileUrlPayload = fileStoreIds && (await getFileUrlFromAPI(fileStoreIds));
-//   const reviewDocData =
-//     documents &&
-//     documents.map((item, index) => {
-//       return {
-//         title: "",
-//         link: (fileUrlPayload && fileUrlPayload[item.fileStoreId] && fileUrlPayload[item.fileStoreId].split(",")[0]) || "",
-//         linkText: "View",
-//         name:
-//           (fileUrlPayload &&
-//             fileUrlPayload[item.fileStoreId] &&
-//             decodeURIComponent(
-//               fileUrlPayload[item.fileStoreId]
-//                 .split(",")[0]
-//                 .split("?")[0]
-//                 .split("/")
-//                 .pop()
-//                 .slice(13)
-//             )) ||
-//           `Document - ${index + 1}`,
-//       };
-//     });
-//   return reviewDocData;
-// };
+
+
 
 const setDocuments = (fileUrl) => {
   return {
@@ -737,34 +707,9 @@ export const getTransformedNotifications = async (notifications) => {
       locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
       entryFees: item.eventDetails && item.eventDetails.fees,
       referenceId: item.referenceId,
-      // documents: item.eventDetails && item.eventDetails.documents && (await setDocuments(item.eventDetails.documents)),
-    });
+          });
   }
   const fileUrls = await getFileUrlFromAPI(fieStoreIdString.join(","));
-
-  // if (notifications && notifications.length > 0) {
-  //   data = notifications.map((item) => ({
-  //     name: item.name,
-  //     description: item.description,
-  //     eventCategory: item.eventCategory,
-  //     address: item.eventDetails && item.eventDetails.address,
-  //     SLA: item.auditDetails && item.auditDetails.lastModifiedTime && getEventSLA(item),
-  //     buttons:
-  //       item.actions && item.actions.actionUrls
-  //         ? item.actions.actionUrls.map((actionUrls) => ({
-  //             label: actionUrls.code,
-  //             route: getEndpointfromUrl(actionUrls.actionUrl, "redirectTo"),
-  //           }))
-  //         : [],
-  //     eventDate: (item.eventDetails && getEventDate(item.eventDetails.fromDate)) || "",
-  //     type: item.eventType,
-  //     id: item.id,
-  //     tenantId: item.tenantId,
-  //     locationObj: item.eventDetails && { lat: item.eventDetails.latitude || 12.9199988, lng: item.eventDetails.longitude || 77.67078 },
-  //     documents: item.eventDetails && item.eventDetails.documents,
-  //   }));
-  // }
-
   const finalArray =
     data &&
     data.reduce((result, item) => {
