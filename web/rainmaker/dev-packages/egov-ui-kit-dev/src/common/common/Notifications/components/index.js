@@ -42,7 +42,6 @@ class EventDetails extends Component {
   };
 
   componentDidMount = async () => {
-    const uuid = getQueryArg(window.location.href, "uuid");
     const tenantId = getQueryArg(window.location.href, "tenantId");
     const { getNotifications, notifications } = this.props;
     if (!notifications) {
@@ -50,6 +49,10 @@ class EventDetails extends Component {
         {
           key: "tenantId",
           value: tenantId,
+        },
+        {
+          key: "eventTypes",
+          value: "EVENTSONGROUND",
         },
       ];
       const requestBody = {
@@ -76,7 +79,7 @@ class EventDetails extends Component {
     const { description, SLA, address, locationObj, eventCategory, name, eventDate, entryFees } = eventDetails || "";
     return (
       <Screen className="notifications-screen-style" loading={loading}>
-        <Card
+        {eventCategory && <Card
           className="home-notification"
           style={{ margin: "8px 0px" }}
           style={{ padding: "12px 8px" }}
@@ -114,8 +117,8 @@ class EventDetails extends Component {
               </Grid>
             </Grid>
           }
-        />
-        <Card
+        />}
+       {description &&  <Card
           style={{ margin: "8px 0px" }}
           style={{ padding: "12px 8px" }}
           textChildren={
@@ -129,7 +132,7 @@ class EventDetails extends Component {
                 containerStyle={{ marginBottom: 20 }}
               />
               {address && (
-                <div className="rainmaker-displayInline">
+                <div className="rainmaker-displayInline" >
                   <Icon
                     name="place"
                     action="maps"
@@ -141,7 +144,7 @@ class EventDetails extends Component {
                     }}
                     viewBox="10 0 24 24"
                   />
-                  <Label fontSize={14} color="rgba(0, 0, 0, 0.60)" label={address} containerStyle={{ marginLeft: 2, marginBottom: 10 }} />
+             <Label fontSize={14} color="rgba(0, 0, 0, 0.60)" label={address} containerStyle={{ marginLeft: 2, marginBottom: 10,width :"90%" }} />
                 </div>
               )}
               <div
@@ -183,7 +186,7 @@ class EventDetails extends Component {
               )}
             </div>
           }
-        />
+        />}
         {/* <div className="responsive-action-button-cont">
           <Button
             primary={true}
