@@ -28,16 +28,12 @@ const iconStyle = {
 
 class EmployeeNotification extends React.Component {
 
-   onModuleCardClick = (route) => {
+  onModuleCardClick = (route) => {
      const {setRoute} = this.props;
-     const url = process.env.NODE_ENV === "production" ? `employee/${route}` : route;
-     setRoute("/" + url);
-    
-    //window.location.href = window.origin + "/" + url;
+     setRoute("/" + route);
   };
 
   render(){
-
     return (
       <div>
         <div style={{ marginLeft: 35, marginTop: 20 }}>

@@ -82,7 +82,7 @@ const Notifications = ({ notifications = [], history }) => {
                 </div>
               )}
               {address && (
-                <div className="rainmaker-displayInline">
+                <div className="rainmaker-displayInline" >
                   <Icon
                     name="place"
                     action="maps"
@@ -94,7 +94,7 @@ const Notifications = ({ notifications = [], history }) => {
                     }}
                     viewBox="10 0 24 24"
                   />
-                  <Label fontSize={14} color="rgba(0, 0, 0, 0.60)" label={address} containerStyle={{ marginLeft: 2, marginBottom: 10 }} />
+                  <Label fontSize={14} color="rgba(0, 0, 0, 0.60)" label={address} containerStyle={{ marginLeft: 2, marginBottom: 10,width :"90%" }} />
                 </div>
               )}
 
