@@ -123,7 +123,7 @@ class PaymentFailure extends Component {
       tenantId
     } = match.params;
     history.push(
-      `/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
+      `/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isAssesment=false&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
     );
   };
 

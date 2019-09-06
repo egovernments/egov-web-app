@@ -75,7 +75,7 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
             label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
             primary={true}
             onClick={(e) => {
-              history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}&isReassesment=true`);
+              history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}&isReassesment=false&isAssesment=true`);
             }}
             style={{
               height: 20,

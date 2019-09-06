@@ -137,7 +137,7 @@ class Property extends Component {
     // localStorage.removeItem("draftId");
     this.setState({
       dialogueOpen: true,
-      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=false&isAssesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
     });
   };
 

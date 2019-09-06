@@ -249,6 +249,7 @@ class ReviewForm extends Component {
       isPartialPaymentInValid,
       termsAccepted,
       termsError,
+      isAssesment,
       toggleTerms
     } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
@@ -261,6 +262,62 @@ class ReviewForm extends Component {
               <AssessmentInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}></AssessmentInfo>
               <OwnerInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}></OwnerInfo>
 
+
+              {isAssesment&&<div>
+                <PropertyTaxDetailsCard
+                  estimationDetails={estimationDetails}
+                  importantDates={importantDates}
+                  openCalculationDetails={this.openCalculationDetails}
+                  optionSelected={valueSelected}
+                />
+                {!this.props.isCompletePayment && (
+                  <CalculationDetails
+                    open={this.state.calculationDetails}
+                    data={this.props.calculationScreenData}
+                    closeDialogue={() => this.closeCalculationDetails()}
+                  />
+                )}
+                {!isPartialPaymentInValid && (
+                  <PaymentAmountDetails
+                    value={
+                      valueSelected === "Partial_Amount"
+                        ? totalAmountToBePaid
+                        : totalAmount
+                    }
+                    onRadioButtonChange={onRadioButtonChange}
+                    handleFieldChange={handleFieldChange}
+                    optionSelected={valueSelected}
+                    totalAmount={totalAmount && totalAmount}
+                    estimationDetails={estimationDetails}
+                    errorText={errorText}
+                  />
+                )}
+                <p className="declaration-main-header">DECLARATION</p>
+                <SingleCheckbox
+                  id="rcpt"
+                  errorMessage={<Label label={termsError} />}
+                  errorText={<Label label={termsError} />}
+                  floatingLabelText={
+                    <Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />
+                  }
+                  value={termsAccepted}
+                  onCheck={() => {
+                    toggleTerms();
+                  }}
+                />
+                {termsError && (
+                  <Label
+                    label={termsError}
+                    containerStyle={{
+                      marginTop: "-22px",
+                      color: "#f44336",
+                      "margin-left": "4px"
+                    }}
+                    fontSize="14px"
+                    color="red"
+                  />
+                )}
+              </div>}
             </div>
           }
         />
@@ -280,61 +337,8 @@ class ReviewForm extends Component {
           editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}
           component={stepTwo}
         /> */}
-        {/* <PropertyTaxDetailsCard
-          estimationDetails={estimationDetails}
-          importantDates={importantDates}
-          openCalculationDetails={this.openCalculationDetails}
-          optionSelected={valueSelected}
-        /> */}
-        {/* {!this.props.isCompletePayment && (
-          <CalculationDetails
-            open={this.state.calculationDetails}
-            data={this.props.calculationScreenData}
-            closeDialogue={() => this.closeCalculationDetails()}
-          />
-        )} */}
-        {/* {!isPartialPaymentInValid && (
-          <PaymentAmountDetails
-            value={
-              valueSelected === "Partial_Amount"
-                ? totalAmountToBePaid
-                : totalAmount
-            }
-            onRadioButtonChange={onRadioButtonChange}
-            handleFieldChange={handleFieldChange}
-            optionSelected={valueSelected}
-            totalAmount={totalAmount && totalAmount}
-            estimationDetails={estimationDetails}
-            errorText={errorText}
-          />
-        )} */}
-        {/* <div>
-          <p className="declaration-main-header">DECLARATION</p>
-          <SingleCheckbox
-            id="rcpt"
-            errorMessage={<Label label={termsError} />}
-            errorText={<Label label={termsError} />}
-            floatingLabelText={
-              <Label label="PT_FINAL_DECLARATION_MESSAGE" color="#767676" />
-            }
-            value={termsAccepted}
-            onCheck={() => {
-              toggleTerms();
-            }}
-          />
-          {termsError && (
-            <Label
-              label={termsError}
-              containerStyle={{
-                marginTop: "-22px",
-                color: "#f44336",
-                "margin-left": "4px"
-              }}
-              fontSize="14px"
-              color="red"
-            />
-          )}
-        </div> */}
+
+
       </div>
     );
   }

@@ -133,12 +133,11 @@ class SearchProperty extends Component {
           }}
           onClick={
             userType === "CITIZEN"
-              ? () => {
-                  this.setState({
-                    dialogueOpen: true,
-                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`
-                  });
-                }
+              ?  e => {
+                history.push(
+                  `/property-tax/my-properties/property/${propertyId}/${tenantId}`
+                );
+              }
               : e => {
                   history.push(
                     `/property-tax/property/${propertyId}/${tenantId}`
@@ -169,9 +168,10 @@ class SearchProperty extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({
-      dialogueOpen: true
-    });
+    // this.setState({
+    //   dialogueOpen: true
+    // });
+    
   };
 
   render() {

@@ -326,8 +326,9 @@ class FormWizard extends Component {
     } = this.props;
     let { search } = location;
     showSpinner();
+    const isReasses = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
     const propertyId = getQueryValue(search, "propertyId");
-    const isReassesment = !!getQueryValue(search, "isReassesment");
+    const isReassesment = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
     const tenantId = getQueryValue(search, "tenantId");
     const draftUuid = getQueryValue(search, "uuid");
     const assessmentId =
@@ -374,7 +375,7 @@ class FormWizard extends Component {
       financialYearFromQuery
     });
 
-    const titleObject = isReassesment
+    const titleObject = isReasses
       ?  [
         "PT_REASSESS_PROPERTY",
       ]
@@ -382,7 +383,7 @@ class FormWizard extends Component {
           "PT_PROPERTY_ASSESSMENT_HEADER",
           `(${financialYearFromQuery})`,
           ":",
-          "PT_NEW_PROPERTY_HEADER"
+          "PT_ADD_NEW_PROPERTY"
         ];
 
     renderCustomTitleForPt({ titleObject });

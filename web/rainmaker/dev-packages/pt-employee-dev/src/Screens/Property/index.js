@@ -132,7 +132,7 @@ class Property extends Component {
     // localStorage.removeItem("draftId");
     this.setState({
       dialogueOpen: true,
-      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isAssesment=true&isReassesment=false&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`
     });
   };
   getAssessmentListItems = props => {

@@ -87,7 +87,7 @@ class PaymentFailure extends Component {
     const { match, history } = this.props;
     const { assessmentNumber, assessmentYear } = match.params;
     history.push(
-      `/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true`
+      `/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isAssesment=true&isReassesment=false`
     );
   };
 

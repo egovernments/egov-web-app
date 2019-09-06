@@ -126,7 +126,7 @@ class SearchProperty extends Component {
                     // localStorageSet("draftId", "")
                     this.setState({
                       dialogueOpen: true,
-                      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
+                      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=false&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                     });
                   }
                   : (e) => {

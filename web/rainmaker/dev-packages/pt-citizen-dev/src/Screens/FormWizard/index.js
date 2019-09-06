@@ -322,7 +322,9 @@ class FormWizard extends Component {
       const assessmentId =
         getQueryValue(search, "assessmentId") ||
         fetchFromLocalStorage("draftId");
-      const isReassesment = !!getQueryValue(search, "isReassesment");
+        const  isReassesment= !!getQueryValue(search, "isReassesment"); 
+      const isReasses = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
+      let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false',''));
       const tenantId = getQueryValue(search, "tenantId");
       const propertyId = getQueryValue(search, "propertyId");
       const draftUuid = getQueryValue(search, "uuid");
@@ -360,22 +362,30 @@ class FormWizard extends Component {
       if (ownerInfoArr.length < 2) {
         addOwner(true, OwnerInformation, this);
       }
-
+      
+    
       const financialYearFromQuery = getFinancialYearFromQuery();
       this.setState({
         financialYearFromQuery
       });
 
-      const titleObject = isReassesment
+      const titleObject = isAssesment? [
+        "PT_PROPERTY_ASSESSMENT_HEADER",
+        `(${financialYearFromQuery})`,
+        ":",
+       "PT_PROPERTY_ADDRESS_PROPERTY_ID",
+        `${propertyId}`,
+
+      ] :(isReasses
         ? [
             "PT_REASSESS_PROPERTY",
           ]
         : [
-            "PT_PROPERTY_ASSESSMENT_HEADER",
-            `(${financialYearFromQuery})`,
-            ":",
-            "PT_NEW_PROPERTY_HEADER"
-          ];
+            // "PT_PROPERTY_ASSESSMENT_HEADER",
+            // `(${financialYearFromQuery})`,
+            // ":",
+            "PT_ADD_NEW_PROPERTY"
+          ]);
       renderCustomTitleForPt({
         titleObject
       });
@@ -462,7 +472,8 @@ class FormWizard extends Component {
     } = this.state;
     const { form, currentTenantId, search } = this.props;
     console.log(this.props,'this.props');
-    
+    let { search:searchQuery } = this.props.location;
+    let isAssesment = Boolean(getQueryValue(searchQuery, "isAssesment").replace('false',''));
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     switch (selected) {
       case 0:
@@ -516,6 +527,7 @@ class FormWizard extends Component {
               financialYr={financialYearFromQuery}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
+              isAssesment={isAssesment}
               currentTenantId={currentTenantId}
               isCompletePayment={isCompletePayment}
               isPartialPaymentInValid={
@@ -533,6 +545,30 @@ class FormWizard extends Component {
             />
           </div>
         );
+        case 4:
+            const ownerType1 = getSelectedCombination(
+              this.props.form,
+              "ownershipType",
+              ["typeOfOwnership"]
+            );
+            return (
+              <div>
+                <OwnershipTypeHOC disabled={fromReviewPage} />
+                {getOwnerDetails(ownerType1)}
+              </div>
+            );
+            case 5:
+                const ownerType2 = getSelectedCombination(
+                  this.props.form,
+                  "ownershipType",
+                  ["typeOfOwnership"]
+                );
+                return (
+                  <div>
+                    <OwnershipTypeHOC disabled={fromReviewPage} />
+                    {getOwnerDetails(ownerType2)}
+                  </div>
+                );
       default:
         return null;
     }
@@ -747,8 +783,28 @@ class FormWizard extends Component {
 
         break;
       case 3:
-        pay();
-        break;
+        // pay();
+        // added tryout
+        callDraft(this);
+        this.setState(
+          {
+            selected: index,
+            formValidIndexArray: [...formValidIndexArray, selected]
+          });
+             break;
+             case 4:
+        // pay();
+        // added tryout
+        callDraft(this);
+        this.setState(
+          {
+            selected: index,
+            formValidIndexArray: [...formValidIndexArray, selected]
+          });
+             break;
+             case 5:
+               pay();
+             break;
     }
   };
 
@@ -1223,13 +1279,13 @@ class FormWizard extends Component {
     } = this.state;
 
     //pay-method-jagan
-    // if (!termsAccepted) {
-    //   this.setState({
-    //     termsError: "PT_CHECK_DECLARATION_BOX"
-    //   });
-    //   alert("Please check the declaration box to proceed futher");
-    //   return;
-    // }
+    if (!termsAccepted) {
+      this.setState({
+        termsError: "PT_CHECK_DECLARATION_BOX"
+      });
+      alert("Please check the declaration box to proceed futher");
+      return;
+    }
     if (totalAmountToBePaid % 1 !== 0) {
       alert("Amount cannot be a fraction!");
       return;
@@ -1252,6 +1308,13 @@ class FormWizard extends Component {
     } = this.state;
     const fromReviewPage = selected === 3;
     const { history } = this.props;
+
+    let { search } = this.props.location;
+    
+    let isReassesment = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
+    let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false',''));
+    console.log(isReassesment,'isReassesment,');
+    
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -1264,7 +1327,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"
-          nextLabel={selected === 3 ? "PT_UPDATE_ASSESSMENT" : "PT_COMMONS_NEXT"}
+          nextLabel={selected === 3 ? (isAssesment?'PT_COMMON_PROC_PMT':(isReassesment?"PT_UPDATE_ASSESSMENT":"PT_ADD_PROPERTY")) : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
