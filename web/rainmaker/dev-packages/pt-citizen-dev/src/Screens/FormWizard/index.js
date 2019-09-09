@@ -551,21 +551,46 @@ class FormWizard extends Component {
 
         return (
           <div>
-            <h3>(property reassess/added/assessed) success screen</h3>
+              <AcknowledgementCard />
           </div>
         );
       case 5:
 
         return (
           <div>
-            <h3>payment summary screen</h3>
-            <AcknowledgementCard />
+            {/* <h3>payment summary screen</h3> */}
+            <ReviewForm
+              onTabClick={this.onTabClick}
+              properties={this.props['prepareFormData']['Properties'][0]}
+              stepZero={this.renderStepperContent(0, fromReviewPage)}
+              stepOne={this.renderStepperContent(1, fromReviewPage)}
+              stepTwo={this.renderStepperContent(2, fromReviewPage)}
+              estimationDetails={estimation}
+              financialYr={financialYearFromQuery}
+              totalAmountToBePaid={totalAmountToBePaid}
+              updateTotalAmount={updateTotalAmount}
+              isAssesment={isAssesment}
+              currentTenantId={currentTenantId}
+              isCompletePayment={isCompletePayment}
+              isPartialPaymentInValid={
+                get(this.state, "estimation[0].totalAmount", 1) < 100 ||
+                get(
+                  form,
+                  "basicInformation.fields.typeOfBuilding.value",
+                  ""
+                ).toLowerCase() === "vacant"
+              }
+              toggleTerms={toggleTerms}
+              termsAccepted={termsAccepted}
+              termsError={termsError}
+              calculationScreenData={this.state.calculationScreenData}
+            />
           </div>
         );
       case 6:
         return (
           <div>
-            <h3>payment success screen</h3>
+              <AcknowledgementCard />
           </div>
         );
       default:
