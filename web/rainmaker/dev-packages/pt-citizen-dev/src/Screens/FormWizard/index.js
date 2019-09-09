@@ -66,6 +66,8 @@ import {
 } from "egov-ui-kit/utils/localStorageUtils";
 import commonConfig from "config/common.js";
 import "./index.css";
+import AcknowledgementCard from "egov-ui-kit/common/propertyTax/AcknowledgementCard";
+
 
 class FormWizard extends Component {
   state = {
@@ -301,7 +303,7 @@ class FormWizard extends Component {
       let inputType = document.getElementsByTagName("input");
       for (let input in inputType) {
         if (inputType[input].type === "number") {
-          inputType[input].addEventListener("mousewheel", function() {
+          inputType[input].addEventListener("mousewheel", function () {
             this.blur();
           });
         }
@@ -322,9 +324,9 @@ class FormWizard extends Component {
       const assessmentId =
         getQueryValue(search, "assessmentId") ||
         fetchFromLocalStorage("draftId");
-        const  isReassesment= !!getQueryValue(search, "isReassesment"); 
-      const isReasses = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
-      let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false',''));
+      const isReassesment = !!getQueryValue(search, "isReassesment");
+      const isReasses = Boolean(getQueryValue(search, "isReassesment").replace('false', ''));
+      let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false', ''));
       const tenantId = getQueryValue(search, "tenantId");
       const propertyId = getQueryValue(search, "propertyId");
       const draftUuid = getQueryValue(search, "uuid");
@@ -362,30 +364,30 @@ class FormWizard extends Component {
       if (ownerInfoArr.length < 2) {
         addOwner(true, OwnerInformation, this);
       }
-      
-    
+
+
       const financialYearFromQuery = getFinancialYearFromQuery();
       this.setState({
         financialYearFromQuery
       });
 
-      const titleObject = isAssesment? [
+      const titleObject = isAssesment ? [
         "PT_PROPERTY_ASSESSMENT_HEADER",
         `(${financialYearFromQuery})`,
         ":",
-       "PT_PROPERTY_ADDRESS_PROPERTY_ID",
+        "PT_PROPERTY_ADDRESS_PROPERTY_ID",
         `${propertyId}`,
 
-      ] :(isReasses
+      ] : (isReasses
         ? [
-            "PT_REASSESS_PROPERTY",
-          ]
+          "PT_REASSESS_PROPERTY",
+        ]
         : [
-            // "PT_PROPERTY_ASSESSMENT_HEADER",
-            // `(${financialYearFromQuery})`,
-            // ":",
-            "PT_ADD_NEW_PROPERTY"
-          ]);
+          // "PT_PROPERTY_ASSESSMENT_HEADER",
+          // `(${financialYearFromQuery})`,
+          // ":",
+          "PT_ADD_NEW_PROPERTY"
+        ]);
       renderCustomTitleForPt({
         titleObject
       });
@@ -471,9 +473,9 @@ class FormWizard extends Component {
       termsError
     } = this.state;
     const { form, currentTenantId, search } = this.props;
-    console.log(this.props,'this.props');
-    let { search:searchQuery } = this.props.location;
-    let isAssesment = Boolean(getQueryValue(searchQuery, "isAssesment").replace('false',''));
+    console.log(this.props, 'this.props');
+    let { search: searchQuery } = this.props.location;
+    let isAssesment = Boolean(getQueryValue(searchQuery, "isAssesment").replace('false', ''));
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     switch (selected) {
       case 0:
@@ -509,7 +511,7 @@ class FormWizard extends Component {
       case 3:
         return (
           <div className="review-pay-tab">
-             {/* {console.log(this.props,"location-jk")}
+            {/* {console.log(this.props,"location-jk")}
             {console.log(this.props['prepareFormData']['Properties'][0]['propertyId'], 'props =jk   ---')}
             {console.log(this.props['prepareFormData']['Properties'][0]['tenantId'], 'tenantId =jk   ---')}
             <button onClick={()=>    this.onTabClick(0)  }>1</button>
@@ -545,30 +547,27 @@ class FormWizard extends Component {
             />
           </div>
         );
-        case 4:
-            const ownerType1 = getSelectedCombination(
-              this.props.form,
-              "ownershipType",
-              ["typeOfOwnership"]
-            );
-            return (
-              <div>
-                <OwnershipTypeHOC disabled={fromReviewPage} />
-                {getOwnerDetails(ownerType1)}
-              </div>
-            );
-            case 5:
-                const ownerType2 = getSelectedCombination(
-                  this.props.form,
-                  "ownershipType",
-                  ["typeOfOwnership"]
-                );
-                return (
-                  <div>
-                    <OwnershipTypeHOC disabled={fromReviewPage} />
-                    {getOwnerDetails(ownerType2)}
-                  </div>
-                );
+      case 4:
+
+        return (
+          <div>
+            <h3>(property reassess/added/assessed) success screen</h3>
+          </div>
+        );
+      case 5:
+
+        return (
+          <div>
+            <h3>payment summary screen</h3>
+            <AcknowledgementCard />
+          </div>
+        );
+      case 6:
+        return (
+          <div>
+            <h3>payment success screen</h3>
+          </div>
+        );
       default:
         return null;
     }
@@ -791,9 +790,9 @@ class FormWizard extends Component {
             selected: index,
             formValidIndexArray: [...formValidIndexArray, selected]
           });
-             break;
-             case 4:
-        // pay();
+        break;
+      case 4:
+
         // added tryout
         callDraft(this);
         this.setState(
@@ -801,10 +800,19 @@ class FormWizard extends Component {
             selected: index,
             formValidIndexArray: [...formValidIndexArray, selected]
           });
-             break;
-             case 5:
-               pay();
-             break;
+        break;
+      case 5:
+        // pay();
+        callDraft(this);
+        this.setState(
+          {
+            selected: index,
+            formValidIndexArray: [...formValidIndexArray, selected]
+          });
+        break;
+      case 6:
+        pay();
+        break;
     }
   };
 
@@ -863,22 +871,22 @@ class FormWizard extends Component {
       if (userType === "CITIZEN") {
         callbackUrl = `${
           window.origin
-        }/citizen/property-tax/payment-redirect-page`;
+          }/citizen/property-tax/payment-redirect-page`;
       } else {
         callbackUrl = `${
           window.origin
-        }/employee/property-tax/payment-redirect-page`;
+          }/employee/property-tax/payment-redirect-page`;
       }
     }
 
     try {
       const getBill = !isCompletePayment
         ? await this.callGetBill(
-            propertyId,
-            assessmentNumber,
-            assessmentYear,
-            tenantId
-          )
+          propertyId,
+          assessmentNumber,
+          assessmentYear,
+          tenantId
+        )
         : billResponse;
       const taxAndPayments = get(getBill, "Bill[0].taxAndPayments", []).map(
         item => {
@@ -925,11 +933,11 @@ class FormWizard extends Component {
           let tenantId = get(goToPaymentGateway, "Transaction.tenantId");
           history.push(
             "/property-tax/payment-success/" +
-              moduleId.split(":")[0] +
-              "/" +
-              tenantId +
-              "/" +
-              moduleId.split(":")[1]
+            moduleId.split(":")[0] +
+            "/" +
+            tenantId +
+            "/" +
+            moduleId.split(":")[1]
           );
         }
       } catch (e) {
@@ -1244,8 +1252,8 @@ class FormWizard extends Component {
     const { formValidIndexArray, selected, propertyUUID } = this.state;
     const { location } = this.props;
     let { search } = location;
-   
-    
+
+
     let currentUUID = get(JSON.parse(getUserInfo()), "uuid");
     const isCompletePayment = getQueryValue(search, "isCompletePayment");
     const isReassesment = getQueryValue(search, "isReassesment");
@@ -1254,13 +1262,13 @@ class FormWizard extends Component {
         ? isCompletePayment || propertyUUID !== currentUUID
           ? alert("Not authorized to edit this property details")
           : this.setState({
-              selected: index,
-              formValidIndexArray: range(0, index)
-            })
-        : this.setState({
             selected: index,
             formValidIndexArray: range(0, index)
-          });
+          })
+        : this.setState({
+          selected: index,
+          formValidIndexArray: range(0, index)
+        });
     } else {
     }
   };
@@ -1268,7 +1276,25 @@ class FormWizard extends Component {
   closeDeclarationDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
+  getButtonLabels(index) {
+    let { search } = this.props.location;
 
+    let isReassesment = Boolean(getQueryValue(search, "isReassesment").replace('false', ''));
+    let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false', ''));
+
+    let buttonLabel = "PT_COMMONS_NEXT";
+    if (index == 3) {
+      isAssesment ? buttonLabel = 'PT_ASSESS_PROPERTY' : (isReassesment ? buttonLabel = "PT_UPDATE_ASSESSMENT" : buttonLabel = "PT_ADD_PROPERTY");
+    } else if (index == 4) {
+      buttonLabel = 'PT_PROCEED_PAYMENT'
+    } else if (index == 5) {
+      buttonLabel = 'PT_GENERATE_RECEIPT'
+    } else if (index == 6) {
+      buttonLabel = 'PT_DOWNLOAD_RECEIPT'
+    }
+
+    return buttonLabel;
+  }
   onPayButtonClick = () => {
     const {
       isFullPayment,
@@ -1309,12 +1335,8 @@ class FormWizard extends Component {
     const fromReviewPage = selected === 3;
     const { history } = this.props;
 
-    let { search } = this.props.location;
-    
-    let isReassesment = Boolean(getQueryValue(search, "isReassesment").replace('false',''));
-    let isAssesment = Boolean(getQueryValue(search, "isAssesment").replace('false',''));
-    console.log(isReassesment,'isReassesment,');
-    
+
+
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -1327,7 +1349,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"
-          nextLabel={selected === 3 ? (isAssesment?'PT_COMMON_PROC_PMT':(isReassesment?"PT_UPDATE_ASSESSMENT":"PT_ADD_PROPERTY")) : "PT_COMMONS_NEXT"}
+          nextLabel={this.getButtonLabels(selected)}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}

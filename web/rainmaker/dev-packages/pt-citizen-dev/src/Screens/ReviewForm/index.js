@@ -261,9 +261,8 @@ class ReviewForm extends Component {
               <PropertyAddressInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />}></PropertyAddressInfo>
               <AssessmentInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />}></AssessmentInfo>
               <OwnerInfo properties={this.props.properties} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />}></OwnerInfo>
-
-
-              {isAssesment&&<div>
+            {/* {isAssesment && */}
+              <div>
                 <PropertyTaxDetailsCard
                   estimationDetails={estimationDetails}
                   importantDates={importantDates}
@@ -317,7 +316,8 @@ class ReviewForm extends Component {
                     color="red"
                   />
                 )}
-              </div>}
+              </div>
+
             </div>
           }
         />
