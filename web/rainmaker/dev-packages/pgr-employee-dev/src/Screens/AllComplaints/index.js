@@ -108,22 +108,22 @@ class AllComplaints extends Component {
           [
             {
               key: "status",
-              value: "open,reassignrequested,assigned"
+              value: "assigned"
             }
           ],
           true,
-          true
+          false
         );
-        // fetchComplaints(
-        //   [
-        //     {
-        //       key: "status",
-        //       value: "open,reassignrequested"
-        //     }
-        //   ],
-        //   true,
-        //   false
-        // );
+        fetchComplaints(
+          [
+            {
+              key: "status",
+              value: "open,reassignrequested"
+            }
+          ],
+          true,
+          false
+        );
       } else {
         fetchComplaints(
           [
