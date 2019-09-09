@@ -107,20 +107,18 @@ class CitizenDashboard extends Component {
             fontSize={16}
             color="rgba(0, 0, 0, 0.87"
             containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
-            labelStyle={{ fontWeight: "bold" }}
           />
           <ServiceList history={history} />
           <Label
             label="DASHBOARD_LOCAL_INFORMATION_LABEL"
             fontSize={16}
-            labelStyle={{fontWeight : "bold"}}
             color="rgba(0, 0, 0, 0.87"
             containerStyle={{ paddingTop: 16, paddingBottom: 8 }}
           />
           <ServicesNearby history={history} />
           {whatsNewEvents && whatsNewEvents.length > 0 && (
             <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16 }}>
-              <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16}  labelStyle={{fontWeight : "bold"}} color="rgba(0, 0, 0, 0.8700000047683716)" />
+              <Label label="DASHBOARD_WHATS_NEW_LABEL" fontSize={16}  color="rgba(0, 0, 0, 0.8700000047683716)" />
               <div onClick={() => history.push("whats-new")} style={{ cursor: "pointer" }}>
                 <Label label="DASHBOARD_VIEW_ALL_LABEL" color="#fe7a51" fontSize={14} />
               </div>
