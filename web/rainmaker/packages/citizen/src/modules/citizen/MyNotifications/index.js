@@ -9,7 +9,7 @@ import { getAccessToken, getUserInfo } from "egov-ui-kit/utils/localStorageUtils
 class Updates extends React.Component {
   componentDidMount = () => {
     const { getNotifications, notifications } = this.props;
-    if (!notifications) {
+    // if (!notifications) {
       let queryObject = [
         {
           key: "tenantId",
@@ -30,7 +30,7 @@ class Updates extends React.Component {
         },
       };
       getNotifications(queryObject, requestBody);
-    }
+    // }
   };
 
   render() {
